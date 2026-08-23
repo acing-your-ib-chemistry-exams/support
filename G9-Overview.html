@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Industrial Chemistry &mdash; Course Overview</title>
+<style>
+:root{
+  --ink:#1b1f24;
+  --ink-soft:#4a545e;
+  --rule:#dfe3e8;
+  --paper:#ffffff;
+  --wash:#f6f7f9;
+  --u1:#8a6d1f;  --u1w:#fbf5e4;
+  --u2:#9a4a2a;  --u2w:#fbeee8;
+  --u3:#1f6b63;  --u3w:#e6f3f1;
+  --u4:#3b4b91;  --u4w:#eceff9;
+  --u5:#8a2f4d;  --u5w:#fbebf0;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--wash);
+  color:var(--ink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  font-size:16.5px;
+  line-height:1.6;
+}
+.sheet{max-width:1080px;margin:0 auto;background:var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.06),0 14px 44px rgba(0,0,0,.07)}
+
+/* ---------- masthead ---------- */
+header.masthead{
+  padding:56px 60px 40px;
+  border-bottom:3px double var(--rule);
+  background:
+    radial-gradient(1200px 220px at 15% -60px, #eef1f6 0%, transparent 70%),
+    var(--paper);
+}
+.eyebrow{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 14px;
+}
+h1{font-size:clamp(30px,4.6vw,46px);line-height:1.1;margin:0 0 10px;font-weight:600;letter-spacing:-.01em}
+h1 .sub{display:block;font-size:.46em;font-weight:400;font-style:italic;color:var(--ink-soft);margin-top:14px;letter-spacing:0}
+.standfirst{max-width:64ch;color:var(--ink-soft);margin:22px 0 0;font-size:1.02em}
+.meta-row{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+}
+.chip{border:1px solid var(--rule);border-radius:999px;padding:5px 13px;color:var(--ink-soft);background:#fff}
+
+/* ---------- contents strip ---------- */
+nav.toc{padding:26px 60px;background:var(--wash);border-bottom:1px solid var(--rule)}
+nav.toc h2{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+  margin:0 0 14px;font-weight:600;
+}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.toc-card{
+  display:block;text-decoration:none;color:inherit;background:#fff;
+  border:1px solid var(--rule);border-radius:9px;padding:13px 15px;
+  border-top:3px solid var(--accent);transition:transform .12s ease, box-shadow .12s ease;
+}
+.toc-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.toc-card .n{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:10px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;
+}
+.toc-card .t{display:block;margin-top:5px;font-size:15px;line-height:1.32}
+
+/* ---------- units ---------- */
+main{padding:0 60px 20px}
+section.unit{padding:46px 0;border-bottom:1px solid var(--rule)}
+section.unit:last-of-type{border-bottom:0}
+.unit-head{display:flex;gap:22px;align-items:flex-start}
+.numeral{
+  flex:0 0 auto;width:64px;height:64px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--wash-accent);color:var(--accent);
+  border:1.5px solid var(--accent);
+  font-size:26px;font-weight:600;line-height:1;
+}
+.unit-titles{flex:1 1 auto;min-width:0}
+.kicker{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;margin:0 0 7px;
+}
+h2.unit-title{font-size:clamp(21px,2.6vw,28px);line-height:1.24;margin:0;font-weight:600}
+h2.unit-title em{font-style:italic;font-weight:400;color:var(--ink-soft)}
+.duration{
+  display:inline-block;margin-top:9px;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11.5px;
+  color:var(--ink-soft);border:1px solid var(--rule);border-radius:999px;padding:3px 11px;
+}
+.thread{
+  margin:22px 0 0;padding:15px 20px;background:var(--wash-accent);
+  border-left:3px solid var(--accent);border-radius:0 7px 7px 0;
+  font-style:italic;color:#333;max-width:78ch;
+}
+.thread strong{font-style:normal;font-weight:600}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:30px}
+@media (max-width:880px){.cols{grid-template-columns:1fr;gap:26px}}
+h3.block{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-soft);font-weight:700;margin:0 0 12px;
+  padding-bottom:7px;border-bottom:1px solid var(--rule);
+}
+ul.content{margin:0;padding:0;list-style:none}
+ul.content > li{position:relative;padding-left:19px;margin-bottom:11px}
+ul.content > li::before{
+  content:"";position:absolute;left:0;top:.62em;
+  width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.75;
+}
+ul.content li b{font-weight:600}
+ul.content ul{margin:7px 0 0;padding-left:16px;list-style:none}
+ul.content ul li{position:relative;padding-left:14px;margin-bottom:5px;font-size:.94em;color:var(--ink-soft)}
+ul.content ul li::before{content:"–";position:absolute;left:0;color:var(--accent)}
+.eqn{
+  font-family:"Iowan Old Style",Georgia,serif;font-style:italic;
+  background:var(--wash);border:1px solid var(--rule);border-radius:5px;
+  padding:1px 7px;white-space:nowrap;font-size:.95em;font-style:normal;
+}
+.skills{margin-top:30px;padding:18px 22px;border:1px dashed var(--rule);border-radius:9px;background:#fcfcfd}
+.skills h3.block{border-bottom:0;padding-bottom:0;margin-bottom:9px}
+.skills ul{margin:0;padding-left:18px}
+.skills li{margin-bottom:6px;color:var(--ink-soft);font-size:.96em}
+
+details.res{margin-top:26px;border:1px solid var(--rule);border-radius:9px;background:#fcfcfd;overflow:hidden}
+details.res > summary{
+  cursor:pointer;list-style:none;padding:12px 18px;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11.5px;
+  letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--accent);
+  background:var(--wash-accent);
+}
+details.res > summary::-webkit-details-marker{display:none}
+details.res > summary::after{content:" ▸";font-size:12px}
+details.res[open] > summary::after{content:" ▾"}
+.res-body{padding:16px 20px}
+.res-group{margin-bottom:14px}
+.res-group:last-child{margin-bottom:0}
+.res-group h4{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:10.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+  margin:0 0 7px;font-weight:700;
+}
+.res-list{display:flex;flex-wrap:wrap;gap:7px}
+.res-list a{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  text-decoration:none;color:var(--ink);background:#fff;
+  border:1px solid var(--rule);border-radius:6px;padding:5px 10px;line-height:1.35;
+}
+.res-list a:hover{border-color:var(--accent);color:var(--accent)}
+.res-list a::before{content:"";display:inline-block;width:6px;height:6px;border-radius:1px;background:var(--accent);opacity:.55;margin-right:7px;vertical-align:middle}
+
+footer.colophon{
+  padding:34px 60px 48px;background:var(--wash);border-top:1px solid var(--rule);
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-soft);
+}
+footer.colophon p{margin:0 0 8px;max-width:74ch}
+
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .sheet{box-shadow:none;max-width:none}
+  header.masthead{padding:0 0 18pt}
+  nav.toc{display:none}
+  main{padding:0}
+  section.unit{padding:16pt 0;break-inside:auto}
+  .unit-head{break-after:avoid}
+  .cols{gap:18pt}
+  details.res{break-inside:avoid}
+  details.res > summary{display:none}
+  details.res .res-body{padding:10pt 0 0}
+  .res-list a{border:0;padding:0;display:block;width:100%;color:#333}
+  footer.colophon{padding:14pt 0 0}
+  a{color:inherit}
+}
+@media (max-width:700px){
+  header.masthead,nav.toc,main,footer.colophon{padding-left:24px;padding-right:24px}
+}
+
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<main>
+
+<section class="unit" id="u1" style="--accent:var(--u1);--wash-accent:var(--u1w)">
+  <div class="unit-head">
+    <div class="unit-titles">
+      <p class="kicker">Foundations</p>
+      <h2 class="unit-title">Chemical Ideas you will learn in each Unit</h2>
+    </div>
+  </div>
+
+  <p class="thread"><strong>The thread:</strong> Four short readings, and four questions you will end up asking about every industrial process in this course. How much? (equations and moles) · How hot? (thermochemistry) · How fast? (kinetics) · How far? (equilibrium). Almost none of this is new to you — but this year you will use it on real chemical plants running at a profit, and not a loss.</p>
+
+  <div class="cols">
+    <div>
+      <h3 class="block">1 · Chemical reactions and equations</h3>
+      <ul class="content">
+        <li><b>Writing equations properly</b> — from words to symbols, balanced, with state symbols <span class="eqn">(s) (l) (g) (aq)</span>. You will be doing this all year, so get it fluent now.</li>
+        <li><b>Conservation of mass</b> — the reason balancing is not just a rule your teacher invented.</li>
+        <li><b>The mole</b> — <span class="eqn">n = m / M</span>, Avogadro's constant, molar gas volume and concentration <span class="eqn">c = n / V</span>.</li>
+        <li><b>Reacting-mass calculations</b>, limiting reagent, percentage yield and atom economy. This is the arithmetic that decides whether a factory makes a profit.</li>
+        <li>Recognising reaction types: combination, decomposition, displacement, neutralisation, precipitation, combustion and redox.</li>
+      </ul>
+
+      <h3 class="block">2 · Thermochemistry</h3>
+      <ul class="content">
+        <li><b>Exothermic and endothermic</b> changes, and why <span class="eqn">ΔH</span> is negative when heat comes out.</li>
+        <li><b>Energy-level diagrams</b> — and reading activation energy off one as the barrier you have to get over.</li>
+        <li><b>Breaking bonds takes energy in, making bonds gives energy out</b> — you will use this to estimate <span class="eqn">ΔH</span> from bond energies.</li>
+        <li>Measuring heat in the lab: <span class="eqn">q = mcΔT</span>, and working out why your answer always comes out too low.</li>
+        <li>Why a strongly exothermic reaction is both good news (it keeps itself going) and a headache (you have to get the heat out before something melts).</li>
+      </ul>
+
+      <h3 class="block">3 · Kinetics</h3>
+      <ul class="content">
+        <li><b>Measuring a rate</b> — by loss of mass, volume of gas, colour change or cloudiness; and reading a rate off the gradient of a graph.</li>
+        <li><b>Collision theory</b>: a collision only works if the particles hit with the right orientation and with at least the activation energy, <span class="eqn">E<sub>a</sub></span>.</li>
+        <li>What changes a rate — <b>concentration, pressure, temperature, surface area, catalyst</b> — and being able to explain each one in terms of collisions.</li>
+        <li><b>Catalysts</b> give the reaction an easier route with a lower <span class="eqn">E<sub>a</sub></span>. They are not used up, and they do not change how much product you end up with.</li>
+        <li>Why heating something by only 10 °C can roughly double the rate.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="block">4 · Equilibrium and reversibility</h3>
+      <ul class="content">
+        <li><b>Reversible reactions</b> and what the <span class="eqn">⇌</span> sign is telling you.</li>
+        <li><b>Dynamic equilibrium</b> — the forward and backward rates are equal, the amounts stop changing, but the reaction has not stopped.</li>
+        <li><b>Le Chatelier's principle</b> — predicting what happens when you change concentration, pressure or temperature.</li>
+        <li>Yield versus rate. Keep these two apart in your head: this distinction is what the whole course turns on.</li>
+        <li><b>The compromise problem</b>, which comes back in Units 3 and 5: the conditions that give you the best yield are usually far too slow to be worth using.</li>
+      </ul>
+
+      <h3 class="block">By the end of this unit you should be able to</h3>
+      <ul class="content">
+        <li>Write a balanced equation with state symbols, without being prompted.</li>
+        <li>Do mole calculations, including yield and limiting reagent.</li>
+        <li>Read an energy-level diagram and a rate curve.</li>
+        <li>Predict what a change does to an equilibrium — and say what it costs you in rate.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<footer class="colophon">
+  <p style="margin:0;opacity:.75">Science Department &middot; Grade 9 &middot; Refined with AI</p>
+</footer>
+
+</div>
+</body>
+</html>
