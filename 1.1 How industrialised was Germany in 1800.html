@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.1 How industrialised was Germany in 1800?</title>
+<style>
+:root{
+  --ink:#1b1f24; --ink-soft:#4a545e; --rule:#dfe3e8; --paper:#ffffff; --wash:#f6f7f9;
+  --accent:#8a6d1f; --accent-w:#fbf5e4;
+  --src:#1f6b63;  --src-w:#e6f3f1;
+  --warn:#8a2f4d; --warn-w:#fbebf0;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--wash);color:var(--ink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman","Apple Symbols","Segoe UI Symbol","Arial Unicode MS","DejaVu Sans",serif;
+  font-size:17px;line-height:1.65;
+}
+.sheet{max-width:920px;margin:0 auto;background:var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.06),0 14px 44px rgba(0,0,0,.07)}
+header.masthead{padding:52px 56px 34px;border-bottom:3px double var(--rule);
+  background:radial-gradient(1100px 200px at 12% -60px,#f3f0e6 0%,transparent 70%),var(--paper)}
+.eyebrow{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:0;font-weight:600;letter-spacing:-.01em}
+h1 .num{color:var(--accent)}
+.sub{display:block;font-size:.46em;font-weight:400;font-style:italic;color:var(--ink-soft);margin-top:14px;letter-spacing:0}
+.standfirst{max-width:62ch;color:var(--ink-soft);margin:22px 0 0}
+.meta-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px}
+.chip{border:1px solid var(--rule);border-radius:999px;padding:5px 13px;color:var(--ink-soft);background:#fff}
+main{padding:8px 56px 20px}
+section{padding:34px 0;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+h2{font-size:clamp(20px,2.4vw,26px);line-height:1.25;margin:0 0 4px;font-weight:600}
+.period{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 8px}
+h3{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin:26px 0 10px;
+  padding-bottom:6px;border-bottom:1px solid var(--rule)}
+p{margin:0 0 14px;max-width:70ch}
+ul,ol{max-width:70ch}
+li{margin-bottom:7px}
+b,strong{font-weight:600}
+.lead{font-size:1.06em}
+.pull{margin:22px 0;padding:16px 22px;background:var(--accent-w);border-left:4px solid var(--accent);
+  border-radius:0 7px 7px 0;max-width:74ch}
+.pull p:last-child{margin-bottom:0}
+/* ---------- source blocks ---------- */
+.source{margin:24px 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden;background:#fcfcfd}
+.source-head{padding:9px 18px;background:var(--src-w);border-bottom:1px solid var(--rule);
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:700;color:var(--src)}
+.source-body{padding:16px 22px}
+.de{font-size:1.02em;line-height:1.6;margin:0;color:#2a2f35}
+.de p{margin:0 0 10px}
+.de p:last-child{margin-bottom:0}
+details.tr{margin-top:12px;border-top:1px dashed var(--rule);padding-top:10px}
+details.tr>summary{cursor:pointer;list-style:none;display:inline-block;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.06em;color:var(--src);background:var(--src-w);border:1px solid #cfe4e0;
+  border-radius:6px;padding:5px 12px}
+details.tr>summary::-webkit-details-marker{display:none}
+details.tr>summary::after{content:" \2192"}
+details.tr[open]>summary::after{content:" \2193"}
+details.tr .en{margin-top:12px;color:#333;font-style:italic}
+details.tr .en p{margin:0 0 10px}
+.cite{margin:12px 0 0;font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:11.5px;color:var(--ink-soft)}
+.cite a{color:#1155cc}
+/* ---------- timeline ---------- */
+table.tl{width:100%;border-collapse:collapse;font-size:14.5px;margin:18px 0 4px}
+table.tl th{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;
+  text-align:left;padding:6px 10px;border-bottom:1.5px solid var(--rule)}
+table.tl td{padding:6px 10px;border-bottom:1px solid #eef0f3;vertical-align:top}
+td.yr{white-space:nowrap;color:var(--accent);font-weight:600;width:96px}
+/* ---------- figures / boxes ---------- */
+.fact{margin:20px 0;padding:15px 20px;border:1px dashed var(--rule);border-radius:9px;background:#fcfcfd}
+.fact h4{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);margin:0 0 9px;font-weight:700}
+.fact p:last-child,.fact ul:last-child{margin-bottom:0}
+.check{margin:24px 0;padding:16px 22px;background:var(--warn-w);border-left:4px solid var(--warn);border-radius:0 7px 7px 0}
+.check h4{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--warn);margin:0 0 9px;font-weight:700}
+.check p:last-child,.check ol:last-child,.check ul:last-child{margin-bottom:0}
+.qs{counter-reset:q;list-style:none;padding:0;margin:0}
+.qs li{position:relative;padding-left:34px;margin-bottom:13px}
+.qs li::before{counter-increment:q;content:counter(q);position:absolute;left:0;top:.05em;
+  width:23px;height:23px;border-radius:50%;background:var(--accent-w);border:1px solid var(--accent);
+  color:var(--accent);font-family:ui-sans-serif,Arial,sans-serif;font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+footer.colophon{padding:30px 56px 44px;background:var(--wash);border-top:1px solid var(--rule);
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-soft)}
+footer.colophon p{margin:0 0 8px;max-width:74ch}
+footer a{color:#1155cc}
+
+
+/* ---------- source link pills ---------- */
+.srclinks{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:7px}
+.srclinks a{
+  display:inline-block;text-decoration:none;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:600;
+  padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:#fff;color:var(--ink);
+}
+.srclinks a:hover{border-color:var(--src);color:var(--src);background:var(--src-w)}
+.srclinks a.de-link{border-color:#cfd8dd}
+.srclinks a.en-link{border-color:#cfe4e0;background:var(--src-w);color:var(--src)}
+.srclinks a::before{content:"\2197  ";font-weight:400;opacity:.6}
+.srclinks .none{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  color:var(--ink-soft);padding:6px 2px;font-style:italic;
+}
+/* ---------- glossary tool-tips ---------- */
+.gl{position:relative;border-bottom:1px dotted var(--accent);cursor:help;outline:none}
+.gl:hover,.gl:focus{background:var(--accent-w)}
+.gl .tip{
+  visibility:hidden;opacity:0;transition:opacity .12s ease;
+  position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);
+  width:min(300px,78vw);z-index:40;
+  background:#1b1f24;color:#f4f5f7;text-align:left;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:13px;font-style:normal;font-weight:400;line-height:1.45;
+  padding:10px 13px;border-radius:8px;box-shadow:0 6px 22px rgba(0,0,0,.28);
+}
+.gl .tip::after{content:"";position:absolute;top:100%;left:50%;margin-left:-6px;
+  border:6px solid transparent;border-top-color:#1b1f24}
+.gl:hover .tip,.gl:focus .tip,.gl:focus-within .tip{visibility:visible;opacity:1}
+.gl .tip b{color:#f0d98a;font-weight:600}
+@media print{.gl .tip{display:none}.gl{border-bottom:0;background:none}}
+sub,sup{line-height:0;font-size:75%}
+.eqn{font-family:"Iowan Old Style",Georgia,serif;background:var(--wash);border:1px solid var(--rule);border-radius:4px;padding:0 5px;white-space:nowrap;font-size:.95em}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .sheet{box-shadow:none;max-width:none}
+  header.masthead{padding:0 0 14pt}
+  main{padding:0}
+  section{padding:12pt 0;break-inside:auto}
+  details.tr>summary{display:none}
+  details.tr .en{display:block!important;margin-top:8pt}
+  .source{break-inside:avoid}
+  footer.colophon{padding:12pt 0 0}
+  a{color:inherit}
+}
+@media (max-width:700px){
+  header.masthead,main,footer.colophon{padding-left:22px;padding-right:22px}
+  body{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header class="masthead">
+  <p class="eyebrow">Industrial Chemistry &middot; Unit 1: Foundations &middot; Background reading</p>
+  <h1><span class="num">1.1</span> How industrialised was Germany in 1800?
+    <span class="sub">The chemical trades of the Rhine and the Main, from the old Empire to the first railway</span>
+  </h1>
+  <p class="standfirst">Before we can ask how the great chemical works of the Rhine&ndash;Main valley came to be, we have to look at what was actually there before them. The answer is surprising, and it is not the answer the phrase &ldquo;industrial revolution&rdquo; leads you to expect.</p>
+  <div class="meta-row">
+    <span class="chip">Reading 1.1</span>
+    <span class="chip">1775 &ndash; September 1825</span>
+    <span class="chip">Frankfurt &middot; H&ouml;chst &middot; Mainz &middot; Wiesbaden &middot; Bad Homburg &middot; Oberursel</span>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <p class="lead">Stand on the <b>Alte Br&uuml;cke</b> in Frankfurt in the year 1800 &mdash; and in 1800 you did not need to say which bridge, because it was the only one across the Main &mdash; and look around. You are in one of the richest trading cities in the German-speaking world. And there is <b>not one chemical factory</b> anywhere in sight &mdash; nor in H&ouml;chst, nor Mainz, nor Wiesbaden, nor anywhere else along this river.</p>
+
+  <p>That is where this course starts. The dye works at H&ouml;chst, whose chimneys you can see from the train today, was founded in <b>1863</b>. The story we are going to follow does not begin with factories. It begins with mills, salt pans, apothecary shops, boats being dragged upstream by horses, and a Europe at war with itself.</p>
+
+  <p>This reading covers fifty years, from <b>1775</b> &mdash; when the Holy Roman Empire still existed and Frankfurt was its own small country &mdash; to <b>September 1825</b>, when a railway opened in the north of England and quietly made everything in this reading obsolete.</p>
+
+  <div class="fact">
+    <h4>How to use the German sources</h4>
+    <p><b>Words with a dotted underline</b> are chemical terms. Hover over one &mdash; or tap it on a tablet &mdash; and its meaning appears. Every one of them is also in the glossary at the end.</p>
+    <p>Under every source box there are <b>buttons</b>: one takes you to the original text, another to an English version where a free one exists. Follow them &mdash; that is where the real thing lives.</p>
+    <p>Throughout this reading you will find boxes containing <b>real German text written at the time</b>. Read the German first and see how much you can get. Then click <b>Translate &rarr;</b> to open the English. Every box gives you the author, the date, and a link to where the text can be read in full &mdash; because a quotation you cannot trace is not evidence.</p>
+  </div>
+</section>
+
+<!-- ============ 1775 ============ -->
+<section>
+  <p class="period">Part one &middot; 1775</p>
+  <h2>A country that was not yet a country</h2>
+
+  <p>In 1775 there was no Germany. There was the <b>Holy Roman Empire</b>, a patchwork of something like 300 states, free cities, church lands and knightly estates, all nominally under an emperor in Vienna who could not tell most of them what to do.</p>
+
+  <p>Our six towns were spread across <b>four different countries</b>, and you could walk between them in a day:</p>
+
+  <table class="tl">
+    <thead><tr><th>Town</th><th>Who ruled it in 1775</th><th>Roughly how many people</th></tr></thead>
+    <tbody>
+      <tr><td><b>Frankfurt am Main</b></td><td>Nobody &mdash; a Free Imperial City, governing itself</td><td>c. 35,000</td></tr>
+      <tr><td><b>Mainz</b></td><td>The Archbishop-Elector of Mainz, a prince of the Church</td><td>c. 25,000</td></tr>
+      <tr><td><b>H&ouml;chst</b></td><td>The Archbishop-Elector of Mainz</td><td>850 (1780)</td></tr>
+      <tr><td><b>Oberursel</b></td><td>The Archbishop-Elector of Mainz</td><td>a few thousand</td></tr>
+      <tr><td><b>Wiesbaden</b></td><td>The Prince of Nassau-Usingen</td><td>c. 2,000</td></tr>
+      <tr><td><b>Bad Homburg</b></td><td>The Landgrave of Hesse-Homburg</td><td>small &mdash; the whole state had c. 20,000</td></tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:16px">Look at those numbers again. <b>Wiesbaden had about 2,200 people in 1800.</b> Today it has around 280,000. In 1804, of its 400 households, <b>284 kept livestock and a smallholding</b> &mdash; the capital of a duchy was a farming village with a bath-house.</p>
+
+  <p>Every one of those borders was a <b>customs border</b>. Around 1790 the German states had roughly <b>1,800 customs boundaries</b>. Inside Prussia alone there were over sixty separate local tariffs, and a cargo travelling from K&ouml;nigsberg to Cologne faced something like eighty separate inspections. In 1819 the economist Friedrich List complained that thirty-eight customs and toll lines &ldquo;paralyse internal traffic&rdquo;.</p>
+
+  <div class="pull">
+    <p><b>Hold on to this.</b> A chemical works needs to buy raw materials cheaply and sell in bulk over a wide area. In 1775 you could do neither. That single fact explains most of what follows.</p>
+  </div>
+
+  <p>And if you did want to start a manufacturing business, the <b>guilds</b> stood in the way. Trades were closed shops: who could practise them, where, how many apprentices, what methods. That is a large part of why the chemical trades that did exist were mostly <b>out in the countryside</b>, on streams and in forests, beyond the town walls and the guilds' reach.</p>
+</section>
+
+<!-- ============ what chemistry existed ============ -->
+<section>
+  <p class="period">Part two</p>
+  <h2>So what chemical industry <em>did</em> exist?</h2>
+
+  <p>A real one &mdash; just not one you would recognise. Across the German states there were hundreds of small works making the handful of chemicals that pre-industrial life actually needed.</p>
+
+  <h3>The trades</h3>
+  <ul>
+    <li><b><span class="gl" tabindex="0">Alum works<span class="tip"><b>alum</b> &mdash; potassium aluminium sulphate. The mordant of the dyeing trade, also used in tanning and paper making.</span></span></b> (<i>Alaunwerke</i>) &mdash; probably well over a hundred of them. Alum shale was roasted, left out to weather for months, <span class="gl" tabindex="0">leached<span class="tip"><b>leaching</b> &mdash; washing a soluble substance out of a solid mixture with water.</span></span> with water, then boiled down in lead or copper pans and <span class="gl" tabindex="0">crystallised<span class="tip"><b>crystallisation</b> &mdash; forming solid crystals out of a solution by cooling it or evaporating the water.</span></span> in wooden vats. <span class="gl" tabindex="0">The yield was dreadful<span class="tip"><b>yield</b> &mdash; how much product you actually get compared with how much you should get in theory. Usually a percentage.</span></span>: <b>50 to 200 Zentner of shale for one Zentner of alum</b> &mdash; under 2%. Alum was the <span class="gl" tabindex="0">mordant<span class="tip"><b>mordant</b> &mdash; a substance that fixes a dye to a fibre so it does not wash out. Without one, most dyes simply rinse away.</span></span> that made dyes stick to cloth, so no alum meant no dyed textiles.</li>
+    <li><b><span class="gl" tabindex="0">Vitriol works<span class="tip"><b>vitriol</b> &mdash; the old name for a sulphate salt. Green vitriol is iron(II) sulphate. <i>Vitriol&ouml;l</i>, oil of vitriol, was sulphuric acid.</span></span></b> making <i>Vitriol&ouml;l</i> &mdash; oil of vitriol, our sulphuric acid. Iron vitriol was <span class="gl" tabindex="0">roasted in ceramic retorts<span class="tip"><b>roasting</b> &mdash; heating a solid strongly in air to change it chemically. A <b>retort</b> is a closed vessel for heating something and collecting what distils off.</span></span> and the fumes condensed. The best-known came from Nordhausen, which is why fuming sulphuric acid is still called <b><span class="gl" tabindex="0">Nordhausen oleum<span class="tip"><b>oleum</b> &mdash; sulphur trioxide dissolved in sulphuric acid. It fumes in air, and is stronger and more dangerous than ordinary sulphuric acid.</span></span></b> (Nordhausen is in <b>Th&uuml;ringen</b>, on the southern edge of the Harz mountains, about 300 km north-east of Frankfurt; in the nineteenth century this was Prussian territory). One works at Bodenmais &mdash; in the <b>Bayerischer Wald</b> in eastern <b>Bayern</b>, on the Czech border &mdash; ran from <b>1787 to 1829</b> and was described in 1792 as &ldquo;almost the only livelihood&rdquo; of the villagers.</li>
+    <li><b><span class="gl" tabindex="0">Saltpetre boilers<span class="tip"><b>saltpetre</b> &mdash; potassium nitrate, the oxidising ingredient of gunpowder. That is why the state controlled it.</span></span></b> (<i>Salpetersieder</i>) &mdash; who held a licence from their ruler to <b>dig up farmers' stables, cellars and walls</b> for nitrogen-rich earth, and were obliged to deliver a quota. Saltpetre meant gunpowder, so this was a state monopoly, not a business.</li>
+    <li><b><span class="gl" tabindex="0">Potash from wood ash<span class="tip"><b>potash</b> &mdash; potassium carbonate, made by burning wood and leaching the ash. The old alkali, and the reason alkali came from forests.</span></span></b> &mdash; <span class="gl" tabindex="0">the alkali for glass<span class="tip"><b>alkali</b> &mdash; a soluble base, the chemical opposite of an acid. Potash and soda are both alkalis.</span></span>, soap and dyeing. A single forest glassworks ate 2,000&ndash;3,000 cubic metres of wood a year, the yield of twenty to thirty hectares of forest, and reportedly <b>80&ndash;85% of that wood was burned to make potash</b> rather than to melt glass. Alkali came from forests, and forests were running out.</li>
+    <li><b>Soap boilers, tanners, dyers, white-lead makers, gunpowder mills.</b> White lead was made by stacking lead sheets over vinegar and burying the pots in horse manure for four weeks. Workers got paralysis, fits and joint disease.</li>
+  </ul>
+
+  <h3>The biggest chemical plant you could have visited</h3>
+  <p>It was a <b>salt works</b>, and there were three within reach of Frankfurt: <b>Bad Nauheim</b> (in the Wetterau, about 35 km north of Frankfurt), <b>Bad Soden am Taunus</b> (about 15 km west of Frankfurt, next door to H&ouml;chst) and <b>Bad Salzhausen</b> near Nidda (about 50 km north-east). All three are in <b>Hessen</b> &mdash; close enough to visit.</p>
+
+  <p>The problem at all three was that the <span class="gl" tabindex="0">brine<span class="tip"><b>brine</b> &mdash; a solution of salt in water; here, pumped up from underground.</span></span> was <b><span class="gl" tabindex="0">very dilute<span class="tip"><b>dilute</b> &mdash; only a little dissolved substance in a lot of water. The opposite of concentrated.</span></span>, and of very low <span class="gl" tabindex="0">concentration<span class="tip"><b>concentration</b> &mdash; how much dissolved substance there is in a given amount of solution.</span></span> in the water</b> &mdash; barely 3% salt at Nauheim, only 1&ndash;1.2% at Soden. Boiling that down with firewood would have been ruinous. So they built <b><span class="gl" tabindex="0">graduation towers<span class="tip"><b>graduation tower</b> (Gradierwerk) &mdash; a timber frame packed with blackthorn twigs. Brine trickles down it and wind and sun evaporate the water, so what reaches the bottom is more concentrated.</span></span></b> (<i>Gradierwerke</i>): huge timber frames packed with blackthorn twigs, over which the brine was pumped and allowed to trickle down again and again, letting wind and sun evaporate the water for free.</p>
+
+  <p>Between <b>1776 and 1786</b> Johann Wilhelm Langsdorff rebuilt Bad Salzhausen with <b>seven graduation towers, up to 210 metres long</b>, driven by water wheels and pumps. That is the largest piece of chemical engineering a Grade 10 student in this region could have walked up to and touched in 1800 &mdash; and its entire purpose was to <b>save fuel</b>.</p>
+
+  <h3>And at H&ouml;chst?</h3>
+  <p>Not a dye works &mdash; a <b>porcelain manufactory</b>, founded in 1746, the second oldest in Germany. For its first four years it could only make faience; true porcelain began in <b>1750</b>, when an <span class="gl" tabindex="0"><i>Arkanist</i><span class="tip"><b>arcanum</b> &mdash; the secret recipe for a porcelain paste and glaze. The <i>Arkanist</i> was the man who kept it: chemical knowledge as private property.</span></span> arrived. An <i>Arkanist</i> was the keeper of the <b>arcanum</b>, the secret recipe for the paste and the glaze &mdash; a chemist in all but name, whose knowledge was so valuable it was a trade secret guarded like treasure.</p>
+
+  <p>It went <b>bankrupt in 1796</b>, owing 57,312 gulden. In 1798 the moulds and models were auctioned off. That is what a chemical business looked like at H&ouml;chst in our period: a state-privileged luxury workshop, and then a receiver's sale.</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; a gazetteer describes H&ouml;chst, 1822</div>
+    <div class="source-body">
+      <div class="de"><p>&bdquo;H&ouml;chst, an dem Einflusse der Nidda in den Main, mit 1516 Einwohnern, Tabaks- und anderen Fabriken, starkem Handel.&ldquo;</p></div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en"><p>&ldquo;H&ouml;chst, at the point where the Nidda flows into the Main, with 1,516 inhabitants, tobacco and other factories, and a strong trade.&rdquo;</p></div>
+      </details>
+      <p class="cite">Quoted in <a href="https://de.wikipedia.org/wiki/Geschichte_von_H%C3%B6chst_am_Main">Geschichte von H&ouml;chst am Main</a>. Note the word <i>Fabriken</i> &mdash; in 1822 it meant a workshop with a few dozen hands, not a factory in our sense.</p>
+      <p class="srclinks"><a class="de-link" href="https://de.wikipedia.org/wiki/Geschichte_von_H%C3%B6chst_am_Main" target="_blank" rel="noopener">Where this is quoted (German)</a><a class="en-link" href="https://en.wikipedia.org/wiki/H%C3%B6chst_(Frankfurt_am_Main)" target="_blank" rel="noopener">H&ouml;chst in English</a></p>
+    </div>
+  </div>
+
+  <h3>The two things Germany did <em>not</em> have</h3>
+  <p>This is the heart of the matter, and it is worth learning.</p>
+
+  <table class="tl">
+    <thead><tr><th></th><th>Britain</th><th>Here, in the German states</th><th>How far behind</th></tr></thead>
+    <tbody>
+      <tr><td class="yr"><span class="gl" tabindex="0">Lead-chamber sulphuric acid<span class="tip"><b>lead chamber process</b> &mdash; the British way of making sulphuric acid in bulk, inside a large chamber lined with lead. Lead is one of the few metals the acid does not eat through.</span></span></td><td>1746, Birmingham, England (John Roebuck)</td><td>1816&ndash;1820, Ringkuhl near Kassel (northern Hessen)</td><td><b>about 70 years</b></td></tr>
+      <tr><td class="yr"><span class="gl" tabindex="0">Leblanc soda<span class="tip"><b>Leblanc process</b> &mdash; making soda from common salt in two steps: salt + sulphuric acid gives salt cake; roasting that with limestone and coal gives soda. It <i>consumes</i> sulphuric acid.</span></span></td><td>1816&ndash;1823</td><td>1828, Sch&ouml;nebeck on the Elbe (Sachsen-Anhalt, near Magdeburg)</td><td><b>about a decade</b></td></tr>
+    </tbody>
+  </table>
+  <p class="cite" style="margin:10px 0 0"><b>A note on the words.</b> The term used in the historical literature is <i>&ldquo;German Lands&rdquo;</i> rather than <i>&ldquo;German States&rdquo;</i> &mdash; from <i>L&auml;nder</i>, the same word you meet today in <i>Bundesland</i>. JKW</p>
+
+  <p style="margin-top:16px">Sulphuric acid and soda are the two substances on which the whole modern chemical industry is built &mdash; and both of them reached the German states <b>after the period this reading covers</b>. Britain had cheap acid in lead chambers while Germany was still distilling it from vitriol in pots.</p>
+
+  <p>And the two facts are one fact: the Leblanc process for making soda <b>consumes sulphuric acid</b>. No cheap acid, no soda. No soda, no cheap glass, soap, paper or bleached cloth.</p>
+</section>
+
+<!-- ============ 1792-1803 ============ -->
+<section>
+  <p class="period">Part three &middot; 1792&ndash;1803</p>
+  <h2>Revolution, invasion, and a republic in Mainz</h2>
+
+  <p>In 1789 France had a revolution. In 1792 the war reached the Rhine. On <b>21 October 1792</b> French troops under General Custine entered Mainz without a shot being fired, and the Archbishop-Elector fled.</p>
+
+  <p>What happened next was extraordinary: German citizens, led in part by the naturalist and traveller <b>Georg Forster</b>, set up the <b>Mainz Republic</b> &mdash; the first attempt at a democratic state on German soil. Elections were held on 24 February 1793, though only 8% of eligible voters turned out. The republic was proclaimed on 18 March 1793.</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; Georg Forster, speech in Mainz, 15 November 1792</div>
+    <div class="source-body">
+      <div class="de">
+        <p>&bdquo;Was waren wir noch vor drei Wochen? Wie hat die wunderbare Verwandlung nur so schnell geschehen k&ouml;nnen, aus bedr&uuml;ckten, gemishandelten, stillschweigenden Knechten eines Priesters, in aufgerichtete, lautredende, freie B&uuml;rger?&ldquo;</p>
+      </div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en"><p>&ldquo;What were we still three weeks ago? How can the marvellous transformation have happened so fast &mdash; from oppressed, ill-treated, silent serfs of a priest into upright, loud-speaking, free citizens?&rdquo;</p></div>
+      </details>
+      <p class="cite">Georg Forster, <i>&Uuml;ber das Verh&auml;ltnis der Mainzer gegen die Franken</i>, delivered to the Gesellschaft der Volksfreunde three weeks after the French entered. The odd spellings &mdash; <i>gemishandelten</i>, <i>Cüstine</i> &mdash; are as printed in 1792.</p>
+      <p class="srclinks"><a class="de-link" href="https://www.projekt-gutenberg.org/forster/essays/chap007.html" target="_blank" rel="noopener">Read the speech in German</a><a class="en-link" href="https://en.wikipedia.org/wiki/Georg_Forster" target="_blank" rel="noopener">Who was Georg Forster?</a><span class="none">No free English translation of this speech was found.</span></p>
+    </div>
+  </div>
+
+  <p>It lasted four months. A Prussian and Imperial army of some 32,000 men besieged the city from 14 April 1793 and bombarded it into surrender on 23 July. Among the observers travelling with the besieging army was <b>Goethe</b>, who kept a diary. His route out of Frankfurt takes him straight through H&ouml;chst.</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; Goethe leaves Frankfurt for the siege, 26 May 1793</div>
+    <div class="source-body">
+      <div class="de">
+        <p>&bdquo;Montag den 26. Mai 1793 von Frankfurt nach H&ouml;chst und Fl&ouml;rsheim; hier stand viel Belagerungsgesch&uuml;tz. Der alte freie Weg nach Mainz war gesperrt, ich mu&szlig;te &uuml;ber die Schiffbr&uuml;cke bei R&uuml;sselsheim; in Ginsheim ward gef&uuml;ttert; der Ort ist sehr zerschossen.&ldquo;</p>
+      </div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en"><p>&ldquo;Monday 26 May 1793, from Frankfurt to H&ouml;chst and Fl&ouml;rsheim; a great deal of siege artillery was standing here. The old free road to Mainz was closed, I had to go over the pontoon bridge at R&uuml;sselsheim; we fed the horses at Ginsheim; the place is badly shot up.&rdquo;</p></div>
+      </details>
+      <p class="cite">Goethe, <i>Belagerung von Mainz</i>, opening entry. Events of 1793, written down in 1820 from his notes and published 1822 &mdash; so there is a gap of nearly thirty years between the journey and the book. </p>
+      <p class="srclinks"><a class="de-link" href="https://www.gutenberg.org/cache/epub/17657/pg17657-images.html" target="_blank" rel="noopener">Read the whole diary in German</a><a class="en-link" href="https://en.wikipedia.org/wiki/Siege_of_Mainz_(1793)" target="_blank" rel="noopener">The siege of Mainz, in English</a><span class="none">No free English translation of this diary was found.</span></p>
+    </div>
+  </div>
+
+  <div class="source">
+    <div class="source-head">Source &middot; Goethe watches Mainz burn, June 1793</div>
+    <div class="source-body">
+      <div class="de">
+        <p>&bdquo;Den 27. Juni. Anfang des Bombardements, wodurch die Dechanei sogleich angez&uuml;ndet war.&ldquo;</p>
+        <p>&bdquo;Den 28. Juni nachts. Fortgesetztes Bombardement gegen den Dom; Turm und Dach brennen ab und viele H&auml;user umher. Nach Mitternacht die Jesuitenkirche.&ldquo;</p>
+      </div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en">
+          <p>&ldquo;27 June. Beginning of the bombardment, by which the deanery was set alight at once.&rdquo;</p>
+          <p>&ldquo;Night of 28 June. Continued bombardment against the cathedral; tower and roof burn away and many houses round about. After midnight the Jesuit church.&rdquo;</p>
+        </div>
+      </details>
+      <p class="cite">Goethe, <i>Belagerung von Mainz</i> &mdash; the same diary as above.</p>
+      <p class="srclinks"><a class="de-link" href="https://www.gutenberg.org/cache/epub/17657/pg17657-images.html" target="_blank" rel="noopener">Read it in German</a></p>
+    </div>
+  </div>
+
+  <p><b>Frankfurt did not escape either.</b> The French had already occupied it in October 1792 and levied two million gulden. In July 1796 they bombarded it, and about <b>a third of the houses in the Judengasse were destroyed</b> &mdash; which, brutally, is what ended compulsory ghetto residence in the city.</p>
+
+  <p>A year after the bombardment Goethe was back in his home town, and what struck him was not the ruins but the accounts.</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; Goethe in Frankfurt, 8 August 1797</div>
+    <div class="source-body">
+      <div class="de">
+        <p>&bdquo;In Frankfurt ist alles t&auml;tig und lebhaft, und das vielfache Ungl&uuml;ck scheint nur einen allgemeinen Leichtsinn bewirkt zu haben. Die Millionen Kriegskontribution, die man im vorigen Jahre den vorgedrungenen Franzosen hingeben mu&szlig;te, sind so wie die Not jener Augenblicke vergessen, und jedermann findet es &auml;u&szlig;erst unbequem, da&szlig; er nun zu den Interessen und Abzahlungen auch das Seinige beitragen soll.&ldquo;</p>
+        <p>&bdquo;Ein jeder beklagt sich &uuml;ber die &auml;u&szlig;erste Teuerung, und f&auml;hrt doch fort Geld auszugeben und den Luxus zu vermehren, &uuml;ber den er sich beschwert.&ldquo;</p>
+      </div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en">
+          <p>&ldquo;In Frankfurt everything is busy and lively, and the manifold misfortune seems only to have produced a general frivolity. The millions of war contribution that had to be handed over last year to the advancing French are forgotten, like the distress of those moments, and everyone finds it extremely inconvenient that he should now contribute his own share to the interest and the repayments.&rdquo;</p>
+          <p>&ldquo;Everyone complains of the extreme dearness, and yet goes on spending money and increasing the very luxury he complains of.&rdquo;</p>
+        </div>
+      </details>
+      <p class="cite">Goethe, <i>Aus einer Reise in die Schweiz &uuml;ber Frankfurt, Heidelberg, Stuttgart und T&uuml;bingen im Jahre 1797</i>. Written on the spot in August 1797 &mdash; no memory gap at all.</p>
+      <p class="srclinks"><a class="de-link" href="https://www.projekt-gutenberg.org/goethe/screis97/screis97.html" target="_blank" rel="noopener">Read it in German</a><span class="none">No free English translation of these travel notes was found.</span></p>
+    </div>
+  </div>
+
+  <div class="pull">
+    <p><b>Why this matters for chemistry.</b> Twenty-three years of war, occupation, war levies and inflation is not a climate in which anyone builds a lead-chamber acid plant. Britain, protected by the Channel, spent the same years building them.</p>
+  </div>
+</section>
+
+<!-- ============ 1803-1806 ============ -->
+<section>
+  <p class="period">Part four &middot; 1803&ndash;1806</p>
+  <h2>Napoleon redraws the map &mdash; and the tolls</h2>
+
+  <p>On <b>25 February 1803</b> came the <i>Reichsdeputationshauptschluss</i>, one of the ugliest words in German history and one of the most consequential documents. At a stroke it abolished the church states and swept away most of the free cities, handing their lands to the surviving princes as compensation for territory lost to France.</p>
+
+  <p>For our towns this meant:</p>
+  <ul>
+    <li><b>H&ouml;chst</b> and <b>Oberursel</b> stopped being ruled by an archbishop and became part of <b>Nassau-Usingen</b> &mdash; in Oberursel's case, a Catholic town now under a Protestant dynasty.</li>
+    <li><b>Wiesbaden</b> became, in 1806, the <b>capital of the new Duchy of Nassau</b> &mdash; a town of about 2,200 people running a country.</li>
+    <li><b>Frankfurt</b> lost its independence in 1806 and became, from 1810 to 1813, the <b>Grand Duchy of Frankfurt</b> under Karl Theodor von Dalberg.</li>
+    <li><b>Hesse-Homburg</b> was abolished altogether in 1806 and swallowed by Hesse-Darmstadt.</li>
+    <li><b>Mainz</b> had already been annexed by France, and from 1800 was the capital of the French <i>D&eacute;partement du Mont-Tonnerre</i>.</li>
+  </ul>
+
+  <p>Buried in that same document, at &sect;39, is a sentence that matters enormously for the movement of goods:</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; Reichsdeputationshauptschluss, 25 February 1803, &sect;39</div>
+    <div class="source-body">
+      <div class="de"><p>&bdquo;Alle Rheinz&ouml;lle werden aufgehoben, blos Eingangs-Geb&uuml;hren und ein Schiffahrts-Octroi bleiben vorbehalten.&ldquo;</p></div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en"><p>&ldquo;All Rhine tolls are abolished; only entry duties and a navigation octroi are reserved.&rdquo;</p></div>
+      </details>
+      <p class="cite">Quoted in Hiram K&uuml;mper, &bdquo;Streit um den Rhein&ldquo;.</p>
+      <p class="srclinks"><a class="de-link" href="https://majournals.bib.uni-mannheim.de/index.php/gdr/article/download/222/169/489" target="_blank" rel="noopener">The article, in German (PDF)</a><a class="en-link" href="https://en.wikipedia.org/wiki/German_Mediatisation" target="_blank" rel="noopener">What the 1803 law did, in English</a></p>
+    </div>
+  </div>
+
+  <p>The following year the <b>Rhine Octroi Convention of 1804</b> put that into practice. At the end of the eighteenth century there had been about <b>31 toll stations</b> between Strasbourg and the Dutch border. The convention replaced them with <b>twelve octroi offices</b> on a single uniform tariff, administered from Mainz by what was arguably the world's first international authority.</p>
+
+  <div class="check">
+    <h4>Careful &mdash; a fact that is usually got wrong</h4>
+    <p>You will often read that there were <b>62 tolls</b> on the Rhine. That figure is real, but it belongs to the <b>end of the fourteenth century</b>, not to 1800. By the 1790s it was about half that. When you meet a striking number, always ask what date it belongs to.</p>
+    <p>You will also read that Napoleon &ldquo;freed the Rhine&rdquo;. Only half true: the 1804 convention cut the tolls, but it <b>confirmed the staple rights and actually revived the boatmen's guilds</b>. Those monopolies survived until 1831.</p>
+  </div>
+</section>
+
+<!-- ============ rivers ============ -->
+<section>
+  <p class="period">Part five</p>
+  <h2>Everything moved by water &mdash; slowly</h2>
+
+  <p>There were no railways, and the roads were bad. If you wanted to shift anything heavy &mdash; salt, timber, stone, wine, grain, coal &mdash; you put it on a river. Which is exactly why, sixty years later, the chemical works were built where they were.</p>
+
+  <p>Going downstream was easy: up to <b>100 river-kilometres a day</b>, just steering. Going upstream was another matter entirely. Boats were <b>towed</b>, from a path along the bank, by horses or by men.</p>
+
+  <div class="fact">
+    <h4>The arithmetic of towing</h4>
+    <ul>
+      <li>A Rhine boat of about <b>100 tonnes</b> needed <b>10 horses</b> in normal water, 12 in low water, and up to 16 when it was very shallow.</li>
+      <li>Where horses could not be used, <b>60 to 90 men</b> did the work of eight to twelve horses.</li>
+      <li>Upstream progress averaged <b>25&ndash;32 km a day</b>. Downstream, up to 100. A three- to fourfold penalty.</li>
+      <li><b>Rotterdam to Cologne upstream: up to six weeks.</b></li>
+    </ul>
+  </div>
+
+  <p>The <b>Main was worse</b>. Before it was engineered in the nineteenth century it was shallow, winding and braided, with a navigable channel often only <b>half a metre deep</b>. Main boats carried just <b>15 to 30 tonnes</b> each, against the Rhine's hundred, and larger craft could reach Frankfurt <b>only exceptionally, at high water</b>.</p>
+
+  <p>And at H&ouml;chst, every cargo going up or down paid the <b>Mainzoll</b>. That toll had been abolished by Emperor Friedrich Barbarossa in 1157, re-imposed, forbidden again, and re-granted &mdash; and it was still being collected right through our period. It was finally abolished on <b>31 December 1866</b>.</p>
+
+  <h3>The largest moving objects in Europe</h3>
+  <p>The most spectacular thing on the Rhine around 1800 was not a ship. It was a <b>raft</b> &mdash; a <i>Holl&auml;nderflo&szlig;</i>, timber from the Black Forest, the Odenwald and the Taunus lashed together and floated down to the Dutch shipyards.</p>
+
+  <div class="fact">
+    <h4>One raft, around 1800</h4>
+    <ul>
+      <li>Up to <b>300 metres long</b> and <b>50 metres wide</b>, drawing about 2 metres</li>
+      <li>A crew of up to <b>500 men</b>, living aboard in huts</li>
+      <li>Steered by 16&ndash;20 oars, each 14 metres long, with seven men to an oar</li>
+      <li>Mainz to Dordrecht in about <b>12 days</b>, passing <b>20 toll stations</b></li>
+      <li>Provisions for one voyage: 40,000 lb of bread, 12,000&ndash;20,000 lb of meat, 10,000&ndash;15,000 lb of cheese, and <b>80,000&ndash;96,000 litres of beer</b></li>
+    </ul>
+  </div>
+
+  <p>On a smaller and more everyday scale, the <b>Marktschiff</b> ran between Mainz and Frankfurt, carrying up to 200 people. Downstream to Mainz it left at ten and arrived by three or four. Coming back upstream it had to be dragged by horses, left at seven in the morning, and got in around three &mdash; and cost more, because pulling is dearer than drifting.</p>
+
+  <p>Goethe, as a boy in Frankfurt, used to go and watch them arrive.</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; Goethe on the Alte Br&uuml;cke and the market boats</div>
+    <div class="source-body">
+      <div class="de">
+        <p>&bdquo;Der sch&ouml;ne Flu&szlig; auf- und abw&auml;rts zog meine Blicke nach sich; und wenn auf dem Br&uuml;ckenkreuz der goldene Hahn im Sonnenschein gl&auml;nzte, so war es mir immer eine erfreuliche Empfindung. [&hellip;] da schlich man zum Weinmarkte, bewunderte den Mechanismus der Krane, wenn Waren ausgeladen wurden; besonders aber unterhielt uns die Ankunft der Marktschiffe, wo man so mancherlei und mitunter so seltsame Figuren aussteigen sah.&ldquo;</p>
+      </div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en"><p>&ldquo;The fine river drew my eyes upstream and down; and when the golden cock on the bridge-cross shone in the sunlight it was always a joy to me. [&hellip;] one strolled to the wine market and admired the mechanism of the cranes when goods were unloaded; but what entertained us most was the arrival of the market boats, from which one saw so many, and sometimes such strange, figures step ashore.&rdquo;</p></div>
+      </details>
+      <p class="cite">Goethe, <i>Dichtung und Wahrheit</i>, Part I, Book 1 (published 1811). <b>Careful with the date:</b> Goethe was born in 1749, so he is describing the 1750s and 1760s from memory, half a century later. <b>Which bridge?</b> Goethe calls it simply <i>die gro&szlig;e Mainbr&uuml;cke</i> because there was only one &mdash; the <b>Alte Br&uuml;cke</b>, running from the Fahrtor in the Altstadt across to Sachsenhausen. The golden cockerel he mentions sat on the <i>Br&uuml;ckenkreuz</i> out in the middle of it, and Frankfurters still call it the <i>Brickegickel</i>. Every other crossing was by ferry &mdash; which is why, a few lines later, he pays a Kreuzer to be rowed back.</p>
+      <p class="srclinks"><a class="de-link" href="https://projekt-gutenberg.org/authors/johann-wolfgang-von-goethe/books/dichtung-und-wahrheit-erster-und-zweiter-teil/chapter/3" target="_blank" rel="noopener">Read the German (Projekt Gutenberg-DE)</a><a class="en-link" href="https://www.gutenberg.org/ebooks/5733" target="_blank" rel="noopener">Read it in English &mdash; Oxenford translation</a><a class="en-link" href="https://www.gutenberg.org/ebooks/52654" target="_blank" rel="noopener">A second English translation</a></p>
+    </div>
+  </div>
+
+  <h3>And the mills</h3>
+  <p>Where there was no big river there was a small one, and on it, mills. The Urselbach at <b>Oberursel</b> had <b>42 mill sites</b> documented over the centuries, eight of them inside the old town in the nineteenth century. A survey of 1488 lists what they were for:</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; the Oberursel mills, 1488</div>
+    <div class="source-body">
+      <div class="de"><p>&bdquo;4 Walkm&uuml;hlen, 3 Schleifm&uuml;hlen, 2 &Ouml;lm&uuml;hlen, 2 Lohm&uuml;hlen, 2 Mahlm&uuml;hlen&ldquo;</p></div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en"><p>&ldquo;4 fulling mills, 3 grinding mills, 2 oil mills, 2 tanbark mills, 2 corn mills&rdquo;</p></div>
+      </details>
+      <p class="cite">From the M&uuml;hlenwanderweg guide, <a href="https://frankfurt.de/-/media/frankfurtde/frankfurt-themen/umwelt-und-gruen/umwelt-und-gruen-a-z/pdf/veroeffentlichungen/muehlenwanderweg_ohne_karte.ashx">Stadt Frankfurt (PDF)</a>. This is 1488, three centuries before our period &mdash; but the <i>kinds</i> of mill barely changed. Later there were paper mills and copper hammers too.</p>
+      <p class="srclinks"><a class="de-link" href="https://frankfurt.de/-/media/frankfurtde/frankfurt-themen/umwelt-und-gruen/umwelt-und-gruen-a-z/pdf/veroeffentlichungen/muehlenwanderweg_ohne_karte.ashx" target="_blank" rel="noopener">The mill trail guide (German PDF)</a><a class="en-link" href="https://en.wikipedia.org/wiki/Oberursel" target="_blank" rel="noopener">Oberursel in English</a></p>
+    </div>
+  </div>
+
+  <p>Look at that list with a chemist's eye. <b>Lohm&uuml;hlen</b> ground oak bark for the tanners &mdash; <span class="gl" tabindex="0">tanning is applied chemistry<span class="tip"><b>tanning</b> &mdash; turning raw hide into leather using tannins from oak bark, plus lime and sometimes alum.</span></span>, turning raw hide into leather with tannins and lime. <b>Walkm&uuml;hlen</b> pounded woollen cloth in a bath of water, urine and fuller's earth. <b>&Ouml;lm&uuml;hlen</b> pressed oil for soap and lamps. This is chemical processing, powered by falling water and organised by guilds.</p>
+</section>
+
+<!-- ============ 1806-1814 ============ -->
+<section>
+  <p class="period">Part six &middot; 1806&ndash;1814</p>
+  <h2>The Continental System: an accidental experiment in chemistry</h2>
+
+  <p>By the <b>Berlin Decree of 21 November 1806</b> Napoleon closed continental Europe to British trade. He could not beat the Royal Navy, so he tried to bankrupt Britain instead. It did not work &mdash; but it did something no one intended.</p>
+
+  <p>Cut off from colonial imports, continental chemists and manufacturers had to <b><span class="gl" tabindex="0">invent substitutes<span class="tip"><b>substitute</b> &mdash; a home-made replacement for something you can no longer import.</span></span></b>:</p>
+  <ul>
+    <li><b>Beet sugar</b> instead of cane sugar. In 1811 Napoleon decreed beet cultivation on 32,000 hectares and set up schools to teach the process; by 1812 France had <b>150 beet-sugar factories</b>.</li>
+    <li><b>Chicory</b> roasted as a coffee substitute &mdash; and this was a real industry: in the Magdeburg region in 1797 there were already <b>14 chicory works employing 1,228 people</b>.</li>
+    <li><b>Woad</b> revived in place of imported indigo, and chemists hunted for dye substitutes generally.</li>
+  </ul>
+
+  <p>Saxony's cotton industry grew twentyfold between 1806 and 1813 behind the barrier. But there was a price, and for chemistry it was the whole game: the German states were <b>cut off from British technology</b> at precisely the moment when Britain was perfecting the lead chamber and the Leblanc process.</p>
+
+  <div class="pull">
+    <p><b>One man's career, in one paragraph.</b> In 1807 <b>Johann Wolfgang D&ouml;bereiner</b> was running the dyeing and bleaching department of a textile works. The blockade cut off the cotton supply and he <b>lost the job</b>. In 1810 the Duke of Weimar called him to Jena as professor of chemistry; in 1812 he was set to building a starch-syrup works, which collapsed when the blockade did. He went on to discover <span class="gl" tabindex="0">catalysis on platinum<span class="tip"><b>catalyst</b> &mdash; speeds a reaction up without being used up, and without changing how much product you finally get.</span></span> in 1823, to invent a lighter that sold 20,000 units, and in 1829 to publish the <b>law of triads</b> &mdash; the first real step towards the periodic table you will meet in Unit 4.</p>
+  </div>
+</section>
+
+<!-- ============ 1815-1825 ============ -->
+<section>
+  <p class="period">Part seven &middot; 1815&ndash;1825</p>
+  <h2>Peace, and a promise that took sixteen years</h2>
+
+  <p>Napoleon fell. At the <b>Congress of Vienna</b> in 1815 the powers made a promise about rivers that reads beautifully:</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; Final Act of the Congress of Vienna, 9 June 1815, Article 109 (French)</div>
+    <div class="source-body">
+      <div class="de"><p>&laquo;La navigation dans tout le cours des rivi&egrave;res &hellip; du point o&ugrave; chacune d'elles devient navigable jusqu'&agrave; son embouchure, sera enti&egrave;rement libre.&raquo;</p></div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en"><p>&ldquo;Navigation along the whole course of the rivers &hellip; from the point where each of them becomes navigable to its mouth, shall be entirely free.&rdquo;</p></div>
+      </details>
+      <p class="cite">The Final Act was written in French, the language of diplomacy.</p>
+      <p class="srclinks"><a class="de-link" href="https://www.ccr-zkr.org/files/histoireCCNR/01_acte-cloture-traite-de-vienne.pdf" target="_blank" rel="noopener">The original document (PDF)</a><a class="en-link" href="https://en.wikipedia.org/wiki/Central_Commission_for_Navigation_on_the_Rhine" target="_blank" rel="noopener">The Rhine Commission, in English</a></p>
+    </div>
+  </div>
+
+  <p>It did not happen. The 1814 peace had said the Rhine should be free <i>jusqu'&agrave; la mer</i> &mdash; &ldquo;to the sea&rdquo;. The Dutch read this as meaning <em>up to</em> the sea, which conveniently left them free to tax the last stretch. Prussia disagreed. <b>Two words held up the Rhine for sixteen years</b>, until the Mainz Convention of 31 March 1831 finally abolished the staple rights and the boatmen's guilds.</p>
+
+  <p>Meanwhile, slowly, things began to move.</p>
+
+  <table class="tl">
+    <thead><tr><th>Year</th><th>What happened</th></tr></thead>
+    <tbody>
+      <tr><td class="yr">1815</td><td>Frankfurt becomes a Free City again; Hesse-Homburg is the only mediatised state to get its land back</td></tr>
+      <tr><td class="yr">12 June 1816</td><td>The English paddle steamer <i>Defiance</i> reaches Cologne &mdash; the first steamship on the Rhine. It cannot get further upstream, and goes home.</td></tr>
+      <tr><td class="yr">1816&ndash;1820</td><td><b>The first German lead-chamber sulphuric acid works</b>, at Ringkuhl near Kassel. Seventy years after Roebuck.</td></tr>
+      <tr><td class="yr">1817</td><td>The Senckenberg natural history society is founded in Frankfurt, at Goethe's suggestion</td></tr>
+      <tr><td class="yr">1818</td><td>Prussia abolishes customs barriers between its own provinces</td></tr>
+      <tr><td class="yr">1819</td><td>Guild restrictions finally fall in Nassau &mdash; Wiesbaden, H&ouml;chst, Oberursel</td></tr>
+      <tr><td class="yr">1824</td><td>Regular steam navigation on the Rhine is under way; the <b>Physikalischer Verein</b> is founded in Frankfurt</td></tr>
+      <tr><td class="yr">1824/25</td><td><b>Justus Liebig opens his teaching laboratory at Giessen</b> (Hessen, 65 km north of Frankfurt) &mdash; and here, for the first time, Germany is ahead</td></tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:18px">That last pair is the hinge of the whole story. Eleven Frankfurt citizens founded the Physikalischer Verein in October 1824 with an aim they wrote into their statutes:</p>
+
+  <div class="source">
+    <div class="source-head">Source &middot; statutes of the Physikalischer Verein, Frankfurt, 24 October 1824</div>
+    <div class="source-body">
+      <div class="de"><p>&bdquo;&hellip; sich gegenseitig zu belehren, um Kenntnisse in der Physik und Chemie allgemeiner zu verbreiten.&ldquo;</p></div>
+      <details class="tr"><summary>Translate</summary>
+        <div class="en"><p>&ldquo;&hellip; to instruct one another, in order to spread knowledge of physics and chemistry more widely.&rdquo;</p></div>
+      </details>
+      <p class="cite">The society had to wait until 1833 before it could afford to pay a teacher of physics and chemistry.</p>
+      <p class="srclinks"><a class="de-link" href="https://de.wikipedia.org/wiki/Physikalischer_Verein" target="_blank" rel="noopener">The society, in German</a><a class="en-link" href="https://physikalischer-verein.de/" target="_blank" rel="noopener">It still exists &mdash; visit them</a></p>
+    </div>
+  </div>
+
+  <p>Germany was <b>seventy years behind in making chemicals</b> and was about to go decisively <b>ahead in teaching chemistry</b>. Hold that thought: it is the reason this course is about German industry at all.</p>
+</section>
+
+<!-- ============ 1825 ============ -->
+<section>
+  <p class="period">Part eight &middot; 27 September 1825</p>
+  <h2>A railway opens in County Durham</h2>
+
+  <p>On the morning of <b>27 September 1825</b>, in <b>County Durham</b>, in the north-east of England, a locomotive later named <b>Locomotion No. 1</b> hauled a train from Shildon through Darlington to Stockton, carrying somewhere between 450 and 600 people on a route of about 42 kilometres.</p>
+
+  <p>It was not built for them. The <b>Stockton and Darlington Railway was built for coal</b> &mdash; to get it from the collieries to the sea more cheaply than horses and carts could manage. For its first eight years the passenger service was actually <b>subcontracted to stagecoach operators using horses</b> on the rails; the company only ran its own steam passenger trains from 1833.</p>
+
+  <p>Nothing changed in Frankfurt that morning. Germany's first steam railway, the six-kilometre line from Nuremberg to F&uuml;rth in <b>Bayern</b>, was still ten years away &mdash; and from the day after <em>its</em> opening in December 1835, most of its trains were pulled by horses too, with the locomotive <i>Adler</i> taking only the one o'clock and two o'clock departures.</p>
+
+  <div class="pull">
+    <p><b>But here is the thing.</b> A railway does not care whether the river is deep enough this month. It does not need a towpath, or ten horses, or six weeks from Rotterdam. It does not stop at H&ouml;chst to pay the Mainzoll.</p>
+    <p>Every constraint described in this reading &mdash; shallow water, towing, tolls, guilds, tiny separate states &mdash; the railway was about to dissolve. And when it did, the chemical industry that could not exist in 1800 became not just possible but inevitable.</p>
+  </div>
+
+  <p>That is where Unit 2 begins: with iron, steel, and the railway explosion.</p>
+</section>
+
+<!-- ============ questions ============ -->
+<section>
+  <p class="period">Before the next reading</p>
+  <h2>Questions to think about</h2>
+  <ol class="qs">
+    <li>In 1800 alum was made by roasting shale and getting less than 2% of it back as product. Explain, using what you know about yield, why alum was expensive &mdash; and why that made dyed cloth expensive.</li>
+    <li>Bad Salzhausen built seven graduation towers, one of them 210 metres long, purely to evaporate water using wind and sun. What were they saving, and why was it worth that much timber and iron to save it?</li>
+    <li>The Leblanc process for making soda consumes sulphuric acid. Germany had no cheap sulphuric acid until about 1816. Use this to explain why the soda process arrived in Germany over thirty years after it was invented in France.</li>
+    <li>A cargo went upstream at 25&ndash;32 km a day and downstream at up to 100 km a day. Work out the round trip from Mainz to Cologne and back (about 200 km each way). What does that do to the cost of a tonne of salt?</li>
+    <li>The Continental System both <em>helped</em> and <em>harmed</em> German chemistry. Give one example of each, and say which you think mattered more in the long run.</li>
+    <li>&ldquo;There was no chemical industry in the Rhine&ndash;Main region in 1800.&rdquo; Is that statement true, false, or does it depend on what you mean by &ldquo;industry&rdquo;? Argue it either way.</li>
+  </ol>
+</section>
+
+
+<!-- ============ glossary ============ -->
+<section id="glossary">
+  <p class="period">Reference</p>
+  <h2>Glossary: the chemical words in this reading</h2>
+  <p>Learn these. Most of them come back in every unit of the course, and several are assessed.</p>
+  <table class="tl">
+    <thead><tr><th style="width:150px">Word</th><th>What it means</th><th style="width:33%">Where it appears here</th></tr></thead>
+    <tbody>
+      <tr><td class="yr">dilute</td><td>A solution with only a <em>little</em> dissolved substance in a lot of water.</td><td>Nauheim brine was about 3% salt &mdash; very dilute.</td></tr>
+      <tr><td class="yr">concentrated</td><td>A solution with a <em>lot</em> of dissolved substance in the water. The opposite of dilute.</td><td>Oleum was absorbed into concentrated sulphuric acid.</td></tr>
+      <tr><td class="yr">concentration</td><td>How much dissolved substance there is in a given amount of solution. Measured later in the course as <span class="eqn">mol dm<sup>&minus;3</sup></span>.</td><td>The whole point of a graduation tower is to raise the concentration.</td></tr>
+      <tr><td class="yr">solution</td><td>A substance dissolved evenly in a liquid.</td><td>Brine is a solution of salt in water.</td></tr>
+      <tr><td class="yr">brine</td><td>A solution of salt in water &mdash; here, water pumped up from underground.</td><td>Nauheim, Soden and Salzhausen all worked brine.</td></tr>
+      <tr><td class="yr">saturated</td><td>A solution holding as much dissolved substance as it possibly can at that temperature.</td><td>Brine had to be near saturation before boiling was worth the fuel.</td></tr>
+      <tr><td class="yr">evaporation</td><td>Turning a liquid into a gas below its boiling point. Uses energy &mdash; which is why doing it with wind and sun is free and doing it with firewood is not.</td><td>Graduation towers evaporate water using wind and sun.</td></tr>
+      <tr><td class="yr">graduation tower<br><span style="font-weight:400;color:#4a545e">(Gradierwerk)</span></td><td>A timber frame packed with blackthorn twigs. Brine is pumped to the top and trickles down over the twigs; wind and sun evaporate water, so what reaches the bottom is more concentrated.</td><td>Bad Salzhausen had seven, one 210 m long.</td></tr>
+      <tr><td class="yr">crystallisation</td><td>Forming solid crystals out of a solution, usually by cooling it or evaporating the water.</td><td>Alum was crystallised in wooden vats.</td></tr>
+      <tr><td class="yr">leaching</td><td>Washing a soluble substance out of a solid mixture with water.</td><td>Roasted alum shale was leached to get the alum out.</td></tr>
+      <tr><td class="yr">roasting<br><span style="font-weight:400;color:#4a545e">(calcining)</span></td><td>Heating a solid strongly in air, to drive off water or gases and change it chemically.</td><td>Alum shale, sulphide ores and salt cake were all roasted.</td></tr>
+      <tr><td class="yr">retort</td><td>A closed vessel used for heating a substance and collecting whatever distils off.</td><td>Iron vitriol was roasted in ceramic retorts to make oleum.</td></tr>
+      <tr><td class="yr">distillation</td><td>Boiling a liquid and condensing the vapour to separate or purify it.</td><td>The old vitriol route to sulphuric acid was a distillation.</td></tr>
+      <tr><td class="yr">mordant</td><td>A substance that fixes a dye to a fibre so it does not wash out. Without one, most dyes simply rinse away.</td><td>Alum was <em>the</em> mordant &mdash; hence over a hundred alum works.</td></tr>
+      <tr><td class="yr">alum</td><td>Potassium aluminium sulphate. Used as a mordant, in tanning, in paper making and in medicine.</td><td>Under 2% of the shale came out as alum.</td></tr>
+      <tr><td class="yr">vitriol</td><td>The old name for a sulphate salt. Green vitriol = iron(II) sulphate; blue vitriol = copper(II) sulphate.</td><td><em>Vitriol&ouml;l</em> &mdash; oil of vitriol &mdash; was sulphuric acid.</td></tr>
+      <tr><td class="yr">oleum<br><span style="font-weight:400;color:#4a545e">(fuming sulphuric acid)</span></td><td>Sulphur trioxide dissolved in sulphuric acid. Fumes in air. Stronger and more dangerous than ordinary sulphuric acid.</td><td>Nordhausen oleum, made by the old vitriol route.</td></tr>
+      <tr><td class="yr">lead chamber process</td><td>The British method of making sulphuric acid cheaply and in bulk: sulphur dioxide, air, water and nitrogen oxides react inside a large chamber lined with lead &mdash; lead being one of the few metals the acid does not eat through.</td><td>Britain 1746; here, only 1816&ndash;1820.</td></tr>
+      <tr><td class="yr">Leblanc process</td><td>The French method of making soda from common salt, in two steps: salt + sulphuric acid &rarr; salt cake; then salt cake roasted with limestone and coal &rarr; soda. <b>It consumes sulphuric acid</b> &mdash; which is why the two dates in the table are really one story.</td><td>Reached here only in 1828.</td></tr>
+      <tr><td class="yr">alkali</td><td>A soluble base &mdash; the chemical opposite of an acid. Potash and soda are both alkalis.</td><td>Needed for glass, soap, paper and dyeing.</td></tr>
+      <tr><td class="yr">potash</td><td>Potassium carbonate, got by burning wood and leaching the ash. The old alkali.</td><td>80&ndash;85% of a glassworks&rsquo; wood went on making it.</td></tr>
+      <tr><td class="yr">soda</td><td>Sodium carbonate. The alkali that replaced potash &mdash; cheaper, and not made from forests.</td><td>The Leblanc process made it from salt.</td></tr>
+      <tr><td class="yr">saltpetre</td><td>Potassium nitrate. The oxidising ingredient of gunpowder, which is why the state controlled it.</td><td>Scraped from stables and cellars by licensed <em>Salpetersieder</em>.</td></tr>
+      <tr><td class="yr">pigment</td><td>A coloured solid that gives paint its colour, as opposed to a dye, which dissolves and stains.</td><td>White lead was the main white pigment until c.1835.</td></tr>
+      <tr><td class="yr">tanning</td><td>Turning raw animal hide into leather using tannins from oak bark, plus lime and sometimes alum. Applied chemistry, done in workshops.</td><td><em>Lohm&uuml;hlen</em> ground the bark for the tanners.</td></tr>
+      <tr><td class="yr">yield</td><td>How much product you actually get, compared with how much you should get in theory. Usually given as a percentage.</td><td>Alum: under 2%. This decides whether a works makes money.</td></tr>
+      <tr><td class="yr">raw material<br><span style="font-weight:400;color:#4a545e">(feedstock)</span></td><td>What goes into a process. Its cost and how far it must travel often matter more than the chemistry.</td><td>Shale, salt, wood, bark, vinegar, manure, brine.</td></tr>
+      <tr><td class="yr">catalyst</td><td>A substance that speeds a reaction up without being used up itself, and without changing how much product you finally get.</td><td>D&ouml;bereiner found hydrogen igniting on platinum in 1823.</td></tr>
+      <tr><td class="yr">substitute</td><td>A home-made replacement for something you can no longer import.</td><td>Chicory for coffee; beet for cane sugar; woad for indigo.</td></tr>
+      <tr><td class="yr">arcanum<br><span style="font-weight:400;color:#4a545e">(and <em>Arkanist</em>)</span></td><td>The secret recipe for a porcelain paste and glaze &mdash; and the man who kept it. Chemical knowledge as private property.</td><td>H&ouml;chst could not make porcelain until an <em>Arkanist</em> arrived in 1750.</td></tr>
+    </tbody>
+  </table>
+  <div class="fact">
+    <h4>The one pair students most often confuse</h4>
+    <p><b>Dilute and concentrated</b> describe <em>how much water you added</em>. They are <b>not</b> the same as <b>weak and strong</b>, which describe <em>how much an acid splits up</em>. You can have a concentrated weak acid and a dilute strong one. You will meet this again in Unit 3, where it is the single most common mistake in the whole topic.</p>
+  </div>
+</section>
+
+<!-- ============ verification ============ -->
+<section>
+  <div class="check">
+    <h4>As historians, be on your guard!</h4>
+    <p>Sources are not in agreement, so these are our sources, and here is our best guess!</p>
+    <ol>
+      <li><b>The population of Oberursel around 1800.</b> Both German and English Wikipedia print &ldquo;1799: 7,999&rdquo;. That cannot be right &mdash; the same table gives 1,600 for 1618 and only 11,000 for 1959. It looks like a corrupted number, so this reading says &ldquo;a few thousand&rdquo; instead. If you can find a reliable figure, bring it.</li>
+      <li><b>The date of the first German sulphuric acid works.</b> A doctoral thesis says 1816 at Ringkuhl; an encyclopaedia of 1905 says 1820. This reading gives the range rather than choosing.</li>
+      <li><b>The forest-glass figure</b> that 80&ndash;85% of a glassworks' wood was burned to make potash rather than to melt glass. It comes from one source and is startlingly high. Treat it as &ldquo;according to&rdquo;, not as fact.</li>
+    </ol>
+    <p style="margin-top:10px">Note also that <b>two of the Goethe passages describe events long before they were written down</b> &mdash; <i>Dichtung und Wahrheit</i> (1811) remembers the 1750s, and <i>Belagerung von Mainz</i> (1822) recalls 1793. The 1797 Frankfurt passage is the only Goethe here written on the spot. When you use a source, always ask how far it stands from the thing it describes.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="colophon">
+  <p><b>What comes next.</b> Reading 1.2 will look at the four chemical ideas this course keeps returning to &mdash; how much, how hot, how fast, how far &mdash; and where they came from.</p>
+  <p><b>Sources.</b> The German passages are linked individually above. The factual material draws chiefly on: the Central Commission for Navigation on the Rhine; Hiram K&uuml;mper, &bdquo;Streit um den Rhein&ldquo; (Universit&auml;t Mannheim); Hans-Henning Walter on German alum production (Deutsches Bergbau-Museum); regionalgeschichte.net on Rhine rafting, steam navigation and Napoleonic Mainz; the city archives and <i>Stadtlexikon</i> pages of Frankfurt, Wiesbaden and Oberursel; and Historic England on the Stockton and Darlington Railway.</p>
+  <p style="margin-top:14px;opacity:.75">Frankfurt International School &middot; Science Department &middot; Refined with AI &middot; Grade 10 &middot; Reading 1.1</p>
+</footer>
+
+</div>
+</body>
+</html>
