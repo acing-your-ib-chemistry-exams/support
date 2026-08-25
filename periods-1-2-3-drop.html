@@ -367,6 +367,51 @@
   }
   .card button:hover{filter:brightness(1.08);}
   .final-score{font-size:32px;color:var(--accent);font-weight:800;margin:6px 0;font-family:'Architects Daughter',cursive;}
+
+  /* --- touch controls (iPad / touchscreen support) --- */
+  .touch-controls{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    align-items:stretch;
+    margin:18px auto 6px;
+    max-width:520px;
+    position:sticky;
+    bottom:10px;
+    z-index:15;
+  }
+  .tbtn{
+    flex:1;
+    font-family:'Architects Daughter',cursive;
+    font-size:22px;
+    font-weight:700;
+    color:var(--ink);
+    background:rgba(255,255,255,.96);
+    -webkit-backdrop-filter:blur(6px);
+    backdrop-filter:blur(6px);
+    border:2.4px solid var(--ink);
+    border-radius: 12px 18px 10px 20px / 16px 10px 20px 12px;
+    box-shadow: 3px 3px 0 rgba(30,30,30,.85);
+    padding:12px 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:1px;
+    line-height:1;
+    cursor:pointer;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  .tbtn span{ font-size:10px; letter-spacing:1.5px; color:var(--ink-soft); font-family:'Kalam','Comic Sans MS',cursive; margin-top:3px; }
+  .tbtn:active, .tbtn.pressed{
+    background:var(--accent-soft);
+    box-shadow: 1px 1px 0 rgba(30,30,30,.85);
+    transform:translate(2px,2px);
+  }
+  .tbtn-drop{ color:var(--accent); border-color:var(--accent); flex:1.3; }
 </style>
 </head>
 <body>
@@ -422,6 +467,12 @@
   <div class="instructions">
     <kbd>&larr;</kbd> <kbd>&rarr;</kbd> move the block &nbsp;•&nbsp; <kbd>&darr;</kbd> drop instantly &nbsp;•&nbsp;
     Complete Period 1 (2 elements), then Period 2 (8 elements), then Period 3 (8 elements) — 18 in total. Faster + correct = more points!
+  </div>
+
+  <div class="touch-controls" id="touchControls">
+    <button type="button" class="tbtn" id="btnLeft" aria-label="Move block left">&larr;<span>LEFT</span></button>
+    <button type="button" class="tbtn tbtn-drop" id="btnDrop" aria-label="Drop block into place">&darr;<span>DROP</span></button>
+    <button type="button" class="tbtn" id="btnRight" aria-label="Move block right">&rarr;<span>RIGHT</span></button>
   </div>
 </div>
 
@@ -1106,6 +1157,55 @@
     else if(e.key==='ArrowRight'){ moveCol(1); e.preventDefault(); }
     else if(e.key==='ArrowDown'){ hardDrop(); e.preventDefault(); }
   });
+
+  // --- touch controls (iPad / touchscreen support) ---
+  // Arrow-key controls above rely on a hardware keyboard, which iPads and
+  // other touchscreens don't have. These on-screen buttons call the exact
+  // same moveCol()/hardDrop() functions, using Pointer Events so touch,
+  // mouse and trackpad all work identically. Press-and-hold repeats the
+  // move (like OS key-repeat); a quick tap moves once.
+  (function(){
+    var btnLeft = document.getElementById('btnLeft');
+    var btnRight = document.getElementById('btnRight');
+    var btnDrop = document.getElementById('btnDrop');
+    if(!btnLeft || !btnRight || !btnDrop) return;
+
+    var repeatDelay = null;
+    var repeatTimer = null;
+
+    function pressStart(action, btn){
+      return function(ev){
+        ev.preventDefault();
+        btn.classList.add('pressed');
+        action();
+        clearTimeout(repeatDelay);
+        clearInterval(repeatTimer);
+        repeatDelay = setTimeout(function(){
+          repeatTimer = setInterval(action, 130);
+        }, 350);
+      };
+    }
+    function pressEnd(btn){
+      return function(ev){
+        if(ev) ev.preventDefault();
+        btn.classList.remove('pressed');
+        clearTimeout(repeatDelay);
+        clearInterval(repeatTimer);
+      };
+    }
+    function wire(btn, action){
+      btn.addEventListener('pointerdown', pressStart(action, btn));
+      btn.addEventListener('pointerup', pressEnd(btn));
+      btn.addEventListener('pointerleave', pressEnd(btn));
+      btn.addEventListener('pointercancel', pressEnd(btn));
+      btn.addEventListener('contextmenu', function(ev){ ev.preventDefault(); });
+    }
+
+    wire(btnLeft, function(){ moveCol(-1); });
+    wire(btnRight, function(){ moveCol(1); });
+    wire(btnDrop, function(){ hardDrop(); });
+  })();
+
 
   window.addEventListener('resize', function(){
     if(!current) return;
