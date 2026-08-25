@@ -1,0 +1,1210 @@
+<meta charset="UTF-8">
+<title>The Filtration Bench</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #f3ecd9;
+    --surface: #fffbf1;
+    --surface-2: #eee2c4;
+    --ink: #2b241a;
+    --ink-soft: #6b6151;
+    --line: #d9c9a3;
+    --accent: #8a3324;
+    --accent-ink: #fdf3ea;
+    --sage: #4f6b58;
+    --sage-soft: #dbe6dd;
+    --brass: #b08d4f;
+    --success: #3f7d52;
+    --success-soft: #dcead9;
+    --error: #a5402c;
+    --error-soft: #f4ded6;
+    --shadow: 0 1px 0 rgba(43,36,26,0.06), 0 8px 24px -12px rgba(43,36,26,0.25);
+    --radius: 10px;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #161c17;
+      --surface: #1f261f;
+      --surface-2: #283127;
+      --ink: #ece4d0;
+      --ink-soft: #a7a08d;
+      --line: #3a4236;
+      --accent: #e0805f;
+      --accent-ink: #241108;
+      --sage: #8fb39d;
+      --sage-soft: #253429;
+      --brass: #cda86a;
+      --success: #7fbf8f;
+      --success-soft: #1e3324;
+      --error: #e2806a;
+      --error-soft: #3a231d;
+      --shadow: 0 1px 0 rgba(0,0,0,0.3), 0 8px 28px -12px rgba(0,0,0,0.55);
+    }
+  }
+
+  :root[data-theme="dark"]{
+    --bg: #161c17;
+    --surface: #1f261f;
+    --surface-2: #283127;
+    --ink: #ece4d0;
+    --ink-soft: #a7a08d;
+    --line: #3a4236;
+    --accent: #e0805f;
+    --accent-ink: #241108;
+    --sage: #8fb39d;
+    --sage-soft: #253429;
+    --brass: #cda86a;
+    --success: #7fbf8f;
+    --success-soft: #1e3324;
+    --error: #e2806a;
+    --error-soft: #3a231d;
+    --shadow: 0 1px 0 rgba(0,0,0,0.3), 0 8px 28px -12px rgba(0,0,0,0.55);
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+  }
+
+  header.masthead{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+    border-bottom: 2px solid var(--line);
+  }
+  .eyebrow{
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 600;
+  }
+  h1{
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(28px, 5vw, 40px);
+    margin: 0;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  .sub{
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 62ch;
+  }
+
+  nav.rounds{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .round-btn{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    padding: 9px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .round-btn:hover{ border-color: var(--brass); color: var(--ink); }
+  .round-btn.active{
+    background: var(--ink);
+    color: var(--surface);
+    border-color: var(--ink);
+  }
+  :root[data-theme="dark"] .round-btn.active,
+  @media (prefers-color-scheme: dark){ }
+  .round-btn .dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--line);
+    flex: none;
+  }
+  .round-btn.done .dot{ background: var(--success); }
+
+  section.round{ display: none; }
+  section.round.active{ display: block; }
+
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    margin-bottom: 18px;
+  }
+
+  .card h2{
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .card p.instructions{
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin: 0 0 16px;
+    max-width: 66ch;
+  }
+
+  .label-tag{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brass);
+    font-weight: 600;
+  }
+
+  .narrative{
+    background: var(--sage-soft);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--sage);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+  }
+  .narrative p{
+    margin: 0 0 10px;
+    font-size: 14.5px;
+    color: var(--ink);
+    max-width: 68ch;
+  }
+  .narrative p:first-child{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--sage);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .narrative p:last-child{ margin-bottom: 0; }
+
+  .why-box{
+    margin-top: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 16px;
+    background: var(--surface-2);
+  }
+  .why-box summary{
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .why-box summary::marker{ color: var(--brass); }
+  .why-box p{
+    margin: 10px 0 0;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    max-width: 64ch;
+  }
+
+  /* ---------- Round 1: Order the Prep ---------- */
+  .slots{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .slot{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    border: 1.5px dashed var(--line);
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: var(--bg);
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .slot.filled{
+    border-style: solid;
+    background: var(--surface);
+  }
+  .slot.correct{ border-color: var(--success); background: var(--success-soft); }
+  .slot.incorrect{ border-color: var(--error); background: var(--error-soft); }
+  .slot-num{
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink-soft);
+    width: 20px;
+    flex: none;
+    text-align: center;
+  }
+  .slot .placed-tile{ flex: 1; }
+  .slot .placeholder{ color: var(--ink-soft); font-size: 13.5px; font-style: italic; }
+
+  .pool{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .tile{
+    font-size: 14px;
+    padding: 9px 13px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: var(--surface-2);
+    cursor: pointer;
+    max-width: 100%;
+    transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+    user-select: none;
+  }
+  .tile:hover{ border-color: var(--brass); transform: translateY(-1px); }
+  .tile.selected{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .tile.in-slot{
+    cursor: pointer;
+    background: var(--surface);
+  }
+
+  /* ---------- Round 2: Label the apparatus ---------- */
+  .diagram-area{
+    display: grid;
+    grid-template-columns: minmax(0,1.15fr) minmax(0,0.85fr);
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 620px){ .diagram-area{ grid-template-columns: 1fr; } }
+  .diagram-area svg{ width: 100%; height: auto; }
+  .blank{ cursor: pointer; }
+  .blank rect, .blank circle{
+    transition: fill .15s ease, stroke .15s ease;
+  }
+  .blank-text{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    fill: var(--ink-soft);
+  }
+  .chip-pool{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .chip{
+    font-size: 13.5px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: var(--surface-2);
+    cursor: pointer;
+    transition: border-color .12s ease, transform .12s ease;
+  }
+  .chip:hover{ border-color: var(--brass); transform: translateY(-1px); }
+  .chip.selected{ border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .chip.placed{ opacity: 0.35; cursor: not-allowed; }
+
+  /* ---------- Round 3: Vocabulary match ---------- */
+  .match-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .match-card{
+    aspect-ratio: 1.3 / 1;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color .12s ease, background .15s ease, transform .1s ease;
+  }
+  .match-card:hover{ transform: translateY(-1px); }
+  .match-card.term{ font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 15px; }
+  .match-card.selected{ border-color: var(--accent); background: var(--surface); }
+  .match-card.solved{
+    border-color: var(--success);
+    background: var(--success-soft);
+    cursor: default;
+    color: var(--ink);
+  }
+  .match-card.wrong{ border-color: var(--error); background: var(--error-soft); }
+
+  /* ---------- Round 4: word equations ---------- */
+  .eqn-block{ margin-bottom: 26px; }
+  .eqn-block:last-child{ margin-bottom: 0; }
+  .eqn-block h3{
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 16.5px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  .eqn-block .eqn-note{
+    color: var(--ink-soft);
+    font-size: 13.5px;
+    margin: 0 0 14px;
+    max-width: 66ch;
+  }
+  .eqn-strip{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .eqn-side{
+    flex: 1 1 220px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    border: 1.5px dashed var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    min-height: 44px;
+  }
+  .eqn-side.side-hover{ border-color: var(--brass); }
+  .eqn-slot{
+    min-width: 110px;
+    min-height: 40px;
+    flex: 1 1 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6px 10px;
+    border: 1.5px dashed var(--line);
+    border-radius: 7px;
+    background: var(--surface);
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .eqn-slot.filled{ border-style: solid; background: var(--surface-2); }
+  .eqn-slot.correct{ border-color: var(--success); background: var(--success-soft); }
+  .eqn-slot.incorrect{ border-color: var(--error); background: var(--error-soft); }
+  .eqn-slot .placeholder{ color: var(--ink-soft); font-style: italic; font-size: 12px; }
+  .eqn-sym{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--brass);
+    flex: 0 0 auto;
+    padding: 0 2px;
+  }
+  .eqn-pool{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 6px;
+  }
+
+  /* ---------- shared bits ---------- */
+  .btn-row{ display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+  button.action{
+    font-family: "Work Sans", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: var(--accent-ink);
+    cursor: pointer;
+    transition: opacity .15s ease;
+  }
+  button.action:hover{ opacity: 0.88; }
+  button.action:focus-visible, .tile:focus-visible, .chip:focus-visible, .match-card:focus-visible, .round-btn:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  button.ghost{
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+  }
+  button.ghost:hover{ border-color: var(--brass); color: var(--ink); opacity: 1; }
+
+  .feedback{
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    min-height: 20px;
+  }
+  .feedback.good{ color: var(--success); }
+  .feedback.bad{ color: var(--error); }
+
+  .score-badge{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    background: var(--sage-soft);
+    color: var(--sage);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-weight: 600;
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .glossary-toggle{
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10;
+  }
+  .glossary-panel{
+    position: fixed;
+    right: 20px;
+    bottom: 76px;
+    width: min(340px, calc(100vw - 40px));
+    max-height: 60vh;
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px;
+    z-index: 10;
+    display: none;
+  }
+  .glossary-panel.open{ display: block; }
+  .glossary-panel h3{
+    font-family: "Fraunces", Georgia, serif;
+    margin: 0 0 10px;
+    font-size: 17px;
+  }
+  .glossary-panel dt{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  .glossary-panel dd{ margin: 2px 0 0; font-size: 13.5px; color: var(--ink-soft); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <span class="eyebrow">Prep Bench &middot; Milk of Magnesia, Batch 01</span>
+    <h1>The Filtration Bench</h1>
+    <p class="sub">Your class just prepared and filtered a precipitate by hand. These rounds keep the vocabulary, the apparatus, and the chemistry straight in your head before next week's class, when you'll examine your dried product.</p>
+  </header>
+
+  <nav class="rounds">
+    <button class="round-btn active" data-round="1"><span class="dot"></span>1 &middot; Order the Prep</button>
+    <button class="round-btn" data-round="2"><span class="dot"></span>2 &middot; Label the Apparatus</button>
+    <button class="round-btn" data-round="3"><span class="dot"></span>3 &middot; Match the Terms</button>
+    <button class="round-btn" data-round="4"><span class="dot"></span>4 &middot; The Two Reactions</button>
+  </nav>
+
+  <!-- ROUND 1 -->
+  <section class="round active" id="round1">
+    <div class="card">
+      <span class="label-tag">Sequence</span>
+      <h2>Put the preparation back in order</h2>
+      <div class="narrative">
+        <p>Read this first — it tells you what actually happened at the bench, and the order below follows from it, not from guesswork.</p>
+        <p><strong>Two students, A and B, share a bench.</strong> Before anything is opened, both put on eye protection — sodium hydroxide and sodium carbonate are corrosive, and sodium hydroxide in the eyes causes blindness. Once that's on, Student A takes a 40 mL beaker and measures out 20 mL of magnesium sulfate solution. While A is doing that, Student B takes a <em>second</em> beaker and measures out 20 mL of sodium carbonate solution — carefully, because it's corrosive.</p>
+        <p>With both solutions ready, Student B moves on to the filter: first, B collects a circle of filter paper and weighs it on the balance <em>before</em> touching it further, writing the mass on the paper in pencil along with their name and the time. Only after the mass is recorded does B fold that same circle — in half, then half again, then half again — into a cone. B then fetches a 250 mL conical flask, stands a plastic funnel in it, and sets the folded paper cone inside the funnel.</p>
+        <p>Now the two solutions are combined: the mixture is poured, with care, through the filter funnel. As it drips through, the clear liquid — the filtrate — collects in the flask, while the solid left on the paper — the residue — is what the two students actually came for. A little distilled water is poured through afterwards to rinse the byproduct (sodium sulfate) off the residue, so it isn't carried through to the final product. Finally, once dripping has stopped, the paper is lifted out and spread flat to dry completely before next week.</p>
+      </div>
+      <p class="instructions">Click a step below to place it in the next open slot. Click a placed step to send it back. When all ten slots are filled, check your sequence.</p>
+      <div class="slots" id="r1-slots"></div>
+      <div class="pool" id="r1-pool"></div>
+      <div class="btn-row">
+        <button class="action" id="r1-check">Check order</button>
+        <button class="ghost" id="r1-reset">Reset</button>
+        <span class="score-badge" id="r1-score">0 / 10 correct</span>
+      </div>
+      <div class="feedback" id="r1-feedback"></div>
+      <details class="why-box">
+        <summary>Why weigh the dry filter paper before you've even filtered anything?</summary>
+        <p>Next week, once your paper and its residue have dried completely, you'll weigh the paper again — now with the product sitting on it. Subtract the mass you wrote down today (the paper alone) from next week's mass (paper + dried product), and what's left is the mass of pure product you actually made. Skip today's weighing, and next week's number means nothing on its own.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ROUND 2 -->
+  <section class="round" id="round2">
+    <div class="card">
+      <span class="label-tag">Apparatus</span>
+      <h2>Label the filtration set-up</h2>
+      <p class="instructions">Click a label on the right, then click the matching lettered circle on the diagram. Click a filled circle to clear it. B sits on the funnel's own wall (visible, empty space); A sits inside the paper cone nested just inside it — they're deliberately close together because that's the confusing part.</p>
+      <div class="diagram-area">
+        <svg viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg" aria-label="Filtration apparatus diagram">
+          <!-- conical flask -->
+          <path d="M185 30 L185 110 L120 260 Q112 282 135 282 L285 282 Q308 282 300 260 L235 110 L235 30 Z"
+                fill="none" stroke="var(--ink-soft)" stroke-width="2.5"/>
+          <!-- liquid in flask (filtrate) -->
+          <path d="M128 235 Q210 224 292 235 L296 258 Q300 279 282 280 L138 280 Q120 279 124 258 Z"
+                fill="var(--sage)" opacity="0.32" stroke="none"/>
+
+          <!-- funnel bowl (outline only — it's clear plastic) -->
+          <path d="M140 20 L280 20 L220 90 L200 90 Z" fill="none" stroke="var(--brass)" stroke-width="2.5"/>
+          <!-- funnel stem, inside the flask neck -->
+          <rect x="200" y="90" width="20" height="24" fill="none" stroke="var(--brass)" stroke-width="2.5"/>
+
+          <!-- filter paper cone, nested inside the funnel bowl -->
+          <path d="M158 30 L262 30 L210 78 Z" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <!-- fold texture on the paper -->
+          <line x1="184" y1="43" x2="210" y2="78" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
+          <line x1="236" y1="43" x2="210" y2="78" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
+
+          <!-- residue at the tip of the paper -->
+          <ellipse cx="210" cy="72" rx="15" ry="6" fill="var(--accent)" opacity="0.6"/>
+
+          <!-- blanks -->
+          <g class="blank" data-target="funnel" tabindex="0" role="button" aria-label="blank: filter funnel">
+            <circle cx="168" cy="52" r="11" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="168" y="56" text-anchor="middle" class="blank-text" font-weight="600">B</text>
+          </g>
+          <g class="blank" data-target="filter-paper" tabindex="0" role="button" aria-label="blank: filter paper">
+            <circle cx="210" cy="44" r="11" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="210" y="48" text-anchor="middle" class="blank-text" font-weight="600">A</text>
+          </g>
+          <g class="blank" data-target="residue" tabindex="0" role="button" aria-label="blank: residue">
+            <circle cx="210" cy="86" r="11" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="210" y="90" text-anchor="middle" class="blank-text" font-weight="600">D</text>
+          </g>
+          <g class="blank" data-target="flask" tabindex="0" role="button" aria-label="blank: conical flask">
+            <circle cx="274" cy="200" r="11" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="274" y="204" text-anchor="middle" class="blank-text" font-weight="600">C</text>
+          </g>
+          <g class="blank" data-target="filtrate" tabindex="0" role="button" aria-label="blank: filtrate">
+            <circle cx="210" cy="255" r="11" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="210" y="259" text-anchor="middle" class="blank-text" font-weight="600">E</text>
+          </g>
+        </svg>
+        <div class="chip-pool" id="r2-pool"></div>
+      </div>
+      <div class="btn-row">
+        <button class="action" id="r2-check">Check labels</button>
+        <button class="ghost" id="r2-reset">Reset</button>
+        <span class="score-badge" id="r2-score">0 / 5 correct</span>
+      </div>
+      <div class="feedback" id="r2-feedback"></div>
+    </div>
+  </section>
+
+  <!-- ROUND 3 -->
+  <section class="round" id="round3">
+    <div class="card">
+      <span class="label-tag">Vocabulary</span>
+      <h2>Match each term to its meaning</h2>
+      <p class="instructions">Click a term, then click the definition you think matches it. Matched pairs turn green and lock in place.</p>
+      <div class="match-grid" id="r3-grid"></div>
+      <div class="btn-row">
+        <button class="ghost" id="r3-reset">Reset</button>
+        <span class="score-badge" id="r3-score">0 / 8 matched</span>
+      </div>
+      <div class="feedback" id="r3-feedback"></div>
+    </div>
+  </section>
+
+  <!-- ROUND 4 -->
+  <section class="round" id="round4">
+    <div class="card">
+      <span class="label-tag">Word Equations</span>
+      <h2>The two reactions behind the tablet</h2>
+      <p class="instructions">Click a word or formula below to select it, then click any empty slot on the side of the equation it belongs on. It doesn't matter which slot within a side, or which order you fill them — only whether the word ends up on the correct side of the arrow.</p>
+
+      <div class="eqn-block">
+        <h3>1. Making the precipitate — at the bench</h3>
+        <p class="eqn-note">This is the reaction in the two beakers you mixed and filtered.</p>
+        <div class="eqn-strip">
+          <div class="eqn-side" data-eqn="a" data-side="left"></div>
+          <div class="eqn-sym">→</div>
+          <div class="eqn-side" data-eqn="a" data-side="right"></div>
+        </div>
+      </div>
+
+      <div class="eqn-block">
+        <h3>2. Making it fizz — in the stomach (or your beaker of acid)</h3>
+        <p class="eqn-note">This is the reaction that releases the gas — the "effervescent" part of the tablet.</p>
+        <div class="eqn-strip">
+          <div class="eqn-side" data-eqn="b" data-side="left"></div>
+          <div class="eqn-sym">→</div>
+          <div class="eqn-side" data-eqn="b" data-side="right"></div>
+        </div>
+      </div>
+
+      <div class="eqn-pool" id="r4-pool"></div>
+
+      <div class="btn-row">
+        <button class="action" id="r4-check">Check both equations</button>
+        <button class="ghost" id="r4-reset">Reset</button>
+        <span class="score-badge" id="r4-score">0 / 9 correct</span>
+      </div>
+      <div class="feedback" id="r4-feedback"></div>
+    </div>
+  </section>
+</div>
+
+<button class="round-btn glossary-toggle" id="glossary-toggle"><span class="dot"></span>Glossary</button>
+<div class="glossary-panel" id="glossary-panel">
+  <h3>Quick glossary</h3>
+  <dl id="glossary-list"></dl>
+</div>
+
+<script>
+(function(){
+
+  var GLOSSARY = [
+    ["Precipitate", "A solid that forms and separates out when two solutions react together."],
+    ["Filtrate", "The liquid that passes through the filter paper during filtration."],
+    ["Residue", "The solid left behind on the filter paper after filtration."],
+    ["Filter paper", "Porous paper used to separate a solid from a liquid it's mixed with."],
+    ["Corrosive", "Able to burn or destroy skin, eyes, or other materials on contact."],
+    ["Byproduct", "A substance made alongside the main product, which isn't the one you wanted."],
+    ["Solution", "A mixture in which a solute is fully and evenly dissolved in a solvent."],
+    ["Element", "A substance that cannot be split into anything simpler by chemical means."],
+    ["Compound", "Two or more different elements chemically combined in a fixed ratio."],
+    ["Word equation", "A reaction written as reactants (in words) turning into products, joined by an arrow."],
+    ["Reactant", "A starting substance that gets used up in a reaction."],
+    ["Product", "A new substance made by a reaction."],
+    ["Effervescence", "The fizzing given off as a gas escapes rapidly from a liquid."]
+  ];
+
+  function renderGlossary(){
+    var dl = document.getElementById('glossary-list');
+    GLOSSARY.forEach(function(pair){
+      var dt = document.createElement('dt'); dt.textContent = pair[0];
+      var dd = document.createElement('dd'); dd.textContent = pair[1];
+      dl.appendChild(dt); dl.appendChild(dd);
+    });
+  }
+  renderGlossary();
+
+  var gToggle = document.getElementById('glossary-toggle');
+  var gPanel = document.getElementById('glossary-panel');
+  gToggle.addEventListener('click', function(){
+    gPanel.classList.toggle('open');
+  });
+
+  // ---------------- Round navigation ----------------
+  var roundBtns = document.querySelectorAll('.round-btn:not(.glossary-toggle)');
+  roundBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      roundBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.round').forEach(function(s){ s.classList.remove('active'); });
+      document.getElementById('round' + btn.dataset.round).classList.add('active');
+    });
+  });
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  // ==================================================
+  // ROUND 1 — Order the Prep
+  // ==================================================
+  var STEPS = [
+    "Put on eye protection before handling any solutions.",
+    "Measure 20 mL of magnesium sulfate solution into a beaker.",
+    "Measure 20 mL of sodium carbonate solution (corrosive) into a second beaker.",
+    "Weigh a circle of filter paper and record its mass.",
+    "Fold the filter paper in half, then half again, into a cone.",
+    "Set the funnel and filter-paper cone into a conical flask.",
+    "Pour the mixture carefully through the filter funnel.",
+    "Let the filtrate drip through, leaving the residue on the paper.",
+    "Rinse the residue with distilled water to wash out the byproduct.",
+    "Remove the filter paper and spread it out to dry for next week."
+  ];
+
+  var r1Slots = document.getElementById('r1-slots');
+  var r1Pool = document.getElementById('r1-pool');
+  var r1Order = []; // slot index -> step index, or null
+  var r1PoolOrder = [];
+
+  function r1Init(){
+    r1Order = new Array(STEPS.length).fill(null);
+    r1PoolOrder = shuffle(STEPS.map(function(_, i){ return i; }));
+    r1Slots.innerHTML = '';
+    for (var i = 0; i < STEPS.length; i++){
+      var slot = document.createElement('div');
+      slot.className = 'slot';
+      slot.dataset.index = i;
+      slot.innerHTML = '<span class="slot-num">' + (i + 1) + '</span><span class="placeholder">— empty —</span>';
+      slot.addEventListener('click', function(){
+        var idx = parseInt(this.dataset.index, 10);
+        if (r1Order[idx] !== null){
+          r1PoolOrder.push(r1Order[idx]);
+          r1Order[idx] = null;
+          r1Render();
+        }
+      });
+      r1Slots.appendChild(slot);
+    }
+    document.getElementById('r1-feedback').textContent = '';
+    document.getElementById('r1-feedback').className = 'feedback';
+    document.getElementById('r1-score').textContent = '0 / ' + STEPS.length + ' correct';
+    r1Render();
+  }
+
+  function r1Render(){
+    // pool
+    r1Pool.innerHTML = '';
+    r1PoolOrder.forEach(function(stepIdx){
+      var tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.tabIndex = 0;
+      tile.textContent = STEPS[stepIdx];
+      tile.addEventListener('click', function(){
+        var nextEmpty = r1Order.indexOf(null);
+        if (nextEmpty === -1) return;
+        r1Order[nextEmpty] = stepIdx;
+        r1PoolOrder = r1PoolOrder.filter(function(s){ return s !== stepIdx; });
+        r1Render();
+      });
+      r1Pool.appendChild(tile);
+    });
+    // slots
+    var slotEls = r1Slots.querySelectorAll('.slot');
+    slotEls.forEach(function(slotEl, i){
+      slotEl.classList.remove('correct', 'incorrect');
+      var stepIdx = r1Order[i];
+      if (stepIdx === null){
+        slotEl.classList.remove('filled');
+        slotEl.innerHTML = '<span class="slot-num">' + (i + 1) + '</span><span class="placeholder">— empty —</span>';
+      } else {
+        slotEl.classList.add('filled');
+        slotEl.innerHTML = '<span class="slot-num">' + (i + 1) + '</span><span class="placed-tile tile in-slot">' + STEPS[stepIdx] + '</span>';
+      }
+    });
+  }
+
+  document.getElementById('r1-check').addEventListener('click', function(){
+    var correct = 0;
+    var slotEls = r1Slots.querySelectorAll('.slot');
+    var allFilled = r1Order.every(function(v){ return v !== null; });
+    slotEls.forEach(function(slotEl, i){
+      slotEl.classList.remove('correct', 'incorrect');
+      if (r1Order[i] === null) return;
+      if (r1Order[i] === i){
+        slotEl.classList.add('correct');
+        correct++;
+      } else {
+        slotEl.classList.add('incorrect');
+      }
+    });
+    document.getElementById('r1-score').textContent = correct + ' / ' + STEPS.length + ' correct';
+    var fb = document.getElementById('r1-feedback');
+    if (!allFilled){
+      fb.textContent = 'Fill every slot, then check again.';
+      fb.className = 'feedback';
+    } else if (correct === STEPS.length){
+      fb.textContent = 'Perfect sequence — that\'s exactly how the prep ran.';
+      fb.className = 'feedback good';
+      markRoundDone(1);
+    } else {
+      fb.textContent = 'Some steps are out of place — the highlighted ones are correct so far.';
+      fb.className = 'feedback bad';
+    }
+  });
+
+  document.getElementById('r1-reset').addEventListener('click', r1Init);
+  r1Init();
+
+  // ==================================================
+  // ROUND 2 — Label the apparatus
+  // ==================================================
+  var LABELS = [
+    { id: 'filter-paper', text: 'Filter paper (cone)' },
+    { id: 'funnel', text: 'Filter funnel' },
+    { id: 'flask', text: 'Conical flask' },
+    { id: 'residue', text: 'Residue (solid left behind)' },
+    { id: 'filtrate', text: 'Filtrate (liquid that passed through)' }
+  ];
+  var r2Placements = {}; // target id -> label id
+  var r2Selected = null;
+  var r2Pool = document.getElementById('r2-pool');
+
+  function r2Init(){
+    r2Placements = {};
+    r2Selected = null;
+    document.getElementById('r2-feedback').textContent = '';
+    document.getElementById('r2-feedback').className = 'feedback';
+    document.getElementById('r2-score').textContent = '0 / ' + LABELS.length + ' correct';
+    document.querySelectorAll('.blank circle').forEach(function(c){
+      c.setAttribute('fill', 'var(--surface)');
+      c.setAttribute('stroke', 'var(--line)');
+    });
+    r2Render();
+  }
+
+  function r2Render(){
+    r2Pool.innerHTML = '';
+    shuffle(LABELS).forEach(function(label){
+      var placedTarget = Object.keys(r2Placements).find(function(k){ return r2Placements[k] === label.id; });
+      var chip = document.createElement('div');
+      chip.className = 'chip' + (placedTarget ? ' placed' : '') + (r2Selected === label.id ? ' selected' : '');
+      chip.textContent = label.text;
+      if (!placedTarget){
+        chip.addEventListener('click', function(){
+          r2Selected = (r2Selected === label.id) ? null : label.id;
+          r2Render();
+        });
+      }
+      r2Pool.appendChild(chip);
+    });
+  }
+
+  document.querySelectorAll('.blank').forEach(function(blank){
+    function handlePlace(){
+      var target = blank.dataset.target;
+      if (r2Placements[target]){
+        delete r2Placements[target];
+        r2Render();
+        r2PaintAnswers();
+        return;
+      }
+      if (!r2Selected) return;
+      // remove selected label from any other target first
+      Object.keys(r2Placements).forEach(function(k){
+        if (r2Placements[k] === r2Selected) delete r2Placements[k];
+      });
+      r2Placements[target] = r2Selected;
+      r2Selected = null;
+      r2Render();
+      r2PaintAnswers();
+    }
+    blank.addEventListener('click', handlePlace);
+    blank.addEventListener('keypress', function(e){ if (e.key === 'Enter') handlePlace(); });
+  });
+
+  function r2PaintAnswers(){
+    document.querySelectorAll('.blank').forEach(function(blank){
+      var target = blank.dataset.target;
+      var circle = blank.querySelector('circle');
+      if (r2Placements[target]){
+        circle.setAttribute('fill', 'var(--surface-2)');
+        circle.setAttribute('stroke', 'var(--brass)');
+      } else {
+        circle.setAttribute('fill', 'var(--surface)');
+        circle.setAttribute('stroke', 'var(--line)');
+      }
+    });
+  }
+
+  document.getElementById('r2-check').addEventListener('click', function(){
+    var correct = 0;
+    document.querySelectorAll('.blank').forEach(function(blank){
+      var target = blank.dataset.target;
+      var circle = blank.querySelector('circle');
+      if (r2Placements[target] === target){
+        correct++;
+        circle.setAttribute('fill', 'var(--success-soft)');
+        circle.setAttribute('stroke', 'var(--success)');
+      } else if (r2Placements[target]){
+        circle.setAttribute('fill', 'var(--error-soft)');
+        circle.setAttribute('stroke', 'var(--error)');
+      }
+    });
+    document.getElementById('r2-score').textContent = correct + ' / ' + LABELS.length + ' correct';
+    var fb = document.getElementById('r2-feedback');
+    var allFilled = Object.keys(r2Placements).length === LABELS.length;
+    if (!allFilled){
+      fb.textContent = 'Place a label on every lettered blank, then check again.';
+      fb.className = 'feedback';
+    } else if (correct === LABELS.length){
+      fb.textContent = 'All five labelled correctly — you know this apparatus.';
+      fb.className = 'feedback good';
+      markRoundDone(2);
+    } else {
+      fb.textContent = 'A few labels are swapped — green is correct, rose needs another look.';
+      fb.className = 'feedback bad';
+    }
+  });
+
+  document.getElementById('r2-reset').addEventListener('click', r2Init);
+  r2Init();
+
+  // ==================================================
+  // ROUND 3 — Vocabulary match
+  // ==================================================
+  var TERMS = [
+    { term: "Precipitate", def: "A solid that forms when two solutions react together." },
+    { term: "Filtrate", def: "The liquid that passes through the filter paper." },
+    { term: "Residue", def: "The solid left behind on the filter paper." },
+    { term: "Corrosive", def: "Able to burn or destroy skin and other materials on contact." },
+    { term: "Byproduct", def: "A substance made alongside the product you actually wanted." },
+    { term: "Solution", def: "A mixture where a solute is fully dissolved in a solvent." },
+    { term: "Element", def: "A substance that cannot be split into anything simpler chemically." },
+    { term: "Compound", def: "Two or more elements chemically combined in a fixed ratio." }
+  ];
+
+  var r3Cards = [];
+  var r3Selected = null;
+  var r3Solved = 0;
+  var r3Grid = document.getElementById('r3-grid');
+  var r3Lock = false;
+
+  function r3Init(){
+    r3Solved = 0;
+    r3Selected = null;
+    r3Lock = false;
+    document.getElementById('r3-feedback').textContent = '';
+    document.getElementById('r3-feedback').className = 'feedback';
+    document.getElementById('r3-score').textContent = '0 / ' + TERMS.length + ' matched';
+
+    var deck = [];
+    TERMS.forEach(function(pair, i){
+      deck.push({ key: i, kind: 'term', text: pair.term });
+      deck.push({ key: i, kind: 'def', text: pair.def });
+    });
+    r3Cards = shuffle(deck);
+    r3Render();
+  }
+
+  function r3Render(){
+    r3Grid.innerHTML = '';
+    r3Cards.forEach(function(card, i){
+      var el = document.createElement('div');
+      el.className = 'match-card' + (card.kind === 'term' ? ' term' : '') + (card.solved ? ' solved' : '') + (r3Selected === i ? ' selected' : '');
+      el.textContent = card.text;
+      el.tabIndex = card.solved ? -1 : 0;
+      if (!card.solved){
+        el.addEventListener('click', function(){ r3Click(i); });
+      }
+      r3Grid.appendChild(el);
+    });
+  }
+
+  function r3Click(i){
+    if (r3Lock || r3Cards[i].solved) return;
+    if (r3Selected === null){
+      r3Selected = i;
+      r3Render();
+      return;
+    }
+    if (r3Selected === i){
+      r3Selected = null;
+      r3Render();
+      return;
+    }
+    var a = r3Cards[r3Selected], b = r3Cards[i];
+    if (a.key === b.key && a.kind !== b.kind){
+      a.solved = true; b.solved = true;
+      r3Solved++;
+      r3Selected = null;
+      r3Render();
+      document.getElementById('r3-score').textContent = r3Solved + ' / ' + TERMS.length + ' matched';
+      if (r3Solved === TERMS.length){
+        var fb = document.getElementById('r3-feedback');
+        fb.textContent = 'Every term matched — that vocabulary is yours now.';
+        fb.className = 'feedback good';
+        markRoundDone(3);
+      }
+    } else {
+      r3Lock = true;
+      var selIdx = r3Selected;
+      r3Selected = null;
+      r3Render();
+      // briefly flag both as wrong
+      var els = r3Grid.children;
+      els[selIdx].classList.add('wrong');
+      els[i].classList.add('wrong');
+      setTimeout(function(){
+        r3Lock = false;
+        r3Render();
+      }, 650);
+    }
+  }
+
+  document.getElementById('r3-reset').addEventListener('click', r3Init);
+  r3Init();
+
+  // ==================================================
+  // ROUND 4 — Word equations
+  // ==================================================
+  // Each equation is just two sides — the order of words WITHIN a side never matters,
+  // only whether a word ends up on the correct side of the arrow.
+  var EQUATIONS = {
+    a: {
+      left: ['magnesium sulfate', 'sodium carbonate'],
+      right: ['magnesium carbonate', 'sodium sulfate']
+    },
+    b: {
+      left: ['magnesium carbonate', 'hydrochloric acid'],
+      right: ['magnesium chloride', 'carbon dioxide gas', 'water']
+    }
+  };
+
+  var r4TotalWords = EQUATIONS.a.left.length + EQUATIONS.a.right.length +
+                      EQUATIONS.b.left.length + EQUATIONS.b.right.length;
+
+  // r4Placed['a-left'] / etc = array of words currently sitting in that side (any order)
+  var r4Placed = {};
+  var r4Pool = [];
+  var r4Selected = null; // the word currently selected from the pool
+
+  function r4SideKey(eqn, side){ return eqn + '-' + side; }
+
+  function r4AllWords(){
+    var all = [];
+    ['a', 'b'].forEach(function(eqn){
+      ['left', 'right'].forEach(function(side){
+        all = all.concat(EQUATIONS[eqn][side]);
+      });
+    });
+    return all;
+  }
+
+  function r4Init(){
+    r4Placed = { 'a-left': [], 'a-right': [], 'b-left': [], 'b-right': [] };
+    r4Pool = shuffle(r4AllWords());
+    r4Selected = null;
+    document.getElementById('r4-feedback').textContent = '';
+    document.getElementById('r4-feedback').className = 'feedback';
+    document.getElementById('r4-score').textContent = '0 / ' + r4TotalWords + ' correct';
+    r4Render();
+  }
+
+  function r4RenderSide(eqn, side){
+    var key = r4SideKey(eqn, side);
+    var expectedCount = EQUATIONS[eqn][side].length;
+    var container = document.querySelector('.eqn-side[data-eqn="' + eqn + '"][data-side="' + side + '"]');
+    container.innerHTML = '';
+    var placed = r4Placed[key];
+    var slotCount = Math.max(expectedCount, placed.length);
+    for (var i = 0; i < slotCount; i++){
+      var word = placed[i];
+      var slot = document.createElement('div');
+      slot.className = 'eqn-slot' + (word ? ' filled' : '');
+      if (word){
+        slot.textContent = word;
+        slot.addEventListener('click', (function(w){
+          return function(){
+            var idx = r4Placed[key].indexOf(w);
+            if (idx !== -1) r4Placed[key].splice(idx, 1);
+            r4Pool.push(w);
+            r4Render();
+          };
+        })(word));
+      } else {
+        var ph = document.createElement('span');
+        ph.className = 'placeholder';
+        ph.textContent = '— empty —';
+        slot.appendChild(ph);
+        slot.addEventListener('click', function(){
+          if (!r4Selected) return;
+          r4Placed[key].push(r4Selected);
+          var pIdx = r4Pool.indexOf(r4Selected);
+          if (pIdx !== -1) r4Pool.splice(pIdx, 1);
+          r4Selected = null;
+          r4Render();
+        });
+      }
+      container.appendChild(slot);
+    }
+  }
+
+  function r4Render(){
+    r4RenderSide('a', 'left'); r4RenderSide('a', 'right');
+    r4RenderSide('b', 'left'); r4RenderSide('b', 'right');
+    var pool = document.getElementById('r4-pool');
+    pool.innerHTML = '';
+    r4Pool.forEach(function(word, i){
+      var tile = document.createElement('div');
+      tile.className = 'tile' + (r4Selected === word && r4PoolSelectedIndex === i ? ' selected' : '');
+      tile.tabIndex = 0;
+      tile.textContent = word;
+      tile.addEventListener('click', function(){
+        r4Selected = (r4Selected === word && r4PoolSelectedIndex === i) ? null : word;
+        r4PoolSelectedIndex = i;
+        r4Render();
+      });
+      pool.appendChild(tile);
+    });
+  }
+  var r4PoolSelectedIndex = null;
+
+  document.getElementById('r4-check').addEventListener('click', function(){
+    var correct = 0;
+    var allFilled = true;
+    ['a', 'b'].forEach(function(eqn){
+      ['left', 'right'].forEach(function(side){
+        var key = r4SideKey(eqn, side);
+        var expected = EQUATIONS[eqn][side].slice().sort();
+        var actual = r4Placed[key].slice().sort();
+        var container = document.querySelector('.eqn-side[data-eqn="' + eqn + '"][data-side="' + side + '"]');
+        var slotEls = container.querySelectorAll('.eqn-slot');
+        var sideCorrect = expected.length === actual.length &&
+          expected.every(function(w, i){ return w === actual[i]; });
+        if (actual.length < expected.length) allFilled = false;
+        slotEls.forEach(function(slotEl){
+          slotEl.classList.remove('correct', 'incorrect');
+          if (!slotEl.classList.contains('filled')) return;
+          slotEl.classList.add(sideCorrect ? 'correct' : 'incorrect');
+        });
+        if (sideCorrect) correct += expected.length;
+      });
+    });
+    document.getElementById('r4-score').textContent = correct + ' / ' + r4TotalWords + ' correct';
+    var fb = document.getElementById('r4-feedback');
+    if (!allFilled){
+      fb.textContent = 'Fill every side of both equations, then check again.';
+      fb.className = 'feedback';
+    } else if (correct === r4TotalWords){
+      fb.textContent = 'Both equations correct — that\'s the whole chemistry of the tablet, from bench to stomach.';
+      fb.className = 'feedback good';
+      markRoundDone(4);
+    } else {
+      fb.textContent = 'One or more sides don\'t match yet — green sides are right, rose sides need a rethink (the order within a side never matters).';
+      fb.className = 'feedback bad';
+    }
+  });
+
+  document.getElementById('r4-reset').addEventListener('click', r4Init);
+  r4Init();
+
+  // ==================================================
+  function markRoundDone(n){
+    var btn = document.querySelector('.round-btn[data-round="' + n + '"]');
+    if (btn) btn.classList.add('done');
+  }
+
+})();
+</script>
