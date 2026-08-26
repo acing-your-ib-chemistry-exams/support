@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Viewing Guide: Organizing the Elements of the Periodic Table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --bg:#f6f4ef;
+    --panel:#ffffff;
+    --ink:#22201c;
+    --ink-soft:#5a564d;
+    --accent:#a6402c;
+    --accent-soft:#f1e2dc;
+    --line:#e2dccf;
+    --done:#3f6f4f;
+    --done-soft:#e4efe6;
+    --warn:#b8791f;
+    --warn-soft:#faedd7;
+    --bad:#b23b3b;
+    --bad-soft:#fbe4e0;
+    --info:#3a5f8a;
+    --info-soft:#e2ebf4;
+    --code-bg:#1f1d19;
+    --code-ink:#f0ece0;
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    padding:0 0 80px 0;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:32px 20px 0;}
+  header.top{
+    padding-bottom:24px;
+    border-bottom:3px solid var(--ink);
+    margin-bottom:28px;
+  }
+  .kicker{
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-size:32px;
+    line-height:1.15;
+    margin:0 0 10px;
+  }
+  .subtitle{color:var(--ink-soft);font-size:15px;max-width:62ch;}
+  .instructions{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-top:18px;
+    font-size:14.5px;
+  }
+  .instructions h2{
+    margin:0 0 8px;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--ink-soft);
+  }
+  .instructions ul{margin:0;padding-left:20px;}
+  .instructions li{margin-bottom:6px;}
+  .meta-row{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-top:18px;
+  }
+  .meta-field{flex:1;min-width:180px;}
+  .meta-field label{
+    display:block;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    margin-bottom:4px;
+  }
+  .meta-field input{
+    width:100%;
+    padding:8px 10px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    font-size:14px;
+    font-family:var(--sans);
+    background:var(--panel);
+    color:var(--ink);
+  }
+  .progress-bar-outer{
+    height:8px;
+    background:var(--line);
+    border-radius:99px;
+    margin-top:20px;
+    overflow:hidden;
+  }
+  .progress-bar-inner{
+    height:100%;
+    width:0%;
+    background:var(--accent);
+    transition:width .25s ease;
+  }
+  .progress-label{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:6px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .player-block{margin-bottom:16px;}
+  .player-link{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:#111;
+    color:#fff;
+    text-decoration:none;
+    border-radius:12px;
+    padding:18px 22px;
+    border:1px solid var(--line);
+  }
+  .player-link:hover{background:var(--accent);}
+  .player-link-icon{
+    font-size:22px;
+    background:#fff;
+    color:#111;
+    border-radius:50%;
+    width:44px;height:44px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .player-link-text{display:flex;flex-direction:column;gap:2px;}
+  .player-link-text strong{font-size:15.5px;}
+  .player-link-text span{font-size:12.5px;opacity:.85;}
+  .player-caption{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:8px;
+  }
+  .watch-warning{
+    display:none;
+    background:var(--bad-soft);
+    border:1px solid var(--bad);
+    color:var(--bad);
+    border-radius:10px;
+    padding:12px 16px;
+    font-size:13.5px;
+    margin-bottom:18px;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .watch-warning.show{display:flex;}
+  .btn.small{padding:6px 12px;font-size:12.5px;border-radius:6px;}
+  .rewatch-btn{
+    background:var(--info);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:6px 12px;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:var(--sans);
+    margin-top:8px;
+  }
+  .rewatch-btn:hover{background:var(--ink);}
+  .section-watch-btn{
+    background:transparent;
+    border:1px solid var(--info);
+    color:var(--info);
+    border-radius:6px;
+    padding:4px 10px;
+    font-size:11.5px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:var(--sans);
+    white-space:nowrap;
+    margin-top:2px;
+  }
+  .section-watch-btn:hover{background:var(--info);color:#fff;}
+  .rewatch-flag{
+    font-size:11px;
+    color:var(--bad);
+    margin-top:4px;
+    display:none;
+  }
+  .rewatch-flag.show{display:block;}
+  section.chunk{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    margin-bottom:18px;
+    overflow:hidden;
+  }
+  section.chunk.done{border-color:var(--done);}
+  .chunk-head{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:16px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .chunk-num{
+    font-family:var(--serif);
+    font-size:22px;
+    color:var(--accent);
+    min-width:28px;
+  }
+  .chunk-title-wrap{flex:1;}
+  .chunk-title{
+    font-family:var(--serif);
+    font-size:19px;
+    margin:0 0 3px;
+  }
+  .chunk-time{
+    font-size:12px;
+    color:var(--ink-soft);
+    font-variant-numeric:tabular-nums;
+  }
+  .chunk-status{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:99px;
+    padding:3px 10px;
+    white-space:nowrap;
+    margin-top:2px;
+  }
+  section.chunk.done .chunk-status{
+    color:var(--done);
+    border-color:var(--done);
+    background:var(--done-soft);
+  }
+  .chevron{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-top:4px;
+    transition:transform .2s ease;
+  }
+  section.chunk.open .chevron{transform:rotate(90deg);}
+  .chunk-body{
+    display:none;
+    padding:0 20px 20px;
+    border-top:1px solid var(--line);
+  }
+  section.chunk.open .chunk-body{display:block;}
+  .watch-for{
+    background:var(--accent-soft);
+    border-left:3px solid var(--accent);
+    padding:12px 14px;
+    border-radius:0 6px 6px 0;
+    font-size:14px;
+    margin:16px 0;
+  }
+  .watch-for strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:4px;}
+
+  .item{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px 15px;
+    margin:14px 0;
+    background:#fffdfa;
+  }
+  .item.correct{border-color:var(--done);background:var(--done-soft);}
+  .item.revealed{border-color:var(--warn);background:var(--warn-soft);}
+  .item.wrong-flash{border-color:var(--bad);}
+  .item.written{border-color:var(--info);background:var(--info-soft);}
+
+  .item-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .item-prompt{font-size:14.5px;font-weight:600;flex:1;}
+  .item-badge{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    padding:3px 9px;
+    border-radius:99px;
+    white-space:nowrap;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+  }
+  .item.correct .item-badge{border-color:var(--done);color:var(--done);background:#fff;}
+  .item.revealed .item-badge{border-color:var(--warn);color:var(--warn);background:#fff;}
+  .item.written .item-badge{border-color:var(--info);color:var(--info);background:#fff;}
+
+  .options{display:flex;flex-direction:column;gap:6px;margin:8px 0;}
+  .option-btn{
+    text-align:left;
+    padding:9px 12px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:#fff;
+    font-family:var(--sans);
+    font-size:13.5px;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .option-btn:hover{border-color:var(--accent);}
+  .option-btn.selected{border-color:var(--ink);background:#efece4;font-weight:600;}
+  .option-btn.opt-correct{border-color:var(--done);background:var(--done-soft);}
+  .option-btn.opt-wrong{border-color:var(--bad);background:var(--bad-soft);}
+  .option-btn:disabled{cursor:default;opacity:.85;}
+
+  .tf-row{display:flex;gap:8px;margin:8px 0;}
+  .tf-row .option-btn{flex:1;text-align:center;}
+
+  .item input[type=text], .item textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:9px 11px;
+    font-family:var(--sans);
+    font-size:13.5px;
+    color:var(--ink);
+    background:#fff;
+    margin:6px 0;
+  }
+  .item textarea{min-height:56px;resize:vertical;}
+
+  .item-controls{display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap;}
+  .check-btn{
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    border-radius:7px;
+    padding:7px 14px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:var(--sans);
+  }
+  .check-btn:hover{background:var(--accent);}
+  .check-btn:disabled{background:var(--line);color:var(--ink-soft);cursor:default;}
+  .attempts-note{font-size:11.5px;color:var(--ink-soft);}
+
+  .feedback{
+    margin-top:10px;
+    font-size:13px;
+    border-radius:7px;
+    padding:9px 12px;
+    display:none;
+  }
+  .feedback.show{display:block;}
+  .feedback.wrong{background:var(--bad-soft);color:var(--bad);}
+  .feedback.right{background:var(--done-soft);color:var(--done);}
+  .feedback .hint-line{display:block;margin-top:4px;font-style:italic;}
+  .explanation{
+    margin-top:8px;
+    font-size:13px;
+    background:#fff;
+    border:1px dashed var(--line);
+    border-radius:7px;
+    padding:9px 12px;
+    display:none;
+  }
+  .explanation.show{display:block;}
+  .explanation strong{color:var(--ink-soft);text-transform:uppercase;font-size:10.5px;letter-spacing:.05em;display:block;margin-bottom:3px;}
+
+  .vocab-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 16px;
+    margin:16px 0;
+  }
+  @media (max-width:520px){.vocab-grid{grid-template-columns:1fr;}}
+
+  footer.synth{
+    background:var(--panel);
+    border:2px solid var(--ink);
+    border-radius:12px;
+    padding:22px 22px 20px;
+    margin-top:28px;
+  }
+  footer.synth h2{
+    font-family:var(--serif);
+    font-size:21px;
+    margin:0 0 6px;
+  }
+  footer.synth p.lead{color:var(--ink-soft);font-size:14px;margin:0 0 16px;}
+  footer.synth label{display:block;font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  footer.synth .hint{display:block;font-weight:400;font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+  footer.synth textarea{width:100%;min-height:100px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-family:var(--sans);font-size:14px;}
+
+  .score-summary{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 18px;
+    margin-bottom:24px;
+    font-size:13.5px;
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .score-summary .stat{display:flex;flex-direction:column;}
+  .score-summary .stat .num{font-family:var(--serif);font-size:22px;}
+  .score-summary .stat .lab{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);}
+  .score-summary .stat.n-correct .num{color:var(--done);}
+  .score-summary .stat.n-revealed .num{color:var(--warn);}
+
+  .export-zone{
+    margin-top:36px;
+    padding-top:24px;
+    border-top:3px solid var(--ink);
+  }
+  .export-zone h2{
+    font-family:var(--serif);
+    font-size:22px;
+    margin:0 0 6px;
+  }
+  .export-zone p{color:var(--ink-soft);font-size:14px;margin:0 0 16px;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:11px 20px;
+    font-size:14.5px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:var(--sans);
+  }
+  .btn:hover{background:var(--accent);}
+  .btn.secondary{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--ink);
+  }
+  .btn.secondary:hover{background:var(--ink);color:#fff;}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .export-status{
+    margin-top:14px;
+    font-size:13.5px;
+    padding:10px 14px;
+    border-radius:8px;
+    background:var(--accent-soft);
+    color:var(--accent);
+    display:none;
+  }
+  .export-status.show{display:block;}
+  .export-status.complete{background:var(--done-soft);color:var(--done);}
+  #exportBlockWrap{margin-top:18px;display:none;}
+  #exportBlockWrap.show{display:block;}
+  pre#exportBlock{
+    background:var(--code-bg);
+    color:var(--code-ink);
+    padding:18px;
+    border-radius:10px;
+    font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size:12.5px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    word-break:break-word;
+    max-height:420px;
+    overflow-y:auto;
+    margin:0;
+  }
+  .copied-flash{color:var(--done);font-size:13px;margin-left:4px;display:none;}
+  .copied-flash.show{display:inline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="kicker">Viewing guide &middot; self-marking &middot; homework</div>
+    <h1>Organizing the Elements of the Periodic Table</h1>
+    <p class="subtitle">This guide walks you through the video in order, assuming no chemistry background. Most questions mark themselves — if you get one wrong, you'll get a hint and a chance to fix it before moving on.</p>
+
+    <div class="instructions">
+      <h2>How this works</h2>
+      <ul>
+        <li>Each section has its own <strong>&#9654; Watch this section</strong> button — it opens the video on YouTube in a new tab, already cued a few seconds before the right moment, so you don't need to hunt for the timestamp yourself.</li>
+        <li>Watch in order. Each numbered section tells you what to look for <em>before</em> you watch that stretch.</li>
+        <li>Most questions have a <strong>Check answer</strong> button. Get it wrong and you'll see a hint — try again. You get a few tries before the answer is revealed, so you can correct yourself rather than just being told you're wrong.</li>
+        <li>If an answer does get revealed, it means the guide thinks you didn't get that bit from the video — you'll be asked to rewatch that section. Do it; guessing your way through is tracked and noted for your teacher.</li>
+        <li>A few questions are marked <strong>written response</strong> — these can't be auto-marked, so your teacher will read those ones directly.</li>
+        <li>A section turns green once everything in it has been answered (correctly, or with the answer revealed after a few tries).</li>
+        <li>At the end, click <strong>Generate my export</strong> to build a text block showing your answers, your score, <em>and</em> any rewatch flags — paste the whole thing into Canvas.</li>
+      </ul>
+    </div>
+
+    <div class="meta-row">
+      <div class="meta-field">
+        <label for="studentName">Your name</label>
+        <input type="text" id="studentName" placeholder="e.g. Jordan Blake">
+      </div>
+      <div class="meta-field">
+        <label for="studentClass">Class / period</label>
+        <input type="text" id="studentClass" placeholder="e.g. Chem 9, Period 3">
+      </div>
+    </div>
+
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
+    <div class="progress-label">
+      <span id="progressLabel">0 of 12 sections complete</span>
+      <span id="scoreLabel"></span>
+    </div>
+  </header>
+
+  <div class="player-block">
+    <a class="player-link" id="playerMainLink" href="https://www.youtube.com/watch?v=5GPpDrQl9-Q" target="_blank" rel="noopener">
+      <span class="player-link-icon">&#9654;</span>
+      <span class="player-link-text">
+        <strong>Watch on YouTube</strong>
+        <span>Opens in a new tab from the very start</span>
+      </span>
+    </a>
+    <div class="player-caption" id="playerCaption">Every "Watch this section" button below opens YouTube in a new tab, cued a little early (the timestamps were typed live, so they can trail the video by a few seconds).</div>
+  </div>
+
+  <div class="watch-warning" id="watchWarning">
+    <strong>Heads up —</strong>
+    <span id="watchWarningText"></span>
+    <button type="button" class="btn secondary small" id="warnAckBtn">OK, I'll rewatch properly</button>
+  </div>
+
+  <div id="chunks"></div>
+
+  <footer class="synth">
+    <h2>Pulling it together <span style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--info);border:1px solid var(--info);border-radius:99px;padding:2px 8px;vertical-align:middle;">written response</span></h2>
+    <p class="lead">Answer this last — it only makes sense once you've watched the whole thing. Your teacher will read this one directly; it isn't auto-marked.</p>
+    <label for="synth1">The video ends by calling the periodic table one of the most productive ideas in science. Using at least two specific examples from the video (a demonstration, a comparison, or a piece of the story), explain why arranging the elements this way turned out to be so useful.
+      <span class="hint">Aim for 4–6 sentences. Name the actual elements or demos you're using as evidence.</span>
+    </label>
+    <textarea id="synth1"></textarea>
+  </footer>
+
+  <div class="export-zone">
+    <h2>Submit to Canvas</h2>
+    <p>When every section above is green (or you've done as much as you can), click below. It builds a single text block with your answers and your results — copy the whole thing and paste it into the Canvas assignment.</p>
+    <div class="btn-row">
+      <button class="btn" id="genBtn">Generate my export</button>
+      <button class="btn secondary" id="copyBtn" style="display:none;">Copy to clipboard</button>
+      <span class="copied-flash" id="copiedFlash">Copied ✓</span>
+    </div>
+    <div class="export-status" id="exportStatus"></div>
+    <div id="exportBlockWrap">
+      <pre id="exportBlock"></pre>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// Section + item data
+// item.type: 'mcq' | 'tf' | 'fill' | 'keyword' | 'written'
+// ============================================================
+const chunks = [
+{
+  time:"0:00 – 0:57", start:0,
+  title:"1. What is an element?",
+  watch:"The video opens by saying everything you can see around you consists of atoms, and that there are only about 100 different types of them.",
+  items:[
+    {type:"mcq", prompt:"Roughly how many different types of atoms (elements) exist?",
+     options:["About 10","About 100","About 100,000","About 1,000,000"], correct:1,
+     hints:["Listen again to the very first sentence of the video.","It's the number mentioned right at the start."],
+     explain:"There are about 100 known elements — everything else is built from combinations of these ~100 basic building blocks."},
+    {type:"fill", prompt:"Fill in the blank: Everything you can see around you consists of ______.",
+     acceptable:["atom","atoms"],
+     hints:["These are far smaller than elements — everything, including every element, is built from these.","About 100 different types of these exist — that number is mentioned right after this line."],
+     explain:"Everything is made of atoms — there are only about 100 different types, and they combine together to form every element and substance."},
+    {type:"keyword", prompt:"In one sentence, what makes an 'element' different from a substance like water or salt?",
+     keywords:["one type of atom","only one kind of atom","cannot be broken down","simplest substance","one kind of atom","single type of atom","cant be broken down","made of only one","just one type","same atom throughout","same kind of atom","only contains one kind","just one element","not a mixture of different atoms","not made of different atoms","one element only","made from a single","only has one type","cant be split into anything simpler","cant be broken down chemically"],
+     hints:["Water and salt are made of more than one type of atom joined together — what about an element?","An element can't be split into anything simpler by chemical means."],
+     explain:"An element contains only one type of atom. Water and salt are compounds — combinations of more than one element."}
+  ]
+},
+{
+  time:"0:57 – 1:48", start:57,
+  title:"2. Oxygen: properties and a test",
+  watch:"Oxygen is introduced as a colourless, transparent gas, shown as bubbles from a plant's leaves, followed by a test used to confirm a gas actually is oxygen.",
+  items:[
+    {type:"mcq", prompt:"Which best describes oxygen gas at room temperature?",
+     options:["Yellow solid","Colourless, transparent gas","Blue liquid","Black powder"], correct:1,
+     hints:["This is stated directly, right after oxygen is introduced.","Think about the air you breathe — can you see it?"],
+     explain:"Oxygen is a colourless, transparent gas — you can't see it, which is why it's often shown as bubbles in water or tested indirectly."},
+    {type:"fill", prompt:"The bubbles produced by the plant's leaves are oxygen. What process in the plant produces this gas?",
+     acceptable:["photosynthesis"],
+     hints:["Think about what plants do with sunlight and carbon dioxide.","It's the process that also produces the plant's food (glucose)."],
+     explain:"Plants release oxygen as a by-product of photosynthesis, using light energy to convert carbon dioxide and water into glucose."},
+    {type:"written", prompt:"Describe the test you saw used to confirm the gas really was oxygen, and what the result looked like.",
+     hint:"Many school oxygen tests use a glowing wooden splint — watch closely to see whether that's what happens here, and exactly what changes."}
+  ]
+},
+{
+  time:"1:48 – 3:17", start:108,
+  title:"3. Dangerous and useful gases: chlorine, hydrogen, helium",
+  watch:"Chlorine gas and its history in WWI attacks, then a comparison of hydrogen and helium including Hindenburg footage and how balloons are lifted today.",
+  items:[
+    {type:"fill", prompt:"Which gas discussed here was used as a chemical weapon in WWI attacks?",
+     acceptable:["chlorine"],
+     hints:["It's the gas discussed right before the WWI footage.","Its name also refers to what's used to disinfect swimming pools."],
+     explain:"Chlorine gas was used as a chemical weapon in WWI — its toxicity comes from how it reacts with moisture in the lungs."},
+    {type:"fill", prompt:"Which gas caused the Hindenburg disaster?",
+     acceptable:["hydrogen"],
+     hints:["It's the lighter of the two gases being compared.","It's extremely flammable."],
+     explain:"The Hindenburg airship was filled with hydrogen, which is highly flammable — a spark caused it to catch fire and burn rapidly."},
+    {type:"fill", prompt:"Which gas lifts manned balloons safely today, instead?",
+     acceptable:["helium"],
+     hints:["It's the other gas in the comparison.","It's the gas used to fill party balloons."],
+     explain:"Helium is used instead of hydrogen because it doesn't burn — it's chemically unreactive (inert)."},
+    {type:"keyword", prompt:"The video says hydrogen and helium's behaviour 'couldn't be more different.' Why is hydrogen dangerous for lifting things, while helium is safe?",
+     keywords:["flammable","catches fire","catch fire","explos","burns","burn easily","ignite","ignites","inert","unreactive","doesnt react","non-reactive","nonreactive","wont react","does not react","noble gas","stable","volatile","combustible","reacts with oxygen","reacts with air","sets alight"],
+     hints:["Think about what actually happened to the Hindenburg — what property of hydrogen caused that?","Helium belongs to a group of gases famous for not reacting with anything — what's that group called?"],
+     explain:"Hydrogen is highly flammable, so a spark can ignite it explosively. Helium is a noble gas — chemically inert (unreactive) — so it can't catch fire."}
+  ]
+},
+{
+  time:"3:17 – 5:06", start:197,
+  title:"4. Not everything is a gas: solids, liquids, and conductivity",
+  watch:"Sulfur as a solid, a conductivity test with probes and a bell, mercury as a liquid at room temperature, caesium melting in a hand, and the extreme temperatures needed to melt iron and tungsten.",
+  items:[
+    {type:"mcq", prompt:"In the conductivity test (probes and a bell), which material completed the circuit and rang the bell?",
+     options:["Sulfur","Aluminium","Neither","Both equally"], correct:1,
+     hints:["One of these two is a metal, the other is a non-metal.","Metals are generally good conductors of electricity."],
+     explain:"Aluminium (a metal) conducts electricity and rings the bell; sulfur (a non-metal) does not."},
+    {type:"tf", prompt:"True or False: non-metals are generally good conductors of electricity.",
+     correct:false,
+     hints:["Think back to the sulfur result in the conductivity test.","It's metals — not non-metals — that conduct well, as a general rule."],
+     explain:"Non-metals generally do not conduct electricity well; this is one of the key differences between metals and non-metals."},
+    {type:"fill", prompt:"Which element is shown as a liquid at room temperature?",
+     acceptable:["mercury"],
+     hints:["It's a dense, silvery metal — also used in old-fashioned thermometers.","Its chemical symbol is Hg."],
+     explain:"Mercury is the only metal that is liquid at room temperature."},
+    {type:"fill", prompt:"Which element melts just from the warmth of someone's hand?",
+     acceptable:["caesium","cesium"],
+     hints:["It's an alkali metal, near the bottom of Group 1.","Its melting point is only around 28°C — just below body temperature."],
+     explain:"Caesium has a melting point of about 28°C, so it melts in a warm hand."},
+    {type:"mcq", prompt:"Which needs a hotter furnace to melt — iron or tungsten?",
+     options:["Iron","Tungsten"], correct:1,
+     hints:["One of these is used as the filament in old incandescent light bulbs because it can withstand extreme heat.","Tungsten has the highest melting point of any element."],
+     explain:"Tungsten has the highest melting point of any element (about 3,422°C) — far hotter than iron (about 1,538°C)."}
+  ]
+},
+{
+  time:"5:06 – 7:28", start:306,
+  title:"5. Mendeleev and the birth of the periodic table",
+  watch:"How Mendeleev noticed a repeating pattern when elements were arranged by atomic weight, then the table being built element by element by atomic number, with groups and periods introduced.",
+  items:[
+    {type:"keyword", prompt:"What pattern did Mendeleev notice when he arranged the elements in order?",
+     keywords:["repeat","periodic","recurring","pattern repeats","recurs","comes back","reoccur","cycle","cyclical","regular pattern","keeps happening","same properties again","similar properties appear again","every so often","at regular intervals","repeating pattern"],
+     hints:["The word 'periodic' in 'periodic table' is a clue.","Properties kept showing up again and again at regular intervals."],
+     explain:"He noticed that when elements were arranged in order, similar properties recurred at regular intervals — a periodic (repeating) pattern."},
+    {type:"tf", prompt:"True or False: columns in the periodic table are called periods, and rows are called groups.",
+     correct:false,
+     hints:["It's the reverse of that statement.","'Group' and 'column' both contain the same double-o sound — that can help you remember which is which."],
+     explain:"It's the opposite: columns are called groups, and rows are called periods."},
+    {type:"fill", prompt:"What is the name given to the group containing helium, neon, and argon?",
+     acceptable:["noble gases","group 0","group zero","the noble gases"],
+     hints:["These elements famously don't react with anything.","It's also called Group 0 (or Group 8, depending on the table)."],
+     explain:"This is Group 0, known as the noble gases, because they are so unreactive."},
+    {type:"keyword", prompt:"When building the table by atomic number, what determines an element's position?",
+     keywords:["atomic number","number of protons","order of atomic number","proton number","how many protons","proton count"],
+     hints:["It's not atomic weight (mass) that's used for the final ordering — it's a smaller whole number.","It's the number of protons in the nucleus."],
+     explain:"Elements are placed in order of atomic number (the number of protons in the nucleus)."}
+  ]
+},
+{
+  time:"7:28 – 9:09", start:448,
+  title:"6. Group 0: the noble gases",
+  watch:"Balloons filled with each noble gas (He, Ne, Ar, Kr, Xe) are compared — all colourless and transparent, but their mass and density trend in a clear pattern down the group.",
+  items:[
+    {type:"keyword", prompt:"As you go down the noble gas group (He → Ne → Ar → Kr → Xe), what happens to their mass and density?",
+     keywords:["increase","heavier","denser","increases","goes up","gets heavier","get heavier","rises","grows","gets bigger","gets more dense","climb","climbs","greater mass","greater density","more dense","higher density","higher mass"],
+     hints:["Compare how the helium balloon behaves versus the xenon balloon.","One floats, the other sinks — what does that tell you about their relative weight?"],
+     explain:"Both mass and density increase going down the group — helium is the lightest, xenon the heaviest (described as a 'lead balloon')."},
+    {type:"mcq", prompt:"Which noble gas is described as 'the heaviest of the lot' — heavy enough to be like a 'lead balloon'?",
+     options:["Helium","Neon","Argon","Xenon"], correct:3,
+     hints:["It's the last one demonstrated in this section.","It's the noble gas furthest down the group that's shown."],
+     explain:"Xenon is the heaviest of the noble gases shown, so a xenon-filled balloon behaves like a 'lead balloon' — it won't float."},
+    {type:"tf", prompt:"True or False: a balloon filled with argon or krypton will float in air, like a helium balloon does.",
+     correct:false,
+     hints:["Only the very lightest noble gases are lighter than air.","Argon and krypton are heavier than air, so balloons filled with them sink."],
+     explain:"Argon and krypton are heavier than air, so those balloons sink rather than float — only helium (and neon, weakly) are lighter than air."}
+  ]
+},
+{
+  time:"9:09 – 11:37", start:549,
+  title:"7. Down a group: the alkali metals",
+  watch:"Group 1 (lithium, sodium, potassium, rubidium, caesium) — how soft they are, how they're stored, and how the reaction with water gets more violent going down the group.",
+  items:[
+    {type:"mcq", prompt:"Which of these is NOT true of the alkali metals shown (Li, Na, K, Rb, Cs)?",
+     options:["Soft enough to cut with a knife","They react with water","They are unreactive with air","They get more reactive going down the group"], correct:2,
+     hints:["Think about why sodium has to be stored under oil.","The false statement is about how they behave in air, not water."],
+     explain:"Alkali metals are actually very reactive with air (which is why they tarnish quickly and are stored under oil) — the opposite of 'unreactive'."},
+    {type:"keyword", prompt:"How does the reaction with water change as you move down the group from lithium to potassium?",
+     keywords:["more violent","more vigorous","more reactive","faster","stronger reaction","more extreme","lilac flame","more energetic","gets more dangerous","gets more dramatic","increasingly violent","increasingly vigorous","releases more heat","more heat","hotter reaction","bigger reaction","more explosive","gets more intense","escalates"],
+     hints:["Compare how calm lithium's reaction looks to how dramatic potassium's is.","Think about what eventually happens to the hydrogen gas given off by potassium."],
+     explain:"The reaction gets more violent going down the group — lithium reacts gently, while potassium releases enough heat to ignite the hydrogen gas with a lilac flame."},
+    {type:"fill", prompt:"Sodium is stored under ______ to stop it reacting with air and moisture.",
+     acceptable:["oil"],
+     hints:["It's a common household liquid, immiscible with water.","You'd also use it for cooking."],
+     explain:"Sodium (and the other alkali metals) are stored under oil to keep air and moisture away, since they react readily with both."},
+    {type:"mcq", prompt:"Which alkali metal's reaction with water produces enough heat that the hydrogen gas ignites with a lilac flame?",
+     options:["Lithium","Sodium","Potassium","Caesium"], correct:2,
+     hints:["It's the third alkali metal reacted with water in the video.","This is the flame-colour detail mentioned right after sodium's reaction."],
+     explain:"Potassium's reaction with water releases enough heat to ignite the hydrogen produced, burning with a characteristic lilac flame."}
+  ]
+},
+{
+  time:"11:37 – 15:16", start:697,
+  title:"8. Across a period: sodium to chlorine",
+  watch:"Reacting each element from sodium to chlorine with fluorine (plus aluminium, carbon, and sulfur burning), then comparing the formulas formed: NaF, MgF2, AlF3...",
+  items:[
+    {type:"keyword", prompt:"Looking at the formulas NaF, MgF2, AlF3 as you move across the period, what happens to the number of fluorine atoms combined with each element?",
+     keywords:["increases","goes up","more fluorine","rises","gets bigger","increase","climbs","grows","goes from one to two to three","one two three","adds one each time","increases by one","gets larger"],
+     hints:["Count the fluorine atoms in each formula in order: NaF, MgF2, AlF3.","1, then 2, then 3 — what's the trend?"],
+     explain:"The number of fluorine atoms combining with each element increases by one each step across the period (1, 2, 3...)."},
+    {type:"fill", prompt:"What is the formula given for sulfur's fluoride in the video?",
+     acceptable:["sf6"],
+     hints:["Sulfur is well into the period, so the number of fluorines is fairly high by now.","It has six fluorine atoms."],
+     explain:"Sulfur forms SF6 — continuing the pattern of increasing fluorine atoms across the period."},
+    {type:"keyword", prompt:"The pattern doesn't perfectly continue at chlorine (ClF5 instead of the expected ClF7). What does this 'failure' show about periodic trends in general?",
+     keywords:["limitation","limitations","exception","exceptions","imperfect","imperfection","inconsistent","inconsistency","flaw","anomaly","irregular","break down","breaks down","dont always work","doesnt always work","not perfect","not exact","not precise","not always precise","not always reliable","not always accurate","only a guide","only a rough guide","generalisation","generalization"],
+     negatedConcepts:["precise","exact","perfect","regular","reliable","predictable","consistent","accurate"],
+     hints:["The video says this directly, right after showing ClF5 — listen for a word like 'limitation'.","Real data doesn't always match a tidy predicted pattern — what does that mean for 'rules' in chemistry?"],
+     explain:"The video calls this a 'limitation' of the periodic law: periodic trends are useful generalisations, not perfect laws — real elements sometimes don't follow the pattern exactly, even though the overall trend is still real."}
+  ]
+},
+{
+  time:"15:16 – 17:38", start:916,
+  title:"9. Oxides across the period, and doing the arithmetic",
+  watch:"Oxides forming across the period (aluminium burning to Al2O3, phosphorus burning in a flask of oxygen), then a calculation turning each formula into a number that shows a clean pattern — starting at zero for neon.",
+  items:[
+    {type:"fill", prompt:"What is the formula of the compound formed when aluminium burns in oxygen?",
+     acceptable:["al2o3"],
+     hints:["Aluminium needs three fluorines in the earlier section — the oxide formula follows a similar idea.","Two aluminiums combine with three oxygens."],
+     explain:"Aluminium burns in oxygen to form Al2O3 (aluminium oxide)."},
+    {type:"fill", prompt:"In the number pattern built across the period, what number is assigned to neon (a noble gas that forms no oxide)?",
+     acceptable:["0","zero"],
+     hints:["Neon doesn't react with oxygen at all — how many oxygens combine with it?","If nothing combines, the number is the lowest possible."],
+     explain:"Neon forms no oxide at all, so it's assigned zero at the start of the pattern."},
+    {type:"fill", prompt:"What number is assigned to sodium, based on the formula Na2O?",
+     acceptable:["1/2","0.5","half","a half",".5"],
+     hints:["Two sodium atoms combine with one oxygen atom — so per sodium atom, how much oxygen is that?","One oxygen shared between two sodiums is a half each."],
+     explain:"Since two sodium atoms combine with one oxygen atom, the ratio per sodium atom is a half."},
+    {type:"keyword", prompt:"Why does converting formulas like Na2O into a single number make the pattern across the period easier to see?",
+     keywords:["easier to compare","clearer pattern","one number","compare directly","see the trend","numerical pattern","easier to see","directly comparable","same scale","line them up","put them on one scale","simpler to compare","easier to spot the pattern","standardises","standardizes","common scale","numbers are simpler than formulas","simplifies the formula"],
+     hints:["Formulas like Na2O, MgO, and Al2O3 look quite different at a glance — numbers don't.","Once everything is one number, you can line them up and see them rise steadily."],
+     explain:"Turning each formula into a single number lets you line all the elements up on one simple, directly comparable scale, making the steady increase across the period obvious."}
+  ]
+},
+{
+  time:"17:49 – 20:09", start:1069,
+  title:"10. Same group, same behaviour: carbon and silicon",
+  watch:"A diamond (pure carbon) is heated and dropped into liquid oxygen, where it burns. This is then compared with burning silicon (shown as sand), both forming a 'dioxide' with the same type of formula.",
+  items:[
+    {type:"mcq", prompt:"What happens when the diamond is dropped into liquid oxygen?",
+     options:["Nothing happens","It dissolves","It burns","It shatters"], correct:2,
+     hints:["Diamond is pure carbon, and carbon is combustible in oxygen.","Think about what 'burning' something in pure oxygen looks like."],
+     explain:"The diamond burns — carbon combusts readily in pure oxygen, especially when already heated with a torch first."},
+    {type:"fill", prompt:"What gas is produced when the diamond (carbon) burns in oxygen?",
+     acceptable:["carbon dioxide","co2"],
+     hints:["It's the same gas you breathe out.","One carbon atom combines with two oxygen atoms."],
+     explain:"Carbon burning in oxygen produces carbon dioxide (CO2)."},
+    {type:"keyword", prompt:"Why did carbon and silicon forming the same type of oxide ('dioxide') help convince Mendeleev to put them in the same group?",
+     keywords:["similar properties","same group","same type of compound","same formula pattern","same behaviour","behave similarly","same formula","similar behaviour","behave the same way","same kind of reaction","react in the same way","form the same kind of compound","same chemistry","chemically similar","act alike"],
+     hints:["Elements in the same group are grouped together because they behave alike — what evidence of 'alike' behaviour do both give here?","Both carbon and silicon form an oxide with the same X O2 pattern."],
+     explain:"Elements in the same group tend to form similarly-patterned compounds. Since carbon and silicon both form a 'dioxide' (CO2 and SiO2), that similarity supported placing them in the same group."}
+  ]
+},
+{
+  time:"20:09 – 21:55", start:1209,
+  title:"11. The cracks in Mendeleev's original table",
+  watch:"Gold, silver and copper are tested with water (none react), and the video points out that Mendeleev's early table had a messy 'leftover' block of metals that didn't fit, plus one box crammed with 15 'rare earth' elements.",
+  items:[
+    {type:"tf", prompt:"True or False: gold, silver, and copper all react readily with water.",
+     correct:false,
+     hints:["These are sometimes called the 'noble metals' for a reason.","None of the three reacted in the demonstration."],
+     explain:"None of them react with water — gold, silver, and copper are all very unreactive metals."},
+    {type:"keyword", prompt:"What was the problem with how Mendeleev's original table handled elements like iron, cobalt, nickel, and platinum, plus the 'rare earth' elements?",
+     keywords:["didnt fit","leftover","dumped together","crammed into one box","no proper place","messy","one box","couldnt fit","didnt fit anywhere","lumped together","forced together","grouped randomly","no logical place","not systematic","not organised","not organized","just thrown together","random group","rubbish tip","catch-all","catch all","miscellaneous group","exceptions to the system"],
+     hints:["The video calls one part of the table a 'rubbish tip' for elements — what does that suggest about how carefully they were placed?","Fifteen different elements were squeezed into a single box — is that a sensible system?"],
+     explain:"These elements didn't fit the table's existing structure, so they were lumped together into leftover groupings (one box even held all 15 rare earth elements) rather than being placed logically."}
+  ]
+},
+{
+  time:"21:55 – 23:55", start:1315,
+  title:"12. Redesigning the table — and what it made possible",
+  watch:"New rules (keep atomic-number order, but properly separate metals, non-metals, and the leftover elements) are used to build the 'long form' periodic table — later used by Niels Bohr to work out atomic structure.",
+  items:[
+    {type:"mcq", prompt:"In redesigning the table into the 'long form', what stays fixed as the one non-negotiable rule?",
+     options:["Alphabetical order","Order of atomic number","Order of discovery","Order of melting point"], correct:1,
+     hints:["This is the same ordering principle used right back in section 5, when the table was first built.","It's based on the number of protons, not on when an element was found or how it melts."],
+     explain:"Atomic number order must always be preserved — everything else about the table's layout can be redesigned around that fixed rule."},
+    {type:"fill", prompt:"Which scientist later used the long-form table to work out the electron arrangement (electronic configuration) of the elements?",
+     acceptable:["bohr","niels bohr"],
+     hints:["It's a Danish physicist famous for his model of the atom.","His name is also attached to an early model of electron shells."],
+     explain:"Niels Bohr used the long-form periodic table to work out the electronic configuration of the elements — how electrons are arranged in shells."},
+    {type:"keyword", prompt:"Why does the video call the periodic table one of the most productive (fruitful) ideas in science?",
+     keywords:["predicted","organise","organize","structure","explains","fruitful","useful","powerful idea","understand atoms","led to","helped explain","helped discover","led to bohr","electron structure","atomic structure","explained so much","so many discoveries","influential","valuable idea","successful idea","productive idea","far-reaching","far reaching"],
+     hints:["Think about everything the table's structure went on to explain or predict — not just element properties, but atomic structure itself.","It led directly to Bohr's work on the atom — that's a big clue."],
+     explain:"A single organising idea went on to predict properties, expose gaps later filled by new elements, and even led to understanding the atom's internal structure (via Bohr) — very few scientific ideas have been that productive."}
+  ]
+}
+];
+
+// ============================================================
+// Render
+// ============================================================
+const container = document.getElementById('chunks');
+let allItems = []; // flat list of {itemEl, data, sectionIdx, itemIdx, state}
+
+chunks.forEach((c, sIdx) => {
+  const section = document.createElement('section');
+  section.className = 'chunk';
+  section.dataset.index = sIdx;
+
+  const itemsHtml = c.items.map((it, iIdx) => renderItem(it, sIdx, iIdx)).join('');
+
+  section.innerHTML = `
+    <div class="chunk-head">
+      <div class="chunk-num">${String(sIdx+1).padStart(2,'0')}</div>
+      <div class="chunk-title-wrap">
+        <div class="chunk-title">${c.title.replace(/^\d+\.\s*/, '')}</div>
+        <div class="chunk-time">${c.time} on the stopwatch</div>
+        <div class="rewatch-flag">Answer(s) revealed in this section — rewatch it before moving on.</div>
+      </div>
+      <button type="button" class="section-watch-btn" data-start="${c.start}">&#9654; Watch this section</button>
+      <div class="chunk-status">to do</div>
+      <div class="chevron">&#9656;</div>
+    </div>
+    <div class="chunk-body">
+      <div class="watch-for"><strong>Before you watch this part</strong>${c.watch}</div>
+      ${itemsHtml}
+    </div>
+  `;
+
+  container.appendChild(section);
+  section.querySelector('.chunk-head').addEventListener('click', (e) => {
+    if (e.target.closest('.section-watch-btn')) return;
+    section.classList.toggle('open');
+  });
+  section.querySelector('.section-watch-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    jumpPlayer(c.start, `section ${sIdx+1}`);
+  });
+});
+
+// The timestamps were typed live while watching, so they likely trail the
+// actual on-screen action by 10-15 seconds. Cue every jump a bit early so
+// students land before the moment, not after it.
+const CUE_BUFFER_SECONDS = 13;
+
+function jumpPlayer(seconds, label) {
+  const cued = Math.max(0, seconds - CUE_BUFFER_SECONDS);
+  window.open(`https://www.youtube.com/watch?v=5GPpDrQl9-Q&t=${cued}s`, '_blank', 'noopener');
+  document.getElementById('playerCaption').textContent = `Just opened YouTube in a new tab, cued a little before ${label} to give you room to catch up.`;
+}
+
+function renderItem(it, sIdx, iIdx) {
+  const id = `item-${sIdx}-${iIdx}`;
+  let controlHtml = '';
+  if (it.type === 'mcq') {
+    controlHtml = `<div class="options">${it.options.map((opt,oi) =>
+      `<button type="button" class="option-btn" data-oi="${oi}">${opt}</button>`).join('')}</div>`;
+  } else if (it.type === 'tf') {
+    controlHtml = `<div class="tf-row">
+      <button type="button" class="option-btn" data-val="true">True</button>
+      <button type="button" class="option-btn" data-val="false">False</button>
+    </div>`;
+  } else if (it.type === 'fill') {
+    controlHtml = `<input type="text" placeholder="Type your answer...">`;
+  } else if (it.type === 'keyword') {
+    controlHtml = `<textarea placeholder="Explain in a sentence or two..."></textarea>`;
+  } else if (it.type === 'written') {
+    controlHtml = `<textarea placeholder="Write your answer..."></textarea>`;
+  }
+
+  const badge = it.type === 'written' ? 'written response' : 'unanswered';
+  const checkBtn = it.type === 'written' ? '' :
+    `<button type="button" class="check-btn">Check answer</button><span class="attempts-note"></span>`;
+
+  return `
+    <div class="item ${it.type==='written' ? 'written' : ''}" id="${id}" data-type="${it.type}">
+      <div class="item-top">
+        <div class="item-prompt">${it.prompt}</div>
+        <div class="item-badge">${badge}</div>
+      </div>
+      ${controlHtml}
+      <div class="item-controls">${checkBtn}</div>
+      <div class="feedback"></div>
+      <div class="explanation"><strong>Explanation</strong><span class="explain-text"></span></div>
+    </div>
+  `;
+}
+
+// ============================================================
+// Grading engine
+// ============================================================
+function normalize(s) {
+  return s.toLowerCase().trim().replace(/[.,!?;:'"]/g, '').replace(/\s+/g, ' ');
+}
+
+// Strip apostrophes only (keeps word boundaries otherwise) so "aren't" and
+// "arent" - both common when typing fast - are treated the same way.
+function stripApos(s) {
+  return s.replace(/['’]/g, '');
+}
+
+// Words that, together with one of the concept words below, signal "this
+// thing is NOT/less/imperfect" even when the student doesn't use the exact
+// phrase we expected. Apostrophes already stripped since stripApos() is
+// applied to both sides before comparing.
+const DEFAULT_NEGATIVES = [
+  "not","never","without","lack","doesnt","dont","isnt","arent","wasnt",
+  "werent","wont","cant","hasnt","havent","didnt","couldnt","shouldnt",
+  "neither","nor","less","fewer"
+];
+
+// A keyword-type question is correct if EITHER:
+//  (a) one of its `keywords` (standalone-sufficient phrases) appears, or
+//  (b) one of its `negatedConcepts` (a neutral word that only signals the
+//      right idea when paired with a negative) appears ALONGSIDE one of
+//      the negative markers above (or the item's own `negatives` list).
+// This is exactly the concept/negative split a student suggested after
+// finding the periodic-trends question too strict on exact phrasing.
+function keywordItemCorrect(it, norm) {
+  const hasStandalone = (it.keywords || []).some(k => norm.includes(stripApos(k.toLowerCase())));
+  if (hasStandalone) return true;
+  if (it.negatedConcepts && it.negatedConcepts.length) {
+    const hasConcept = it.negatedConcepts.some(k => norm.includes(stripApos(k.toLowerCase())));
+    const negList = (it.negatives || DEFAULT_NEGATIVES).map(n => stripApos(n.toLowerCase()));
+    const hasNegative = negList.some(n => norm.includes(n));
+    if (hasConcept && hasNegative) return true;
+  }
+  return false;
+}
+
+chunks.forEach((c, sIdx) => {
+  c.items.forEach((it, iIdx) => {
+    const el = document.getElementById(`item-${sIdx}-${iIdx}`);
+    it._el = el;
+    it._state = 'unanswered'; // unanswered | correct | revealed | written
+    it._attempts = 0;
+    it._selected = null;
+    it._maxAttempts = it.hints ? it.hints.length + 1 : 3;
+
+    if (it.type === 'written') {
+      const ta = el.querySelector('textarea');
+      ta.addEventListener('input', () => {
+        it._state = ta.value.trim().length > 0 ? 'written' : 'unanswered';
+        updateAll();
+      });
+      return;
+    }
+
+    if (it.type === 'mcq' || it.type === 'tf') {
+      const buttons = el.querySelectorAll('.option-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (it._state === 'correct' || it._state === 'revealed') return;
+          buttons.forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          it._selected = it.type === 'mcq' ? parseInt(btn.dataset.oi,10) : (btn.dataset.val === 'true');
+        });
+      });
+    }
+
+    const checkBtn = el.querySelector('.check-btn');
+    if (checkBtn) {
+      checkBtn.addEventListener('click', () => checkAnswer(it, sIdx, iIdx));
+    }
+  });
+});
+
+function checkAnswer(it, sIdx, iIdx) {
+  if (it._state === 'correct' || it._state === 'revealed') return;
+  const el = it._el;
+  const feedback = el.querySelector('.feedback');
+  let isCorrect = false;
+  let studentAnswer = '';
+
+  if (it.type === 'mcq') {
+    if (it._selected === null || it._selected === undefined) { flash(feedback,'Pick an option first.'); return; }
+    isCorrect = it._selected === it.correct;
+    studentAnswer = it.options[it._selected];
+  } else if (it.type === 'tf') {
+    if (it._selected === null || it._selected === undefined) { flash(feedback,'Pick True or False first.'); return; }
+    isCorrect = it._selected === it.correct;
+    studentAnswer = it._selected ? 'True' : 'False';
+  } else if (it.type === 'fill') {
+    const input = el.querySelector('input[type=text]');
+    studentAnswer = input.value.trim();
+    if (!studentAnswer) { flash(feedback,'Type an answer first.'); return; }
+    const norm = normalize(studentAnswer);
+    isCorrect = it.acceptable.some(a => normalize(a) === norm);
+  } else if (it.type === 'keyword') {
+    const ta = el.querySelector('textarea');
+    studentAnswer = ta.value.trim();
+    if (!studentAnswer) { flash(feedback,'Write an answer first.'); return; }
+    const norm = stripApos(studentAnswer.toLowerCase());
+    isCorrect = keywordItemCorrect(it, norm);
+  }
+
+  it._attempts++;
+  it._lastAnswer = studentAnswer;
+
+  if (isCorrect) {
+    it._state = 'correct';
+    lockControls(it);
+    el.classList.add('correct');
+    el.classList.remove('wrong-flash','revealed');
+    el.querySelector('.item-badge').textContent = 'correct' + (it._attempts>1 ? ` (try ${it._attempts})` : '');
+    feedback.className = 'feedback show right';
+    feedback.innerHTML = it._attempts === 1 ? 'Correct — first try.' : `Correct — got there in ${it._attempts} tries.`;
+    showExplanation(it);
+    markStyledOption(it, true);
+  } else {
+    if (it._attempts >= it._maxAttempts) {
+      it._state = 'revealed';
+      lockControls(it);
+      el.classList.add('revealed');
+      el.classList.remove('wrong-flash');
+      el.querySelector('.item-badge').textContent = 'answer revealed';
+      feedback.className = 'feedback show wrong';
+      feedback.innerHTML = `Not quite — here's the answer, so you can move on. <strong>Please rewatch this section</strong> — you likely missed something in the video.<br>
+        <button type="button" class="rewatch-btn" onclick="jumpPlayer(${chunks[sIdx].start}, 'section ${sIdx+1}')">&#9654; Rewatch section ${sIdx+1}</button>`;
+      showExplanation(it);
+      markStyledOption(it, false);
+      registerReveal(sIdx, iIdx, it);
+    } else {
+      el.classList.add('wrong-flash');
+      const hintIdx = it._attempts - 1;
+      const hintText = (it.hints && it.hints[hintIdx]) ? it.hints[hintIdx] : (it.hint || 'Try rewatching that part of the video.');
+      feedback.className = 'feedback show wrong';
+      feedback.innerHTML = `Not quite yet. <span class="hint-line">Hint: ${hintText}</span>`;
+      if (it.type === 'mcq' || it.type === 'tf') {
+        const sel = el.querySelector('.option-btn.selected');
+        if (sel) sel.classList.add('opt-wrong');
+      }
+    }
+  }
+  updateAll();
+}
+
+function markStyledOption(it, correct) {
+  if (it.type !== 'mcq' && it.type !== 'tf') return;
+  const el = it._el;
+  const buttons = el.querySelectorAll('.option-btn');
+  buttons.forEach(b => {
+    const isCorrectOpt = it.type === 'mcq'
+      ? parseInt(b.dataset.oi,10) === it.correct
+      : (b.dataset.val === 'true') === it.correct;
+    if (isCorrectOpt) b.classList.add('opt-correct');
+  });
+}
+
+function lockControls(it) {
+  const el = it._el;
+  el.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  const input = el.querySelector('input[type=text]');
+  const ta = el.querySelector('textarea');
+  if (input) input.disabled = true;
+  if (ta) ta.disabled = true;
+  const checkBtn = el.querySelector('.check-btn');
+  if (checkBtn) checkBtn.disabled = true;
+}
+
+function showExplanation(it) {
+  const exp = it._el.querySelector('.explanation');
+  exp.querySelector('.explain-text').textContent = it.explain || '';
+  if (it.explain) exp.classList.add('show');
+}
+
+function flash(feedbackEl, msg) {
+  feedbackEl.className = 'feedback show wrong';
+  feedbackEl.innerHTML = msg;
+}
+
+// ============================================================
+// "Are they actually watching?" tracking
+// ============================================================
+const rewatchLog = []; // {section, sIdx, prompt, attempts}
+let sitDownWarningShown = false;
+const SIT_DOWN_THRESHOLD = 3; // reveals across the whole guide
+
+function registerReveal(sIdx, iIdx, it) {
+  const c = chunks[sIdx];
+  rewatchLog.push({
+    section: c.title.replace(/^\d+\.\s*/, ''),
+    sectionNum: sIdx + 1,
+    prompt: it.prompt,
+    attempts: it._attempts
+  });
+
+  // Flag the section itself
+  const sectionEl = document.querySelectorAll('section.chunk')[sIdx];
+  sectionEl.querySelector('.rewatch-flag').classList.add('show');
+
+  if (rewatchLog.length >= SIT_DOWN_THRESHOLD && !sitDownWarningShown) {
+    sitDownWarningShown = true;
+    const warn = document.getElementById('watchWarning');
+    const text = document.getElementById('watchWarningText');
+    text.textContent = `You've needed the answer revealed ${rewatchLog.length} times now (most recently in "${c.title.replace(/^\d+\.\s*/,'')}"). That usually means you're guessing rather than watching. Please stop, scroll back up, and actually sit down and watch the video properly before answering more questions — this will be noted for your teacher.`;
+    warn.classList.add('show');
+  }
+}
+
+document.getElementById('warnAckBtn').addEventListener('click', () => {
+  document.getElementById('watchWarning').classList.remove('show');
+});
+
+// ============================================================
+// Progress + score
+// ============================================================
+function updateAll() {
+  const sections = document.querySelectorAll('section.chunk');
+  let sectionsDone = 0;
+  let totalGraded = 0, correctCount = 0, revealedCount = 0, writtenDone = 0, writtenTotal = 0;
+
+  chunks.forEach((c, sIdx) => {
+    let sectionComplete = true;
+    c.items.forEach(it => {
+      if (it.type === 'written') {
+        writtenTotal++;
+        if (it._state === 'written') writtenDone++;
+        else sectionComplete = false;
+      } else {
+        totalGraded++;
+        if (it._state === 'correct') { correctCount++; }
+        else if (it._state === 'revealed') { revealedCount++; }
+        else { sectionComplete = false; }
+      }
+    });
+    const sectionEl = sections[sIdx];
+    sectionEl.classList.toggle('done', sectionComplete);
+    sectionEl.querySelector('.chunk-status').textContent = sectionComplete ? 'done' : 'to do';
+    if (sectionComplete) sectionsDone++;
+  });
+
+  const total = chunks.length;
+  document.getElementById('progressBar').style.width = (sectionsDone/total*100) + '%';
+  document.getElementById('progressLabel').textContent = `${sectionsDone} of ${total} sections complete`;
+  document.getElementById('scoreLabel').textContent =
+    `Score so far: ${correctCount}/${totalGraded} correct on first look` +
+    (revealedCount ? `, ${revealedCount} revealed` : '');
+}
+
+// ============================================================
+// Export
+// ============================================================
+document.getElementById('genBtn').addEventListener('click', () => {
+  const name = document.getElementById('studentName').value.trim();
+  const klass = document.getElementById('studentClass').value.trim();
+
+  let missing = [];
+  let lines = [];
+  let totalGraded = 0, correctCount = 0, revealedCount = 0;
+
+  lines.push('Viewing Guide: Organizing the Elements of the Periodic Table');
+  lines.push('='.repeat(62));
+  lines.push(`Name: ${name || '(not entered)'}`);
+  lines.push(`Class: ${klass || '(not entered)'}`);
+  lines.push('');
+
+  chunks.forEach((c, sIdx) => {
+    const titleClean = c.title.replace(/^\d+\.\s*/, '');
+    lines.push(`${sIdx+1}. ${titleClean}  [${c.time}]`);
+    lines.push('-'.repeat(52));
+
+    let sectionMissing = false;
+    c.items.forEach(it => {
+      lines.push(`Q: ${it.prompt}`);
+      if (it.type === 'written') {
+        const val = it._lastLiveValue !== undefined ? it._lastLiveValue : (it._el.querySelector('textarea') ? it._el.querySelector('textarea').value.trim() : '');
+        lines.push(`A (written response, for teacher review): ${val || '[no answer given]'}`);
+        if (!val) sectionMissing = true;
+      } else {
+        totalGraded++;
+        const answer = it._lastAnswer || '[not attempted]';
+        let statusText;
+        if (it._state === 'correct') {
+          statusText = it._attempts === 1 ? 'Correct (first try)' : `Correct (after ${it._attempts} tries)`;
+          correctCount++;
+        } else if (it._state === 'revealed') {
+          statusText = `Answer revealed after ${it._attempts} tries — correct answer noted below`;
+          revealedCount++;
+        } else {
+          statusText = 'Not attempted';
+          sectionMissing = true;
+        }
+        lines.push(`A: ${answer}`);
+        lines.push(`Result: ${statusText}`);
+        if (it._state === 'revealed' || it._state === 'correct') {
+          if (it.type === 'mcq') lines.push(`Correct answer: ${it.options[it.correct]}`);
+          else if (it.type === 'tf') lines.push(`Correct answer: ${it.correct ? 'True' : 'False'}`);
+          else if (it.type === 'fill') lines.push(`Accepted answer: ${it.acceptable[0]}`);
+        }
+      }
+      lines.push('');
+    });
+    if (sectionMissing) missing.push(titleClean);
+  });
+
+  lines.push('Pulling it together (written response)');
+  lines.push('-'.repeat(52));
+  const synthVal = document.getElementById('synth1').value.trim();
+  lines.push('Q: Why did organizing the elements this way turn out to be so useful? (use two examples)');
+  lines.push(`A: ${synthVal || '[no answer given]'}`);
+  if (!synthVal) missing.push('Pulling it together');
+  lines.push('');
+
+  lines.push('Auto-marked score summary');
+  lines.push('-'.repeat(52));
+  lines.push(`Correct on first look or after retries: ${correctCount} / ${totalGraded}`);
+  lines.push(`Answers revealed (needed the answer shown): ${revealedCount} / ${totalGraded}`);
+  lines.push('');
+
+  lines.push('Note for teacher: rewatch flags');
+  lines.push('-'.repeat(52));
+  if (rewatchLog.length === 0) {
+    lines.push('No answers had to be revealed — this student got everything within their attempts.');
+  } else {
+    lines.push(`This student needed the answer revealed ${rewatchLog.length} time(s):`);
+    rewatchLog.forEach(r => {
+      lines.push(`  - Section ${r.sectionNum} ("${r.section}"): "${r.prompt}" — revealed after ${r.attempts} tries`);
+    });
+    if (rewatchLog.length >= SIT_DOWN_THRESHOLD) {
+      lines.push('');
+      lines.push(`FLAG: ${rewatchLog.length} reveals is at/above this guide's threshold (${SIT_DOWN_THRESHOLD}) for prompting the student to stop and actually watch the video rather than guess. Worth checking in with them directly.`);
+    }
+  }
+
+  const exportText = lines.join('\n');
+  document.getElementById('exportBlock').textContent = exportText;
+  document.getElementById('exportBlockWrap').classList.add('show');
+  document.getElementById('copyBtn').style.display = 'inline-flex';
+
+  const statusEl = document.getElementById('exportStatus');
+  statusEl.classList.add('show');
+  if (missing.length === 0) {
+    statusEl.classList.add('complete');
+    statusEl.textContent = 'Complete — every question has an answer. Copy the block above and paste it into Canvas.';
+  } else {
+    statusEl.classList.remove('complete');
+    statusEl.textContent = `Not complete yet — missing answers in: ${missing.join(', ')}. You can still copy and submit, or go back and fill those in first.`;
+  }
+
+  updateAll();
+});
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const text = document.getElementById('exportBlock').textContent;
+  const flashEl = document.getElementById('copiedFlash');
+  const doFlash = () => { flashEl.classList.add('show'); setTimeout(()=>flashEl.classList.remove('show'),1600); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(doFlash).catch(selectExportBlock);
+  } else {
+    selectExportBlock();
+  }
+});
+function selectExportBlock() {
+  const el = document.getElementById('exportBlock');
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+updateAll();
+</script>
+</body>
+</html>
