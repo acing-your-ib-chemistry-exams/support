@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Word Equations: Fill in the Blanks</title>
+<style>
+  :root{
+    --ink:#1f2a24;
+    --paper:#faf7f0;
+    --panel:#ffffff;
+    --line:#c9beac;
+    --accent:#2f6f4f;
+    --accent-dark:#1f4d36;
+    --blank-bg:#fffdf6;
+    --blank-border:#8a7a5c;
+    --correct:#2f7d3f;
+    --correct-bg:#e7f5e8;
+    --wrong:#a8402f;
+    --wrong-bg:#fbeae7;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Georgia','Iowan Old Style',serif;
+    line-height:1.5;
+    padding:32px 18px 80px;
+  }
+  .page{max-width:880px;margin:0 auto;}
+  header.title-block{
+    text-align:center;
+    margin-bottom:28px;
+    border-bottom:3px double var(--accent-dark);
+    padding-bottom:16px;
+  }
+  header.title-block h1{
+    font-size:1.9rem;
+    margin:0 0 6px;
+    color:var(--accent-dark);
+    letter-spacing:.3px;
+  }
+  header.title-block p{
+    margin:4px 0 0;
+    font-size:.98rem;
+    color:#5a5346;
+    font-family:'Trebuchet MS',sans-serif;
+  }
+  .name-line{
+    display:flex;
+    gap:24px;
+    justify-content:center;
+    margin-top:14px;
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.9rem;
+    color:#5a5346;
+  }
+  .name-line span{border-bottom:1px solid #8a7a5c;min-width:160px;display:inline-block;padding-bottom:2px;}
+
+  .instructions{
+    background:#fff6df;
+    border:1px solid #e0c98a;
+    border-radius:10px;
+    padding:14px 18px;
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.92rem;
+    margin-bottom:30px;
+  }
+  .instructions strong{color:var(--accent-dark);}
+
+  .group-header{
+    font-family:'Trebuchet MS',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-size:.82rem;
+    color:#fff;
+    background:var(--accent);
+    display:inline-block;
+    padding:5px 16px;
+    border-radius:999px;
+    margin:36px 0 14px;
+  }
+  .group-blurb{
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.88rem;
+    color:#5a5346;
+    margin:-6px 0 16px;
+  }
+
+  .reaction{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 22px 20px;
+    margin-bottom:18px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.05);
+  }
+  .reaction-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .reaction-num{
+    font-family:'Trebuchet MS',sans-serif;
+    font-weight:bold;
+    color:var(--accent-dark);
+    font-size:.95rem;
+  }
+  .watch-link{
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.76rem;
+    text-decoration:none;
+    color:#fff;
+    background:#a6402c;
+    border-radius:999px;
+    padding:4px 12px 4px 10px;
+    white-space:nowrap;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+  }
+  .watch-link:hover{background:#7d2f20;}
+  .watch-link .approx{opacity:.8;font-style:italic;}
+  .reaction-note{
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.83rem;
+    color:#77705f;
+    font-style:italic;
+    margin:0 0 12px;
+  }
+
+  .balanced-box{
+    font-family:'Trebuchet MS',sans-serif;
+    background:#eef4ee;
+    border:1px dashed var(--accent);
+    border-radius:8px;
+    padding:8px 14px;
+    margin-bottom:14px;
+    font-size:1.02rem;
+    letter-spacing:.2px;
+  }
+  .balanced-box .label{
+    display:block;
+    font-size:.68rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--accent-dark);
+    margin-bottom:3px;
+  }
+  .balanced-box sub{font-size:.7em;}
+
+  .word-eq{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:1rem;
+  }
+  .word-eq .op{color:var(--accent-dark);font-weight:bold;font-size:1.15rem;}
+  .word-eq .arrow{color:var(--accent-dark);font-weight:bold;font-size:1.25rem;margin:0 2px;}
+
+  .lozenge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:34px;
+    border:2px dashed var(--blank-border);
+    background:var(--blank-bg);
+    border-radius:999px;
+    padding:4px 6px;
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.95rem;
+    color:#b0a583;
+    text-align:center;
+    transition:background .15s,border-color .15s,box-shadow .15s;
+  }
+  .lozenge.hover-target{border-color:var(--accent-dark);background:#eef4ee;box-shadow:0 0 0 3px rgba(47,111,79,.15);}
+  .lozenge.filled{border-style:solid;border-color:transparent;background:transparent;padding:0;}
+  .lozenge .placeholder{pointer-events:none;font-size:.85rem;}
+
+  .word-bank{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:2px 0 14px;
+    padding:10px 12px;
+    background:#f4efe1;
+    border:1px solid #e3d6b3;
+    border-radius:10px;
+  }
+  .word-bank .bank-label{
+    width:100%;
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.68rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:#8a7a52;
+    margin-bottom:2px;
+  }
+
+  .tile{
+    display:inline-block;
+    border:2px solid var(--blank-border);
+    background:#fffdf6;
+    border-radius:999px;
+    padding:6px 16px;
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.95rem;
+    color:var(--ink);
+    cursor:grab;
+    user-select:none;
+    touch-action:none;
+    white-space:nowrap;
+    box-shadow:0 1px 2px rgba(0,0,0,.06);
+  }
+  .tile.selected{border-color:var(--accent-dark);box-shadow:0 0 0 3px rgba(47,111,79,.25);}
+  .tile.placed{cursor:pointer;width:100%;height:100%;box-shadow:none;}
+  .tile.dragging-source{opacity:.35;}
+  .tile.drag-ghost{
+    position:fixed;
+    z-index:999;
+    pointer-events:none;
+    cursor:grabbing;
+    box-shadow:0 4px 10px rgba(0,0,0,.2);
+  }
+  .lozenge.correct .tile{background:var(--correct-bg);border-color:var(--correct);color:var(--correct);}
+  .lozenge.wrong .tile{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong);}
+  .lozenge.revealed .tile{background:#eee6d2;border-color:#b7a679;color:#4a4530;font-style:italic;}
+
+  .reaction-tools{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .mini-btn{
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.78rem;
+    padding:5px 14px;
+    border-radius:999px;
+    border:1px solid var(--accent);
+    background:#fff;
+    color:var(--accent-dark);
+    cursor:pointer;
+  }
+  .mini-btn:hover{background:#eef4ee;}
+  .mini-btn.hint-btn{border-color:#c79a3e;color:#8a6a1e;}
+  .mini-btn.hint-btn:hover{background:#fbf1d8;}
+  .score-label{
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.78rem;
+    font-weight:bold;
+    color:#8a836f;
+  }
+  .score-label.all-correct{color:var(--correct);}
+  .score-label.has-wrong{color:var(--wrong);}
+
+  .hint-box{
+    display:none;
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.84rem;
+    background:#fbf1d8;
+    border:1px solid #d8b862;
+    color:#6b5220;
+    border-radius:8px;
+    padding:8px 12px;
+    margin:10px 0 0;
+  }
+  .hint-box.shown{display:block;}
+
+  .rank-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin:14px 0;
+  }
+  .rank-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .rank-num{
+    font-family:'Trebuchet MS',sans-serif;
+    font-weight:bold;
+    color:var(--accent-dark);
+    min-width:26px;
+    text-align:right;
+    font-size:.95rem;
+  }
+  .rank-caption{
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.7rem;
+    color:#8a836f;
+    min-width:110px;
+  }
+  .rank-row .lozenge{flex:1;min-width:140px;}
+
+  .controls{
+    max-width:880px;
+    margin:0 auto 26px;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    font-family:'Trebuchet MS',sans-serif;
+  }
+  button{
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.88rem;
+    padding:9px 18px;
+    border-radius:999px;
+    border:1px solid var(--accent-dark);
+    background:var(--accent);
+    color:#fff;
+    cursor:pointer;
+  }
+  button.secondary{background:#fff;color:var(--accent-dark);}
+  button:hover{opacity:.9;}
+
+  footer{
+    text-align:center;
+    font-family:'Trebuchet MS',sans-serif;
+    font-size:.78rem;
+    color:#8a836f;
+    margin-top:36px;
+  }
+
+  @media print{
+    body{background:#fff;padding:0;}
+    .controls{display:none;}
+    .reaction-tools{display:none;}
+    .reaction{box-shadow:none;break-inside:avoid;}
+    .lozenge{background:#fff;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="title-block">
+    <h1>Reactivity &amp; the Periodic Table</h1>
+    <p>Word Equations — Fill in the Blanks</p>
+    <div class="name-line">
+      <span>Name: &nbsp;</span>
+      <span>Date: &nbsp;</span>
+    </div>
+  </header>
+
+  <div class="instructions">
+    <strong>How this works:</strong> each reaction below gives you the full <em>balanced chemical equation</em>.
+    Drag the word tiles from the box below each equation into the matching lozenge-shaped blanks to build the
+    <em>word equation</em>. (On a touch screen, or if dragging is tricky: tap a tile to select it, then tap the
+    blank you want to put it in.) Tap a tile that's already placed to send it back. Use each reaction's own
+    <strong>Check</strong> button to mark just that one, or <strong>Hint</strong> if you're stuck — or use
+    <strong>Check Answers</strong> / <strong>Reveal Answers</strong> at the bottom to do all of them at once.
+    Each reaction also has a <strong>&#9654; Watch this bit</strong> link that jumps straight to that moment
+    in the video on YouTube. At the end of the Group 1 metals, there's also a ranking activity — drag the
+    five metals into order of reactivity, most reactive at the top, based on what you've seen.
+  </div>
+
+  <div id="sections"></div>
+
+</div>
+
+<div class="controls">
+  <button onclick="checkAll()">Check Answers</button>
+  <button class="secondary" onclick="revealAll()">Reveal Answers</button>
+  <button class="secondary" onclick="resetAll()">Clear</button>
+</div>
+
+<footer>Based on video notes on photosynthesis/respiration and periodic trends — Group 1 metals in air and in water, reactions with fluorine, and oxide formation across a period. Video links jump to "Organizing the Elements of the Periodic Table" on YouTube, cued a little early since the original timestamps were noted live.</footer>
+
+<script>
+// The viewing guide built from this same video (a separate file) uses this
+// video id and a 13-second "cue early" buffer, since the timestamps were
+// typed live and trail the actual on-screen action slightly. Reusing both
+// here so every link behaves the same way as that guide.
+const VIDEO_ID = "5GPpDrQl9-Q";
+const CUE_BUFFER_SECONDS = 13;
+
+function watchUrl(seconds){
+  const cued = Math.max(0, seconds - CUE_BUFFER_SECONDS);
+  return `https://www.youtube.com/watch?v=${VIDEO_ID}&t=${cued}s`;
+}
+
+const GROUPS = [
+  {
+    title: "Photosynthesis and respiration",
+    blurb: "The bubbles you can see on the leaves of a water plant are oxygen gas, made by photosynthesis. We then need to breathe that oxygen in — respiration is essentially the reverse reaction, releasing energy back out of the sugar the plant made.",
+    reactions: [
+      {
+        note: "The bubbles on the leaves of this plant are oxygen — made by photosynthesis using light energy, carbon dioxide and water.",
+        balanced: "6CO<sub>2</sub> + 6H<sub>2</sub>O &rarr; C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6O<sub>2</sub> &nbsp;(light energy)",
+        reactants: ["carbon dioxide", "water"],
+        products: ["glucose", "oxygen"],
+        hint: "Plants take in the gas we breathe out, and give out the gas we breathe in — powered by light.",
+        watch: 57
+      },
+      {
+        note: "To stay alive we have to breathe — respiration releases the energy stored in glucose, and is essentially the reverse of photosynthesis.",
+        balanced: "C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6O<sub>2</sub> &rarr; 6CO<sub>2</sub> + 6H<sub>2</sub>O &nbsp;(+ energy)",
+        reactants: ["glucose", "oxygen"],
+        products: ["carbon dioxide", "water"],
+        hint: "Same four substances as photosynthesis — just swap which side they're on.",
+        watch: 57,
+        watchNote: "same section — respiration itself isn't filmed, just the oxygen it needs"
+      }
+    ]
+  },
+  {
+    title: "Group 1 metals in air: the oxide coating",
+    blurb: "Just before the water demonstrations, lithium, sodium and potassium are each cut open with a knife. The shiny metal surface is only visible for a moment before a dull layer of metal oxide forms — the metals are reacting with the oxygen in the air.",
+    reactions: [
+      {
+        note: "When lithium is cut, the shiny metallic surface is briefly seen before a dull oxide coating quickly reforms.",
+        balanced: "4Li + O<sub>2</sub> &rarr; 2Li<sub>2</sub>O",
+        reactants: ["lithium", "oxygen"],
+        products: ["lithium oxide"],
+        hint: "Group 1 metal + oxygen — the same pattern of product as the others cut in this section.",
+        watch: 570
+      },
+      {
+        note: "Sodium tarnishes even faster than lithium in air — part of why it's kept stored under oil.",
+        balanced: "4Na + O<sub>2</sub> &rarr; 2Na<sub>2</sub>O",
+        reactants: ["sodium", "oxygen"],
+        products: ["sodium oxide"],
+        hint: "Same product pattern as lithium's oxide — just swap the metal.",
+        watch: 592
+      },
+      {
+        note: "Potassium tarnishes fastest of the three shown — reactivity with air increases down the group, just as it does with water.",
+        balanced: "4K + O<sub>2</sub> &rarr; 2K<sub>2</sub>O",
+        reactants: ["potassium", "oxygen"],
+        products: ["potassium oxide"],
+        hint: "Follow the same M2O pattern as lithium oxide and sodium oxide.",
+        watch: 608
+      }
+    ]
+  },
+  {
+    title: "Group 1 metals reacting with water",
+    blurb: "Lithium, sodium and potassium all float and fizz on water, giving off hydrogen gas and forming a metal hydroxide solution. The reaction gets more vigorous going down the group.",
+    afterExtra: "ranking",
+    reactions: [
+      {
+        note: "Lithium floats and fizzes gently, giving off hydrogen gas.",
+        balanced: "2Li + 2H<sub>2</sub>O &rarr; 2LiOH + H<sub>2</sub>",
+        reactants: ["lithium", "water"],
+        products: ["lithium hydroxide", "hydrogen"],
+        hint: "The gas given off is the same lightweight gas that filled the Hindenburg airship.",
+        watch: 629
+      },
+      {
+        note: "Sodium reacts more vigorously than lithium, darting across the water's surface.",
+        balanced: "2Na + 2H<sub>2</sub>O &rarr; 2NaOH + H<sub>2</sub>",
+        reactants: ["sodium", "water"],
+        products: ["sodium hydroxide", "hydrogen"],
+        hint: "Same gas as lithium's reaction — the one that gives a 'squeaky pop' with a lit splint.",
+        watch: 640,
+        watchApprox: true
+      },
+      {
+        note: "So much heat is given out that the hydrogen catches fire, burning with a lilac flame.",
+        balanced: "2K + 2H<sub>2</sub>O &rarr; 2KOH + H<sub>2</sub>",
+        reactants: ["potassium", "water"],
+        products: ["potassium hydroxide", "hydrogen"],
+        hint: "Enough heat is released here to ignite the gas itself — what colour was that flame?",
+        watch: 655
+      },
+      {
+        note: "Rubidium reacts even more violently — the trend down Group 1 continues.",
+        balanced: "2Rb + 2H<sub>2</sub>O &rarr; 2RbOH + H<sub>2</sub>",
+        reactants: ["rubidium", "water"],
+        products: ["rubidium hydroxide", "hydrogen"],
+        hint: "Exactly the same pattern of products as Li, Na and K — just a more violent reaction.",
+        watch: 677
+      },
+      {
+        note: "Caesium, the fifth alkali metal shown, reacts explosively with water.",
+        balanced: "2Cs + 2H<sub>2</sub>O &rarr; 2CsOH + H<sub>2</sub>",
+        reactants: ["caesium", "water"],
+        products: ["caesium hydroxide", "hydrogen"],
+        hint: "The most reactive of the five — but still the same two products as every metal in this group.",
+        watch: 697
+      }
+    ]
+  },
+  {
+    title: "Reactions with fluorine, across a period",
+    blurb: "Fluorine — “the T-Rex of the elements” — reacts vigorously with metals and non-metals alike. Formulae like NaF, MgF₂ and AlF₃ follow the trend in combining power across the period, though the pattern isn't perfectly precise: ClF₅ forms instead of the ClF₇ the trend would predict.",
+    reactions: [
+      {
+        note: "Sodium burns in fluorine gas.",
+        balanced: "2Na + F<sub>2</sub> &rarr; 2NaF",
+        reactants: ["sodium", "fluorine"],
+        products: ["sodium fluoride"],
+        hint: "Same kind of product as sodium reacting with chlorine to make table salt — just a different halogen.",
+        watch: 697
+      },
+      {
+        note: "Magnesium reacts the same way as sodium, just as vigorously.",
+        balanced: "Mg + F<sub>2</sub> &rarr; MgF<sub>2</sub>",
+        reactants: ["magnesium", "fluorine"],
+        products: ["magnesium fluoride"],
+        hint: "Magnesium's ion carries a 2+ charge — that's why it needs two fluorines this time.",
+        watch: 697
+      },
+      {
+        note: "Aluminium powder burns readily in fluorine.",
+        balanced: "2Al + 3F<sub>2</sub> &rarr; 2AlF<sub>3</sub>",
+        reactants: ["aluminium", "fluorine"],
+        products: ["aluminium fluoride"],
+        hint: "Aluminium's ion is 3+ — how many fluorines balance that out?",
+        watch: 697
+      },
+      {
+        note: "Sulfur powder burns in fluorine to give a hexafluoride.",
+        balanced: "S + 3F<sub>2</sub> &rarr; SF<sub>6</sub>",
+        reactants: ["sulfur", "fluorine"],
+        products: ["sulfur hexafluoride"],
+        hint: "Sulfur forms an unusually high fluoride here — six fluorine atoms for every sulfur.",
+        watch: 697
+      },
+      {
+        note: "Here the trend breaks down — chlorine forms ClF₅, not the ClF₇ you might expect.",
+        balanced: "Cl<sub>2</sub> + 5F<sub>2</sub> &rarr; 2ClF<sub>5</sub>",
+        reactants: ["chlorine", "fluorine"],
+        products: ["chlorine pentafluoride"],
+        hint: "This is the odd one out in the pattern — five fluorines, not the seven you'd predict.",
+        watch: 697
+      }
+    ]
+  },
+  {
+    title: "Oxide formation across a period",
+    blurb: "Burning each element in oxygen produces its “highest oxide”. Working out the ratio of metal atoms to oxygen atoms in each formula reveals the same steady trend across the period that Mendeleev used to place silicon in the same group as carbon.",
+    reactions: [
+      {
+        note: "Sodium burns in oxygen to form a simple oxide.",
+        balanced: "4Na + O<sub>2</sub> &rarr; 2Na<sub>2</sub>O",
+        reactants: ["sodium", "oxygen"],
+        products: ["sodium oxide"],
+        hint: "Sodium's ion is 1+ and oxide's is 2- — so you need two sodiums per oxygen.",
+        watch: 916
+      },
+      {
+        note: "Aluminium powder poured into a flame burns brightly.",
+        balanced: "4Al + 3O<sub>2</sub> &rarr; 2Al<sub>2</sub>O<sub>3</sub>",
+        reactants: ["aluminium", "oxygen"],
+        products: ["aluminium oxide"],
+        hint: "Aluminium is 3+ and oxide is 2- — the same balancing trick as aluminium fluoride, one group over.",
+        watch: 916
+      },
+      {
+        note: "Silicon (as sand) forms the same type of oxide as carbon — this is why Mendeleev grouped them together.",
+        balanced: "Si + O<sub>2</sub> &rarr; SiO<sub>2</sub>",
+        reactants: ["silicon", "oxygen"],
+        products: ["silicon dioxide"],
+        hint: "Same formula pattern as carbon dioxide — one atom of each element to two oxygens.",
+        watch: 1069
+      },
+      {
+        note: "Phosphorus burns in a 1 m³ flask of oxygen with a bright glow.",
+        balanced: "P<sub>4</sub> + 5O<sub>2</sub> &rarr; P<sub>4</sub>O<sub>10</sub>",
+        reactants: ["phosphorus", "oxygen"],
+        products: ["phosphorus decoxide"],
+        hint: "Phosphorus is unusual — it reacts as clusters of four atoms (P₄), not single atoms.",
+        watch: 916
+      },
+      {
+        note: "A diamond, heated with an oxy-acetylene torch and dropped into liquid oxygen, burns completely away.",
+        balanced: "C + O<sub>2</sub> &rarr; CO<sub>2</sub>",
+        reactants: ["carbon", "oxygen"],
+        products: ["carbon dioxide"],
+        hint: "The classic combustion product — the same gas you breathe out in respiration.",
+        watch: 1069
+      }
+    ]
+  }
+];
+
+// A separate ranking/ordering activity — not a chemical equation, so it's
+// handled by its own render function, but it reuses the same tile/lozenge
+// drag engine (and plugs into Check/Hint/Reveal/Clear) by sharing the same
+// class names and a reaction-style container id.
+const RANKING = {
+  id: "rank-alkali",
+  title: "Rank them: reactivity of the alkali metals",
+  prompt: "Based on the air and water demonstrations you've just seen, drag the five metals into order — most reactive at the top, least reactive at the bottom.",
+  hint: "Reactivity increases as you go down Group 1 — the metal that reacted most violently with water goes on top.",
+  watch: 549,
+  items: [
+    { rank: 1, caption: "Most reactive", answer: "caesium" },
+    { rank: 2, caption: "", answer: "rubidium" },
+    { rank: 3, caption: "", answer: "potassium" },
+    { rank: 4, caption: "", answer: "sodium" },
+    { rank: 5, caption: "Least reactive", answer: "lithium" }
+  ]
+};
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function makeLozenge(answer, reactionId, slotIdx){
+  const width = Math.max(answer.length + 2, 9);
+  return `<span class="lozenge" data-answer="${answer.toLowerCase()}" data-reaction="${reactionId}" id="${reactionId}-slot-${slotIdx}" style="min-width:${width}ch"><span class="placeholder">&hellip;</span></span>`;
+}
+
+function watchLinkHtml(r){
+  if(r.watch === undefined) return '';
+  const label = r.watchNote ? `Watch this bit <span class="approx">(${r.watchNote})</span>`
+    : (r.watchApprox ? `Watch this bit <span class="approx">(approx.)</span>` : 'Watch this bit');
+  return `<a class="watch-link" href="${watchUrl(r.watch)}" target="_blank" rel="noopener">&#9654; ${label}</a>`;
+}
+
+function buildReaction(r, groupIdx, rIdx){
+  const num = `${groupIdx + 1}.${rIdx + 1}`;
+  const reactionId = `rx-${groupIdx}-${rIdx}`;
+  let slot = 0;
+  const reactantEls = r.reactants.map(a => makeLozenge(a, reactionId, slot++)).join(`<span class="op">+</span>`);
+  const productEls = r.products.map(a => makeLozenge(a, reactionId, slot++)).join(`<span class="op">+</span>`);
+  const words = shuffle([...r.reactants, ...r.products]);
+  const tileEls = words.map((w, i) => `<span class="tile" draggable="false" data-word="${w.toLowerCase()}" data-reaction="${reactionId}" id="${reactionId}-tile-${i}">${w}</span>`).join('');
+  return `
+  <div class="reaction" id="${reactionId}">
+    <div class="reaction-head">
+      <span class="reaction-num">Reaction ${num}</span>
+      ${watchLinkHtml(r)}
+    </div>
+    <p class="reaction-note">${r.note}</p>
+    <div class="balanced-box">
+      <span class="label">Balanced chemical equation (given)</span>
+      ${r.balanced}
+    </div>
+    <div class="word-eq">
+      ${reactantEls}
+      <span class="arrow">&rarr;</span>
+      ${productEls}
+    </div>
+    <div class="word-bank" data-reaction="${reactionId}">
+      <span class="bank-label">Word bank — drag or tap into place</span>
+      ${tileEls}
+    </div>
+    <div class="reaction-tools">
+      <button class="mini-btn" onclick="checkOne('${reactionId}')">Check</button>
+      <button class="mini-btn hint-btn" onclick="toggleHint('${reactionId}')" id="${reactionId}-hint-btn">Hint</button>
+      <span class="score-label" id="${reactionId}-score"></span>
+    </div>
+    <p class="hint-box" id="${reactionId}-hint">&#128161; ${r.hint || ''}</p>
+  </div>`;
+}
+
+function renderRanking(rk){
+  const reactionId = rk.id;
+  const rowsHtml = rk.items.map((item, i) => `
+    <div class="rank-row">
+      <span class="rank-num">${item.rank}</span>
+      ${makeLozenge(item.answer, reactionId, i)}
+      <span class="rank-caption">${item.caption}</span>
+    </div>`).join('');
+  const words = shuffle(rk.items.map(item => item.answer));
+  const tileEls = words.map((w, i) => `<span class="tile" draggable="false" data-word="${w.toLowerCase()}" data-reaction="${reactionId}" id="${reactionId}-tile-${i}">${w}</span>`).join('');
+  return `
+  <div class="reaction" id="${reactionId}">
+    <div class="reaction-head">
+      <span class="reaction-num">Activity</span>
+      ${watchLinkHtml(rk)}
+    </div>
+    <p class="reaction-note">${rk.prompt}</p>
+    <div class="rank-list">${rowsHtml}</div>
+    <div class="word-bank" data-reaction="${reactionId}">
+      <span class="bank-label">Word bank — drag or tap into place</span>
+      ${tileEls}
+    </div>
+    <div class="reaction-tools">
+      <button class="mini-btn" onclick="checkOne('${reactionId}')">Check</button>
+      <button class="mini-btn hint-btn" onclick="toggleHint('${reactionId}')" id="${reactionId}-hint-btn">Hint</button>
+      <span class="score-label" id="${reactionId}-score"></span>
+    </div>
+    <p class="hint-box" id="${reactionId}-hint">&#128161; ${rk.hint || ''}</p>
+  </div>`;
+}
+
+function render(){
+  const container = document.getElementById('sections');
+  let html = '';
+  GROUPS.forEach((g, gi) => {
+    html += `<div class="group-header">${g.title}</div><p class="group-blurb">${g.blurb}</p>`;
+    g.reactions.forEach((r, ri) => { html += buildReaction(r, gi, ri); });
+    if(g.afterExtra === 'ranking'){ html += renderRanking(RANKING); }
+  });
+  container.innerHTML = html;
+}
+render();
+
+/* ---------- drag / tap-to-place logic ---------- */
+let selectedTile = null;   // tile chosen via tap, awaiting a lozenge tap
+let dragInfo = null;       // active pointer-drag state
+
+function clearSelection(){
+  if(selectedTile) selectedTile.classList.remove('selected');
+  selectedTile = null;
+}
+
+function bankOf(reactionId){
+  return document.querySelector(`.word-bank[data-reaction="${reactionId}"]`);
+}
+
+function placeTile(tile, lozenge){
+  // if the lozenge already holds a tile, bounce it back to its bank first
+  const existing = lozenge.querySelector('.tile');
+  if(existing){
+    returnTileToBank(existing);
+  }
+  lozenge.classList.remove('correct','wrong','revealed');
+  lozenge.classList.add('filled');
+  lozenge.innerHTML = '';
+  tile.classList.add('placed');
+  tile.style.width = '';
+  tile.style.height = '';
+  lozenge.appendChild(tile);
+}
+
+function returnTileToBank(tile){
+  const reactionId = tile.dataset.reaction;
+  const lozenge = tile.parentElement;
+  if(lozenge && lozenge.classList.contains('lozenge')){
+    lozenge.classList.remove('filled','correct','wrong','revealed');
+    lozenge.innerHTML = '<span class="placeholder">&hellip;</span>';
+  }
+  tile.classList.remove('placed');
+  bankOf(reactionId).appendChild(tile);
+}
+
+function findDropLozenge(x, y, reactionId){
+  const el = document.elementFromPoint(x, y);
+  if(!el) return null;
+  const lozenge = el.closest('.lozenge');
+  if(lozenge && lozenge.dataset.reaction === reactionId) return lozenge;
+  return null;
+}
+
+function onTilePointerDown(e){
+  const tile = e.currentTarget;
+  e.preventDefault();
+  const startX = e.clientX, startY = e.clientY;
+  let moved = false;
+  let ghost = null;
+  const reactionId = tile.dataset.reaction;
+  let lastHover = null;
+
+  function onMove(ev){
+    const dx = ev.clientX - startX, dy = ev.clientY - startY;
+    if(!moved && Math.hypot(dx, dy) > 6){
+      moved = true;
+      clearSelection();
+      tile.classList.add('dragging-source');
+      ghost = tile.cloneNode(true);
+      ghost.classList.add('drag-ghost');
+      ghost.style.width = tile.offsetWidth + 'px';
+      document.body.appendChild(ghost);
+    }
+    if(moved && ghost){
+      ghost.style.left = (ev.clientX - ghost.offsetWidth / 2) + 'px';
+      ghost.style.top = (ev.clientY - ghost.offsetHeight / 2) + 'px';
+      if(lastHover) lastHover.classList.remove('hover-target');
+      const target = findDropLozenge(ev.clientX, ev.clientY, reactionId);
+      if(target && !target.querySelector('.tile')){
+        target.classList.add('hover-target');
+        lastHover = target;
+      } else {
+        lastHover = null;
+      }
+    }
+  }
+
+  function onUp(ev){
+    document.removeEventListener('pointermove', onMove);
+    document.removeEventListener('pointerup', onUp);
+    if(lastHover) lastHover.classList.remove('hover-target');
+    if(moved){
+      tile.classList.remove('dragging-source');
+      if(ghost) ghost.remove();
+      const target = findDropLozenge(ev.clientX, ev.clientY, reactionId);
+      if(target){
+        placeTile(tile, target);
+      }
+    } else {
+      // simple tap: select this tile (or deselect if tapping it again)
+      if(selectedTile === tile){
+        clearSelection();
+      } else {
+        clearSelection();
+        selectedTile = tile;
+        tile.classList.add('selected');
+      }
+    }
+  }
+
+  document.addEventListener('pointermove', onMove);
+  document.addEventListener('pointerup', onUp);
+}
+
+function onTileClickInSlot(e){
+  const tile = e.currentTarget;
+  if(!tile.classList.contains('placed')) return;
+  returnTileToBank(tile);
+  clearSelection();
+}
+
+function onLozengeClick(e){
+  const lozenge = e.currentTarget;
+  if(lozenge.querySelector('.tile')) return; // occupied — handled by the tile's own click
+  if(selectedTile && selectedTile.dataset.reaction === lozenge.dataset.reaction){
+    placeTile(selectedTile, lozenge);
+    clearSelection();
+  }
+}
+
+function wireUpEvents(){
+  document.querySelectorAll('.tile').forEach(tile => {
+    tile.addEventListener('pointerdown', onTilePointerDown);
+    tile.addEventListener('click', onTileClickInSlot);
+  });
+  document.querySelectorAll('.lozenge').forEach(lz => {
+    lz.addEventListener('click', onLozengeClick);
+  });
+}
+wireUpEvents();
+
+function evaluateReaction(reactionEl){
+  let correct = 0, total = 0;
+  reactionEl.querySelectorAll('.lozenge').forEach(lz => {
+    total++;
+    lz.classList.remove('revealed');
+    const tile = lz.querySelector('.tile');
+    if(!tile){ lz.classList.remove('correct','wrong'); return; }
+    if(tile.dataset.word === lz.dataset.answer){
+      lz.classList.add('correct'); lz.classList.remove('wrong');
+      correct++;
+    } else {
+      lz.classList.add('wrong'); lz.classList.remove('correct');
+    }
+  });
+  const label = document.getElementById(`${reactionEl.id}-score`);
+  if(label){
+    label.textContent = `${correct} / ${total} correct`;
+    label.classList.toggle('all-correct', correct === total);
+    label.classList.toggle('has-wrong', correct < total);
+  }
+  return { correct, total };
+}
+
+function checkOne(reactionId){
+  const reactionEl = document.getElementById(reactionId);
+  if(reactionEl) evaluateReaction(reactionEl);
+}
+
+function checkAll(){
+  document.querySelectorAll('.reaction').forEach(evaluateReaction);
+}
+
+function toggleHint(reactionId){
+  const box = document.getElementById(`${reactionId}-hint`);
+  const btn = document.getElementById(`${reactionId}-hint-btn`);
+  if(!box) return;
+  const shown = box.classList.toggle('shown');
+  if(btn) btn.textContent = shown ? 'Hide hint' : 'Hint';
+}
+
+function revealAll(){
+  document.querySelectorAll('.reaction').forEach(reactionEl => {
+    const reactionId = reactionEl.id;
+    reactionEl.querySelectorAll('.lozenge').forEach(lz => {
+      const current = lz.querySelector('.tile');
+      if(current && current.dataset.word === lz.dataset.answer){
+        lz.classList.add('revealed'); lz.classList.remove('correct','wrong');
+        return;
+      }
+      if(current) returnTileToBank(current);
+      const match = bankOf(reactionId).querySelector(`.tile[data-word="${lz.dataset.answer}"]`)
+        || reactionEl.querySelector(`.tile[data-word="${lz.dataset.answer}"]`);
+      if(match) placeTile(match, lz);
+      lz.classList.add('revealed'); lz.classList.remove('correct','wrong');
+    });
+    const label = document.getElementById(`${reactionId}-score`);
+    if(label){ label.textContent = ''; label.classList.remove('all-correct','has-wrong'); }
+  });
+}
+
+function resetAll(){
+  document.querySelectorAll('.lozenge').forEach(lz => {
+    const tile = lz.querySelector('.tile');
+    if(tile) returnTileToBank(tile);
+    lz.classList.remove('correct','wrong','revealed');
+  });
+  document.querySelectorAll('.score-label').forEach(label => {
+    label.textContent = '';
+    label.classList.remove('all-correct','has-wrong');
+  });
+  clearSelection();
+}
+</script>
+</body>
+</html>
