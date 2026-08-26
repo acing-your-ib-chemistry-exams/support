@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Random Element Drop! Periods 1–6 Edition — Periodic Table Tetris</title>
+<title>Random Element Drop! Periods 1–7 Edition — Periodic Table Tetris</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
@@ -133,7 +133,7 @@
     z-index:1;
     display:grid;
     grid-template-columns:repeat(18,1fr);
-    grid-template-rows:20px repeat(6,44px) 20px;
+    grid-template-rows:20px repeat(7,44px) 20px;
     gap:4px;
     width:min(96vw,920px);
   }
@@ -399,13 +399,13 @@
 
 <div class="wrap">
   <header>
-    <h1>Random Element Drop! Periods 1–6 Edition</h1>
-    <div class="subtitle">A Periodic Table Challenge — all 72 elements across Periods 1–6 fall in random order, anywhere on the table</div>
+    <h1>Random Element Drop! Periods 1–7 Edition</h1>
+    <div class="subtitle">A Periodic Table Challenge — all 90 elements across Periods 1–7 fall in random order, anywhere on the table</div>
     <div class="hud">
       <div>Score: <span id="score">0</span><span id="multiplierBadge" class="badge" hidden>×1</span></div>
       <div>Element Timer: <span id="elTimer">0.0s</span></div>
       <div>Total Time: <span id="totalTimer">00:00</span></div>
-      <div>Remaining: <span id="remaining">72</span></div>
+      <div>Remaining: <span id="remaining">90</span></div>
     </div>
     <div class="support-bar">
       <label class="switch-row" id="noColorRow">
@@ -433,13 +433,13 @@
   <div class="current-guide" id="guideText">Guide the block into place.</div>
 
   <div class="game-area" id="gameArea">
-    <div class="bg-text" id="bgText">PERIODS 1–6</div>
+    <div class="bg-text" id="bgText">PERIODS 1–7</div>
     <div class="table-grid" id="tableGrid"></div>
   </div>
 
   <div class="instructions">
     <kbd>&larr;</kbd> <kbd>&rarr;</kbd> move the block &nbsp;•&nbsp; <kbd>&darr;</kbd> drop instantly &nbsp;•&nbsp; <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> work too (W does nothing!) &nbsp;•&nbsp;
-    Every one of the 72 elements across Periods 1–6 can fall next, in completely random order and from anywhere on the table —
+    Every one of the 90 elements across Periods 1–7 can fall next, in completely random order and from anywhere on the table —
     no working through Period 1, 2, 3... in sequence. Faster + correct = more points!
   </div>
 
@@ -452,10 +452,10 @@
 
 <div class="overlay" id="startOverlay">
   <div class="card">
-    <h2>Random Element Drop! Periods 1–6 Edition</h2>
-    <p>Built for students who already know Periods 1 through 6: instead of working through Period 1,
-    Period 2, Period 3 and so on in order, all <b>72 elements</b> across every one of the six
-    periods are shuffled together into one pile and fall one at a time in completely random order.</p>
+    <h2>Random Element Drop! Periods 1–7 Edition</h2>
+    <p>Built for students who already know Periods 1 through 7: instead of working through Period 1,
+    Period 2, Period 3 and so on in order, all <b>90 elements</b> across every one of the seven periods
+    are shuffled together into one pile and fall one at a time in completely random order.</p>
     <p>Use the arrow keys to steer each falling block sideways and land it in its correct box before it
     reaches the bottom of its row. The block's landing row is fixed automatically by which element it is —
     the only guess you have to make is the column. Correct placements score more points the faster you find
@@ -472,7 +472,7 @@
 
 <div class="overlay" id="endOverlay" hidden>
   <div class="card">
-    <h2>You've Conquered Periods 1–6!</h2>
+    <h2>You've Conquered Periods 1–7!</h2>
     <div class="final-score" id="finalScore">0</div>
     <p id="finalTime"></p>
     <button id="restartBtn">Play Again</button>
@@ -488,14 +488,14 @@
   const EXTRA_LIFT = 100; // raises the spawn point ~2 row-heights higher for more reaction time
   const ROMAN_LABELS = ['I','II','3','4','5','6','7','8','9','10','11','12','III','IV','V','VI','VII','0']; // historical group numbering, shown above the table
 
-  // No decorative context — every one of the 72 elements is a box the
+  // No decorative context — every one of the 90 elements is a box the
   // player fills in, in random order rather than period by period.
   const context = [];
 
-  // All 72 elements across Periods 1-6 the player must place, in NO fixed
+  // All 90 elements across Periods 1-7 the player must place, in NO fixed
   // order — spawnNext() draws from a single shuffled queue covering every
   // period at once. The Lanthanide and Actinide Series are not included
-  // (same main-table-only element set as the other Period drop games).
+  // (same main-table-only element set as the individual Period 1-7 games).
   const allTargets = [
     {p:1, g:1, s:'H', z:1, name:'Hydrogen', cat:'nonmetal'},
     {p:1, g:18, s:'He', z:2, name:'Helium', cat:'noble'},
@@ -568,10 +568,28 @@
     {p:6, g:15, s:'Bi', z:83, name:'Bismuth', cat:'posttrans'},
     {p:6, g:16, s:'Po', z:84, name:'Polonium', cat:'metalloid'},
     {p:6, g:17, s:'At', z:85, name:'Astatine', cat:'halogen'},
-    {p:6, g:18, s:'Rn', z:86, name:'Radon', cat:'noble'}
+    {p:6, g:18, s:'Rn', z:86, name:'Radon', cat:'noble'},
+    {p:7, g:1, s:'Fr', z:87, name:'Francium', cat:'alkali'},
+    {p:7, g:2, s:'Ra', z:88, name:'Radium', cat:'alkaline'},
+    {p:7, g:3, s:'Ac', z:89, name:'Actinium', cat:'rare'},
+    {p:7, g:4, s:'Rf', z:104, name:'Rutherfordium', cat:'transition'},
+    {p:7, g:5, s:'Db', z:105, name:'Dubnium', cat:'transition'},
+    {p:7, g:6, s:'Sg', z:106, name:'Seaborgium', cat:'transition'},
+    {p:7, g:7, s:'Bh', z:107, name:'Bohrium', cat:'transition'},
+    {p:7, g:8, s:'Hs', z:108, name:'Hassium', cat:'transition'},
+    {p:7, g:9, s:'Mt', z:109, name:'Meitnerium', cat:'transition'},
+    {p:7, g:10, s:'Ds', z:110, name:'Darmstadtium', cat:'transition'},
+    {p:7, g:11, s:'Rg', z:111, name:'Roentgenium', cat:'transition'},
+    {p:7, g:12, s:'Cn', z:112, name:'Copernicium', cat:'transition'},
+    {p:7, g:13, s:'Nh', z:113, name:'Nihonium', cat:'posttrans'},
+    {p:7, g:14, s:'Fl', z:114, name:'Flerovium', cat:'posttrans'},
+    {p:7, g:15, s:'Mc', z:115, name:'Moscovium', cat:'posttrans'},
+    {p:7, g:16, s:'Lv', z:116, name:'Livermorium', cat:'posttrans'},
+    {p:7, g:17, s:'Ts', z:117, name:'Tennessine', cat:'halogen'},
+    {p:7, g:18, s:'Og', z:118, name:'Oganesson', cat:'noble'}
   ];
 
-  // Every target sits in a real main-table period (1-6), so the grid row is
+  // Every target sits in a real main-table period (1-7), so the grid row is
   // simply period+1 (row 1 is the roman-numeral header above the table).
   function rowForPeriod(p){
     return p + 1;
@@ -865,13 +883,21 @@
     current = queue.shift();
     currentCol = Math.ceil(COLS/2);
     spawnTime = performance.now();
-    // Ramps up over the first ~22 correct placements, then plateaus — with
-    // 72 elements to get through, an ever-increasing speed would become
-    // unplayable long before the end, unlike the shorter single-period games.
-    fallSpeed = 42 + Math.min(solvedCount, 22)*2.2;
+    // Showcase pace: slow and constant (no ramp-up), so there's always
+    // time to read the symbol, think about where it belongs, and watch
+    // it drift there before it lands. (24px/s gives Period 1 elements —
+    // the shortest fall, closest to the spawn point — a roughly 8.5s
+    // transit, comfortably longer than the ~2s think-pause plus the
+    // longest possible column walk below, so it can never land before
+    // it's finished lining up.)
+    fallSpeed = 24;
 
     document.getElementById('blockSymbol').textContent = current.s;
     fallingBlockEl.className = 'falling-block cat-'+current.cat;
+    // A previous block's glide (see the autopilot below) may have left a
+    // long, slow transition on this element — reset it so the new block
+    // always snaps to its centred starting column instantly.
+    fallingBlockEl.style.transition = 'left .12s ease';
     bgTextEl.textContent = current.name.toUpperCase();
     guideTextEl.innerHTML = 'Guide <b>'+current.name+'</b> (<span class="sym-inline">'+current.s+'</span>) into its correct box — it could be anywhere on the table!';
 
@@ -1033,6 +1059,7 @@
     finalScoreEl.textContent = score;
     finalTimeEl.textContent = 'Total time: '+formatTime(performance.now()-gameStart);
     endOverlay.hidden = false;
+    setTimeout(startGame, 3500);
   }
 
   function startGame(){
@@ -1053,7 +1080,7 @@
     updateMultiplierDisplay();
 
     buildTable();
-    queue = shuffle(allTargets); // ALL 72 elements shuffled together — no period grouping at all
+    queue = shuffle(allTargets); // ALL 90 elements shuffled together — no period grouping at all
     updateScore();
     updateRemaining();
     startOverlay.hidden = true;
@@ -1072,7 +1099,7 @@
       spawnNext();
       rafId = requestAnimationFrame(loop);
     } else {
-      guideTextEl.innerHTML = 'Study the board — the full 72-element layout is shown for 5 seconds...';
+      guideTextEl.innerHTML = 'Study the board — the full 90-element layout is shown for 5 seconds...';
       showGhostHints(5000, "Here's the full layout — study it! (5s)", function(){
         gameStart = performance.now();
         gameRunning = true;
@@ -1084,12 +1111,32 @@
 
   document.getElementById('startBtn').addEventListener('click', startGame);
   document.getElementById('restartBtn').addEventListener('click', startGame);
+  setTimeout(startGame, 700);
+
+  // Lets a student grab the currently-falling block at any time — with the
+  // keyboard, WASD, or the on-screen buttons below — and steer it in
+  // themselves. Getting it wrong is fine: the shared game engine already
+  // resets a wrong guess and drops the same element again (see land()
+  // above), exactly as in the regular games. The autopilot further down
+  // simply steps back the moment a student takes a block, and picks the
+  // next one up normally once this one is correctly placed.
+  var playerControlBlock = null;
+  var apHandledBlock = null;
+  var apMoveTimer = null;
+  var apRevertTimer = null;
+  function takeManualControl(){
+    if(!current || current === playerControlBlock) return;
+    playerControlBlock = current;
+    if(apMoveTimer) clearTimeout(apMoveTimer);
+    if(apRevertTimer) clearTimeout(apRevertTimer);
+    fallingBlockEl.style.transition = 'left .12s ease';
+  }
 
   window.addEventListener('keydown', function(e){
     if(!gameRunning) return;
-    if(e.key==='ArrowLeft' || e.key==='a' || e.key==='A'){ moveCol(-1); e.preventDefault(); }
-    else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){ moveCol(1); e.preventDefault(); }
-    else if(e.key==='ArrowDown' || e.key==='s' || e.key==='S'){ hardDrop(); e.preventDefault(); }
+    if(e.key==='ArrowLeft' || e.key==='a' || e.key==='A'){ takeManualControl(); moveCol(-1); e.preventDefault(); }
+    else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){ takeManualControl(); moveCol(1); e.preventDefault(); }
+    else if(e.key==='ArrowDown' || e.key==='s' || e.key==='S'){ takeManualControl(); hardDrop(); e.preventDefault(); }
   });
 
   // --- touch controls (iPad / touchscreen support) ---
@@ -1159,9 +1206,9 @@
     window.addEventListener('blur', stopAll);
     document.addEventListener('visibilitychange', function(){ if(document.hidden) stopAll(); });
 
-    wire(btnLeft, function(){ moveCol(-1); });
-    wire(btnRight, function(){ moveCol(1); });
-    wire(btnDrop, function(){ hardDrop(); });
+    wire(btnLeft, function(){ takeManualControl(); moveCol(-1); });
+    wire(btnRight, function(){ takeManualControl(); moveCol(1); });
+    wire(btnDrop, function(){ takeManualControl(); hardDrop(); });
   })();
 
 
@@ -1171,6 +1218,54 @@
     positionBlockX();
     targetTop = getRowTop();
   });
+
+  // Steers each falling block into its correct column on its own — always
+  // correctly, and UNLESS a student has grabbed this particular block via
+  // takeManualControl() above, in which case it hands off entirely until
+  // the next one spawns. Otherwise it works backwards from how long the
+  // fall actually takes: it stays on the centre line falling straight
+  // down for as long as possible, and only starts drifting across at the
+  // last moment needed to finish lining up — as ONE continuous eased
+  // glide (not a series of discrete one-column hops, which read as
+  // jerky/mechanical) — so it settles in smoothly right as it lands,
+  // instead of arriving early and idling there, or stepping in jumps.
+  (function(){
+    var MS_PER_COL = 260;         // total glide duration scales gently with distance
+    var MIN_GLIDE_MS = 550;
+    var SETTLE_BUFFER_MS = 450;   // finish the glide a little before touchdown, not exactly on it
+    var MIN_FALL_PAUSE_MS = 900;  // always watch it fall a while before it starts moving
+    var DEFAULT_TRANSITION = 'left .12s ease';
+    var GLIDE_EASING = 'cubic-bezier(.45,0,.2,1)'; // smooth accelerate-then-settle, no steps
+
+    setInterval(function(){
+      if(!gameRunning || !current) return;
+      if(current === playerControlBlock) return; // a student is flying this one — hands off
+      if(current === apHandledBlock) return;
+      var thisBlock = current;
+      apHandledBlock = thisBlock;
+      if(apMoveTimer) clearTimeout(apMoveTimer);
+      if(apRevertTimer) clearTimeout(apRevertTimer);
+      fallingBlockEl.style.transition = DEFAULT_TRANSITION;
+
+      var steps = Math.abs(thisBlock.g - currentCol);
+      if(steps === 0) return; // already lined up — nothing to glide
+      var glideMs = Math.max(MIN_GLIDE_MS, steps * MS_PER_COL);
+      var timeToLandMs = Math.max(0, (targetTop - fallingTop) / fallSpeed * 1000);
+      var startDelay = Math.max(MIN_FALL_PAUSE_MS, timeToLandMs - glideMs - SETTLE_BUFFER_MS);
+
+      apMoveTimer = setTimeout(function(){
+        if(current !== thisBlock || !gameRunning || hintActive || current === playerControlBlock) return;
+        // One smooth, continuous glide across to the target column —
+        // a single CSS transition, not a sequence of column-by-column hops.
+        fallingBlockEl.style.transition = 'left ' + glideMs + 'ms ' + GLIDE_EASING;
+        currentCol = thisBlock.g;
+        positionBlockX();
+        apRevertTimer = setTimeout(function(){
+          fallingBlockEl.style.transition = DEFAULT_TRANSITION;
+        }, glideMs + 60);
+      }, startDelay);
+    }, 90);
+  })();
 
   // Build the table once immediately so it's visible behind the start overlay
   buildTable();

@@ -410,6 +410,26 @@
     transform:translate(2px,2px);
   }
   .tbtn-drop{ color:var(--accent); border-color:var(--accent); flex:1.3; }
+
+  .study-ready-btn{
+    display:block;
+    margin:8px auto 14px;
+    font-family:'Architects Daughter',cursive;
+    background:var(--accent);
+    border:2.2px solid var(--ink);
+    color:#fff;
+    font-weight:700;
+    padding:10px 26px;
+    border-radius: 10px 16px 9px 17px / 14px 9px 17px 10px;
+    cursor:pointer;
+    font-size:15px;
+    box-shadow: 3px 3px 0 rgba(30,30,30,.85);
+    letter-spacing:0.5px;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .study-ready-btn:hover{ filter:brightness(1.08); }
+  .study-ready-btn[hidden]{ display:none; }
 </style>
 </head>
 <body>
@@ -455,6 +475,7 @@
   <div class="banner" id="banner"></div>
   <div class="period-banner" id="periodBanner"></div>
   <div class="hint-banner" id="hintBanner">Here's where everything goes — take a look!</div>
+  <button type="button" class="study-ready-btn" id="studyReadyBtn" hidden>I'm ready &mdash; Start!</button>
   <div class="current-guide" id="guideText">Guide the block into place.</div>
 
   <div class="game-area" id="gameArea">
@@ -463,7 +484,7 @@
   </div>
 
   <div class="instructions">
-    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> move the block &nbsp;•&nbsp; <kbd>&darr;</kbd> drop instantly &nbsp;•&nbsp;
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> move the block &nbsp;•&nbsp; <kbd>&darr;</kbd> drop instantly &nbsp;•&nbsp; <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> work too (W does nothing!) &nbsp;•&nbsp;
     Complete each stage in turn — Period 1 through Period 6, then the Lanthanide Series, then Period 7, then the
     Actinide Series — 118 elements in total, one row at a time. Faster + correct = more points, and your points
     multiplier climbs by 20% for every stage beyond the first three!
@@ -682,6 +703,7 @@
   const bannerEl = document.getElementById('banner');
   const periodBannerEl = document.getElementById('periodBanner');
   const hintBannerEl = document.getElementById('hintBanner');
+  const studyReadyBtn = document.getElementById('studyReadyBtn');
   const guideTextEl = document.getElementById('guideText');
   const startOverlay = document.getElementById('startOverlay');
   const endOverlay = document.getElementById('endOverlay');
@@ -1070,10 +1092,21 @@
       }
     });
     if(hintTimer) clearTimeout(hintTimer);
-    hintTimer = setTimeout(function(){
-      hideGhostHints();
-      if(onDone) onDone();
-    }, duration);
+    if(duration === 0 && studyReadyBtn){
+      // Manual mode: the student studies the board for as long as they like
+      // and presses the button when ready, instead of a fixed timer.
+      studyReadyBtn.hidden = false;
+      studyReadyBtn.onclick = function(){
+        studyReadyBtn.hidden = true;
+        hideGhostHints();
+        if(onDone) onDone();
+      };
+    } else {
+      hintTimer = setTimeout(function(){
+        hideGhostHints();
+        if(onDone) onDone();
+      }, duration);
+    }
   }
 
   function hideGhostHints(){
@@ -1233,8 +1266,8 @@
       spawnNext();
       rafId = requestAnimationFrame(loop);
     } else {
-      guideTextEl.innerHTML = 'Study the board — the full 118-element layout is shown for 5 seconds...';
-      showGhostHints(5000, "Here's the full layout — study it! (5s)", function(){
+      guideTextEl.innerHTML = 'Study the board — the full 118-element layout is shown until you press Start...';
+      showGhostHints(0, "Here's the full layout — take your time, then press Start.", function(){
         gameStart = performance.now();
         gameRunning = true;
         spawnNext();
@@ -1248,9 +1281,9 @@
 
   window.addEventListener('keydown', function(e){
     if(!gameRunning) return;
-    if(e.key==='ArrowLeft'){ moveCol(-1); e.preventDefault(); }
-    else if(e.key==='ArrowRight'){ moveCol(1); e.preventDefault(); }
-    else if(e.key==='ArrowDown'){ hardDrop(); e.preventDefault(); }
+    if(e.key==='ArrowLeft' || e.key==='a' || e.key==='A'){ moveCol(-1); e.preventDefault(); }
+    else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){ moveCol(1); e.preventDefault(); }
+    else if(e.key==='ArrowDown' || e.key==='s' || e.key==='S'){ hardDrop(); e.preventDefault(); }
   });
 
   // --- touch controls (iPad / touchscreen support) ---
@@ -1267,34 +1300,58 @@
 
     var repeatDelay = null;
     var repeatTimer = null;
+    var safetyStop = null;
+    var activeBtn = null;
+
+    // Bug fix: if pointerup/pointerleave ever failed to fire on the pressed
+    // button (seen intermittently with mouse/trackpad — the OS delivers the
+    // release to a different element, or none), the repeat interval below
+    // used to keep firing forever, silently fighting the keyboard until the
+    // block was dragged to column 1 or 18. stopAll() is now reachable from
+    // several independent listeners (not just the one button that started
+    // it), plus a hard 4s cap, so a repeat can never outlive its keypress.
+    function stopAll(){
+      if(activeBtn) activeBtn.classList.remove('pressed');
+      activeBtn = null;
+      clearTimeout(repeatDelay);
+      clearInterval(repeatTimer);
+      clearTimeout(safetyStop);
+      repeatDelay = null;
+      repeatTimer = null;
+      safetyStop = null;
+    }
 
     function pressStart(action, btn){
       return function(ev){
         ev.preventDefault();
+        stopAll();
+        if(ev.pointerId !== undefined && btn.setPointerCapture){
+          try { btn.setPointerCapture(ev.pointerId); } catch(e){}
+        }
+        activeBtn = btn;
         btn.classList.add('pressed');
         action();
-        clearTimeout(repeatDelay);
-        clearInterval(repeatTimer);
         repeatDelay = setTimeout(function(){
           repeatTimer = setInterval(action, 130);
         }, 350);
-      };
-    }
-    function pressEnd(btn){
-      return function(ev){
-        if(ev) ev.preventDefault();
-        btn.classList.remove('pressed');
-        clearTimeout(repeatDelay);
-        clearInterval(repeatTimer);
+        safetyStop = setTimeout(stopAll, 4000);
       };
     }
     function wire(btn, action){
       btn.addEventListener('pointerdown', pressStart(action, btn));
-      btn.addEventListener('pointerup', pressEnd(btn));
-      btn.addEventListener('pointerleave', pressEnd(btn));
-      btn.addEventListener('pointercancel', pressEnd(btn));
+      btn.addEventListener('pointerup', stopAll);
+      btn.addEventListener('pointerleave', stopAll);
+      btn.addEventListener('pointercancel', stopAll);
+      btn.addEventListener('lostpointercapture', stopAll);
       btn.addEventListener('contextmenu', function(ev){ ev.preventDefault(); });
     }
+
+    // Fail-safes: catch a release anywhere on the page (or the window losing
+    // focus entirely) even if the originating button never reports it.
+    window.addEventListener('pointerup', stopAll);
+    window.addEventListener('pointercancel', stopAll);
+    window.addEventListener('blur', stopAll);
+    document.addEventListener('visibilitychange', function(){ if(document.hidden) stopAll(); });
 
     wire(btnLeft, function(){ moveCol(-1); });
     wire(btnRight, function(){ moveCol(1); });

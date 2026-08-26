@@ -438,7 +438,7 @@
   </div>
 
   <div class="instructions">
-    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> move the block &nbsp;•&nbsp; <kbd>&darr;</kbd> drop instantly &nbsp;•&nbsp;
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> move the block &nbsp;•&nbsp; <kbd>&darr;</kbd> drop instantly &nbsp;•&nbsp; <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> work too (W does nothing!) &nbsp;•&nbsp;
     Every one of the 18 elements across Periods 1–3 can fall next, in completely random order and from anywhere on the table —
     no working through Period 1, 2, 3... in sequence. Faster + correct = more points!
   </div>
@@ -1033,9 +1033,9 @@
 
   window.addEventListener('keydown', function(e){
     if(!gameRunning) return;
-    if(e.key==='ArrowLeft'){ moveCol(-1); e.preventDefault(); }
-    else if(e.key==='ArrowRight'){ moveCol(1); e.preventDefault(); }
-    else if(e.key==='ArrowDown'){ hardDrop(); e.preventDefault(); }
+    if(e.key==='ArrowLeft' || e.key==='a' || e.key==='A'){ moveCol(-1); e.preventDefault(); }
+    else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){ moveCol(1); e.preventDefault(); }
+    else if(e.key==='ArrowDown' || e.key==='s' || e.key==='S'){ hardDrop(); e.preventDefault(); }
   });
 
   // --- touch controls (iPad / touchscreen support) ---
@@ -1052,34 +1052,58 @@
 
     var repeatDelay = null;
     var repeatTimer = null;
+    var safetyStop = null;
+    var activeBtn = null;
+
+    // Bug fix: if pointerup/pointerleave ever failed to fire on the pressed
+    // button (seen intermittently with mouse/trackpad — the OS delivers the
+    // release to a different element, or none), the repeat interval below
+    // used to keep firing forever, silently fighting the keyboard until the
+    // block was dragged to column 1 or 18. stopAll() is now reachable from
+    // several independent listeners (not just the one button that started
+    // it), plus a hard 4s cap, so a repeat can never outlive its keypress.
+    function stopAll(){
+      if(activeBtn) activeBtn.classList.remove('pressed');
+      activeBtn = null;
+      clearTimeout(repeatDelay);
+      clearInterval(repeatTimer);
+      clearTimeout(safetyStop);
+      repeatDelay = null;
+      repeatTimer = null;
+      safetyStop = null;
+    }
 
     function pressStart(action, btn){
       return function(ev){
         ev.preventDefault();
+        stopAll();
+        if(ev.pointerId !== undefined && btn.setPointerCapture){
+          try { btn.setPointerCapture(ev.pointerId); } catch(e){}
+        }
+        activeBtn = btn;
         btn.classList.add('pressed');
         action();
-        clearTimeout(repeatDelay);
-        clearInterval(repeatTimer);
         repeatDelay = setTimeout(function(){
           repeatTimer = setInterval(action, 130);
         }, 350);
-      };
-    }
-    function pressEnd(btn){
-      return function(ev){
-        if(ev) ev.preventDefault();
-        btn.classList.remove('pressed');
-        clearTimeout(repeatDelay);
-        clearInterval(repeatTimer);
+        safetyStop = setTimeout(stopAll, 4000);
       };
     }
     function wire(btn, action){
       btn.addEventListener('pointerdown', pressStart(action, btn));
-      btn.addEventListener('pointerup', pressEnd(btn));
-      btn.addEventListener('pointerleave', pressEnd(btn));
-      btn.addEventListener('pointercancel', pressEnd(btn));
+      btn.addEventListener('pointerup', stopAll);
+      btn.addEventListener('pointerleave', stopAll);
+      btn.addEventListener('pointercancel', stopAll);
+      btn.addEventListener('lostpointercapture', stopAll);
       btn.addEventListener('contextmenu', function(ev){ ev.preventDefault(); });
     }
+
+    // Fail-safes: catch a release anywhere on the page (or the window losing
+    // focus entirely) even if the originating button never reports it.
+    window.addEventListener('pointerup', stopAll);
+    window.addEventListener('pointercancel', stopAll);
+    window.addEventListener('blur', stopAll);
+    document.addEventListener('visibilitychange', function(){ if(document.hidden) stopAll(); });
 
     wire(btnLeft, function(){ moveCol(-1); });
     wire(btnRight, function(){ moveCol(1); });
