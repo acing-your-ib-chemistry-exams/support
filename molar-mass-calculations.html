@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Molar Mass Calculations</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#f6f4ec;
+    --surface:#ffffff;
+    --surface-2:#ece8da;
+    --border:#ddd6c2;
+    --text:#211f19;
+    --text-muted:#5b6259;
+    --accent:#1f6f5c;
+    --accent-strong:#12463a;
+    --accent-tint:#e2ede8;
+    --good:#2e7d46;
+    --good-tint:#e3f2e6;
+    --bad:#b3261e;
+    --bad-tint:#fbe8e6;
+    --hint:#8a5c0c;
+    --hint-tint:#f6ecd9;
+    --reflect:#3a5a8c;
+    --reflect-tint:#e7edf6;
+    --shadow: 0 1px 2px rgba(33,31,25,0.06), 0 6px 20px -8px rgba(33,31,25,0.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14181a;
+      --surface:#1b2124;
+      --surface-2:#212a2c;
+      --border:#2e3a38;
+      --text:#e7ece6;
+      --text-muted:#9caea5;
+      --accent:#59c7a6;
+      --accent-strong:#8ce0c4;
+      --accent-tint:#1c2e2a;
+      --good:#69c684;
+      --good-tint:#193322;
+      --bad:#e5786d;
+      --bad-tint:#3a1f1c;
+      --hint:#e5b85e;
+      --hint-tint:#332a15;
+      --reflect:#8fb0e0;
+      --reflect-tint:#1b2636;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -10px rgba(0,0,0,0.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14181a;
+    --surface:#1b2124;
+    --surface-2:#212a2c;
+    --border:#2e3a38;
+    --text:#e7ece6;
+    --text-muted:#9caea5;
+    --accent:#59c7a6;
+    --accent-strong:#8ce0c4;
+    --accent-tint:#1c2e2a;
+    --good:#69c684;
+    --good-tint:#193322;
+    --bad:#e5786d;
+    --bad-tint:#3a1f1c;
+    --hint:#e5b85e;
+    --hint-tint:#332a15;
+    --reflect:#8fb0e0;
+    --reflect-tint:#1b2636;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -10px rgba(0,0,0,0.55);
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height:1.6;
+    font-size:16px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  h1,h2,h3{
+    font-family:"Fraunces", ui-serif, Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--text);
+    margin:0 0 0.4em;
+  }
+  code, .mono, .formula{
+    font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  }
+  sub{font-size:0.72em;}
+
+  a{color:var(--accent-strong);}
+
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  .wrap-wide{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:40;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar-inner{
+    max-width:1180px; margin:0 auto; padding:12px 24px;
+    display:flex; align-items:center; gap:16px; justify-content:space-between;
+  }
+  .topbar-title{
+    font-family:"Fraunces", serif; font-weight:600; font-size:1.05rem;
+    white-space:nowrap;
+  }
+  .topbar-title span{color:var(--accent-strong);}
+  .progress-cluster{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end;
+  }
+  .progress-track{
+    width:130px; height:8px; border-radius:99px; background:var(--surface-2);
+    overflow:hidden; border:1px solid var(--border);
+  }
+  .progress-fill{
+    height:100%; width:0%; background:var(--accent); border-radius:99px;
+    transition:width .35s ease;
+  }
+  .progress-label{
+    font-family:"IBM Plex Mono", monospace; font-size:0.82rem; color:var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    white-space:nowrap;
+  }
+  .btn-reset{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.8rem; font-weight:500;
+    background:transparent; border:1px solid var(--border); color:var(--text-muted);
+    padding:6px 12px; border-radius:8px; cursor:pointer;
+  }
+  .btn-reset:hover{ border-color:var(--accent); color:var(--accent-strong); }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:56px 0 8px; }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; text-transform:uppercase; letter-spacing:0.09em;
+    font-size:0.75rem; color:var(--accent-strong); font-weight:600; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:""; width:22px; height:1px; background:var(--accent);
+  }
+  .hero h1{ font-size:2.35rem; letter-spacing:-0.01em; }
+  .hero p.lede{
+    color:var(--text-muted); font-size:1.05rem; max-width:60ch;
+  }
+
+  /* ---------- prose sections ---------- */
+  section.prose{ padding:28px 0; }
+  section.prose h2{ font-size:1.4rem; }
+  section.prose p{ margin:0 0 1em; }
+  .callout{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:12px;
+    padding:16px 18px; margin:18px 0; font-size:0.95rem;
+  }
+  .callout strong{ color:var(--accent-strong); }
+
+  /* ---------- reflection blocks ---------- */
+  .reflect{
+    padding:24px 0;
+  }
+  .reflect-card{
+    background:var(--reflect-tint); border:1px solid var(--border); border-radius:14px;
+    padding:20px 22px;
+  }
+  .reflect-card .kicker{
+    font-family:"IBM Plex Mono", monospace; text-transform:uppercase; letter-spacing:0.08em;
+    font-size:0.7rem; color:var(--reflect); font-weight:600; margin-bottom:6px;
+  }
+  .reflect-card h2{ font-size:1.2rem; margin-bottom:4px; }
+  .reflect-card p.prompt{ color:var(--text-muted); margin:0 0 12px; font-size:0.94rem; }
+  .reflect-card textarea{
+    width:100%; min-height:88px; resize:vertical;
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.95rem;
+    padding:11px 13px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text);
+  }
+  .reflect-card textarea:focus{ outline:2px solid var(--reflect); outline-offset:1px; }
+  .reflect-saved{
+    font-size:0.78rem; color:var(--reflect); margin-top:6px; min-height:1.2em;
+  }
+
+  /* ---------- atomic mass table ---------- */
+  .mass-table-section{ padding:8px 0 36px; }
+  .mass-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(84px,1fr));
+    gap:8px;
+    margin-top:16px;
+  }
+  .mass-cell{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:8px 6px 7px; text-align:center;
+  }
+  .mass-cell .sym{
+    font-family:"IBM Plex Mono", monospace; font-weight:600; font-size:1.02rem;
+    color:var(--text);
+  }
+  .mass-cell .name{
+    font-size:0.62rem; color:var(--text-muted); text-transform:uppercase;
+    letter-spacing:0.03em; margin-top:1px;
+  }
+  .mass-cell .mval{
+    font-family:"IBM Plex Mono", monospace; font-size:0.85rem; color:var(--accent-strong);
+    margin-top:4px; font-variant-numeric: tabular-nums;
+  }
+  .mass-cell.decimal{ border-color:var(--hint); }
+  .mass-cell.decimal .mval{ color:var(--hint); }
+
+  /* ---------- worked examples ---------- */
+  .examples-section{ padding:8px 0 40px; }
+  .example{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; margin-bottom:18px; box-shadow:var(--shadow);
+  }
+  .example-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px; }
+  .example-tag{
+    font-family:"IBM Plex Mono", monospace; font-size:0.72rem; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--accent-strong); background:var(--accent-tint);
+    padding:3px 8px; border-radius:6px;
+  }
+  .example h3{ font-size:1.15rem; margin:0; }
+  .example .formula{ font-size:1.2rem; }
+  .example .note{ color:var(--text-muted); font-size:0.9rem; margin:6px 0 14px; }
+
+  .try-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:14px 0 4px; }
+  .answer-input{
+    font-family:"IBM Plex Mono", monospace; font-size:1rem;
+    padding:9px 12px; border-radius:8px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text); width:112px;
+  }
+  .answer-input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .unit{ color:var(--text-muted); font-size:0.85rem; }
+
+  .btn{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.85rem; font-weight:600;
+    padding:9px 14px; border-radius:8px; cursor:pointer; border:1px solid transparent;
+  }
+  .btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .btn-check{ background:var(--accent); color:#fff; }
+  .btn-check:hover{ background:var(--accent-strong); }
+  .btn-hint{ background:transparent; border-color:var(--border); color:var(--hint); }
+  .btn-hint:hover{ border-color:var(--hint); }
+  .btn-ghost{ background:transparent; border-color:var(--border); color:var(--text-muted); }
+  .btn-ghost:hover{ border-color:var(--text-muted); color:var(--text); }
+  .btn-report{ background:var(--reflect); color:#fff; }
+  .btn-report:hover{ filter:brightness(1.08); }
+
+  .feedback{ margin-top:10px; padding:9px 12px; border-radius:8px; font-size:0.88rem; display:none; }
+  .feedback.show{ display:block; }
+  .feedback.good{ background:var(--good-tint); color:var(--good); }
+  .feedback.bad{ background:var(--bad-tint); color:var(--bad); }
+  .feedback.hint{ background:var(--hint-tint); color:var(--hint); }
+
+  details.working{ margin-top:12px; }
+  details.working summary{ cursor:pointer; font-size:0.85rem; color:var(--text-muted); font-weight:500; list-style:none; }
+  details.working summary::-webkit-details-marker{ display:none; }
+  details.working summary::before{ content:"▸ "; color:var(--accent); }
+  details.working[open] summary::before{ content:"▾ "; }
+  .steps{ margin-top:10px; border-collapse:collapse; width:100%; font-size:0.9rem; }
+  .steps th, .steps td{ text-align:left; padding:6px 10px; border-bottom:1px solid var(--border); }
+  .steps th{ color:var(--text-muted); font-weight:500; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.03em; }
+  .steps td.num{ font-family:"IBM Plex Mono", monospace; text-align:right; font-variant-numeric: tabular-nums; }
+  .steps tfoot td{ font-weight:600; border-bottom:none; padding-top:9px; color:var(--accent-strong); }
+
+  /* ---------- exercise ---------- */
+  .exercise-section{ padding:8px 0 20px; }
+  .exercise-intro{ max-width:70ch; }
+  .section-banner{
+    display:flex; align-items:center; gap:12px; margin:34px 0 16px; flex-wrap:wrap;
+  }
+  .section-banner h2{ font-size:1.3rem; margin:0; }
+  .badge{
+    font-family:"IBM Plex Mono", monospace; font-size:0.7rem; text-transform:uppercase;
+    letter-spacing:0.06em; font-weight:600; padding:4px 10px; border-radius:99px;
+  }
+  .badge.today{ background:var(--accent-tint); color:var(--accent-strong); }
+  .badge.extended{ background:var(--surface-2); color:var(--text-muted); border:1px solid var(--border); }
+  .section-banner p{ width:100%; margin:2px 0 0; color:var(--text-muted); font-size:0.92rem; }
+
+  .group-heading{ margin:30px 0 14px; display:flex; align-items:baseline; gap:12px; }
+  .group-heading h3{ font-size:1.02rem; color:var(--text); white-space:nowrap; }
+  .group-heading .rule{ height:1px; background:var(--border); flex:1; }
+  .group-heading .count{ font-family:"IBM Plex Mono", monospace; font-size:0.75rem; color:var(--text-muted); }
+
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(258px, 1fr)); gap:14px; }
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:16px 16px 14px; box-shadow:var(--shadow); transition:border-color .2s ease;
+  }
+  .card.solved{ border-color:var(--good); }
+  .card-top{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+  .card-num{ font-family:"IBM Plex Mono", monospace; font-size:0.72rem; color:var(--text-muted); }
+  .card-check{ font-size:0.72rem; font-family:"IBM Plex Mono", monospace; color:var(--good); opacity:0; transition:opacity .2s; }
+  .card.solved .card-check{ opacity:1; }
+  .card .formula{ font-size:1.15rem; margin-bottom:12px; min-height:1.4em; }
+  .card .try-row{ margin:0 0 4px; }
+  .card .answer-input{ width:88px; }
+
+  /* ---------- report ---------- */
+  .report-section{ padding:12px 0 50px; }
+  .report-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; box-shadow:var(--shadow);
+  }
+  .report-card h2{ font-size:1.25rem; }
+  .report-card p.hint-text{ color:var(--text-muted); font-size:0.92rem; margin:0 0 16px; }
+  .report-controls{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+  .report-controls input[type="text"]{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.92rem;
+    padding:9px 12px; border-radius:8px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text); flex:1; min-width:180px;
+  }
+  #reportOutput{
+    width:100%; min-height:220px; resize:vertical;
+    font-family:"IBM Plex Mono", monospace; font-size:0.85rem; line-height:1.55;
+    padding:14px 16px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface-2); color:var(--text); white-space:pre-wrap;
+  }
+  #reportOutput:focus{ outline:2px solid var(--reflect); outline-offset:1px; }
+  .copy-msg{ font-size:0.8rem; color:var(--good); margin-left:4px; }
+
+  footer.fineprint{ border-top:1px solid var(--border); padding:22px 0 60px; }
+  footer.fineprint p{ color:var(--text-muted); font-size:0.78rem; max-width:70ch; margin:0; }
+
+  @media (max-width:600px){
+    .hero h1{ font-size:1.85rem; }
+    .topbar-inner{ padding:10px 16px; }
+    .progress-track{ width:80px; }
+  }
+</style>
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-title">Molar Mass <span>Calculations</span></div>
+    <div class="progress-cluster">
+      <span class="progress-label" id="progressLabel">0 / 63 solved</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <button class="btn-reset" id="resetBtn" type="button">Reset progress</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="eyebrow">Edexcel Chemistry &middot; Moles, Formulae &amp; Equations</div>
+    <h1>Molar mass, from first principles to sixty formulae</h1>
+    <p class="lede">Every molar mass is just relative atomic masses, added up. Read the method, work through three examples with the answer hidden, then check yourself against the questions from Exercise 1 — with hints if you get stuck.</p>
+  </section>
+
+  <section class="reflect wrap">
+    <div class="reflect-card">
+      <div class="kicker">Before you start</div>
+      <h2>How are things going so far?</h2>
+      <p class="prompt">A quick check-in on the course, this topic, or today in general — whatever's on your mind before you dive in.</p>
+      <textarea id="reflectBefore" placeholder="Type here…"></textarea>
+      <div class="reflect-saved" id="reflectBeforeSaved">&nbsp;</div>
+    </div>
+  </section>
+
+  <section class="prose wrap">
+    <h2>Relative formula mass</h2>
+    <p>Sodium chloride is written NaCl, but it isn't really a single molecule — it's a giant lattice of Na⁺ and Cl⁻ ions. Strictly, a compound like this has no "molecular" mass, because it has no individual molecules. What it does have is a <strong>relative formula mass</strong>: the relative atomic masses of everything in the formula, added together. For NaCl that's sodium (23) plus chlorine (35.5), giving 58.5.</p>
+    <p>Relative atomic mass, relative molecular mass, and relative formula mass are all ratios compared with carbon-12 — none of them carry units.</p>
+
+    <h2>Molar mass</h2>
+    <p>In the lab you weigh things in grams, not in "relative mass units". <strong>Molar mass</strong> takes the same number as the relative formula mass and gives it units of grams per mole, g&nbsp;mol⁻¹. You find it the same way: add up the relative atomic mass of every atom shown in the formula.</p>
+    <div class="callout">The two most common slips: missing a multiplier that applies to a whole bracketed group — Pb(NO₃)₂ has <em>two</em> nitrate groups, so six oxygens, not three — and miscounting a water of crystallisation, where CuSO₄·5H₂O has 5 × 2 = 10 hydrogens and 5 oxygens from the water, on top of the four already in the sulfate.</div>
+  </section>
+
+  <section class="mass-table-section wrap-wide">
+    <h2>Atomic masses used below</h2>
+    <p class="unit" style="max-width:70ch;">Rounded to whole numbers throughout, as used on this course — with one exception: <strong style="color:var(--hint);">chlorine stays at 35.5</strong>, marked below.</p>
+    <div class="mass-grid" id="massGrid"></div>
+  </section>
+
+  <section class="examples-section wrap">
+    <h2>Worked examples</h2>
+    <p class="unit" style="margin-bottom:18px;">Try each one yourself first — type an answer and check it — then open the working to see the step-by-step breakdown.</p>
+    <div id="examplesHost"></div>
+  </section>
+
+  <section class="exercise-section wrap-wide">
+    <h2>Exercise 1 &mdash; calculate the molar mass</h2>
+    <p class="exercise-intro unit">Enter a value in g&nbsp;mol⁻¹, use <strong>Hint</strong> to see the atom count without the arithmetic, and <strong>Check</strong> to mark it. Answers are accepted to within 0.1.</p>
+
+    <div class="section-banner">
+      <span class="badge today">Do today</span>
+      <h2>Required — 12 questions</h2>
+      <p>A selection of the twelve most straightforward calculations from Exercise 1. Work through all of them before you finish.</p>
+    </div>
+    <div class="card-grid" id="todayHost"></div>
+
+    <div class="section-banner">
+      <span class="badge extended">Optional</span>
+      <h2>Extended</h2>
+      <p>The remaining 48 questions from Exercise 1, grouped by compound type. Optional — dip in for extra practice whenever you like.</p>
+    </div>
+    <div id="extendedHost"></div>
+  </section>
+
+  <section class="reflect wrap">
+    <div class="reflect-card">
+      <div class="kicker">Before you finish</div>
+      <h2>How did this work for you today?</h2>
+      <p class="prompt">What clicked, what was tricky, anything you'd want to go over again.</p>
+      <textarea id="reflectAfter" placeholder="Type here…"></textarea>
+      <div class="reflect-saved" id="reflectAfterSaved">&nbsp;</div>
+    </div>
+  </section>
+
+  <section class="report-section wrap">
+    <div class="report-card">
+      <h2>Activity report</h2>
+      <p class="hint-text">Generate a summary of your progress and reflections below, then copy and paste it into Canvas to complete this activity.</p>
+      <div class="report-controls">
+        <input type="text" id="studentName" placeholder="Your name (optional)">
+        <button type="button" class="btn btn-report" id="generateBtn">Generate report</button>
+        <button type="button" class="btn btn-ghost" id="copyBtn">Copy to clipboard</button>
+        <span class="copy-msg" id="copyMsg"></span>
+      </div>
+      <textarea id="reportOutput" readonly placeholder="Click “Generate report” once you've finished the required questions and both reflections."></textarea>
+    </div>
+  </section>
+
+  <footer class="fineprint wrap">
+    <p>Adapted for interactive self-study from the Edexcel AS/A GCE Chemistry (8CH01/9CH01) workbook, <em>Moles, Formulae and Equations</em> — Section: Introducing Molar Mass Calculations, Exercise 1. Atomic masses rounded to whole numbers except chlorine (35.5), per course convention.</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- atomic mass data ----------
+  var MASSES = [
+    ["H","Hydrogen",1],["C","Carbon",12],["N","Nitrogen",14],["O","Oxygen",16],
+    ["Na","Sodium",23],["Mg","Magnesium",24],["Al","Aluminium",27],["S","Sulfur",32],
+    ["Cl","Chlorine",35.5],["K","Potassium",39],["Ca","Calcium",40],["V","Vanadium",51],
+    ["Cr","Chromium",52],["Mn","Manganese",55],["Fe","Iron",56],["Cu","Copper",64],
+    ["Zn","Zinc",65],["Br","Bromine",80],["Ag","Silver",108],["I","Iodine",127],
+    ["Cs","Caesium",133],["Ba","Barium",137],["Pb","Lead",207]
+  ];
+
+  var grid = document.getElementById("massGrid");
+  MASSES.forEach(function(m){
+    var cell = document.createElement("div");
+    cell.className = "mass-cell" + (m[2] % 1 !== 0 ? " decimal" : "");
+    cell.innerHTML = '<div class="sym">'+m[0]+'</div><div class="name">'+m[1]+'</div><div class="mval">'+m[2]+'</div>';
+    grid.appendChild(cell);
+  });
+
+  // ---------- worked examples ----------
+  var EXAMPLES = [
+    {
+      tag: "Example 1", name: "Sulfuric acid", formula: "H<sub>2</sub>SO<sub>4</sub>", answer: 98,
+      rows: [
+        ["2 atoms of hydrogen, mass 1", "2 × 1", 2],
+        ["1 atom of sulfur, mass 32", "1 × 32", 32],
+        ["4 atoms of oxygen, mass 16", "4 × 16", 64]
+      ]
+    },
+    {
+      tag: "Example 2", name: "Lead nitrate", formula: "Pb(NO<sub>3</sub>)<sub>2</sub>",
+      note: "Care — this formula contains two nitrate groups.", answer: 331,
+      rows: [
+        ["1 atom of lead, mass 207", "1 × 207", 207],
+        ["2 atoms of nitrogen, mass 14", "2 × 14", 28],
+        ["6 atoms of oxygen, mass 16", "6 × 16", 96]
+      ]
+    },
+    {
+      tag: "Example 3", name: "Hydrated copper sulfate", formula: "CuSO<sub>4</sub>&middot;5H<sub>2</sub>O",
+      note: "Care — five water molecules are attached, so that's 10 hydrogens and 5 more oxygens, not 1 oxygen and 10 hydrogens on a single water.",
+      answer: 250,
+      rows: [
+        ["1 atom of copper, mass 64", "1 × 64", 64],
+        ["1 atom of sulfur, mass 32", "1 × 32", 32],
+        ["4 atoms of oxygen, mass 16", "4 × 16", 64],
+        ["5 × 2 atoms of hydrogen (from water), mass 1", "10 × 1", 10],
+        ["5 atoms of oxygen (from water), mass 16", "5 × 16", 80]
+      ]
+    }
+  ];
+
+  var exHost = document.getElementById("examplesHost");
+  EXAMPLES.forEach(function(ex){
+    var el = document.createElement("div");
+    el.className = "example";
+    var stepsHtml = ex.rows.map(function(r){
+      return '<tr><td>'+r[0]+'</td><td class="num">'+r[1]+'</td><td class="num">'+r[2]+' g mol⁻¹</td></tr>';
+    }).join("");
+    el.innerHTML =
+      '<div class="example-head"><span class="example-tag">'+ex.tag+'</span><h3>'+ex.name+' &mdash; <span class="formula">'+ex.formula+'</span></h3></div>'+
+      (ex.note ? '<p class="note">'+ex.note+'</p>' : '') +
+      '<div class="try-row">'+
+        '<input type="text" inputmode="decimal" class="answer-input" placeholder="g mol⁻¹">'+
+        '<button type="button" class="btn btn-check">Check</button>'+
+        '<span class="unit">g mol⁻¹</span>'+
+      '</div>'+
+      '<div class="feedback"></div>'+
+      '<details class="working"><summary>Show full working</summary>'+
+        '<table class="steps"><thead><tr><th>Atoms</th><th>Calculation</th><th>Mass</th></tr></thead><tbody>'+stepsHtml+'</tbody>'+
+        '<tfoot><tr><td colspan="2">Total molar mass</td><td class="num">'+ex.answer+' g mol⁻¹</td></tr></tfoot></table>'+
+      '</details>';
+    exHost.appendChild(el);
+    wireCheck(el, ex.answer, null);
+  });
+
+  // ---------- today's questions: the 12 most straightforward, required ----------
+  var TODAY = [
+    [1, "H<sub>2</sub>O", 18, "2 × H, 1 × O"],
+    [2, "CO<sub>2</sub>", 44, "1 × C, 2 × O"],
+    [3, "NH<sub>3</sub>", 17, "1 × N, 3 × H"],
+    [5, "C<sub>2</sub>H<sub>4</sub>", 28, "2 × C, 4 × H"],
+    [6, "SO<sub>2</sub>", 64, "1 × S, 2 × O"],
+    [7, "SO<sub>3</sub>", 80, "1 × S, 3 × O"],
+    [8, "HBr", 81, "1 × H, 1 × Br"],
+    [11, "NaCl", 58.5, "1 × Na, 1 × Cl"],
+    [14, "NaOH", 40, "1 × Na, 1 × O, 1 × H"],
+    [19, "KI", 166, "1 × K, 1 × I"],
+    [21, "CaCl<sub>2</sub>", 111, "1 × Ca, 2 × Cl"],
+    [33, "PbO", 223, "1 × Pb, 1 × O"]
+  ];
+
+  // ---------- extended questions: everything else, kept under their original headings ----------
+  var EXTENDED_GROUPS = [
+    {
+      label: "Simple molecules",
+      items: [
+        [4, "C<sub>2</sub>H<sub>5</sub>OH", 46, "2 × C, 6 × H, 1 × O — don't forget the H in –OH"],
+        [9, "H<sub>2</sub>SO<sub>4</sub>", 98, "2 × H, 1 × S, 4 × O"],
+        [10, "HNO<sub>3</sub>", 63, "1 × H, 1 × N, 3 × O"]
+      ]
+    },
+    {
+      label: "Sodium, potassium &amp; calcium salts",
+      items: [
+        [12, "NaNO<sub>3</sub>", 85, "1 × Na, 1 × N, 3 × O"],
+        [13, "Na<sub>2</sub>CO<sub>3</sub>", 106, "2 × Na, 1 × C, 3 × O"],
+        [15, "Na<sub>2</sub>SO<sub>4</sub>", 142, "2 × Na, 1 × S, 4 × O"],
+        [16, "KMnO<sub>4</sub>", 158, "1 × K, 1 × Mn, 4 × O"],
+        [17, "K<sub>2</sub>CrO<sub>4</sub>", 194, "2 × K, 1 × Cr, 4 × O"],
+        [18, "KHCO<sub>3</sub>", 100, "1 × K, 1 × H, 1 × C, 3 × O"],
+        [20, "CsNO<sub>3</sub>", 195, "1 × Cs, 1 × N, 3 × O"],
+        [22, "Ca(NO<sub>3</sub>)<sub>2</sub>", 164, "1 × Ca, 2 × N, 6 × O — two nitrate groups"],
+        [23, "Ca(OH)<sub>2</sub>", 74, "1 × Ca, 2 × O, 2 × H"],
+        [24, "CaSO<sub>4</sub>", 136, "1 × Ca, 1 × S, 4 × O"],
+        [25, "BaCl<sub>2</sub>", 208, "1 × Ba, 2 × Cl"]
+      ]
+    },
+    {
+      label: "Aluminium, iron &amp; lead compounds",
+      items: [
+        [26, "AlCl<sub>3</sub>", 133.5, "1 × Al, 3 × Cl"],
+        [27, "Al(NO<sub>3</sub>)<sub>3</sub>", 213, "1 × Al, 3 × N, 9 × O — three nitrate groups"],
+        [28, "Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>", 342, "2 × Al, 3 × S, 12 × O — three sulfate groups"],
+        [29, "FeSO<sub>4</sub>", 152, "1 × Fe, 1 × S, 4 × O"],
+        [30, "FeCl<sub>2</sub>", 127, "1 × Fe, 2 × Cl"],
+        [31, "FeCl<sub>3</sub>", 162.5, "1 × Fe, 3 × Cl"],
+        [32, "Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>", 400, "2 × Fe, 3 × S, 12 × O — three sulfate groups"],
+        [34, "PbO<sub>2</sub>", 239, "1 × Pb, 2 × O"],
+        [35, "Pb<sub>3</sub>O<sub>4</sub>", 685, "3 × Pb, 4 × O"],
+        [36, "Pb(NO<sub>3</sub>)<sub>2</sub>", 331, "1 × Pb, 2 × N, 6 × O — two nitrate groups"],
+        [37, "PbCl<sub>2</sub>", 278, "1 × Pb, 2 × Cl"],
+        [38, "PbSO<sub>4</sub>", 303, "1 × Pb, 1 × S, 4 × O"]
+      ]
+    },
+    {
+      label: "Copper, zinc, silver &amp; ammonium salts",
+      items: [
+        [39, "CuCl", 99.5, "1 × Cu, 1 × Cl"],
+        [40, "CuCl<sub>2</sub>", 135, "1 × Cu, 2 × Cl"],
+        [41, "CuSO<sub>4</sub>", 160, "1 × Cu, 1 × S, 4 × O"],
+        [42, "ZnCl<sub>2</sub>", 136, "1 × Zn, 2 × Cl"],
+        [43, "AgNO<sub>3</sub>", 170, "1 × Ag, 1 × N, 3 × O"],
+        [44, "NH<sub>4</sub>Cl", 53.5, "1 × N, 4 × H, 1 × Cl"],
+        [45, "(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>", 132, "2 × N, 8 × H, 1 × S, 4 × O — two ammonium groups"],
+        [46, "NH<sub>4</sub>VO<sub>3</sub>", 117, "1 × N, 4 × H, 1 × V, 3 × O"],
+        [47, "KClO<sub>3</sub>", 122.5, "1 × K, 1 × Cl, 3 × O"],
+        [48, "KIO<sub>3</sub>", 214, "1 × K, 1 × I, 3 × O"],
+        [49, "NaClO", 74.5, "1 × Na, 1 × Cl, 1 × O"],
+        [50, "NaNO<sub>2</sub>", 69, "1 × Na, 1 × N, 2 × O"]
+      ]
+    },
+    {
+      label: "Hydrates (water of crystallisation)",
+      items: [
+        [51, "CuSO<sub>4</sub>&middot;5H<sub>2</sub>O", 250, "CuSO₄: 1×Cu,1×S,4×O — plus 5H₂O: 10×H, 5×O"],
+        [52, "FeSO<sub>4</sub>&middot;7H<sub>2</sub>O", 278, "FeSO₄: 1×Fe,1×S,4×O — plus 7H₂O: 14×H, 7×O"],
+        [53, "(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>&middot;Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>&middot;24H<sub>2</sub>O", 964, "Add all three parts: (NH₄)₂SO₄ = 132, Fe₂(SO₄)₃ = 400, 24H₂O = 432"],
+        [54, "Na<sub>2</sub>S<sub>2</sub>O<sub>3</sub>&middot;5H<sub>2</sub>O", 248, "Na₂S₂O₃: 2×Na,2×S,3×O — plus 5H₂O: 10×H, 5×O"],
+        [55, "(COOH)<sub>2</sub>&middot;2H<sub>2</sub>O", 126, "(COOH)₂ = C₂H₂O₄: 2×C,2×H,4×O — plus 2H₂O: 4×H, 2×O"],
+        [56, "MgSO<sub>4</sub>&middot;7H<sub>2</sub>O", 246, "MgSO₄: 1×Mg,1×S,4×O — plus 7H₂O: 14×H, 7×O"],
+        [57, "Cu(NH<sub>3</sub>)<sub>4</sub>SO<sub>4</sub>&middot;2H<sub>2</sub>O", 264, "1×Cu, 4×N, 12×H, 1×S, 4×O — plus 2H₂O: 4×H, 2×O"]
+      ]
+    },
+    {
+      label: "Organic acids &amp; ketone",
+      items: [
+        [58, "CH<sub>3</sub>CO<sub>2</sub>H", 60, "2 × C, 4 × H, 2 × O"],
+        [59, "CH<sub>3</sub>COCH<sub>3</sub>", 58, "3 × C, 6 × H, 1 × O"],
+        [60, "C<sub>6</sub>H<sub>5</sub>CO<sub>2</sub>H", 122, "7 × C, 6 × H, 2 × O"]
+      ]
+    }
+  ];
+
+  var REQUIRED_COUNT = TODAY.length; // 12
+  var EXTENDED_COUNT = EXTENDED_GROUPS.reduce(function(n,g){ return n + g.items.length; }, 0); // 48
+  var TOTAL = EXAMPLES.length + REQUIRED_COUNT + EXTENDED_COUNT;
+  document.getElementById("progressLabel").textContent = "0 / " + TOTAL + " solved";
+
+  var solved = {};
+  try {
+    var saved = localStorage.getItem("molarMassSolved");
+    if (saved) solved = JSON.parse(saved);
+  } catch(e) { solved = {}; }
+
+  function persist(){
+    try { localStorage.setItem("molarMassSolved", JSON.stringify(solved)); } catch(e) {}
+  }
+
+  function updateProgress(){
+    var count = Object.keys(solved).filter(function(k){ return solved[k]; }).length;
+    document.getElementById("progressLabel").textContent = count + " / " + TOTAL + " solved";
+    document.getElementById("progressFill").style.width = (100 * count / TOTAL) + "%";
+  }
+
+  function wireCheck(container, answer, key){
+    var input = container.querySelector(".answer-input");
+    var checkBtn = container.querySelector(".btn-check");
+    var feedback = container.querySelector(".feedback");
+    var hintBtn = container.querySelector(".btn-hint");
+    var hintText = container.getAttribute("data-hint");
+
+    function showFeedback(cls, text){
+      feedback.className = "feedback show " + cls;
+      feedback.textContent = text;
+    }
+
+    checkBtn.addEventListener("click", function(){
+      var v = parseFloat((input.value || "").replace(",", "."));
+      if (isNaN(v)){
+        showFeedback("hint", "Type a number first.");
+        return;
+      }
+      if (Math.abs(v - answer) < 0.1){
+        showFeedback("good", "Correct — " + answer + " g mol⁻¹.");
+        container.classList.add("solved");
+        if (key){ solved[key] = true; persist(); updateProgress(); }
+      } else {
+        showFeedback("bad", "Not quite. Check your atom count and try again.");
+        if (key){ solved[key] = false; persist(); }
+      }
+    });
+
+    input.addEventListener("keydown", function(e){
+      if (e.key === "Enter"){ checkBtn.click(); }
+    });
+
+    if (hintBtn){
+      hintBtn.addEventListener("click", function(){
+        showFeedback("hint", hintText);
+      });
+    }
+
+    if (key && solved[key]){
+      container.classList.add("solved");
+    }
+  }
+
+  function makeCard(item){
+    var num = item[0], formula = item[1], answer = item[2], hint = item[3];
+    var key = "q" + num;
+    var card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("data-hint", hint);
+    card.innerHTML =
+      '<div class="card-top"><span class="card-num">Q'+num+'</span><span class="card-check">✓ solved</span></div>'+
+      '<div class="formula">'+formula+'</div>'+
+      '<div class="try-row">'+
+        '<input type="text" inputmode="decimal" class="answer-input" placeholder="&mdash;">'+
+        '<span class="unit">g mol⁻¹</span>'+
+      '</div>'+
+      '<div class="try-row" style="margin-top:8px;">'+
+        '<button type="button" class="btn btn-hint">Hint</button>'+
+        '<button type="button" class="btn btn-check">Check</button>'+
+      '</div>'+
+      '<div class="feedback"></div>';
+    wireCheck(card, answer, key);
+    return card;
+  }
+
+  var todayHost = document.getElementById("todayHost");
+  TODAY.forEach(function(item){ todayHost.appendChild(makeCard(item)); });
+
+  var extendedHost = document.getElementById("extendedHost");
+  EXTENDED_GROUPS.forEach(function(group){
+    var heading = document.createElement("div");
+    heading.className = "group-heading";
+    heading.innerHTML = '<h3>'+group.label+'</h3><div class="rule"></div><span class="count">'+group.items.length+' compounds</span>';
+    extendedHost.appendChild(heading);
+
+    var grid = document.createElement("div");
+    grid.className = "card-grid";
+    group.items.forEach(function(item){ grid.appendChild(makeCard(item)); });
+    extendedHost.appendChild(grid);
+  });
+
+  updateProgress();
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    solved = {};
+    try { localStorage.removeItem("molarMassSolved"); } catch(e) {}
+    document.querySelectorAll(".card.solved, .example.solved").forEach(function(c){ c.classList.remove("solved"); });
+    document.querySelectorAll(".feedback.show").forEach(function(f){ f.classList.remove("show"); });
+    document.querySelectorAll(".answer-input").forEach(function(i){ i.value = ""; });
+    updateProgress();
+  });
+
+  // ---------- reflections ----------
+  var reflections = {before:"", after:""};
+  try {
+    var savedR = localStorage.getItem("molarMassReflections");
+    if (savedR) reflections = JSON.parse(savedR);
+  } catch(e) {}
+
+  var beforeBox = document.getElementById("reflectBefore");
+  var afterBox = document.getElementById("reflectAfter");
+  beforeBox.value = reflections.before || "";
+  afterBox.value = reflections.after || "";
+
+  function saveReflections(which, box, label){
+    reflections[which] = box.value;
+    try { localStorage.setItem("molarMassReflections", JSON.stringify(reflections)); } catch(e) {}
+    var el = document.getElementById(label);
+    el.textContent = "Saved";
+    clearTimeout(el._t);
+    el._t = setTimeout(function(){ el.textContent = " "; }, 1500);
+  }
+  beforeBox.addEventListener("blur", function(){ saveReflections("before", beforeBox, "reflectBeforeSaved"); });
+  afterBox.addEventListener("blur", function(){ saveReflections("after", afterBox, "reflectAfterSaved"); });
+
+  // ---------- report generator ----------
+  function countSolvedIn(list){
+    return list.filter(function(item){ return solved["q" + item[0]]; }).length;
+  }
+  function unsolvedIn(list){
+    return list.filter(function(item){ return !solved["q" + item[0]]; }).map(function(item){ return item[0]; });
+  }
+  var ALL_EXTENDED = EXTENDED_GROUPS.reduce(function(a,g){ return a.concat(g.items); }, []);
+
+  function generateReport(){
+    var name = document.getElementById("studentName").value.trim();
+    var today = new Date();
+    var dateStr = today.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+
+    var reqSolved = countSolvedIn(TODAY);
+    var reqMissing = unsolvedIn(TODAY);
+    var extSolved = countSolvedIn(ALL_EXTENDED);
+
+    var lines = [];
+    lines.push("Molar Mass Calculations — Activity Report");
+    lines.push("Date: " + dateStr);
+    if (name) lines.push("Name: " + name);
+    lines.push("");
+    lines.push("Required questions: " + reqSolved + "/" + REQUIRED_COUNT + " completed");
+    if (reqMissing.length){
+      lines.push("Still to do: Q" + reqMissing.join(", Q"));
+    } else {
+      lines.push("All required questions completed.");
+    }
+    lines.push("Extended questions (optional): " + extSolved + "/" + EXTENDED_COUNT + " completed");
+    lines.push("");
+    lines.push("Reflection — how things are going so far:");
+    lines.push((beforeBox.value.trim() || "(no response)"));
+    lines.push("");
+    lines.push("Reflection — how today's activity went:");
+    lines.push((afterBox.value.trim() || "(no response)"));
+
+    document.getElementById("reportOutput").value = lines.join("\n");
+  }
+
+  document.getElementById("generateBtn").addEventListener("click", generateReport);
+
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var out = document.getElementById("reportOutput");
+    if (!out.value.trim()){ generateReport(); }
+    out.focus();
+    out.select();
+    var msg = document.getElementById("copyMsg");
+    function flash(text){
+      msg.textContent = text;
+      clearTimeout(msg._t);
+      msg._t = setTimeout(function(){ msg.textContent = ""; }, 2000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(out.value).then(function(){
+        flash("Copied!");
+      }).catch(function(){
+        flash("Select all (Ctrl/Cmd+A) and copy.");
+      });
+    } else {
+      try {
+        document.execCommand("copy");
+        flash("Copied!");
+      } catch(e){
+        flash("Select all (Ctrl/Cmd+A) and copy.");
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

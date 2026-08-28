@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemical Formulae</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#f6f4ec;
+    --surface:#ffffff;
+    --surface-2:#ece8da;
+    --border:#ddd6c2;
+    --text:#211f19;
+    --text-muted:#5b6259;
+    --accent:#1f6f5c;
+    --accent-strong:#12463a;
+    --accent-tint:#e2ede8;
+    --good:#2e7d46;
+    --good-tint:#e3f2e6;
+    --bad:#b3261e;
+    --bad-tint:#fbe8e6;
+    --hint:#8a5c0c;
+    --hint-tint:#f6ecd9;
+    --reflect:#3a5a8c;
+    --reflect-tint:#e7edf6;
+    --shadow: 0 1px 2px rgba(33,31,25,0.06), 0 6px 20px -8px rgba(33,31,25,0.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14181a;
+      --surface:#1b2124;
+      --surface-2:#212a2c;
+      --border:#2e3a38;
+      --text:#e7ece6;
+      --text-muted:#9caea5;
+      --accent:#59c7a6;
+      --accent-strong:#8ce0c4;
+      --accent-tint:#1c2e2a;
+      --good:#69c684;
+      --good-tint:#193322;
+      --bad:#e5786d;
+      --bad-tint:#3a1f1c;
+      --hint:#e5b85e;
+      --hint-tint:#332a15;
+      --reflect:#8fb0e0;
+      --reflect-tint:#1b2636;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -10px rgba(0,0,0,0.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14181a;
+    --surface:#1b2124;
+    --surface-2:#212a2c;
+    --border:#2e3a38;
+    --text:#e7ece6;
+    --text-muted:#9caea5;
+    --accent:#59c7a6;
+    --accent-strong:#8ce0c4;
+    --accent-tint:#1c2e2a;
+    --good:#69c684;
+    --good-tint:#193322;
+    --bad:#e5786d;
+    --bad-tint:#3a1f1c;
+    --hint:#e5b85e;
+    --hint-tint:#332a15;
+    --reflect:#8fb0e0;
+    --reflect-tint:#1b2636;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -10px rgba(0,0,0,0.55);
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height:1.6;
+    font-size:16px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  h1,h2,h3{
+    font-family:"Fraunces", ui-serif, Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    color:var(--text);
+    margin:0 0 0.4em;
+  }
+  code, .mono, .formula{
+    font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  }
+  sub{font-size:0.72em;}
+  sup{font-size:0.68em;}
+
+  a{color:var(--accent-strong);}
+
+  .wrap{ max-width:760px; margin:0 auto; padding:0 24px; }
+  .wrap-wide{ max-width:1180px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:40;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar-inner{
+    max-width:1180px; margin:0 auto; padding:12px 24px;
+    display:flex; align-items:center; gap:16px; justify-content:space-between;
+  }
+  .topbar-title{ font-family:"Fraunces", serif; font-weight:600; font-size:1.05rem; white-space:nowrap; }
+  .topbar-title span{color:var(--accent-strong);}
+  .progress-cluster{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end; }
+  .progress-track{
+    width:130px; height:8px; border-radius:99px; background:var(--surface-2);
+    overflow:hidden; border:1px solid var(--border);
+  }
+  .progress-fill{ height:100%; width:0%; background:var(--accent); border-radius:99px; transition:width .35s ease; }
+  .progress-label{
+    font-family:"IBM Plex Mono", monospace; font-size:0.82rem; color:var(--text-muted);
+    font-variant-numeric: tabular-nums; white-space:nowrap;
+  }
+  .btn-reset{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.8rem; font-weight:500;
+    background:transparent; border:1px solid var(--border); color:var(--text-muted);
+    padding:6px 12px; border-radius:8px; cursor:pointer;
+  }
+  .btn-reset:hover{ border-color:var(--accent); color:var(--accent-strong); }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:56px 0 8px; }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; text-transform:uppercase; letter-spacing:0.09em;
+    font-size:0.75rem; color:var(--accent-strong); font-weight:600; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--accent); }
+  .hero h1{ font-size:2.3rem; letter-spacing:-0.01em; }
+  .hero p.lede{ color:var(--text-muted); font-size:1.05rem; max-width:60ch; }
+
+  /* ---------- prose sections ---------- */
+  section.prose{ padding:28px 0; }
+  section.prose h2{ font-size:1.4rem; }
+  section.prose p{ margin:0 0 1em; }
+  section.prose ul{ margin:0 0 1em; padding-left:1.2em; }
+  section.prose li{ margin-bottom:0.4em; }
+  .callout{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:12px;
+    padding:16px 18px; margin:18px 0; font-size:0.95rem;
+  }
+  .callout strong{ color:var(--accent-strong); }
+  .callout.warn{ border-color:var(--hint); }
+  .callout.warn strong{ color:var(--hint); }
+
+  /* ---------- reflection blocks ---------- */
+  .reflect{ padding:24px 0; }
+  .reflect-card{
+    background:var(--reflect-tint); border:1px solid var(--border); border-radius:14px;
+    padding:20px 22px;
+  }
+  .reflect-card .kicker{
+    font-family:"IBM Plex Mono", monospace; text-transform:uppercase; letter-spacing:0.08em;
+    font-size:0.7rem; color:var(--reflect); font-weight:600; margin-bottom:6px;
+  }
+  .reflect-card h2{ font-size:1.2rem; margin-bottom:4px; }
+  .reflect-card p.prompt{ color:var(--text-muted); margin:0 0 12px; font-size:0.94rem; }
+  .reflect-card textarea{
+    width:100%; min-height:88px; resize:vertical;
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.95rem;
+    padding:11px 13px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text);
+  }
+  .reflect-card textarea:focus{ outline:2px solid var(--reflect); outline-offset:1px; }
+  .reflect-saved{ font-size:0.78rem; color:var(--reflect); margin-top:6px; min-height:1.2em; }
+
+  /* ---------- reference tables ---------- */
+  .ref-section{ padding:8px 0 36px; }
+  .ref-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:20px; margin-top:16px; }
+  .ref-table{ background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+  .ref-table h3{
+    font-size:0.85rem; font-family:"IBM Plex Mono", monospace; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--accent-strong); background:var(--accent-tint); margin:0; padding:10px 14px;
+  }
+  .ref-table table{ width:100%; border-collapse:collapse; font-size:0.88rem; }
+  .ref-table td, .ref-table th{ padding:6px 14px; border-bottom:1px solid var(--border); text-align:left; }
+  .ref-table th{ font-size:0.72rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--text-muted); font-weight:500; }
+  .ref-table td.sym{ font-family:"IBM Plex Mono", monospace; font-weight:600; }
+  .ref-table td.chg{ font-family:"IBM Plex Mono", monospace; color:var(--accent-strong); text-align:right; font-variant-numeric: tabular-nums; }
+  .ref-table tr:last-child td{ border-bottom:none; }
+  .ref-note{ color:var(--text-muted); font-size:0.8rem; padding:8px 14px 12px; margin:0; }
+
+  .bonds-table{ margin-top:20px; }
+
+  /* ---------- worked examples ---------- */
+  .examples-section{ padding:8px 0 40px; }
+  .example{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; margin-bottom:18px; box-shadow:var(--shadow);
+  }
+  .example-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px; }
+  .example-tag{
+    font-family:"IBM Plex Mono", monospace; font-size:0.72rem; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--accent-strong); background:var(--accent-tint);
+    padding:3px 8px; border-radius:6px;
+  }
+  .example h3{ font-size:1.15rem; margin:0; }
+  .example .note{ color:var(--text-muted); font-size:0.9rem; margin:6px 0 14px; }
+  .example .steps-list{ margin:10px 0 0; padding-left:1.2em; font-size:0.92rem; }
+  .example .steps-list li{ margin-bottom:5px; }
+  .example .final{
+    margin-top:12px; font-family:"IBM Plex Mono", monospace; font-size:1.1rem; color:var(--accent-strong);
+  }
+
+  .try-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:14px 0 4px; }
+  .answer-input{
+    font-family:"IBM Plex Mono", monospace; font-size:1rem;
+    padding:9px 12px; border-radius:8px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text); width:150px;
+  }
+  .answer-input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .unit{ color:var(--text-muted); font-size:0.85rem; }
+
+  .btn{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.85rem; font-weight:600;
+    padding:9px 14px; border-radius:8px; cursor:pointer; border:1px solid transparent;
+  }
+  .btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .btn-check{ background:var(--accent); color:#fff; }
+  .btn-check:hover{ background:var(--accent-strong); }
+  .btn-hint{ background:transparent; border-color:var(--border); color:var(--hint); }
+  .btn-hint:hover{ border-color:var(--hint); }
+  .btn-ghost{ background:transparent; border-color:var(--border); color:var(--text-muted); }
+  .btn-ghost:hover{ border-color:var(--text-muted); color:var(--text); }
+  .btn-report{ background:var(--reflect); color:#fff; }
+  .btn-report:hover{ filter:brightness(1.08); }
+
+  .feedback{ margin-top:10px; padding:9px 12px; border-radius:8px; font-size:0.88rem; display:none; }
+  .feedback.show{ display:block; }
+  .feedback.good{ background:var(--good-tint); color:var(--good); }
+  .feedback.bad{ background:var(--bad-tint); color:var(--bad); }
+  .feedback.hint{ background:var(--hint-tint); color:var(--hint); }
+
+  /* ---------- exercise ---------- */
+  .exercise-section{ padding:8px 0 20px; }
+  .exercise-intro{ max-width:70ch; }
+  .section-banner{ display:flex; align-items:center; gap:12px; margin:34px 0 16px; flex-wrap:wrap; }
+  .section-banner h2{ font-size:1.3rem; margin:0; }
+  .badge{
+    font-family:"IBM Plex Mono", monospace; font-size:0.7rem; text-transform:uppercase;
+    letter-spacing:0.06em; font-weight:600; padding:4px 10px; border-radius:99px;
+  }
+  .badge.today{ background:var(--accent-tint); color:var(--accent-strong); }
+  .badge.extended{ background:var(--surface-2); color:var(--text-muted); border:1px solid var(--border); }
+  .section-banner p{ width:100%; margin:2px 0 0; color:var(--text-muted); font-size:0.92rem; }
+
+  .group-heading{ margin:30px 0 14px; display:flex; align-items:baseline; gap:12px; }
+  .group-heading h3{ font-size:1.02rem; color:var(--text); white-space:nowrap; }
+  .group-heading .rule{ height:1px; background:var(--border); flex:1; }
+  .group-heading .count{ font-family:"IBM Plex Mono", monospace; font-size:0.75rem; color:var(--text-muted); }
+
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(270px, 1fr)); gap:14px; }
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:16px 16px 14px; box-shadow:var(--shadow); transition:border-color .2s ease;
+  }
+  .card.solved{ border-color:var(--good); }
+  .card-top{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+  .card-num{ font-family:"IBM Plex Mono", monospace; font-size:0.72rem; color:var(--text-muted); }
+  .card-check{ font-size:0.72rem; font-family:"IBM Plex Mono", monospace; color:var(--good); opacity:0; transition:opacity .2s; }
+  .card.solved .card-check{ opacity:1; }
+  .card .name{ font-size:1.02rem; margin-bottom:12px; min-height:2.4em; font-weight:500; }
+  .card .try-row{ margin:0 0 4px; }
+  .card .answer-input{ width:100%; }
+
+  /* ---------- report ---------- */
+  .report-section{ padding:12px 0 50px; }
+  .report-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; box-shadow:var(--shadow);
+  }
+  .report-card h2{ font-size:1.25rem; }
+  .report-card p.hint-text{ color:var(--text-muted); font-size:0.92rem; margin:0 0 16px; }
+  .report-controls{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+  .report-controls input[type="text"]{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.92rem;
+    padding:9px 12px; border-radius:8px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text); flex:1; min-width:180px;
+  }
+  #reportOutput{
+    width:100%; min-height:220px; resize:vertical;
+    font-family:"IBM Plex Mono", monospace; font-size:0.85rem; line-height:1.55;
+    padding:14px 16px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface-2); color:var(--text); white-space:pre-wrap;
+  }
+  #reportOutput:focus{ outline:2px solid var(--reflect); outline-offset:1px; }
+  .copy-msg{ font-size:0.8rem; color:var(--good); margin-left:4px; }
+
+  footer.fineprint{ border-top:1px solid var(--border); padding:22px 0 60px; }
+  footer.fineprint p{ color:var(--text-muted); font-size:0.78rem; max-width:70ch; margin:0; }
+
+  @media (max-width:600px){
+    .hero h1{ font-size:1.85rem; }
+    .topbar-inner{ padding:10px 16px; }
+    .progress-track{ width:80px; }
+  }
+</style>
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-title">Chemical <span>Formulae</span></div>
+    <div class="progress-cluster">
+      <span class="progress-label" id="progressLabel">0 / 80 solved</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <button class="btn-reset" id="resetBtn" type="button">Reset progress</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="eyebrow">Edexcel Chemistry &middot; Moles, Formulae &amp; Equations</div>
+    <h1>Writing chemical formulae from names</h1>
+    <p class="lede">A formula is built from ion charges (or, for non-metals, bonding numbers) balanced to zero. Learn the method, work through two examples, then write all 80 formulae from Exercise 2 yourself — with hints if you get stuck.</p>
+  </section>
+
+  <section class="reflect wrap">
+    <div class="reflect-card">
+      <div class="kicker">Before you start</div>
+      <h2>How are things going so far?</h2>
+      <p class="prompt">A quick check-in on the course, this topic, or today in general — whatever's on your mind before you dive in.</p>
+      <textarea id="reflectBefore" placeholder="Type here…"></textarea>
+      <div class="reflect-saved" id="reflectBeforeSaved">&nbsp;</div>
+    </div>
+  </section>
+
+  <section class="prose wrap">
+    <h2>What a formula tells you</h2>
+    <p>A chemical formula is shorthand for a compound. FeSO₄ tells you which elements are present (iron, sulfur, oxygen), how many atoms of each (H₂SO₄ has 2 hydrogens, 1 sulfur, 4 oxygens), and — for compounds built from a named group — how the atoms are arranged: C₂H₅OH shows an ethyl group (C₂H₅) attached to a hydroxyl group (OH).</p>
+    <p>You don't need to memorise formulae. You need to know the charges on a handful of ions, and you can work the rest out.</p>
+
+    <h2>Metal ions: read the charge from the group</h2>
+    <ul>
+      <li>Group 1 metals are always +1</li>
+      <li>Group 2 metals are always +2</li>
+      <li>Group 3 metals are always +3</li>
+      <li>Group 7 ions are always −1, group 6 ions −2, group 5 ions −3</li>
+    </ul>
+    <p>Some metals — copper, iron, lead, tin, manganese, mercury — form more than one ion. The name tells you which: <strong>iron(II)</strong> chloride is Fe²⁺, so FeCl₂; <strong>iron(III)</strong> chloride is Fe³⁺, so FeCl₃.</p>
+    <p>A handful of ions don't come from the periodic table and just have to be learned: hydroxide OH⁻, nitrate NO₃⁻, carbonate CO₃²⁻, sulfate SO₄²⁻, ammonium NH₄⁺ — plus the fuller set in the reference tables below.</p>
+
+    <h2>Balancing the charges</h2>
+    <p>Whatever ions you're combining, the positive and negative charges must add to zero. Sodium sulfate: Na⁺ and SO₄²⁻ — you need two sodiums to cancel the two-minus on sulfate, giving Na₂SO₄. Calcium hydrogen carbonate: Ca²⁺ and HCO₃⁻ — you need two hydrogencarbonates to cancel the two-plus on calcium, giving Ca(HCO₃)₂.</p>
+
+    <div class="callout warn"><strong>Brackets.</strong> Put brackets around a group only when it's multiplied by 2 or more <em>and</em> made of more than one element. MgBr₂ needs no bracket (bromine is one element). Ca(OH)₂ needs one — CaOH₂ would be wrong. NaOH needs no bracket either, because there's only one hydroxide.</div>
+    <div class="callout"><strong>Cancelling.</strong> You can usually simplify a ratio — Ca₂(CO₃)₂ becomes CaCO₃ — but never do this for organic compounds: C₂H₄ stays C₂H₄, not CH₂.</div>
+
+    <h2>Non-metals: count the bonds instead</h2>
+    <p>Compounds of two non-metals are covalent, not ionic — there's no charge to balance, but each element has a typical number of bonds it forms. Balance those instead: sulfur dioxide is SO₂ because sulfur's two bonds are satisfied by two oxygens, each using one of its two bonds.</p>
+  </section>
+
+  <section class="ref-section wrap-wide">
+    <h2>Ions &amp; bonding numbers used below</h2>
+    <p class="unit" style="max-width:70ch;">Zinc and tin aren't in the Edexcel table but come up in this exercise, so they're added here for reference.</p>
+    <div class="ref-grid" id="refGrid"></div>
+    <div class="ref-table bonds-table">
+      <h3>Covalent bonds normally formed</h3>
+      <table id="bondsTable"></table>
+    </div>
+  </section>
+
+  <section class="examples-section wrap">
+    <h2>Worked examples</h2>
+    <p class="unit" style="margin-bottom:18px;">Try each one yourself first — type a formula and check it — then open the working to see how it's built.</p>
+    <div id="examplesHost"></div>
+  </section>
+
+  <section class="exercise-section wrap-wide">
+    <h2>Exercise 2 &mdash; write the formula</h2>
+    <p class="exercise-intro unit">Type the formula (plain digits, e.g. <code>Na2CO3</code>, <code>Al2(SO4)3</code>) and press <strong>Check</strong>. Case and spacing don't matter, but brackets and subscripts do. Use <strong>Hint</strong> for the ion charges or bonding numbers involved.</p>
+
+    <div class="section-banner">
+      <span class="badge today">Do today</span>
+      <h2>Required — 12 questions</h2>
+      <p>A selection of the twelve most straightforward formulae from Exercise 2. Work through all of them before you finish.</p>
+    </div>
+    <div class="card-grid" id="todayHost"></div>
+
+    <div class="section-banner">
+      <span class="badge extended">Optional</span>
+      <h2>Extended</h2>
+      <p>The remaining 68 questions from Exercise 2, grouped by compound type. Optional — dip in for extra practice whenever you like.</p>
+    </div>
+    <div id="extendedHost"></div>
+  </section>
+
+  <section class="reflect wrap">
+    <div class="reflect-card">
+      <div class="kicker">Before you finish</div>
+      <h2>How did this work for you today?</h2>
+      <p class="prompt">What clicked, what was tricky, anything you'd want to go over again.</p>
+      <textarea id="reflectAfter" placeholder="Type here…"></textarea>
+      <div class="reflect-saved" id="reflectAfterSaved">&nbsp;</div>
+    </div>
+  </section>
+
+  <section class="report-section wrap">
+    <div class="report-card">
+      <h2>Activity report</h2>
+      <p class="hint-text">Generate a summary of your progress and reflections below, then copy and paste it into Canvas to complete this activity.</p>
+      <div class="report-controls">
+        <input type="text" id="studentName" placeholder="Your name (optional)">
+        <button type="button" class="btn btn-report" id="generateBtn">Generate report</button>
+        <button type="button" class="btn btn-ghost" id="copyBtn">Copy to clipboard</button>
+        <span class="copy-msg" id="copyMsg"></span>
+      </div>
+      <textarea id="reportOutput" readonly placeholder="Click “Generate report” once you've finished the required questions and both reflections."></textarea>
+    </div>
+  </section>
+
+  <footer class="fineprint wrap">
+    <p>Adapted for interactive self-study from the Edexcel AS/A GCE Chemistry (8CH01/9CH01) workbook, <em>Moles, Formulae and Equations</em> — Section 2: Chemical Formulae, Exercise 2. Zinc (+2) and tin (+2 and +4) added to the reference table; not in the original Edexcel list but used in the exercise.</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- reference data ----------
+  var ELEMENT_IONS = [
+    ["Al","+3"],["Ba","+2"],["Br","−1"],["Ca","+2"],["Cl","−1"],["Co","+2"],
+    ["Cu","+1 and 2"],["H","+1"],["I","−1"],["Fe","+2 and 3"],["Pb","+2 and 4"],
+    ["Mg","+2"],["Mn","+2 and 4"],["Hg","+1 and 2"],["N","3 and 5"],["O","−2"],
+    ["K","+1"],["Ag","+1"],["Na","+1"],["Zn","+2 *"],["Sn","+2 and 4 *"]
+  ];
+  var POLY_IONS = [
+    ["NH4","Ammonium","+1"],["CO3","Carbonate","−2"],["HCO3","Hydrogencarbonate","−1"],
+    ["HSO3","Hydrogen-sulfate","−1"],["OH","Hydroxide","−1"],["NO3","Nitrate","−1"],
+    ["NO2","Nitrite","−1"],["SO4","Sulfate","−2"],["SO3","Sulfite","−2"],
+    ["ClO","Chlorate(I)","−1"],["ClO3","Chlorate(V)","−1"],["VO3","Vanadate(V)","−1"],
+    ["MnO4","Manganate(VII)","−1"],["CrO4","Chromate(VI)","−2"],["Cr2O7","Dichromate(VI)","−2"],
+    ["PO4","Phosphate","−3 *"]
+  ];
+  var BONDS = [
+    ["Hydrogen","1"],["Halogens (F, Cl, Br, I)","1"],["Oxygen","2"],["Sulfur","2 or more"],
+    ["Nitrogen","3"],["Phosphorus","3 or 5"],["Carbon","4"],["Silicon","4"]
+  ];
+
+  var refGrid = document.getElementById("refGrid");
+
+  function buildRefTable(title, rows, cols){
+    var box = document.createElement("div");
+    box.className = "ref-table";
+    var rowsHtml = rows.map(function(r){
+      if (cols === 3){
+        return '<tr><td class="sym">'+r[0]+'</td><td>'+r[1]+'</td><td class="chg">'+r[2]+'</td></tr>';
+      }
+      return '<tr><td class="sym">'+r[0]+'</td><td class="chg">'+r[1]+'</td></tr>';
+    }).join("");
+    var head = cols === 3
+      ? '<tr><th>Ion</th><th>Name</th><th>Charge</th></tr>'
+      : '<tr><th>Symbol</th><th>Charge</th></tr>';
+    box.innerHTML = '<h3>'+title+'</h3><table><thead>'+head+'</thead><tbody>'+rowsHtml+'</tbody></table>'+
+      (title.indexOf("Element") === 0 ? '<p class="ref-note">* Not in the original Edexcel table — added here because the exercise uses them.</p>' : (title.indexOf("Poly") === 0 ? '<p class="ref-note">* Phosphate isn\'t in the Edexcel ion table either, but is needed for a few questions below.</p>' : ''));
+    return box;
+  }
+
+  refGrid.appendChild(buildRefTable("Elements &amp; their ions", ELEMENT_IONS, 2));
+  refGrid.appendChild(buildRefTable("Polyatomic ions", POLY_IONS, 3));
+
+  var bondsTable = document.getElementById("bondsTable");
+  bondsTable.innerHTML = '<thead><tr><th>Element</th><th style="text-align:right;">Bonds formed</th></tr></thead><tbody>'+
+    BONDS.map(function(b){ return '<tr><td class="sym">'+b[0]+'</td><td class="chg">'+b[1]+'</td></tr>'; }).join("") +
+    '</tbody>';
+
+  // ---------- normalisation & checking ----------
+  function normalise(s){
+    return (s || "").replace(/\s+/g, "").toLowerCase();
+  }
+
+  function wireCheck(container, answers, key){
+    var input = container.querySelector(".answer-input");
+    var checkBtn = container.querySelector(".btn-check");
+    var feedback = container.querySelector(".feedback");
+    var hintBtn = container.querySelector(".btn-hint");
+    var hintText = container.getAttribute("data-hint");
+    var normAnswers = answers.map(normalise);
+
+    function showFeedback(cls, text){
+      feedback.className = "feedback show " + cls;
+      feedback.innerHTML = text;
+    }
+
+    checkBtn.addEventListener("click", function(){
+      var v = normalise(input.value);
+      if (!v){
+        showFeedback("hint", "Type a formula first.");
+        return;
+      }
+      if (normAnswers.indexOf(v) !== -1){
+        showFeedback("good", "Correct — " + answers[0] + ".");
+        container.classList.add("solved");
+        if (key){ solved[key] = true; persist(); updateProgress(); }
+      } else {
+        showFeedback("bad", "Not quite. Check the charges and whether you need a bracket.");
+        if (key){ solved[key] = false; persist(); }
+      }
+    });
+
+    input.addEventListener("keydown", function(e){
+      if (e.key === "Enter"){ checkBtn.click(); }
+    });
+
+    if (hintBtn){
+      hintBtn.addEventListener("click", function(){
+        showFeedback("hint", hintText);
+      });
+    }
+
+    if (key && solved[key]){ container.classList.add("solved"); }
+  }
+
+  // ---------- worked examples ----------
+  var EXAMPLES = [
+    {
+      tag: "Example 1", name: "Sodium sulfate", answers: ["Na2SO4"],
+      steps: [
+        "The sodium ion is Na⁺.",
+        "The sulfate ion is SO₄²⁻.",
+        "Two Na⁺ are needed to cancel the two-minus charge on one sulfate."
+      ],
+      final: "Na₂SO₄"
+    },
+    {
+      tag: "Example 2", name: "Calcium hydrogencarbonate", answers: ["Ca(HCO3)2"],
+      steps: [
+        "The calcium ion is Ca²⁺.",
+        "The hydrogencarbonate ion is HCO₃⁻.",
+        "Two HCO₃⁻ are needed to cancel the two-plus charge on calcium.",
+        "HCO₃ is multiplied by 2 and has more than one element, so it needs brackets."
+      ],
+      final: "Ca(HCO₃)₂"
+    }
+  ];
+
+  var exHost = document.getElementById("examplesHost");
+  EXAMPLES.forEach(function(ex){
+    var el = document.createElement("div");
+    el.className = "example";
+    el.innerHTML =
+      '<div class="example-head"><span class="example-tag">'+ex.tag+'</span><h3>'+ex.name+'</h3></div>'+
+      '<div class="try-row">'+
+        '<input type="text" class="answer-input" placeholder="formula">'+
+        '<button type="button" class="btn btn-check">Check</button>'+
+      '</div>'+
+      '<div class="feedback"></div>'+
+      '<details class="working"><summary style="cursor:pointer;color:var(--text-muted);font-size:0.85rem;">Show full working</summary>'+
+        '<ol class="steps-list">'+ex.steps.map(function(s){ return '<li>'+s+'</li>'; }).join("")+'</ol>'+
+        '<div class="final">'+ex.final+'</div>'+
+      '</details>';
+    exHost.appendChild(el);
+    wireCheck(el, ex.answers, null);
+  });
+
+  // ---------- required (12, most straightforward) ----------
+  var TODAY = [
+    [1, "Sodium chloride", ["NaCl"], "Na⁺ (+1), Cl⁻ (−1)"],
+    [2, "Sodium hydroxide", ["NaOH"], "Na⁺ (+1), OH⁻ (−1)"],
+    [6, "Potassium chloride", ["KCl"], "K⁺ (+1), Cl⁻ (−1)"],
+    [7, "Potassium bromide", ["KBr"], "K⁺ (+1), Br⁻ (−1)"],
+    [8, "Potassium iodide", ["KI"], "K⁺ (+1), I⁻ (−1)"],
+    [14, "Magnesium oxide", ["MgO"], "Mg²⁺ (+2), O²⁻ (−2)"],
+    [16, "Calcium oxide", ["CaO"], "Ca²⁺ (+2), O²⁻ (−2)"],
+    [17, "Calcium chloride", ["CaCl2"], "Ca²⁺ (+2), Cl⁻ (−1)"],
+    [20, "Barium chloride", ["BaCl2"], "Ba²⁺ (+2), Cl⁻ (−1)"],
+    [35, "Silver chloride", ["AgCl"], "Ag⁺ (+1), Cl⁻ (−1)"],
+    [68, "Hydrogen chloride (Hydrochloric acid)", ["HCl"], "H⁺ (+1), Cl⁻ (−1)"],
+    [78, "Carbon dioxide", ["CO2"], "The name tells you: di- = 2 oxygens, 1 carbon"]
+  ];
+
+  // ---------- extended (68), kept under their original headings ----------
+  var EXTENDED_GROUPS = [
+    {
+      label: "Sodium &amp; potassium salts",
+      items: [
+        [3, "Sodium carbonate", ["Na2CO3"], "Na⁺ (+1), CO₃²⁻ (−2)"],
+        [4, "Sodium sulfate", ["Na2SO4"], "Na⁺ (+1), SO₄²⁻ (−2)"],
+        [5, "Sodium phosphate", ["Na3PO4"], "Na⁺ (+1), PO₄³⁻ (−3)"],
+        [9, "Potassium hydrogen carbonate", ["KHCO3"], "K⁺ (+1), HCO₃⁻ (−1)"],
+        [10, "Potassium nitrite", ["KNO2"], "K⁺ (+1), NO₂⁻ (−1)"]
+      ]
+    },
+    {
+      label: "Magnesium, calcium &amp; barium compounds",
+      items: [
+        [11, "Magnesium chloride", ["MgCl2"], "Mg²⁺ (+2), Cl⁻ (−1)"],
+        [12, "Magnesium nitrate", ["Mg(NO3)2"], "Mg²⁺ (+2), NO₃⁻ (−1) — bracket needed, multiplied by 2"],
+        [13, "Magnesium hydroxide", ["Mg(OH)2"], "Mg²⁺ (+2), OH⁻ (−1) — bracket needed, multiplied by 2"],
+        [15, "Magnesium carbonate", ["MgCO3"], "Mg²⁺ (+2), CO₃²⁻ (−2)"],
+        [18, "Calcium sulfate", ["CaSO4"], "Ca²⁺ (+2), SO₄²⁻ (−2)"],
+        [19, "Calcium carbonate", ["CaCO3"], "Ca²⁺ (+2), CO₃²⁻ (−2)"],
+        [21, "Barium sulfate", ["BaSO4"], "Ba²⁺ (+2), SO₄²⁻ (−2)"]
+      ]
+    },
+    {
+      label: "Aluminium compounds",
+      items: [
+        [22, "Aluminium chloride", ["AlCl3"], "Al³⁺ (+3), Cl⁻ (−1)"],
+        [23, "Aluminium oxide", ["Al2O3"], "Al³⁺ (+3), O²⁻ (−2)"],
+        [24, "Aluminium hydroxide", ["Al(OH)3"], "Al³⁺ (+3), OH⁻ (−1) — bracket needed, multiplied by 3"],
+        [25, "Aluminium sulfate", ["Al2(SO4)3"], "Al³⁺ (+3), SO₄²⁻ (−2) — bracket needed, multiplied by 3"]
+      ]
+    },
+    {
+      label: "Copper &amp; zinc compounds",
+      items: [
+        [26, "Copper(II) sulfate", ["CuSO4"], "Cu²⁺ (+2), SO₄²⁻ (−2)"],
+        [27, "Copper(II) oxide", ["CuO"], "Cu²⁺ (+2), O²⁻ (−2)"],
+        [28, "Copper(II) chloride", ["CuCl2"], "Cu²⁺ (+2), Cl⁻ (−1)"],
+        [29, "Copper(II) nitrate", ["Cu(NO3)2"], "Cu²⁺ (+2), NO₃⁻ (−1) — bracket needed, multiplied by 2"],
+        [30, "Copper(I) oxide", ["Cu2O"], "Cu⁺ (+1), O²⁻ (−2)"],
+        [31, "Copper(I) chloride", ["CuCl"], "Cu⁺ (+1), Cl⁻ (−1)"],
+        [32, "Zinc nitrate", ["Zn(NO3)2"], "Zn²⁺ (+2), NO₃⁻ (−1) — bracket needed, multiplied by 2"],
+        [33, "Zinc carbonate", ["ZnCO3"], "Zn²⁺ (+2), CO₃²⁻ (−2)"],
+        [34, "Zinc oxide", ["ZnO"], "Zn²⁺ (+2), O²⁻ (−2)"]
+      ]
+    },
+    {
+      label: "Silver &amp; lead compounds",
+      items: [
+        [36, "Silver bromide", ["AgBr"], "Ag⁺ (+1), Br⁻ (−1)"],
+        [37, "Silver iodide", ["AgI"], "Ag⁺ (+1), I⁻ (−1)"],
+        [38, "Silver nitrate", ["AgNO3"], "Ag⁺ (+1), NO₃⁻ (−1)"],
+        [39, "Silver oxide", ["Ag2O"], "Ag⁺ (+1), O²⁻ (−2)"],
+        [40, "Lead(II) nitrate", ["Pb(NO3)2"], "Pb²⁺ (+2), NO₃⁻ (−1) — bracket needed, multiplied by 2"],
+        [41, "Lead(II) carbonate", ["PbCO3"], "Pb²⁺ (+2), CO₃²⁻ (−2)"],
+        [42, "Lead(II) oxide", ["PbO"], "Pb²⁺ (+2), O²⁻ (−2)"],
+        [43, "Lead(IV) oxide", ["PbO2"], "Pb⁴⁺ (+4), O²⁻ (−2)"],
+        [44, "Lead(II) chloride", ["PbCl2"], "Pb²⁺ (+2), Cl⁻ (−1)"],
+        [45, "Lead(IV) chloride", ["PbCl4"], "Pb⁴⁺ (+4), Cl⁻ (−1)"],
+        [46, "Lead(II) sulfide", ["PbS"], "Pb²⁺ (+2), S²⁻ (−2)"]
+      ]
+    },
+    {
+      label: "Tin &amp; iron compounds",
+      items: [
+        [47, "Tin(II) chloride", ["SnCl2"], "Sn²⁺ (+2), Cl⁻ (−1)"],
+        [48, "Tin(IV) chloride", ["SnCl4"], "Sn⁴⁺ (+4), Cl⁻ (−1)"],
+        [49, "Iron(II) sulfate", ["FeSO4"], "Fe²⁺ (+2), SO₄²⁻ (−2)"],
+        [50, "Iron(II) chloride", ["FeCl2"], "Fe²⁺ (+2), Cl⁻ (−1)"],
+        [51, "Iron(III) sulfate", ["Fe2(SO4)3"], "Fe³⁺ (+3), SO₄²⁻ (−2) — bracket needed, multiplied by 3"],
+        [52, "Iron(III) chloride", ["FeCl3"], "Fe³⁺ (+3), Cl⁻ (−1)"],
+        [53, "Iron(III) hydroxide", ["Fe(OH)3"], "Fe³⁺ (+3), OH⁻ (−1) — bracket needed, multiplied by 3"],
+        [54, "Iron(II) hydroxide", ["Fe(OH)2"], "Fe²⁺ (+2), OH⁻ (−1) — bracket needed, multiplied by 2"]
+      ]
+    },
+    {
+      label: "Ammonium compounds",
+      items: [
+        [55, "Ammonium chloride", ["NH4Cl"], "NH₄⁺ (+1), Cl⁻ (−1)"],
+        [56, "Ammonium carbonate", ["(NH4)2CO3"], "NH₄⁺ (+1), CO₃²⁻ (−2) — bracket needed, multiplied by 2"],
+        [57, "Ammonium hydroxide", ["NH4OH"], "NH₄⁺ (+1), OH⁻ (−1)"],
+        [58, "Ammonium nitrate", ["NH4NO3"], "NH₄⁺ (+1), NO₃⁻ (−1)"],
+        [59, "Ammonium sulfate", ["(NH4)2SO4"], "NH₄⁺ (+1), SO₄²⁻ (−2) — bracket needed, multiplied by 2"],
+        [60, "Ammonium phosphate", ["(NH4)3PO4"], "NH₄⁺ (+1), PO₄³⁻ (−3) — bracket needed, multiplied by 3"]
+      ]
+    },
+    {
+      label: "Simple covalent compounds",
+      items: [
+        [61, "Phosphorus trichloride", ["PCl3"], "The prefix tells you directly: tri- = 3 chlorines"],
+        [62, "Phosphorus pentachloride", ["PCl5"], "The prefix tells you directly: penta- = 5 chlorines"],
+        [63, "Phosphorus trioxide", ["P2O3"], "tri- = 3 oxygens, each needs 2 bonds = 6 bonds total; P forms 3 bonds each, so 6 ÷ 3 = 2 phosphorus atoms"],
+        [64, "Phosphorus pentoxide", ["P2O5"], "penta- = 5 oxygens, each needs 2 bonds = 10 bonds total; P forms 5 bonds here, so 10 ÷ 5 = 2 phosphorus atoms"],
+        [65, "Hydrogen phosphate (Phosphoric acid)", ["H3PO4"], "H⁺ (+1), PO₄³⁻ (−3)"],
+        [66, "Hydrogen sulfate (Sulfuric acid)", ["H2SO4"], "H⁺ (+1), SO₄²⁻ (−2)"],
+        [67, "Hydrogen nitrate (Nitric acid)", ["HNO3"], "H⁺ (+1), NO₃⁻ (−1)"],
+        [69, "Carbon tetrachloride", ["CCl4"], "The prefix tells you directly: tetra- = 4 chlorines"],
+        [70, "Silicon tetrachloride", ["SiCl4"], "The prefix tells you directly: tetra- = 4 chlorines"],
+        [71, "Silicon dioxide", ["SiO2"], "Si forms 4 bonds, each O forms 2 — one Si balances two O exactly"],
+        [72, "Sulfur dioxide", ["SO2"], "The prefix tells you directly: di- = 2 oxygens"],
+        [73, "Sulfur trioxide", ["SO3"], "The prefix tells you directly: tri- = 3 oxygens"],
+        [74, "Hydrogen sulfide", ["H2S"], "H⁺ (+1), S²⁻ (−2)"],
+        [75, "Chlorine(I) oxide", ["Cl2O"], "Cl(I) = +1 charge, O²⁻ = −2 — cross the charges: 2 Cl to balance 1 O"],
+        [76, "Nitrogen dioxide", ["NO2"], "The prefix tells you directly: di- = 2 oxygens, 1 nitrogen"],
+        [77, "Nitrogen monoxide", ["NO"], "The prefix tells you directly: mono- = 1 oxygen, 1 nitrogen"],
+        [79, "Carbon monoxide", ["CO"], "The prefix tells you directly: mono- = 1 oxygen, 1 carbon"],
+        [80, "Hydrogen hydroxide", ["H2O","HOH"], "H⁺ (+1), OH⁻ (−1) — these combine to give water"]
+      ]
+    }
+  ];
+
+  var REQUIRED_COUNT = TODAY.length; // 12
+  var EXTENDED_COUNT = EXTENDED_GROUPS.reduce(function(n,g){ return n + g.items.length; }, 0); // 68
+  var TOTAL = EXAMPLES.length + REQUIRED_COUNT + EXTENDED_COUNT;
+  document.getElementById("progressLabel").textContent = "0 / " + TOTAL + " solved";
+
+  var solved = {};
+  try {
+    var saved = localStorage.getItem("chemFormulaeSolved");
+    if (saved) solved = JSON.parse(saved);
+  } catch(e) { solved = {}; }
+
+  function persist(){
+    try { localStorage.setItem("chemFormulaeSolved", JSON.stringify(solved)); } catch(e) {}
+  }
+
+  function updateProgress(){
+    var count = Object.keys(solved).filter(function(k){ return solved[k]; }).length;
+    document.getElementById("progressLabel").textContent = count + " / " + TOTAL + " solved";
+    document.getElementById("progressFill").style.width = (100 * count / TOTAL) + "%";
+  }
+
+  function makeCard(item){
+    var num = item[0], name = item[1], answers = item[2], hint = item[3];
+    var key = "q" + num;
+    var card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("data-hint", hint);
+    card.innerHTML =
+      '<div class="card-top"><span class="card-num">Q'+num+'</span><span class="card-check">✓ solved</span></div>'+
+      '<div class="name">'+name+'</div>'+
+      '<div class="try-row">'+
+        '<input type="text" class="answer-input" placeholder="formula, e.g. Na2CO3">'+
+      '</div>'+
+      '<div class="try-row" style="margin-top:8px;">'+
+        '<button type="button" class="btn btn-hint">Hint</button>'+
+        '<button type="button" class="btn btn-check">Check</button>'+
+      '</div>'+
+      '<div class="feedback"></div>';
+    wireCheck(card, answers, key);
+    return card;
+  }
+
+  var todayHost = document.getElementById("todayHost");
+  TODAY.forEach(function(item){ todayHost.appendChild(makeCard(item)); });
+
+  var extendedHost = document.getElementById("extendedHost");
+  EXTENDED_GROUPS.forEach(function(group){
+    var heading = document.createElement("div");
+    heading.className = "group-heading";
+    heading.innerHTML = '<h3>'+group.label+'</h3><div class="rule"></div><span class="count">'+group.items.length+' compounds</span>';
+    extendedHost.appendChild(heading);
+
+    var grid = document.createElement("div");
+    grid.className = "card-grid";
+    group.items.forEach(function(item){ grid.appendChild(makeCard(item)); });
+    extendedHost.appendChild(grid);
+  });
+
+  updateProgress();
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    solved = {};
+    try { localStorage.removeItem("chemFormulaeSolved"); } catch(e) {}
+    document.querySelectorAll(".card.solved, .example.solved").forEach(function(c){ c.classList.remove("solved"); });
+    document.querySelectorAll(".feedback.show").forEach(function(f){ f.classList.remove("show"); });
+    document.querySelectorAll(".answer-input").forEach(function(i){ i.value = ""; });
+    updateProgress();
+  });
+
+  // ---------- reflections ----------
+  var reflections = {before:"", after:""};
+  try {
+    var savedR = localStorage.getItem("chemFormulaeReflections");
+    if (savedR) reflections = JSON.parse(savedR);
+  } catch(e) {}
+
+  var beforeBox = document.getElementById("reflectBefore");
+  var afterBox = document.getElementById("reflectAfter");
+  beforeBox.value = reflections.before || "";
+  afterBox.value = reflections.after || "";
+
+  function saveReflections(which, box, label){
+    reflections[which] = box.value;
+    try { localStorage.setItem("chemFormulaeReflections", JSON.stringify(reflections)); } catch(e) {}
+    var el = document.getElementById(label);
+    el.textContent = "Saved";
+    clearTimeout(el._t);
+    el._t = setTimeout(function(){ el.textContent = " "; }, 1500);
+  }
+  beforeBox.addEventListener("blur", function(){ saveReflections("before", beforeBox, "reflectBeforeSaved"); });
+  afterBox.addEventListener("blur", function(){ saveReflections("after", afterBox, "reflectAfterSaved"); });
+
+  // ---------- report generator ----------
+  function countSolvedIn(list){
+    return list.filter(function(item){ return solved["q" + item[0]]; }).length;
+  }
+  function unsolvedIn(list){
+    return list.filter(function(item){ return !solved["q" + item[0]]; }).map(function(item){ return item[0]; });
+  }
+  var ALL_EXTENDED = EXTENDED_GROUPS.reduce(function(a,g){ return a.concat(g.items); }, []);
+
+  function generateReport(){
+    var name = document.getElementById("studentName").value.trim();
+    var today = new Date();
+    var dateStr = today.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+
+    var reqSolved = countSolvedIn(TODAY);
+    var reqMissing = unsolvedIn(TODAY);
+    var extSolved = countSolvedIn(ALL_EXTENDED);
+
+    var lines = [];
+    lines.push("Chemical Formulae — Activity Report");
+    lines.push("Date: " + dateStr);
+    if (name) lines.push("Name: " + name);
+    lines.push("");
+    lines.push("Required questions: " + reqSolved + "/" + REQUIRED_COUNT + " completed");
+    if (reqMissing.length){
+      lines.push("Still to do: Q" + reqMissing.join(", Q"));
+    } else {
+      lines.push("All required questions completed.");
+    }
+    lines.push("Extended questions (optional): " + extSolved + "/" + EXTENDED_COUNT + " completed");
+    lines.push("");
+    lines.push("Reflection — how things are going so far:");
+    lines.push((beforeBox.value.trim() || "(no response)"));
+    lines.push("");
+    lines.push("Reflection — how today's activity went:");
+    lines.push((afterBox.value.trim() || "(no response)"));
+
+    document.getElementById("reportOutput").value = lines.join("\n");
+  }
+
+  document.getElementById("generateBtn").addEventListener("click", generateReport);
+
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var out = document.getElementById("reportOutput");
+    if (!out.value.trim()){ generateReport(); }
+    out.focus();
+    out.select();
+    var msg = document.getElementById("copyMsg");
+    function flash(text){
+      msg.textContent = text;
+      clearTimeout(msg._t);
+      msg._t = setTimeout(function(){ msg.textContent = ""; }, 2000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(out.value).then(function(){
+        flash("Copied!");
+      }).catch(function(){
+        flash("Select all (Ctrl/Cmd+A) and copy.");
+      });
+    } else {
+      try {
+        document.execCommand("copy");
+        flash("Copied!");
+      } catch(e){
+        flash("Select all (Ctrl/Cmd+A) and copy.");
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
