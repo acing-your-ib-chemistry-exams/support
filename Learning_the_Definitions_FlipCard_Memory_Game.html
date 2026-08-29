@@ -526,6 +526,117 @@
   }
   .quiz-setup p{color:var(--ink-soft);max-width:44ch;margin:0 auto 1.5rem;}
 
+  /* ---------- Match ---------- */
+  .match-toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:1rem;
+    margin-bottom:1rem;
+  }
+  .match-toolbar .index-badge{flex:1 1 200px;}
+  .match-size-row{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+  }
+  .match-size-label{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.7rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .size-chips{display:flex;gap:.35rem;}
+  .size-chip{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.78rem;
+    width:1.9rem;
+    height:1.9rem;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:background .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .size-chip:hover{border-color:var(--accent);color:var(--ink);}
+  .size-chip.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .match-status{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.8rem;
+    color:var(--ink-soft);
+    margin:0 0 1rem;
+  }
+  .match-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
+    gap:.85rem;
+  }
+  .match-tile{
+    font-family:"Public Sans", sans-serif;
+    text-align:center;
+    padding:1rem .9rem;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:.4rem;
+    min-height:88px;
+    box-shadow:var(--shadow);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .match-tile:hover:not(.matched):not(:disabled){border-color:var(--cat-color, var(--accent));transform:translateY(-1px);}
+  .match-tile::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--cat-color);
+    margin-bottom:.1rem;
+  }
+  .match-tile.term-tile .match-tile-text{
+    font-family:"Spectral", Georgia, serif;
+    font-weight:600;
+    font-size:1.05rem;
+    line-height:1.25;
+  }
+  .match-tile.def-tile .match-tile-text{
+    font-size:.85rem;
+    line-height:1.4;
+    color:var(--ink-soft);
+  }
+  .match-tile.selected{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft), var(--shadow);
+  }
+  .match-tile.matched{
+    border-color:var(--good);
+    background:color-mix(in srgb, var(--good) 10%, var(--card));
+    cursor:default;
+    opacity:.55;
+  }
+  .match-tile.matched::before{background:var(--good);}
+  .match-tile.wrong{
+    border-color:var(--bad);
+    animation:shake .35s ease;
+  }
+  @keyframes shake{
+    20%{transform:translateX(-4px);}
+    40%{transform:translateX(4px);}
+    60%{transform:translateX(-3px);}
+    80%{transform:translateX(3px);}
+    100%{transform:translateX(0);}
+  }
+  .match-complete{margin-top:1.5rem;}
+
   footer.note{
     margin-top:3rem;
     text-align:center;
@@ -543,7 +654,7 @@
     <div class="hero-title-block">
       <div class="eyebrow">Definitions You Must Know</div>
       <h1>A Reagent Label <em>Card Game</em></h1>
-      <p>Core and advanced definitions from acids to transition metals, catalogued by topic. Flip through them, then test what stuck.</p>
+      <p>Core and advanced definitions from acids to transition metals, catalogued by topic. Flip through them, quiz yourself, or play a quick pair-matching round.</p>
     </div>
     <div class="hero-stats">
       <div class="stat"><b id="statTotal">90</b><span>Terms</span></div>
@@ -555,6 +666,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="study">Study</button>
     <button class="tab" data-tab="quiz">Quiz</button>
+    <button class="tab" data-tab="match">Match</button>
   </div>
 
   <!-- STUDY MODE -->
@@ -576,7 +688,7 @@
       <div id="quizSetup" class="quiz-card quiz-setup">
         <div class="quiz-cat" style="--cat-color:var(--accent2)"><span class="dot"></span>Multiple choice</div>
         <p style="font-family:'Spectral',serif;font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:.6rem;">Ready when you are</p>
-        <p>Ten random definitions, four choices each. Filter by topic first on the Study tab if you want a focused round — otherwise it draws from all 90.</p>
+        <p>Ten random definitions, four choices each. Filter by topic first on the Study tab if you want a focused round — otherwise it draws from all 163.</p>
         <button class="primary-btn" id="startQuizBtn">Start quiz</button>
       </div>
 
@@ -607,6 +719,25 @@
     </div>
   </section>
 
+  <!-- MATCH MODE -->
+  <section id="matchPane" class="hidden">
+    <div class="match-toolbar">
+      <span class="index-badge" id="matchFilterSummary">Playing from: All topics</span>
+      <div class="match-size-row">
+        <span class="match-size-label">Pairs</span>
+        <div class="size-chips" id="sizeChips"></div>
+      </div>
+      <button class="primary-btn" id="dealBtn">Deal new round</button>
+    </div>
+    <p class="match-status" id="matchStatus">Matched 0 / 6 · 0 moves</p>
+    <div class="match-grid" id="matchGrid"></div>
+    <div id="matchComplete" class="hidden match-complete quiz-card results">
+      <p class="big"><em id="matchCompleteMoves">0</em> moves</p>
+      <p>Every pair matched. Nice work.</p>
+      <button class="primary-btn" id="matchAgainBtn">Play again</button>
+    </div>
+  </section>
+
   <footer class="note">CHEM · <span id="footerCount">144</span> SPECIMENS · CATALOGUED BY TOPIC</footer>
 </div>
 
@@ -616,26 +747,26 @@
 
   // Chemistry definitions data set (transcribed from user's supplied definition sheets)
   const TERMS = [
-{t:"Acid",d:"A substance which contains hydrogen that can be replaced by a metal, liberates carbon dioxide from carbonates, and turns litmus red in solution; a substance which can donate protons",c:"acidsbases"},
-{t:"Activation energy",d:"The minimum amount of energy particles must have in order to react",c:"kinetics"},
+{t:"Acid",d:"A substance which contains hydrogen that can be replaced by a metal, liberates carbon dioxide from carbonates, and turns litmus red in solution; a substance which can donate protons",c:["acidsbases","week1"]},
+{t:"Activation energy",d:"The minimum amount of energy particles must have in order to react",c:["kinetics","thermo"]},
 {t:"Alkali",d:"A base which dissolves in water to produce hydroxide ions",c:"acidsbases"},
 {t:"Alkali",d:"A substance which neutralizes an acid to form a salt and water only; dissolves in water to produce hydroxide ions (OH⁻); a soluble base; a proton acceptor",c:"acidsbases",adv:true},
 {t:"Alkanes",d:"A family of hydrocarbons the members of which only have carbon–carbon single bonds",c:"general"},
 {t:"Alkenes",d:"A family of hydrocarbons the members of which have one carbon–carbon double bond",c:"general"},
 {t:"Alloy",d:"A mixture of a metal with another element or elements, usually another metal",c:"bonding"},
-{t:"Alkali metals",d:"The elements of Group 1 in the Periodic Table (lithium, sodium, potassium, rubidium and caesium)",c:"periodic"},
-{t:"Alkaline earth metals",d:"The elements of Group 2 in the Periodic Table (beryllium, magnesium, calcium, strontium, barium and radium)",c:"periodic"},
+{t:"Alkali metals",d:"The elements of Group 1 in the Periodic Table (lithium, sodium, potassium, rubidium and caesium)",c:["periodic","week1"]},
+{t:"Alkaline earth metals",d:"The elements of Group 2 in the Periodic Table (beryllium, magnesium, calcium, strontium, barium and radium)",c:["periodic","week1"]},
 {t:"Allotropy",d:"The existence of an element in more than one form in the same physical state; the different forms are called allotropes and differ in structure — diamond, graphite and buckminsterfullerene are all allotropes of carbon",c:"bonding"},
 {t:"Analysis",d:"The determination of the composition and/or structure of a substance or mixture, often by controlled decomposition or instrumental methods",c:"labtech"},
 {t:"Anhydrous",d:"Without water of crystallisation; for example, anhydrous copper(II) sulfate",c:"labtech"},
 {t:"Anions",d:"Negative ions which move to the anode during electrolysis",c:"redox"},
 {t:"Anode",d:"The positive electrode in an electrolysis",c:"redox"},
-{t:"Atom",d:"The smallest particle of an element which can take part in a chemical reaction",c:"atomic"},
+{t:"Atom",d:"The smallest particle of an element which can take part in a chemical reaction",c:["atomic","week1"]},
 {t:"Atomic number",d:"The number of protons in the nucleus of an atom",c:"atomic"},
 {t:"Atomic weight",d:"An older term for relative atomic mass — now obsolete",c:"stoichiometry"},
 {t:"Atomicity",d:"The number of atoms in a molecule; for example, the atomicity of hydrogen, H₂, is 2",c:"stoichiometry"},
 {t:"Avogadro constant",d:"Approximately 6 × 10²³ mol⁻¹ — the number of atoms per mole of ¹²C",c:"stoichiometry"},
-{t:"Base",d:"A substance which reacts with an acid to produce a salt and water",c:"acidsbases"},
+{t:"Base",d:"A substance which reacts with an acid to produce a salt and water",c:["acidsbases","week1"]},
 {t:"Boiling",d:"The change of state from liquid to vapour at the boiling point",c:"labtech"},
 {t:"Boiling temperature (point)",d:"The temperature at which the vapour pressure of a liquid equals the external pressure — usually quoted at atmospheric pressure",c:"labtech"},
 {t:"Catalyst",d:"A substance that increases the rate of a reaction but is not used up during the reaction",c:"kinetics"},
@@ -648,7 +779,7 @@
 {t:"Chromatography",d:"A process for separating mixtures of coloured substances",c:"labtech"},
 {t:"Combination",d:"A reaction in which two or more elements combine to form a compound",c:"general"},
 {t:"Combustion",d:"Burning, usually in air",c:"general"},
-{t:"Compound",d:"A substance formed when two or more elements are chemically combined in definite proportions by mass",c:"bonding"},
+{t:"Compound",d:"A substance formed when two or more elements are chemically combined in definite proportions by mass",c:["bonding","week1"]},
 {t:"Condense",d:"A change of state from gas to liquid",c:"labtech",g:"condense"},
 {t:"Condensation",d:"The change of state from vapour to liquid; often deliberately induced by cooling, as in a Liebig condenser",c:"labtech",adv:true,g:"condense"},
 {t:"Covalent bond",d:"A chemical bond in which two electrons are shared",c:"bonding"},
@@ -671,24 +802,24 @@
 {t:"Electrolyte",d:"The substance which undergoes electrolysis, either in solution or the molten state, for example copper(II) sulfate solution, or molten lead(II) bromide",c:"redox"},
 {t:"Electron",d:"A negatively charged particle which orbits the nucleus of an atom",c:"atomic"},
 {t:"Electron",d:"A sub-atomic elementary particle, having unit negative charge and a mass approximately 1/1840 of a proton; it also exhibits wave properties",c:"atomic",adv:true},
-{t:"Elements (definition 1)",d:"Chemicals which cannot be broken down into simpler substances",c:"periodic"},
-{t:"Elements (definition 2)",d:"Chemicals which contain only one type of atom",c:"periodic"},
+{t:"Elements (definition 1)",d:"Chemicals which cannot be broken down into simpler substances",c:["periodic","week1"]},
+{t:"Elements (definition 2)",d:"Chemicals which contain only one type of atom",c:["periodic","week1"]},
 {t:"Empirical formula",d:"The simplest whole-number ratio of atoms in a compound",c:"stoichiometry"},
-{t:"Endothermic",d:"A reaction which takes in heat from the surroundings",c:"thermo"},
-{t:"Endothermic",d:"A process during which thermal energy is absorbed",c:"thermo",adv:true},
+{t:"Endothermic",d:"A reaction which takes in heat from the surroundings",c:["thermo","week1"]},
+{t:"Endothermic",d:"A process during which thermal energy is absorbed",c:["thermo","week1"],adv:true},
 {t:"Enzyme",d:"A biological catalyst produced by living organisms",c:"kinetics"},
 {t:"Equilibrium",d:"When the forward and reverse rates of a reversible reaction are the same",c:"equilibrium"},
 {t:"Erosion",d:"A process which involves movement, by which rocks are worn away",c:"general"},
 {t:"Eutrophication",d:"When a lake or river is so rich in nutrients that too many plants grow",c:"general"},
 {t:"Evaporate",d:"Change of state from liquid to gas",c:"labtech",g:"evaporate"},
 {t:"Evaporation",d:"The change of state from liquid to vapour below the boiling point; it occurs from the surface of the liquid",c:"labtech",adv:true,g:"evaporate"},
-{t:"Exothermic",d:"A reaction which gives out heat to the surroundings",c:"thermo"},
-{t:"Exothermic",d:"A process which gives out thermal energy",c:"thermo",adv:true},
+{t:"Exothermic",d:"A reaction which gives out heat to the surroundings",c:["thermo","week1"]},
+{t:"Exothermic",d:"A process which gives out thermal energy",c:["thermo","week1"],adv:true},
 {t:"Extrusive rock",d:"Igneous rock formed when lava cools and solidifies as magma reaches the Earth's surface",c:"general"},
 {t:"Fermentation",d:"An anaerobic respiration by which yeast uses sugar for energy without using oxygen",c:"general"},
-{t:"Filtrate",d:"The liquid which passes through a filter paper during filtration",c:"labtech"},
-{t:"Filtration",d:"A means of separating an insoluble solid from a liquid",c:"labtech"},
-{t:"Filtration",d:"Separating solids from liquids by passing them through a porous material (usually filter paper); the liquid that passes through is the filtrate, the solid left behind is the residue",c:"labtech",adv:true},
+{t:"Filtrate",d:"The liquid which passes through a filter paper during filtration",c:["labtech","week1"]},
+{t:"Filtration",d:"A means of separating an insoluble solid from a liquid",c:["labtech","week1"],g:"filtration"},
+{t:"Filtration",d:"Separating solids from liquids by passing them through a porous material (usually filter paper); the liquid that passes through is the filtrate, the solid left behind is the residue",c:["labtech","week1"],adv:true,g:"filtration"},
 {t:"Fossil fuels",d:"Fuels such as coal, oil, gas, which have formed from the remains of plants or animals",c:"general"},
 {t:"Fractional distillation",d:"The process of separating mixtures of liquids according to their boiling points",c:"labtech"},
 {t:"Fractional distillation",d:"The separation of several liquids which have different boiling points, by collecting the distillates (fractions) at different temperatures",c:"labtech",adv:true},
@@ -698,7 +829,7 @@
 {t:"Geological change",d:"A change in which the structure or composition of rocks is altered",c:"general"},
 {t:"Giant structure",d:"A structure of very many particles bonded together",c:"bonding"},
 {t:"Greenhouse gases",d:"Gases present in the atmosphere which cause an increase in the Earth's average temperature",c:"general"},
-{t:"Group",d:"A vertical column in the Periodic Table",c:"periodic"},
+{t:"Group",d:"A vertical column in the Periodic Table",c:["periodic","week1"]},
 {t:"Hydrocarbons",d:"Compounds containing hydrogen and carbon as the only elements",c:"general"},
 {t:"Igneous rocks",d:"Rocks formed from molten magma",c:"general"},
 {t:"Indicator",d:"A substance which shows different colours in acidic or alkaline conditions, for example litmus",c:"acidsbases"},
@@ -708,16 +839,16 @@
 {t:"Melting temperature (point)",d:"The temperature at which the solid and liquid phases of a substance are in equilibrium at a given pressure",c:"labtech"},
 {t:"Mole",d:"The unit of amount of substance. One mole is the amount of substance which contains as many elementary particles as there are atoms in 0.012 kg of the isotope ¹²C",c:"stoichiometry"},
 {t:"Molecular formula",d:"A multiple of the empirical formula, giving the actual number of atoms of each element in a molecule",c:"stoichiometry"},
-{t:"Molecule",d:"The smallest part of a substance which can exist independently and still retain the properties of that substance, for example Cl₂, HCl, H₂O, C₂H₅OH",c:"bonding"},
+{t:"Molecule",d:"The smallest part of a substance which can exist independently and still retain the properties of that substance, for example Cl₂, HCl, H₂O, C₂H₅OH",c:["bonding","week1"]},
 {t:"Neutralisation",d:"A reaction between an acid and a base to give a salt and water",c:"acidsbases"},
 {t:"Neutralisation",d:"The addition of an acid to an alkali, or vice versa, until neither is in excess and the solution is neutral",c:"acidsbases",adv:true},
 {t:"Neutron",d:"A sub-atomic particle with the same mass as a proton but no charge",c:"atomic"},
 {t:"Ore",d:"A solid, naturally occurring mineral from which metals or other valuable substances can be extracted, usually by chemical treatment",c:"general"},
-{t:"Oxidation",d:"A reaction in which oxygen is gained or electrons are lost or hydrogen is lost",c:"redox"},
-{t:"Oxidation",d:"The addition of oxygen or the removal of hydrogen; an increase in the oxidation state of an element is oxidation; oxidation is also the loss of one or more electrons",c:"redox",adv:true},
+{t:"Oxidation",d:"A reaction in which oxygen is gained or electrons are lost or hydrogen is lost",c:["redox","week1"]},
+{t:"Oxidation",d:"The addition of oxygen or the removal of hydrogen; an increase in the oxidation state of an element is oxidation; oxidation is also the loss of one or more electrons",c:["redox","week1"],adv:true},
 {t:"Periodic law",d:"The physical and chemical properties of the elements are periodic functions of their atomic numbers",c:"periodic"},
-{t:"pH",d:"A measure of acidity according to the concentration of hydrogen ions",c:"acidsbases",g:"ph"},
-{t:"pH scale",d:"A measure of hydrogen ion concentration, hence of the acidity or alkalinity of a solution; a neutral solution has pH 7, acidic solutions have pH less than 7, alkaline solutions have pH greater than 7",c:"acidsbases",adv:true,g:"ph"},
+{t:"pH",d:"A measure of acidity according to the concentration of hydrogen ions",c:["acidsbases","week1"],g:"ph"},
+{t:"pH scale",d:"A measure of hydrogen ion concentration, hence of the acidity or alkalinity of a solution; a neutral solution has pH 7, acidic solutions have pH less than 7, alkaline solutions have pH greater than 7",c:["acidsbases","week1"],adv:true,g:"ph"},
 {t:"Photosynthesis",d:"The production of glucose from carbon dioxide and water by green plants using light",c:"general"},
 {t:"Physical change",d:"A change in which no new substances are produced",c:"general"},
 {t:"Physical properties",d:"Those properties of a substance which do not involve chemical change",c:"general"},
@@ -725,9 +856,9 @@
 {t:"Plates",d:"Large sections of the Earth's lithosphere",c:"general"},
 {t:"Polymerisation",d:"A reaction in which molecules containing very long carbon chains are made from smaller units",c:"bonding"},
 {t:"Polymers",d:"Compounds, made from smaller molecules, which contain very long chains of carbon atoms",c:"bonding"},
-{t:"Precipitate",d:"A solid formed from solution as a result of two soluble substances reacting to form an insoluble one",c:"general"},
-{t:"Precipitate",d:"An insoluble substance which separates from solution during a chemical reaction",c:"general",adv:true},
-{t:"Precipitation",d:"A reaction which produces a precipitate",c:"general"},
+{t:"Precipitate",d:"A solid formed from solution as a result of two soluble substances reacting to form an insoluble one",c:["general","week1"]},
+{t:"Precipitate",d:"An insoluble substance which separates from solution during a chemical reaction",c:["general","week1"],adv:true},
+{t:"Precipitation",d:"A reaction which produces a precipitate",c:["general","week1"]},
 {t:"Products",d:"Substances formed during a chemical reaction",c:"general"},
 {t:"Proton",d:"A positively charged particle found in the nucleus of an atom",c:"atomic"},
 {t:"Proton",d:"A sub-atomic elementary particle, with unit positive charge and unit mass, expressed in relative atomic mass units",c:"atomic",adv:true},
@@ -736,13 +867,13 @@
 {t:"Reactants",d:"The chemicals present at the start of a chemical reaction",c:"general"},
 {t:"Reduction",d:"A reaction in which oxygen is lost or electrons are gained or hydrogen is gained",c:"redox"},
 {t:"Refine",d:"To purify, especially applied to crude oil",c:"labtech"},
-{t:"Relative atomic mass",d:"The average mass of the atoms of an element using a scale on which the mass of carbon is twelve",c:"stoichiometry"},
-{t:"Relative atomic mass",d:"The ratio of the average mass per atom of an element relative to 1/12 the mass of an atom of ¹²C",c:"stoichiometry",adv:true},
-{t:"Relative molecular mass",d:"The sum of the relative atomic masses of the elements in a compound",c:"stoichiometry"},
-{t:"Residue",d:"The substance remaining in the filter paper after filtration",c:"labtech"},
+{t:"Relative atomic mass",d:"The average mass of the atoms of an element using a scale on which the mass of carbon is twelve",c:"stoichiometry",g:"relative-atomic-mass"},
+{t:"Relative atomic mass",d:"The ratio of the average mass per atom of an element relative to 1/12 the mass of an atom of ¹²C",c:"stoichiometry",adv:true,g:"relative-atomic-mass"},
+{t:"Relative molecular mass",d:"The sum of the relative atomic masses of the elements in a compound",c:"stoichiometry",g:"relative-molecular-mass"},
+{t:"Residue",d:"The substance remaining in the filter paper after filtration",c:["labtech","week1"]},
 {t:"Respiration",d:"A process of releasing energy from glucose",c:"general"},
-{t:"Reversible reaction",d:"A chemical reaction in which the products can react to re-form the starting substances according to the prevailing conditions",c:"equilibrium"},
-{t:"Reversible reaction",d:"A reaction which can be made to proceed either forwards or backwards under suitable conditions; both products and reactants are present at equilibrium",c:"equilibrium",adv:true},
+{t:"Reversible reaction",d:"A chemical reaction in which the products can react to re-form the starting substances according to the prevailing conditions",c:["equilibrium","week1"]},
+{t:"Reversible reaction",d:"A reaction which can be made to proceed either forwards or backwards under suitable conditions; both products and reactants are present at equilibrium",c:["equilibrium","week1"],adv:true},
 {t:"Rocks",d:"Mixtures of minerals which are present in the Earth's crust",c:"general"},
 {t:"Rusting",d:"The corrosion of iron (or steel) which requires both air (oxygen) and water",c:"redox"},
 {t:"Sacrificial protection",d:"A method of rust prevention by using a more reactive metal which corrodes in place of the iron",c:"redox"},
@@ -752,17 +883,37 @@
 {t:"Sediment",d:"Fragments of rock which have moved and settled",c:"general"},
 {t:"Sedimentary rocks",d:"Rocks formed from layers of sediment",c:"general"},
 {t:"Solute",d:"A substance which dissolves in a solvent to form a solution",c:"labtech"},
-{t:"Solution",d:"A mixture in which one substance has dissolved in another",c:"labtech"},
+{t:"Solution",d:"A mixture in which one substance has dissolved in another",c:["labtech","week1"]},
 {t:"Solvent",d:"A liquid which has dissolved another substance to make a solution",c:"labtech"},
-{t:"State symbols",d:"Symbols included in a reaction equation to show the physical state of each substance: (g) gas, (l) liquid, (s) solid, (aq) aqueous — dissolved in water",c:"labtech"},
+{t:"State symbols",d:"Symbols included in a reaction equation to show the physical state of each substance: (g) gas, (l) liquid, (s) solid, (aq) aqueous — dissolved in water",c:["labtech","week1"]},
 {t:"States of matter",d:"Solid, liquid, gas",c:"general"},
 {t:"Sublimation",d:"The change from solid to gas and back to solid again without passing through the liquid state",c:"labtech"},
 {t:"Substrate",d:"A reactant which takes part in a reaction catalysed by an enzyme",c:"kinetics"},
-{t:"Transition element",d:"A d-block element which forms one or more stable ions with an incompletely filled set of d-orbitals",c:"transition"},
+{t:"Transition element",d:"A d-block element which forms one or more stable ions with an incompletely filled set of d-orbitals",c:["transition","week1"]},
 {t:"Weathering",d:"A process by which rocks are broken down into fragments in situ",c:"general"},
+{t:"Period",d:"A horizontal row of elements in the Periodic Table",c:["periodic","week1"]},
+{t:"Noble gases",d:"The elements of Group 0 (18) in the Periodic Table — very unreactive gases with a full outer shell of electrons, for example helium, neon and argon",c:["periodic","week1"]},
+{t:"Halogens",d:"The elements of Group 7 (17) in the Periodic Table — reactive non-metals that exist as diatomic molecules, for example fluorine, chlorine and bromine",c:["periodic","week1"]},
+{t:"Chalcogens",d:"The elements of Group 6 (16) in the Periodic Table, including oxygen and sulfur",c:["periodic","week1"]},
+{t:"Periodic table",d:"A table of all the known chemical elements, arranged in order of atomic number into rows (periods) and columns (groups) of elements with similar properties",c:["periodic","week1"]},
+{t:"Filtering",d:"The act of passing a mixture through a filter to separate an insoluble solid from a liquid",c:["labtech","week1"],g:"filtration"},
+{t:"Conical flask",d:"A cone-shaped laboratory flask with a flat base and a narrow neck, used for mixing, heating or titrating liquids",c:["labtech","week1"]},
+{t:"Filter funnel",d:"A cone-shaped piece of labware used to hold filter paper and direct a filtered liquid into the container below",c:["labtech","week1"]},
+{t:"Gas jar",d:"A wide cylindrical glass container, usually covered with a lid or cover slip, used to collect and store a gas in the laboratory",c:["labtech","week1"]},
+{t:"Aqueous",d:"Dissolved in water; shown by the state symbol (aq) in a chemical equation",c:["labtech","week1"]},
+{t:"Equation",d:"A way of representing a chemical reaction using the symbols and formulae of the reactants and products",c:["general","week1"]},
+{t:"Formula",d:"A way of showing the number and type of atoms of each element present in a compound, using element symbols and numbers",c:["bonding","week1"]},
+{t:"Molar mass",d:"The mass of one mole of a substance, measured in grams per mole (g/mol)",c:["stoichiometry","week1"]},
+{t:"Atomic mass",d:"The mass of an atom, usually given as the relative atomic mass — the average mass of the atoms of an element compared with 1/12 the mass of a carbon-12 atom",c:["stoichiometry","week1"],g:"relative-atomic-mass"},
+{t:"Molecular mass",d:"The mass of a molecule, found by adding together the relative atomic masses of all the atoms in its formula — also called relative molecular mass",c:["stoichiometry","week1"],g:"relative-molecular-mass"},
+{t:"Temperature",d:"A measure of how hot or cold something is, related to the average kinetic energy of its particles",c:["labtech","week1"]},
+{t:"Effervescence",d:"The rapid escape of gas bubbles from a liquid, seen for example when an acid reacts with a carbonate",c:["general","week1"]},
+{t:"Gelatinous precipitate",d:"A soft, jelly-like precipitate — often formed by metal hydroxides — which can be difficult to filter",c:["general","week1"]},
+{t:"Fine precipitate",d:"A precipitate made of very small particles, which can pass through filter paper or take a long time to settle",c:["general","week1"]},
 ];
 
   const CATEGORIES = [
+{key:"week1", label:"Week 1", color:"#d1495b"},
 {key:"stoichiometry", label:"Stoichiometry", color:"#8a6b4a"},
 {key:"thermo", label:"Thermochemistry & Energetics", color:"#b5502a"},
 {key:"kinetics", label:"Rates of Reaction & Kinetics", color:"#c9a227"},
@@ -779,6 +930,13 @@
 
   const catMeta = Object.fromEntries(CATEGORIES.map(c => [c.key, c]));
   const terms = TERMS.map((term, i) => ({...term, id:i}));
+
+  // A term's `c` is usually one category key, but can be an array (e.g. Activation
+  // energy lives in both Kinetics and Thermochemistry). catsOf() always returns an
+  // array so filtering/matching code doesn't need to care which shape it was given.
+  const catsOf = t => Array.isArray(t.c) ? t.c : [t.c];
+  const inActiveCats = t => catsOf(t).some(c => activeCats.has(c));
+  const shareCategory = (a, b) => catsOf(a).some(c => catsOf(b).includes(c));
 
   document.getElementById('statTotal').textContent = terms.length;
   document.getElementById('statCats').textContent = CATEGORIES.length;
@@ -797,12 +955,15 @@
   const tabs = document.querySelectorAll('.tab');
   const studyPane = document.getElementById('studyPane');
   const quizPane = document.getElementById('quizPane');
+  const matchPane = document.getElementById('matchPane');
   tabs.forEach(tab => tab.addEventListener('click', () => {
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    const isStudy = tab.dataset.tab === 'study';
-    studyPane.classList.toggle('hidden', !isStudy);
-    quizPane.classList.toggle('hidden', isStudy);
+    const which = tab.dataset.tab;
+    studyPane.classList.toggle('hidden', which !== 'study');
+    quizPane.classList.toggle('hidden', which !== 'quiz');
+    matchPane.classList.toggle('hidden', which !== 'match');
+    if(which === 'match'){ dealRound(); }
   }));
 
   // ---------------- STUDY: chips ----------------
@@ -810,7 +971,7 @@
   const chipRow = document.getElementById('chipRow');
 
   function catCount(key){
-    return terms.filter(t => t.c === key).length;
+    return terms.filter(t => catsOf(t).includes(key)).length;
   }
 
   function renderChips(){
@@ -854,13 +1015,16 @@
   function renderCards(){
     const q = searchInput.value.trim().toLowerCase();
     const filtered = terms.filter(t =>
-      activeCats.has(t.c) &&
+      inActiveCats(t) &&
       (q === '' || t.t.toLowerCase().includes(q) || t.d.toLowerCase().includes(q))
     );
     grid.innerHTML = '';
     emptyMsg.classList.toggle('hidden', filtered.length > 0);
     filtered.forEach(t => {
-      const cat = catMeta[t.c];
+      const cats = catsOf(t).map(k => catMeta[k]);
+      const cat = cats[0];
+      const catLabel = cats.map(c => c.label).join(' + ');
+      const dots = cats.map(c => `<span class="cat-dot" style="--cat-color:${c.color}" title="${c.label}"></span>`).join('');
       const card = document.createElement('div');
       card.className = 'card';
       const advBadge = t.adv ? '<span class="adv-badge">Advanced</span>' : '';
@@ -869,15 +1033,15 @@
           <div class="face front" style="--cat-color:${cat.color}">
             <div class="tag-row">
               <span class="index-badge">No. ${String(t.id+1).padStart(2,'0')}</span>
-              <span class="badge-group">${advBadge}<span class="cat-dot" title="${cat.label}"></span></span>
+              <span class="badge-group">${advBadge}${dots}</span>
             </div>
             <p class="term">${t.t}</p>
             <span class="flip-hint">Tap to reveal</span>
           </div>
           <div class="face back" style="--cat-color:${cat.color}">
             <div class="tag-row">
-              <span class="index-badge">${cat.label}</span>
-              <span class="badge-group">${advBadge}<span class="cat-dot" title="${cat.label}"></span></span>
+              <span class="index-badge">${catLabel}</span>
+              <span class="badge-group">${advBadge}${dots}</span>
             </div>
             <p class="def">${t.d}</p>
             <span class="flip-hint">Tap to flip back</span>
@@ -968,15 +1132,15 @@
   }
 
   function buildQuiz(){
-    const pool = terms.filter(t => activeCats.has(t.c));
+    const pool = terms.filter(inActiveCats);
     const source = pool.length >= QUIZ_LEN ? pool : terms;
     // Avoid asking the same concept twice in one quiz (some terms have a second "Advanced" card)
     const deduped = uniqueByGroup(shuffle(source));
     const chosen = deduped.slice(0, Math.min(QUIZ_LEN, deduped.length));
     quizQuestions = chosen.map(t => {
-      let distractorPool = terms.filter(o => o.id !== t.id && groupKey(o) !== groupKey(t) && o.c === t.c);
+      let distractorPool = terms.filter(o => o.id !== t.id && groupKey(o) !== groupKey(t) && shareCategory(o, t));
       if(distractorPool.length < 3){
-        distractorPool = distractorPool.concat(terms.filter(o => o.id !== t.id && groupKey(o) !== groupKey(t) && o.c !== t.c));
+        distractorPool = distractorPool.concat(terms.filter(o => o.id !== t.id && groupKey(o) !== groupKey(t) && !shareCategory(o, t)));
       }
       distractorPool = uniqueByGroup(distractorPool);
       const distractors = shuffle(distractorPool).slice(0,3);
@@ -997,9 +1161,10 @@
   function renderQuestion(){
     answered = false;
     const q = quizQuestions[qIndex];
-    const cat = catMeta[q.term.c];
-    quizCatLabel.style.setProperty('--cat-color', cat.color);
-    quizCatLabel.innerHTML = `<span class="dot"></span>${cat.label}${q.term.adv ? ' <span class="adv-badge" style="margin-left:.4rem;">Advanced</span>' : ''}`;
+    const cats = catsOf(q.term).map(k => catMeta[k]);
+    const catLabel = cats.map(c => c.label).join(' + ');
+    quizCatLabel.style.setProperty('--cat-color', cats[0].color);
+    quizCatLabel.innerHTML = `<span class="dot"></span>${catLabel}${q.term.adv ? ' <span class="adv-badge" style="margin-left:.4rem;">Advanced</span>' : ''}`;
     quizQuestion.textContent = q.term.t;
     quizProgressText.textContent = `Question ${qIndex+1} / ${quizQuestions.length}`;
     quizScoreText.textContent = `Score: ${score}`;
@@ -1078,6 +1243,154 @@
 
   startQuizBtn.addEventListener('click', startQuiz);
   retryBtn.addEventListener('click', startQuiz);
+
+  // ---------------- MATCH ----------------
+  const matchFilterSummary = document.getElementById('matchFilterSummary');
+  const sizeChips = document.getElementById('sizeChips');
+  const dealBtn = document.getElementById('dealBtn');
+  const matchStatus = document.getElementById('matchStatus');
+  const matchGrid = document.getElementById('matchGrid');
+  const matchComplete = document.getElementById('matchComplete');
+  const matchCompleteMoves = document.getElementById('matchCompleteMoves');
+  const matchAgainBtn = document.getElementById('matchAgainBtn');
+
+  const SIZE_OPTIONS = [4,5,6,7,8,9];
+  let roundSize = 6;
+  let matchTiles = [];
+  let selectedTile = null;
+  let matchesFound = 0;
+  let moveCount = 0;
+  let boardLocked = false;
+
+  function renderSizeChips(){
+    sizeChips.innerHTML = '';
+    SIZE_OPTIONS.forEach(n => {
+      const b = document.createElement('button');
+      b.className = 'size-chip' + (n === roundSize ? ' active' : '');
+      b.textContent = n;
+      b.addEventListener('click', () => {
+        roundSize = n;
+        renderSizeChips();
+        dealRound();
+      });
+      sizeChips.appendChild(b);
+    });
+  }
+
+  // The pool for Match reuses whatever topic filter is currently active on the
+  // Study tab's category chips, so "one chosen filtered set" only has to be
+  // picked in one place.
+  function currentMatchPool(){
+    return uniqueByGroup(terms.filter(inActiveCats));
+  }
+
+  function updateMatchFilterSummary(){
+    if(activeCats.size === CATEGORIES.length){
+      matchFilterSummary.textContent = 'Playing from: All topics';
+    } else {
+      const labels = CATEGORIES.filter(c => activeCats.has(c.key)).map(c => c.label);
+      matchFilterSummary.textContent = 'Playing from: ' + (labels.length ? labels.join(', ') : 'no topics selected — pick one on the Study tab');
+    }
+  }
+
+  function dealRound(){
+    updateMatchFilterSummary();
+    const pool = currentMatchPool();
+    if(pool.length === 0){
+      matchTiles = [];
+      matchGrid.innerHTML = '';
+      matchStatus.textContent = 'No terms in this filter — choose a topic on the Study tab first.';
+      matchComplete.classList.add('hidden');
+      return;
+    }
+    const n = Math.min(roundSize, pool.length);
+    const chosen = shuffle(pool).slice(0, n);
+    matchTiles = [];
+    chosen.forEach(t => {
+      matchTiles.push({ pairId:t.id, type:'term', text:t.t, cat:catsOf(t), adv:t.adv, matched:false });
+      matchTiles.push({ pairId:t.id, type:'def', text:t.d, cat:catsOf(t), adv:t.adv, matched:false });
+    });
+    matchTiles = shuffle(matchTiles);
+    matchesFound = 0;
+    moveCount = 0;
+    selectedTile = null;
+    boardLocked = false;
+    matchComplete.classList.add('hidden');
+    renderMatchGrid();
+    updateMatchStatus();
+    if(n < roundSize){
+      matchStatus.textContent += ` (only ${n} available in this filter)`;
+    }
+  }
+
+  function updateMatchStatus(){
+    const total = matchTiles.length / 2;
+    matchStatus.textContent = `Matched ${matchesFound} / ${total} · ${moveCount} move${moveCount === 1 ? '' : 's'}`;
+  }
+
+  function renderMatchGrid(){
+    matchGrid.innerHTML = '';
+    matchTiles.forEach((tile, idx) => {
+      const cat = catMeta[tile.cat[0]];
+      const el = document.createElement('button');
+      el.className = 'match-tile ' + (tile.type === 'term' ? 'term-tile' : 'def-tile');
+      el.style.setProperty('--cat-color', cat.color);
+      const advBadge = tile.adv ? '<span class="adv-badge">Advanced</span>' : '';
+      el.innerHTML = `<span class="match-tile-text">${tile.text}</span>${advBadge}`;
+      el.addEventListener('click', () => onTileClick(idx));
+      matchGrid.appendChild(el);
+    });
+  }
+
+  function onTileClick(idx){
+    if(boardLocked) return;
+    const tile = matchTiles[idx];
+    if(tile.matched) return;
+    const el = matchGrid.children[idx];
+
+    if(selectedTile === null){
+      selectedTile = idx;
+      el.classList.add('selected');
+      return;
+    }
+    if(selectedTile === idx) return;
+
+    const firstIdx = selectedTile;
+    const firstTile = matchTiles[firstIdx];
+    const firstEl = matchGrid.children[firstIdx];
+    moveCount++;
+
+    if(firstTile.pairId === tile.pairId && firstTile.type !== tile.type){
+      firstTile.matched = true;
+      tile.matched = true;
+      firstEl.classList.remove('selected');
+      firstEl.classList.add('matched');
+      el.classList.add('matched');
+      matchesFound++;
+      selectedTile = null;
+      updateMatchStatus();
+      if(matchesFound === matchTiles.length / 2){
+        boardLocked = true;
+        matchCompleteMoves.textContent = moveCount;
+        matchComplete.classList.remove('hidden');
+      }
+    } else {
+      boardLocked = true;
+      el.classList.add('selected', 'wrong');
+      firstEl.classList.add('wrong');
+      updateMatchStatus();
+      setTimeout(() => {
+        firstEl.classList.remove('selected', 'wrong');
+        el.classList.remove('selected', 'wrong');
+        selectedTile = null;
+        boardLocked = false;
+      }, 650);
+    }
+  }
+
+  dealBtn.addEventListener('click', dealRound);
+  matchAgainBtn.addEventListener('click', dealRound);
+  renderSizeChips();
 
 })();
 </script>
