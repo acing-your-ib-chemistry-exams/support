@@ -1,0 +1,1733 @@
+<title>Empirical Formula Lab</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --paper:#F0F4F2;
+    --paper-grid:#DCE6E1;
+    --panel:#FFFFFF;
+    --ink:#132022;
+    --ink-soft:#4B5E60;
+    --ink-faint:#7C8C8D;
+    --line:#D2DEDA;
+    --accent:#136B77;
+    --accent-strong:#0B4E58;
+    --accent-soft:#E0EFEE;
+    --amber:#B5731A;
+    --amber-soft:#F7E9D2;
+    --good:#2E7D4F;
+    --good-soft:#DEF0E3;
+    --bad:#B5432E;
+    --bad-soft:#F8E2DD;
+    --shadow: 0 1px 2px rgba(19,32,34,0.06), 0 8px 24px -12px rgba(19,32,34,0.18);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E1618;
+      --paper-grid:#182225;
+      --panel:#141F22;
+      --ink:#E7EEEC;
+      --ink-soft:#9DB0AE;
+      --ink-faint:#71898A;
+      --line:#233335;
+      --accent:#4FC3D1;
+      --accent-strong:#7BDCE7;
+      --accent-soft:#152B2E;
+      --amber:#E3A24E;
+      --amber-soft:#2C2114;
+      --good:#6FCB95;
+      --good-soft:#122B1C;
+      --bad:#E68A75;
+      --bad-soft:#301917;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0E1618;
+    --paper-grid:#182225;
+    --panel:#141F22;
+    --ink:#E7EEEC;
+    --ink-soft:#9DB0AE;
+    --ink-faint:#71898A;
+    --line:#233335;
+    --accent:#4FC3D1;
+    --accent-strong:#7BDCE7;
+    --accent-soft:#152B2E;
+    --amber:#E3A24E;
+    --amber-soft:#2C2114;
+    --good:#6FCB95;
+    --good-soft:#122B1C;
+    --bad:#E68A75;
+    --bad-soft:#301917;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -14px rgba(0,0,0,0.6);
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background:
+      linear-gradient(var(--paper-grid) 1px, transparent 1px) 0 0/100% 28px,
+      linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px) 0 0/28px 100%,
+      var(--paper);
+    background-blend-mode: normal;
+    color:var(--ink);
+    font-family:'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent-soft); color:var(--accent-strong); }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, serif; text-wrap:balance; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace; }
+  code, .formula{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  a{ color:var(--accent-strong); }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .wrap{ max-width:760px; margin:0 auto; padding:28px 20px 90px; }
+
+  /* ---------- Header ---------- */
+  .masthead{ margin-bottom:22px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--accent-strong); font-weight:600;
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--accent); display:inline-block; }
+  .masthead h1{ font-size:clamp(26px,4vw,34px); font-weight:600; margin-top:6px; color:var(--ink); }
+  .masthead p{ color:var(--ink-soft); margin:6px 0 0; font-size:15px; max-width:52ch; }
+
+  /* ---------- Burette progress ---------- */
+  .burette-row{
+    display:flex; align-items:center; gap:16px; margin-top:20px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:14px 16px; box-shadow:var(--shadow);
+  }
+  .burette{ position:relative; flex:0 0 auto; width:230px; height:34px; }
+  .burette-tube{
+    position:absolute; inset:0; border:1.5px solid var(--ink-faint); border-radius:4px;
+    background:
+      repeating-linear-gradient(90deg, var(--ink-faint) 0 1px, transparent 1px 19.16px);
+    background-color: transparent;
+    overflow:hidden;
+  }
+  .burette-fill{
+    position:absolute; top:0; left:0; bottom:0; width:0%;
+    background:linear-gradient(90deg, var(--accent-soft), var(--accent));
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .burette-tube::after{
+    content:''; position:absolute; inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 18.16px, var(--ink-faint) 18.16px 19.16px);
+    opacity:.55; pointer-events:none;
+  }
+  .burette-label{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-soft); white-space:nowrap; }
+  .burette-label b{ color:var(--ink); font-weight:600; }
+
+  .chip-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:500;
+    border:1px solid var(--line); background:var(--panel); color:var(--ink-soft);
+    padding:5px 9px; border-radius:6px; cursor:pointer; transition:.15s;
+  }
+  .chip:hover{ border-color:var(--accent); color:var(--accent-strong); }
+  .chip.is-current{ border-color:var(--accent); background:var(--accent-soft); color:var(--accent-strong); }
+  .chip.is-done{ background:var(--good-soft); color:var(--good); border-color:var(--good); }
+  .chip.is-done::before{ content:'\2713\0020'; }
+
+  /* ---------- Concept panel ---------- */
+  .concept{
+    background:var(--accent-soft); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:8px; padding:16px 18px; margin:22px 0 18px;
+  }
+  .concept summary{ cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .concept summary::-webkit-details-marker{ display:none; }
+  .concept-title{ font-weight:600; color:var(--accent-strong); font-size:15px; display:flex; align-items:center; gap:8px; }
+  .concept-title .tag{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; background:var(--accent); color:var(--panel); padding:2px 6px; border-radius:4px; }
+  .concept .chevron{ color:var(--accent-strong); transition:transform .2s; font-size:13px; }
+  .concept[open] .chevron{ transform:rotate(90deg); }
+  .concept-body{ margin-top:12px; font-size:14.5px; color:var(--ink); }
+  .concept-body p{ margin:0 0 10px; }
+  .concept-body p:last-child{ margin-bottom:0; }
+  .concept-body .worked{
+    background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:10px 12px; margin:10px 0; font-size:13.5px;
+  }
+  .concept-body table{ border-collapse:collapse; width:100%; font-size:13px; margin:8px 0; }
+  .concept-body th, .concept-body td{ border:1px solid var(--line); padding:5px 8px; text-align:left; }
+  .concept-body th{ background:var(--panel); font-weight:600; }
+
+  /* ---------- Question card ---------- */
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:24px 24px 22px; box-shadow:var(--shadow);
+  }
+  .qhead{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .qnum{ font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--amber); font-size:14px; letter-spacing:.03em; }
+  .qtitle{ font-size:19px; font-weight:600; color:var(--ink); }
+  .qprompt{ margin-top:10px; font-size:15px; color:var(--ink); }
+  .qprompt p{ margin:0 0 10px; }
+  .given{
+    margin:12px 0; border-collapse:collapse; width:100%; font-size:13.5px;
+  }
+  .given th, .given td{ border:1px solid var(--line); padding:6px 9px; text-align:left; }
+  .given th{ background:var(--paper); font-weight:600; color:var(--ink-soft); font-size:12px; text-transform:uppercase; letter-spacing:.03em; }
+  .given td.num{ font-family:'IBM Plex Mono',monospace; }
+
+  .worktable{ margin:14px 0; }
+  .worktable-title{ font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); font-weight:600; margin-bottom:6px; }
+  .worktable table{ border-collapse:collapse; width:100%; font-size:13.5px; }
+  .worktable th, .worktable td{ border:1px solid var(--line); padding:5px 7px; }
+  .worktable th{ background:var(--paper); font-weight:600; color:var(--ink-soft); font-size:12px; }
+  .worktable input.cell{
+    width:100%; border:none; background:transparent; font-family:'IBM Plex Mono',monospace; font-size:13.5px;
+    color:var(--ink); padding:2px 3px; border-radius:3px;
+  }
+  .worktable input.cell:focus{ background:var(--accent-soft); }
+  .worktable input.cell.ok{ background:var(--good-soft); }
+  .worktable input.cell.no{ background:var(--bad-soft); }
+  .worktable-actions{ display:flex; align-items:center; gap:10px; margin-top:8px; }
+  .worktable-note{ font-size:12.5px; color:var(--ink-faint); }
+
+  .parts{ margin-top:16px; display:flex; flex-direction:column; gap:14px; }
+  .part{ }
+  .part-label{ font-size:14px; color:var(--ink); margin-bottom:6px; font-weight:500; }
+  .part-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .answer-input{
+    font-family:'IBM Plex Mono',monospace; font-size:15px; padding:8px 11px;
+    border:1.5px solid var(--line); border-radius:7px; background:var(--paper); color:var(--ink);
+    min-width:160px; transition:border-color .15s;
+  }
+  .answer-input:focus{ border-color:var(--accent); background:var(--panel); }
+  .answer-input.correct{ border-color:var(--good); background:var(--good-soft); }
+  .answer-input.incorrect{ border-color:var(--bad); background:var(--bad-soft); }
+  .unit{ color:var(--ink-faint); font-size:13.5px; }
+  .part-feedback{ font-size:13px; margin-top:5px; min-height:1.3em; }
+  .part-feedback.good{ color:var(--good); }
+  .part-feedback.bad{ color:var(--bad); }
+
+  .mc-options{ display:flex; flex-direction:column; gap:8px; margin-top:4px; }
+  .mc-opt{
+    display:flex; align-items:center; gap:10px; border:1.5px solid var(--line); border-radius:8px;
+    padding:9px 12px; cursor:pointer; background:var(--paper); font-size:14.5px; transition:.15s;
+  }
+  .mc-opt:hover{ border-color:var(--accent); }
+  .mc-opt input{ accent-color:var(--accent); }
+  .mc-opt.correct{ border-color:var(--good); background:var(--good-soft); }
+  .mc-opt.incorrect{ border-color:var(--bad); background:var(--bad-soft); }
+  .mc-opt.disabled{ pointer-events:none; opacity:.85; }
+
+  .btn{
+    font-size:14px; font-weight:600; border-radius:7px; padding:9px 16px; cursor:pointer;
+    border:1.5px solid transparent; transition:.15s; display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn-primary{ background:var(--accent); color:#fff; }
+  .btn-primary:hover{ background:var(--accent-strong); }
+  .btn-primary:disabled{ background:var(--ink-faint); cursor:not-allowed; opacity:.55; }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink-soft); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent-strong); }
+  .btn-amber{ background:var(--amber-soft); color:var(--amber); border-color:var(--amber-soft); }
+  .btn-amber:hover{ border-color:var(--amber); }
+  .btn-sm{ font-size:12.5px; padding:6px 11px; border-radius:6px; }
+
+  .action-row{ display:flex; align-items:center; gap:10px; margin-top:20px; flex-wrap:wrap; }
+  .hint-box{
+    margin-top:12px; background:var(--amber-soft); border:1px dashed var(--amber); border-radius:8px;
+    padding:10px 14px; font-size:13.5px; color:var(--ink);
+  }
+  .hint-box ol{ margin:0; padding-left:18px; }
+  .hint-box li{ margin-bottom:4px; }
+  .hint-box li:last-child{ margin-bottom:0; }
+
+  .banner{
+    margin-top:16px; border-radius:8px; padding:12px 15px; font-size:14.5px; display:none;
+    align-items:flex-start; gap:9px;
+  }
+  .banner.show{ display:flex; }
+  .banner.good{ background:var(--good-soft); color:var(--good); }
+  .banner.bad{ background:var(--bad-soft); color:var(--bad); }
+  .banner .icon{ font-size:16px; line-height:1.3; }
+
+  .explain{
+    margin-top:14px; background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:14px 16px; font-size:14px;
+  }
+  .explain-title{ font-weight:600; color:var(--ink); margin-bottom:6px; font-size:13.5px; text-transform:uppercase; letter-spacing:.04em; }
+  .explain table{ border-collapse:collapse; width:100%; font-size:13px; margin:8px 0; }
+  .explain th, .explain td{ border:1px solid var(--line); padding:5px 8px; }
+  .explain th{ background:var(--panel); font-weight:600; }
+
+  .footer-nav{ display:flex; justify-content:space-between; margin-top:26px; }
+
+  .complete-card{ text-align:center; padding:40px 24px; }
+  .complete-card .big{ font-size:44px; }
+  .score-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+  .score-tile{ background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:14px 8px; }
+  .score-tile b{ display:block; font-family:'IBM Plex Mono',monospace; font-size:24px; color:var(--accent-strong); }
+  .score-tile span{ font-size:12px; color:var(--ink-soft); }
+
+  @media (max-width:520px){
+    .burette{ width:150px; }
+    .score-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Calculator ---------- */
+  .calc-fab{
+    position:fixed; right:22px; bottom:22px; width:56px; height:56px; border-radius:50%;
+    background:var(--accent); color:#fff; border:none; font-size:24px; box-shadow:var(--shadow);
+    cursor:pointer; z-index:500; display:flex; align-items:center; justify-content:center; transition:.15s;
+  }
+  .calc-fab:hover{ background:var(--accent-strong); transform:scale(1.05); }
+  .calc-panel{
+    position:fixed; right:22px; bottom:90px; width:300px; max-width:92vw; max-height:80vh;
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    box-shadow:var(--shadow); z-index:500; overflow:hidden; display:none; flex-direction:column;
+  }
+  .calc-panel.open{ display:flex; }
+  .calc-header{
+    display:flex; align-items:center; justify-content:space-between; padding:8px 12px;
+    background:var(--paper); border-bottom:1px solid var(--line); cursor:grab; touch-action:none;
+    user-select:none; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
+    color:var(--ink-soft); letter-spacing:.06em; text-transform:uppercase; flex-shrink:0;
+  }
+  .calc-header .calc-title{ display:flex; align-items:center; }
+  .calc-header .mem-badge{
+    margin-left:7px; font-size:9.5px; padding:1px 5px; border-radius:4px; letter-spacing:.03em;
+    background:var(--accent-soft); color:var(--accent-strong); visibility:hidden;
+  }
+  .calc-header button{ background:none; border:none; color:var(--ink-faint); font-size:17px; cursor:pointer; padding:2px 6px; line-height:1; }
+  .calc-header button:hover{ color:var(--bad); }
+  .calc-display{ padding:14px 14px 8px; text-align:right; flex-shrink:0; }
+  .calc-display .expr{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint); min-height:14px; overflow-wrap:anywhere; }
+  .calc-display .val{ font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--ink); font-weight:600; overflow-wrap:anywhere; margin-top:2px; }
+  .calc-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:10px 12px 14px; overflow-y:auto; min-height:0; }
+  .calc-btn{
+    border:none; border-radius:8px; padding:11px 0; font-family:'IBM Plex Mono',monospace; font-size:14px;
+    font-weight:600; cursor:pointer; background:var(--paper); color:var(--ink); transition:.1s;
+  }
+  .calc-btn:hover{ filter:brightness(1.1); }
+  .calc-btn:active{ transform:scale(0.94); }
+  .calc-btn.fn{ background:var(--accent-soft); color:var(--accent-strong); font-size:12.5px; }
+  .calc-btn.op{ background:var(--amber-soft); color:var(--amber); }
+  .calc-btn.eq{ background:var(--accent); color:#fff; }
+  .calc-btn.ctrl{ background:var(--bad-soft); color:var(--bad); }
+  .calc-btn.mem{ background:var(--paper); color:var(--accent-strong); border:1px solid var(--line); font-size:12.5px; }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">IB Chemistry &middot; Topic 1</div>
+    <h1>Empirical Formula Lab</h1>
+    <p>A worked path through textbook exercises 24&ndash;50 &mdash; empirical and molecular formulas, reacting quantities &amp; percentage yield, and gas volumes at STP &mdash; read the idea, try the numbers, get a nudge if you're stuck.</p>
+
+    <div class="burette-row">
+      <div class="burette">
+        <div class="burette-tube"><div class="burette-fill" id="buretteFill"></div></div>
+      </div>
+      <div class="burette-label"><b id="progressCount">0</b> of <span id="progressTotal">30</span> questions solved</div>
+    </div>
+    <div class="chip-row" id="chipRow"></div>
+  </header>
+
+  <main id="stage"></main>
+</div>
+
+<button type="button" class="calc-fab" id="calcFab" title="Open calculator" aria-label="Open calculator">&#x1F9EE;</button>
+<div class="calc-panel" id="calcPanel">
+  <div class="calc-header" id="calcHeader"><span class="calc-title">Calculator<span class="mem-badge" id="calcMemInd">M</span></span><button type="button" id="calcClose" aria-label="Close calculator">&times;</button></div>
+  <div class="calc-display">
+    <div class="expr" id="calcExpr">&nbsp;</div>
+    <div class="val" id="calcVal">0</div>
+  </div>
+  <div class="calc-grid" id="calcGrid"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ chemistry helpers ============ */
+  const AR = { H:1.008, C:12.01, N:14.01, O:16.00, Na:22.99, S:32.07, P:30.97, Co:58.93, Cd:112.41, Se:78.97, Te:127.60, Li:6.94, Fe:55.85, Al:26.98, Cl:35.45, Ca:40.08, Hg:200.59, Br:79.90 };
+  const VM_STP = 22.7; // dm3 per mol at STP (273 K, 1.00x10^5 Pa)
+
+  function parseFormula(str){
+    if (!str) return null;
+    let s = String(str).trim().replace(/\s+/g,'');
+    if (!s) return null;
+    s = s.replace(/[\u00B7\u2022\u2219]/g,'.').replace(/\*/g,'.');
+    if (!/^[A-Za-z0-9.]+$/.test(s)) return null;
+    const parts = s.split('.').filter(Boolean);
+    if (!parts.length) return null;
+    const counts = {};
+    for (const part of parts){
+      let mult = 1, rest = part;
+      const lead = part.match(/^(\d+)([A-Za-z].*)$/);
+      if (lead){ mult = parseInt(lead[1],10); rest = lead[2]; }
+      const re = /([A-Z][a-z]?)(\d*)/g;
+      let m, consumed = 0;
+      while ((m = re.exec(rest)) !== null){
+        if (m[0] === ''){ re.lastIndex++; continue; }
+        consumed += m[0].length;
+        const el = m[1];
+        const n = m[2] ? parseInt(m[2],10) : 1;
+        counts[el] = (counts[el]||0) + n*mult;
+      }
+      if (consumed !== rest.length) return null;
+    }
+    return counts;
+  }
+  function gcd2(a,b){ a=Math.round(a); b=Math.round(b); return b===0?a:gcd2(b,a%b); }
+  function reduceCounts(counts){
+    const vals = Object.values(counts).filter(v=>v>0);
+    if (!vals.length) return counts;
+    let g = vals[0];
+    for (const v of vals) g = gcd2(g,v);
+    const out = {};
+    for (const k in counts) out[k] = counts[k]/g;
+    return out;
+  }
+  function countsEqual(a,b){
+    const ka = Object.keys(a).filter(k=>a[k]!==0);
+    const kb = Object.keys(b).filter(k=>b[k]!==0);
+    if (ka.length !== kb.length) return false;
+    return ka.every(k => b[k] === a[k]);
+  }
+  function checkEmpirical(userStr, correctStr){
+    const u = parseFormula(userStr), c = parseFormula(correctStr);
+    if (!u || !c) return false;
+    return countsEqual(reduceCounts(u), reduceCounts(c));
+  }
+  function checkMolecular(userStr, correctStr){
+    const u = parseFormula(userStr), c = parseFormula(correctStr);
+    if (!u || !c) return false;
+    return countsEqual(u, c);
+  }
+  function checkNumeric(userStr, correct, tolPct, tolAbs){
+    tolPct = tolPct===undefined?0.05:tolPct; tolAbs = tolAbs===undefined?0:tolAbs;
+    const v = parseFloat(userStr);
+    if (isNaN(v)) return false;
+    const tol = Math.max(tolAbs, Math.abs(correct)*tolPct);
+    return Math.abs(v-correct) <= tol;
+  }
+  function fmtFormula(str){
+    return str.replace(/([A-Za-z])(\d+)/g,'$1<sub>$2</sub>').replace(/\./g,'&middot;');
+  }
+
+  /* ============ concept library ============ */
+  const CONCEPTS = {
+    'empirical-basic': {
+      tag:'Idea', title:'From molecular formula to empirical formula',
+      body: `<p>A <b>molecular formula</b> gives the actual number of each atom in one molecule. An <b>empirical formula</b> gives only the simplest whole-number ratio between them.</p>
+      <p>To go from one to the other, divide every subscript by the highest common factor of all the subscripts.</p>
+      <div class="worked">e.g. hydrogen peroxide, H<sub>2</sub>O<sub>2</sub> &rarr; both subscripts share a factor of 2 &rarr; empirical formula <b>HO</b>.</div>`
+    },
+    'empirical-from-mass': {
+      tag:'Method', title:'Empirical formula from masses',
+      body: `<p><i>Worked example &mdash; a 0.5436&nbsp;g sample of a compound containing only carbon, hydrogen and oxygen is analysed and found to contain 0.2835&nbsp;g C, 0.07125&nbsp;g H and 0.1888&nbsp;g O. When you're given the mass of each element in a sample, the formula falls out of four steps:</i></p>
+      <div class="worked">
+      <table><tr><th></th><th>C</th><th>H</th><th>O</th></tr>
+      <tr><td>mass / g</td><td>0.2835</td><td>0.07125</td><td>0.1888</td></tr>
+      <tr><td>&divide; A<sub>r</sub> &rarr; moles</td><td>0.02361</td><td>0.07068</td><td>0.01180</td></tr>
+      <tr><td>&divide; smallest</td><td>2.001</td><td>5.999</td><td>1.000</td></tr>
+      <tr><td>whole-number ratio</td><td>2</td><td>6</td><td>1</td></tr>
+      </table>
+      </div>
+      <p>1. Convert each mass to moles (mass &divide; A<sub>r</sub>). 2. Divide every mole value by the smallest one. 3. If the results aren't whole numbers, scale all of them up by the same small integer (&times;2, &times;3&hellip;) until they are. 4. Write the ratio as the formula &mdash; here, <b>C<sub>2</sub>H<sub>6</sub>O</b>.</p>`
+    },
+    'empirical-from-percent': {
+      tag:'Method', title:'Empirical formula from percentage composition',
+      body: `<p>Percentages by mass work exactly like masses &mdash; because percentages of <i>any</i> total are the same ratio, just imagine a 100&nbsp;g sample. Then each percentage becomes a mass in grams, and you convert to moles and reduce as before.</p>`
+    },
+    'percent-comparison': {
+      tag:'Method', title:'Comparing percentage composition',
+      body: `<p>The percentage by mass of an element in a compound is:</p>
+      <div class="worked">%element = (moles of that element in the formula &times; A<sub>r</sub>) &divide; M<sub>r</sub> of the whole compound &times; 100%</div>
+      <p>To compare several compounds, work out this percentage for each one using its own formula and molar mass, then compare the results directly &mdash; there's no shortcut around computing each one.</p>`
+    },
+    'atomic-mass': {
+      tag:'Method', title:'Working backwards to an atomic mass',
+      body: `<p>Sometimes the formula's <i>pattern</i> is given (like M<sub>3</sub>N) but one atomic mass is the unknown. Use the same mole ratio the formula implies, but solve for the unknown A<sub>r</sub> algebraically instead of a numerical division.</p>
+      <div class="worked">In M<sub>3</sub>N, for every 1 mole of N there are 3 moles of M, so mass of N &divide; mass of M = A<sub>r</sub>(N) &divide; (3 &times; A<sub>r</sub>(M)).</div>`
+    },
+    'empirical-to-molecular': {
+      tag:'Method', title:'From empirical formula to molecular formula',
+      body: `<p>The empirical formula only tells you the ratio &mdash; the real molecule could be that formula repeated <i>n</i> times. You find <i>n</i> by comparing masses:</p>
+      <div class="worked">n = (molar mass of the real compound) &divide; (mass of one empirical formula unit)</div>
+      <p>Then the molecular formula is the empirical formula with every subscript multiplied by <i>n</i>.</p>`
+    },
+    'combustion': {
+      tag:'Method', title:'Combustion analysis',
+      body: `<p>Burning a compound containing only C, H (and possibly O) in excess oxygen converts every carbon atom into CO<sub>2</sub> and every hydrogen atom into H<sub>2</sub>O. So:</p>
+      <div class="worked">moles C = moles CO<sub>2</sub> produced &nbsp;&middot;&nbsp; moles H = 2 &times; moles H<sub>2</sub>O produced</div>
+      <p>If the compound might also contain oxygen, you can't measure it directly &mdash; instead find the mass of C and H you just calculated, subtract both from the original sample mass, and whatever mass is left over must be oxygen.</p>`
+    },
+    'moles-macroscopic': {
+      tag:'Idea', title:'Bridging a real object to atom counts',
+      body: `<p>The mole lets you connect something you can weigh (grams of chalk) to something you can't count directly (atoms). The chain is always the same:</p>
+      <div class="worked">mass (g) &rarr; moles (&divide; M) &rarr; number of particles (&times; N<sub>A</sub>, Avogadro's constant, 6.02&times;10<sup>23</sup> mol<sup>&minus;1</sup>)</div>
+      <p>You don't need a lab balance sensitive enough to weigh a signature &mdash; estimating the mass of chalk transferred (e.g. from how much a piece of chalk loses in overall mass) is precise enough, because the answer will be an enormous number of atoms either way.</p>`
+    },
+    'reacting-quantities-basic': {
+      tag:'Idea', title:'Mole ratios from a balanced equation',
+      body: `<p>A balanced equation gives the ratio of <b>moles</b> that react and form &mdash; not the ratio of masses. Once you have moles of one substance, the equation's coefficients convert straight across to moles of any other.</p>
+      <div class="worked">e.g. N<sub>2</sub>(g) + 3H<sub>2</sub>(g) &rarr; 2NH<sub>3</sub>(g): 0.40&nbsp;mol N<sub>2</sub> needs 3&times;0.40 = 1.20&nbsp;mol H<sub>2</sub>, and produces 2&times;0.40 = 0.80&nbsp;mol NH<sub>3</sub>.</div>
+      <p>Always convert to moles first, apply the ratio, then convert back to whatever units the question actually asks for.</p>`
+    },
+    'limiting-reagent': {
+      tag:'Method', title:'Identifying the limiting reagent',
+      body: `<p>When two reactants are both given, one of them runs out first &mdash; the <b>limiting reagent</b> &mdash; and it alone decides how much product can form. The other is <b>in excess</b>.</p>
+      <div class="worked">Convert both masses to moles, then divide each by its own coefficient in the equation. Whichever gives the <i>smaller</i> value is the limiting reagent.</div>
+      <p>Every later step (product mass, leftover excess reactant) is based on the limiting reagent's moles &mdash; never the one in excess.</p>`
+    },
+    'percentage-yield': {
+      tag:'Method', title:'Percentage yield',
+      body: `<p>The <b>theoretical yield</b> is the maximum mass of product the limiting reagent could possibly give, calculated from the equation. Real reactions almost never quite reach it.</p>
+      <div class="worked">percentage yield = (experimental yield &divide; theoretical yield) &times; 100%<br>e.g. theoretical yield 12.0&nbsp;g, experimental yield 9.60&nbsp;g &rarr; percentage yield = 9.60/12.0 &times; 100 = 80.0%</div>
+      <p>The same relationship can also run in reverse &mdash; scaling a theoretical calculation up to however much starting material you'd actually need for a target amount of product at a known percentage yield.</p>`
+    },
+    'gas-molar-volume': {
+      tag:'Idea', title:'Molar volume of a gas at STP',
+      body: `<p>At <b>standard temperature and pressure</b> (STP: 273&nbsp;K, 1.00&times;10<sup>5</sup>&nbsp;Pa), one mole of <i>any</i> gas occupies the same volume &mdash; the <b>molar volume</b>, V<sub>m</sub> = 22.7&nbsp;dm<sup>3</sup>&nbsp;mol<sup>&minus;1</sup> (22,700&nbsp;cm<sup>3</sup>&nbsp;mol<sup>&minus;1</sup>).</p>
+      <div class="worked">moles = volume (dm<sup>3</sup>) &divide; 22.7 &nbsp;&middot;&nbsp; volume (dm<sup>3</sup>) = moles &times; 22.7</div>
+      <p>This holds no matter which gas it is &mdash; it's the same idea as Avogadro's law: equal volumes of gas at the same temperature and pressure contain equal numbers of moles.</p>`
+    }
+  };
+
+  /* ============ questions ============ */
+  const Q = [];
+
+  Q.push({
+    num:24, id:'q24',
+    title:'Reducing molecular formulas',
+    concept:'empirical-basic',
+    prompt:`<p>Give the empirical formula of each compound below by dividing all subscripts by their highest common factor.</p>`,
+    parts:[
+      {id:'a', label:'(a) ethyne, C<sub>2</sub>H<sub>2</sub>', type:'formula-empirical', correct:'CH'},
+      {id:'b', label:'(b) glucose, C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>', type:'formula-empirical', correct:'CH2O'},
+      {id:'c', label:'(c) sucrose, C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>', type:'formula-empirical', correct:'C12H22O11'},
+      {id:'d', label:'(d) octane, C<sub>8</sub>H<sub>18</sub>', type:'formula-empirical', correct:'C4H9'},
+      {id:'e', label:'(e) oct-1-yne, C<sub>8</sub>H<sub>14</sub>', type:'formula-empirical', correct:'C4H7'},
+      {id:'f', label:'(f) ethanoic acid, CH<sub>3</sub>COOH', type:'formula-empirical', correct:'CH2O'}
+    ],
+    hints:[
+      'Find the highest common factor (HCF) shared by every subscript in the formula &mdash; remember an element written with no subscript has an implied subscript of 1.',
+      'Divide each subscript by that HCF. If the HCF is 1 (nothing divides evenly into all of them), the formula is already in its simplest form.',
+      'For (f), first count up all the atoms in CH<sub>3</sub>COOH as one formula &mdash; C<sub>2</sub>H<sub>4</sub>O<sub>2</sub> &mdash; before you look for a common factor.'
+    ],
+    explanation:`<p>(a) CH &nbsp; (b) CH<sub>2</sub>O &nbsp; (c) C<sub>12</sub>H<sub>22</sub>O<sub>11</sub> (already simplest &mdash; 12, 22 and 11 share no common factor) &nbsp; (d) C<sub>4</sub>H<sub>9</sub> &nbsp; (e) C<sub>4</sub>H<sub>7</sub> &nbsp; (f) CH<sub>3</sub>COOH = C<sub>2</sub>H<sub>4</sub>O<sub>2</sub> &rarr; CH<sub>2</sub>O.</p>`
+  });
+
+  Q.push({
+    num:25, id:'q25',
+    title:'Sodium, sulfur and oxygen',
+    concept:'empirical-from-mass',
+    prompt:`<p>A sample of a compound contains only the elements sodium, sulfur, and oxygen. It is found by analysis to contain 0.979&nbsp;g Na, 1.365&nbsp;g S, and 1.021&nbsp;g O. Determine its empirical formula.</p>`,
+    given:{cols:['Na','S','O'], mass:[0.979,1.365,1.021]},
+    work:{elements:['Na','S','O'], mass:[0.979,1.365,1.021], moles:[0.979/22.99, 1.365/32.07, 1.021/16.00]},
+    parts:[ {id:'formula', label:'Empirical formula', type:'formula-empirical', correct:'Na2S2O3'} ],
+    hints:[
+      'Divide each mass by its atomic mass (A<sub>r</sub>: Na = 22.99, S = 32.07, O = 16.00) to get moles of each element.',
+      'Divide all three mole values by whichever is smallest &mdash; sulfur and sodium should come out close to equal, with oxygen close to 1.5&times; that.',
+      'A ratio ending in &ldquo;.5&rdquo; isn\'t whole yet &mdash; double every number in the ratio to clear the fraction.'
+    ],
+    explanation:`<p>Moles: Na = 0.979/22.99 = 0.0426, S = 1.365/32.07 = 0.0426, O = 1.021/16.00 = 0.0638. Dividing by the smallest (0.0426): Na&nbsp;1.00 : S&nbsp;1.00 : O&nbsp;1.50. Doubling clears the half: <b>Na<sub>2</sub>S<sub>2</sub>O<sub>3</sub></b> (sodium thiosulfate).</p>`
+  });
+
+  Q.push({
+    num:26, id:'q26',
+    title:'A hydrated cobalt compound',
+    concept:'empirical-from-mass',
+    prompt:`<p>A sample of a hydrated compound was analysed and found to contain 2.10&nbsp;g Co, 1.14&nbsp;g S, 2.28&nbsp;g O, and 4.50&nbsp;g H<sub>2</sub>O. Determine its empirical formula.</p>`,
+    work:{elements:['Co','S','O','H2O'], mass:[2.10,1.14,2.28,4.50], moles:[2.10/58.93, 1.14/32.07, 2.28/16.00, 4.50/18.02]},
+    parts:[ {id:'formula', label:'Empirical formula (write water of crystallisation as &lsquo;.xH2O&rsquo;, e.g. CuSO4.5H2O)', type:'formula-empirical', correct:'CoSO4.7H2O'} ],
+    hints:[
+      'Treat the 2.28&nbsp;g of O as separate from the water &mdash; it belongs to the sulfate part of the formula, not to the H<sub>2</sub>O.',
+      'Find moles of Co, S, O (the 2.28 g) and of H<sub>2</sub>O (using its own molar mass, 18.02 g mol<sup>&minus;1</sup>) &mdash; four mole values in total.',
+      'Divide all four by the smallest. Co and S should each come out to 1, O close to 4, and H<sub>2</sub>O close to 7.'
+    ],
+    explanation:`<p>Moles: Co = 2.10/58.93 = 0.0356, S = 1.14/32.07 = 0.0356, O = 2.28/16.00 = 0.1425, H<sub>2</sub>O = 4.50/18.02 = 0.250. Dividing by the smallest (0.0356): Co&nbsp;1 : S&nbsp;1 : O&nbsp;4 : H<sub>2</sub>O&nbsp;7. Empirical formula <b>CoSO<sub>4</sub>&middot;7H<sub>2</sub>O</b> (cobalt(II) sulfate heptahydrate).</p>`
+  });
+
+  Q.push({
+    num:27, id:'q27',
+    title:'A street drug',
+    concept:'empirical-from-percent',
+    prompt:`<p>A street drug has the following composition by mass: 83.89% C, 10.35% H, 5.76% N. Determine its empirical formula.</p>`,
+    work:{elements:['C','H','N'], mass:[83.89,10.35,5.76], moles:[83.89/12.01, 10.35/1.008, 5.76/14.01], massLabel:'in a 100 g sample / g'},
+    parts:[ {id:'formula', label:'Empirical formula', type:'formula-empirical', correct:'C17H25N'} ],
+    hints:[
+      'Imagine exactly 100 g of the compound &mdash; then each percentage is simply that many grams (83.89 g C, 10.35 g H, 5.76 g N).',
+      'Convert each of those masses to moles, then divide all three by the smallest value (nitrogen will be smallest).',
+      'The ratio doesn\'t round to small whole numbers here &mdash; that\'s expected. Round each to the nearest whole number once it\'s within about 0.05 of one.'
+    ],
+    explanation:`<p>Per 100 g: moles C = 83.89/12.01 = 6.985, H = 10.35/1.008 = 10.268, N = 5.76/14.01 = 0.4111. Dividing by N (smallest): C&nbsp;17.0 : H&nbsp;25.0 : N&nbsp;1.0. Empirical formula <b>C<sub>17</sub>H<sub>25</sub>N</b>.</p>`
+  });
+
+  Q.push({
+    num:28, id:'q28',
+    title:'Nitrogen fertilizers compared',
+    concept:'percent-comparison',
+    prompt:`<p>The following compounds are used in the production of fertilizers: NH<sub>3</sub>, CO(NH<sub>2</sub>)<sub>2</sub> (urea), (NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>. Which has the highest percentage by mass of nitrogen?</p>`,
+    parts:[ {id:'mc', label:'Highest % nitrogen by mass', type:'mc', options:['NH3 (ammonia)','CO(NH2)2 (urea)','(NH4)2SO4 (ammonium sulfate)'], correctIndex:0} ],
+    hints:[
+      'Work out M<sub>r</sub> for each compound, then the mass contributed by nitrogen alone (count the N atoms &times; 14.01) as a fraction of that M<sub>r</sub>.',
+      'Ammonia\'s formula has by far the fewest non-nitrogen atoms sitting alongside its one N atom &mdash; that\'s a strong clue before you even finish the arithmetic.',
+      'M<sub>r</sub>(NH<sub>3</sub>) = 17.03, M<sub>r</sub>(urea) = 60.06, M<sub>r</sub>((NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>) = 132.15 &mdash; put 14.01 (or 28.02 where there are 2 N) over each.'
+    ],
+    explanation:`<p>%N: NH<sub>3</sub> = 14.01/17.03 = <b>82.3%</b>; urea = 28.02/60.06 = 46.7%; (NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub> = 28.02/132.15 = 21.2%. Ammonia has the highest percentage of nitrogen, even though urea and ammonium sulfate deliver more total nitrogen per bag because they're solids that pack and spread more easily.</p>`
+  });
+
+  Q.push({
+    num:29, id:'q29',
+    title:'Identifying an unknown metal',
+    concept:'atomic-mass',
+    prompt:`<p>A compound has the formula M<sub>3</sub>N, where M is a metal element and N is nitrogen. It contains 0.673&nbsp;g of N per gram of M. Determine the relative atomic mass of M and hence its identity.</p>`,
+    parts:[
+      {id:'ar', label:'Relative atomic mass of M', type:'numeric', correct:6.94, tolPct:0.05, unit:''},
+      {id:'name', label:'Identity of M', type:'text', accept:['li','lithium'], correct:'Lithium'}
+    ],
+    hints:[
+      'In M<sub>3</sub>N there are 3 moles of M for every 1 mole of N, so mass ratio N&thinsp;:&thinsp;M = A<sub>r</sub>(N) &divide; (3 &times; A<sub>r</sub>(M)).',
+      'Set that ratio equal to 0.673 and solve for A<sub>r</sub>(M): A<sub>r</sub>(M) = 14.01 &divide; (3 &times; 0.673).',
+      'The answer should land close to a very light, very familiar metal from Group 1.'
+    ],
+    explanation:`<p>14.01/(3&times;A<sub>r</sub>) = 0.673 &rarr; A<sub>r</sub> = 14.01/(3&times;0.673) = <b>6.94</b>, which is lithium. The compound is Li<sub>3</sub>N, lithium nitride.</p>`
+  });
+
+  Q.push({
+    num:30, id:'q30',
+    title:'Cadmium compounds for photocells',
+    concept:'percent-comparison',
+    prompt:`<p>Compounds of cadmium are used in the construction of photocells. Deduce which of the following has the highest percentage by mass of cadmium: CdS, CdSe, CdTe.</p>`,
+    parts:[ {id:'mc', label:'Highest % cadmium by mass', type:'mc', options:['CdS','CdSe','CdTe'], correctIndex:0} ],
+    hints:[
+      'Cadmium\'s own mass doesn\'t change between the three compounds (A<sub>r</sub>(Cd) = 112.41) &mdash; only its partner element does.',
+      'A heavier partner element makes the same cadmium mass a smaller fraction of a bigger total. Compare A<sub>r</sub>: S = 32.07, Se = 78.97, Te = 127.60.',
+      'The lightest partner element gives cadmium the largest share of the total mass.'
+    ],
+    explanation:`<p>%Cd: CdS = 112.41/144.48 = <b>77.8%</b>; CdSe = 112.41/191.38 = 58.7%; CdTe = 112.41/240.01 = 46.8%. Sulfur is the lightest partner, so CdS has the highest percentage of cadmium.</p>`
+  });
+
+  Q.push({
+    num:31, id:'q31',
+    title:'Benzene',
+    concept:'empirical-to-molecular',
+    prompt:`<p>Benzene is a hydrocarbon, a compound of carbon and hydrogen only. It is found to contain 7.74% H by mass. Its molar mass is 78.10&nbsp;g&nbsp;mol<sup>&minus;1</sup>. Determine its empirical and molecular formulas.</p>`,
+    work:{elements:['C','H'], mass:[92.26,7.74], moles:[92.26/12.01, 7.74/1.008], massLabel:'in a 100 g sample / g', note:'(%C = 100 &minus; 7.74)'},
+    parts:[
+      {id:'ef', label:'Empirical formula', type:'formula-empirical', correct:'CH'},
+      {id:'mf', label:'Molecular formula', type:'formula-molecular', correct:'C6H6'}
+    ],
+    hints:[
+      'Only two elements are present, so %C = 100% &minus; 7.74%. Turn both percentages into moles and reduce as usual to get the empirical formula.',
+      'Work out the mass of one empirical formula unit (the empirical formula mass), then n = molar mass &divide; empirical formula mass.',
+      'The empirical formula CH has a formula mass of about 13.02 &mdash; how many times does that fit into 78.10?'
+    ],
+    explanation:`<p>Moles per 100 g: C = 92.26/12.01 = 7.68, H = 7.74/1.008 = 7.68 &rarr; ratio 1:1 &rarr; empirical formula <b>CH</b> (mass 13.02). n = 78.10/13.02 = 6.0, so molecular formula = <b>C<sub>6</sub>H<sub>6</sub></b>.</p>`
+  });
+
+  Q.push({
+    num:32, id:'q32',
+    title:'A weak acid',
+    concept:'empirical-to-molecular',
+    prompt:`<p>A weak acid has a molar mass of 162&nbsp;g&nbsp;mol<sup>&minus;1</sup>. Analysis of a 0.8821&nbsp;g sample showed the composition by mass is 0.0220&nbsp;g H, 0.3374&nbsp;g P, and the remainder was O. Determine its empirical and molecular formulas.</p>`,
+    work:{elements:['H','P','O'], mass:[0.0220,0.3374,0.8821-0.0220-0.3374], moles:[0.0220/1.008, 0.3374/30.97, (0.8821-0.0220-0.3374)/16.00], note:'(O by difference: 0.8821 &minus; 0.0220 &minus; 0.3374)'},
+    parts:[
+      {id:'ef', label:'Empirical formula', type:'formula-empirical', correct:'H2PO3'},
+      {id:'mf', label:'Molecular formula', type:'formula-molecular', correct:'H4P2O6'}
+    ],
+    hints:[
+      'Oxygen\'s mass isn\'t given directly &mdash; subtract the mass of H and P from the total sample mass (0.8821 g) to find it.',
+      'Convert all three masses to moles and divide by the smallest (phosphorus) to get the empirical formula ratio.',
+      'Once you have the empirical formula, find its formula mass and see how many times it divides into 162.'
+    ],
+    explanation:`<p>Mass O = 0.8821 &minus; 0.0220 &minus; 0.3374 = 0.5227 g. Moles: H = 0.0220/1.008 = 0.02183, P = 0.3374/30.97 = 0.01089, O = 0.5227/16.00 = 0.03267. Dividing by P: H&nbsp;2.00 : P&nbsp;1.00 : O&nbsp;3.00 &rarr; empirical formula <b>H<sub>2</sub>PO<sub>3</sub></b> (mass &asymp; 81.0). n = 162/81.0 = 2, so molecular formula = <b>H<sub>4</sub>P<sub>2</sub>O<sub>6</sub></b>.</p>`
+  });
+
+  Q.push({
+    num:33, id:'q33',
+    title:'ATP',
+    concept:'empirical-to-molecular',
+    prompt:`<p>ATP is an important molecule in living cells. A sample with a mass of 0.8138&nbsp;g was analysed and found to contain 0.1927&nbsp;g C, 0.02590&nbsp;g H, 0.1124&nbsp;g N, and 0.1491&nbsp;g P. The remainder was O. Determine the empirical formula of ATP. Its formula mass was found to be 507&nbsp;g&nbsp;mol<sup>&minus;1</sup>. Determine its molecular formula.</p>`,
+    work:{elements:['C','H','N','P','O'], mass:[0.1927,0.02590,0.1124,0.1491, 0.8138-0.1927-0.02590-0.1124-0.1491], moles:[0.1927/12.01, 0.02590/1.008, 0.1124/14.01, 0.1491/30.97, (0.8138-0.1927-0.02590-0.1124-0.1491)/16.00], note:'(O by difference)'},
+    parts:[
+      {id:'ef', label:'Empirical formula', type:'formula-empirical', correct:'C10H16N5O13P3'},
+      {id:'mf', label:'Molecular formula', type:'formula-molecular', correct:'C10H16N5O13P3'}
+    ],
+    hints:[
+      'Five elements this time, but the method doesn\'t change &mdash; find the mass of O by subtracting all four given masses from 0.8138 g.',
+      'Convert all five masses to moles. Phosphorus gives the smallest mole value here, so divide everything by it.',
+      'The ratios won\'t all land on whole numbers straight away &mdash; try multiplying every value by 2 or 3 before rounding.'
+    ],
+    explanation:`<p>Mass O = 0.8138 &minus; 0.1927 &minus; 0.02590 &minus; 0.1124 &minus; 0.1491 = 0.3337 g. Moles: C = 0.01605, H = 0.02569, N = 0.00802, P = 0.00481, O = 0.02086. Dividing by P (smallest) and &times;3 to clear the thirds: C&nbsp;10 : H&nbsp;16 : N&nbsp;5 : P&nbsp;3 : O&nbsp;13. Empirical formula <b>C<sub>10</sub>H<sub>16</sub>N<sub>5</sub>O<sub>13</sub>P<sub>3</sub></b>, formula mass &asymp; 507 &mdash; so n = 1 and the molecular formula is the same: <b>C<sub>10</sub>H<sub>16</sub>N<sub>5</sub>O<sub>13</sub>P<sub>3</sub></b>.</p>`
+  });
+
+  Q.push({
+    num:34, id:'q34',
+    title:'Combustion of an unknown',
+    concept:'combustion',
+    prompt:`<p>A 0.30&nbsp;g sample of a compound that contains only carbon, hydrogen, and oxygen was burned in excess oxygen. The products were 0.66&nbsp;g of carbon dioxide and 0.36&nbsp;g of water. Determine the empirical formula of the compound.</p>`,
+    parts:[ {id:'formula', label:'Empirical formula', type:'formula-empirical', correct:'C3H8O'} ],
+    hints:[
+      'Moles CO<sub>2</sub> = 0.66/44.01 gives you moles C directly. Moles H<sub>2</sub>O = 0.36/18.02, then &times;2 gives you moles H.',
+      'Convert those moles of C and H back into grams (&times; A<sub>r</sub>), then subtract both from the original 0.30 g sample &mdash; what\'s left is the mass of oxygen.',
+      'Turn the mass of O into moles too, then divide all three (C, H, O) by the smallest to get the ratio.'
+    ],
+    explanation:`<p>Moles CO<sub>2</sub> = 0.66/44.01 = 0.01500 = moles C; mass C = 0.01500&times;12.01 = 0.1801 g. Moles H<sub>2</sub>O = 0.36/18.02 = 0.01998, moles H = 0.03996; mass H = 0.03996&times;1.008 = 0.0403 g. Mass O = 0.30 &minus; 0.1801 &minus; 0.0403 = 0.0796 g &rarr; moles O = 0.00498. Dividing by O (smallest): C&nbsp;3.01 : H&nbsp;8.02 : O&nbsp;1.00. Empirical formula <b>C<sub>3</sub>H<sub>8</sub>O</b> (e.g. propan-1-ol).</p>`
+  });
+
+  Q.push({
+    num:35, id:'q35',
+    title:'Atoms in a signature',
+    concept:'moles-macroscopic',
+    reflect:true,
+    prompt:`<p>You are asked to write your name on a suitable surface, using a piece of chalk that is pure calcium carbonate, CaCO<sub>3</sub>. How could you calculate the number of carbon atoms in your signature? (As a bonus: how many atoms of calcium are in Avogadro's name written in chalk?)</p>`,
+    hints:[
+      'You need a mass of CaCO<sub>3</sub> to start the mole chain &mdash; how could you measure or estimate the mass of chalk that ends up on the board rather than in your hand?',
+      'Weigh the piece of chalk before and after writing (or writing a similar amount of text) &mdash; the difference is the mass of CaCO<sub>3</sub> deposited.',
+      'From there it\'s the standard chain: mass &rarr; moles (&divide; M<sub>r</sub>(CaCO<sub>3</sub>) = 100.09) &rarr; moles of C (1 per formula unit, same for Ca) &rarr; number of atoms (&times; 6.02&times;10<sup>23</sup>).'
+    ],
+    explanation:`<p><b>Method:</b> weigh the chalk before and after writing your name to find the mass of CaCO<sub>3</sub> transferred. Divide by M<sub>r</sub>(CaCO<sub>3</sub>) = 100.09 g&nbsp;mol<sup>&minus;1</sup> to get moles of CaCO<sub>3</sub>. Since each formula unit contains exactly one C atom (and one Ca atom), moles of C = moles of Ca = moles of CaCO<sub>3</sub>. Multiply by Avogadro's constant (6.02&times;10<sup>23</sup>&nbsp;mol<sup>&minus;1</sup>) to get the number of atoms. A only a few milligrams of chalk already contains on the order of 10<sup>19</sup>&ndash;10<sup>20</sup> atoms of carbon &mdash; there's no need for an exact mass, because the answer is a staggering number either way.</p>`
+  });
+
+  Q.push({
+    num:36, id:'q36',
+    title:'Reducing iron ore',
+    concept:'reacting-quantities-basic',
+    prompt:`<p>Iron ore can be reduced to iron by the following reaction:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">Fe<sub>2</sub>O<sub>3</sub>(s) + 3H<sub>2</sub>(g) &rarr; 2Fe + 3H<sub>2</sub>O(l)</p>`,
+    parts:[
+      {id:'a', label:'(a) Moles of Fe made from 1.25 mol Fe2O3', type:'numeric', correct:2.50, unit:'mol'},
+      {id:'b', label:'(b) Moles of H2 needed to make 3.75 mol Fe', type:'numeric', correct:5.625, unit:'mol'},
+      {id:'c', label:'(c) Mass of Fe2O3 used up if the reaction yields 12.50 mol H2O', type:'numeric', correct:665.4, unit:'g'}
+    ],
+    hints:[
+      'Read the equation\'s coefficients as a mole ratio: 1 mol Fe<sub>2</sub>O<sub>3</sub> : 3 mol H<sub>2</sub> : 2 mol Fe : 3 mol H<sub>2</sub>O.',
+      'For (b), scale the H<sub>2</sub>:Fe ratio (3:2) up to the 3.75 mol of Fe given.',
+      'For (c), first find moles of Fe<sub>2</sub>O<sub>3</sub> from the Fe<sub>2</sub>O<sub>3</sub>:H<sub>2</sub>O ratio (1:3), then convert those moles to grams using M<sub>r</sub>(Fe<sub>2</sub>O<sub>3</sub>) = 2(55.85) + 3(16.00) = 159.70.'
+    ],
+    explanation:`<p>(a) 1.25 mol Fe<sub>2</sub>O<sub>3</sub> &times; (2 mol Fe / 1 mol Fe<sub>2</sub>O<sub>3</sub>) = <b>2.50 mol Fe</b>. (b) 3.75 mol Fe &times; (3 mol H<sub>2</sub> / 2 mol Fe) = <b>5.625 mol H<sub>2</sub></b>. (c) 12.50 mol H<sub>2</sub>O &times; (1 mol Fe<sub>2</sub>O<sub>3</sub> / 3 mol H<sub>2</sub>O) = 4.167 mol Fe<sub>2</sub>O<sub>3</sub>; &times; M<sub>r</sub> (159.70) = <b>665.4 g</b>.</p>`
+  });
+
+  Q.push({
+    num:'37 (a)', chip:'37a', id:'q37a',
+    title:'Combustion of butane \u2014 the equation',
+    concept:'reacting-quantities-basic',
+    reflect:true,
+    prompt:`<p>Lighters commonly use butane, C<sub>4</sub>H<sub>10</sub>, as the fuel. Formulate the balanced equation for the complete combustion of butane.</p>`,
+    hints:[
+      'Complete combustion of a hydrocarbon in oxygen always produces carbon dioxide and water only.',
+      'Balance carbon and hydrogen first (4 C &rarr; 4 CO<sub>2</sub>, 10 H &rarr; 5 H<sub>2</sub>O), then count up the oxygen needed on the right and balance O<sub>2</sub> last.',
+      'You may land on a fractional O<sub>2</sub> coefficient (13/2) &mdash; if so, double every coefficient in the whole equation to clear it.'
+    ],
+    explanation:`<p>Balancing C and H first: C<sub>4</sub>H<sub>10</sub> + &hellip;O<sub>2</sub> &rarr; 4CO<sub>2</sub> + 5H<sub>2</sub>O. That needs 8 + 5 = 13 O atoms on the right, i.e. 13/2 O<sub>2</sub>. Doubling everything to clear the fraction:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">2C<sub>4</sub>H<sub>10</sub>(g) + 13O<sub>2</sub>(g) &rarr; 8CO<sub>2</sub>(g) + 10H<sub>2</sub>O(g)</p>
+    <p>(The unscaled form C<sub>4</sub>H<sub>10</sub> + 13/2 O<sub>2</sub> &rarr; 4CO<sub>2</sub> + 5H<sub>2</sub>O is just as correct.)</p>`
+  });
+
+  Q.push({
+    num:'37 (b)', chip:'37b', id:'q37b',
+    title:'Combustion of butane \u2014 mass burned',
+    concept:'reacting-quantities-basic',
+    prompt:`<p>Using the combustion equation from part (a), determine the mass of butane that burned when 2.46&nbsp;g of water was produced.</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">2C<sub>4</sub>H<sub>10</sub>(g) + 13O<sub>2</sub>(g) &rarr; 8CO<sub>2</sub>(g) + 10H<sub>2</sub>O(g)</p>`,
+    parts:[ {id:'mass', label:'Mass of butane burned', type:'numeric', correct:1.587, unit:'g'} ],
+    hints:[
+      'Convert 2.46 g of H<sub>2</sub>O to moles first (M<sub>r</sub>(H<sub>2</sub>O) = 18.02).',
+      'Use the equation\'s ratio of butane to water (2:10, i.e. 1:5) to get moles of butane.',
+      'Convert moles of butane to grams using M<sub>r</sub>(C<sub>4</sub>H<sub>10</sub>) = 4(12.01) + 10(1.008) = 58.12.'
+    ],
+    explanation:`<p>Moles H<sub>2</sub>O = 2.46/18.02 = 0.1365 mol. Moles C<sub>4</sub>H<sub>10</sub> = 0.1365 &times; (2/10) = 0.02731 mol. Mass = 0.02731 &times; 58.12 = <b>1.587 g</b>.</p>`
+  });
+
+  Q.push({
+    num:38, id:'q38',
+    title:'Booster rocket fuel',
+    concept:'reacting-quantities-basic',
+    prompt:`<p>Booster rockets for the space shuttle use the following reaction:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">3Al(s) + 3NH<sub>4</sub>ClO<sub>4</sub>(s) &rarr; Al<sub>2</sub>O<sub>3</sub>(s) + AlCl<sub>3</sub>(s) + 3NO(g) + 6H<sub>2</sub>O(g)</p>
+    <p>Calculate the mass of NH<sub>4</sub>ClO<sub>4</sub> that should be added to this fuel mixture to react completely with every kilogram of Al.</p>`,
+    parts:[ {id:'mass', label:'Mass of NH4ClO4 per kg of Al', type:'numeric', correct:4355, unit:'g'} ],
+    hints:[
+      'The equation gives a 3:3 mole ratio of Al to NH<sub>4</sub>ClO<sub>4</sub> &mdash; that simplifies to 1:1.',
+      'Convert 1 kg (1000 g) of Al to moles using A<sub>r</sub>(Al) = 26.98.',
+      'Because the ratio is 1:1, moles of NH<sub>4</sub>ClO<sub>4</sub> needed equal moles of Al &mdash; then convert back to grams using M<sub>r</sub>(NH<sub>4</sub>ClO<sub>4</sub>) = 14.01 + 4(1.008) + 35.45 + 4(16.00) = 117.49.'
+    ],
+    explanation:`<p>Moles Al = 1000/26.98 = 37.06 mol. Ratio Al : NH<sub>4</sub>ClO<sub>4</sub> = 3:3 = 1:1, so moles NH<sub>4</sub>ClO<sub>4</sub> = 37.06 mol. Mass = 37.06 &times; 117.49 = <b>4355 g (4.355 kg)</b>.</p>`
+  });
+
+  Q.push({
+    num:'39 (a)', chip:'39a', id:'q39a',
+    title:'Decomposing limestone \u2014 the equation',
+    concept:'reacting-quantities-basic',
+    reflect:true,
+    prompt:`<p>Limestone is mostly calcium carbonate, CaCO<sub>3</sub>, but also contains other minerals. When heated, the CaCO<sub>3</sub> decomposes into CaO and CO<sub>2</sub>. Formulate the equation for the thermal decomposition of calcium carbonate.</p>`,
+    hints:[
+      'This is a single compound breaking apart into two simpler ones &mdash; a decomposition reaction.',
+      'Count the atoms on each side: one Ca, one C and three O appear in CaCO<sub>3</sub>, and the same totals must appear among the products.',
+      'Check whether any coefficients other than 1 are actually needed once you write CaO and CO<sub>2</sub> as the products.'
+    ],
+    explanation:`<p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">CaCO<sub>3</sub>(s) &rarr; CaO(s) + CO<sub>2</sub>(g)</p><p>Every atom already balances 1:1:1, so no coefficients besides 1 are needed.</p>`
+  });
+
+  Q.push({
+    num:'39 (b)', chip:'39b', id:'q39b',
+    title:'Decomposing limestone \u2014 percentage purity',
+    concept:'reacting-quantities-basic',
+    prompt:`<p>A 1.605&nbsp;g sample of limestone was heated and gave off 0.657&nbsp;g of CO<sub>2</sub>. Using the equation from part (a), determine the percentage by mass of CaCO<sub>3</sub> in the limestone.</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">CaCO<sub>3</sub>(s) &rarr; CaO(s) + CO<sub>2</sub>(g)</p>`,
+    parts:[ {id:'pct', label:'Percentage by mass of CaCO3', type:'numeric', correct:93.10, unit:'%'} ],
+    hints:[
+      'Convert the mass of CO<sub>2</sub> collected to moles (M<sub>r</sub>(CO<sub>2</sub>) = 44.01).',
+      'The equation is 1:1, so moles of CaCO<sub>3</sub> that decomposed equal moles of CO<sub>2</sub> produced.',
+      'Convert those moles of CaCO<sub>3</sub> back to a mass (M<sub>r</sub>(CaCO<sub>3</sub>) = 100.09), then divide by the original 1.605 g sample and &times;100.'
+    ],
+    explanation:`<p>Moles CO<sub>2</sub> = 0.657/44.01 = 0.01493 mol = moles CaCO<sub>3</sub> decomposed. Mass CaCO<sub>3</sub> = 0.01493 &times; 100.09 = 1.494 g. Percentage = 1.494/1.605 &times; 100 = <b>93.10%</b>.</p>`
+  });
+
+  Q.push({
+    num:'39 (c)', chip:'39c', id:'q39c',
+    title:'Decomposing limestone \u2014 assumptions',
+    concept:'reacting-quantities-basic',
+    reflect:true,
+    prompt:`<p>State the assumptions you are making in the calculation in part (b).</p>`,
+    hints:[
+      'Think about where else mass could have been lost, or where the CO<sub>2</sub> could have come from, besides the CaCO<sub>3</sub> you\'re trying to measure.',
+      'Also think about how completely the reaction ran, and how pure the "other minerals" in the limestone really are.'
+    ],
+    explanation:`<p>The calculation assumes: (1) all of the CO<sub>2</sub> given off came only from the decomposition of CaCO<sub>3</sub>, and no other mineral in the limestone also released a gas on heating; (2) all of the CaCO<sub>3</sub> present fully decomposed (the sample was heated long enough and hot enough); and (3) no other mass was lost on heating, e.g. moisture or other volatile impurities evaporating off.</p>`
+  });
+
+  Q.push({
+    num:40, id:'q40',
+    title:'Synthesising methanol',
+    concept:'limiting-reagent',
+    prompt:`<p>Methanol, CH<sub>3</sub>OH, is a useful fuel that can be made as follows:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">CO(g) + 2H<sub>2</sub>(g) &rarr; CH<sub>3</sub>OH(l)</p>
+    <p>A reaction mixture used 12.0&nbsp;g of H<sub>2</sub> and 74.5&nbsp;g of CO.</p>`,
+    parts:[
+      {id:'a', label:'(a) Theoretical yield of CH3OH', type:'numeric', correct:85.22, unit:'g'},
+      {id:'b', label:'(b) Mass of the excess reactant remaining unchanged', type:'numeric', correct:1.276, unit:'g'}
+    ],
+    hints:[
+      'Convert both masses to moles first: M<sub>r</sub>(H<sub>2</sub>) = 2.016, M<sub>r</sub>(CO) = 28.01.',
+      'Divide each by its own coefficient (H<sub>2</sub> by 2, CO by 1) and compare &mdash; the smaller result identifies the limiting reagent.',
+      'CO turns out to be limiting. Moles CH<sub>3</sub>OH = moles CO (1:1 ratio); for (b), work out how much H<sub>2</sub> that amount of CO actually used, and subtract from the H<sub>2</sub> you started with.'
+    ],
+    explanation:`<p>Moles H<sub>2</sub> = 12.0/2.016 = 5.952 mol; moles CO = 74.5/28.01 = 2.660 mol. Dividing by coefficients: H<sub>2</sub>/2 = 2.976, CO/1 = 2.660 &mdash; CO is smaller, so <b>CO is limiting</b>. (a) Moles CH<sub>3</sub>OH = 2.660 mol (1:1 with CO); mass = 2.660 &times; 32.04 = <b>85.22 g</b>. (b) H<sub>2</sub> used = 2 &times; 2.660 = 5.320 mol; H<sub>2</sub> remaining = 5.952 &minus; 5.320 = 0.633 mol; mass = 0.633 &times; 2.016 = <b>1.276 g</b>.</p>`
+  });
+
+  Q.push({
+    num:41, id:'q41',
+    title:'Making a dry-cleaning solvent',
+    concept:'limiting-reagent',
+    prompt:`<p>The dry-cleaning solvent 1,2-dichloroethane, C<sub>2</sub>H<sub>4</sub>Cl<sub>2</sub>, is prepared from the following reaction:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">C<sub>2</sub>H<sub>4</sub>(g) + Cl<sub>2</sub>(g) &rarr; C<sub>2</sub>H<sub>4</sub>Cl<sub>2</sub>(l)</p>
+    <p>Determine the mass of product that can be formed from 15.40&nbsp;g of C<sub>2</sub>H<sub>4</sub> and 3.74&nbsp;g of Cl<sub>2</sub>.</p>`,
+    parts:[ {id:'mass', label:'Mass of C2H4Cl2 formed', type:'numeric', correct:5.220, unit:'g'} ],
+    hints:[
+      'Convert both masses to moles: M<sub>r</sub>(C<sub>2</sub>H<sub>4</sub>) = 28.05, M<sub>r</sub>(Cl<sub>2</sub>) = 70.90.',
+      'The equation is a 1:1:1 ratio, so simply compare the two mole values directly &mdash; the smaller one is the limiting reagent.',
+      'Use the limiting reagent\'s moles directly as moles of product, then convert to grams with M<sub>r</sub>(C<sub>2</sub>H<sub>4</sub>Cl<sub>2</sub>) = 98.95.'
+    ],
+    explanation:`<p>Moles C<sub>2</sub>H<sub>4</sub> = 15.40/28.05 = 0.5490 mol; moles Cl<sub>2</sub> = 3.74/70.90 = 0.05275 mol. Cl<sub>2</sub> is far smaller, so <b>Cl<sub>2</sub> is limiting</b>. Moles product = 0.05275 mol (1:1); mass = 0.05275 &times; 98.95 = <b>5.220 g</b>.</p>`
+  });
+
+  Q.push({
+    num:42, id:'q42',
+    title:'Scrubbing sulfur dioxide',
+    concept:'percentage-yield',
+    prompt:`<p>Calcium carbonate, CaCO<sub>3</sub>, is able to remove sulfur dioxide, SO<sub>2</sub>, from waste gases by a reaction in which they react in a 1:1 stoichiometric ratio to form equimolar amounts of CaSO<sub>3</sub>. When 255&nbsp;g of CaCO<sub>3</sub> reacted with 135&nbsp;g of SO<sub>2</sub>, 198&nbsp;g of CaSO<sub>3</sub> were formed. Determine the percentage yield of CaSO<sub>3</sub>.</p>`,
+    parts:[ {id:'pct', label:'Percentage yield of CaSO3', type:'numeric', correct:78.21, unit:'%'} ],
+    hints:[
+      'Convert both masses to moles: M<sub>r</sub>(CaCO<sub>3</sub>) = 100.09, M<sub>r</sub>(SO<sub>2</sub>) = 64.07.',
+      'Since the ratio is 1:1, whichever reactant gives fewer moles is limiting &mdash; that fixes the theoretical moles (and mass) of CaSO<sub>3</sub>, M<sub>r</sub> = 120.15.',
+      'Percentage yield = actual mass produced (198 g) &divide; theoretical mass &times; 100.'
+    ],
+    explanation:`<p>Moles CaCO<sub>3</sub> = 255/100.09 = 2.548 mol; moles SO<sub>2</sub> = 135/64.07 = 2.107 mol &mdash; <b>SO<sub>2</sub> is limiting</b>. Theoretical moles CaSO<sub>3</sub> = 2.107 mol; theoretical mass = 2.107 &times; 120.15 = 253.2 g. Percentage yield = 198/253.2 &times; 100 = <b>78.21%</b>.</p>`
+  });
+
+  Q.push({
+    num:43, id:'q43',
+    title:'Esterification \u2014 pentyl ethanoate',
+    concept:'percentage-yield',
+    prompt:`<p>Pentyl ethanoate, CH<sub>3</sub>COOC<sub>5</sub>H<sub>11</sub>, which smells like bananas, is produced from the esterification reaction:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">CH<sub>3</sub>COOH(aq) + C<sub>5</sub>H<sub>11</sub>OH(aq) &rarr; CH<sub>3</sub>COOC<sub>5</sub>H<sub>11</sub>(aq) + H<sub>2</sub>O(l)</p>
+    <p>A reaction uses 3.58&nbsp;g of CH<sub>3</sub>COOH and 4.75&nbsp;g of C<sub>5</sub>H<sub>11</sub>OH and has a yield of 45.00%. Determine the mass of ester that forms.</p>`,
+    parts:[ {id:'mass', label:'Mass of ester formed', type:'numeric', correct:3.157, unit:'g'} ],
+    hints:[
+      'Convert both masses to moles: M<sub>r</sub>(CH<sub>3</sub>COOH) = 60.05, M<sub>r</sub>(C<sub>5</sub>H<sub>11</sub>OH) = 88.15.',
+      'The equation is 1:1, so the smaller mole value is the limiting reagent &mdash; that gives the theoretical moles of ester, M<sub>r</sub>(CH<sub>3</sub>COOC<sub>5</sub>H<sub>11</sub>) = 130.18.',
+      'The 45.00% yield applies at the very end: actual mass = theoretical mass &times; 0.4500.'
+    ],
+    explanation:`<p>Moles CH<sub>3</sub>COOH = 3.58/60.05 = 0.05962 mol; moles C<sub>5</sub>H<sub>11</sub>OH = 4.75/88.15 = 0.05389 mol &mdash; <b>C<sub>5</sub>H<sub>11</sub>OH is limiting</b>. Theoretical mass ester = 0.05389 &times; 130.18 = 7.015 g. Actual mass = 7.015 &times; 0.4500 = <b>3.157 g</b>.</p>`
+  });
+
+  Q.push({
+    num:44, id:'q44',
+    title:'Making chlorobenzene',
+    concept:'percentage-yield',
+    prompt:`<p>A chemist has to make a 100&nbsp;g sample of chlorobenzene, C<sub>6</sub>H<sub>5</sub>Cl, from the following reaction:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">C<sub>6</sub>H<sub>6</sub> + Cl<sub>2</sub> &rarr; C<sub>6</sub>H<sub>5</sub>Cl + HCl</p>
+    <p>Determine the minimum quantity of benzene, C<sub>6</sub>H<sub>6</sub>, that can be used to achieve this with a yield of 65%.</p>`,
+    parts:[ {id:'mass', label:'Minimum mass of C6H6 needed', type:'numeric', correct:106.8, unit:'g'} ],
+    hints:[
+      'Start from the 100 g of actual product wanted, and convert to moles using M<sub>r</sub>(C<sub>6</sub>H<sub>5</sub>Cl) = 112.55.',
+      'A 65% yield means the theoretical moles needed are larger than the actual moles obtained &mdash; divide by 0.65, don\'t multiply.',
+      'The equation is 1:1, so the theoretical moles of product equal the moles of benzene required; convert to grams with M<sub>r</sub>(C<sub>6</sub>H<sub>6</sub>) = 78.11.'
+    ],
+    explanation:`<p>Moles C<sub>6</sub>H<sub>5</sub>Cl wanted = 100/112.55 = 0.8885 mol. This is only 65% of the theoretical amount, so theoretical moles = 0.8885/0.65 = 1.367 mol. By the 1:1 ratio, moles C<sub>6</sub>H<sub>6</sub> required = 1.367 mol; mass = 1.367 &times; 78.11 = <b>106.8 g</b>.</p>`
+  });
+
+  Q.push({
+    num:45, id:'q45',
+    title:'Moles of gas at STP',
+    concept:'gas-molar-volume',
+    prompt:`<p>How many moles are present in each of the following at STP?</p>`,
+    parts:[
+      {id:'a', label:'(a) 54.5 dm3 CH4', type:'numeric', correct:2.401, unit:'mol'},
+      {id:'b', label:'(b) 250.0 cm3 CO', type:'numeric', correct:0.01101, unit:'mol'},
+      {id:'c', label:'(c) 1.0 m3 O2', type:'numeric', correct:44.05, unit:'mol'}
+    ],
+    hints:[
+      'moles = volume (in dm<sup>3</sup>) &divide; 22.7.',
+      'Watch your units: 1 dm<sup>3</sup> = 1000 cm<sup>3</sup>, and 1 m<sup>3</sup> = 1000 dm<sup>3</sup> &mdash; convert everything to dm<sup>3</sup> before dividing by the molar volume.',
+      'The identity of the gas (CH<sub>4</sub>, CO or O<sub>2</sub>) makes no difference at all here &mdash; that\'s the whole point of molar volume.'
+    ],
+    explanation:`<p>(a) 54.5/22.7 = <b>2.401 mol</b>. (b) 250.0 cm<sup>3</sup> = 0.2500 dm<sup>3</sup>; 0.2500/22.7 = <b>0.01101 mol</b>. (c) 1.0 m<sup>3</sup> = 1000 dm<sup>3</sup>; 1000/22.7 = <b>44.05 mol</b>.</p>`
+  });
+
+  Q.push({
+    num:46, id:'q46',
+    title:'Volume of gas at STP',
+    concept:'gas-molar-volume',
+    prompt:`<p>What is the volume of each of the following at STP?</p>`,
+    parts:[
+      {id:'a', label:'(a) 44.00 g N2', type:'numeric', correct:35.65, unit:'dm3'},
+      {id:'b', label:'(b) 0.25 mol NH3', type:'numeric', correct:5.675, unit:'dm3'}
+    ],
+    hints:[
+      'For (a) you need moles first: M<sub>r</sub>(N<sub>2</sub>) = 28.02 (it\'s a diatomic molecule, not a single N atom).',
+      'For (b) you already have moles &mdash; no mass conversion needed at all.',
+      'Once you have moles, volume (dm<sup>3</sup>) = moles &times; 22.7.'
+    ],
+    explanation:`<p>(a) Moles N<sub>2</sub> = 44.00/28.02 = 1.570 mol; volume = 1.570 &times; 22.7 = <b>35.65 dm<sup>3</sup></b>. (b) Volume = 0.25 &times; 22.7 = <b>5.675 dm<sup>3</sup></b>.</p>`
+  });
+
+  Q.push({
+    num:47, id:'q47',
+    title:'Preparing oxygen from mercury(II) oxide',
+    concept:'gas-molar-volume',
+    prompt:`<p>Pure oxygen gas was first prepared by heating mercury(II) oxide, HgO.</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">2HgO(s) &rarr; 2Hg(l) + O<sub>2</sub>(g)</p>
+    <p>What volume of oxygen at STP is released by heating 12.45&nbsp;g of HgO?</p>`,
+    parts:[ {id:'vol', label:'Volume of O2 at STP', type:'numeric', correct:0.6524, unit:'dm3'} ],
+    hints:[
+      'Convert the mass of HgO to moles first: M<sub>r</sub>(HgO) = 200.59 + 16.00 = 216.59.',
+      'The equation\'s ratio is 2 mol HgO : 1 mol O<sub>2</sub>, so moles O<sub>2</sub> = half the moles of HgO.',
+      'Convert moles of O<sub>2</sub> to a volume using volume (dm<sup>3</sup>) = moles &times; 22.7.'
+    ],
+    explanation:`<p>Moles HgO = 12.45/216.59 = 0.05748 mol. Moles O<sub>2</sub> = 0.05748/2 = 0.02874 mol. Volume = 0.02874 &times; 22.7 = <b>0.6524 dm<sup>3</sup></b> (652.4 cm<sup>3</sup>).</p>`
+  });
+
+  Q.push({
+    num:48, id:'q48',
+    title:'Comparing bromine and chlorine samples',
+    concept:'gas-molar-volume',
+    prompt:`<p>Which sample contains more molecules, 3.14&nbsp;dm<sup>3</sup> of bromine, Br<sub>2</sub>, or 11.07&nbsp;g of chlorine, Cl<sub>2</sub>, when measured at the same temperature and pressure?</p>`,
+    parts:[
+      {id:'a', label:'(a) Moles of Br2 in 3.14 dm3 (at STP)', type:'numeric', correct:0.1383, unit:'mol'},
+      {id:'b', label:'(b) Moles of Cl2 in 11.07 g', type:'numeric', correct:0.1561, unit:'mol'},
+      {id:'c', label:'(c) Which sample contains more molecules?', type:'mc', options:['The 3.14 dm3 of Br2(g)','The 11.07 g of Cl2'], correctIndex:1}
+    ],
+    hints:[
+      'More molecules always means more moles &mdash; whichever species has the larger mole count wins, regardless of what the substance is.',
+      'For Br<sub>2</sub>, use moles = volume (dm<sup>3</sup>) &divide; 22.7. For Cl<sub>2</sub>, use moles = mass &divide; M<sub>r</sub>(Cl<sub>2</sub>) = 70.90.',
+      'Compare the two mole values you calculated directly.'
+    ],
+    explanation:`<p>Moles Br<sub>2</sub> = 3.14/22.7 = 0.1383 mol. Moles Cl<sub>2</sub> = 11.07/70.90 = 0.1561 mol. Since 0.1561 &gt; 0.1383, <b>the 11.07 g sample of Cl<sub>2</sub> contains more molecules</b>, even though it's the one described by mass rather than volume.</p>`
+  });
+
+  Q.push({
+    num:49, id:'q49',
+    title:'Calcium reacting with water',
+    concept:'gas-molar-volume',
+    prompt:`<p>Calcium reacts with water to produce hydrogen.</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">Ca(s) + 2H<sub>2</sub>O(l) &rarr; Ca(OH)<sub>2</sub>(aq) + H<sub>2</sub>(g)</p>
+    <p>Calculate the volume of gas at STP produced when 0.200&nbsp;g of calcium reacts completely with water.</p>`,
+    parts:[ {id:'vol', label:'Volume of H2 at STP', type:'numeric', correct:0.1133, unit:'dm3'} ],
+    hints:[
+      'Convert 0.200 g of Ca to moles using A<sub>r</sub>(Ca) = 40.08.',
+      'The equation\'s ratio of Ca to H<sub>2</sub> is 1:1.',
+      'Convert moles of H<sub>2</sub> to a volume using volume (dm<sup>3</sup>) = moles &times; 22.7.'
+    ],
+    explanation:`<p>Moles Ca = 0.200/40.08 = 0.004990 mol = moles H<sub>2</sub> (1:1 ratio). Volume = 0.004990 &times; 22.7 = <b>0.1133 dm<sup>3</sup></b> (113.3 cm<sup>3</sup>).</p>`
+  });
+
+  Q.push({
+    num:50, id:'q50',
+    title:'Dinitrogen oxide from ammonium nitrate',
+    concept:'gas-molar-volume',
+    prompt:`<p>Dinitrogen oxide, N<sub>2</sub>O, is a greenhouse gas produced from the decomposition of artificial nitrate fertilizers. Calculate the volume at STP of N<sub>2</sub>O produced from 1.0&nbsp;g of ammonium nitrate, when it reacts according to the equation:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">NH<sub>4</sub>NO<sub>3</sub>(s) &rarr; N<sub>2</sub>O(g) + 2H<sub>2</sub>O(l)</p>`,
+    parts:[ {id:'vol', label:'Volume of N2O at STP', type:'numeric', correct:0.2836, unit:'dm3'} ],
+    hints:[
+      'Convert the mass of NH<sub>4</sub>NO<sub>3</sub> to moles first: M<sub>r</sub>(NH<sub>4</sub>NO<sub>3</sub>) = 2(14.01) + 4(1.008) + 3(16.00) = 80.05.',
+      'The equation\'s ratio of NH<sub>4</sub>NO<sub>3</sub> to N<sub>2</sub>O is 1:1.',
+      'Convert moles of N<sub>2</sub>O to a volume using volume (dm<sup>3</sup>) = moles &times; 22.7.'
+    ],
+    explanation:`<p>Moles NH<sub>4</sub>NO<sub>3</sub> = 1.0/80.05 = 0.01249 mol = moles N<sub>2</sub>O (1:1 ratio). Volume = 0.01249 &times; 22.7 = <b>0.2836 dm<sup>3</sup></b> (283.6 cm<sup>3</sup>).</p>`
+  });
+
+  /* ============ state ============ */
+  const state = { current:0, solved:new Set(), attempts:{}, revealedHints:{}, gaveUp:new Set(), firstTry:new Set() };
+
+  const stage = document.getElementById('stage');
+  const chipRow = document.getElementById('chipRow');
+  const buretteFill = document.getElementById('buretteFill');
+  const progressCount = document.getElementById('progressCount');
+
+  function buildChips(){
+    chipRow.innerHTML = '';
+    Q.forEach((q,i)=>{
+      const c = document.createElement('button');
+      c.type='button'; c.className='chip'; c.textContent = 'Q'+(q.chip || q.num);
+      if (i===state.current) c.classList.add('is-current');
+      if (state.solved.has(q.id)) c.classList.add('is-done');
+      c.addEventListener('click', ()=> goTo(i));
+      chipRow.appendChild(c);
+    });
+  }
+  function updateProgress(){
+    const pct = Math.round((state.solved.size/Q.length)*100);
+    buretteFill.style.width = pct+'%';
+    progressCount.textContent = state.solved.size;
+    buildChips();
+  }
+  function goTo(i){
+    state.current = i;
+    render();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function partKey(qid, pid){ return qid+':'+pid; }
+
+  function renderConceptOpen(conceptKey, seenBefore){
+    const c = CONCEPTS[conceptKey];
+    const det = document.createElement('details');
+    det.className = 'concept';
+    det.open = !seenBefore;
+    det.innerHTML = `<summary><span class="concept-title"><span class="tag">${c.tag}</span>${c.title}</span><span class="chevron">&#9656;</span></summary>
+      <div class="concept-body">${c.body}</div>`;
+    return det;
+  }
+
+  function buildWorkTable(q){
+    const w = q.work;
+    if (!w) return null;
+    const box = document.createElement('div');
+    box.className = 'worktable';
+    const massLabel = w.massLabel || 'mass / g';
+    let head = '<tr><th></th>' + w.elements.map(e=>`<th>${fmtFormula(e)}</th>`).join('') + '</tr>';
+    let massRow = `<tr><td>${massLabel}</td>` + w.mass.map(m=>`<td class="mono">${m.toFixed(4).replace(/0+$/,'').replace(/\.$/,'')}</td>`).join('') + '</tr>';
+    let moleRow = '<tr><td>moles (your working)</td>' + w.elements.map((e,i)=>`<td><input class="cell" data-el="${i}" inputmode="decimal" placeholder="?" /></td>`).join('') + '</tr>';
+    box.innerHTML = `<div class="worktable-title">Optional working &mdash; fill in the moles yourself</div>
+      <table>${head}${massRow}${moleRow}</table>
+      <div class="worktable-actions">
+        <button type="button" class="btn btn-ghost btn-sm" data-action="check-work">Check my moles</button>
+        <span class="worktable-note">${w.note ? w.note : 'not graded &mdash; just a sanity check before you commit to a final answer'}</span>
+      </div>`;
+    box.querySelector('[data-action="check-work"]').addEventListener('click', ()=>{
+      const inputs = box.querySelectorAll('input.cell');
+      inputs.forEach((inp,i)=>{
+        const correct = w.moles[i];
+        const val = parseFloat(inp.value);
+        inp.classList.remove('ok','no');
+        if (!isNaN(val) && Math.abs(val-correct) <= Math.max(0.0005, correct*0.03)){
+          inp.classList.add('ok');
+        } else {
+          inp.classList.add('no');
+        }
+      });
+    });
+    return box;
+  }
+
+  function render(){
+    const q = Q[state.current];
+    const conceptKeysSeen = new Set(Q.slice(0, state.current).map(p=>p.concept));
+    stage.innerHTML = '';
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // concept
+    card.appendChild(renderConceptOpen(q.concept, conceptKeysSeen.has(q.concept)));
+
+    // head
+    const head = document.createElement('div');
+    head.innerHTML = `<div class="qhead"><span class="qnum">EXERCISE ${q.num}</span><span class="qtitle">${q.title}</span></div>
+      <div class="qprompt">${q.prompt}</div>`;
+    card.appendChild(head);
+
+    // given table for simple mass-only questions without a work table already covering it visually
+    // (work table itself displays masses, so no separate "given" table needed)
+
+    // work table
+    const wt = buildWorkTable(q);
+    if (wt) card.appendChild(wt);
+
+    // reflection-only question (35)
+    if (q.reflect){
+      const topActions = document.createElement('div');
+      topActions.className = 'action-row';
+      topActions.innerHTML = `
+        <button type="button" class="btn btn-amber" data-action="hint">Hint (1/${q.hints.length})</button>
+        <button type="button" class="btn btn-primary" data-action="reveal-reflect">Show a worked approach</button>`;
+      card.appendChild(topActions);
+
+      const explainBox = document.createElement('div');
+      explainBox.className = 'explain'; explainBox.id = 'reflectExplain'; explainBox.style.display = 'none';
+      explainBox.innerHTML = `<div class="explain-title">Model approach</div>${q.explanation}`;
+      card.appendChild(explainBox);
+
+      const continueRow = document.createElement('div');
+      continueRow.className = 'action-row'; continueRow.id = 'reflectActions';
+      continueRow.style.display = 'none';
+      continueRow.innerHTML = `<button type="button" class="btn btn-primary" data-action="mark-done">Got it &mdash; continue</button>`;
+      card.appendChild(continueRow);
+
+      stage.appendChild(card);
+      renderHints(card, q);
+      renderFooter(card, q, state.solved.has(q.id));
+
+      topActions.querySelector('[data-action="hint"]').addEventListener('click', ()=> handleHint(card, q));
+      topActions.querySelector('[data-action="reveal-reflect"]').addEventListener('click', (e)=>{
+        explainBox.style.display = 'block';
+        continueRow.style.display = 'flex';
+        e.target.disabled = true;
+      });
+      continueRow.querySelector('[data-action="mark-done"]').addEventListener('click', ()=>{
+        state.solved.add(q.id);
+        updateProgress();
+        renderFooter(card, q, true);
+      });
+
+      if (state.solved.has(q.id)){
+        explainBox.style.display = 'block';
+        continueRow.style.display = 'flex';
+        topActions.querySelector('[data-action="reveal-reflect"]').disabled = true;
+      }
+      return;
+    }
+
+    // parts
+    const partsBox = document.createElement('div');
+    partsBox.className = 'parts';
+    q.parts.forEach(p=>{
+      partsBox.appendChild(renderPart(q, p));
+    });
+    card.appendChild(partsBox);
+
+    // banners
+    const goodBanner = document.createElement('div');
+    goodBanner.className = 'banner good'; goodBanner.id='goodBanner';
+    goodBanner.innerHTML = `<span class="icon">&#10003;</span><span>Correct &mdash; nice work. Move on when you're ready.</span>`;
+    const badBanner = document.createElement('div');
+    badBanner.className = 'banner bad'; badBanner.id='badBanner';
+    badBanner.innerHTML = `<span class="icon">&#8288;&times;</span><span id="badBannerText">Not quite &mdash; check the hint below and try again.</span>`;
+    card.appendChild(goodBanner);
+    card.appendChild(badBanner);
+
+    // explanation (hidden until revealed or solved)
+    const explain = document.createElement('div');
+    explain.className = 'explain'; explain.id = 'explainBox'; explain.style.display='none';
+    explain.innerHTML = `<div class="explain-title">Worked solution</div>${q.explanation}`;
+    card.appendChild(explain);
+    if (state.solved.has(q.id) || state.gaveUp.has(q.id)) explain.style.display = 'block';
+
+    // action row
+    const actions = document.createElement('div');
+    actions.className = 'action-row';
+    actions.innerHTML = `
+      <button type="button" class="btn btn-primary" data-action="check">Check answer</button>
+      <button type="button" class="btn btn-amber" data-action="hint">Hint (1/${q.hints.length})</button>
+      <button type="button" class="btn btn-ghost" data-action="reveal" style="display:none;">Show solution</button>
+    `;
+    card.appendChild(actions);
+
+    stage.appendChild(card);
+
+    renderHints(card, q);
+
+    actions.querySelector('[data-action="check"]').addEventListener('click', ()=> handleCheck(card, q));
+    actions.querySelector('[data-action="hint"]').addEventListener('click', ()=> handleHint(card, q));
+    actions.querySelector('[data-action="reveal"]').addEventListener('click', ()=> handleReveal(card, q));
+
+    // if already solved, reflect UI state
+    if (state.solved.has(q.id)){
+      q.parts.forEach(p=>{ markPartSolved(card, q, p); });
+      goodBanner.classList.add('show');
+    }
+    updateRevealButton(card, q);
+    renderFooter(card, q, state.solved.has(q.id) || state.gaveUp.has(q.id));
+  }
+
+  function renderHints(card, q){
+    const box = document.createElement('div');
+    box.className = 'hint-box'; box.id='hintBox'; box.style.display='none';
+    box.innerHTML = '<ol id="hintList"></ol>';
+    const actionRow = card.querySelector(':scope > .action-row');
+    if (actionRow) card.insertBefore(box, actionRow);
+    else card.appendChild(box);
+  }
+
+  function handleHint(card, q){
+    const box = card.querySelector('#hintBox');
+    const list = card.querySelector('#hintList');
+    const shown = state.revealedHints[q.id] || 0;
+    if (shown >= q.hints.length) return;
+    const li = document.createElement('li');
+    li.textContent = q.hints[shown];
+    list.appendChild(li);
+    state.revealedHints[q.id] = shown+1;
+    box.style.display = 'block';
+    const btn = card.querySelector('[data-action="hint"]');
+    const n = state.revealedHints[q.id];
+    if (n >= q.hints.length){
+      btn.disabled = true;
+      btn.textContent = 'All hints shown';
+    } else {
+      btn.textContent = `Hint (${n+1}/${q.hints.length})`;
+    }
+  }
+
+  function renderPart(q, p){
+    const wrap = document.createElement('div');
+    wrap.className = 'part';
+    wrap.dataset.partId = p.id;
+
+    if (p.type === 'mc'){
+      let opts = p.options.map((opt,i)=>`
+        <label class="mc-opt" data-idx="${i}">
+          <input type="radio" name="${q.id}-${p.id}" value="${i}">
+          <span>${opt}</span>
+        </label>`).join('');
+      wrap.innerHTML = `<div class="part-label">${p.label}</div><div class="mc-options">${opts}</div><div class="part-feedback" id="fb-${p.id}"></div>`;
+    } else {
+      const inputType = p.type === 'numeric' ? 'text' : 'text';
+      const placeholder = p.type==='formula-empirical' || p.type==='formula-molecular' ? 'e.g. Na2S2O3' : (p.type==='numeric' ? 'e.g. 6.94' : 'type your answer');
+      wrap.innerHTML = `<div class="part-label">${p.label}</div>
+        <div class="part-row">
+          <input class="answer-input" id="in-${p.id}" type="${inputType}" placeholder="${placeholder}" autocomplete="off" spellcheck="false">
+          ${p.unit ? `<span class="unit">${p.unit}</span>` : ''}
+        </div>
+        <div class="part-feedback" id="fb-${p.id}"></div>`;
+    }
+    return wrap;
+  }
+
+  function evalPart(p, card){
+    if (p.type === 'mc'){
+      const sel = card.querySelector(`.part[data-part-id="${p.id}"] input[type="radio"]:checked`);
+      if (!sel) return {ok:false, empty:true};
+      return {ok: parseInt(sel.value,10) === p.correctIndex, empty:false};
+    }
+    const input = card.querySelector(`#in-${p.id}`);
+    const val = input ? input.value.trim() : '';
+    if (!val) return {ok:false, empty:true};
+    let ok = false;
+    if (p.type === 'formula-empirical') ok = checkEmpirical(val, p.correct);
+    else if (p.type === 'formula-molecular') ok = checkMolecular(val, p.correct);
+    else if (p.type === 'numeric') ok = checkNumeric(val, p.correct, p.tolPct);
+    else if (p.type === 'text') ok = p.accept.some(a=>a.toLowerCase()===val.toLowerCase());
+    return {ok, empty:false, parsedFail: (p.type==='formula-empirical'||p.type==='formula-molecular') && parseFormula(val)===null};
+  }
+
+  function markPartFeedback(card, q, p, result){
+    const fb = card.querySelector(`#fb-${p.id}`);
+    if (p.type === 'mc'){
+      const optEls = card.querySelectorAll(`.part[data-part-id="${p.id}"] .mc-opt`);
+      const selEl = card.querySelector(`.part[data-part-id="${p.id}"] input[type="radio"]:checked`);
+      if (result.ok){
+        selEl.closest('.mc-opt').classList.add('correct');
+        optEls.forEach(o=>o.classList.add('disabled'));
+        fb.textContent = 'Correct.'; fb.className = 'part-feedback good';
+      } else {
+        if (selEl) selEl.closest('.mc-opt').classList.add('incorrect');
+        fb.textContent = 'Not this one.'; fb.className = 'part-feedback bad';
+      }
+      return;
+    }
+    const input = card.querySelector(`#in-${p.id}`);
+    input.classList.remove('correct','incorrect');
+    if (result.empty){ fb.textContent=''; return; }
+    if (result.ok){
+      input.classList.add('correct');
+      fb.textContent = '\u2713 correct'; fb.className = 'part-feedback good';
+    } else {
+      input.classList.add('incorrect');
+      if (result.parsedFail) fb.textContent = "Couldn't read that formula \u2014 check capitalization and format, e.g. Na2S2O3 or CoSO4.7H2O";
+      else fb.textContent = 'Not quite \u2014 try again, or use a hint.';
+      fb.className = 'part-feedback bad';
+    }
+  }
+
+  function markPartSolved(card, q, p){
+    if (p.type === 'mc'){
+      const optEls = card.querySelectorAll(`.part[data-part-id="${p.id}"] .mc-opt`);
+      optEls.forEach((o,i)=>{ if (i===p.correctIndex) o.classList.add('correct'); o.classList.add('disabled'); });
+      return;
+    }
+    const input = card.querySelector(`#in-${p.id}`);
+    if (input){
+      input.value = (p.type === 'numeric') ? String(p.correct) : p.correct;
+      input.classList.add('correct');
+    }
+  }
+
+  function handleCheck(card, q){
+    const results = q.parts.map(p=>evalPart(p, card));
+    q.parts.forEach((p,i)=> markPartFeedback(card, q, p, results[i]));
+
+    const anyEmpty = results.some(r=>r.empty);
+    const allOk = results.every(r=>r.ok) && !anyEmpty;
+
+    const goodBanner = card.querySelector('#goodBanner');
+    const badBanner = card.querySelector('#badBanner');
+    goodBanner.classList.remove('show'); badBanner.classList.remove('show');
+
+    if (anyEmpty){
+      card.querySelector('#badBannerText').textContent = 'Fill in every box before checking.';
+      badBanner.classList.add('show');
+      return;
+    }
+
+    state.attempts[q.id] = (state.attempts[q.id]||0) + 1;
+
+    if (allOk){
+      if (state.attempts[q.id] === 1 && (state.revealedHints[q.id]||0) === 0) state.firstTry.add(q.id);
+      state.solved.add(q.id);
+      updateProgress();
+      goodBanner.classList.add('show');
+      renderFooter(card, q, true);
+      card.querySelector('[data-action="check"]').disabled = true;
+      const explain = card.querySelector('#explainBox');
+      explain.style.display = 'block';
+    } else {
+      card.querySelector('#badBannerText').textContent = 'Not everything checks out yet \u2014 see which box turned red, then have another go.';
+      badBanner.classList.add('show');
+      updateRevealButton(card, q);
+    }
+  }
+
+  function updateRevealButton(card, q){
+    const btn = card.querySelector('[data-action="reveal"]');
+    if (!btn) return;
+    if ((state.attempts[q.id]||0) >= 3 && !state.solved.has(q.id)){
+      btn.style.display = 'inline-flex';
+    }
+  }
+
+  function handleReveal(card, q){
+    state.gaveUp.add(q.id);
+    q.parts.forEach(p=> markPartSolved(card, q, p));
+    card.querySelector('#explainBox').style.display = 'block';
+    card.querySelector('#goodBanner').classList.remove('show');
+    card.querySelector('#badBanner').classList.remove('show');
+    card.querySelector('[data-action="check"]').disabled = true;
+    card.querySelector('[data-action="reveal"]').style.display = 'none';
+    renderFooter(card, q, true);
+  }
+
+  function renderFooter(card, q, canAdvance){
+    let footer = card.querySelector('.footer-nav');
+    if (footer) footer.remove();
+    footer = document.createElement('div');
+    footer.className = 'footer-nav';
+    const isLast = state.current === Q.length - 1;
+    footer.innerHTML = `
+      <button type="button" class="btn btn-ghost" data-action="prev" ${state.current===0?'disabled':''}>&larr; Previous</button>
+      <button type="button" class="btn btn-primary" data-action="next" ${canAdvance? '' : 'disabled'}>${isLast? 'Finish' : 'Next question &rarr;'}</button>
+    `;
+    card.appendChild(footer);
+    footer.querySelector('[data-action="prev"]').addEventListener('click', ()=> goTo(Math.max(0,state.current-1)));
+    footer.querySelector('[data-action="next"]').addEventListener('click', ()=>{
+      if (isLast) renderComplete(); else goTo(state.current+1);
+    });
+  }
+
+  function renderComplete(){
+    stage.innerHTML = '';
+    const card = document.createElement('div');
+    card.className = 'card complete-card';
+    const firstTry = state.firstTry.size;
+    const total = Q.length;
+    card.innerHTML = `
+      <div class="big">&#x1F9EA;</div>
+      <h2 style="margin-top:10px;">Workbook complete</h2>
+      <p style="color:var(--ink-soft); margin-top:8px;">You've worked through exercises 24&ndash;50 &mdash; empirical and molecular formulas, reacting quantities &amp; percentage yield, and gas volumes at STP.</p>
+      <div class="score-grid">
+        <div class="score-tile"><b>${total}</b><span>questions completed</span></div>
+        <div class="score-tile"><b>${firstTry}</b><span>solved first try, no hints</span></div>
+        <div class="score-tile"><b>${state.gaveUp.size}</b><span>solutions revealed</span></div>
+      </div>
+      <button type="button" class="btn btn-ghost" data-action="restart">Review from the start</button>
+    `;
+    stage.appendChild(card);
+    card.querySelector('[data-action="restart"]').addEventListener('click', ()=> goTo(0));
+  }
+
+  /* ============ calculator ============ */
+  const CALC_CONSTS = {
+    h: {v:6.63e-34, title:'Planck constant, h = 6.63x10^-34 J s'},
+    L: {v:6.02e23, title:'Avogadro constant, L = 6.02x10^23 /mol'},
+    R: {v:8.31, title:'Gas constant, R = 8.31 J K^-1 mol^-1'},
+    c: {v:2.998e8, title:'Speed of light, c = 2.998x10^8 m/s'}
+  };
+  const CALC_BUTTONS = [
+    {key:'ln', label:'ln', action:'func', value:'ln', cls:'fn'}, {key:'log', label:'log', action:'func', value:'log', cls:'fn'}, {key:'sqrt', label:'&radic;', action:'func', value:'sqrt', cls:'fn'}, {key:'sq', label:'x<sup>2</sup>', action:'func', value:'sq', cls:'fn'},
+    {key:'exp', label:'e<sup>x</sup>', action:'func', value:'exp', cls:'fn'}, {key:'pow10', label:'10<sup>x</sup>', action:'func', value:'pow10', cls:'fn'}, {key:'pow', label:'x<sup>y</sup>', action:'op', value:'^', cls:'op'}, {key:'recip', label:'1/x', action:'func', value:'recip', cls:'fn'},
+    {key:'lparen', label:'(', action:'lparen', cls:'op'}, {key:'rparen', label:')', action:'rparen', cls:'op'}, {key:'ee', label:'EE', action:'ee', cls:'op'}, {key:'sign', label:'&plusmn;', action:'sign', cls:'op'},
+    {key:'clear', label:'C', action:'clear', cls:'ctrl'}, {key:'back', label:'&#9003;', action:'back', cls:'ctrl'}, {key:'mc', label:'MC', action:'mc', cls:'ctrl', title:'Clear memory'}, {key:'mr', label:'MR', action:'mr', cls:'mem', title:'Recall memory'},
+    {key:'mplus', label:'M+', action:'mplus', cls:'mem', title:'Add displayed value to memory'}, {key:'mminus', label:'M&minus;', action:'mminus', cls:'mem', title:'Subtract displayed value from memory'}, {key:'const_h', label:'h', action:'const', value:'h', cls:'mem', title:CALC_CONSTS.h.title}, {key:'const_L', label:'L', action:'const', value:'L', cls:'mem', title:CALC_CONSTS.L.title},
+    {key:'const_R', label:'R', action:'const', value:'R', cls:'mem', title:CALC_CONSTS.R.title}, {key:'const_c', label:'c', action:'const', value:'c', cls:'mem', title:CALC_CONSTS.c.title},
+    {key:'d7', label:'7', action:'digit', value:'7'}, {key:'d8', label:'8', action:'digit', value:'8'}, {key:'d9', label:'9', action:'digit', value:'9'}, {key:'div', label:'&divide;', action:'op', value:'/', cls:'op'},
+    {key:'d4', label:'4', action:'digit', value:'4'}, {key:'d5', label:'5', action:'digit', value:'5'}, {key:'d6', label:'6', action:'digit', value:'6'}, {key:'mul', label:'&times;', action:'op', value:'*', cls:'op'},
+    {key:'d1', label:'1', action:'digit', value:'1'}, {key:'d2', label:'2', action:'digit', value:'2'}, {key:'d3', label:'3', action:'digit', value:'3'}, {key:'sub', label:'&minus;', action:'op', value:'-', cls:'op'},
+    {key:'d0', label:'0', action:'digit', value:'0'}, {key:'dot', label:'.', action:'decimal'}, {key:'eq', label:'=', action:'equals', cls:'eq'}, {key:'add', label:'+', action:'op', value:'+', cls:'op'}
+  ];
+
+  let calcTokens = [];        // finalized tokens: {t:'num'|'op'|'lparen'|'rparen'|'func', v}
+  let calcCurNum = null;      // string being typed right now, or null
+  let calcMemory = 0;
+  let calcShowingResult = false;
+  let calcLastResult = 0;
+  let calcResultPrevExpr = '';
+
+  function calcInExponent(){ return calcCurNum !== null && calcCurNum.indexOf('e') !== -1; }
+
+  function calcFormat(n){
+    if (n===null || n===undefined || isNaN(n) || !isFinite(n)) return 'Error';
+    if (n===0) return '0';
+    const abs = Math.abs(n);
+    if (abs < 1e-6 || abs >= 1e10){
+      let s = n.toExponential(6);
+      s = s.replace(/(\.\d*?)0+e/, '$1e').replace(/\.e/, 'e').replace('e+','e');
+      return s;
+    }
+    return parseFloat(n.toPrecision(10)).toString();
+  }
+  function calcOpSymbol(op){ return {'+':'+','-':'\u2212','*':'\u00D7','/':'\u00F7','^':'^'}[op] || op; }
+  function calcFuncLabel(fn){ return {ln:'ln', log:'log', exp:'e^', pow10:'10^', sqrt:'\u221A', sq:'sq', recip:'1/'}[fn] || fn; }
+
+  function calcBeginFresh(){
+    calcTokens = []; calcCurNum = null; calcShowingResult = false; calcResultPrevExpr = '';
+  }
+  function calcParseCurNum(s){
+    const v = parseFloat(s);
+    return isNaN(v) ? 0 : v;
+  }
+  function calcCommitCurNum(){
+    if (calcCurNum !== null){
+      calcTokens.push({t:'num', v:calcParseCurNum(calcCurNum)});
+      calcCurNum = null;
+    }
+  }
+  function calcMaybeInsertImplicitMul(){
+    const last = calcTokens[calcTokens.length-1];
+    if (last && (last.t==='num' || last.t==='rparen')) calcTokens.push({t:'op', v:'*'});
+  }
+  function calcOpenParenCount(){
+    let n = 0;
+    calcTokens.forEach(t=>{ if (t.t==='lparen') n++; if (t.t==='rparen') n--; });
+    return n;
+  }
+
+  function calcTokensToString(tokens){
+    let s = '';
+    tokens.forEach(tok=>{
+      if (tok.t==='num') s += calcFormat(tok.v);
+      else if (tok.t==='op') s += ' ' + calcOpSymbol(tok.v) + ' ';
+      else if (tok.t==='lparen') s += '(';
+      else if (tok.t==='rparen') s += ')';
+      else if (tok.t==='func') s += calcFuncLabel(tok.v);
+    });
+    return s;
+  }
+  function calcLiveExprString(){
+    let s = calcTokensToString(calcTokens);
+    if (calcCurNum !== null) s += calcCurNum;
+    return s;
+  }
+
+  function calcApplyFunc(fn, x){
+    switch(fn){
+      case 'ln': return Math.log(x);
+      case 'log': return Math.log10(x);
+      case 'exp': return Math.exp(x);
+      case 'pow10': return Math.pow(10, x);
+      case 'sqrt': return Math.sqrt(x);
+      case 'sq': return x*x;
+      case 'recip': return x === 0 ? NaN : 1/x;
+      default: return x;
+    }
+  }
+  function calcEvalTokens(tokens){
+    let pos = 0;
+    function peek(){ return tokens[pos]; }
+    function take(){ return tokens[pos++]; }
+    function parseExpression(){
+      let v = parseTerm();
+      while (peek() && peek().t==='op' && (peek().v==='+' || peek().v==='-')){
+        const op = take().v;
+        const rhs = parseTerm();
+        v = op==='+' ? v+rhs : v-rhs;
+      }
+      return v;
+    }
+    function parseTerm(){
+      let v = parsePower();
+      while (peek() && peek().t==='op' && (peek().v==='*' || peek().v==='/')){
+        const op = take().v;
+        const rhs = parsePower();
+        v = op==='*' ? v*rhs : (rhs===0 ? NaN : v/rhs);
+      }
+      return v;
+    }
+    function parsePower(){
+      let v = parseUnary();
+      if (peek() && peek().t==='op' && peek().v==='^'){
+        take();
+        const rhs = parsePower();
+        v = Math.pow(v, rhs);
+      }
+      return v;
+    }
+    function parseUnary(){
+      if (peek() && peek().t==='op' && peek().v==='-'){ take(); return -parseUnary(); }
+      if (peek() && peek().t==='op' && peek().v==='+'){ take(); return parseUnary(); }
+      return parsePrimary();
+    }
+    function parsePrimary(){
+      const tok = peek();
+      if (!tok) throw new Error('unexpected end');
+      if (tok.t==='num'){ take(); return tok.v; }
+      if (tok.t==='lparen'){
+        take();
+        const v = parseExpression();
+        if (peek() && peek().t==='rparen') take();
+        return v;
+      }
+      if (tok.t==='func'){
+        take();
+        if (peek() && peek().t==='lparen') take();
+        const v = parseExpression();
+        if (peek() && peek().t==='rparen') take();
+        return calcApplyFunc(tok.v, v);
+      }
+      throw new Error('unexpected token');
+    }
+    if (tokens.length === 0) return 0;
+    return parseExpression();
+  }
+  function calcEvaluateCurrentValue(){
+    if (calcShowingResult) return calcLastResult;
+    const tokens = calcTokens.slice();
+    if (calcCurNum !== null) tokens.push({t:'num', v:calcParseCurNum(calcCurNum)});
+    let result;
+    try { result = calcEvalTokens(tokens); } catch(e){ result = NaN; }
+    return isNaN(result) || !isFinite(result) ? 0 : result;
+  }
+
+  function calcRender(){
+    const valEl = document.getElementById('calcVal');
+    const exprEl = document.getElementById('calcExpr');
+    if (calcShowingResult){
+      if (exprEl) exprEl.textContent = calcResultPrevExpr + ' =';
+      if (valEl) valEl.textContent = calcFormat(calcLastResult);
+    } else {
+      const live = calcLiveExprString();
+      if (exprEl) exprEl.textContent = '\u00A0';
+      if (valEl) valEl.textContent = live === '' ? '0' : live;
+    }
+    const memEl = document.getElementById('calcMemInd');
+    if (memEl) memEl.style.visibility = (calcMemory !== 0) ? 'visible' : 'hidden';
+  }
+
+  function calcPressDigit(d){
+    if (calcShowingResult) calcBeginFresh();
+    if (calcCurNum === null) calcCurNum = '0';
+    if (calcCurNum === '0' && !calcInExponent()) calcCurNum = d;
+    else calcCurNum += d;
+    calcRender();
+  }
+  function calcPressDecimal(){
+    if (calcShowingResult) calcBeginFresh();
+    if (calcCurNum === null) calcCurNum = '0';
+    if (calcInExponent()) return;
+    if (calcCurNum.indexOf('.') === -1) calcCurNum += '.';
+    calcRender();
+  }
+  function calcPressEE(){
+    if (calcShowingResult) calcBeginFresh();
+    if (calcCurNum === null) calcCurNum = '0';
+    if (!calcInExponent()) calcCurNum += 'e';
+    calcRender();
+  }
+  function calcPressSign(){
+    if (calcShowingResult) calcBeginFresh();
+    if (calcCurNum === null) calcCurNum = '0';
+    if (calcInExponent()){
+      const idx = calcCurNum.indexOf('e');
+      let mant = calcCurNum.slice(0, idx+1);
+      let exp = calcCurNum.slice(idx+1);
+      exp = exp.charAt(0)==='-' ? exp.slice(1) : ('-'+exp);
+      calcCurNum = mant + exp;
+    } else if (calcCurNum !== '0') {
+      calcCurNum = calcCurNum.charAt(0)==='-' ? calcCurNum.slice(1) : ('-'+calcCurNum);
+    }
+    calcRender();
+  }
+  function calcPressBackspace(){
+    if (calcShowingResult) return;
+    if (calcCurNum !== null){
+      calcCurNum = calcCurNum.slice(0, -1);
+      if (calcCurNum === '' || calcCurNum === '-') calcCurNum = null;
+    } else if (calcTokens.length){
+      calcTokens.pop();
+    }
+    calcRender();
+  }
+  function calcClear(){
+    calcBeginFresh();
+    calcRender();
+  }
+  function calcPressOp(op){
+    if (calcShowingResult){
+      calcTokens = [{t:'num', v:calcLastResult}];
+      calcCurNum = null; calcShowingResult = false; calcResultPrevExpr = '';
+    } else {
+      calcCommitCurNum();
+    }
+    calcTokens.push({t:'op', v:op});
+    calcRender();
+  }
+  function calcPressLParen(){
+    if (calcShowingResult) calcBeginFresh();
+    calcCommitCurNum();
+    calcMaybeInsertImplicitMul();
+    calcTokens.push({t:'lparen'});
+    calcRender();
+  }
+  function calcPressRParen(){
+    if (calcShowingResult) return;
+    calcCommitCurNum();
+    if (calcOpenParenCount() > 0) calcTokens.push({t:'rparen'});
+    calcRender();
+  }
+  function calcPressFunc(fn){
+    if (calcShowingResult) calcBeginFresh();
+    calcCommitCurNum();
+    calcMaybeInsertImplicitMul();
+    calcTokens.push({t:'func', v:fn});
+    calcTokens.push({t:'lparen'});
+    calcRender();
+  }
+  function calcInsertLiteral(v){
+    if (calcShowingResult) calcBeginFresh();
+    calcCommitCurNum();
+    calcMaybeInsertImplicitMul();
+    calcTokens.push({t:'num', v:v});
+    calcRender();
+  }
+  function calcInsertConst(key){
+    const c = CALC_CONSTS[key];
+    if (c) calcInsertLiteral(c.v);
+  }
+  function calcMemClear(){ calcMemory = 0; calcRender(); }
+  function calcMemRecall(){ calcInsertLiteral(calcMemory); }
+  function calcMemAdd(){ calcMemory += calcEvaluateCurrentValue(); calcRender(); }
+  function calcMemSub(){ calcMemory -= calcEvaluateCurrentValue(); calcRender(); }
+  function calcPressEquals(){
+    calcCommitCurNum();
+    const openCount = calcOpenParenCount();
+    for (let i=0; i<openCount; i++) calcTokens.push({t:'rparen'});
+    const exprStr = calcTokensToString(calcTokens);
+    let result;
+    try { result = calcEvalTokens(calcTokens); } catch(e){ result = NaN; }
+    calcLastResult = result;
+    calcResultPrevExpr = exprStr === '' ? '0' : exprStr;
+    calcShowingResult = true;
+    calcTokens = [];
+    calcCurNum = null;
+    calcRender();
+  }
+
+  function buildCalc(){
+    const grid = document.getElementById('calcGrid');
+    CALC_BUTTONS.forEach(spec=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'calc-btn' + (spec.cls ? ' '+spec.cls : '');
+      btn.dataset.key = spec.key;
+      btn.innerHTML = spec.label;
+      if (spec.title) btn.title = spec.title;
+      btn.addEventListener('click', ()=>{
+        switch(spec.action){
+          case 'digit': calcPressDigit(spec.value); break;
+          case 'op': calcPressOp(spec.value); break;
+          case 'decimal': calcPressDecimal(); break;
+          case 'ee': calcPressEE(); break;
+          case 'sign': calcPressSign(); break;
+          case 'back': calcPressBackspace(); break;
+          case 'clear': calcClear(); break;
+          case 'equals': calcPressEquals(); break;
+          case 'lparen': calcPressLParen(); break;
+          case 'rparen': calcPressRParen(); break;
+          case 'func': calcPressFunc(spec.value); break;
+          case 'mc': calcMemClear(); break;
+          case 'mr': calcMemRecall(); break;
+          case 'mplus': calcMemAdd(); break;
+          case 'mminus': calcMemSub(); break;
+          case 'const': calcInsertConst(spec.value); break;
+        }
+      });
+      grid.appendChild(btn);
+    });
+  }
+  function initCalcUI(){
+    buildCalc();
+    calcRender();
+    const fab = document.getElementById('calcFab');
+    const panel = document.getElementById('calcPanel');
+    const closeBtn = document.getElementById('calcClose');
+    fab.addEventListener('click', ()=> panel.classList.toggle('open'));
+    closeBtn.addEventListener('click', ()=> panel.classList.remove('open'));
+
+    const header = document.getElementById('calcHeader');
+    let dragging = false, offsetX = 0, offsetY = 0;
+    header.addEventListener('pointerdown', (e)=>{
+      dragging = true;
+      const rect = panel.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      panel.style.right = 'auto'; panel.style.bottom = 'auto';
+      panel.style.left = rect.left + 'px'; panel.style.top = rect.top + 'px';
+      header.setPointerCapture(e.pointerId);
+    });
+    header.addEventListener('pointermove', (e)=>{
+      if (!dragging) return;
+      const maxX = window.innerWidth - panel.offsetWidth - 4;
+      const maxY = window.innerHeight - panel.offsetHeight - 4;
+      panel.style.left = Math.min(Math.max(0, e.clientX - offsetX), maxX) + 'px';
+      panel.style.top = Math.min(Math.max(0, e.clientY - offsetY), maxY) + 'px';
+    });
+    header.addEventListener('pointerup', ()=> dragging = false);
+    header.addEventListener('pointercancel', ()=> dragging = false);
+  }
+
+  updateProgress();
+  render();
+  initCalcUI();
+})();
+</script>
