@@ -1,0 +1,1463 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Definitions You Must Know: A Reagent Label Card Game!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root{
+    --paper:#eef1ec;
+    --paper-2:#e3e9e1;
+    --card:#ffffff;
+    --ink:#1c2420;
+    --ink-soft:#4c5850;
+    --ink-faint:#7c877e;
+    --line:#c9d2c6;
+    --accent:#b5502a;
+    --accent-ink:#ffffff;
+    --accent-soft:#f1ded2;
+    --accent2:#2f6e63;
+    --accent2-soft:#dbe9e5;
+    --good:#3f7d4a;
+    --bad:#b6402f;
+    --shadow: 0 1px 2px rgba(28,36,32,.06), 0 6px 16px rgba(28,36,32,.07);
+    --radius: 14px;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#121613;
+      --paper-2:#181d19;
+      --card:#1c221e;
+      --ink:#e9efe8;
+      --ink-soft:#aab6ae;
+      --ink-faint:#7c8a80;
+      --line:#313b34;
+      --accent:#e2703f;
+      --accent-ink:#161a17;
+      --accent-soft:#3a2a20;
+      --accent2:#5cb3a1;
+      --accent2-soft:#1c332e;
+      --good:#6fbf7a;
+      --bad:#e1685a;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#121613;
+    --paper-2:#181d19;
+    --card:#1c221e;
+    --ink:#e9efe8;
+    --ink-soft:#aab6ae;
+    --ink-faint:#7c8a80;
+    --line:#313b34;
+    --accent:#e2703f;
+    --accent-ink:#161a17;
+    --accent-soft:#3a2a20;
+    --accent2:#5cb3a1;
+    --accent2-soft:#1c332e;
+    --good:#6fbf7a;
+    --bad:#e1685a;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 20px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Public Sans", ui-sans-serif, system-ui, sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:2.25rem 1.5rem 5rem;
+  }
+
+  /* ---------- Header ---------- */
+  header.hero{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:1.5rem;
+    padding-bottom:1.5rem;
+    margin-bottom:1.75rem;
+    border-bottom:2px solid var(--ink);
+  }
+  .hero-title-block{max-width:640px;}
+  .eyebrow{
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    margin-bottom:.6rem;
+  }
+  .eyebrow::before{
+    content:"";
+    width:8px;height:8px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft);
+  }
+  h1{
+    font-family:"Spectral", Georgia, serif;
+    font-weight:600;
+    font-size:clamp(2rem, 4vw, 2.7rem);
+    line-height:1.05;
+    margin:0 0 .5rem;
+    text-wrap:balance;
+    letter-spacing:-.01em;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--accent);
+  }
+  .hero p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:1rem;
+    line-height:1.55;
+    max-width:52ch;
+  }
+  .hero-stats{
+    display:flex;
+    gap:1.75rem;
+    font-family:"JetBrains Mono", monospace;
+  }
+  .stat{text-align:right;}
+  .stat b{
+    display:block;
+    font-size:1.7rem;
+    line-height:1;
+    color:var(--ink);
+    font-weight:600;
+  }
+  .stat span{
+    font-size:.68rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+
+  /* ---------- Mode tabs ---------- */
+  .tabs{
+    display:flex;
+    gap:.5rem;
+    margin-bottom:1.5rem;
+  }
+  .tab{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.8rem;
+    letter-spacing:.04em;
+    padding:.6rem 1.1rem;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .tab:hover{border-color:var(--accent);color:var(--ink);}
+  .tab.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .tab:active{transform:scale(.97);}
+  .tab:focus-visible, button:focus-visible, input:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  /* ---------- Controls row (study mode) ---------- */
+  .controls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.9rem;
+    align-items:center;
+    margin-bottom:1.4rem;
+  }
+  .search{
+    position:relative;
+    flex:1 1 220px;
+    max-width:320px;
+  }
+  .search input{
+    width:100%;
+    padding:.65rem .9rem .65rem 2.1rem;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    font-family:"Public Sans", sans-serif;
+    font-size:.9rem;
+  }
+  .search::before{
+    content:"⌕";
+    position:absolute;
+    left:.7rem;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--ink-faint);
+    font-size:1rem;
+  }
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.45rem;
+  }
+  .chip{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.72rem;
+    letter-spacing:.03em;
+    padding:.4rem .75rem;
+    border-radius:999px;
+    border:1px solid var(--chip-color, var(--line));
+    background:var(--card);
+    color:var(--ink-soft);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:.4rem;
+    transition:background .15s ease, color .15s ease;
+  }
+  .chip .dot{width:7px;height:7px;border-radius:50%;background:var(--chip-color);}
+  .chip.active{
+    background:var(--chip-color);
+    color:#fff;
+    border-color:var(--chip-color);
+  }
+  .chip.active .dot{background:#fff;}
+  .chip-count{opacity:.75;font-size:.68rem;}
+
+  .empty-msg{
+    color:var(--ink-faint);
+    font-family:"JetBrains Mono", monospace;
+    font-size:.85rem;
+    padding:2.5rem 0;
+    text-align:center;
+  }
+
+  /* ---------- Flashcard grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:1rem;
+  }
+  .card{
+    perspective:1200px;
+    min-height:150px;
+  }
+  .card-inner{
+    position:relative;
+    width:100%;
+    height:100%;
+    min-height:150px;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+    transform-style:preserve-3d;
+    cursor:pointer;
+  }
+  .card.flipped .card-inner{transform:rotateY(180deg);}
+  .face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    background:var(--card);
+    box-shadow:var(--shadow);
+    padding:1rem 1.1rem;
+    display:flex;
+    flex-direction:column;
+  }
+  .face.back{
+    transform:rotateY(180deg);
+    background:var(--paper-2);
+  }
+  /* Used briefly by JS to measure a face's natural content height so a card
+     with an unusually long definition can grow taller — without affecting
+     the font size or height of any other card. */
+  .face.measuring{
+    position:static !important;
+    inset:auto !important;
+    height:auto !important;
+  }
+  .tag-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:.6rem;
+  }
+  .index-badge{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.68rem;
+    color:var(--ink-faint);
+    letter-spacing:.05em;
+  }
+  .badge-group{
+    display:flex;
+    align-items:center;
+    gap:.4rem;
+  }
+  .adv-badge{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.6rem;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    border-radius:999px;
+    padding:.1rem .45rem;
+    line-height:1.4;
+  }
+  .cat-dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--cat-color);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--cat-color) 20%, transparent);
+  }
+  .term{
+    font-family:"Spectral", Georgia, serif;
+    font-weight:600;
+    font-size:1.2rem;
+    line-height:1.25;
+    color:var(--ink);
+    margin:0;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    text-wrap:balance;
+  }
+  .def{
+    font-size:.92rem;
+    line-height:1.45;
+    color:var(--ink-soft);
+    margin:0;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+  .flip-hint{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.63rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-top:.5rem;
+    text-align:center;
+  }
+
+  /* ---------- Quiz ---------- */
+  .quiz-wrap{
+    max-width:640px;
+    margin:0 auto;
+  }
+  .quiz-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:"JetBrains Mono", monospace;
+    font-size:.78rem;
+    color:var(--ink-soft);
+    margin-bottom:.6rem;
+  }
+  .progress-track{
+    height:6px;
+    border-radius:999px;
+    background:var(--line);
+    overflow:hidden;
+    margin-bottom:1.6rem;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--accent);
+    border-radius:999px;
+    transition:width .3s ease;
+  }
+  .quiz-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:2rem 1.8rem 1.8rem;
+  }
+  .quiz-cat{
+    display:inline-flex;
+    align-items:center;
+    gap:.4rem;
+    font-family:"JetBrains Mono", monospace;
+    font-size:.68rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--cat-color);
+    margin-bottom:1rem;
+  }
+  .quiz-cat .dot{width:7px;height:7px;border-radius:50%;background:var(--cat-color);}
+  .quiz-question{
+    font-family:"Spectral", Georgia, serif;
+    font-size:1.5rem;
+    font-weight:600;
+    line-height:1.3;
+    margin:0 0 1.5rem;
+    text-wrap:balance;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:.65rem;
+  }
+  .option{
+    text-align:left;
+    font-family:"Public Sans", sans-serif;
+    font-size:.94rem;
+    line-height:1.4;
+    padding:.85rem 1rem;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    color:var(--ink);
+    cursor:pointer;
+    display:flex;
+    gap:.7rem;
+    align-items:flex-start;
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .option:hover:not(:disabled){border-color:var(--accent);}
+  .option:active:not(:disabled){transform:scale(.995);}
+  .option .letter{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.75rem;
+    color:var(--ink-faint);
+    border:1px solid var(--line);
+    border-radius:5px;
+    width:1.4rem;height:1.4rem;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .option.correct{
+    border-color:var(--good);
+    background:color-mix(in srgb, var(--good) 14%, var(--card));
+  }
+  .option.correct .letter{border-color:var(--good);color:var(--good);}
+  .option.wrong{
+    border-color:var(--bad);
+    background:color-mix(in srgb, var(--bad) 12%, var(--card));
+  }
+  .option.wrong .letter{border-color:var(--bad);color:var(--bad);}
+  .option:disabled{cursor:default;}
+
+  .quiz-foot{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:1.4rem;
+    min-height:2.4rem;
+  }
+  .next-btn{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.8rem;
+    letter-spacing:.04em;
+    padding:.6rem 1.3rem;
+    border-radius:999px;
+    border:none;
+    background:var(--ink);
+    color:var(--paper);
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity .18s ease, transform .18s ease;
+  }
+  .next-btn.show{opacity:1;transform:none;}
+
+  .results{
+    text-align:center;
+    padding:2.5rem 1.5rem;
+  }
+  .results .big{
+    font-family:"Spectral", Georgia, serif;
+    font-size:3rem;
+    font-weight:700;
+    margin:0;
+  }
+  .results .big em{font-style:normal;color:var(--accent);}
+  .results p{color:var(--ink-soft);margin:.4rem 0 1.6rem;}
+  .missed-list{
+    text-align:left;
+    max-width:480px;
+    margin:0 auto 1.8rem;
+    display:flex;
+    flex-direction:column;
+    gap:.5rem;
+  }
+  .missed-item{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:.7rem .9rem;
+    background:var(--paper-2);
+    font-size:.88rem;
+  }
+  .missed-item b{font-family:"Spectral", serif;font-weight:600;}
+  .missed-item span{display:block;color:var(--ink-soft);margin-top:.15rem;}
+  .primary-btn{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.85rem;
+    padding:.75rem 1.6rem;
+    border-radius:999px;
+    border:none;
+    background:var(--accent);
+    color:var(--accent-ink);
+    cursor:pointer;
+  }
+  .quiz-setup{
+    text-align:center;
+    padding:2rem 1.5rem;
+  }
+  .quiz-setup p{color:var(--ink-soft);max-width:44ch;margin:0 auto 1.5rem;}
+
+  /* ---------- Match ---------- */
+  .match-toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:1rem;
+    margin-bottom:1rem;
+  }
+  .match-toolbar .index-badge{flex:1 1 200px;}
+  .match-size-row{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+  }
+  .match-size-label{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.7rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .size-chips{display:flex;gap:.35rem;}
+  .size-chip{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.78rem;
+    width:1.9rem;
+    height:1.9rem;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:background .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .size-chip:hover{border-color:var(--accent);color:var(--ink);}
+  .size-chip.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .match-status{
+    font-family:"JetBrains Mono", monospace;
+    font-size:.8rem;
+    color:var(--ink-soft);
+    margin:0 0 1rem;
+  }
+  .match-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
+    gap:.85rem;
+  }
+  .match-tile{
+    font-family:"Public Sans", sans-serif;
+    text-align:center;
+    padding:1rem .9rem;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:.4rem;
+    min-height:88px;
+    box-shadow:var(--shadow);
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .match-tile:hover:not(.matched):not(:disabled){border-color:var(--cat-color, var(--accent));transform:translateY(-1px);}
+  .match-tile::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--cat-color);
+    margin-bottom:.1rem;
+  }
+  .match-tile.term-tile .match-tile-text{
+    font-family:"Spectral", Georgia, serif;
+    font-weight:600;
+    font-size:1.05rem;
+    line-height:1.25;
+  }
+  .match-tile.def-tile .match-tile-text{
+    font-size:.85rem;
+    line-height:1.4;
+    color:var(--ink-soft);
+  }
+  .match-tile.selected{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft), var(--shadow);
+  }
+  .match-tile.matched{
+    border-color:var(--good);
+    background:color-mix(in srgb, var(--good) 10%, var(--card));
+    cursor:default;
+    opacity:.55;
+  }
+  .match-tile.matched::before{background:var(--good);}
+  .match-tile.wrong{
+    border-color:var(--bad);
+    animation:shake .35s ease;
+  }
+  @keyframes shake{
+    20%{transform:translateX(-4px);}
+    40%{transform:translateX(4px);}
+    60%{transform:translateX(-3px);}
+    80%{transform:translateX(3px);}
+    100%{transform:translateX(0);}
+  }
+  .match-complete{margin-top:1.5rem;}
+
+  footer.note{
+    margin-top:3rem;
+    text-align:center;
+    font-family:"JetBrains Mono", monospace;
+    font-size:.68rem;
+    letter-spacing:.05em;
+    color:var(--ink-faint);
+  }
+
+  .hidden{display:none !important;}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-title-block">
+      <div class="eyebrow">Definitions You Must Know</div>
+      <h1>A Reagent Label <em>Card Game</em></h1>
+      <p>Core and advanced definitions from acids to transition metals, catalogued by topic. Flip through them, quiz yourself, or play a quick pair-matching round.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><b id="statTotal">90</b><span>Terms</span></div>
+      <div class="stat"><b id="statCats">8</b><span>Topics</span></div>
+      <div class="stat"><b id="statBest">—</b><span>Best score</span></div>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="study">Study</button>
+    <button class="tab" data-tab="quiz">Quiz</button>
+    <button class="tab" data-tab="match">Match</button>
+  </div>
+
+  <!-- STUDY MODE -->
+  <section id="studyPane">
+    <div class="controls">
+      <div class="search">
+        <input id="searchInput" type="text" placeholder="Search terms or definitions…" autocomplete="off">
+      </div>
+      <div class="chips" id="chipRow"></div>
+    </div>
+    <div class="grid" id="cardGrid"></div>
+    <p class="empty-msg hidden" id="emptyMsg">No terms match these filters yet.</p>
+  </section>
+
+  <!-- QUIZ MODE -->
+  <section id="quizPane" class="hidden">
+    <div class="quiz-wrap">
+
+      <div id="quizSetup" class="quiz-card quiz-setup">
+        <div class="quiz-cat" style="--cat-color:var(--accent2)"><span class="dot"></span>Multiple choice</div>
+        <p style="font-family:'Spectral',serif;font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:.6rem;">Ready when you are</p>
+        <p>Ten random definitions, four choices each. Filter by topic first on the Study tab if you want a focused round — otherwise it draws from all <span id="quizPoolTotal">163</span>.</p>
+        <button class="primary-btn" id="startQuizBtn">Start quiz</button>
+      </div>
+
+      <div id="quizRunning" class="hidden">
+        <div class="quiz-top">
+          <span id="quizProgressText">Question 1 / 10</span>
+          <span id="quizScoreText">Score: 0</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+        <div class="quiz-card">
+          <div class="quiz-cat" id="quizCatLabel"><span class="dot"></span>Category</div>
+          <p class="quiz-question" id="quizQuestion">Term</p>
+          <div class="options" id="quizOptions"></div>
+          <div class="quiz-foot">
+            <button class="next-btn" id="nextBtn">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="quizResults" class="hidden quiz-card results">
+        <p class="big" id="resultsScore"><em>0</em>/10</p>
+        <p id="resultsLine">Nice work.</p>
+        <div class="missed-list" id="missedList"></div>
+        <button class="primary-btn" id="retryBtn">Try again</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MATCH MODE -->
+  <section id="matchPane" class="hidden">
+    <div class="match-toolbar">
+      <span class="index-badge" id="matchFilterSummary">Playing from: All topics</span>
+      <div class="match-size-row">
+        <span class="match-size-label">Pairs</span>
+        <div class="size-chips" id="sizeChips"></div>
+      </div>
+      <button class="primary-btn" id="dealBtn">Deal new round</button>
+    </div>
+    <p class="match-status" id="matchStatus">Matched 0 / 6 · 0 moves</p>
+    <div class="match-grid" id="matchGrid"></div>
+    <div id="matchComplete" class="hidden match-complete quiz-card results">
+      <p class="big"><em id="matchCompleteMoves">0</em> moves</p>
+      <p>Every pair matched. Nice work.</p>
+      <button class="primary-btn" id="matchAgainBtn">Play again</button>
+    </div>
+  </section>
+
+  <footer class="note">CHEM · <span id="footerCount">144</span> SPECIMENS · CATALOGUED BY TOPIC</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // Chemistry definitions data set (transcribed from user's supplied definition sheets)
+  const TERMS = [
+{t:"Acid",d:"A substance which contains hydrogen that can be replaced by a metal, liberates carbon dioxide from carbonates, and turns litmus red in solution; a substance which can donate protons",c:["acidsbases","week1"]},
+{t:"Activation energy",d:"The minimum amount of energy particles must have in order to react",c:["kinetics","thermo","alevel"]},
+{t:"Alkali",d:"A base which dissolves in water to produce hydroxide ions",c:"acidsbases"},
+{t:"Alkali",d:"A substance which neutralizes an acid to form a salt and water only; dissolves in water to produce hydroxide ions (OH⁻); a soluble base; a proton acceptor",c:"acidsbases",adv:true},
+{t:"Alkanes",d:"A family of hydrocarbons the members of which only have carbon–carbon single bonds",c:"general"},
+{t:"Alkenes",d:"A family of hydrocarbons the members of which have one carbon–carbon double bond",c:"general"},
+{t:"Alloy",d:"A mixture of a metal with another element or elements, usually another metal",c:"bonding"},
+{t:"Alkali metals",d:"The elements of Group 1 in the Periodic Table (lithium, sodium, potassium, rubidium and caesium)",c:["periodic","week1"]},
+{t:"Alkaline earth metals",d:"The elements of Group 2 in the Periodic Table (beryllium, magnesium, calcium, strontium, barium and radium)",c:["periodic","week1"]},
+{t:"Allotropy",d:"The existence of an element in more than one form in the same physical state; the different forms are called allotropes and differ in structure — diamond, graphite and buckminsterfullerene are all allotropes of carbon",c:"bonding"},
+{t:"Analysis",d:"The determination of the composition and/or structure of a substance or mixture, often by controlled decomposition or instrumental methods",c:"labtech"},
+{t:"Anhydrous",d:"Without water of crystallisation; for example, anhydrous copper(II) sulfate",c:"labtech"},
+{t:"Anions",d:"Negative ions which move to the anode during electrolysis",c:"redox"},
+{t:"Anode",d:"The positive electrode in an electrolysis",c:"redox"},
+{t:"Atom",d:"The smallest particle of an element which can take part in a chemical reaction",c:["atomic","week1"]},
+{t:"Atomic number",d:"The number of protons in the nucleus of an atom",c:["atomic","alevel"]},
+{t:"Atomic weight",d:"An older term for relative atomic mass — now obsolete",c:"stoichiometry"},
+{t:"Atomicity",d:"The number of atoms in a molecule; for example, the atomicity of hydrogen, H₂, is 2",c:"stoichiometry"},
+{t:"Avogadro constant",d:"Approximately 6 × 10²³ mol⁻¹ — the number of atoms per mole of ¹²C",c:["stoichiometry","alevel"]},
+{t:"Base",d:"A substance which reacts with an acid to produce a salt and water",c:["acidsbases","week1"]},
+{t:"Boiling",d:"The change of state from liquid to vapour at the boiling point",c:"labtech"},
+{t:"Boiling temperature (point)",d:"The temperature at which the vapour pressure of a liquid equals the external pressure — usually quoted at atmospheric pressure",c:"labtech"},
+{t:"Catalyst",d:"A substance that increases the rate of a reaction but is not used up during the reaction",c:"kinetics"},
+{t:"Catalyst",d:"A substance which lowers the activation energy of a reaction by providing an alternative mechanism, and can be recovered unchanged in mass at the end; catalyst concentration does not appear in the equilibrium expression",c:["kinetics","alevel"],adv:true},
+{t:"Homogeneous catalyst",d:"A catalyst in the same phase as the reactants: consumed by an early step and regenerated in a later step of the mechanism, so its concentration appears in the rate equation",c:"kinetics"},
+{t:"Cathode",d:"The negative electrode in an electrolysis",c:"redox"},
+{t:"Cations",d:"Positive ions which move to the cathode during electrolysis",c:"redox"},
+{t:"Chemical change",d:"A change which involves the formation of new chemical substances",c:"general"},
+{t:"Chemical properties",d:"Those properties of a substance which involve chemical change",c:"general"},
+{t:"Chromatography",d:"A process for separating mixtures of coloured substances",c:"labtech"},
+{t:"Combination",d:"A reaction in which two or more elements combine to form a compound",c:"general"},
+{t:"Combustion",d:"Burning, usually in air",c:"general"},
+{t:"Compound",d:"A substance formed when two or more elements are chemically combined in definite proportions by mass",c:["bonding","week1"]},
+{t:"Condense",d:"A change of state from gas to liquid",c:"labtech",g:"condense"},
+{t:"Condensation",d:"The change of state from vapour to liquid; often deliberately induced by cooling, as in a Liebig condenser",c:"labtech",adv:true,g:"condense"},
+{t:"Covalent bond",d:"A chemical bond in which two electrons are shared",c:"bonding",g:"covalent-bond"},
+{t:"Cracking",d:"A process of breaking long-chain hydrocarbons into smaller molecules",c:"general"},
+{t:"Crude oil",d:"A naturally occurring mixture of hydrocarbons",c:"general"},
+{t:"Crystal",d:"A solid whose atoms are arranged in a definite pattern, giving rise to an external geometric form",c:"labtech"},
+{t:"Crystallisation",d:"The process by which crystals are obtained, either from solution or the molten state, usually by cooling",c:"labtech"},
+{t:"Decomposition",d:"Breaking down a compound into simpler substances",c:"general"},
+{t:"Denaturation",d:"Alteration of the shape of an enzyme, e.g. by heat, so that it will no longer work",c:"general"},
+{t:"Diatomic",d:"Molecules containing two atoms",c:"bonding"},
+{t:"Diffusion",d:"The ability of gases to spread out",c:"labtech"},
+{t:"Diffusion",d:"The process whereby particles move freely through both gases and solutions to produce a uniform or homogeneous system",c:"labtech",adv:true},
+{t:"Displacement",d:"A reaction in which an element replaces a less reactive element in a solution of one of its salts",c:"redox"},
+{t:"Distillation",d:"A process for obtaining liquids from solutions by evaporation and condensation",c:"labtech"},
+{t:"Distillation",d:"A liquid is converted to a vapour by heating, then the vapour is recondensed to a liquid; used for the separation or purification of liquids — the product is called the distillate",c:"labtech",adv:true},
+{t:"Electric current",d:"The movement of electrical charge",c:"redox"},
+{t:"Electrode",d:"A conductor by which an electric current enters or leaves an electrolyte during electrolysis",c:"redox"},
+{t:"Electrolysis",d:"The passage of electric current through a compound causing chemical reactions to occur",c:"redox"},
+{t:"Electrolysis",d:"Occurs when a substance, either in solution or the molten state, is decomposed by the passage of an electric current",c:"redox",adv:true},
+{t:"Electrolyte",d:"The substance which undergoes electrolysis, either in solution or the molten state, for example copper(II) sulfate solution, or molten lead(II) bromide",c:"redox"},
+{t:"Electron",d:"A negatively charged particle which orbits the nucleus of an atom",c:"atomic"},
+{t:"Electron",d:"A sub-atomic elementary particle, having unit negative charge and a mass approximately 1/1840 of a proton; it also exhibits wave properties",c:"atomic",adv:true},
+{t:"Elements (definition 1)",d:"Chemicals which cannot be broken down into simpler substances",c:["periodic","week1"]},
+{t:"Elements (definition 2)",d:"Chemicals which contain only one type of atom",c:["periodic","week1"]},
+{t:"Empirical formula",d:"The simplest whole-number ratio of atoms in a compound",c:["stoichiometry","alevel"]},
+{t:"Endothermic",d:"A reaction which takes in heat from the surroundings",c:["thermo","week1"]},
+{t:"Endothermic",d:"A process during which thermal energy is absorbed",c:["thermo","week1"],adv:true},
+{t:"Enzyme",d:"A biological catalyst produced by living organisms",c:"kinetics"},
+{t:"Equilibrium",d:"When the forward and reverse rates of a reversible reaction are the same",c:"equilibrium",g:"equilibrium"},
+{t:"Erosion",d:"A process which involves movement, by which rocks are worn away",c:"general"},
+{t:"Eutrophication",d:"When a lake or river is so rich in nutrients that too many plants grow",c:"general"},
+{t:"Evaporate",d:"Change of state from liquid to gas",c:"labtech",g:"evaporate"},
+{t:"Evaporation",d:"The change of state from liquid to vapour below the boiling point; it occurs from the surface of the liquid",c:"labtech",adv:true,g:"evaporate"},
+{t:"Exothermic",d:"A reaction which gives out heat to the surroundings",c:["thermo","week1"]},
+{t:"Exothermic",d:"A process which gives out thermal energy",c:["thermo","week1"],adv:true},
+{t:"Extrusive rock",d:"Igneous rock formed when lava cools and solidifies as magma reaches the Earth's surface",c:"general"},
+{t:"Fermentation",d:"An anaerobic respiration by which yeast uses sugar for energy without using oxygen",c:"general"},
+{t:"Filtrate",d:"The liquid which passes through a filter paper during filtration",c:["labtech","week1"]},
+{t:"Filtration",d:"A means of separating an insoluble solid from a liquid",c:["labtech","week1"],g:"filtration"},
+{t:"Filtration",d:"Separating solids from liquids by passing them through a porous material (usually filter paper); the liquid that passes through is the filtrate, the solid left behind is the residue",c:["labtech","week1"],adv:true,g:"filtration"},
+{t:"Fossil fuels",d:"Fuels such as coal, oil, gas, which have formed from the remains of plants or animals",c:"general"},
+{t:"Fractional distillation",d:"The process of separating mixtures of liquids according to their boiling points",c:"labtech"},
+{t:"Fractional distillation",d:"The separation of several liquids which have different boiling points, by collecting the distillates (fractions) at different temperatures",c:"labtech",adv:true},
+{t:"Fractions",d:"Liquids separated from crude oil by fractional distillation",c:"labtech"},
+{t:"Freeze",d:"Change of state from liquid to solid",c:"labtech",g:"freeze"},
+{t:"Freezing",d:"Change of state from liquid to solid at a constant temperature",c:"labtech",adv:true,g:"freeze"},
+{t:"Geological change",d:"A change in which the structure or composition of rocks is altered",c:"general"},
+{t:"Giant structure",d:"A structure of very many particles bonded together",c:"bonding"},
+{t:"Greenhouse gases",d:"Gases present in the atmosphere which cause an increase in the Earth's average temperature",c:"general"},
+{t:"Group",d:"A vertical column in the Periodic Table",c:["periodic","week1"]},
+{t:"Hydrocarbons",d:"Compounds containing hydrogen and carbon as the only elements",c:"general"},
+{t:"Igneous rocks",d:"Rocks formed from molten magma",c:"general"},
+{t:"Indicator",d:"A substance which shows different colours in acidic or alkaline conditions, for example litmus",c:"acidsbases"},
+{t:"Intrusive rock",d:"Igneous rock formed when magma cools inside the Earth's crust",c:"general"},
+{t:"Ion",d:"An electrically charged particle formed from an atom or group of atoms by loss or gain of electrons, for example Na⁺, Pb²⁺, Cl⁻, SO₄²⁻",c:"atomic"},
+{t:"Insoluble",d:"Not able to dissolve in a particular solvent, usually water",c:"labtech"},
+{t:"Melting",d:"The change of state from solid to liquid",c:"labtech"},
+{t:"Melting temperature (point)",d:"The temperature at which the solid and liquid phases of a substance are in equilibrium at a given pressure",c:"labtech"},
+{t:"Mole",d:"The unit of amount of substance. One mole is the amount of substance which contains as many elementary particles as there are atoms in 0.012 kg of the isotope ¹²C",c:["stoichiometry","alevel"]},
+{t:"Molecular formula",d:"A multiple of the empirical formula, giving the actual number of atoms of each element in a molecule",c:["stoichiometry","alevel"]},
+{t:"Molecule",d:"The smallest part of a substance which can exist independently and still retain the properties of that substance, for example Cl₂, HCl, H₂O, C₂H₅OH",c:["bonding","week1"]},
+{t:"Neutralisation",d:"A reaction between an acid and a base to give a salt and water",c:"acidsbases"},
+{t:"Neutralisation",d:"The addition of an acid to an alkali, or vice versa, until neither is in excess and the solution is neutral",c:"acidsbases",adv:true},
+{t:"Neutron",d:"A sub-atomic particle with the same mass as a proton but no charge",c:"atomic"},
+{t:"Ore",d:"A solid, naturally occurring mineral from which metals or other valuable substances can be extracted, usually by chemical treatment",c:"general"},
+{t:"Oxidation",d:"A reaction in which oxygen is gained or electrons are lost or hydrogen is lost",c:["redox","week1"]},
+{t:"Oxidation",d:"The addition of oxygen or the removal of hydrogen; an increase in the oxidation state of an element is oxidation; oxidation is also the loss of one or more electrons",c:["redox","week1","alevel"],adv:true},
+{t:"Periodic law",d:"The physical and chemical properties of the elements are periodic functions of their atomic numbers",c:"periodic"},
+{t:"pH",d:"A measure of acidity according to the concentration of hydrogen ions",c:["acidsbases","week1"],g:"ph"},
+{t:"pH scale",d:"A measure of hydrogen ion concentration, hence of the acidity or alkalinity of a solution; a neutral solution has pH 7, acidic solutions have pH less than 7, alkaline solutions have pH greater than 7",c:["acidsbases","week1"],adv:true,g:"ph"},
+{t:"Photosynthesis",d:"The production of glucose from carbon dioxide and water by green plants using light",c:"general"},
+{t:"Physical change",d:"A change in which no new substances are produced",c:"general"},
+{t:"Physical properties",d:"Those properties of a substance which do not involve chemical change",c:"general"},
+{t:"Physical state",d:"One of the states of matter",c:"general"},
+{t:"Plates",d:"Large sections of the Earth's lithosphere",c:"general"},
+{t:"Polymerisation",d:"A reaction in which molecules containing very long carbon chains are made from smaller units",c:"bonding"},
+{t:"Polymers",d:"Compounds, made from smaller molecules, which contain very long chains of carbon atoms",c:"bonding"},
+{t:"Precipitate",d:"A solid formed from solution as a result of two soluble substances reacting to form an insoluble one",c:["general","week1"]},
+{t:"Precipitate",d:"An insoluble substance which separates from solution during a chemical reaction",c:["general","week1"],adv:true},
+{t:"Precipitation",d:"A reaction which produces a precipitate",c:["general","week1"]},
+{t:"Products",d:"Substances formed during a chemical reaction",c:"general"},
+{t:"Proton",d:"A positively charged particle found in the nucleus of an atom",c:"atomic"},
+{t:"Proton",d:"A sub-atomic elementary particle, with unit positive charge and unit mass, expressed in relative atomic mass units",c:"atomic",adv:true},
+{t:"Proton number",d:"The number of protons in the nucleus of an element — another name for atomic number",c:"atomic"},
+{t:"Radical",d:"An ion which is made up of more than one atom",c:"bonding"},
+{t:"Reactants",d:"The chemicals present at the start of a chemical reaction",c:"general"},
+{t:"Reduction",d:"A reaction in which oxygen is lost or electrons are gained or hydrogen is gained",c:"redox",g:"reduction"},
+{t:"Refine",d:"To purify, especially applied to crude oil",c:"labtech"},
+{t:"Relative atomic mass",d:"The average mass of the atoms of an element using a scale on which the mass of carbon is twelve",c:"stoichiometry",g:"relative-atomic-mass"},
+{t:"Relative atomic mass",d:"The ratio of the average mass per atom of an element relative to 1/12 the mass of an atom of ¹²C",c:["stoichiometry","alevel"],adv:true,g:"relative-atomic-mass"},
+{t:"Relative molecular mass",d:"The sum of the relative atomic masses of the elements in a compound",c:"stoichiometry",g:"relative-molecular-mass"},
+{t:"Residue",d:"The substance remaining in the filter paper after filtration",c:["labtech","week1"]},
+{t:"Respiration",d:"A process of releasing energy from glucose",c:"general"},
+{t:"Reversible reaction",d:"A chemical reaction in which the products can react to re-form the starting substances according to the prevailing conditions",c:["equilibrium","week1"]},
+{t:"Reversible reaction",d:"A reaction which can be made to proceed either forwards or backwards under suitable conditions; both products and reactants are present at equilibrium",c:["equilibrium","week1"],adv:true},
+{t:"Rocks",d:"Mixtures of minerals which are present in the Earth's crust",c:"general"},
+{t:"Rusting",d:"The corrosion of iron (or steel) which requires both air (oxygen) and water",c:"redox"},
+{t:"Sacrificial protection",d:"A method of rust prevention by using a more reactive metal which corrodes in place of the iron",c:"redox"},
+{t:"Salt",d:"A compound formed when the hydrogen of an acid is replaced by a metal",c:"acidsbases"},
+{t:"Salt",d:"The product obtained when part or all of the hydrogen of an acid is replaced by a metal (or the ammonium group); an ionic solid formed from positive ions (other than H⁺) and negative ions (other than OH⁻ and O²⁻), for example NaCl, CuSO₄",c:"acidsbases",adv:true},
+{t:"Saturated solution",d:"A solution which remains in equilibrium with undissolved solute — no more solute can dissolve in it at that temperature",c:"labtech"},
+{t:"Sediment",d:"Fragments of rock which have moved and settled",c:"general"},
+{t:"Sedimentary rocks",d:"Rocks formed from layers of sediment",c:"general"},
+{t:"Solute",d:"A substance which dissolves in a solvent to form a solution",c:"labtech"},
+{t:"Solution",d:"A mixture in which one substance has dissolved in another",c:["labtech","week1"]},
+{t:"Solvent",d:"A liquid which has dissolved another substance to make a solution",c:"labtech"},
+{t:"State symbols",d:"Symbols included in a reaction equation to show the physical state of each substance: (g) gas, (l) liquid, (s) solid, (aq) aqueous — dissolved in water",c:["labtech","week1"]},
+{t:"States of matter",d:"Solid, liquid, gas",c:"general"},
+{t:"Sublimation",d:"The change from solid to gas and back to solid again without passing through the liquid state",c:"labtech"},
+{t:"Substrate",d:"A reactant which takes part in a reaction catalysed by an enzyme",c:"kinetics"},
+{t:"Transition element",d:"A d-block element which forms one or more stable ions with an incompletely filled set of d-orbitals",c:["transition","week1","alevel"]},
+{t:"Weathering",d:"A process by which rocks are broken down into fragments in situ",c:"general"},
+{t:"Period",d:"A horizontal row of elements in the Periodic Table",c:["periodic","week1"]},
+{t:"Noble gases",d:"The elements of Group 0 (18) in the Periodic Table — very unreactive gases with a full outer shell of electrons, for example helium, neon and argon",c:["periodic","week1"]},
+{t:"Halogens",d:"The elements of Group 7 (17) in the Periodic Table — reactive non-metals that exist as diatomic molecules, for example fluorine, chlorine and bromine",c:["periodic","week1"]},
+{t:"Chalcogens",d:"The elements of Group 6 (16) in the Periodic Table, including oxygen and sulfur",c:["periodic","week1"]},
+{t:"Periodic table",d:"A table of all the known chemical elements, arranged in order of atomic number into rows (periods) and columns (groups) of elements with similar properties",c:["periodic","week1"]},
+{t:"Filtering",d:"The act of passing a mixture through a filter to separate an insoluble solid from a liquid",c:["labtech","week1"],g:"filtration"},
+{t:"Conical flask",d:"A cone-shaped laboratory flask with a flat base and a narrow neck, used for mixing, heating or titrating liquids",c:["labtech","week1"]},
+{t:"Filter funnel",d:"A cone-shaped piece of labware used to hold filter paper and direct a filtered liquid into the container below",c:["labtech","week1"]},
+{t:"Gas jar",d:"A wide cylindrical glass container, usually covered with a lid or cover slip, used to collect and store a gas in the laboratory",c:["labtech","week1"]},
+{t:"Aqueous",d:"Dissolved in water; shown by the state symbol (aq) in a chemical equation",c:["labtech","week1"]},
+{t:"Equation",d:"A way of representing a chemical reaction using the symbols and formulae of the reactants and products",c:["general","week1"]},
+{t:"Formula",d:"A way of showing the number and type of atoms of each element present in a compound, using element symbols and numbers",c:["bonding","week1"]},
+{t:"Molar mass",d:"The mass of one mole of a substance, measured in grams per mole (g/mol)",c:["stoichiometry","week1"]},
+{t:"Atomic mass",d:"The mass of an atom, usually given as the relative atomic mass — the average mass of the atoms of an element compared with 1/12 the mass of a carbon-12 atom",c:["stoichiometry","week1"],g:"relative-atomic-mass"},
+{t:"Molecular mass",d:"The mass of a molecule, found by adding together the relative atomic masses of all the atoms in its formula — also called relative molecular mass",c:["stoichiometry","week1"],g:"relative-molecular-mass"},
+{t:"Temperature",d:"A measure of how hot or cold something is, related to the average kinetic energy of its particles",c:["labtech","week1"]},
+{t:"Effervescence",d:"The rapid escape of gas bubbles from a liquid, seen for example when an acid reacts with a carbonate",c:["general","week1"]},
+{t:"Gelatinous precipitate",d:"A soft, jelly-like precipitate — often formed by metal hydroxides — which can be difficult to filter",c:["general","week1"]},
+{t:"Fine precipitate",d:"A precipitate made of very small particles, which can pass through filter paper or take a long time to settle",c:["general","week1"]},
+{t:"Mass number (A)",d:"The total number of protons and neutrons in the nucleus of an atom",c:["atomic","alevel"],adv:true},
+{t:"Relative isotopic mass",d:"The mass of an atom of an isotope relative to 1/12th of the mass of an atom of carbon-12",c:["atomic","alevel"],adv:true},
+{t:"Relative molecular mass (M<sub>r</sub>)",d:"The weighted mean mass of a molecule relative to 1/12th of the mass of an atom of carbon-12",c:["stoichiometry","alevel"],adv:true,g:"relative-molecular-mass"},
+{t:"First ionisation energy",d:"The energy required to remove one mole of electrons from one mole of gaseous atoms to form one mole of gaseous 1<sup>+</sup> ions",c:["atomic","alevel"],adv:true},
+{t:"Periodicity",d:"A repeating pattern of atomic, physical and chemical properties across a period in the Periodic Table",c:["periodic","alevel"],adv:true},
+{t:"Ionic bond",d:"The electrostatic attraction between oppositely charged ions",c:["bonding","alevel"],adv:true},
+{t:"Covalent bond",d:"The strong electrostatic attraction between a shared pair of electrons and the nuclei of the bonded atoms",c:["bonding","alevel"],adv:true,g:"covalent-bond"},
+{t:"Dative covalent (coordinate) bond",d:"A covalent bond in which both shared electrons are provided by one of the bonding atoms",c:["bonding","alevel"],adv:true},
+{t:"Electronegativity",d:"The ability of an atom to attract the bonding pair of electrons in a covalent bond",c:["bonding","alevel"],adv:true},
+{t:"Metallic bond",d:"The electrostatic attraction between positive metal ions and delocalised electrons",c:["bonding","alevel"],adv:true},
+{t:"Enthalpy change (ΔH)",d:"The heat energy change measured at constant pressure",c:["thermo","alevel"],adv:true},
+{t:"Standard enthalpy change of reaction (ΔH<sub>r</sub><sup>⦵</sup>)",d:"The enthalpy change when a reaction occurs in the molar quantities shown in the chemical equation under standard conditions, with reactants and products in their standard states",c:["thermo","alevel"],adv:true},
+{t:"Standard enthalpy change of formation (ΔH<sub>f</sub><sup>⦵</sup>)",d:"The enthalpy change when one mole of a compound is formed from its constituent elements in their standard states under standard conditions",c:["thermo","alevel"],adv:true},
+{t:"Standard enthalpy change of combustion (ΔH<sub>c</sub><sup>⦵</sup>)",d:"The enthalpy change when one mole of a substance is burned completely in oxygen under standard conditions, with all reactants and products in their standard states",c:["thermo","alevel"],adv:true},
+{t:"Standard enthalpy change of neutralisation (ΔH<sub>neut</sub><sup>⦵</sup>)",d:"The enthalpy change when an acid and an alkali react to form one mole of water under standard conditions",c:["thermo","alevel"],adv:true},
+{t:"Mean bond enthalpy",d:"The energy required to break one mole of a specified covalent bond in a gaseous molecule, averaged over a range of different compounds",c:["thermo","alevel"],adv:true},
+{t:"Hess's Law",d:"The total enthalpy change for a chemical reaction is independent of the route taken, provided the initial and final conditions are the same",c:["thermo","alevel"],adv:true},
+{t:"Lattice enthalpy",d:"The enthalpy change when one mole of an ionic lattice is formed from its gaseous ions under standard conditions",c:["thermo","alevel"],adv:true},
+{t:"Standard enthalpy change of atomisation (ΔH<sub>at</sub><sup>⦵</sup>)",d:"The enthalpy change when one mole of gaseous atoms is formed from an element in its standard state",c:["thermo","alevel"],adv:true},
+{t:"First electron affinity",d:"The enthalpy change when one mole of electrons is added to one mole of gaseous atoms to form one mole of gaseous 1<sup>-</sup> ions",c:["thermo","alevel"],adv:true},
+{t:"Enthalpy change of solution (ΔH<sub>sol</sub><sup>⦵</sup>)",d:"The enthalpy change when one mole of an ionic solid dissolves completely in water to form infinitely dilute aqueous ions under standard conditions",c:["thermo","alevel"],adv:true},
+{t:"Enthalpy change of hydration (ΔH<sub>hyd</sub><sup>⦵</sup>)",d:"The enthalpy change when one mole of gaseous ions dissolves in water to form one mole of aqueous ions under standard conditions",c:["thermo","alevel"],adv:true},
+{t:"Entropy (S)",d:"A measure of the dispersal of energy in a system, reflecting the degree of disorder",c:["thermo","alevel"],adv:true},
+{t:"Rate of reaction",d:"The change in concentration of a reactant or product per unit time",c:["kinetics","alevel"],adv:true},
+{t:"Rate-determining step",d:"The slowest step in a multi-step reaction mechanism",c:["kinetics","alevel"],adv:true},
+{t:"Order of reaction",d:"The power to which the concentration of a reactant is raised in the rate equation",c:["kinetics","alevel"],adv:true},
+{t:"Half-life (t<sub>1/2</sub>)",d:"The time taken for the concentration of a reactant to decrease to half of its initial value",c:["kinetics","alevel"],adv:true},
+{t:"Le Chatelier's Principle",d:"When a system in dynamic equilibrium is subjected to a change in conditions, the position of equilibrium shifts to oppose that change",c:["equilibrium","alevel"],adv:true},
+{t:"Dynamic equilibrium",d:"A state in a closed system where the rate of the forward reaction equals the rate of the reverse reaction, and the concentrations of reactants and products remain constant",c:["equilibrium","alevel"],adv:true,g:"equilibrium"},
+{t:"Brønsted–Lowry acid",d:"A proton (H<sup>+</sup>) donor",c:["acidsbases","alevel"],adv:true},
+{t:"Brønsted–Lowry base",d:"A proton (H<sup>+</sup>) acceptor",c:["acidsbases","alevel"],adv:true},
+{t:"Strong acid",d:"An acid that fully dissociates into ions in aqueous solution",c:["acidsbases","alevel"],adv:true},
+{t:"Weak acid",d:"An acid that only partially dissociates into ions in aqueous solution",c:["acidsbases","alevel"],adv:true},
+{t:"Buffer solution",d:"A solution that resists changes in pH when small amounts of an acid or alkali are added",c:["acidsbases","alevel"],adv:true},
+{t:"Reduction",d:"The gain of electrons, or a decrease in oxidation number",c:["redox","alevel"],adv:true,g:"reduction"},
+{t:"Oxidising agent",d:"A species that accepts electrons and is reduced itself",c:["redox","alevel"],adv:true},
+{t:"Reducing agent",d:"A species that loses electrons and is oxidised itself",c:["redox","alevel"],adv:true},
+{t:"Standard electrode potential (E<sup>⦵</sup>)",d:"The electromotive force (e.m.f.) of a half-cell connected to a standard hydrogen electrode under standard conditions (298 K, 100 kPa, 1.00 mol dm<sup>-3</sup> solution concentration)",c:["redox","alevel"],adv:true},
+{t:"Ligand",d:"An atom, ion, or molecule that donates a pair of electrons to a central metal ion to form a coordinate (dative covalent) bond",c:["transition","alevel"],adv:true},
+{t:"Complex ion",d:"A central metal ion bonded to one or more ligands by coordinate bonds",c:["transition","alevel"],adv:true},
+{t:"Coordination number",d:"The total number of coordinate bonds formed between a central metal ion and its ligands",c:["transition","alevel"],adv:true},
+{t:"Bidentate ligand",d:"A ligand that donates two pairs of electrons to a central metal ion to form two coordinate bonds",c:["transition","alevel"],adv:true},
+{t:"Monodentate ligand",d:"A ligand that donates one pair of electrons to a central metal ion to form one coordinate bond",c:["transition","alevel"],adv:true},
+{t:"Ligand substitution reaction",d:"A reaction in which one ligand in a complex ion is replaced by another ligand",c:["transition","alevel"],adv:true},
+{t:"Homologous series",d:"A series of organic compounds having the same functional group and general formula, with successive members differing by -CH<sub>2</sub>-",c:["organic","alevel"],adv:true},
+{t:"Functional group",d:"The atom or group of atoms in a molecule responsible for its characteristic chemical reactions",c:["organic","alevel"],adv:true},
+{t:"Structural isomers",d:"Compounds with the same molecular formula but different structural formulas",c:["organic","alevel"],adv:true},
+{t:"Stereoisomers",d:"Compounds with the same structural and molecular formulas but a different arrangement of atoms in 3D space",c:["organic","alevel"],adv:true},
+{t:"E/Z isomerism",d:"A type of stereoisomerism caused by restricted rotation around a C=C double bond when each carbon atom has two different groups attached",c:["organic","alevel"],adv:true},
+{t:"Optical isomerism (enantiomers)",d:"Stereoisomers that are non-superimposable mirror images of each other around a chiral centre",c:["organic","alevel"],adv:true},
+{t:"Chiral centre",d:"An atom (typically carbon) attached to four different groups",c:["organic","alevel"],adv:true},
+{t:"Racemic mixture (racemate)",d:"An equimolar mixture of two optical isomers that has no net optical activity",c:["organic","alevel"],adv:true},
+{t:"Electrophile",d:"An electron-pair acceptor",c:["organic","alevel"],adv:true},
+{t:"Nucleophile",d:"An electron-pair donor",c:["organic","alevel"],adv:true},
+{t:"Free radical",d:"A species with an unpaired electron",c:["organic","alevel"],adv:true},
+{t:"Homolytic fission",d:"The breaking of a covalent bond where each bonded atom takes one electron from the shared pair, forming two radicals",c:["organic","alevel"],adv:true},
+{t:"Heterolytic fission",d:"The breaking of a covalent bond where one of the bonded atoms takes both electrons from the shared pair, forming ions",c:["organic","alevel"],adv:true},
+{t:"Substitution reaction",d:"A reaction in which an atom or group of atoms is replaced by another atom or group of atoms",c:["organic","alevel"],adv:true},
+{t:"Addition reaction",d:"A reaction in which two reactants join together to form a single product",c:["organic","alevel"],adv:true},
+{t:"Elimination reaction",d:"A reaction involving the removal of a small molecule from a larger molecule to form a double bond",c:["organic","alevel"],adv:true},
+{t:"Retention time",d:"The time taken for a component to travel from the point of injection to the detector in chromatography",c:["labtech","alevel"],adv:true},
+{t:"Chemical shift (δ)",d:"A measure of how far an NMR signal is shifted relative to the reference standard tetramethylsilane (TMS), measured in parts per million (ppm)",c:["labtech","alevel"],adv:true},
+];
+
+  const CATEGORIES = [
+{key:"week1", label:"Unit 1", color:"#d1495b"},
+{key:"alevel", label:"Advanced", color:"#0f6b5c"},
+{key:"stoichiometry", label:"Stoichiometry", color:"#8a6b4a"},
+{key:"thermo", label:"Thermochemistry & Energetics", color:"#b5502a"},
+{key:"kinetics", label:"Rates of Reaction & Kinetics", color:"#c9a227"},
+{key:"equilibrium", label:"Reversible Reactions & Equilibrium", color:"#2f6e63"},
+{key:"redox", label:"Oxidation & Reduction (Redox)", color:"#3b7dc4"},
+{key:"acidsbases", label:"Acids, Bases & Salts", color:"#4f8f3f"},
+{key:"bonding", label:"Bonding & Structure", color:"#8a5fb0"},
+{key:"atomic", label:"Atomic & Electronic Structure", color:"#c1447a"},
+{key:"periodic", label:"Periodic Trends & the Periodic Table", color:"#6b7280"},
+{key:"labtech", label:"Lab Chemistry, Measurement & Purification", color:"#4a7a8c"},
+{key:"transition", label:"Transition Metal Properties & Ideas", color:"#7a3b5e"},
+{key:"organic", label:"Organic Chemistry & Analysis", color:"#a65d2e"},
+{key:"general", label:"General & Physical Chemistry", color:"#9a9483"},
+];
+
+  const catMeta = Object.fromEntries(CATEGORIES.map(c => [c.key, c]));
+  const terms = TERMS.map((term, i) => ({...term, id:i}));
+
+  // A term's `c` is usually one category key, but can be an array (e.g. Activation
+  // energy lives in both Kinetics and Thermochemistry). catsOf() always returns an
+  // array so filtering/matching code doesn't need to care which shape it was given.
+  const catsOf = t => Array.isArray(t.c) ? t.c : [t.c];
+  const inActiveCats = t => catsOf(t).some(c => activeCats.has(c));
+  const shareCategory = (a, b) => catsOf(a).some(c => catsOf(b).includes(c));
+  const badgeHtml = t => t.adv ? '<span class="adv-badge">Advanced</span>' : '';
+
+  document.getElementById('statTotal').textContent = terms.length;
+  document.getElementById('statCats').textContent = CATEGORIES.length;
+  document.getElementById('footerCount').textContent = terms.length;
+  document.getElementById('quizPoolTotal').textContent = terms.length;
+
+  // ---- best score (in-memory only, per artifact-authoring rules: no localStorage) ----
+  let bestScore = null;
+  function updateBest(score){
+    if(bestScore === null || score > bestScore){
+      bestScore = score;
+      document.getElementById('statBest').textContent = bestScore + '/10';
+    }
+  }
+
+  // ---------------- TABS ----------------
+  const tabs = document.querySelectorAll('.tab');
+  const studyPane = document.getElementById('studyPane');
+  const quizPane = document.getElementById('quizPane');
+  const matchPane = document.getElementById('matchPane');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const which = tab.dataset.tab;
+    studyPane.classList.toggle('hidden', which !== 'study');
+    quizPane.classList.toggle('hidden', which !== 'quiz');
+    matchPane.classList.toggle('hidden', which !== 'match');
+    if(which === 'match'){ dealRound(); }
+  }));
+
+  // ---------------- STUDY: chips ----------------
+  let activeCats = new Set(CATEGORIES.map(c => c.key));
+  const chipRow = document.getElementById('chipRow');
+
+  function catCount(key){
+    return terms.filter(t => catsOf(t).includes(key)).length;
+  }
+
+  function renderChips(){
+    chipRow.innerHTML = '';
+    const allChip = document.createElement('button');
+    allChip.className = 'chip' + (activeCats.size === CATEGORIES.length ? ' active' : '');
+    allChip.style.setProperty('--chip-color', 'var(--ink)');
+    allChip.innerHTML = `<span class="dot"></span>All <span class="chip-count">${terms.length}</span>`;
+    allChip.addEventListener('click', () => {
+      activeCats = new Set(CATEGORIES.map(c => c.key));
+      renderChips(); renderCards();
+    });
+    chipRow.appendChild(allChip);
+
+    CATEGORIES.forEach(cat => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (activeCats.has(cat.key) ? ' active' : '');
+      chip.style.setProperty('--chip-color', cat.color);
+      chip.innerHTML = `<span class="dot"></span>${cat.label} <span class="chip-count">${catCount(cat.key)}</span>`;
+      chip.addEventListener('click', () => {
+        if(activeCats.has(cat.key) && activeCats.size === 1){
+          activeCats = new Set(CATEGORIES.map(c => c.key));
+        } else if(activeCats.size === CATEGORIES.length){
+          activeCats = new Set([cat.key]);
+        } else if(activeCats.has(cat.key)){
+          activeCats.delete(cat.key);
+        } else {
+          activeCats.add(cat.key);
+        }
+        renderChips(); renderCards();
+      });
+      chipRow.appendChild(chip);
+    });
+  }
+
+  // ---------------- STUDY: cards ----------------
+  const grid = document.getElementById('cardGrid');
+  const emptyMsg = document.getElementById('emptyMsg');
+  const searchInput = document.getElementById('searchInput');
+
+  function renderCards(){
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = terms.filter(t =>
+      inActiveCats(t) &&
+      (q === '' || t.t.toLowerCase().includes(q) || t.d.toLowerCase().includes(q))
+    );
+    grid.innerHTML = '';
+    emptyMsg.classList.toggle('hidden', filtered.length > 0);
+    filtered.forEach(t => {
+      const cats = catsOf(t).map(k => catMeta[k]);
+      const cat = cats[0];
+      const catLabel = cats.map(c => c.label).join(' + ');
+      const dots = cats.map(c => `<span class="cat-dot" style="--cat-color:${c.color}" title="${c.label}"></span>`).join('');
+      const card = document.createElement('div');
+      card.className = 'card';
+      const advBadge = badgeHtml(t);
+      card.innerHTML = `
+        <div class="card-inner">
+          <div class="face front" style="--cat-color:${cat.color}">
+            <div class="tag-row">
+              <span class="index-badge">No. ${String(t.id+1).padStart(2,'0')}</span>
+              <span class="badge-group">${advBadge}${dots}</span>
+            </div>
+            <p class="term">${t.t}</p>
+            <span class="flip-hint">Tap to reveal</span>
+          </div>
+          <div class="face back" style="--cat-color:${cat.color}">
+            <div class="tag-row">
+              <span class="index-badge">${catLabel}</span>
+              <span class="badge-group">${advBadge}${dots}</span>
+            </div>
+            <p class="def">${t.d}</p>
+            <span class="flip-hint">Tap to flip back</span>
+          </div>
+        </div>`;
+      card.addEventListener('click', () => card.classList.toggle('flipped'));
+      grid.appendChild(card);
+    });
+    fitCardHeights();
+  }
+
+  // Most definitions fit the standard card comfortably. A handful run long enough
+  // to overflow it — rather than shrinking every card's font to accommodate the
+  // few outliers, measure each card's actual content height and only grow the
+  // ones that need it.
+  function fitCardHeights(){
+    grid.querySelectorAll('.card').forEach(card => {
+      const inner = card.querySelector('.card-inner');
+      inner.style.minHeight = '';
+      card.style.minHeight = '';
+      let maxH = 0;
+      card.querySelectorAll('.face').forEach(face => {
+        face.classList.add('measuring');
+        maxH = Math.max(maxH, face.scrollHeight);
+        face.classList.remove('measuring');
+      });
+      const baseline = 150;
+      if(maxH > baseline){
+        inner.style.minHeight = maxH + 'px';
+        card.style.minHeight = maxH + 'px';
+      }
+    });
+  }
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fitCardHeights, 200);
+  });
+
+  searchInput.addEventListener('input', renderCards);
+  renderChips();
+  renderCards();
+
+  // ---------------- QUIZ ----------------
+  const quizSetup = document.getElementById('quizSetup');
+  const quizRunning = document.getElementById('quizRunning');
+  const quizResults = document.getElementById('quizResults');
+  const startQuizBtn = document.getElementById('startQuizBtn');
+  const retryBtn = document.getElementById('retryBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const quizOptions = document.getElementById('quizOptions');
+  const quizQuestion = document.getElementById('quizQuestion');
+  const quizCatLabel = document.getElementById('quizCatLabel');
+  const quizProgressText = document.getElementById('quizProgressText');
+  const quizScoreText = document.getElementById('quizScoreText');
+  const progressFill = document.getElementById('progressFill');
+
+  const QUIZ_LEN = 10;
+  let quizQuestions = [];
+  let qIndex = 0;
+  let score = 0;
+  let missed = [];
+  let answered = false;
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  // Group key: terms sharing a "g" (e.g. Condense/Condensation, pH/pH scale) describe the
+  // same concept under different names, so they must never appear as each other's distractor
+  // or both show up as separate questions in one quiz.
+  const groupKey = t => t.g || t.t;
+
+  function uniqueByGroup(list){
+    const seen = new Set();
+    const out = [];
+    for(const t of list){
+      const k = groupKey(t);
+      if(!seen.has(k)){ seen.add(k); out.push(t); }
+    }
+    return out;
+  }
+
+  function buildQuiz(){
+    const pool = terms.filter(inActiveCats);
+    const source = pool.length >= QUIZ_LEN ? pool : terms;
+    // Avoid asking the same concept twice in one quiz (some terms have a second "Advanced" card)
+    const deduped = uniqueByGroup(shuffle(source));
+    const chosen = deduped.slice(0, Math.min(QUIZ_LEN, deduped.length));
+    quizQuestions = chosen.map(t => {
+      let distractorPool = terms.filter(o => o.id !== t.id && groupKey(o) !== groupKey(t) && shareCategory(o, t));
+      if(distractorPool.length < 3){
+        distractorPool = distractorPool.concat(terms.filter(o => o.id !== t.id && groupKey(o) !== groupKey(t) && !shareCategory(o, t)));
+      }
+      distractorPool = uniqueByGroup(distractorPool);
+      const distractors = shuffle(distractorPool).slice(0,3);
+      const options = shuffle([t, ...distractors]);
+      return { term: t, options, correctId: t.id };
+    });
+    qIndex = 0; score = 0; missed = [];
+  }
+
+  function startQuiz(){
+    buildQuiz();
+    quizSetup.classList.add('hidden');
+    quizResults.classList.add('hidden');
+    quizRunning.classList.remove('hidden');
+    renderQuestion();
+  }
+
+  function renderQuestion(){
+    answered = false;
+    const q = quizQuestions[qIndex];
+    const cats = catsOf(q.term).map(k => catMeta[k]);
+    const catLabel = cats.map(c => c.label).join(' + ');
+    quizCatLabel.style.setProperty('--cat-color', cats[0].color);
+    quizCatLabel.innerHTML = `<span class="dot"></span>${catLabel}${q.term.adv ? ` <span style="margin-left:.4rem;">${badgeHtml(q.term)}</span>` : ''}`;
+    quizQuestion.textContent = q.term.t;
+    quizProgressText.textContent = `Question ${qIndex+1} / ${quizQuestions.length}`;
+    quizScoreText.textContent = `Score: ${score}`;
+    progressFill.style.width = ((qIndex)/quizQuestions.length*100) + '%';
+    nextBtn.classList.remove('show');
+
+    quizOptions.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${opt.d}</span>`;
+      btn.addEventListener('click', () => selectOption(btn, opt.id === q.correctId, q));
+      quizOptions.appendChild(btn);
+    });
+  }
+
+  function selectOption(btn, isCorrect, q){
+    if(answered) return;
+    answered = true;
+    const buttons = Array.from(quizOptions.children);
+    buttons.forEach(b => b.disabled = true);
+    if(isCorrect){
+      btn.classList.add('correct');
+      score++;
+    } else {
+      btn.classList.add('wrong');
+      const correctBtn = buttons.find((b,i) => q.options[i].id === q.correctId);
+      if(correctBtn) correctBtn.classList.add('correct');
+      missed.push(q.term);
+    }
+    quizScoreText.textContent = `Score: ${score}`;
+    nextBtn.classList.add('show');
+    nextBtn.textContent = qIndex < quizQuestions.length - 1 ? 'Next →' : 'See results →';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    qIndex++;
+    if(qIndex >= quizQuestions.length){
+      finishQuiz();
+    } else {
+      renderQuestion();
+    }
+  });
+
+  function finishQuiz(){
+    progressFill.style.width = '100%';
+    quizRunning.classList.add('hidden');
+    quizResults.classList.remove('hidden');
+    document.getElementById('resultsScore').innerHTML = `<em>${score}</em>/${quizQuestions.length}`;
+    const pct = score / quizQuestions.length;
+    let line = 'Solid — a bit more review and it will stick.';
+    if(pct === 1) line = 'Perfect round — every definition landed.';
+    else if(pct >= 0.8) line = 'Strong showing.';
+    else if(pct < 0.5) line = 'Worth another pass through the Study tab.';
+    document.getElementById('resultsLine').textContent = line;
+    updateBest(score);
+
+    const missedList = document.getElementById('missedList');
+    missedList.innerHTML = '';
+    if(missed.length === 0){
+      const p = document.createElement('p');
+      p.style.color = 'var(--ink-soft)';
+      p.style.fontSize = '.88rem';
+      p.textContent = 'Nothing missed this round.';
+      missedList.appendChild(p);
+    } else {
+      missed.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'missed-item';
+        div.innerHTML = `<b>${t.t}</b><span>${t.d}</span>`;
+        missedList.appendChild(div);
+      });
+    }
+  }
+
+  startQuizBtn.addEventListener('click', startQuiz);
+  retryBtn.addEventListener('click', startQuiz);
+
+  // ---------------- MATCH ----------------
+  const matchFilterSummary = document.getElementById('matchFilterSummary');
+  const sizeChips = document.getElementById('sizeChips');
+  const dealBtn = document.getElementById('dealBtn');
+  const matchStatus = document.getElementById('matchStatus');
+  const matchGrid = document.getElementById('matchGrid');
+  const matchComplete = document.getElementById('matchComplete');
+  const matchCompleteMoves = document.getElementById('matchCompleteMoves');
+  const matchAgainBtn = document.getElementById('matchAgainBtn');
+
+  const SIZE_OPTIONS = [4,5,6,7,8,9];
+  let roundSize = 6;
+  let matchTiles = [];
+  let selectedTile = null;
+  let matchesFound = 0;
+  let moveCount = 0;
+  let boardLocked = false;
+
+  function renderSizeChips(){
+    sizeChips.innerHTML = '';
+    SIZE_OPTIONS.forEach(n => {
+      const b = document.createElement('button');
+      b.className = 'size-chip' + (n === roundSize ? ' active' : '');
+      b.textContent = n;
+      b.addEventListener('click', () => {
+        roundSize = n;
+        renderSizeChips();
+        dealRound();
+      });
+      sizeChips.appendChild(b);
+    });
+  }
+
+  // The pool for Match reuses whatever topic filter is currently active on the
+  // Study tab's category chips, so "one chosen filtered set" only has to be
+  // picked in one place.
+  function currentMatchPool(){
+    return uniqueByGroup(terms.filter(inActiveCats));
+  }
+
+  function updateMatchFilterSummary(){
+    if(activeCats.size === CATEGORIES.length){
+      matchFilterSummary.textContent = 'Playing from: All topics';
+    } else {
+      const labels = CATEGORIES.filter(c => activeCats.has(c.key)).map(c => c.label);
+      matchFilterSummary.textContent = 'Playing from: ' + (labels.length ? labels.join(', ') : 'no topics selected — pick one on the Study tab');
+    }
+  }
+
+  function dealRound(){
+    updateMatchFilterSummary();
+    const pool = currentMatchPool();
+    if(pool.length === 0){
+      matchTiles = [];
+      matchGrid.innerHTML = '';
+      matchStatus.textContent = 'No terms in this filter — choose a topic on the Study tab first.';
+      matchComplete.classList.add('hidden');
+      return;
+    }
+    const n = Math.min(roundSize, pool.length);
+    const chosen = shuffle(pool).slice(0, n);
+    matchTiles = [];
+    chosen.forEach(t => {
+      matchTiles.push({ pairId:t.id, type:'term', text:t.t, cat:catsOf(t), adv:t.adv, matched:false });
+      matchTiles.push({ pairId:t.id, type:'def', text:t.d, cat:catsOf(t), adv:t.adv, matched:false });
+    });
+    matchTiles = shuffle(matchTiles);
+    matchesFound = 0;
+    moveCount = 0;
+    selectedTile = null;
+    boardLocked = false;
+    matchComplete.classList.add('hidden');
+    renderMatchGrid();
+    updateMatchStatus();
+    if(n < roundSize){
+      matchStatus.textContent += ` (only ${n} available in this filter)`;
+    }
+  }
+
+  function updateMatchStatus(){
+    const total = matchTiles.length / 2;
+    matchStatus.textContent = `Matched ${matchesFound} / ${total} · ${moveCount} move${moveCount === 1 ? '' : 's'}`;
+  }
+
+  function renderMatchGrid(){
+    matchGrid.innerHTML = '';
+    matchTiles.forEach((tile, idx) => {
+      const cat = catMeta[tile.cat[0]];
+      const el = document.createElement('button');
+      el.className = 'match-tile ' + (tile.type === 'term' ? 'term-tile' : 'def-tile');
+      el.style.setProperty('--cat-color', cat.color);
+      const advBadge = tile.adv ? '<span class="adv-badge">Advanced</span>' : '';
+      el.innerHTML = `<span class="match-tile-text">${tile.text}</span>${advBadge}`;
+      el.addEventListener('click', () => onTileClick(idx));
+      matchGrid.appendChild(el);
+    });
+  }
+
+  function onTileClick(idx){
+    if(boardLocked) return;
+    const tile = matchTiles[idx];
+    if(tile.matched) return;
+    const el = matchGrid.children[idx];
+
+    if(selectedTile === null){
+      selectedTile = idx;
+      el.classList.add('selected');
+      return;
+    }
+    if(selectedTile === idx) return;
+
+    const firstIdx = selectedTile;
+    const firstTile = matchTiles[firstIdx];
+    const firstEl = matchGrid.children[firstIdx];
+    moveCount++;
+
+    if(firstTile.pairId === tile.pairId && firstTile.type !== tile.type){
+      firstTile.matched = true;
+      tile.matched = true;
+      firstEl.classList.remove('selected');
+      firstEl.classList.add('matched');
+      el.classList.add('matched');
+      matchesFound++;
+      selectedTile = null;
+      updateMatchStatus();
+      if(matchesFound === matchTiles.length / 2){
+        boardLocked = true;
+        matchCompleteMoves.textContent = moveCount;
+        matchComplete.classList.remove('hidden');
+      }
+    } else {
+      boardLocked = true;
+      el.classList.add('selected', 'wrong');
+      firstEl.classList.add('wrong');
+      updateMatchStatus();
+      setTimeout(() => {
+        firstEl.classList.remove('selected', 'wrong');
+        el.classList.remove('selected', 'wrong');
+        selectedTile = null;
+        boardLocked = false;
+      }, 650);
+    }
+  }
+
+  dealBtn.addEventListener('click', dealRound);
+  matchAgainBtn.addEventListener('click', dealRound);
+  renderSizeChips();
+
+})();
+</script>
