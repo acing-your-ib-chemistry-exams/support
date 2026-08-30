@@ -1,0 +1,1615 @@
+<title>November 2021 Paper 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --paper:#F0F4F2;
+    --paper-grid:#DCE6E1;
+    --panel:#FFFFFF;
+    --ink:#132022;
+    --ink-soft:#4B5E60;
+    --ink-faint:#7C8C8D;
+    --line:#D2DEDA;
+    --accent:#136B77;
+    --accent-strong:#0B4E58;
+    --accent-soft:#E0EFEE;
+    --amber:#B5731A;
+    --amber-soft:#F7E9D2;
+    --good:#2E7D4F;
+    --good-soft:#DEF0E3;
+    --bad:#B5432E;
+    --bad-soft:#F8E2DD;
+    --shadow: 0 1px 2px rgba(19,32,34,0.06), 0 8px 24px -12px rgba(19,32,34,0.18);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E1618;
+      --paper-grid:#182225;
+      --panel:#141F22;
+      --ink:#E7EEEC;
+      --ink-soft:#9DB0AE;
+      --ink-faint:#71898A;
+      --line:#233335;
+      --accent:#4FC3D1;
+      --accent-strong:#7BDCE7;
+      --accent-soft:#152B2E;
+      --amber:#E3A24E;
+      --amber-soft:#2C2114;
+      --good:#6FCB95;
+      --good-soft:#122B1C;
+      --bad:#E68A75;
+      --bad-soft:#301917;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0E1618;
+    --paper-grid:#182225;
+    --panel:#141F22;
+    --ink:#E7EEEC;
+    --ink-soft:#9DB0AE;
+    --ink-faint:#71898A;
+    --line:#233335;
+    --accent:#4FC3D1;
+    --accent-strong:#7BDCE7;
+    --accent-soft:#152B2E;
+    --amber:#E3A24E;
+    --amber-soft:#2C2114;
+    --good:#6FCB95;
+    --good-soft:#122B1C;
+    --bad:#E68A75;
+    --bad-soft:#301917;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -14px rgba(0,0,0,0.6);
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background:
+      linear-gradient(var(--paper-grid) 1px, transparent 1px) 0 0/100% 28px,
+      linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px) 0 0/28px 100%,
+      var(--paper);
+    background-blend-mode: normal;
+    color:var(--ink);
+    font-family:'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent-soft); color:var(--accent-strong); }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, serif; text-wrap:balance; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace; }
+  code, .formula{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  a{ color:var(--accent-strong); }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .wrap{ max-width:760px; margin:0 auto; padding:28px 20px 90px; }
+
+  /* ---------- Header ---------- */
+  .masthead{ margin-bottom:22px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--accent-strong); font-weight:600;
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--accent); display:inline-block; }
+  .masthead h1{ font-size:clamp(26px,4vw,34px); font-weight:600; margin-top:6px; color:var(--ink); }
+  .masthead p{ color:var(--ink-soft); margin:6px 0 0; font-size:15px; max-width:52ch; }
+
+  /* ---------- Burette progress ---------- */
+  .burette-row{
+    display:flex; align-items:center; gap:16px; margin-top:20px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:14px 16px; box-shadow:var(--shadow);
+  }
+  .burette{ position:relative; flex:0 0 auto; width:230px; height:34px; }
+  .burette-tube{
+    position:absolute; inset:0; border:1.5px solid var(--ink-faint); border-radius:4px;
+    background:
+      repeating-linear-gradient(90deg, var(--ink-faint) 0 1px, transparent 1px 19.16px);
+    background-color: transparent;
+    overflow:hidden;
+  }
+  .burette-fill{
+    position:absolute; top:0; left:0; bottom:0; width:0%;
+    background:linear-gradient(90deg, var(--accent-soft), var(--accent));
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .burette-tube::after{
+    content:''; position:absolute; inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 18.16px, var(--ink-faint) 18.16px 19.16px);
+    opacity:.55; pointer-events:none;
+  }
+  .burette-label{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-soft); white-space:nowrap; }
+  .burette-label b{ color:var(--ink); font-weight:600; }
+
+  .chip-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:500;
+    border:1px solid var(--line); background:var(--panel); color:var(--ink-soft);
+    padding:5px 9px; border-radius:6px; cursor:pointer; transition:.15s;
+  }
+  .chip:hover{ border-color:var(--accent); color:var(--accent-strong); }
+  .chip.is-current{ border-color:var(--accent); background:var(--accent-soft); color:var(--accent-strong); }
+  .chip.is-done{ background:var(--good-soft); color:var(--good); border-color:var(--good); }
+  .chip.is-done::before{ content:'\2713\0020'; }
+
+  /* ---------- Concept panel ---------- */
+  .concept{
+    background:var(--accent-soft); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:8px; padding:16px 18px; margin:22px 0 18px;
+  }
+  .concept summary{ cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .concept summary::-webkit-details-marker{ display:none; }
+  .concept-title{ font-weight:600; color:var(--accent-strong); font-size:15px; display:flex; align-items:center; gap:8px; }
+  .concept-title .tag{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; background:var(--accent); color:var(--panel); padding:2px 6px; border-radius:4px; }
+  .concept .chevron{ color:var(--accent-strong); transition:transform .2s; font-size:13px; }
+  .concept[open] .chevron{ transform:rotate(90deg); }
+  .concept-body{ margin-top:12px; font-size:14.5px; color:var(--ink); }
+  .concept-body p{ margin:0 0 10px; }
+  .concept-body p:last-child{ margin-bottom:0; }
+  .concept-body .worked{
+    background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:10px 12px; margin:10px 0; font-size:13.5px;
+  }
+  .concept-body table{ border-collapse:collapse; width:100%; font-size:13px; margin:8px 0; }
+  .concept-body th, .concept-body td{ border:1px solid var(--line); padding:5px 8px; text-align:left; }
+  .concept-body th{ background:var(--panel); font-weight:600; }
+
+  /* ---------- Question card ---------- */
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:24px 24px 22px; box-shadow:var(--shadow);
+  }
+  .qhead{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .qnum{ font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--amber); font-size:14px; letter-spacing:.03em; }
+  .qtitle{ font-size:19px; font-weight:600; color:var(--ink); }
+  .qprompt{ margin-top:10px; font-size:15px; color:var(--ink); }
+  .qprompt p{ margin:0 0 10px; }
+  .aside{
+    margin:14px 0; border:1px dashed var(--line); border-radius:8px; background:var(--paper);
+  }
+  .aside summary{ cursor:pointer; list-style:none; padding:10px 14px; font-size:13.5px; font-weight:600; color:var(--ink-soft); display:flex; align-items:center; gap:8px; }
+  .aside summary::-webkit-details-marker{ display:none; }
+  .aside summary::before{ content:'\25B8'; color:var(--accent); transition:transform .2s; display:inline-block; }
+  .aside[open] summary::before{ transform:rotate(90deg); }
+  .aside-body{ padding:0 16px 16px; font-size:13.5px; }
+  .orbital-row{ display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-top:6px; }
+  .orbital-cell{ text-align:center; }
+  .orbital-cell span{ display:block; margin-top:6px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft); }
+  .model-svg{ text-align:center; margin:10px 0; }
+  .model-svg svg{ max-width:100%; height:auto; }
+
+  .given{
+    margin:12px 0; border-collapse:collapse; width:100%; font-size:13.5px;
+  }
+  .given th, .given td{ border:1px solid var(--line); padding:6px 9px; text-align:left; }
+  .given th{ background:var(--paper); font-weight:600; color:var(--ink-soft); font-size:12px; text-transform:uppercase; letter-spacing:.03em; }
+  .given td.num{ font-family:'IBM Plex Mono',monospace; }
+
+  .worktable{ margin:14px 0; }
+  .worktable-title{ font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); font-weight:600; margin-bottom:6px; }
+  .worktable table{ border-collapse:collapse; width:100%; font-size:13.5px; }
+  .worktable th, .worktable td{ border:1px solid var(--line); padding:5px 7px; }
+  .worktable th{ background:var(--paper); font-weight:600; color:var(--ink-soft); font-size:12px; }
+  .worktable input.cell{
+    width:100%; border:none; background:transparent; font-family:'IBM Plex Mono',monospace; font-size:13.5px;
+    color:var(--ink); padding:2px 3px; border-radius:3px;
+  }
+  .worktable input.cell:focus{ background:var(--accent-soft); }
+  .worktable input.cell.ok{ background:var(--good-soft); }
+  .worktable input.cell.no{ background:var(--bad-soft); }
+  .worktable-actions{ display:flex; align-items:center; gap:10px; margin-top:8px; }
+  .worktable-note{ font-size:12.5px; color:var(--ink-faint); }
+
+  .parts{ margin-top:16px; display:flex; flex-direction:column; gap:14px; }
+  .part{ }
+  .part-label{ font-size:14px; color:var(--ink); margin-bottom:6px; font-weight:500; }
+  .part-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .answer-input{
+    font-family:'IBM Plex Mono',monospace; font-size:15px; padding:8px 11px;
+    border:1.5px solid var(--line); border-radius:7px; background:var(--paper); color:var(--ink);
+    min-width:160px; transition:border-color .15s;
+  }
+  .answer-input:focus{ border-color:var(--accent); background:var(--panel); }
+  .answer-input.correct{ border-color:var(--good); background:var(--good-soft); }
+  .answer-input.incorrect{ border-color:var(--bad); background:var(--bad-soft); }
+  textarea.answer-input{ width:100%; min-height:64px; resize:vertical; line-height:1.5; }
+  .unit{ color:var(--ink-faint); font-size:13.5px; }
+  .part-feedback{ font-size:13px; margin-top:5px; min-height:1.3em; }
+  .part-feedback.good{ color:var(--good); }
+  .part-feedback.bad{ color:var(--bad); }
+
+  .mc-options{ display:flex; flex-direction:column; gap:8px; margin-top:4px; }
+  .mc-opt{
+    display:flex; align-items:center; gap:10px; border:1.5px solid var(--line); border-radius:8px;
+    padding:9px 12px; cursor:pointer; background:var(--paper); font-size:14.5px; transition:.15s;
+  }
+  .mc-opt:hover{ border-color:var(--accent); }
+  .mc-opt input{ accent-color:var(--accent); }
+  .mc-opt.correct{ border-color:var(--good); background:var(--good-soft); }
+  .mc-opt.incorrect{ border-color:var(--bad); background:var(--bad-soft); }
+  .mc-opt.disabled{ pointer-events:none; opacity:.85; }
+
+  .btn{
+    font-size:14px; font-weight:600; border-radius:7px; padding:9px 16px; cursor:pointer;
+    border:1.5px solid transparent; transition:.15s; display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn-primary{ background:var(--accent); color:#fff; }
+  .btn-primary:hover{ background:var(--accent-strong); }
+  .btn-primary:disabled{ background:var(--ink-faint); cursor:not-allowed; opacity:.55; }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink-soft); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent-strong); }
+  .btn-amber{ background:var(--amber-soft); color:var(--amber); border-color:var(--amber-soft); }
+  .btn-amber:hover{ border-color:var(--amber); }
+  .btn-sm{ font-size:12.5px; padding:6px 11px; border-radius:6px; }
+
+  .action-row{ display:flex; align-items:center; gap:10px; margin-top:20px; flex-wrap:wrap; }
+  .hint-box{
+    margin-top:12px; background:var(--amber-soft); border:1px dashed var(--amber); border-radius:8px;
+    padding:10px 14px; font-size:13.5px; color:var(--ink);
+  }
+  .hint-box ol{ margin:0; padding-left:18px; }
+  .hint-box li{ margin-bottom:4px; }
+  .hint-box li:last-child{ margin-bottom:0; }
+
+  .banner{
+    margin-top:16px; border-radius:8px; padding:12px 15px; font-size:14.5px; display:none;
+    align-items:flex-start; gap:9px;
+  }
+  .banner.show{ display:flex; }
+  .banner.good{ background:var(--good-soft); color:var(--good); }
+  .banner.bad{ background:var(--bad-soft); color:var(--bad); }
+  .banner .icon{ font-size:16px; line-height:1.3; }
+
+  .explain{
+    margin-top:14px; background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:14px 16px; font-size:14px;
+  }
+  .explain-title{ font-weight:600; color:var(--ink); margin-bottom:6px; font-size:13.5px; text-transform:uppercase; letter-spacing:.04em; }
+  .explain table{ border-collapse:collapse; width:100%; font-size:13px; margin:8px 0; }
+  .explain th, .explain td{ border:1px solid var(--line); padding:5px 8px; }
+  .explain th{ background:var(--panel); font-weight:600; }
+
+  .footer-nav{ display:flex; justify-content:space-between; margin-top:26px; }
+
+  .complete-card{ text-align:center; padding:40px 24px; }
+  .complete-card .big{ font-size:44px; }
+  .score-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+  .score-tile{ background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:14px 8px; }
+  .score-tile b{ display:block; font-family:'IBM Plex Mono',monospace; font-size:24px; color:var(--accent-strong); }
+  .score-tile span{ font-size:12px; color:var(--ink-soft); }
+
+  @media (max-width:520px){
+    .burette{ width:150px; }
+    .score-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Calculator ---------- */
+  .calc-fab{
+    position:fixed; right:22px; bottom:22px; width:56px; height:56px; border-radius:50%;
+    background:var(--accent); color:#fff; border:none; font-size:24px; box-shadow:var(--shadow);
+    cursor:pointer; z-index:500; display:flex; align-items:center; justify-content:center; transition:.15s;
+  }
+  .calc-fab:hover{ background:var(--accent-strong); transform:scale(1.05); }
+  .calc-panel{
+    position:fixed; right:22px; bottom:90px; width:300px; max-width:92vw; max-height:80vh;
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    box-shadow:var(--shadow); z-index:500; overflow:hidden; display:none; flex-direction:column;
+  }
+  .calc-panel.open{ display:flex; }
+  .calc-header{
+    display:flex; align-items:center; justify-content:space-between; padding:8px 12px;
+    background:var(--paper); border-bottom:1px solid var(--line); cursor:grab; touch-action:none;
+    user-select:none; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
+    color:var(--ink-soft); letter-spacing:.06em; text-transform:uppercase; flex-shrink:0;
+  }
+  .calc-header .calc-title{ display:flex; align-items:center; }
+  .calc-header .mem-badge{
+    margin-left:7px; font-size:9.5px; padding:1px 5px; border-radius:4px; letter-spacing:.03em;
+    background:var(--accent-soft); color:var(--accent-strong); visibility:hidden;
+  }
+  .calc-header button{ background:none; border:none; color:var(--ink-faint); font-size:17px; cursor:pointer; padding:2px 6px; line-height:1; }
+  .calc-header button:hover{ color:var(--bad); }
+  .calc-display{ padding:14px 14px 8px; text-align:right; flex-shrink:0; }
+  .calc-display .expr{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint); min-height:14px; overflow-wrap:anywhere; }
+  .calc-display .val{ font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--ink); font-weight:600; overflow-wrap:anywhere; margin-top:2px; }
+  .calc-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:10px 12px 14px; overflow-y:auto; min-height:0; }
+  .calc-btn{
+    border:none; border-radius:8px; padding:11px 0; font-family:'IBM Plex Mono',monospace; font-size:14px;
+    font-weight:600; cursor:pointer; background:var(--paper); color:var(--ink); transition:.1s;
+  }
+  .calc-btn:hover{ filter:brightness(1.1); }
+  .calc-btn:active{ transform:scale(0.94); }
+  .calc-btn.fn{ background:var(--accent-soft); color:var(--accent-strong); font-size:12.5px; }
+  .calc-btn.op{ background:var(--amber-soft); color:var(--amber); }
+  .calc-btn.eq{ background:var(--accent); color:#fff; }
+  .calc-btn.ctrl{ background:var(--bad-soft); color:var(--bad); }
+  .calc-btn.mem{ background:var(--paper); color:var(--accent-strong); border:1px solid var(--line); font-size:12.5px; }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">IB Chemistry HL &middot; Paper 2</div>
+    <h1>November 2021 Paper 2</h1>
+    <p>A worked path through the selected questions from the November 2021 HL Paper 2 exam &mdash; read the idea, try the numbers, get a nudge if you're stuck.</p>
+
+    <div class="burette-row">
+      <div class="burette">
+        <div class="burette-tube"><div class="burette-fill" id="buretteFill"></div></div>
+      </div>
+      <div class="burette-label"><b id="progressCount">0</b> of <span id="progressTotal">12</span> questions solved</div>
+    </div>
+    <div class="chip-row" id="chipRow"></div>
+  </header>
+
+  <main id="stage"></main>
+</div>
+
+<button type="button" class="calc-fab" id="calcFab" title="Open calculator" aria-label="Open calculator">&#x1F9EE;</button>
+<div class="calc-panel" id="calcPanel">
+  <div class="calc-header" id="calcHeader"><span class="calc-title">Calculator<span class="mem-badge" id="calcMemInd">M</span></span><button type="button" id="calcClose" aria-label="Close calculator">&times;</button></div>
+  <div class="calc-display">
+    <div class="expr" id="calcExpr">&nbsp;</div>
+    <div class="val" id="calcVal">0</div>
+  </div>
+  <div class="calc-grid" id="calcGrid"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ chemistry helpers ============ */
+  const AR = { H:1.008, C:12.01, N:14.01, O:16.00, Na:22.99, S:32.07, P:30.97, Co:58.93, Cd:112.41, Se:78.97, Te:127.60, Li:6.94 };
+
+  function parseFormula(str){
+    if (!str) return null;
+    let s = String(str).trim().replace(/\s+/g,'');
+    if (!s) return null;
+    s = s.replace(/[\u00B7\u2022\u2219]/g,'.').replace(/\*/g,'.');
+    if (!/^[A-Za-z0-9.]+$/.test(s)) return null;
+    const parts = s.split('.').filter(Boolean);
+    if (!parts.length) return null;
+    const counts = {};
+    for (const part of parts){
+      let mult = 1, rest = part;
+      const lead = part.match(/^(\d+)([A-Za-z].*)$/);
+      if (lead){ mult = parseInt(lead[1],10); rest = lead[2]; }
+      const re = /([A-Z][a-z]?)(\d*)/g;
+      let m, consumed = 0;
+      while ((m = re.exec(rest)) !== null){
+        if (m[0] === ''){ re.lastIndex++; continue; }
+        consumed += m[0].length;
+        const el = m[1];
+        const n = m[2] ? parseInt(m[2],10) : 1;
+        counts[el] = (counts[el]||0) + n*mult;
+      }
+      if (consumed !== rest.length) return null;
+    }
+    return counts;
+  }
+  function gcd2(a,b){ a=Math.round(a); b=Math.round(b); return b===0?a:gcd2(b,a%b); }
+  function reduceCounts(counts){
+    const vals = Object.values(counts).filter(v=>v>0);
+    if (!vals.length) return counts;
+    let g = vals[0];
+    for (const v of vals) g = gcd2(g,v);
+    const out = {};
+    for (const k in counts) out[k] = counts[k]/g;
+    return out;
+  }
+  function countsEqual(a,b){
+    const ka = Object.keys(a).filter(k=>a[k]!==0);
+    const kb = Object.keys(b).filter(k=>b[k]!==0);
+    if (ka.length !== kb.length) return false;
+    return ka.every(k => b[k] === a[k]);
+  }
+  function checkEmpirical(userStr, correctStr){
+    const u = parseFormula(userStr), c = parseFormula(correctStr);
+    if (!u || !c) return false;
+    return countsEqual(reduceCounts(u), reduceCounts(c));
+  }
+  function checkMolecular(userStr, correctStr){
+    const u = parseFormula(userStr), c = parseFormula(correctStr);
+    if (!u || !c) return false;
+    return countsEqual(u, c);
+  }
+  function checkNumeric(userStr, correct, tolPct, tolAbs){
+    tolPct = tolPct===undefined?0.05:tolPct; tolAbs = tolAbs===undefined?0:tolAbs;
+    const v = parseFloat(userStr);
+    if (isNaN(v)) return false;
+    const tol = Math.max(tolAbs, Math.abs(correct)*tolPct);
+    return Math.abs(v-correct) <= tol;
+  }
+  function fmtFormula(str){
+    return str.replace(/([A-Za-z])(\d+)/g,'$1<sub>$2</sub>').replace(/\./g,'&middot;');
+  }
+  function checkKeywords(userStr, groups){
+    const v = (userStr||'').toLowerCase();
+    return groups.every(group => group.some(kw => v.includes(kw.toLowerCase())));
+  }
+  function checkEquation(userStr, required, forbidden){
+    const norm = (userStr||'').replace(/[^A-Za-z0-9]/g,'').toLowerCase();
+    const req = required.map(t=>t.replace(/[^A-Za-z0-9]/g,'').toLowerCase());
+    const forb = (forbidden||[]).map(t=>t.replace(/[^A-Za-z0-9]/g,'').toLowerCase());
+    const hasAll = req.every(tok => norm.includes(tok));
+    const hasNone = !forb.some(tok => norm.includes(tok));
+    return hasAll && hasNone;
+  }
+  function extractBracketTokens(str){
+    const re = /\[([^\]]+)\]/g;
+    let m; const out = [];
+    while ((m = re.exec(str)) !== null) out.push(m[1].replace(/\s+/g,'').toLowerCase());
+    return out;
+  }
+  function checkKcExpression(userStr, numerator, denominator){
+    const s = (userStr||'').trim();
+    const idx = s.indexOf('/');
+    if (idx < 0) return false;
+    const numTokens = extractBracketTokens(s.slice(0, idx)).sort();
+    const denTokens = extractBracketTokens(s.slice(idx+1)).sort();
+    const wantNum = numerator.map(x=>x.toLowerCase()).sort();
+    const wantDen = denominator.map(x=>x.toLowerCase()).sort();
+    return JSON.stringify(numTokens) === JSON.stringify(wantNum) && JSON.stringify(denTokens) === JSON.stringify(wantDen);
+  }
+
+  /* ============ concept library ============ */
+  const CONCEPTS = {
+    'combustion-and-molecular': {
+      tag:'Method', title:'Combustion analysis, then scaling up to a molecular formula',
+      body: `<p>Burning a compound containing only C, H and O in excess oxygen converts every carbon atom into CO<sub>2</sub> and every hydrogen atom into H<sub>2</sub>O:</p>
+      <div class="worked">moles C = moles CO<sub>2</sub> &nbsp;&middot;&nbsp; moles H = 2 &times; moles H<sub>2</sub>O</div>
+      <p>Oxygen can't be measured directly from the products, so find the masses of C and H first, then subtract both from the original sample mass &mdash; whatever's left over is the mass of oxygen. Convert all three masses to moles, divide by the smallest, and scale up to whole numbers to get the empirical formula.</p>
+      <p>To go from empirical to molecular formula, compare the empirical formula's own mass to the compound's real molar mass:</p>
+      <div class="worked">n = (molar mass) &divide; (empirical formula mass), then multiply every subscript in the empirical formula by n.</div>`
+    },
+    'periodicity-ie': {
+      tag:'Idea', title:'Why ionization energy rises across a period',
+      body: `<p>Across period 3 (Na to Ar), each successive element has one more proton in the nucleus (increasing nuclear charge), but electrons are being added to the <i>same</i> outer shell &mdash; so the amount of shielding from inner-shell electrons barely changes.</p>
+      <p>The result is a steadily increasing <b>effective nuclear charge</b> pulling on the outer electrons: they're held more tightly and the atom shrinks slightly, so more energy is needed to remove an electron &mdash; first ionization energy increases left to right.</p>`
+    },
+    'atomic-emission': {
+      tag:'Method', title:'Photon energy from a spectral line',
+      body: `<p>When an electron drops from a higher energy level to a lower one, it emits a photon whose energy exactly equals the gap between the two levels. That energy is related to the light's frequency by:</p>
+      <div class="worked">E = hf &nbsp;(h = Planck constant = 6.63&times;10<sup>&minus;34</sup> J s, data booklet section 1; f in Hz)</div>`
+    },
+    'equilibrium-thermo': {
+      tag:'Method', title:'Enthalpy, entropy, Gibbs energy and K, all from one table',
+      body: `<p>These four quantities form a connected chain for a reaction at a given temperature:</p>
+      <div class="worked">
+      &Delta;H&deg; = &Sigma;&Delta;H<sub>f</sub>&deg;(products) &minus; &Sigma;&Delta;H<sub>f</sub>&deg;(reactants) &nbsp;(elements in their standard state have &Delta;H<sub>f</sub>&deg; = 0)<br>
+      &Delta;S&deg; = &Sigma;S&deg;(products) &minus; &Sigma;S&deg;(reactants)<br>
+      &Delta;G&deg; = &Delta;H&deg; &minus; T&Delta;S&deg; &nbsp;(T in kelvin &mdash; watch your units: &Delta;H is usually kJ, &Delta;S is J)<br>
+      &Delta;G&deg; = &minus;RT ln K &nbsp;(R = 8.31 J K<sup>&minus;1</sup> mol<sup>&minus;1</sup>, data booklet section 1)
+      </div>
+      <p>A very negative &Delta;G&deg; corresponds to an enormous K. For the equilibrium constant expression, gaseous/aqueous species go on top for products and on the bottom for reactants, each raised to its coefficient; pure solids and liquids are left out entirely.</p>`
+    },
+    'maxwell-boltzmann': {
+      tag:'Idea', title:'How temperature reshapes the energy distribution',
+      body: `<p>The Maxwell&ndash;Boltzmann curve shows how kinetic energy is spread across all the particles in a sample. Every curve starts at the origin, tails off at high energy, and the area underneath always represents the same total number of particles.</p>
+      <p>Lowering the temperature squeezes that spread: particles cluster into a narrower range of (mostly lower) energies, so the peak gets taller and shifts left. Raising the temperature does the opposite &mdash; the curve flattens and stretches out to the right.</p>`
+    },
+    'acid-base-amphiprotic': {
+      tag:'Idea', title:'Amphiprotic species, and Br&oslash;nsted&ndash;Lowry vs Lewis',
+      body: `<p>A species is <b>amphiprotic</b> if it can either donate <i>or</i> accept a proton (H<sup>+</sup>) depending what it reacts with. H<sub>2</sub>PO<sub>4</sub><sup>&minus;</sup> sits in the middle of phosphoric acid's three-proton ladder, so it can lose a proton (acting as an acid) or gain one back (acting as a base).</p>
+      <p>A <b>Br&oslash;nsted&ndash;Lowry base</b> is defined by what it does with a proton (accepts one). A <b>Lewis base</b> is defined more generally by its electron pair &mdash; any species with a lone pair it can donate to form a new bond counts, whether or not a proton is directly involved.</p>`
+    },
+    'uncertainty': {
+      tag:'Method', title:'Combining uncertainties in a calculated quantity',
+      body: `<p>When a value is calculated by multiplying or dividing measured quantities (like concentration = moles &divide; volume), you don't add the absolute uncertainties &mdash; you add the <b>percentage (relative) uncertainties</b> instead:</p>
+      <div class="worked">% uncertainty = (absolute uncertainty &divide; measured value) &times; 100%</div>
+      <p>Add the % uncertainty of every measured quantity that feeds into the final calculated value.</p>`
+    },
+    'titration-redox': {
+      tag:'Method', title:"Following a multi-step redox titration",
+      body: `<p>In a method like Winkler's, the substance you actually titrate (here, I<sub>2</sub> with S<sub>2</sub>O<sub>3</sub><sup>2&minus;</sup>) is several reactions removed from the thing you're really measuring (dissolved O<sub>2</sub>). Follow the mole ratios through each equation in turn, one step at a time, working back from the titration to the original species.</p>`
+    },
+    'enthalpy-combustion': {
+      tag:'Method', title:'Molar enthalpy of combustion from a calorimetry experiment',
+      body: `<p>Heat released warms the water:</p>
+      <div class="worked">q = mc&Delta;T &nbsp;(c for water = 4.18 J g<sup>&minus;1</sup> K<sup>&minus;1</sup>, data booklet section 2)</div>
+      <p>Divide that heat by the moles of fuel actually burned to get the molar enthalpy of combustion &mdash; and remember combustion is exothermic, so the answer carries a negative sign.</p>`
+    },
+    'electrochemistry-cells': {
+      tag:'Idea', title:'Measuring a standard electrode potential against the SHE',
+      body: `<p>Every standard electrode potential is measured relative to the standard hydrogen electrode (SHE), defined as exactly 0.00 V. A complete standard cell needs: an inert platinum electrode in 1 mol dm<sup>&minus;3</sup> H<sup>+</sup>(aq) with H<sub>2</sub> gas bubbled in at 100 kPa on one side; the metal being tested in 1 mol dm<sup>&minus;3</sup> of its own ions on the other; a salt bridge connecting the two solutions (completing the circuit ionically, without the solutions mixing); and a wire from each electrode to a voltmeter (completing the circuit electrically). All of this at 298 K.</p>`
+    },
+    'atomic-model': {
+      tag:'Idea', title:'What the gold foil experiment revealed',
+      body: `<p>Rutherford's team fired alpha particles (positively charged) at gold foil and watched where they went. The pattern of results directly tells you about the structure inside each gold atom &mdash; what happens to <i>most</i> particles reveals one thing, and what happens to the rare few that scatter widely reveals another.</p>`
+    },
+    'orbitals-electron-config': {
+      tag:'Idea', title:'Orbital shapes, and why copper breaks the pattern',
+      body: `<p>s orbitals are spherical (2s is just a bigger sphere than 1s, with a spherical node in between); p orbitals are dumbbell-shaped, with two lobes pointing in opposite directions along one axis.</p>
+      <p>Filling orbitals normally follows the aufbau order (4s before 3d), but a few transition metals are exceptions: a fully-filled d subshell is unusually stable, so copper promotes one 4s electron into 3d to reach 3d<sup>10</sup>4s<sup>1</sup> rather than the 3d<sup>9</sup>4s<sup>2</sup> you'd otherwise predict.</p>`
+    },
+    'complex-ion-colour': {
+      tag:'Idea', title:'Why transition metal complexes change colour',
+      body: `<p>In a complex ion, the surrounding ligands split the d orbitals into two slightly different energy levels &mdash; the size of that gap depends on which ligand it is. Electrons can absorb visible light and jump across that gap (a d&ndash;d transition); the colour you see is the light that <i>isn't</i> absorbed.</p>
+      <p>Swap one ligand for another (here, H<sub>2</sub>O for Cl<sup>&minus;</sup>) and the splitting energy changes, so a different wavelength of light is absorbed &mdash; the complex changes colour.</p>`
+    }
+  };
+
+  /* ============ questions ============ */
+  const Q = [];
+
+  Q.push({
+    num:'1', chip:'1', id:'q1',
+    title:'Combustion of an unknown ester',
+    concept:'combustion-and-molecular',
+    prompt:`<p>A 4.406&nbsp;g sample of a compound containing only C, H and O was burnt in excess oxygen. 8.802&nbsp;g of CO<sub>2</sub> and 3.604&nbsp;g of H<sub>2</sub>O were produced.</p>`,
+    parts:[
+      {id:'a', label:'(a) Empirical formula', type:'formula-empirical', correct:'C2H4O'},
+      {id:'b', label:'(b) Molecular formula, given a molar mass of 88.12 g mol&minus;1', type:'formula-molecular', correct:'C4H8O2'}
+    ],
+    hints:[
+      'Moles of CO2 = moles of C, and moles of H2O &times; 2 = moles of H. Convert the given masses of CO2 and H2O into moles first.',
+      'Add up the masses of C and H you just found, then subtract that total from 4.406 g &mdash; the remainder is the mass of oxygen in the original sample.',
+      'Turn all three masses into moles and divide by the smallest to get the empirical formula, then compare its mass to 88.12 to find the scaling factor n for part (b).'
+    ],
+    explanation:`<p>Moles CO<sub>2</sub> = 8.802/44.01 = 0.2000 mol = moles C (mass 2.402 g). Moles H<sub>2</sub>O = 3.604/18.02 = 0.2000 mol &rarr; moles H = 0.4000 mol (mass 0.4032 g). Mass O = 4.406 &minus; 2.402 &minus; 0.4032 = 1.601 g &rarr; moles O = 0.1000 mol. Ratio C:H:O = 2:4:1 &rarr; empirical formula <b>C<sub>2</sub>H<sub>4</sub>O</b> (mass 44.05). n = 88.12/44.05 = 2.0, so molecular formula = <b>C<sub>4</sub>H<sub>8</sub>O<sub>2</sub></b>.</p>`
+  });
+
+  Q.push({
+    num:'2 (a)', chip:'2a', id:'q2a',
+    title:'Ionization energy across period 3',
+    concept:'periodicity-ie',
+    prompt:`<p>Electron transitions are related to trends in the periodic table. Explain the general increase in trend in the first ionization energies of the period 3 elements, Na to Ar.</p>`,
+    parts:[
+      {id:'explain', label:'Explanation', type:'keywords', multiline:true,
+        groups:[["nuclear charge","protons","proton number"], ["shielding","inner electrons","same shell","same number of shells","same energy level","same shielding"], ["attract","harder to remove","smaller radius","more energy","effective nuclear charge","pulled closer","held more tightly","atomic radius decreases"]],
+        correct:'Nuclear charge (protons) increases across the period while shielding from inner electrons stays roughly constant, so effective nuclear charge increases and outer electrons are held more tightly (atomic radius decreases) \u2014 more energy is needed to remove one.'}
+    ],
+    hints:[
+      'Two things change (or don\'t) as you move from Na to Ar: the number of protons, and the number of shells being shielded by inner electrons. Start there.',
+      'If shielding barely changes but nuclear charge keeps increasing, what happens to the net (effective) pull on the outer electrons?',
+      'Connect that stronger pull to two observable consequences: the atom gets smaller, and it takes more energy to remove an outer electron.'
+    ],
+    explanation:`<p>Across period 3, nuclear charge (number of protons) increases steadily, but every atom is adding electrons to the <i>same</i> outer shell, so shielding from inner-shell electrons stays roughly constant. The effective nuclear charge felt by the outer electrons therefore increases, pulling them in more tightly (atomic radius decreases) &mdash; so progressively more energy is required to remove an electron, and first ionization energy rises left to right.</p>`
+  });
+
+  Q.push({
+    num:'2 (b)', chip:'2b', id:'q2b',
+    title:'Energy of a sodium emission line',
+    concept:'atomic-emission',
+    prompt:`<p>Sodium emits yellow light with a frequency of 5.09&times;10<sup>14</sup>&nbsp;Hz when electrons transition from 3p to 3s orbitals. Calculate the energy difference, in J, between these two orbitals.</p>`,
+    parts:[
+      {id:'e', label:'Energy difference', type:'numeric', correct:3.375e-19, tolPct:0.05, unit:'J'}
+    ],
+    hints:[
+      'The energy of the emitted photon equals the energy gap between the two orbitals: E = hf.',
+      'h (the Planck constant) is 6.63&times;10<sup>&minus;34</sup> J s &mdash; data booklet section 1.',
+      'Multiply 6.63&times;10<sup>&minus;34</sup> by 5.09&times;10<sup>14</sup> and keep track of the powers of ten separately from the digits.'
+    ],
+    explanation:`<p>E = hf = (6.63&times;10<sup>&minus;34</sup>)(5.09&times;10<sup>14</sup>) = <b>3.37&times;10<sup>&minus;19</sup> J</b>.</p>`
+  });
+
+  Q.push({
+    num:'3 (c)', chip:'3c', id:'q3c',
+    title:'The PCl3 / PCl5 equilibrium',
+    concept:'equilibrium-thermo',
+    prompt:`<p>An equilibrium exists between PCl<sub>3</sub> and PCl<sub>5</sub>:</p>
+    <p class="mono" style="text-align:center; font-size:15px; margin:10px 0;">PCl<sub>3</sub>(g) + Cl<sub>2</sub>(g) &#8652; PCl<sub>5</sub>(g)</p>
+    <table class="given">
+      <tr><th>Substance</th><th>&Delta;H<sub>f</sub>&deg; / kJ&nbsp;mol<sup>&minus;1</sup></th><th>S&deg; / J&nbsp;K<sup>&minus;1</sup>&nbsp;mol<sup>&minus;1</sup></th></tr>
+      <tr><td>PCl<sub>3</sub>(g)</td><td class="num">&minus;306.4</td><td class="num">311.7</td></tr>
+      <tr><td>PCl<sub>5</sub>(g)</td><td class="num">&minus;398.9</td><td class="num">364.5</td></tr>
+      <tr><td>Cl<sub>2</sub>(g)</td><td class="num">0 (element)</td><td class="num">223.0</td></tr>
+    </table>`,
+    parts:[
+      {id:'i', label:'(i) Standard enthalpy change, &Delta;H&deg;, in kJ mol&minus;1', type:'numeric', correct:-92.5, tolPct:0.03},
+      {id:'ii', label:'(ii) Entropy change, &Delta;S, in J K&minus;1 mol&minus;1', type:'numeric', correct:-170.2, tolPct:0.03},
+      {id:'iii', label:'(iii) Gibbs free energy change, &Delta;G, in kJ mol&minus;1, at 25&deg;C', type:'numeric', correct:-41.8, tolPct:0.06},
+      {id:'iv', label:'(iv) Equilibrium constant, K, at 25&deg;C', type:'numeric', correct:2.1e7, tolPct:0.4},
+      {id:'v', label:'(v) Equilibrium constant expression, Kc', type:'kc', numerator:['PCl5'], denominator:['PCl3','Cl2'], correct:'[PCl5]/([PCl3][Cl2])'},
+      {id:'vi', label:'(vi) Effect of increasing temperature on the position of equilibrium, with a reason', type:'keywords', multiline:true,
+        groups:[["exothermic"],["left","reactants","decreas","reverse","favour the endothermic","favors the endothermic","backward","less pcl5"]],
+        correct:'The forward reaction is exothermic, so increasing temperature shifts the equilibrium position left (towards reactants), decreasing the yield of PCl5, because the system favours the endothermic (reverse) direction.'}
+    ],
+    hints:[
+      'For (i): &Delta;H&deg; = &Delta;H<sub>f</sub>&deg;(PCl5) &minus; [&Delta;H<sub>f</sub>&deg;(PCl3) + &Delta;H<sub>f</sub>&deg;(Cl2)] &mdash; remember Cl2 is an element in its standard state, so its &Delta;H<sub>f</sub>&deg; is zero.',
+      'For (ii): &Delta;S = S&deg;(PCl5) &minus; [S&deg;(PCl3) + S&deg;(Cl2)]. For (iii): &Delta;G = &Delta;H &minus; T&Delta;S at T = 298 K &mdash; convert &Delta;S into kJ (&divide;1000) so the units match &Delta;H.',
+      'For (iv): &Delta;G = &minus;RT ln K, so K = e<sup>&minus;&Delta;G/RT</sup> (R = 8.31 J K&minus;1 mol&minus;1, &Delta;G in J). For (v): products (aq/g species) over reactants, each to the power of its coefficient. For (vi): work out the sign of &Delta;H first, then apply Le Ch&acirc;telier\'s principle to an increase in temperature.'
+    ],
+    explanation:`<p>(i) &Delta;H&deg; = &minus;398.9 &minus; (&minus;306.4) = <b>&minus;92.5 kJ mol<sup>&minus;1</sup></b>. (ii) &Delta;S = 364.5 &minus; (311.7+223.0) = <b>&minus;170.2 J K<sup>&minus;1</sup> mol<sup>&minus;1</sup></b>. (iii) &Delta;G = &minus;92.5 &minus; 298&times;(&minus;0.1702) = <b>&minus;41.8 kJ mol<sup>&minus;1</sup></b>. (iv) ln K = 41800/(8.31&times;298) = 16.9 &rarr; <b>K &asymp; 2&times;10<sup>7</sup></b>. (v) <b>K<sub>c</sub> = [PCl<sub>5</sub>]/([PCl<sub>3</sub>][Cl<sub>2</sub>])</b>. (vi) The forward reaction is exothermic (&Delta;H&deg; is negative), so by Le Ch&acirc;telier's principle, increasing temperature shifts the equilibrium <b>left</b>, favouring the endothermic reverse reaction and reducing the yield of PCl<sub>5</sub>.</p>`
+  });
+
+  Q.push({
+    num:'4 (b)', chip:'4b', id:'q4b',
+    title:'Maxwell&ndash;Boltzmann curves at two temperatures',
+    concept:'maxwell-boltzmann',
+    reflect:true,
+    prompt:`<p>1-chloropentane reacts with aqueous sodium hydroxide. The reaction was repeated at a lower temperature. Sketch labelled Maxwell&ndash;Boltzmann energy distribution curves at the original temperature (T<sub>1</sub>) and the new, lower temperature (T<sub>2</sub>) on the same axes (fraction of particles vs kinetic energy).</p>`,
+    hints:[
+      'Both curves must start at the origin (essentially no particles have zero kinetic energy) and approach, but never quite touch, the x-axis at high energy.',
+      'The lower-temperature curve (T2) should have a higher, narrower peak positioned further left &mdash; more particles clustered in a narrower, lower range of energies.',
+      'The higher-temperature curve (T1) should be broader and flatter, peaking further right with a longer tail &mdash; and the total area under each curve should look about the same (same number of particles overall).'
+    ],
+    explanation:`<div class="model-svg"><svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Maxwell-Boltzmann energy distribution curves at two temperatures">
+      <line x1="40" y1="20" x2="40" y2="220" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+      <line x1="40" y1="220" x2="400" y2="220" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+      <text x="10" y="120" transform="rotate(-90 10,120)" font-size="12" fill="currentColor" opacity="0.75">Fraction of particles</text>
+      <text x="180" y="245" font-size="12" fill="currentColor" opacity="0.75">Kinetic energy</text>
+      <path d="M40,218 C75,218 85,45 120,45 C155,45 175,140 225,178 C285,205 345,216 395,219" fill="none" stroke="#4FC3D1" stroke-width="2.5"/>
+      <text x="118" y="38" font-size="13" fill="#4FC3D1" font-weight="600">T2 (lower)</text>
+      <path d="M40,218 C110,218 130,120 175,102 C225,84 270,140 330,182 C355,198 375,210 395,215" fill="none" stroke="#E3A24E" stroke-width="2.5"/>
+      <text x="230" y="78" font-size="13" fill="#E3A24E" font-weight="600">T1 (original)</text>
+    </svg></div>
+    <p>Both curves rise from the origin and fall away at high energy without ever reaching zero. The lower-temperature curve (T2) is narrower and taller, peaking at a lower kinetic energy &mdash; fewer particles have enough energy to react, consistent with a slower rate. The original curve (T1) is broader and lower, with more of its area extending to higher energies.</p>`
+  });
+
+  Q.push({
+    num:'5 (b)', chip:'5b', id:'q5b',
+    title:'The amphiprotic nature of H2PO4&minus;',
+    concept:'acid-base-amphiprotic',
+    prompt:`<p>Phosphoric acid, H<sub>3</sub>PO<sub>4</sub>, can form three different salts depending on the extent of neutralisation by sodium hydroxide. Formulate <b>two</b> equations to show the amphiprotic nature of H<sub>2</sub>PO<sub>4</sub><sup>&minus;</sup>.</p>`,
+    parts:[
+      {id:'acid', label:'Equation showing H2PO4&minus; acting as a Br&oslash;nsted&ndash;Lowry ACID (donates a proton)', type:'equation', required:['H2PO4','HPO4'], forbidden:['H3PO4'], correct:'H2PO4- (aq) + H2O(l) \u21CC HPO4 2-(aq) + H3O+(aq)'},
+      {id:'base', label:'Equation showing H2PO4&minus; acting as a Br&oslash;nsted&ndash;Lowry BASE (accepts a proton)', type:'equation', required:['H2PO4','H3PO4'], correct:'H2PO4- (aq) + H2O(l) \u21CC H3PO4(aq) + OH-(aq)'}
+    ],
+    hints:[
+      'Acting as an acid, H2PO4&minus; donates a proton &mdash; what species does it become once it has lost one H+?',
+      'Acting as a base, H2PO4&minus; accepts a proton &mdash; what species does it become once it has gained one H+?',
+      'You can write either equation with water as the other reactant/product (forming H3O+ or OH&minus;), or more simply just showing H+ being transferred &mdash; both are accepted here.'
+    ],
+    explanation:`<p>As an acid: H<sub>2</sub>PO<sub>4</sub><sup>&minus;</sup>(aq) + H<sub>2</sub>O(l) &#8652; HPO<sub>4</sub><sup>2&minus;</sup>(aq) + H<sub>3</sub>O<sup>+</sup>(aq). As a base: H<sub>2</sub>PO<sub>4</sub><sup>&minus;</sup>(aq) + H<sub>2</sub>O(l) &#8652; H<sub>3</sub>PO<sub>4</sub>(aq) + OH<sup>&minus;</sup>(aq). (Simpler versions using H<sup>+</sup> directly instead of H<sub>2</sub>O/H<sub>3</sub>O<sup>+</sup>/OH<sup>&minus;</sup> are equally valid.)</p>`
+  });
+
+  Q.push({
+    num:'5 (c)', chip:'5c', id:'q5c',
+    title:'Concentration of phosphoric acid',
+    concept:'acid-base-amphiprotic',
+    prompt:`<p>Calculate the concentration of H<sub>3</sub>PO<sub>4</sub> if 25.00&nbsp;cm<sup>3</sup> is completely neutralised by the addition of 28.40&nbsp;cm<sup>3</sup> of 0.5000&nbsp;mol&nbsp;dm<sup>&minus;3</sup> NaOH.</p>`,
+    parts:[
+      {id:'conc', label:'Concentration of H3PO4', type:'numeric', correct:0.1893, tolPct:0.03, unit:'mol dm&minus;3'}
+    ],
+    hints:[
+      '"Completely neutralised" means every acidic hydrogen is removed &mdash; H3PO4 has three, so the reacting ratio with NaOH is 1:3, not 1:1.',
+      'Moles NaOH = concentration &times; volume (in dm3) = 0.5000 &times; 0.02840.',
+      'Divide moles of NaOH by 3 to get moles of H3PO4, then divide by the acid\'s own volume (0.02500 dm3) to get its concentration.'
+    ],
+    explanation:`<p>Moles NaOH = 0.5000 &times; 0.02840 = 0.01420 mol. Complete neutralisation of H<sub>3</sub>PO<sub>4</sub> needs 3 mol NaOH per mol acid, so moles H<sub>3</sub>PO<sub>4</sub> = 0.01420/3 = 4.733&times;10<sup>&minus;3</sup> mol. Concentration = 4.733&times;10<sup>&minus;3</sup>/0.02500 = <b>0.1893 mol dm<sup>&minus;3</sup></b>.</p>`
+  });
+
+  Q.push({
+    num:'5 (d)', chip:'5d', id:'q5d',
+    title:'Why NaOH is both a Br&oslash;nsted&ndash;Lowry and a Lewis base',
+    concept:'acid-base-amphiprotic',
+    prompt:`<p>Outline the reasons that sodium hydroxide is considered a Br&oslash;nsted&ndash;Lowry <b>and</b> Lewis base.</p>`,
+    parts:[
+      {id:'bl', label:'Br&oslash;nsted&ndash;Lowry base:', type:'keywords', multiline:true, groups:[["proton acceptor","accepts a proton","accept protons","accepts h+","accepts hydrogen ion","accepts a hydrogen"]], correct:'The OH- ion is a proton acceptor \u2014 it reacts with (accepts a proton from) an acid to form water.'},
+      {id:'lewis', label:'Lewis base:', type:'keywords', multiline:true, groups:[["lone pair"],["donat"]], correct:'The OH- ion has a lone pair of electrons (on oxygen) that it can donate to form a new covalent bond.'}
+    ],
+    hints:[
+      'A Br&oslash;nsted&ndash;Lowry base is defined purely by what it does with H+ &mdash; what does OH&minus; do with a proton from an acid?',
+      'A Lewis base is defined by electron pairs, not protons &mdash; what does the oxygen in OH&minus; have that it can offer to form a new bond?',
+      'Both answers can be short: one sentence naming the proton acceptor role, one sentence naming the lone pair it donates.'
+    ],
+    explanation:`<p><b>Br&oslash;nsted&ndash;Lowry base:</b> OH<sup>&minus;</sup> is a proton acceptor &mdash; it reacts with an acid (H<sup>+</sup> donor) to form water. <b>Lewis base:</b> the oxygen atom in OH<sup>&minus;</sup> carries a lone pair of electrons that it can donate to form a new coordinate (dative covalent) bond with an electron-deficient species.</p>`
+  });
+
+  Q.push({
+    num:'6 (b)', chip:'6b', id:'q6b',
+    title:'Uncertainty in a molar concentration',
+    concept:'uncertainty',
+    prompt:`<p>Biochemical oxygen demand (BOD) can be determined by the Winkler Method. A student dissolved 0.1240&plusmn;0.0001&nbsp;g of Na<sub>2</sub>S<sub>2</sub>O<sub>3</sub> to make 1000.0&plusmn;0.4&nbsp;cm<sup>3</sup> of solution. Determine the percentage uncertainty in the molar concentration.</p>`,
+    parts:[
+      {id:'unc', label:'Percentage uncertainty', type:'numeric', correct:0.12, tolAbs:0.03, unit:'%'}
+    ],
+    hints:[
+      'Concentration = (mass &divide; molar mass) &divide; volume &mdash; it\'s built entirely from multiplication/division, so percentage uncertainties simply add.',
+      '% uncertainty in mass = (0.0001/0.1240) &times; 100. % uncertainty in volume = (0.4/1000.0) &times; 100.',
+      'Add those two percentages together (the molar mass itself is treated as exact, with no uncertainty).'
+    ],
+    explanation:`<p>% uncertainty (mass) = 0.0001/0.1240 &times; 100 = 0.081%. % uncertainty (volume) = 0.4/1000.0 &times; 100 = 0.040%. Total = 0.081+0.040 = <b>&asymp;0.12%</b>.</p>`
+  });
+
+  Q.push({
+    num:'6 (c)', chip:'6c', id:'q6c',
+    title:'The Winkler method for dissolved oxygen',
+    concept:'titration-redox',
+    prompt:`<p>A 25.00&nbsp;cm<sup>3</sup> sample of water was treated according to the Winkler Method:</p>
+    <p class="mono" style="font-size:13.5px;">Step I:&nbsp; 2Mn<sup>2+</sup>(aq) + O<sub>2</sub>(g) + 4OH<sup>&minus;</sup>(aq) &rarr; 2MnO<sub>2</sub>(s) + 2H<sub>2</sub>O(l)<br>
+    Step II:&nbsp; MnO<sub>2</sub>(s) + 2I<sup>&minus;</sup>(aq) + 4H<sup>+</sup>(aq) &rarr; Mn<sup>2+</sup>(aq) + I<sub>2</sub>(aq) + 2H<sub>2</sub>O(l)<br>
+    Step III:&nbsp; 2S<sub>2</sub>O<sub>3</sub><sup>2&minus;</sup>(aq) + I<sub>2</sub>(aq) &rarr; 2I<sup>&minus;</sup>(aq) + S<sub>4</sub>O<sub>6</sub><sup>2&minus;</sup>(aq)</p>
+    <p>The iodine produced was titrated with 37.50&nbsp;cm<sup>3</sup> of 5.000&times;10<sup>&minus;4</sup>&nbsp;mol&nbsp;dm<sup>&minus;3</sup> Na<sub>2</sub>S<sub>2</sub>O<sub>3</sub>.</p>`,
+    parts:[
+      {id:'i', label:'(i) Amount, in moles, of Na2S2O3 used in the titration', type:'numeric', correct:1.875e-5, tolPct:0.03},
+      {id:'ii', label:'(ii) Mole ratio: moles of S2O3 2- used in step III per 1 mole of O2 consumed in step I (i.e. the number in "1 : ___")', type:'numeric', correct:4, tolPct:0.05},
+      {id:'iii', label:'(iii) Concentration of dissolved oxygen in the sample, in mol dm&minus;3', type:'numeric', correct:1.875e-4, tolPct:0.05},
+      {id:'iv', label:'(iv) Reduction half-equation for step II', type:'equation', required:['MnO2','Mn2'], correct:'MnO2(s) + 4H+(aq) + 2e- \u2192 Mn2+(aq) + 2H2O(l)'},
+      {id:'v', label:'(v) Reason the Winkler Method must be done at constant temperature', type:'keywords', multiline:true, groups:[["solubility"],["temperature","temp"]], correct:'The solubility of oxygen (dissolved O2) in water changes with temperature, so temperature must be kept constant for the measured amount of dissolved oxygen to be meaningful/comparable.'}
+    ],
+    hints:[
+      'For (i): moles = concentration &times; volume (37.50 cm3 = 0.03750 dm3). For (ii): trace 1 mol O2 through step I (&rarr; 2 mol MnO2), then step II (&rarr; 2 mol I2), then step III (&rarr; how many mol S2O3 2-?).',
+      'For (iii): use your answer to (i) together with the ratio from (ii) to get moles of O2, then divide by the sample\'s own volume (0.02500 dm3).',
+      'For (iv): in step II, which element changes oxidation state by gaining electrons (Mn goes from +4 in MnO2 to +2)? Balance that half-equation with H+ and H2O. For (v): think about what property of a gas dissolved in water is sensitive to temperature.'
+    ],
+    explanation:`<p>(i) Moles Na<sub>2</sub>S<sub>2</sub>O<sub>3</sub> = 5.000&times;10<sup>&minus;4</sup> &times; 0.03750 = <b>1.875&times;10<sup>&minus;5</sup> mol</b>. (ii) 1 mol O<sub>2</sub> &rarr; 2 mol MnO<sub>2</sub> &rarr; 2 mol I<sub>2</sub> &rarr; 4 mol S<sub>2</sub>O<sub>3</sub><sup>2&minus;</sup>, so the ratio O<sub>2</sub>:S<sub>2</sub>O<sub>3</sub><sup>2&minus;</sup> is <b>1:4</b>. (iii) moles O<sub>2</sub> = 1.875&times;10<sup>&minus;5</sup>/4 = 4.6875&times;10<sup>&minus;6</sup> mol; concentration = 4.6875&times;10<sup>&minus;6</sup>/0.02500 = <b>1.875&times;10<sup>&minus;4</sup> mol dm<sup>&minus;3</sup></b>. (iv) <b>MnO<sub>2</sub>(s) + 4H<sup>+</sup>(aq) + 2e<sup>&minus;</sup> &rarr; Mn<sup>2+</sup>(aq) + 2H<sub>2</sub>O(l)</b>. (v) The <b>solubility of dissolved oxygen</b> in water changes with temperature, so the temperature must be held constant for the measured DO concentration to be valid and comparable between samples.</p>`
+  });
+
+  Q.push({
+    num:'7 (a)', chip:'7a', id:'q7a',
+    title:'Molar enthalpy of combustion of an alkane',
+    concept:'enthalpy-combustion',
+    prompt:`<p>Alkanes undergo combustion and substitution. Determine the molar enthalpy of combustion of an alkane if 8.75&times;10<sup>&minus;4</sup>&nbsp;moles are burned, raising the temperature of 20.0&nbsp;g of water by 57.3&deg;C.</p>`,
+    parts:[
+      {id:'enthalpy', label:'Molar enthalpy of combustion', type:'numeric', correct:-5470, tolPct:0.05, unit:'kJ mol&minus;1'}
+    ],
+    hints:[
+      'First find the heat released: q = mc&Delta;T, with c(water) = 4.18 J g&minus;1 K&minus;1.',
+      'Divide that heat (in J) by the number of moles of alkane burned (8.75&times;10&minus;4 mol) to get J per mole, then convert to kJ per mole.',
+      'Combustion releases energy &mdash; don\'t forget the negative sign on your final answer.'
+    ],
+    explanation:`<p>q = 20.0 &times; 4.18 &times; 57.3 = 4790 J. Molar enthalpy = 4790/(8.75&times;10<sup>&minus;4</sup>) = 5.47&times;10<sup>6</sup> J mol<sup>&minus;1</sup> = <b>&minus;5470 kJ mol<sup>&minus;1</sup></b> (negative because combustion is exothermic).</p>`
+  });
+
+  Q.push({
+    num:'8', chip:'8', id:'q8',
+    title:'A standard cell for zinc',
+    concept:'electrochemistry-cells',
+    reflect:true,
+    prompt:`<p>The standard electrode potential of zinc can be measured using a standard hydrogen electrode (SHE). The Zn(s) half-cell (in 1&nbsp;mol&nbsp;dm<sup>&minus;3</sup> Zn<sup>2+</sup>(aq)) is already set up for you. Draw and annotate the diagram to show the <b>complete</b> apparatus required to measure the standard electrode potential of zinc.</p>`,
+    hints:[
+      'The missing half-cell is the SHE itself &mdash; what inert electrode material is used, and what needs to be bubbled through what solution around it?',
+      'Two separate connections must join the two half-cells: one that completes the circuit electrically, and one that completes it ionically without letting the solutions mix.',
+      'Annotate the standard conditions explicitly: the concentration of each ionic solution, the pressure of the gas, and the temperature.'
+    ],
+    explanation:`<div class="model-svg"><svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Standard cell diagram: hydrogen electrode versus zinc electrode">
+      <rect x="40" y="120" width="140" height="130" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+      <rect x="300" y="120" width="140" height="130" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+      <line x1="110" y1="60" x2="110" y2="130" stroke="currentColor" stroke-width="3"/>
+      <rect x="100" y="130" width="20" height="60" fill="currentColor" opacity="0.55"/>
+      <line x1="80" y1="95" x2="100" y2="95" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M80,95 Q70,95 70,110 L70,150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="118" y="70" font-size="12" fill="currentColor">Pt electrode</text>
+      <text x="50" y="105" font-size="11" fill="currentColor" opacity="0.8">H2(g), 100 kPa</text>
+      <text x="55" y="205" font-size="11.5" fill="currentColor">1 mol dm-3</text>
+      <text x="55" y="219" font-size="11.5" fill="currentColor">H+(aq)</text>
+      <line x1="370" y1="60" x2="370" y2="190" stroke="currentColor" stroke-width="6"/>
+      <text x="382" y="75" font-size="12" fill="currentColor">Zn(s)</text>
+      <text x="325" y="205" font-size="11.5" fill="currentColor">1 mol dm-3</text>
+      <text x="325" y="219" font-size="11.5" fill="currentColor">Zn2+(aq)</text>
+      <path d="M180,150 C220,110 260,110 300,150" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.85"/>
+      <text x="215" y="115" font-size="11" fill="currentColor" opacity="0.8">salt bridge</text>
+      <line x1="110" y1="60" x2="110" y2="30" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="110" y1="30" x2="370" y2="30" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="370" y1="30" x2="370" y2="60" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="240" cy="30" r="16" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="234" y="35" font-size="14" fill="currentColor">V</text>
+      <text x="150" y="290" font-size="11.5" fill="currentColor" opacity="0.75">Standard conditions throughout: 298 K</text>
+    </svg></div>
+    <p>Left half-cell: a platinum electrode dipping into 1&nbsp;mol&nbsp;dm<sup>&minus;3</sup> H<sup>+</sup>(aq), with H<sub>2</sub> gas bubbled in at 100&nbsp;kPa (this is the SHE, defined as 0.00&nbsp;V). Right half-cell: the given Zn(s) strip in 1&nbsp;mol&nbsp;dm<sup>&minus;3</sup> Zn<sup>2+</sup>(aq). The two solutions are joined by a salt bridge, and the two electrodes are joined by a wire through a voltmeter. Everything is at 298&nbsp;K.</p>`
+  });
+
+  Q.push({
+    num:'9 (a)', chip:'9a', id:'q9a',
+    title:'Rutherford\u2019s gold foil experiment',
+    concept:'atomic-model',
+    prompt:`<p>Fast moving helium nuclei (<sup>4</sup>He<sup>2+</sup>) were fired at a thin piece of gold foil, with most passing undeflected but a few deviating largely from their path. Suggest what can be concluded about the gold atom from this experiment.</p>`,
+    parts:[
+      {id:'through', label:'Most 4He2+ passing straight through:', type:'keywords', multiline:true, groups:[["empty space","mostly empty","most of the atom is empty","empty"]], correct:'The atom is mostly empty space, so most alpha particles pass straight through without being deflected.'},
+      {id:'deviate', label:'Very few 4He2+ deviating largely from their path:', type:'keywords', multiline:true, groups:[["nucleus"],["small","dense","concentrated"],["positive"]], correct:'The positive charge (and most of the mass) of the atom is concentrated in a very small, dense nucleus, which strongly repels the few alpha particles that pass close to it.'}
+    ],
+    hints:[
+      'If almost every particle sails straight through undisturbed, what does that say about how much of the atom\'s volume is actually solid matter?',
+      'The rare particles that deflect strongly must be interacting with something small but powerful &mdash; what kind of charge would repel a positive helium nucleus, and where must it be concentrated?',
+      'Put both ideas together: most of the atom is empty space, with a tiny, dense, positively-charged nucleus at the centre.'
+    ],
+    explanation:`<p><b>Most passing through:</b> the atom is mostly empty space. <b>Few deviating strongly:</b> the positive charge (and almost all of the mass) is concentrated in a very small, dense nucleus, which repels the alpha particles that happen to approach it closely.</p>`
+  });
+
+  Q.push({
+    num:'9 (b)', chip:'9b', id:'q9b',
+    title:'Orbitals and the electron configuration of copper',
+    concept:'orbitals-electron-config',
+    prompt:`<p>Subsequent experiments showed electrons existing in energy levels occupying various orbital shapes.</p>
+    <details class="aside">
+      <summary>Show 1s, 2s and 2p orbital shapes</summary>
+      <div class="aside-body">
+        <div class="orbital-row">
+          <div class="orbital-cell"><svg width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="22" fill="none" stroke="currentColor" stroke-width="2.5"/></svg><span>1s</span></div>
+          <div class="orbital-cell"><svg width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="34" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="45" cy="45" r="18" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/></svg><span>2s</span></div>
+          <div class="orbital-cell"><svg width="90" height="90" viewBox="0 0 90 90"><ellipse cx="45" cy="24" rx="14" ry="20" fill="none" stroke="currentColor" stroke-width="2.5"/><ellipse cx="45" cy="66" rx="14" ry="20" fill="none" stroke="currentColor" stroke-width="2.5"/></svg><span>2p</span></div>
+        </div>
+      </div>
+    </details>
+    <p>State the electron configuration of copper.</p>`,
+    parts:[
+      {id:'config', label:'Electron configuration of Cu', type:'equation', required:['3d10','4s1'], forbidden:['3d9','4s2'], correct:'1s2 2s2 2p6 3s2 3p6 3d10 4s1', placeholder:'e.g. 1s2 2s2 2p6 3s2 3p6 3d10 4s1'}
+    ],
+    hints:[
+      'Copper is one of the classic exceptions to the normal filling order &mdash; the usual prediction from the aufbau principle isn\'t quite right here.',
+      'A completely full d subshell (3d10) is unusually stable, even at the cost of leaving 4s with only one electron.',
+      'Write out the full configuration (or [Ar] shorthand) ending in &hellip;3d10 4s1, not &hellip;3d9 4s2.'
+    ],
+    explanation:`<p>Copper's configuration is <b>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 3d<sup>10</sup> 4s<sup>1</sup></b> (or [Ar]3d<sup>10</sup>4s<sup>1</sup>) &mdash; not the &hellip;3d<sup>9</sup>4s<sup>2</sup> the aufbau order would otherwise predict, because a fully-filled 3d subshell is unusually stable.</p>`
+  });
+
+  Q.push({
+    num:'9 (b) iii', chip:'9biii', id:'q9biii',
+    title:'Colour change of a copper complex',
+    concept:'complex-ion-colour',
+    prompt:`<p>Copper is a transition metal that forms different coloured complexes. A complex [Cu(H<sub>2</sub>O)<sub>6</sub>]<sup>2+</sup>(aq) changes colour when excess Cl<sup>&minus;</sup>(aq) is added. Explain the cause of this colour change.</p>`,
+    parts:[
+      {id:'explain', label:'Explanation', type:'keywords', multiline:true,
+        groups:[["ligand"],["splitting","split the d","energy gap","different energy levels","crystal field","splits the d orbitals","d orbital splitting"],["wavelength","absorb","colour","color"]],
+        correct:'Exchanging the H2O ligands for Cl- ligands changes the splitting of the d orbitals (a different-sized energy gap), so a different wavelength of light is absorbed for the d-d electron transition \u2014 the complementary colour observed therefore changes.'}
+    ],
+    hints:[
+      'Adding excess Cl&minus; replaces the water ligands around Cu2+ with chloride ligands &mdash; a ligand exchange.',
+      'Different ligands split the d orbitals by different amounts, changing the energy gap between them.',
+      'A different energy gap means a different wavelength of light is absorbed when an electron makes a d&ndash;d transition &mdash; so the colour you observe (the light not absorbed) changes too.'
+    ],
+    explanation:`<p>Replacing the H<sub>2</sub>O ligands with Cl<sup>&minus;</sup> ligands changes the splitting of the d orbitals (a different energy gap between them), so a different wavelength of visible light is absorbed as electrons make d&ndash;d transitions. Since the observed colour is the light that <i>isn't</i> absorbed, a different absorbed wavelength means a different observed colour.</p>`
+  });
+
+
+  /* ============ state ============ */
+  const state = { current:0, solved:new Set(), attempts:{}, revealedHints:{}, gaveUp:new Set(), firstTry:new Set() };
+
+  const stage = document.getElementById('stage');
+  const chipRow = document.getElementById('chipRow');
+  const buretteFill = document.getElementById('buretteFill');
+  const progressCount = document.getElementById('progressCount');
+  document.getElementById('progressTotal').textContent = Q.length;
+
+  function buildChips(){
+    chipRow.innerHTML = '';
+    Q.forEach((q,i)=>{
+      const c = document.createElement('button');
+      c.type='button'; c.className='chip'; c.textContent = 'Q'+(q.chip || q.num);
+      if (i===state.current) c.classList.add('is-current');
+      if (state.solved.has(q.id)) c.classList.add('is-done');
+      c.addEventListener('click', ()=> goTo(i));
+      chipRow.appendChild(c);
+    });
+  }
+  function updateProgress(){
+    const pct = Math.round((state.solved.size/Q.length)*100);
+    buretteFill.style.width = pct+'%';
+    progressCount.textContent = state.solved.size;
+    buildChips();
+  }
+  function goTo(i){
+    state.current = i;
+    render();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function partKey(qid, pid){ return qid+':'+pid; }
+
+  function renderConceptOpen(conceptKey, seenBefore){
+    const c = CONCEPTS[conceptKey];
+    const det = document.createElement('details');
+    det.className = 'concept';
+    det.open = !seenBefore;
+    det.innerHTML = `<summary><span class="concept-title"><span class="tag">${c.tag}</span>${c.title}</span><span class="chevron">&#9656;</span></summary>
+      <div class="concept-body">${c.body}</div>`;
+    return det;
+  }
+
+  function buildWorkTable(q){
+    const w = q.work;
+    if (!w) return null;
+    const box = document.createElement('div');
+    box.className = 'worktable';
+    const massLabel = w.massLabel || 'mass / g';
+    let head = '<tr><th></th>' + w.elements.map(e=>`<th>${fmtFormula(e)}</th>`).join('') + '</tr>';
+    let massRow = `<tr><td>${massLabel}</td>` + w.mass.map(m=>`<td class="mono">${m.toFixed(4).replace(/0+$/,'').replace(/\.$/,'')}</td>`).join('') + '</tr>';
+    let moleRow = '<tr><td>moles (your working)</td>' + w.elements.map((e,i)=>`<td><input class="cell" data-el="${i}" inputmode="decimal" placeholder="?" /></td>`).join('') + '</tr>';
+    box.innerHTML = `<div class="worktable-title">Optional working &mdash; fill in the moles yourself</div>
+      <table>${head}${massRow}${moleRow}</table>
+      <div class="worktable-actions">
+        <button type="button" class="btn btn-ghost btn-sm" data-action="check-work">Check my moles</button>
+        <span class="worktable-note">${w.note ? w.note : 'not graded &mdash; just a sanity check before you commit to a final answer'}</span>
+      </div>`;
+    box.querySelector('[data-action="check-work"]').addEventListener('click', ()=>{
+      const inputs = box.querySelectorAll('input.cell');
+      inputs.forEach((inp,i)=>{
+        const correct = w.moles[i];
+        const val = parseFloat(inp.value);
+        inp.classList.remove('ok','no');
+        if (!isNaN(val) && Math.abs(val-correct) <= Math.max(0.0005, correct*0.03)){
+          inp.classList.add('ok');
+        } else {
+          inp.classList.add('no');
+        }
+      });
+    });
+    return box;
+  }
+
+  function render(){
+    const q = Q[state.current];
+    const conceptKeysSeen = new Set(Q.slice(0, state.current).map(p=>p.concept));
+    stage.innerHTML = '';
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // concept
+    card.appendChild(renderConceptOpen(q.concept, conceptKeysSeen.has(q.concept)));
+
+    // head
+    const head = document.createElement('div');
+    head.innerHTML = `<div class="qhead"><span class="qnum">EXERCISE ${q.num}</span><span class="qtitle">${q.title}</span></div>
+      <div class="qprompt">${q.prompt}</div>`;
+    card.appendChild(head);
+
+    // given table for simple mass-only questions without a work table already covering it visually
+    // (work table itself displays masses, so no separate "given" table needed)
+
+    // work table
+    const wt = buildWorkTable(q);
+    if (wt) card.appendChild(wt);
+
+    // reflection-only question (35)
+    if (q.reflect){
+      const topActions = document.createElement('div');
+      topActions.className = 'action-row';
+      topActions.innerHTML = `
+        <button type="button" class="btn btn-amber" data-action="hint">Hint (1/${q.hints.length})</button>
+        <button type="button" class="btn btn-primary" data-action="reveal-reflect">Show a worked approach</button>`;
+      card.appendChild(topActions);
+
+      const explainBox = document.createElement('div');
+      explainBox.className = 'explain'; explainBox.id = 'reflectExplain'; explainBox.style.display = 'none';
+      explainBox.innerHTML = `<div class="explain-title">Model approach</div>${q.explanation}`;
+      card.appendChild(explainBox);
+
+      const continueRow = document.createElement('div');
+      continueRow.className = 'action-row'; continueRow.id = 'reflectActions';
+      continueRow.style.display = 'none';
+      continueRow.innerHTML = `<button type="button" class="btn btn-primary" data-action="mark-done">Got it &mdash; continue</button>`;
+      card.appendChild(continueRow);
+
+      stage.appendChild(card);
+      renderHints(card, q);
+      renderFooter(card, q, state.solved.has(q.id));
+
+      topActions.querySelector('[data-action="hint"]').addEventListener('click', ()=> handleHint(card, q));
+      topActions.querySelector('[data-action="reveal-reflect"]').addEventListener('click', (e)=>{
+        explainBox.style.display = 'block';
+        continueRow.style.display = 'flex';
+        e.target.disabled = true;
+      });
+      continueRow.querySelector('[data-action="mark-done"]').addEventListener('click', ()=>{
+        state.solved.add(q.id);
+        updateProgress();
+        renderFooter(card, q, true);
+      });
+
+      if (state.solved.has(q.id)){
+        explainBox.style.display = 'block';
+        continueRow.style.display = 'flex';
+        topActions.querySelector('[data-action="reveal-reflect"]').disabled = true;
+      }
+      return;
+    }
+
+    // parts
+    const partsBox = document.createElement('div');
+    partsBox.className = 'parts';
+    q.parts.forEach(p=>{
+      partsBox.appendChild(renderPart(q, p));
+    });
+    card.appendChild(partsBox);
+
+    // banners
+    const goodBanner = document.createElement('div');
+    goodBanner.className = 'banner good'; goodBanner.id='goodBanner';
+    goodBanner.innerHTML = `<span class="icon">&#10003;</span><span>Correct &mdash; nice work. Move on when you're ready.</span>`;
+    const badBanner = document.createElement('div');
+    badBanner.className = 'banner bad'; badBanner.id='badBanner';
+    badBanner.innerHTML = `<span class="icon">&#8288;&times;</span><span id="badBannerText">Not quite &mdash; check the hint below and try again.</span>`;
+    card.appendChild(goodBanner);
+    card.appendChild(badBanner);
+
+    // explanation (hidden until revealed or solved)
+    const explain = document.createElement('div');
+    explain.className = 'explain'; explain.id = 'explainBox'; explain.style.display='none';
+    explain.innerHTML = `<div class="explain-title">Worked solution</div>${q.explanation}`;
+    card.appendChild(explain);
+    if (state.solved.has(q.id) || state.gaveUp.has(q.id)) explain.style.display = 'block';
+
+    // action row
+    const actions = document.createElement('div');
+    actions.className = 'action-row';
+    actions.innerHTML = `
+      <button type="button" class="btn btn-primary" data-action="check">Check answer</button>
+      <button type="button" class="btn btn-amber" data-action="hint">Hint (1/${q.hints.length})</button>
+      <button type="button" class="btn btn-ghost" data-action="reveal" style="display:none;">Show solution</button>
+    `;
+    card.appendChild(actions);
+
+    stage.appendChild(card);
+
+    renderHints(card, q);
+
+    actions.querySelector('[data-action="check"]').addEventListener('click', ()=> handleCheck(card, q));
+    actions.querySelector('[data-action="hint"]').addEventListener('click', ()=> handleHint(card, q));
+    actions.querySelector('[data-action="reveal"]').addEventListener('click', ()=> handleReveal(card, q));
+
+    // if already solved, reflect UI state
+    if (state.solved.has(q.id)){
+      q.parts.forEach(p=>{ markPartSolved(card, q, p); });
+      goodBanner.classList.add('show');
+    }
+    updateRevealButton(card, q);
+    renderFooter(card, q, state.solved.has(q.id) || state.gaveUp.has(q.id));
+  }
+
+  function renderHints(card, q){
+    const box = document.createElement('div');
+    box.className = 'hint-box'; box.id='hintBox'; box.style.display='none';
+    box.innerHTML = '<ol id="hintList"></ol>';
+    const actionRow = card.querySelector(':scope > .action-row');
+    if (actionRow) card.insertBefore(box, actionRow);
+    else card.appendChild(box);
+  }
+
+  function handleHint(card, q){
+    const box = card.querySelector('#hintBox');
+    const list = card.querySelector('#hintList');
+    const shown = state.revealedHints[q.id] || 0;
+    if (shown >= q.hints.length) return;
+    const li = document.createElement('li');
+    li.textContent = q.hints[shown];
+    list.appendChild(li);
+    state.revealedHints[q.id] = shown+1;
+    box.style.display = 'block';
+    const btn = card.querySelector('[data-action="hint"]');
+    const n = state.revealedHints[q.id];
+    if (n >= q.hints.length){
+      btn.disabled = true;
+      btn.textContent = 'All hints shown';
+    } else {
+      btn.textContent = `Hint (${n+1}/${q.hints.length})`;
+    }
+  }
+
+  function renderPart(q, p){
+    const wrap = document.createElement('div');
+    wrap.className = 'part';
+    wrap.dataset.partId = p.id;
+
+    if (p.type === 'mc'){
+      let opts = p.options.map((opt,i)=>`
+        <label class="mc-opt" data-idx="${i}">
+          <input type="radio" name="${q.id}-${p.id}" value="${i}">
+          <span>${opt}</span>
+        </label>`).join('');
+      wrap.innerHTML = `<div class="part-label">${p.label}</div><div class="mc-options">${opts}</div><div class="part-feedback" id="fb-${p.id}"></div>`;
+    } else {
+      let placeholder = p.placeholder;
+      if (!placeholder){
+        if (p.type==='formula-empirical' || p.type==='formula-molecular') placeholder = 'e.g. Na2S2O3';
+        else if (p.type==='numeric') placeholder = 'e.g. 6.94';
+        else if (p.type==='kc') placeholder = 'e.g. [PCl5]/([PCl3][Cl2])';
+        else if (p.type==='equation') placeholder = 'e.g. H2PO4- + H2O -> HPO4 2- + H3O+';
+        else if (p.type==='keywords') placeholder = 'explain in a sentence or two';
+        else placeholder = 'type your answer';
+      }
+      const field = p.multiline
+        ? `<textarea class="answer-input" id="in-${p.id}" placeholder="${placeholder}" spellcheck="false" rows="2"></textarea>`
+        : `<input class="answer-input" id="in-${p.id}" type="text" placeholder="${placeholder}" autocomplete="off" spellcheck="false">`;
+      wrap.innerHTML = `<div class="part-label">${p.label}</div>
+        <div class="part-row">
+          ${field}
+          ${p.unit ? `<span class="unit">${p.unit}</span>` : ''}
+        </div>
+        <div class="part-feedback" id="fb-${p.id}"></div>`;
+    }
+    return wrap;
+  }
+
+  function evalPart(p, card){
+    if (p.type === 'mc'){
+      const sel = card.querySelector(`.part[data-part-id="${p.id}"] input[type="radio"]:checked`);
+      if (!sel) return {ok:false, empty:true};
+      return {ok: parseInt(sel.value,10) === p.correctIndex, empty:false};
+    }
+    const input = card.querySelector(`#in-${p.id}`);
+    const val = input ? input.value.trim() : '';
+    if (!val) return {ok:false, empty:true};
+    let ok = false;
+    if (p.type === 'formula-empirical') ok = checkEmpirical(val, p.correct);
+    else if (p.type === 'formula-molecular') ok = checkMolecular(val, p.correct);
+    else if (p.type === 'numeric') ok = checkNumeric(val, p.correct, p.tolPct);
+    else if (p.type === 'text') ok = p.accept.some(a=>a.toLowerCase()===val.toLowerCase());
+    else if (p.type === 'keywords') ok = checkKeywords(val, p.groups);
+    else if (p.type === 'equation') ok = checkEquation(val, p.required, p.forbidden);
+    else if (p.type === 'kc') ok = checkKcExpression(val, p.numerator, p.denominator);
+    return {ok, empty:false, parsedFail: (p.type==='formula-empirical'||p.type==='formula-molecular') && parseFormula(val)===null};
+  }
+
+  function markPartFeedback(card, q, p, result){
+    const fb = card.querySelector(`#fb-${p.id}`);
+    if (p.type === 'mc'){
+      const optEls = card.querySelectorAll(`.part[data-part-id="${p.id}"] .mc-opt`);
+      const selEl = card.querySelector(`.part[data-part-id="${p.id}"] input[type="radio"]:checked`);
+      if (result.ok){
+        selEl.closest('.mc-opt').classList.add('correct');
+        optEls.forEach(o=>o.classList.add('disabled'));
+        fb.textContent = 'Correct.'; fb.className = 'part-feedback good';
+      } else {
+        if (selEl) selEl.closest('.mc-opt').classList.add('incorrect');
+        fb.textContent = 'Not this one.'; fb.className = 'part-feedback bad';
+      }
+      return;
+    }
+    const input = card.querySelector(`#in-${p.id}`);
+    input.classList.remove('correct','incorrect');
+    if (result.empty){ fb.textContent=''; return; }
+    if (result.ok){
+      input.classList.add('correct');
+      fb.textContent = '\u2713 correct'; fb.className = 'part-feedback good';
+    } else {
+      input.classList.add('incorrect');
+      if (result.parsedFail) fb.textContent = "Couldn't read that formula \u2014 check capitalization and format, e.g. Na2S2O3 or CoSO4.7H2O";
+      else fb.textContent = 'Not quite \u2014 try again, or use a hint.';
+      fb.className = 'part-feedback bad';
+    }
+  }
+
+  function markPartSolved(card, q, p){
+    if (p.type === 'mc'){
+      const optEls = card.querySelectorAll(`.part[data-part-id="${p.id}"] .mc-opt`);
+      optEls.forEach((o,i)=>{ if (i===p.correctIndex) o.classList.add('correct'); o.classList.add('disabled'); });
+      return;
+    }
+    const input = card.querySelector(`#in-${p.id}`);
+    if (input){
+      input.value = (p.type === 'numeric') ? String(p.correct) : p.correct;
+      input.classList.add('correct');
+    }
+  }
+
+  function handleCheck(card, q){
+    const results = q.parts.map(p=>evalPart(p, card));
+    q.parts.forEach((p,i)=> markPartFeedback(card, q, p, results[i]));
+
+    const anyEmpty = results.some(r=>r.empty);
+    const allOk = results.every(r=>r.ok) && !anyEmpty;
+
+    const goodBanner = card.querySelector('#goodBanner');
+    const badBanner = card.querySelector('#badBanner');
+    goodBanner.classList.remove('show'); badBanner.classList.remove('show');
+
+    if (anyEmpty){
+      card.querySelector('#badBannerText').textContent = 'Fill in every box before checking.';
+      badBanner.classList.add('show');
+      return;
+    }
+
+    state.attempts[q.id] = (state.attempts[q.id]||0) + 1;
+
+    if (allOk){
+      if (state.attempts[q.id] === 1 && (state.revealedHints[q.id]||0) === 0) state.firstTry.add(q.id);
+      state.solved.add(q.id);
+      updateProgress();
+      goodBanner.classList.add('show');
+      renderFooter(card, q, true);
+      card.querySelector('[data-action="check"]').disabled = true;
+      const explain = card.querySelector('#explainBox');
+      explain.style.display = 'block';
+    } else {
+      card.querySelector('#badBannerText').textContent = 'Not everything checks out yet \u2014 see which box turned red, then have another go.';
+      badBanner.classList.add('show');
+      updateRevealButton(card, q);
+    }
+  }
+
+  function updateRevealButton(card, q){
+    const btn = card.querySelector('[data-action="reveal"]');
+    if (!btn) return;
+    if ((state.attempts[q.id]||0) >= 3 && !state.solved.has(q.id)){
+      btn.style.display = 'inline-flex';
+    }
+  }
+
+  function handleReveal(card, q){
+    state.gaveUp.add(q.id);
+    q.parts.forEach(p=> markPartSolved(card, q, p));
+    card.querySelector('#explainBox').style.display = 'block';
+    card.querySelector('#goodBanner').classList.remove('show');
+    card.querySelector('#badBanner').classList.remove('show');
+    card.querySelector('[data-action="check"]').disabled = true;
+    card.querySelector('[data-action="reveal"]').style.display = 'none';
+    renderFooter(card, q, true);
+  }
+
+  function renderFooter(card, q, canAdvance){
+    let footer = card.querySelector('.footer-nav');
+    if (footer) footer.remove();
+    footer = document.createElement('div');
+    footer.className = 'footer-nav';
+    const isLast = state.current === Q.length - 1;
+    footer.innerHTML = `
+      <button type="button" class="btn btn-ghost" data-action="prev" ${state.current===0?'disabled':''}>&larr; Previous</button>
+      <button type="button" class="btn btn-primary" data-action="next" ${canAdvance? '' : 'disabled'}>${isLast? 'Finish' : 'Next question &rarr;'}</button>
+    `;
+    card.appendChild(footer);
+    footer.querySelector('[data-action="prev"]').addEventListener('click', ()=> goTo(Math.max(0,state.current-1)));
+    footer.querySelector('[data-action="next"]').addEventListener('click', ()=>{
+      if (isLast) renderComplete(); else goTo(state.current+1);
+    });
+  }
+
+  function renderComplete(){
+    stage.innerHTML = '';
+    const card = document.createElement('div');
+    card.className = 'card complete-card';
+    const firstTry = state.firstTry.size;
+    const total = Q.length;
+    card.innerHTML = `
+      <div class="big">&#x1F9EA;</div>
+      <h2 style="margin-top:10px;">Workbook complete</h2>
+      <p style="color:var(--ink-soft); margin-top:8px;">You've worked through exercises 24&ndash;35 on empirical and molecular formulas.</p>
+      <div class="score-grid">
+        <div class="score-tile"><b>${total}</b><span>questions completed</span></div>
+        <div class="score-tile"><b>${firstTry}</b><span>solved first try, no hints</span></div>
+        <div class="score-tile"><b>${state.gaveUp.size}</b><span>solutions revealed</span></div>
+      </div>
+      <button type="button" class="btn btn-ghost" data-action="restart">Review from the start</button>
+    `;
+    stage.appendChild(card);
+    card.querySelector('[data-action="restart"]').addEventListener('click', ()=> goTo(0));
+  }
+
+  /* ============ calculator ============ */
+  const CALC_CONSTS = {
+    h: {v:6.63e-34, title:'Planck constant, h = 6.63x10^-34 J s'},
+    L: {v:6.02e23, title:'Avogadro constant, L = 6.02x10^23 /mol'},
+    R: {v:8.31, title:'Gas constant, R = 8.31 J K^-1 mol^-1'},
+    c: {v:2.998e8, title:'Speed of light, c = 2.998x10^8 m/s'}
+  };
+  const CALC_BUTTONS = [
+    {key:'ln', label:'ln', action:'func', value:'ln', cls:'fn'}, {key:'log', label:'log', action:'func', value:'log', cls:'fn'}, {key:'sqrt', label:'&radic;', action:'func', value:'sqrt', cls:'fn'}, {key:'sq', label:'x<sup>2</sup>', action:'func', value:'sq', cls:'fn'},
+    {key:'exp', label:'e<sup>x</sup>', action:'func', value:'exp', cls:'fn'}, {key:'pow10', label:'10<sup>x</sup>', action:'func', value:'pow10', cls:'fn'}, {key:'pow', label:'x<sup>y</sup>', action:'op', value:'^', cls:'op'}, {key:'recip', label:'1/x', action:'func', value:'recip', cls:'fn'},
+    {key:'lparen', label:'(', action:'lparen', cls:'op'}, {key:'rparen', label:')', action:'rparen', cls:'op'}, {key:'ee', label:'EE', action:'ee', cls:'op'}, {key:'sign', label:'&plusmn;', action:'sign', cls:'op'},
+    {key:'clear', label:'C', action:'clear', cls:'ctrl'}, {key:'back', label:'&#9003;', action:'back', cls:'ctrl'}, {key:'mc', label:'MC', action:'mc', cls:'ctrl', title:'Clear memory'}, {key:'mr', label:'MR', action:'mr', cls:'mem', title:'Recall memory'},
+    {key:'mplus', label:'M+', action:'mplus', cls:'mem', title:'Add displayed value to memory'}, {key:'mminus', label:'M&minus;', action:'mminus', cls:'mem', title:'Subtract displayed value from memory'}, {key:'const_h', label:'h', action:'const', value:'h', cls:'mem', title:CALC_CONSTS.h.title}, {key:'const_L', label:'L', action:'const', value:'L', cls:'mem', title:CALC_CONSTS.L.title},
+    {key:'const_R', label:'R', action:'const', value:'R', cls:'mem', title:CALC_CONSTS.R.title}, {key:'const_c', label:'c', action:'const', value:'c', cls:'mem', title:CALC_CONSTS.c.title},
+    {key:'d7', label:'7', action:'digit', value:'7'}, {key:'d8', label:'8', action:'digit', value:'8'}, {key:'d9', label:'9', action:'digit', value:'9'}, {key:'div', label:'&divide;', action:'op', value:'/', cls:'op'},
+    {key:'d4', label:'4', action:'digit', value:'4'}, {key:'d5', label:'5', action:'digit', value:'5'}, {key:'d6', label:'6', action:'digit', value:'6'}, {key:'mul', label:'&times;', action:'op', value:'*', cls:'op'},
+    {key:'d1', label:'1', action:'digit', value:'1'}, {key:'d2', label:'2', action:'digit', value:'2'}, {key:'d3', label:'3', action:'digit', value:'3'}, {key:'sub', label:'&minus;', action:'op', value:'-', cls:'op'},
+    {key:'d0', label:'0', action:'digit', value:'0'}, {key:'dot', label:'.', action:'decimal'}, {key:'eq', label:'=', action:'equals', cls:'eq'}, {key:'add', label:'+', action:'op', value:'+', cls:'op'}
+  ];
+
+  let calcTokens = [];        // finalized tokens: {t:'num'|'op'|'lparen'|'rparen'|'func', v}
+  let calcCurNum = null;      // string being typed right now, or null
+  let calcMemory = 0;
+  let calcShowingResult = false;
+  let calcLastResult = 0;
+  let calcResultPrevExpr = '';
+
+  function calcInExponent(){ return calcCurNum !== null && calcCurNum.indexOf('e') !== -1; }
+
+  function calcFormat(n){
+    if (n===null || n===undefined || isNaN(n) || !isFinite(n)) return 'Error';
+    if (n===0) return '0';
+    const abs = Math.abs(n);
+    if (abs < 1e-6 || abs >= 1e10){
+      let s = n.toExponential(6);
+      s = s.replace(/(\.\d*?)0+e/, '$1e').replace(/\.e/, 'e').replace('e+','e');
+      return s;
+    }
+    return parseFloat(n.toPrecision(10)).toString();
+  }
+  function calcOpSymbol(op){ return {'+':'+','-':'\u2212','*':'\u00D7','/':'\u00F7','^':'^'}[op] || op; }
+  function calcFuncLabel(fn){ return {ln:'ln', log:'log', exp:'e^', pow10:'10^', sqrt:'\u221A', sq:'sq', recip:'1/'}[fn] || fn; }
+
+  function calcBeginFresh(){
+    calcTokens = []; calcCurNum = null; calcShowingResult = false; calcResultPrevExpr = '';
+  }
+  function calcParseCurNum(s){
+    const v = parseFloat(s);
+    return isNaN(v) ? 0 : v;
+  }
+  function calcCommitCurNum(){
+    if (calcCurNum !== null){
+      calcTokens.push({t:'num', v:calcParseCurNum(calcCurNum)});
+      calcCurNum = null;
+    }
+  }
+  function calcMaybeInsertImplicitMul(){
+    const last = calcTokens[calcTokens.length-1];
+    if (last && (last.t==='num' || last.t==='rparen')) calcTokens.push({t:'op', v:'*'});
+  }
+  function calcOpenParenCount(){
+    let n = 0;
+    calcTokens.forEach(t=>{ if (t.t==='lparen') n++; if (t.t==='rparen') n--; });
+    return n;
+  }
+
+  function calcTokensToString(tokens){
+    let s = '';
+    tokens.forEach(tok=>{
+      if (tok.t==='num') s += calcFormat(tok.v);
+      else if (tok.t==='op') s += ' ' + calcOpSymbol(tok.v) + ' ';
+      else if (tok.t==='lparen') s += '(';
+      else if (tok.t==='rparen') s += ')';
+      else if (tok.t==='func') s += calcFuncLabel(tok.v);
+    });
+    return s;
+  }
+  function calcLiveExprString(){
+    let s = calcTokensToString(calcTokens);
+    if (calcCurNum !== null) s += calcCurNum;
+    return s;
+  }
+
+  function calcApplyFunc(fn, x){
+    switch(fn){
+      case 'ln': return Math.log(x);
+      case 'log': return Math.log10(x);
+      case 'exp': return Math.exp(x);
+      case 'pow10': return Math.pow(10, x);
+      case 'sqrt': return Math.sqrt(x);
+      case 'sq': return x*x;
+      case 'recip': return x === 0 ? NaN : 1/x;
+      default: return x;
+    }
+  }
+  function calcEvalTokens(tokens){
+    let pos = 0;
+    function peek(){ return tokens[pos]; }
+    function take(){ return tokens[pos++]; }
+    function parseExpression(){
+      let v = parseTerm();
+      while (peek() && peek().t==='op' && (peek().v==='+' || peek().v==='-')){
+        const op = take().v;
+        const rhs = parseTerm();
+        v = op==='+' ? v+rhs : v-rhs;
+      }
+      return v;
+    }
+    function parseTerm(){
+      let v = parsePower();
+      while (peek() && peek().t==='op' && (peek().v==='*' || peek().v==='/')){
+        const op = take().v;
+        const rhs = parsePower();
+        v = op==='*' ? v*rhs : (rhs===0 ? NaN : v/rhs);
+      }
+      return v;
+    }
+    function parsePower(){
+      let v = parseUnary();
+      if (peek() && peek().t==='op' && peek().v==='^'){
+        take();
+        const rhs = parsePower();
+        v = Math.pow(v, rhs);
+      }
+      return v;
+    }
+    function parseUnary(){
+      if (peek() && peek().t==='op' && peek().v==='-'){ take(); return -parseUnary(); }
+      if (peek() && peek().t==='op' && peek().v==='+'){ take(); return parseUnary(); }
+      return parsePrimary();
+    }
+    function parsePrimary(){
+      const tok = peek();
+      if (!tok) throw new Error('unexpected end');
+      if (tok.t==='num'){ take(); return tok.v; }
+      if (tok.t==='lparen'){
+        take();
+        const v = parseExpression();
+        if (peek() && peek().t==='rparen') take();
+        return v;
+      }
+      if (tok.t==='func'){
+        take();
+        if (peek() && peek().t==='lparen') take();
+        const v = parseExpression();
+        if (peek() && peek().t==='rparen') take();
+        return calcApplyFunc(tok.v, v);
+      }
+      throw new Error('unexpected token');
+    }
+    if (tokens.length === 0) return 0;
+    return parseExpression();
+  }
+  function calcEvaluateCurrentValue(){
+    if (calcShowingResult) return calcLastResult;
+    const tokens = calcTokens.slice();
+    if (calcCurNum !== null) tokens.push({t:'num', v:calcParseCurNum(calcCurNum)});
+    let result;
+    try { result = calcEvalTokens(tokens); } catch(e){ result = NaN; }
+    return isNaN(result) || !isFinite(result) ? 0 : result;
+  }
+
+  function calcRender(){
+    const valEl = document.getElementById('calcVal');
+    const exprEl = document.getElementById('calcExpr');
+    if (calcShowingResult){
+      if (exprEl) exprEl.textContent = calcResultPrevExpr + ' =';
+      if (valEl) valEl.textContent = calcFormat(calcLastResult);
+    } else {
+      const live = calcLiveExprString();
+      if (exprEl) exprEl.textContent = '\u00A0';
+      if (valEl) valEl.textContent = live === '' ? '0' : live;
+    }
+    const memEl = document.getElementById('calcMemInd');
+    if (memEl) memEl.style.visibility = (calcMemory !== 0) ? 'visible' : 'hidden';
+  }
+
+  function calcPressDigit(d){
+    if (calcShowingResult) calcBeginFresh();
+    if (calcCurNum === null) calcCurNum = '0';
+    if (calcCurNum === '0' && !calcInExponent()) calcCurNum = d;
+    else calcCurNum += d;
+    calcRender();
+  }
+  function calcPressDecimal(){
+    if (calcShowingResult) calcBeginFresh();
+    if (calcCurNum === null) calcCurNum = '0';
+    if (calcInExponent()) return;
+    if (calcCurNum.indexOf('.') === -1) calcCurNum += '.';
+    calcRender();
+  }
+  function calcPressEE(){
+    if (calcShowingResult) calcBeginFresh();
+    if (calcCurNum === null) calcCurNum = '0';
+    if (!calcInExponent()) calcCurNum += 'e';
+    calcRender();
+  }
+  function calcPressSign(){
+    if (calcShowingResult) calcBeginFresh();
+    if (calcCurNum === null) calcCurNum = '0';
+    if (calcInExponent()){
+      const idx = calcCurNum.indexOf('e');
+      let mant = calcCurNum.slice(0, idx+1);
+      let exp = calcCurNum.slice(idx+1);
+      exp = exp.charAt(0)==='-' ? exp.slice(1) : ('-'+exp);
+      calcCurNum = mant + exp;
+    } else if (calcCurNum !== '0') {
+      calcCurNum = calcCurNum.charAt(0)==='-' ? calcCurNum.slice(1) : ('-'+calcCurNum);
+    }
+    calcRender();
+  }
+  function calcPressBackspace(){
+    if (calcShowingResult) return;
+    if (calcCurNum !== null){
+      calcCurNum = calcCurNum.slice(0, -1);
+      if (calcCurNum === '' || calcCurNum === '-') calcCurNum = null;
+    } else if (calcTokens.length){
+      calcTokens.pop();
+    }
+    calcRender();
+  }
+  function calcClear(){
+    calcBeginFresh();
+    calcRender();
+  }
+  function calcPressOp(op){
+    if (calcShowingResult){
+      calcTokens = [{t:'num', v:calcLastResult}];
+      calcCurNum = null; calcShowingResult = false; calcResultPrevExpr = '';
+    } else {
+      calcCommitCurNum();
+    }
+    calcTokens.push({t:'op', v:op});
+    calcRender();
+  }
+  function calcPressLParen(){
+    if (calcShowingResult) calcBeginFresh();
+    calcCommitCurNum();
+    calcMaybeInsertImplicitMul();
+    calcTokens.push({t:'lparen'});
+    calcRender();
+  }
+  function calcPressRParen(){
+    if (calcShowingResult) return;
+    calcCommitCurNum();
+    if (calcOpenParenCount() > 0) calcTokens.push({t:'rparen'});
+    calcRender();
+  }
+  function calcPressFunc(fn){
+    if (calcShowingResult) calcBeginFresh();
+    calcCommitCurNum();
+    calcMaybeInsertImplicitMul();
+    calcTokens.push({t:'func', v:fn});
+    calcTokens.push({t:'lparen'});
+    calcRender();
+  }
+  function calcInsertLiteral(v){
+    if (calcShowingResult) calcBeginFresh();
+    calcCommitCurNum();
+    calcMaybeInsertImplicitMul();
+    calcTokens.push({t:'num', v:v});
+    calcRender();
+  }
+  function calcInsertConst(key){
+    const c = CALC_CONSTS[key];
+    if (c) calcInsertLiteral(c.v);
+  }
+  function calcMemClear(){ calcMemory = 0; calcRender(); }
+  function calcMemRecall(){ calcInsertLiteral(calcMemory); }
+  function calcMemAdd(){ calcMemory += calcEvaluateCurrentValue(); calcRender(); }
+  function calcMemSub(){ calcMemory -= calcEvaluateCurrentValue(); calcRender(); }
+  function calcPressEquals(){
+    calcCommitCurNum();
+    const openCount = calcOpenParenCount();
+    for (let i=0; i<openCount; i++) calcTokens.push({t:'rparen'});
+    const exprStr = calcTokensToString(calcTokens);
+    let result;
+    try { result = calcEvalTokens(calcTokens); } catch(e){ result = NaN; }
+    calcLastResult = result;
+    calcResultPrevExpr = exprStr === '' ? '0' : exprStr;
+    calcShowingResult = true;
+    calcTokens = [];
+    calcCurNum = null;
+    calcRender();
+  }
+
+  function buildCalc(){
+    const grid = document.getElementById('calcGrid');
+    CALC_BUTTONS.forEach(spec=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'calc-btn' + (spec.cls ? ' '+spec.cls : '');
+      btn.dataset.key = spec.key;
+      btn.innerHTML = spec.label;
+      if (spec.title) btn.title = spec.title;
+      btn.addEventListener('click', ()=>{
+        switch(spec.action){
+          case 'digit': calcPressDigit(spec.value); break;
+          case 'op': calcPressOp(spec.value); break;
+          case 'decimal': calcPressDecimal(); break;
+          case 'ee': calcPressEE(); break;
+          case 'sign': calcPressSign(); break;
+          case 'back': calcPressBackspace(); break;
+          case 'clear': calcClear(); break;
+          case 'equals': calcPressEquals(); break;
+          case 'lparen': calcPressLParen(); break;
+          case 'rparen': calcPressRParen(); break;
+          case 'func': calcPressFunc(spec.value); break;
+          case 'mc': calcMemClear(); break;
+          case 'mr': calcMemRecall(); break;
+          case 'mplus': calcMemAdd(); break;
+          case 'mminus': calcMemSub(); break;
+          case 'const': calcInsertConst(spec.value); break;
+        }
+      });
+      grid.appendChild(btn);
+    });
+  }
+  function initCalcUI(){
+    buildCalc();
+    calcRender();
+    const fab = document.getElementById('calcFab');
+    const panel = document.getElementById('calcPanel');
+    const closeBtn = document.getElementById('calcClose');
+    fab.addEventListener('click', ()=> panel.classList.toggle('open'));
+    closeBtn.addEventListener('click', ()=> panel.classList.remove('open'));
+
+    const header = document.getElementById('calcHeader');
+    let dragging = false, offsetX = 0, offsetY = 0;
+    header.addEventListener('pointerdown', (e)=>{
+      dragging = true;
+      const rect = panel.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      panel.style.right = 'auto'; panel.style.bottom = 'auto';
+      panel.style.left = rect.left + 'px'; panel.style.top = rect.top + 'px';
+      header.setPointerCapture(e.pointerId);
+    });
+    header.addEventListener('pointermove', (e)=>{
+      if (!dragging) return;
+      const maxX = window.innerWidth - panel.offsetWidth - 4;
+      const maxY = window.innerHeight - panel.offsetHeight - 4;
+      panel.style.left = Math.min(Math.max(0, e.clientX - offsetX), maxX) + 'px';
+      panel.style.top = Math.min(Math.max(0, e.clientY - offsetY), maxY) + 'px';
+    });
+    header.addEventListener('pointerup', ()=> dragging = false);
+    header.addEventListener('pointercancel', ()=> dragging = false);
+  }
+
+  updateProgress();
+  render();
+  initCalcUI();
+})();
+</script>
