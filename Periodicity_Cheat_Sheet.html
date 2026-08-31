@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Periodicity Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#eef0e8;
+    --paper2:#e2e6da;
+    --card:#fbfbf6;
+    --ink:#1c2129;
+    --ink-soft:#525c60;
+    --ink-faint:#838f8a;
+    --line:#cfd4c4;
+    --accent:#6b3f9e;
+    --accent-soft:#ece2f5;
+    --accent-ink:#ffffff;
+    --s-block:#3b6ea5;
+    --s-soft:#dde8f2;
+    --p-block:#b5502a;
+    --p-soft:#f3e0d5;
+    --d-block:#a4841c;
+    --d-soft:#f0e6c6;
+    --f-block:#4f8f3f;
+    --f-soft:#dfeadb;
+    --shadow:0 1px 2px rgba(28,33,41,.05), 0 8px 20px rgba(28,33,41,.06);
+    --radius:12px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#14171c;
+      --paper2:#1a1e23;
+      --card:#1d2229;
+      --ink:#e9ecec;
+      --ink-soft:#aab2b3;
+      --ink-faint:#7a8386;
+      --line:#333b3f;
+      --accent:#a97fe0;
+      --accent-soft:#2c2438;
+      --accent-ink:#161018;
+      --s-block:#6fa0d8;
+      --s-soft:#1f2c3a;
+      --p-block:#e08157;
+      --p-soft:#3a271e;
+      --d-block:#d4b64a;
+      --d-soft:#3a3319;
+      --f-block:#7bc46a;
+      --f-soft:#213424;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 24px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14171c;
+    --paper2:#1a1e23;
+    --card:#1d2229;
+    --ink:#e9ecec;
+    --ink-soft:#aab2b3;
+    --ink-faint:#7a8386;
+    --line:#333b3f;
+    --accent:#a97fe0;
+    --accent-soft:#2c2438;
+    --accent-ink:#161018;
+    --s-block:#6fa0d8;
+    --s-soft:#1f2c3a;
+    --p-block:#e08157;
+    --p-soft:#3a271e;
+    --d-block:#d4b64a;
+    --d-soft:#3a3319;
+    --f-block:#7bc46a;
+    --f-soft:#213424;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 24px rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Work Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:2.4rem 1.6rem 5rem;}
+
+  h1,h2,h3{font-family:"Fraunces", Georgia, serif; margin:0;}
+  h1{text-wrap:balance;}
+  h2{text-wrap:balance;}
+
+  code, .mono{font-family:"IBM Plex Mono", ui-monospace, monospace;}
+
+  /* ---------- Header ---------- */
+  header.hero{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:1.5rem;
+    padding-bottom:1.6rem;
+    margin-bottom:2.2rem;
+    border-bottom:2.5px solid var(--ink);
+  }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    margin-bottom:.7rem;
+  }
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+  h1{font-weight:600; font-size:clamp(2.1rem,4.4vw,3rem); line-height:1.02; letter-spacing:-.01em;}
+  h1 em{font-style:italic; color:var(--accent);}
+  .hero p{margin:.6rem 0 0; color:var(--ink-soft); max-width:54ch; line-height:1.55;}
+  .hero-meta{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.72rem;
+    color:var(--ink-faint);
+    text-align:right;
+    line-height:1.9;
+  }
+
+  section{margin-bottom:2.6rem;}
+  .sec-head{display:flex; align-items:baseline; gap:.7rem; margin-bottom:1rem;}
+  .sec-num{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.75rem;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    border-radius:5px;
+    padding:.1rem .4rem;
+    flex-shrink:0;
+  }
+  .sec-head h2{font-size:1.5rem; font-weight:600;}
+  .sec-sub{color:var(--ink-faint); font-size:.85rem; margin:.15rem 0 1rem 2.6rem;}
+
+  /* ---------- Key-point callouts ---------- */
+  .key{
+    background:var(--accent-soft);
+    border-left:3px solid var(--accent);
+    border-radius:0 8px 8px 0;
+    padding:.7rem 1rem;
+    font-size:.9rem;
+    line-height:1.5;
+    color:var(--ink);
+    margin:.9rem 0;
+  }
+  .key b{font-weight:600;}
+
+  /* ---------- Table grid (periodic map) ---------- */
+  .ptable-wrap{overflow-x:auto; padding-bottom:.4rem;}
+  .ptable{
+    display:grid;
+    grid-template-columns:repeat(18, minmax(30px,1fr));
+    gap:3px;
+    min-width:760px;
+  }
+  .cell{
+    aspect-ratio:1/1;
+    border-radius:4px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.62rem;
+    line-height:1.1;
+    position:relative;
+    border:1px solid transparent;
+  }
+  .cell .z{position:absolute; top:2px; left:3px; font-size:.5rem; opacity:.6;}
+  .cell .sym{font-weight:600; font-size:.78rem;}
+  .cell.s{background:var(--s-soft); color:var(--s-block);}
+  .cell.p{background:var(--p-soft); color:var(--p-block);}
+  .cell.d{background:var(--d-soft); color:var(--d-block);}
+  .cell.f{background:var(--f-soft); color:var(--f-block); font-size:.56rem;}
+  .cell.wide{font-size:.52rem; font-weight:600;}
+  .cell.metalloid{border:1px dashed currentColor;}
+  .gnum{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.6rem;
+    color:var(--ink-faint);
+    text-align:center;
+  }
+  .frow{display:grid; grid-template-columns:repeat(18,minmax(30px,1fr)); gap:3px; min-width:760px; margin-top:3px;}
+  .frow .cell{grid-column:span 1;}
+
+  .legend{display:flex; flex-wrap:wrap; gap:.9rem; margin-top:.9rem; font-size:.78rem; color:var(--ink-soft);}
+  .legend span{display:inline-flex; align-items:center; gap:.4rem;}
+  .legend i{width:11px; height:11px; border-radius:3px; display:inline-block;}
+
+  /* ---------- Trend table ---------- */
+  .tbl-wrap{overflow-x:auto;}
+  table.data{
+    width:100%;
+    border-collapse:collapse;
+    font-size:.86rem;
+    background:var(--card);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  table.data th, table.data td{
+    padding:.7rem .85rem;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+    line-height:1.45;
+  }
+  table.data thead th{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.68rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    background:var(--paper2);
+    border-bottom:1px solid var(--line);
+  }
+  table.data tr:last-child td{border-bottom:none;}
+  table.data td.prop{font-family:"Fraunces",serif; font-weight:600; color:var(--ink); white-space:nowrap;}
+  table.data .arrow-up{color:var(--p-block); font-weight:700;}
+  table.data .arrow-down{color:var(--s-block); font-weight:700;}
+
+  /* ---------- Two-column compare cards ---------- */
+  .compare{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1.1rem;
+  }
+  @media (max-width:720px){ .compare{grid-template-columns:1fr;} }
+  .compare-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:1.2rem 1.3rem;
+    border-top:4px solid var(--group-color, var(--accent));
+  }
+  .compare-card h3{font-size:1.15rem; font-weight:600; margin-bottom:.15rem;}
+  .compare-card .subtitle{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:.85rem;}
+  .compare-card ul{margin:0 0 .9rem; padding-left:1.1rem; font-size:.87rem; line-height:1.5; color:var(--ink-soft);}
+  .compare-card ul li{margin-bottom:.25rem;}
+  .rxn{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.78rem;
+    background:var(--paper2);
+    border-radius:6px;
+    padding:.5rem .65rem;
+    margin-bottom:.4rem;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+  .rxn-label{display:block; font-family:"Work Sans",sans-serif; font-size:.72rem; color:var(--ink-faint); margin:.6rem 0 .3rem;}
+
+  /* ---------- Oxide table ---------- */
+  .oxide-note{font-size:.85rem; color:var(--ink-soft); line-height:1.55; margin-top:.8rem;}
+
+  /* ---------- Glossary ---------- */
+  .glossary{
+    background:var(--paper2);
+    border-radius:16px;
+    padding:1.8rem 1.8rem 1.4rem;
+    margin-top:.5rem;
+  }
+  .gloss-group{margin-bottom:1.5rem;}
+  .gloss-group h3{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:.75rem;
+    font-weight:600;
+  }
+  .gloss-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:.7rem 1.4rem;
+  }
+  @media (max-width:680px){ .gloss-grid{grid-template-columns:1fr;} }
+  .gcard{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:.65rem .85rem;
+  }
+  .gcard .term{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:600;
+    font-size:.82rem;
+    color:var(--ink);
+    display:block;
+    margin-bottom:.2rem;
+  }
+  .gcard .def{font-size:.82rem; line-height:1.45; color:var(--ink-soft);}
+
+  footer.note{
+    margin-top:3rem;
+    text-align:center;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.68rem;
+    letter-spacing:.05em;
+    color:var(--ink-faint);
+  }
+  footer.note .credit{
+    margin-top:.5rem;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:.55rem;
+  }
+  footer.note .credit a{
+    color:var(--ink-faint);
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  footer.note .credit a:hover{color:var(--accent);}
+  footer.note .credit .sep{opacity:.5;}
+
+  sup{font-size:.7em;}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">IB Chemistry · Higher Level</div>
+      <h1>Topic 3 — <em>Periodicity</em></h1>
+      <p>The Periodic Table as a map of electron configuration: how atomic radius, ionic radius, ionization energy, electron affinity and electronegativity all trace back to nuclear charge and shielding.</p>
+    </div>
+    <div class="hero-meta">
+      3.1 The Periodic Table<br>
+      3.2 Periodic Trends<br>
+      Sub-topics 3.1 &amp; 3.2
+    </div>
+  </header>
+
+  <!-- ============ 3.1 THE PERIODIC TABLE ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">3.1</span><h2>The Periodic Table</h2></div>
+    <p class="sec-sub">Arrangement by atomic number reveals the periodicity of electron configuration.</p>
+
+    <div class="key"><b>Position = configuration.</b> The block tells you which sub-level holds the highest-energy electron; the period number is the outer (highest) occupied energy level, n; the group number gives the number of valence electrons (main groups).</div>
+
+    <div class="ptable-wrap">
+      <div class="ptable" id="ptable"></div>
+      <div class="frow" id="frow"></div>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--s-block)"></i>s block — groups 1–2</span>
+      <span><i style="background:var(--p-block)"></i>p block — groups 13–18</span>
+      <span><i style="background:var(--d-block)"></i>d block — groups 3–12</span>
+      <span><i style="background:var(--f-block)"></i>f block — lanthanoids &amp; actinoids</span>
+      <span style="border:1px dashed var(--ink-faint); border-radius:3px; padding:0 .3rem;">dashed = metalloid</span>
+    </div>
+
+    <div class="tbl-wrap" style="margin-top:1.4rem;">
+      <table class="data">
+        <thead><tr><th>Region</th><th>Members</th><th>Character</th></tr></thead>
+        <tbody>
+          <tr><td class="prop">Metals</td><td>s block, most of d block, f block, left/centre of p block</td><td>Lose electrons; low ionization energy &amp; electronegativity; conduct heat/electricity</td></tr>
+          <tr><td class="prop">Metalloids</td><td>B, Si, Ge, As, Sb, Te, Po (diagonal staircase)</td><td>Intermediate properties; physically resemble metals, chemically resemble non-metals</td></tr>
+          <tr><td class="prop">Non-metals</td><td>Upper-right of p block</td><td>Gain electrons; high ionization energy &amp; electronegativity; poor conductors</td></tr>
+          <tr><td class="prop">Alkali metals</td><td>Group 1 (Li → Fr)</td><td>Very reactive metals, form +1 ions</td></tr>
+          <tr><td class="prop">Halogens</td><td>Group 17 (F → At)</td><td>Very reactive non-metals, diatomic X<sub>2</sub>, form −1 ions</td></tr>
+          <tr><td class="prop">Noble gases</td><td>Group 18 (He → Rn)</td><td>Unreactive; complete outer shell (stable octet, or duet for He)</td></tr>
+          <tr><td class="prop">Transition metals</td><td>d block, Sc → Cu (period 4 series)</td><td>Incomplete d sub-level in at least one common ion; variable oxidation states</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ EFFECTIVE NUCLEAR CHARGE ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">3.2a</span><h2>Effective Nuclear Charge</h2></div>
+    <p class="sec-sub">The engine behind every trend below.</p>
+    <p style="font-size:.92rem; line-height:1.6; color:var(--ink-soft); max-width:74ch;">
+      Outer electrons are attracted by the full nuclear charge <span class="mono">Z</span> but <b style="color:var(--ink)">shielded</b> (repelled) by the inner, core electrons. The charge they actually experience is the <b style="color:var(--ink)">effective nuclear charge</b>, Z<sub>eff</sub> ≈ Z − (number of shielding/core electrons).
+    </p>
+    <div class="tbl-wrap">
+      <table class="data">
+        <thead><tr><th>Element</th><th>Na</th><th>Mg</th><th>Al</th><th>Si</th></tr></thead>
+        <tbody>
+          <tr><td class="prop">Nuclear charge</td><td>11</td><td>12</td><td>13</td><td>14</td></tr>
+          <tr><td class="prop">Core (shielding) e⁻</td><td>10</td><td>10</td><td>10</td><td>10</td></tr>
+          <tr><td class="prop">Z<sub>eff</sub> on valence e⁻</td><td>≈ +1</td><td>≈ +2</td><td>≈ +3</td><td>≈ +4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="key"><b>Across a period:</b> one proton added, no new shielding shell ⇒ Z<sub>eff</sub> rises with group number. <b>Down a group:</b> one full shell of core electrons is added along with the protons ⇒ Z<sub>eff</sub> stays roughly constant (≈ +1 for Group 1, ≈ +7 for Group 17, etc.).</div>
+  </section>
+
+  <!-- ============ TREND SUMMARY TABLE ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">3.2b</span><h2>The Five Trends</h2></div>
+    <p class="sec-sub">All explained by the balance of Z<sub>eff</sub> against the number of occupied shells.</p>
+    <div class="tbl-wrap">
+      <table class="data">
+        <thead><tr><th>Property</th><th>Across a period (L→R)</th><th>Down a group</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="prop">Atomic radius</td>
+            <td><span class="arrow-down">↓ decreases</span></td>
+            <td><span class="arrow-up">↑ increases</span></td>
+            <td>Across: Z<sub>eff</sub> rises, same shell pulled in tighter. Down: an extra occupied shell each row outweighs the near-constant Z<sub>eff</sub>.</td>
+          </tr>
+          <tr>
+            <td class="prop">Ionic radius</td>
+            <td>cations shrink Gp 1→14; anions shrink Gp 14→17 (big jump at the metal/non-metal switch)</td>
+            <td><span class="arrow-up">↑ increases</span></td>
+            <td>Cations are smaller than their parent atom (outer shell lost); anions are larger (extra e⁻–e⁻ repulsion). Isoelectronic species shrink as Z increases.</td>
+          </tr>
+          <tr>
+            <td class="prop">Ionization energy</td>
+            <td><span class="arrow-up">↑ increases</span> (dips after Gp 2→13 and Gp 15→16)</td>
+            <td><span class="arrow-down">↓ decreases</span></td>
+            <td>Across: stronger pull on outer e⁻. Down: electron removed from a shell further away; shielding keeps Z<sub>eff</sub> ~constant.</td>
+          </tr>
+          <tr>
+            <td class="prop">Electron affinity</td>
+            <td>generally <span class="arrow-up">↑ more exothermic</span> to Gp 17 (Gp 18 ≈ 0; Gp 2 &amp; 15 anomalously low)</td>
+            <td><span class="arrow-down">↓ less exothermic</span></td>
+            <td>Same logic as IE, displaced one group and inverted in sign — high Z<sub>eff</sub> (Gp 17, ≈+7) attracts the incoming electron most strongly.</td>
+          </tr>
+          <tr>
+            <td class="prop">Electronegativity</td>
+            <td><span class="arrow-up">↑ increases</span></td>
+            <td><span class="arrow-down">↓ decreases</span></td>
+            <td>Measures pull on <i>bonding</i> electrons in a covalent bond — same Z<sub>eff</sub>/shielding argument as ionization energy. F = 4.0 (highest); Cs = 0.7 (lowest). Not defined for Group 18.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="key"><b>Ionization energy discontinuities (Period 2/3, general pattern):</b> Group 13 (ns²np¹) is <i>lower</i> than Group 2 (ns²) — the single p electron is higher in energy than a full s sub-level. Group 16 (ns²np⁴) is <i>lower</i> than Group 15 (ns²np³) — the fourth p electron is paired and repelled by its partner, so easier to remove.</div>
+    <div class="key"><b>Electron affinity exceptions:</b> Be (Gp 2) is endothermic — the incoming electron is repelled by the filled 2s sub-level. N (Gp 15) is only weakly exothermic — the electron must pair up in an already half-filled 2p sub-level (extra repulsion).</div>
+  </section>
+
+  <!-- ============ GROUP 1 vs GROUP 17 ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">3.2c</span><h2>Group 1 vs Group 17</h2></div>
+    <p class="sec-sub">Opposite ends of the table, opposite trends in reactivity.</p>
+
+    <div class="compare">
+      <div class="compare-card" style="--group-color:var(--s-block)">
+        <h3>Group 1 — Alkali metals</h3>
+        <div class="subtitle">Li · Na · K · Rb · Cs · Fr — form M⁺</div>
+        <ul>
+          <li>Soft, shiny when cut, low density, good conductors</li>
+          <li>Reactivity <b>increases</b> down the group — lower ionization energy makes the outer electron easier to lose</li>
+          <li>React with water to give H<sub>2</sub>(g) + metal hydroxide (alkaline solution)</li>
+          <li>Melting point <b>decreases</b> down the group (weaker metallic bonding as ionic radius grows)</li>
+        </ul>
+        <span class="rxn-label">Reaction with water</span>
+        <div class="rxn">2K(s) + 2H₂O(l) → 2KOH(aq) + H₂(g)</div>
+        <span class="rxn-label">Reaction with a halogen</span>
+        <div class="rxn">2Na(s) + Cl₂(g) → 2NaCl(s)</div>
+      </div>
+
+      <div class="compare-card" style="--group-color:var(--p-block)">
+        <h3>Group 17 — Halogens</h3>
+        <div class="subtitle">F · Cl · Br · I · At — form X⁻ (diatomic X₂)</div>
+        <ul>
+          <li>Coloured; state runs gas (F₂, Cl₂) → liquid (Br₂) → solid (I₂)</li>
+          <li>Reactivity <b>decreases</b> down the group — larger atomic radius weakens the pull on an incoming electron</li>
+          <li>Form ionic halides with metals, covalent compounds with other non-metals</li>
+          <li>Melting point <b>increases</b> down the group (stronger London/dispersion forces, more electrons)</li>
+        </ul>
+        <span class="rxn-label">Displacement (more reactive halogen wins)</span>
+        <div class="rxn">Cl₂(aq) + 2KBr(aq) → 2KCl(aq) + Br₂(aq)</div>
+        <span class="rxn-label">Silver halide precipitate test</span>
+        <div class="rxn">Ag⁺(aq) + X⁻(aq) → AgX(s)</div>
+      </div>
+    </div>
+    <div class="key">The most vigorous alkali/halogen reaction pairs the elements <b>furthest apart</b> in the table: francium (lowest IE in Gp 1) with fluorine (highest Z<sub>eff</sub>, most exothermic EA, in Gp 17). AgCl = white, AgBr = cream, AgI = pale yellow — a classic halide test.</div>
+  </section>
+
+  <!-- ============ PERIOD 3 OXIDES ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">3.2d</span><h2>Metallic Behaviour &amp; Period 3 Oxides</h2></div>
+    <p class="sec-sub">Bonding — and therefore acid–base character — shifts from ionic to covalent across the period.</p>
+    <div class="tbl-wrap">
+      <table class="data">
+        <thead><tr><th></th><th>Na₂O</th><th>MgO</th><th>Al₂O₃</th><th>SiO₂</th><th>P₄O₁₀ / SO₃</th><th>Cl₂O₇</th></tr></thead>
+        <tbody>
+          <tr><td class="prop">Oxidation no.</td><td>+1</td><td>+2</td><td>+3</td><td>+4</td><td>+5 / +6</td><td>+7</td></tr>
+          <tr><td class="prop">Bonding</td><td colspan="2">giant ionic</td><td>ionic + covalent character</td><td>giant covalent</td><td colspan="2">simple molecular covalent</td></tr>
+          <tr><td class="prop">Acid–base</td><td colspan="2">basic</td><td>amphoteric</td><td colspan="3">acidic</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="oxide-note">Ionic character falls across the period as each element's electronegativity climbs toward oxygen's (3.4) — the electronegativity <i>difference</i> shrinks, so bonding becomes more covalent and oxides become more acidic.</p>
+    <span class="rxn-label">Basic oxide + water → alkali</span>
+    <div class="rxn">Na₂O(s) + H₂O(l) → 2NaOH(aq)</div>
+    <span class="rxn-label">Acidic oxide + water → acid</span>
+    <div class="rxn">SO₃(l) + H₂O(l) → H₂SO₄(aq)</div>
+    <span class="rxn-label">Amphoteric oxide — reacts with both acid and base</span>
+    <div class="rxn">Al₂O₃(s) + 6HCl(aq) → 2AlCl₃(aq) + 3H₂O(l)</div>
+    <div class="rxn">Al₂O₃(s) + 2NaOH(aq) + 3H₂O(l) → 2NaAl(OH)₄(aq)</div>
+  </section>
+
+  <!-- ============ GLOSSARY ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">§</span><h2>Definitions You Must Know</h2></div>
+    <p class="sec-sub">Every term this unit rests on, pulled from the class reagent-label deck.</p>
+
+    <div class="glossary">
+
+      <div class="gloss-group">
+        <h3>The table itself</h3>
+        <div class="gloss-grid">
+          <div class="gcard"><span class="term">Periodic table</span><span class="def">A table of all the known chemical elements, arranged in order of atomic number into rows (periods) and columns (groups) of elements with similar properties.</span></div>
+          <div class="gcard"><span class="term">Period</span><span class="def">A horizontal row of elements in the Periodic Table.</span></div>
+          <div class="gcard"><span class="term">Group</span><span class="def">A vertical column in the Periodic Table.</span></div>
+          <div class="gcard"><span class="term">Periodic law</span><span class="def">The physical and chemical properties of the elements are periodic functions of their atomic numbers.</span></div>
+          <div class="gcard"><span class="term">Periodicity</span><span class="def">A repeating pattern of atomic, physical and chemical properties across a period in the Periodic Table.</span></div>
+          <div class="gcard"><span class="term">Element</span><span class="def">A chemical which cannot be broken down into simpler substances; contains only one type of atom.</span></div>
+        </div>
+      </div>
+
+      <div class="gloss-group">
+        <h3>Families</h3>
+        <div class="gloss-grid">
+          <div class="gcard"><span class="term">Alkali metals</span><span class="def">The elements of Group 1 (lithium, sodium, potassium, rubidium and caesium).</span></div>
+          <div class="gcard"><span class="term">Alkaline earth metals</span><span class="def">The elements of Group 2 (beryllium, magnesium, calcium, strontium, barium and radium).</span></div>
+          <div class="gcard"><span class="term">Halogens</span><span class="def">The elements of Group 17 — reactive non-metals that exist as diatomic molecules, e.g. fluorine, chlorine, bromine.</span></div>
+          <div class="gcard"><span class="term">Noble gases</span><span class="def">The elements of Group 18 — very unreactive gases with a full outer shell of electrons, e.g. helium, neon, argon.</span></div>
+          <div class="gcard"><span class="term">Chalcogens</span><span class="def">The elements of Group 16, including oxygen and sulfur.</span></div>
+          <div class="gcard"><span class="term">Transition element</span><span class="def">A d-block element which forms one or more stable ions with an incompletely filled set of d-orbitals.</span></div>
+        </div>
+      </div>
+
+      <div class="gloss-group">
+        <h3>Atomic structure</h3>
+        <div class="gloss-grid">
+          <div class="gcard"><span class="term">Atom</span><span class="def">The smallest particle of an element which can take part in a chemical reaction.</span></div>
+          <div class="gcard"><span class="term">Atomic number (Z)</span><span class="def">The number of protons in the nucleus of an atom — also called proton number.</span></div>
+          <div class="gcard"><span class="term">Mass number (A)</span><span class="def">The total number of protons and neutrons in the nucleus of an atom.</span></div>
+          <div class="gcard"><span class="term">Ion</span><span class="def">An electrically charged particle formed from an atom or group of atoms by loss or gain of electrons, e.g. Na⁺, Cl⁻, SO₄²⁻.</span></div>
+          <div class="gcard"><span class="term">Relative atomic mass</span><span class="def">The ratio of the average mass per atom of an element relative to 1/12 the mass of an atom of ¹²C.</span></div>
+        </div>
+      </div>
+
+      <div class="gloss-group">
+        <h3>Trend quantities</h3>
+        <div class="gloss-grid">
+          <div class="gcard"><span class="term">First ionisation energy</span><span class="def">The energy required to remove one mole of electrons from one mole of gaseous atoms in their ground state, to form one mole of gaseous 1+ ions.</span></div>
+          <div class="gcard"><span class="term">First electron affinity</span><span class="def">The enthalpy change when one mole of electrons is added to one mole of gaseous atoms, to form one mole of gaseous 1− ions.</span></div>
+          <div class="gcard"><span class="term">Electronegativity</span><span class="def">The ability of an atom to attract the bonding pair of electrons in a covalent bond.</span></div>
+          <div class="gcard"><span class="term">Ionic bond</span><span class="def">The electrostatic attraction between oppositely charged ions.</span></div>
+          <div class="gcard"><span class="term">Metallic bond</span><span class="def">The electrostatic attraction between positive metal ions and delocalised electrons.</span></div>
+          <div class="gcard"><span class="term">Covalent bond</span><span class="def">The strong electrostatic attraction between a shared pair of electrons and the nuclei of the bonded atoms.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="note">
+    TOPIC 3 · PERIODICITY · IB CHEMISTRY HL
+    <div class="credit">
+      <span>JJ</span>
+      <span class="sep">·</span>
+      <a href="contact.html">About</a>
+      <span class="sep">·</span>
+      <span>Enhanced with AI</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var MAIN = [
+    // period 1
+    {s:"H",z:1,p:1,g:1,b:"s"}, {s:"He",z:2,p:1,g:18,b:"s"},
+    // period 2
+    {s:"Li",z:3,p:2,g:1,b:"s"},{s:"Be",z:4,p:2,g:2,b:"s"},
+    {s:"B",z:5,p:2,g:13,b:"p",m:1},{s:"C",z:6,p:2,g:14,b:"p"},{s:"N",z:7,p:2,g:15,b:"p"},{s:"O",z:8,p:2,g:16,b:"p"},{s:"F",z:9,p:2,g:17,b:"p"},{s:"Ne",z:10,p:2,g:18,b:"p"},
+    // period 3
+    {s:"Na",z:11,p:3,g:1,b:"s"},{s:"Mg",z:12,p:3,g:2,b:"s"},
+    {s:"Al",z:13,p:3,g:13,b:"p"},{s:"Si",z:14,p:3,g:14,b:"p",m:1},{s:"P",z:15,p:3,g:15,b:"p"},{s:"S",z:16,p:3,g:16,b:"p"},{s:"Cl",z:17,p:3,g:17,b:"p"},{s:"Ar",z:18,p:3,g:18,b:"p"},
+    // period 4
+    {s:"K",z:19,p:4,g:1,b:"s"},{s:"Ca",z:20,p:4,g:2,b:"s"},
+    {s:"Sc",z:21,p:4,g:3,b:"d"},{s:"Ti",z:22,p:4,g:4,b:"d"},{s:"V",z:23,p:4,g:5,b:"d"},{s:"Cr",z:24,p:4,g:6,b:"d"},{s:"Mn",z:25,p:4,g:7,b:"d"},{s:"Fe",z:26,p:4,g:8,b:"d"},{s:"Co",z:27,p:4,g:9,b:"d"},{s:"Ni",z:28,p:4,g:10,b:"d"},{s:"Cu",z:29,p:4,g:11,b:"d"},{s:"Zn",z:30,p:4,g:12,b:"d"},
+    {s:"Ga",z:31,p:4,g:13,b:"p"},{s:"Ge",z:32,p:4,g:14,b:"p",m:1},{s:"As",z:33,p:4,g:15,b:"p",m:1},{s:"Se",z:34,p:4,g:16,b:"p"},{s:"Br",z:35,p:4,g:17,b:"p"},{s:"Kr",z:36,p:4,g:18,b:"p"},
+    // period 5
+    {s:"Rb",z:37,p:5,g:1,b:"s"},{s:"Sr",z:38,p:5,g:2,b:"s"},
+    {s:"Y",z:39,p:5,g:3,b:"d"},{s:"Zr",z:40,p:5,g:4,b:"d"},{s:"Nb",z:41,p:5,g:5,b:"d"},{s:"Mo",z:42,p:5,g:6,b:"d"},{s:"Tc",z:43,p:5,g:7,b:"d"},{s:"Ru",z:44,p:5,g:8,b:"d"},{s:"Rh",z:45,p:5,g:9,b:"d"},{s:"Pd",z:46,p:5,g:10,b:"d"},{s:"Ag",z:47,p:5,g:11,b:"d"},{s:"Cd",z:48,p:5,g:12,b:"d"},
+    {s:"In",z:49,p:5,g:13,b:"p"},{s:"Sn",z:50,p:5,g:14,b:"p"},{s:"Sb",z:51,p:5,g:15,b:"p",m:1},{s:"Te",z:52,p:5,g:16,b:"p",m:1},{s:"I",z:53,p:5,g:17,b:"p"},{s:"Xe",z:54,p:5,g:18,b:"p"},
+    // period 6
+    {s:"Cs",z:55,p:6,g:1,b:"s"},{s:"Ba",z:56,p:6,g:2,b:"s"},
+    {s:"57–71",z:null,p:6,g:3,b:"f",wide:1},
+    {s:"Hf",z:72,p:6,g:4,b:"d"},{s:"Ta",z:73,p:6,g:5,b:"d"},{s:"W",z:74,p:6,g:6,b:"d"},{s:"Re",z:75,p:6,g:7,b:"d"},{s:"Os",z:76,p:6,g:8,b:"d"},{s:"Ir",z:77,p:6,g:9,b:"d"},{s:"Pt",z:78,p:6,g:10,b:"d"},{s:"Au",z:79,p:6,g:11,b:"d"},{s:"Hg",z:80,p:6,g:12,b:"d"},
+    {s:"Tl",z:81,p:6,g:13,b:"p"},{s:"Pb",z:82,p:6,g:14,b:"p"},{s:"Bi",z:83,p:6,g:15,b:"p"},{s:"Po",z:84,p:6,g:16,b:"p",m:1},{s:"At",z:85,p:6,g:17,b:"p"},{s:"Rn",z:86,p:6,g:18,b:"p"},
+    // period 7
+    {s:"Fr",z:87,p:7,g:1,b:"s"},{s:"Ra",z:88,p:7,g:2,b:"s"},
+    {s:"89–103",z:null,p:7,g:3,b:"f",wide:1},
+    {s:"Rf",z:104,p:7,g:4,b:"d"},{s:"Db",z:105,p:7,g:5,b:"d"},{s:"Sg",z:106,p:7,g:6,b:"d"},{s:"Bh",z:107,p:7,g:7,b:"d"},{s:"Hs",z:108,p:7,g:8,b:"d"},{s:"Mt",z:109,p:7,g:9,b:"d"},{s:"Ds",z:110,p:7,g:10,b:"d"},{s:"Rg",z:111,p:7,g:11,b:"d"},{s:"Cn",z:112,p:7,g:12,b:"d"},
+    {s:"Nh",z:113,p:7,g:13,b:"p"},{s:"Fl",z:114,p:7,g:14,b:"p"},{s:"Mc",z:115,p:7,g:15,b:"p"},{s:"Lv",z:116,p:7,g:16,b:"p"},{s:"Ts",z:117,p:7,g:17,b:"p"},{s:"Og",z:118,p:7,g:18,b:"p"}
+  ];
+  var LANT = ["La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu"];
+  var ACT  = ["Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr"];
+
+  var grid = document.getElementById("ptable");
+  MAIN.forEach(function(el){
+    var d = document.createElement("div");
+    d.className = "cell " + el.b + (el.m ? " metalloid" : "") + (el.wide ? " wide" : "");
+    d.style.gridColumn = el.g;
+    d.style.gridRow = el.p;
+    d.innerHTML = (el.z ? '<span class="z">'+el.z+'</span>' : '') + '<span class="sym">'+el.s+'</span>';
+    grid.appendChild(d);
+  });
+
+  var frow = document.getElementById("frow");
+  function addStrip(list, startCol){
+    list.forEach(function(sym, i){
+      var d = document.createElement("div");
+      d.className = "cell f";
+      d.style.gridColumn = startCol + i;
+      d.style.gridRow = 1;
+      d.innerHTML = '<span class="sym">'+sym+'</span>';
+      frow.appendChild(d);
+    });
+  }
+  addStrip(LANT, 3);
+  var frow2 = document.createElement("div");
+  frow2.className = "frow";
+  frow2.style.marginTop = "3px";
+  frow2.id = "frow2";
+  document.getElementById("ptable").parentNode.insertBefore(frow2, frow.nextSibling);
+  ACT.forEach(function(sym, i){
+    var d = document.createElement("div");
+    d.className = "cell f";
+    d.style.gridColumn = 3 + i;
+    d.style.gridRow = 1;
+    d.innerHTML = '<span class="sym">'+sym+'</span>';
+    frow2.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>
