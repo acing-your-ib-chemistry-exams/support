@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Clue Challenge — Two Players — Periodic Table Tetris</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e1e1e;
+    --ink-soft:#495057;
+    --accent:#7048e8;
+    --accent-soft:#e5dbff;
+    --good:#2f9e44;
+    --bad:#c92a2a;
+    --reveal:#f08c00;
+    --p1:#7048e8;
+    --p1-soft:#e5dbff;
+    --p2:#0c8599;
+    --p2-soft:#c5f6fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background-color:#ffffff;
+    background-image: radial-gradient(circle, #d8dee9 1.4px, transparent 1.4px);
+    background-size: 22px 22px;
+    font-family:'Kalam','Comic Sans MS',cursive;
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:14px 16px 40px;}
+
+  header{
+    text-align:center;
+    padding:6px 0 14px;
+    border-bottom:2.5px solid var(--ink);
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Architects Daughter',cursive;
+    font-size:clamp(20px,4vw,34px);
+    margin:4px 0;
+    color:var(--ink);
+    letter-spacing:0.5px;
+    display:inline-block;
+    transform:rotate(-0.6deg);
+  }
+  .subtitle{font-size:14px;color:var(--ink-soft);letter-spacing:.3px;}
+
+  .hud{
+    display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:stretch;
+    margin-top:10px;
+  }
+  .player-card{
+    background:#fff;
+    border:2.4px solid var(--ink);
+    border-radius: 12px 16px 10px 18px / 16px 10px 18px 12px;
+    padding:8px 18px;
+    box-shadow: 2.5px 2.5px 0 rgba(30,30,30,.9);
+    min-width:150px;
+    text-align:center;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .player-card.p1{ --pcolor:var(--p1); }
+  .player-card.p2{ --pcolor:var(--p2); }
+  .player-card .player-name{
+    font-family:'Architects Daughter',cursive;font-weight:700;font-size:15px;
+    color:var(--pcolor);margin-bottom:2px;
+  }
+  .player-card .player-stats{font-size:13px;font-weight:700;color:var(--ink-soft);}
+  .player-card .player-stats span{color:var(--pcolor);font-weight:800;}
+  .player-card.active{
+    transform:translateY(-2px);
+    box-shadow: 4px 4px 0 rgba(30,30,30,.9);
+    border-color:var(--pcolor);
+    background:var(--p1-soft);
+  }
+  .player-card.p2.active{ background:var(--p2-soft); }
+  .clue-counter{
+    align-self:center;
+    background:#fff;border:2.2px solid var(--ink);
+    border-radius: 9px 14px 8px 16px / 13px 8px 15px 9px;
+    padding:4px 14px;font-size:14px;font-weight:700;
+    box-shadow: 2.5px 2.5px 0 rgba(30,30,30,.9);
+  }
+  .clue-counter span{color:var(--ink);font-weight:800;}
+
+  .turn-banner{
+    text-align:center;margin:10px auto 0;font-size:14px;font-weight:800;
+    display:inline-block;padding:4px 16px;border-radius:20px;
+    border:2px solid var(--ink);color:#fff;
+    font-family:'Architects Daughter',cursive;
+    letter-spacing:.3px;
+  }
+  .turn-banner-wrap{text-align:center;}
+  .turn-banner.p1{background:var(--p1);}
+  .turn-banner.p2{background:var(--p2);}
+  .turn-banner.steal{animation:stealPulse .5s ease;}
+  @keyframes stealPulse{0%{transform:scale(1);}40%{transform:scale(1.12);}100%{transform:scale(1);}}
+
+  .clue-banner{
+    max-width:680px;margin:14px auto 10px;padding:16px 22px;
+    background:#fff;border:2.6px solid var(--ink);
+    border-radius: 18px 12px 20px 10px / 12px 18px 10px 20px;
+    box-shadow: 4px 4px 0 rgba(30,30,30,.85);
+    text-align:center;
+  }
+  .clue-text{
+    font-family:'Architects Daughter',cursive;
+    font-size:clamp(16px,2.6vw,22px);
+    color:var(--ink);
+    line-height:1.4;
+  }
+  .clue-text .hl{color:var(--accent);}
+  .feedback{
+    min-height:1.4em;
+    font-size:14px;font-weight:700;margin-top:6px;
+    opacity:0;transition:opacity .2s ease;
+  }
+  .feedback.show{opacity:1;}
+  .feedback.good{color:var(--good);}
+  .feedback.bad{color:var(--bad);}
+  .feedback.reveal{color:var(--reveal);}
+
+  .game-area{
+    display:flex;justify-content:center;margin-top:6px;
+  }
+  .table-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(18,1fr);
+    gap:4px;
+    width:min(96vw,940px);
+  }
+  .group-label{
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:11px;color:var(--ink-soft);
+  }
+  .cell{
+    position:relative;
+    border:none;background:none;padding:0;margin:0;font:inherit;
+    border-radius: 7px 10px 6px 11px / 9px 6px 11px 7px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Architects Daughter',cursive;font-style:normal;font-weight:700;
+    font-size:20px;line-height:1;color:var(--ink);
+    cursor:pointer;touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;
+  }
+  .cell::before{
+    content:'';position:absolute;inset:0;border-radius:inherit;
+    background-color:inherit;border:2.2px solid var(--ink);
+    filter:url(#sketchy);
+  }
+  .cell > span{position:relative;z-index:1;}
+  .cell:hover::before{box-shadow:0 0 0 2px rgba(112,72,232,.35);}
+  .cell.correctflash::before{border-color:var(--good) !important;background-color:#b2f2bb !important;}
+  .cell.correctflash{animation:pop .4s ease;}
+  .cell.wrongflash{animation:cellShake .3s ease;}
+  .cell.revealflash::before{border-color:var(--reveal) !important;background-color:#ffe8cc !important;}
+  .cell.revealflash{animation:pop .4s ease;}
+  @keyframes pop{0%{transform:scale(0.6);}60%{transform:scale(1.18);}100%{transform:scale(1);}}
+  @keyframes cellShake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+
+  .cat-alkali{background:#ffd8a8;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+  .cat-alkaline{background:#ffec99;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+  .cat-rare{background:#fcc2d7;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+  .cat-transition{background:#a5d8ff;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+  .cat-posttrans{background:#b2f2bb;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+  .cat-metalloid{background:#99e9f2;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+  .cat-nonmetal{background:#b197fc;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+  .cat-halogen{background:#ffc9c9;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+  .cat-noble{background:#eebefa;background-image:repeating-linear-gradient(45deg,rgba(30,30,30,.13) 0 1.5px,transparent 1.5px 7px);}
+
+  .table-grid.blind .cell{background:#fff !important;background-image:none !important;color:transparent !important;}
+  .table-grid.blind .cell::before{border-style:dashed;border-color:#adb5bd !important;}
+  .table-grid.blind .cell:hover::before{border-color:var(--accent) !important;}
+
+  .instructions{
+    text-align:center;font-size:13px;color:var(--ink-soft);margin-top:18px;line-height:1.6;
+  }
+
+  .overlay{
+    position:fixed;inset:0;background:rgba(30,30,30,.5);
+    display:flex;align-items:center;justify-content:center;z-index:20;padding:16px;
+  }
+  .overlay[hidden]{display:none;}
+  .card{
+    background:#fff;border:2.6px solid var(--ink);
+    border-radius: 20px 14px 22px 12px / 14px 20px 12px 22px;
+    padding:26px 30px;max-width:480px;width:100%;text-align:center;
+    box-shadow: 6px 6px 0 rgba(30,30,30,.85);
+    max-height:90vh;overflow-y:auto;
+  }
+  .card h2{font-family:'Architects Daughter',cursive;color:var(--accent);margin-top:0;}
+  .card p{font-size:14px;line-height:1.6;color:var(--ink-soft);}
+  .option-group{
+    text-align:left;margin:14px 0;padding:10px 14px;
+    border:1.6px dashed var(--ink);border-radius:10px;
+  }
+  .option-label{font-weight:800;font-size:13px;margin-bottom:6px;color:var(--ink);}
+  .option-group label{
+    display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-soft);
+    padding:4px 0;cursor:pointer;
+  }
+  .option-group input[type="checkbox"],.option-group input[type="radio"]{width:16px;height:16px;cursor:pointer;accent-color:var(--accent);flex:none;}
+  .name-row{display:flex;gap:10px;}
+  .name-field{flex:1;text-align:left;}
+  .name-field label{display:block;font-size:12px;font-weight:800;margin-bottom:3px;color:var(--ink-soft);}
+  .name-field input[type="text"]{
+    width:100%;font-family:'Kalam','Comic Sans MS',cursive;font-size:14px;
+    border:2px solid var(--ink);border-radius:8px;padding:6px 8px;
+  }
+  .name-field.p1 input{border-color:var(--p1);}
+  .name-field.p2 input{border-color:var(--p2);}
+  .rounds-row{display:flex;gap:8px;justify-content:center;}
+  .rounds-row label{
+    flex:1;justify-content:center;border:2px solid var(--ink);border-radius:8px;padding:6px 0;
+  }
+  .rounds-row input{position:absolute;opacity:0;pointer-events:none;}
+  .rounds-row label:has(input:checked){background:var(--accent-soft);border-color:var(--accent);font-weight:800;color:var(--ink);}
+  .card button{
+    font-family:'Architects Daughter',cursive;background:var(--accent);
+    border:2.2px solid var(--ink);color:#fff;font-weight:700;
+    padding:10px 26px;border-radius: 10px 16px 9px 17px / 14px 9px 17px 10px;
+    cursor:pointer;font-size:15px;box-shadow: 3px 3px 0 rgba(30,30,30,.85);
+    letter-spacing:0.5px;margin-top:12px;
+  }
+  .card button:hover{filter:brightness(1.08);}
+  .winner-line{font-size:20px;font-weight:800;color:var(--accent);font-family:'Architects Daughter',cursive;margin:10px 0 2px;}
+  .final-scores{display:flex;gap:14px;justify-content:center;margin:10px 0;}
+  .final-scores .fp{
+    border:2.2px solid var(--ink);border-radius:12px;padding:8px 16px;min-width:110px;
+  }
+  .final-scores .fp.p1{border-color:var(--p1);}
+  .final-scores .fp.p2{border-color:var(--p2);}
+  .final-scores .fp .fname{font-weight:800;font-size:13px;}
+  .final-scores .fp.p1 .fname{color:var(--p1);}
+  .final-scores .fp.p2 .fname{color:var(--p2);}
+  .final-scores .fp .fscore{font-size:26px;font-weight:800;font-family:'Architects Daughter',cursive;}
+
+  .ai-credit-line{text-align:center;font-size:12px;color:#8a8a8a;margin:22px 0 4px;letter-spacing:.4px;}
+  .corner-credit{text-align:right;margin:6px 0 16px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11px;line-height:1.3;color:#888;}
+  .corner-initials{font-weight:700;}
+  .corner-about{color:#888;text-decoration:underline;}
+  .corner-about:hover{color:#555;}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+  <filter id="sketchy" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<div class="wrap">
+  <header>
+    <h1>Clue Challenge — Two Players</h1>
+    <div class="subtitle">Take turns — a wrong guess hands the clue to the other player to steal!</div>
+    <div class="hud" id="hud" hidden>
+      <div class="player-card p1" id="p1Card">
+        <div class="player-name" id="p1NameLabel">Player 1</div>
+        <div class="player-stats">Score <span id="p1Score">0</span> &nbsp;•&nbsp; Streak <span id="p1Streak">0</span></div>
+      </div>
+      <div class="clue-counter">Clue <span id="clueNum">1</span> / <span id="clueTotal">25</span></div>
+      <div class="player-card p2" id="p2Card">
+        <div class="player-name" id="p2NameLabel">Player 2</div>
+        <div class="player-stats">Score <span id="p2Score">0</span> &nbsp;•&nbsp; Streak <span id="p2Streak">0</span></div>
+      </div>
+    </div>
+    <div class="turn-banner-wrap">
+      <div class="turn-banner" id="turnBanner" hidden></div>
+    </div>
+  </header>
+
+  <div class="clue-banner" id="clueBanner" hidden>
+    <div class="clue-text" id="clueText"></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <div class="game-area" id="gameArea" hidden>
+    <div class="table-grid" id="tableGrid"></div>
+  </div>
+
+  <div class="instructions" id="instructions" hidden>Guess wrong and the clue passes straight to the other player to steal. Miss it twice between you and the answer is revealed, then it's on to the next clue.</div>
+
+  <div class="overlay" id="startOverlay">
+    <div class="card">
+      <h2>Clue Challenge — Two Players</h2>
+      <p>Statements like &ldquo;An s-block element from Period 2&rdquo; or &ldquo;Has the electron shell arrangement 2.8.8.1&rdquo; appear one at a time. Turns alternate; guess wrong and your opponent gets a steal attempt on the same clue.</p>
+
+      <div class="option-group">
+        <div class="option-label">Players</div>
+        <div class="name-row">
+          <div class="name-field p1"><label for="p1Name">Player 1</label><input type="text" id="p1Name" placeholder="Player 1" maxlength="20"></div>
+          <div class="name-field p2"><label for="p2Name">Player 2</label><input type="text" id="p2Name" placeholder="Player 2" maxlength="20"></div>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <div class="option-label">Level</div>
+        <label><input type="radio" name="level" value="junior"> Junior — Periods 1&ndash;4</label>
+        <label><input type="radio" name="level" value="full" checked> Full Table — Periods 1&ndash;7 (with the f-block)</label>
+      </div>
+
+      <div class="option-group">
+        <div class="option-label">Options</div>
+        <label><input type="checkbox" id="extToggle"> Extension: electron configuration clues (s, p, d, f notation)</label>
+        <label><input type="checkbox" id="blindToggle" checked> Occasional rounds with the symbols hidden</label>
+      </div>
+
+      <div class="option-group">
+        <div class="option-label">Clues per match</div>
+        <div class="rounds-row">
+          <label><input type="radio" name="rounds" value="15">15</label>
+          <label><input type="radio" name="rounds" value="25" checked>25</label>
+          <label><input type="radio" name="rounds" value="40">40</label>
+        </div>
+      </div>
+
+      <button id="startBtn" type="button">Start</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="endOverlay" hidden>
+    <div class="card">
+      <h2>Match Complete!</h2>
+      <div class="winner-line" id="winnerLine"></div>
+      <div class="final-scores">
+        <div class="fp p1"><div class="fname" id="finalP1Name">Player 1</div><div class="fscore" id="finalP1Score">0</div></div>
+        <div class="fp p2"><div class="fname" id="finalP2Name">Player 2</div><div class="fscore" id="finalP2Score">0</div></div>
+      </div>
+      <button id="playAgainBtn" type="button">Play Again</button>
+    </div>
+  </div>
+
+  <div class="ai-credit-line">Enhanced with A.I.</div>
+  <div class="corner-credit">
+    <div class="corner-initials">J.J.</div>
+    <a class="corner-about" href="contact.html">About</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------------------------------------------------------------
+  // Element data: period (p), group (g), symbol (s), atomic number (z),
+  // name, and broad chemical category (cat). 'Ln'/'An' mark the
+  // lanthanide/actinide rows, shown as a separate strip below the main
+  // table but chemically belonging to Period 6 / Period 7 respectively.
+  // ---------------------------------------------------------------------
+  const ELEMENTS = [
+    {p:1, g:1, s:'H', z:1, name:'Hydrogen', cat:'nonmetal'},
+    {p:1, g:18, s:'He', z:2, name:'Helium', cat:'noble'},
+    {p:2, g:1, s:'Li', z:3, name:'Lithium', cat:'alkali'},
+    {p:2, g:2, s:'Be', z:4, name:'Beryllium', cat:'alkaline'},
+    {p:2, g:13, s:'B', z:5, name:'Boron', cat:'metalloid'},
+    {p:2, g:14, s:'C', z:6, name:'Carbon', cat:'nonmetal'},
+    {p:2, g:15, s:'N', z:7, name:'Nitrogen', cat:'nonmetal'},
+    {p:2, g:16, s:'O', z:8, name:'Oxygen', cat:'nonmetal'},
+    {p:2, g:17, s:'F', z:9, name:'Fluorine', cat:'halogen'},
+    {p:2, g:18, s:'Ne', z:10, name:'Neon', cat:'noble'},
+    {p:3, g:1, s:'Na', z:11, name:'Sodium', cat:'alkali'},
+    {p:3, g:2, s:'Mg', z:12, name:'Magnesium', cat:'alkaline'},
+    {p:3, g:13, s:'Al', z:13, name:'Aluminium', cat:'posttrans'},
+    {p:3, g:14, s:'Si', z:14, name:'Silicon', cat:'metalloid'},
+    {p:3, g:15, s:'P', z:15, name:'Phosphorus', cat:'nonmetal'},
+    {p:3, g:16, s:'S', z:16, name:'Sulfur', cat:'nonmetal'},
+    {p:3, g:17, s:'Cl', z:17, name:'Chlorine', cat:'halogen'},
+    {p:3, g:18, s:'Ar', z:18, name:'Argon', cat:'noble'},
+    {p:4, g:1, s:'K', z:19, name:'Potassium', cat:'alkali'},
+    {p:4, g:2, s:'Ca', z:20, name:'Calcium', cat:'alkaline'},
+    {p:4, g:3, s:'Sc', z:21, name:'Scandium', cat:'transition'},
+    {p:4, g:4, s:'Ti', z:22, name:'Titanium', cat:'transition'},
+    {p:4, g:5, s:'V', z:23, name:'Vanadium', cat:'transition'},
+    {p:4, g:6, s:'Cr', z:24, name:'Chromium', cat:'transition'},
+    {p:4, g:7, s:'Mn', z:25, name:'Manganese', cat:'transition'},
+    {p:4, g:8, s:'Fe', z:26, name:'Iron', cat:'transition'},
+    {p:4, g:9, s:'Co', z:27, name:'Cobalt', cat:'transition'},
+    {p:4, g:10, s:'Ni', z:28, name:'Nickel', cat:'transition'},
+    {p:4, g:11, s:'Cu', z:29, name:'Copper', cat:'transition'},
+    {p:4, g:12, s:'Zn', z:30, name:'Zinc', cat:'transition'},
+    {p:4, g:13, s:'Ga', z:31, name:'Gallium', cat:'posttrans'},
+    {p:4, g:14, s:'Ge', z:32, name:'Germanium', cat:'metalloid'},
+    {p:4, g:15, s:'As', z:33, name:'Arsenic', cat:'metalloid'},
+    {p:4, g:16, s:'Se', z:34, name:'Selenium', cat:'nonmetal'},
+    {p:4, g:17, s:'Br', z:35, name:'Bromine', cat:'halogen'},
+    {p:4, g:18, s:'Kr', z:36, name:'Krypton', cat:'noble'},
+    {p:5, g:1, s:'Rb', z:37, name:'Rubidium', cat:'alkali'},
+    {p:5, g:2, s:'Sr', z:38, name:'Strontium', cat:'alkaline'},
+    {p:5, g:3, s:'Y', z:39, name:'Yttrium', cat:'transition'},
+    {p:5, g:4, s:'Zr', z:40, name:'Zirconium', cat:'transition'},
+    {p:5, g:5, s:'Nb', z:41, name:'Niobium', cat:'transition'},
+    {p:5, g:6, s:'Mo', z:42, name:'Molybdenum', cat:'transition'},
+    {p:5, g:7, s:'Tc', z:43, name:'Technetium', cat:'transition'},
+    {p:5, g:8, s:'Ru', z:44, name:'Ruthenium', cat:'transition'},
+    {p:5, g:9, s:'Rh', z:45, name:'Rhodium', cat:'transition'},
+    {p:5, g:10, s:'Pd', z:46, name:'Palladium', cat:'transition'},
+    {p:5, g:11, s:'Ag', z:47, name:'Silver', cat:'transition'},
+    {p:5, g:12, s:'Cd', z:48, name:'Cadmium', cat:'transition'},
+    {p:5, g:13, s:'In', z:49, name:'Indium', cat:'posttrans'},
+    {p:5, g:14, s:'Sn', z:50, name:'Tin', cat:'posttrans'},
+    {p:5, g:15, s:'Sb', z:51, name:'Antimony', cat:'metalloid'},
+    {p:5, g:16, s:'Te', z:52, name:'Tellurium', cat:'metalloid'},
+    {p:5, g:17, s:'I', z:53, name:'Iodine', cat:'halogen'},
+    {p:5, g:18, s:'Xe', z:54, name:'Xenon', cat:'noble'},
+    {p:6, g:1, s:'Cs', z:55, name:'Caesium', cat:'alkali'},
+    {p:6, g:2, s:'Ba', z:56, name:'Barium', cat:'alkaline'},
+    {p:6, g:3, s:'La', z:57, name:'Lanthanum', cat:'rare'},
+    {p:6, g:4, s:'Hf', z:72, name:'Hafnium', cat:'transition'},
+    {p:6, g:5, s:'Ta', z:73, name:'Tantalum', cat:'transition'},
+    {p:6, g:6, s:'W', z:74, name:'Tungsten', cat:'transition'},
+    {p:6, g:7, s:'Re', z:75, name:'Rhenium', cat:'transition'},
+    {p:6, g:8, s:'Os', z:76, name:'Osmium', cat:'transition'},
+    {p:6, g:9, s:'Ir', z:77, name:'Iridium', cat:'transition'},
+    {p:6, g:10, s:'Pt', z:78, name:'Platinum', cat:'transition'},
+    {p:6, g:11, s:'Au', z:79, name:'Gold', cat:'transition'},
+    {p:6, g:12, s:'Hg', z:80, name:'Mercury', cat:'transition'},
+    {p:6, g:13, s:'Tl', z:81, name:'Thallium', cat:'posttrans'},
+    {p:6, g:14, s:'Pb', z:82, name:'Lead', cat:'posttrans'},
+    {p:6, g:15, s:'Bi', z:83, name:'Bismuth', cat:'posttrans'},
+    {p:6, g:16, s:'Po', z:84, name:'Polonium', cat:'metalloid'},
+    {p:6, g:17, s:'At', z:85, name:'Astatine', cat:'halogen'},
+    {p:6, g:18, s:'Rn', z:86, name:'Radon', cat:'noble'},
+    {p:'Ln', g:3, s:'Ce', z:58, name:'Cerium', cat:'rare'},
+    {p:'Ln', g:4, s:'Pr', z:59, name:'Praseodymium', cat:'rare'},
+    {p:'Ln', g:5, s:'Nd', z:60, name:'Neodymium', cat:'rare'},
+    {p:'Ln', g:6, s:'Pm', z:61, name:'Promethium', cat:'rare'},
+    {p:'Ln', g:7, s:'Sm', z:62, name:'Samarium', cat:'rare'},
+    {p:'Ln', g:8, s:'Eu', z:63, name:'Europium', cat:'rare'},
+    {p:'Ln', g:9, s:'Gd', z:64, name:'Gadolinium', cat:'rare'},
+    {p:'Ln', g:10, s:'Tb', z:65, name:'Terbium', cat:'rare'},
+    {p:'Ln', g:11, s:'Dy', z:66, name:'Dysprosium', cat:'rare'},
+    {p:'Ln', g:12, s:'Ho', z:67, name:'Holmium', cat:'rare'},
+    {p:'Ln', g:13, s:'Er', z:68, name:'Erbium', cat:'rare'},
+    {p:'Ln', g:14, s:'Tm', z:69, name:'Thulium', cat:'rare'},
+    {p:'Ln', g:15, s:'Yb', z:70, name:'Ytterbium', cat:'rare'},
+    {p:'Ln', g:16, s:'Lu', z:71, name:'Lutetium', cat:'rare'},
+    {p:7, g:1, s:'Fr', z:87, name:'Francium', cat:'alkali'},
+    {p:7, g:2, s:'Ra', z:88, name:'Radium', cat:'alkaline'},
+    {p:7, g:3, s:'Ac', z:89, name:'Actinium', cat:'rare'},
+    {p:7, g:4, s:'Rf', z:104, name:'Rutherfordium', cat:'transition'},
+    {p:7, g:5, s:'Db', z:105, name:'Dubnium', cat:'transition'},
+    {p:7, g:6, s:'Sg', z:106, name:'Seaborgium', cat:'transition'},
+    {p:7, g:7, s:'Bh', z:107, name:'Bohrium', cat:'transition'},
+    {p:7, g:8, s:'Hs', z:108, name:'Hassium', cat:'transition'},
+    {p:7, g:9, s:'Mt', z:109, name:'Meitnerium', cat:'transition'},
+    {p:7, g:10, s:'Ds', z:110, name:'Darmstadtium', cat:'transition'},
+    {p:7, g:11, s:'Rg', z:111, name:'Roentgenium', cat:'transition'},
+    {p:7, g:12, s:'Cn', z:112, name:'Copernicium', cat:'transition'},
+    {p:7, g:13, s:'Nh', z:113, name:'Nihonium', cat:'posttrans'},
+    {p:7, g:14, s:'Fl', z:114, name:'Flerovium', cat:'posttrans'},
+    {p:7, g:15, s:'Mc', z:115, name:'Moscovium', cat:'posttrans'},
+    {p:7, g:16, s:'Lv', z:116, name:'Livermorium', cat:'posttrans'},
+    {p:7, g:17, s:'Ts', z:117, name:'Tennessine', cat:'halogen'},
+    {p:7, g:18, s:'Og', z:118, name:'Oganesson', cat:'noble'},
+    {p:'An', g:3, s:'Th', z:90, name:'Thorium', cat:'rare'},
+    {p:'An', g:4, s:'Pa', z:91, name:'Protactinium', cat:'rare'},
+    {p:'An', g:5, s:'U', z:92, name:'Uranium', cat:'rare'},
+    {p:'An', g:6, s:'Np', z:93, name:'Neptunium', cat:'rare'},
+    {p:'An', g:7, s:'Pu', z:94, name:'Plutonium', cat:'rare'},
+    {p:'An', g:8, s:'Am', z:95, name:'Americium', cat:'rare'},
+    {p:'An', g:9, s:'Cm', z:96, name:'Curium', cat:'rare'},
+    {p:'An', g:10, s:'Bk', z:97, name:'Berkelium', cat:'rare'},
+    {p:'An', g:11, s:'Cf', z:98, name:'Californium', cat:'rare'},
+    {p:'An', g:12, s:'Es', z:99, name:'Einsteinium', cat:'rare'},
+    {p:'An', g:13, s:'Fm', z:100, name:'Fermium', cat:'rare'},
+    {p:'An', g:14, s:'Md', z:101, name:'Mendelevium', cat:'rare'},
+    {p:'An', g:15, s:'No', z:102, name:'Nobelium', cat:'rare'},
+    {p:'An', g:16, s:'Lr', z:103, name:'Lawrencium', cat:'rare'}
+  ];
+
+  // ---------------------------------------------------------------------
+  // Electron configuration engine.
+  // Filling order follows the Madelung / Aufbau rule; a small set of
+  // well-documented exceptions (Cr, Cu, Nb, Mo, Ru, Rh, Pd, Ag, Pt, Au,
+  // and the lanthanide/actinide series) are given explicitly rather than
+  // derived, since those are the elements where simple Aufbau filling is
+  // known to disagree with the real ground-state configuration.
+  // ---------------------------------------------------------------------
+  const AUFBAU_ORDER = [
+    [1,'s',2],[2,'s',2],[2,'p',6],[3,'s',2],[3,'p',6],[4,'s',2],[3,'d',10],[4,'p',6],
+    [5,'s',2],[4,'d',10],[5,'p',6],[6,'s',2],[4,'f',14],[5,'d',10],[6,'p',6],
+    [7,'s',2],[5,'f',14],[6,'d',10],[7,'p',6]
+  ];
+  function aufbauFill(z){
+    const counts = {};
+    let remaining = z;
+    for(let i=0;i<AUFBAU_ORDER.length && remaining>0;i++){
+      const n=AUFBAU_ORDER[i][0], l=AUFBAU_ORDER[i][1], cap=AUFBAU_ORDER[i][2];
+      const take = Math.min(cap, remaining);
+      if(take>0) counts[n+''+l]=take;
+      remaining -= take;
+    }
+    return counts;
+  }
+  function buildFromCore(coreZ, extra){
+    const counts = Object.assign({}, aufbauFill(coreZ));
+    for(const k in extra) counts[k]=extra[k];
+    return counts;
+  }
+  const EXPLICIT_CONFIGS = {
+    24: buildFromCore(18, {'3d':5,'4s':1}),   // Cr
+    29: buildFromCore(18, {'3d':10,'4s':1}),  // Cu
+    41: buildFromCore(36, {'4d':4,'5s':1}),   // Nb
+    42: buildFromCore(36, {'4d':5,'5s':1}),   // Mo
+    44: buildFromCore(36, {'4d':7,'5s':1}),   // Ru
+    45: buildFromCore(36, {'4d':8,'5s':1}),   // Rh
+    46: buildFromCore(36, {'4d':10,'5s':0}),  // Pd
+    47: buildFromCore(36, {'4d':10,'5s':1}),  // Ag
+    78: buildFromCore(54, {'4f':14,'5d':9,'6s':1}),  // Pt
+    79: buildFromCore(54, {'4f':14,'5d':10,'6s':1}), // Au
+    57: buildFromCore(54, {'5d':1,'6s':2}),                // La
+    58: buildFromCore(54, {'4f':1,'5d':1,'6s':2}),         // Ce
+    59: buildFromCore(54, {'4f':3,'6s':2}),                // Pr
+    60: buildFromCore(54, {'4f':4,'6s':2}),                // Nd
+    61: buildFromCore(54, {'4f':5,'6s':2}),                // Pm
+    62: buildFromCore(54, {'4f':6,'6s':2}),                // Sm
+    63: buildFromCore(54, {'4f':7,'6s':2}),                // Eu
+    64: buildFromCore(54, {'4f':7,'5d':1,'6s':2}),         // Gd
+    65: buildFromCore(54, {'4f':9,'6s':2}),                // Tb
+    66: buildFromCore(54, {'4f':10,'6s':2}),               // Dy
+    67: buildFromCore(54, {'4f':11,'6s':2}),               // Ho
+    68: buildFromCore(54, {'4f':12,'6s':2}),               // Er
+    69: buildFromCore(54, {'4f':13,'6s':2}),               // Tm
+    70: buildFromCore(54, {'4f':14,'6s':2}),               // Yb
+    71: buildFromCore(54, {'4f':14,'5d':1,'6s':2}),        // Lu
+    89: buildFromCore(86, {'6d':1,'7s':2}),                // Ac
+    90: buildFromCore(86, {'6d':2,'7s':2}),                // Th
+    91: buildFromCore(86, {'5f':2,'6d':1,'7s':2}),         // Pa
+    92: buildFromCore(86, {'5f':3,'6d':1,'7s':2}),         // U
+    93: buildFromCore(86, {'5f':4,'6d':1,'7s':2}),         // Np
+    94: buildFromCore(86, {'5f':6,'7s':2}),                // Pu
+    95: buildFromCore(86, {'5f':7,'7s':2}),                // Am
+    96: buildFromCore(86, {'5f':7,'6d':1,'7s':2}),         // Cm
+    97: buildFromCore(86, {'5f':9,'7s':2}),                // Bk
+    98: buildFromCore(86, {'5f':10,'7s':2}),               // Cf
+    99: buildFromCore(86, {'5f':11,'7s':2}),               // Es
+    100: buildFromCore(86, {'5f':12,'7s':2}),              // Fm
+    101: buildFromCore(86, {'5f':13,'7s':2}),              // Md
+    102: buildFromCore(86, {'5f':14,'7s':2}),              // No
+    103: buildFromCore(86, {'5f':14,'7s':2,'7p':1})        // Lr
+  };
+  function electronCounts(z){
+    return EXPLICIT_CONFIGS[z] || aufbauFill(z);
+  }
+  const SUPER = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  function sup(n){ return String(n).split('').map(d=>SUPER[d]).join(''); }
+  function sortedSubshells(counts){
+    return Object.keys(counts)
+      .map(k=>({n:parseInt(k,10), l:k.slice(String(parseInt(k,10)).length), count:counts[k]}))
+      .sort((a,b)=> a.n-b.n || 'spdf'.indexOf(a.l)-'spdf'.indexOf(b.l));
+  }
+  function fullConfigString(z){
+    const counts = electronCounts(z);
+    return sortedSubshells(counts).map(s=> s.n+s.l+sup(s.count)).join('');
+  }
+  const NOBLE_CORES = [86,54,36,18,10,2]; // Rn, Xe, Kr, Ar, Ne, He (descending)
+  const NOBLE_SYMBOL = {2:'He',10:'Ne',18:'Ar',36:'Kr',54:'Xe',86:'Rn'};
+  function coreOf(z){
+    for(const c of NOBLE_CORES){ if(c < z) return c; }
+    return 0;
+  }
+  function shortConfigString(z){
+    const core = coreOf(z);
+    if(!core) return fullConfigString(z);
+    const full = electronCounts(z);
+    const coreCounts = aufbauFill(core);
+    const extra = {};
+    for(const k in full){ if(full[k] !== coreCounts[k]) extra[k]=full[k]; }
+    const rest = sortedSubshells(extra).map(s=> s.n+s.l+sup(s.count)).join('');
+    return '['+NOBLE_SYMBOL[core]+']'+rest;
+  }
+  function shellCounts(z){
+    const counts = electronCounts(z);
+    const shells = [];
+    for(const k in counts){
+      const n = parseInt(k,10);
+      shells[n-1] = (shells[n-1]||0) + counts[k];
+    }
+    const out = [];
+    for(let i=0;i<shells.length;i++) out.push(shells[i]||0);
+    return out;
+  }
+  function blockOf(el){
+    if(el.z===1 || el.z===2) return 's';
+    if(el.p==='Ln' || el.p==='An') return 'f';
+    if(el.g===1 || el.g===2) return 's';
+    if(el.g>=3 && el.g<=12) return 'd';
+    return 'p';
+  }
+  function truePeriod(el){
+    if(el.p==='Ln') return 6;
+    if(el.p==='An') return 7;
+    return el.p;
+  }
+  function valenceElectrons(el){
+    if(el.z===2) return 2; // Helium: duet, not 8
+    if(el.g===1 || el.g===2) return el.g;
+    if(el.g>=13 && el.g<=18) return el.g-10;
+    return null; // d-block / f-block: not taught via simple group-number counting
+  }
+
+  // Precompute derived fields once.
+  ELEMENTS.forEach(el=>{
+    el.block = blockOf(el);
+    el.truePeriod = truePeriod(el);
+    el.shells = shellCounts(el.z);
+    el.valence = valenceElectrons(el);
+  });
+  const BY_Z = {};
+  ELEMENTS.forEach(el=> BY_Z[el.z]=el);
+
+  const HIGH_EN = new Set([7,8,9,17]);   // N, O, F, Cl
+  const FON = new Set([7,8,9]);          // N, O, F — hydrogen-bond formers
+
+  function rowForPeriod(p){
+    if(p === 'Ln') return 9;
+    if(p === 'An') return 10;
+    return p + 1;
+  }
+
+  // ---------------------------------------------------------------------
+  // Clue generators. Each returns {text, valid:Set<z>, blind:bool} or
+  // null if it can't find a suitable candidate in the current pool.
+  // (Identical to the single-player Clue Challenge engine.)
+  // ---------------------------------------------------------------------
+  let POOL = [];
+  function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  const BLOCK_LABEL = {s:'s-block', p:'p-block', d:'d-block', f:'f-block'};
+  const BLOCK_ARTICLE = {s:'An', p:'A', d:'A', f:'An'};
+
+  function genPosition(){
+    const el = pickRandom(POOL);
+    const matches = POOL.filter(e=> e.block===el.block && e.truePeriod===el.truePeriod);
+    return {
+      text: BLOCK_ARTICLE[el.block]+' <span class="hl">'+BLOCK_LABEL[el.block]+'</span> element from <span class="hl">Period '+el.truePeriod+'</span> of the Periodic Table.',
+      valid: new Set(matches.map(e=>e.z))
+    };
+  }
+
+  const CATEGORY_DEFS = [
+    {label:'an alkali metal', test: el=> el.g===1 && el.z!==1},
+    {label:'an alkaline earth metal', test: el=> el.g===2},
+    {label:'a halogen', test: el=> el.g===17},
+    {label:'a chalcogen', test: el=> el.g===16},
+    {label:'a noble gas', test: el=> el.g===18},
+    {label:'a lanthanide', test: el=> el.p==='Ln'},
+    {label:'an actinide', test: el=> el.p==='An'},
+    {label:'a transition metal', test: el=> el.block==='d'},
+    {label:'a metalloid', test: el=> el.cat==='metalloid'},
+    {label:'a post-transition metal', test: el=> el.cat==='posttrans'}
+  ];
+  function genCategory(){
+    const options = CATEGORY_DEFS.filter(c=> POOL.some(c.test));
+    if(!options.length) return null;
+    const def = pickRandom(options);
+    const matches = POOL.filter(def.test);
+    return {
+      text: 'Click on <span class="hl">'+def.label+'</span>.',
+      valid: new Set(matches.map(e=>e.z))
+    };
+  }
+
+  function genEconfig(){
+    const el = pickRandom(POOL);
+    const useShort = Math.random() < 0.5 && coreOf(el.z);
+    const config = useShort ? shortConfigString(el.z) : fullConfigString(el.z);
+    return {
+      text: 'The element with the electron configuration: <span class="hl">'+config+'</span>',
+      valid: new Set([el.z])
+    };
+  }
+
+  function genShells(){
+    const el = pickRandom(POOL);
+    const shellStr = el.shells.join('.');
+    const matches = POOL.filter(e=> e.shells.join('.') === shellStr);
+    return {
+      text: 'Has the electron shell arrangement <span class="hl">'+shellStr+'</span>.',
+      valid: new Set(matches.map(e=>e.z))
+    };
+  }
+
+  function genOccupiedShells(){
+    const el = pickRandom(POOL);
+    const n = el.shells.length;
+    const matches = POOL.filter(e=> e.shells.length === n);
+    return {
+      text: 'Has <span class="hl">'+n+'</span> occupied electron shells (Bohr diagram).',
+      valid: new Set(matches.map(e=>e.z))
+    };
+  }
+
+  function genValence(){
+    const candidates = POOL.filter(e=> e.valence !== null);
+    if(!candidates.length) return null;
+    const el = pickRandom(candidates);
+    const matches = candidates.filter(e=> e.valence === el.valence);
+    return {
+      text: 'Has <span class="hl">'+el.valence+'</span> valence electrons (<span class="hl">'+el.valence+'</span> Lewis dots).',
+      valid: new Set(matches.map(e=>e.z))
+    };
+  }
+
+  function genAtomicNumber(){
+    const el = pickRandom(POOL);
+    return {
+      text: 'Has the atomic number <span class="hl">'+el.z+'</span>.',
+      valid: new Set([el.z])
+    };
+  }
+
+  function genHighEN(){
+    const matches = POOL.filter(e=> HIGH_EN.has(e.z));
+    if(!matches.length) return null;
+    return {
+      text: 'Has a <span class="hl">high electronegativity</span>.',
+      valid: new Set(matches.map(e=>e.z))
+    };
+  }
+
+  function genFON(){
+    const matches = POOL.filter(e=> FON.has(e.z));
+    if(!matches.length) return null;
+    return {
+      text: 'Forms <span class="hl">hydrogen bonds</span> in its compounds with hydrogen.',
+      valid: new Set(matches.map(e=>e.z))
+    };
+  }
+
+  function genRecall(){
+    const el = pickRandom(POOL);
+    return {
+      text: 'Place <span class="hl">'+el.name+' ('+el.s+')</span> in its correct position.',
+      valid: new Set([el.z]),
+      blind: true
+    };
+  }
+
+  // ---------------------------------------------------------------------
+  // Game state — turn-based, two players
+  // ---------------------------------------------------------------------
+  let level = 'full';
+  let extensionOn = false;
+  let blindOn = true;
+  let totalClues = 25;
+  let clueIndex = 0;
+  let currentClue = null;
+  let gameRunning = false;
+
+  const players = [
+    {name:'Player 1', score:0, streak:0},
+    {name:'Player 2', score:0, streak:0}
+  ];
+  let starterIndex = 0;   // whose turn opens the current clue (alternates every clue)
+  let turnIndex = 0;      // whose turn it is RIGHT NOW (can flip mid-clue on a steal)
+  let attemptsThisClue = 0;
+
+  const hud = document.getElementById('hud');
+  const p1Card = document.getElementById('p1Card');
+  const p2Card = document.getElementById('p2Card');
+  const p1NameLabel = document.getElementById('p1NameLabel');
+  const p2NameLabel = document.getElementById('p2NameLabel');
+  const p1ScoreEl = document.getElementById('p1Score');
+  const p2ScoreEl = document.getElementById('p2Score');
+  const p1StreakEl = document.getElementById('p1Streak');
+  const p2StreakEl = document.getElementById('p2Streak');
+  const clueNumEl = document.getElementById('clueNum');
+  const clueTotalEl = document.getElementById('clueTotal');
+  const turnBanner = document.getElementById('turnBanner');
+  const clueBanner = document.getElementById('clueBanner');
+  const clueTextEl = document.getElementById('clueText');
+  const feedbackEl = document.getElementById('feedback');
+  const gameArea = document.getElementById('gameArea');
+  const tableGrid = document.getElementById('tableGrid');
+  const instructions = document.getElementById('instructions');
+  const startOverlay = document.getElementById('startOverlay');
+  const endOverlay = document.getElementById('endOverlay');
+  const winnerLine = document.getElementById('winnerLine');
+  const finalP1Name = document.getElementById('finalP1Name');
+  const finalP2Name = document.getElementById('finalP2Name');
+  const finalP1Score = document.getElementById('finalP1Score');
+  const finalP2Score = document.getElementById('finalP2Score');
+  const startBtn = document.getElementById('startBtn');
+  const playAgainBtn = document.getElementById('playAgainBtn');
+  const extToggle = document.getElementById('extToggle');
+  const blindToggle = document.getElementById('blindToggle');
+  const p1NameInput = document.getElementById('p1Name');
+  const p2NameInput = document.getElementById('p2Name');
+
+  function buildPool(){
+    if(level === 'junior'){
+      POOL = ELEMENTS.filter(el=> typeof el.p === 'number' && el.p <= 4);
+    } else {
+      POOL = ELEMENTS.slice();
+    }
+  }
+
+  function buildTable(){
+    tableGrid.innerHTML = '';
+    tableGrid.style.gridTemplateRows = level === 'junior'
+      ? '20px repeat(4,44px) 20px'
+      : '20px repeat(7,44px) 20px 14px repeat(2,44px)';
+
+    POOL.forEach(el=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cell cat-'+el.cat;
+      btn.dataset.z = el.z;
+      btn.style.gridColumn = el.g;
+      btn.style.gridRow = rowForPeriod(el.p);
+      btn.innerHTML = '<span>'+el.s+'</span>';
+      btn.setAttribute('aria-label', el.name);
+      btn.addEventListener('click', ()=> handleClick(el, btn));
+      tableGrid.appendChild(btn);
+    });
+
+    const labelRow = level === 'junior' ? 6 : 9;
+    for(let g=1; g<=18; g++){
+      const label = document.createElement('div');
+      label.className = 'group-label';
+      label.style.gridColumn = g;
+      label.style.gridRow = labelRow;
+      label.textContent = g;
+      tableGrid.appendChild(label);
+    }
+  }
+
+  function updatePlayerHud(){
+    p1ScoreEl.textContent = players[0].score;
+    p2ScoreEl.textContent = players[1].score;
+    p1StreakEl.textContent = players[0].streak;
+    p2StreakEl.textContent = players[1].streak;
+    p1NameLabel.textContent = players[0].name;
+    p2NameLabel.textContent = players[1].name;
+  }
+
+  function updateTurnUI(isSteal){
+    p1Card.classList.toggle('active', turnIndex===0);
+    p2Card.classList.toggle('active', turnIndex===1);
+    turnBanner.hidden = false;
+    turnBanner.className = 'turn-banner '+(turnIndex===0?'p1':'p2')+(isSteal?' steal':'');
+    turnBanner.textContent = isSteal
+      ? 'Steal chance — '+players[turnIndex].name+'!'
+      : players[turnIndex].name+'’s turn';
+  }
+
+  function nextClue(){
+    starterIndex = clueIndex % 2;
+    turnIndex = starterIndex;
+    attemptsThisClue = 0;
+
+    const wantBlind = blindOn && Math.random() < 0.28;
+    let clue = null;
+    let guard = 0;
+    while(!clue && guard < 12){
+      guard++;
+      if(wantBlind){
+        const r = Math.random();
+        clue = r < 0.55 ? genRecall() : (r < 0.78 ? genPosition() : genCategory());
+      } else {
+        const pool = [genPosition, genCategory, genShells, genOccupiedShells, genValence, genAtomicNumber, genHighEN, genFON];
+        if(extensionOn) pool.push(genEconfig, genEconfig);
+        clue = pickRandom(pool)();
+      }
+    }
+    if(!clue) clue = genPosition();
+    if(wantBlind) clue.blind = true;
+    currentClue = clue;
+    tableGrid.classList.toggle('blind', !!clue.blind);
+    clueTextEl.innerHTML = clue.text;
+    feedbackEl.className = 'feedback';
+    feedbackEl.textContent = '';
+    clueNumEl.textContent = String(clueIndex+1);
+    updateTurnUI(false);
+  }
+
+  function revealAnswer(){
+    const z = currentClue.valid.values().next().value;
+    const el = BY_Z[z];
+    const btn = tableGrid.querySelector('.cell[data-z="'+z+'"]');
+    if(btn){
+      btn.classList.remove('wrongflash');
+      void btn.offsetWidth;
+      btn.classList.add('revealflash');
+      setTimeout(()=> btn.classList.remove('revealflash'), 900);
+    }
+    feedbackEl.textContent = 'No one got it — it was '+el.name+' ('+el.s+').';
+    feedbackEl.className = 'feedback show reveal';
+  }
+
+  function handleClick(el, btn){
+    if(!gameRunning || !currentClue) return;
+    const activePlayer = players[turnIndex];
+
+    if(currentClue.valid.has(el.z)){
+      activePlayer.score++;
+      activePlayer.streak++;
+      updatePlayerHud();
+      btn.classList.remove('wrongflash');
+      void btn.offsetWidth;
+      btn.classList.add('correctflash');
+      feedbackEl.textContent = 'Correct — '+el.name+'! +1 for '+activePlayer.name;
+      feedbackEl.className = 'feedback show good';
+      clueIndex++;
+      gameRunning = false;
+      setTimeout(()=>{
+        btn.classList.remove('correctflash');
+        if(clueIndex >= totalClues){ endMatch(); }
+        else { gameRunning = true; nextClue(); }
+      }, 750);
+    } else {
+      activePlayer.streak = 0;
+      updatePlayerHud();
+      btn.classList.remove('wrongflash');
+      void btn.offsetWidth;
+      btn.classList.add('wrongflash');
+      attemptsThisClue++;
+      if(attemptsThisClue >= 2){
+        gameRunning = false;
+        revealAnswer();
+        clueIndex++;
+        setTimeout(()=>{
+          if(clueIndex >= totalClues){ endMatch(); }
+          else { gameRunning = true; nextClue(); }
+        }, 1100);
+      } else {
+        turnIndex = 1 - turnIndex;
+        feedbackEl.textContent = 'Not quite — over to '+players[turnIndex].name+'!';
+        feedbackEl.className = 'feedback show bad';
+        updateTurnUI(true);
+        setTimeout(()=> btn.classList.remove('wrongflash'), 320);
+      }
+    }
+  }
+
+  function startGame(){
+    level = document.querySelector('input[name="level"]:checked').value;
+    extensionOn = extToggle.checked;
+    blindOn = blindToggle.checked;
+    totalClues = parseInt(document.querySelector('input[name="rounds"]:checked').value, 10);
+
+    players[0].name = (p1NameInput.value||'').trim() || 'Player 1';
+    players[1].name = (p2NameInput.value||'').trim() || 'Player 2';
+    players[0].score = 0; players[0].streak = 0;
+    players[1].score = 0; players[1].streak = 0;
+    clueIndex = 0;
+
+    buildPool();
+    buildTable();
+    updatePlayerHud();
+    clueTotalEl.textContent = String(totalClues);
+
+    startOverlay.hidden = true;
+    endOverlay.hidden = true;
+    hud.hidden = false;
+    clueBanner.hidden = false;
+    gameArea.hidden = false;
+    instructions.hidden = false;
+
+    gameRunning = true;
+    nextClue();
+  }
+
+  function endMatch(){
+    gameRunning = false;
+    tableGrid.classList.remove('blind');
+    turnBanner.hidden = true;
+    p1Card.classList.remove('active');
+    p2Card.classList.remove('active');
+    finalP1Name.textContent = players[0].name;
+    finalP2Name.textContent = players[1].name;
+    finalP1Score.textContent = players[0].score;
+    finalP2Score.textContent = players[1].score;
+    if(players[0].score === players[1].score){
+      winnerLine.textContent = "It's a tie!";
+    } else {
+      const winner = players[0].score > players[1].score ? players[0] : players[1];
+      winnerLine.textContent = winner.name+' wins!';
+    }
+    endOverlay.hidden = false;
+  }
+
+  startBtn.addEventListener('click', startGame);
+  playAgainBtn.addEventListener('click', ()=>{ endOverlay.hidden = true; startOverlay.hidden = false; });
+})();
+</script>
+</body>
+</html>
