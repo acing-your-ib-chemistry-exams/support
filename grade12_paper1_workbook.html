@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IB Chemistry HL — Paper 1 Guided Practice (November 2021)</title>
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --card-bg: #ffffff;
+    --ink: #23241f;
+    --muted: #5a5c53;
+    --rule: #d8d5cb;
+    --accent: #7a3b2e;
+    --accent-light: #f1e4de;
+    --correct: #2f6b3a;
+    --correct-bg: #e5f2e6;
+    --incorrect: #a13a2f;
+    --incorrect-bg: #f7e4e1;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    line-height: 1.5;
+    padding-bottom: 4rem;
+  }
+  h1, h2, .qnum, .qtopic, summary, .calc-toggle, .footer-heading {
+    font-family: "Gill Sans", "Clear Gothic", "Helvetica Neue", Arial, sans-serif;
+  }
+  header.page-header {
+    padding: 2rem 1.5rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+    border-bottom: 2px solid var(--rule);
+  }
+  header.page-header h1 {
+    margin: 0 0 0.3rem;
+    font-size: 1.6rem;
+    color: var(--accent);
+  }
+  .subtitle {
+    color: var(--muted);
+    margin: 0 0 0.5rem;
+  }
+  .access-note {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .toc {
+    max-width: 900px;
+    margin: 1rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .toc a {
+    display: inline-block;
+    min-width: 1.8rem;
+    text-align: center;
+    padding: 0.2rem 0.4rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+  .toc a:hover { background: var(--accent); color: #fff; }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  #score-tracker {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 0.6rem 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+    z-index: 5;
+  }
+
+  .qcard {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    padding: 1.2rem 1.4rem 1.4rem;
+  }
+  .qhead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.4rem;
+  }
+  .qnum {
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 1.05rem;
+  }
+  .qtopic {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  details.cheatsheet {
+    background: var(--accent-light);
+    border-radius: 6px;
+    padding: 0.5rem 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+  details.cheatsheet summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 0.92rem;
+  }
+  details.cheatsheet ul { margin: 0.5rem 0 0.2rem; padding-left: 1.2rem; }
+  details.cheatsheet li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+
+  .qstem { font-size: 1.05rem; margin: 0.4rem 0; }
+  .eqn {
+    text-align: center;
+    font-style: italic;
+    margin: 0.6rem 0;
+  }
+  .given {
+    background: #f4f3ee;
+    border-left: 3px solid var(--rule);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.92rem;
+    margin: 0.6rem 0;
+  }
+  .dtable {
+    border-collapse: collapse;
+    margin: 0.6rem auto;
+    font-size: 0.92rem;
+  }
+  .dtable th, .dtable td {
+    border: 1px solid var(--rule);
+    padding: 0.3rem 0.7rem;
+    text-align: center;
+  }
+
+  .diagram-wrap {
+    text-align: center;
+    margin: 0.8rem 0;
+    color: var(--ink);
+  }
+  .qdiagram {
+    max-width: 100%;
+    height: auto;
+    max-height: 320px;
+  }
+  .dlabel { font-size: 12px; font-family: "Helvetica Neue", Arial, sans-serif; fill: currentColor; }
+
+  .options {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+  }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-align: left;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.97rem;
+    color: var(--ink);
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); }
+  .opt:disabled { cursor: default; }
+  .opt.correct { background: var(--correct-bg); border-color: var(--correct); }
+  .opt.incorrect { background: var(--incorrect-bg); border-color: var(--incorrect); }
+  .optletter {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: bold;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+  }
+
+  .hints { margin-top: 0.9rem; }
+  .hintbtn {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.82rem;
+    color: var(--accent);
+    background: none;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 0.25rem 0.6rem;
+    margin-right: 0.4rem;
+    margin-bottom: 0.4rem;
+    cursor: pointer;
+  }
+  .hintbtn:disabled { opacity: 0.4; cursor: default; }
+  .hint {
+    background: #fbf6ea;
+    border-left: 3px solid #c9a63f;
+    padding: 0.5rem 0.8rem;
+    margin: 0.4rem 0;
+    font-size: 0.92rem;
+  }
+  .hintlabel {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: bold;
+    display: block;
+    font-size: 0.78rem;
+    color: #8a6d1c;
+    margin-bottom: 0.15rem;
+  }
+
+  .feedback {
+    margin-top: 0.9rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 6px;
+    background: #f4f3ee;
+    font-size: 0.94rem;
+  }
+  .fb-correct { color: var(--correct); font-weight: bold; margin: 0 0 0.4rem; }
+  .fb-incorrect { color: var(--incorrect); font-weight: bold; margin: 0 0 0.4rem; }
+  .fb-explain { margin: 0; color: var(--ink); }
+
+  .term {
+    border-bottom: 1px dotted var(--accent);
+    cursor: help;
+    position: relative;
+  }
+
+  section.glossary-section {
+    margin-top: 2.5rem;
+    border-top: 2px solid var(--rule);
+    padding-top: 1rem;
+  }
+  .glossary dt { font-weight: bold; color: var(--accent); margin-top: 0.7rem; }
+  .glossary dd { margin: 0.2rem 0 0; color: var(--ink); font-size: 0.95rem; }
+
+  .calc-wrap {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 20;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+  .calc-toggle {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .calculator {
+    margin-top: 0.6rem;
+    background: #2b2b28;
+    border-radius: 10px;
+    padding: 0.8rem;
+    width: 260px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .calc-display {
+    background: #1a1a18;
+    color: #eaeaea;
+    font-size: 1.4rem;
+    text-align: right;
+    padding: 0.5rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 0.3rem;
+    min-height: 1.8rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-family: "SF Mono", Consolas, monospace;
+  }
+  .calc-mem-indicator {
+    color: #c9a63f;
+    font-size: 0.75rem;
+    text-align: right;
+    margin-bottom: 0.3rem;
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.35rem;
+  }
+  .calc-grid button {
+    padding: 0.55rem 0;
+    border: none;
+    border-radius: 6px;
+    background: #45443f;
+    color: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  .calc-grid button:hover { background: #56554e; }
+  .calc-grid .calc-op { background: #6b5344; }
+  .calc-grid .calc-const { background: var(--accent); }
+  .calc-grid .calc-mem { background: #3d4a52; font-size: 0.8rem; }
+  .calc-grid .calc-eq { background: #7a3b2e; }
+  .calc-wide { grid-column: span 2; }
+  .calc-note {
+    color: #cfcfc7;
+    font-size: 0.72rem;
+    margin: 0.6rem 0 0;
+    line-height: 1.35;
+  }
+
+  .site-footer {
+    max-width: 900px;
+    margin: 3rem auto 0;
+    padding: 1.2rem 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    text-align: center;
+  }
+  .site-footer a { color: var(--accent); }
+  .ai-disclosure { font-style: italic; }
+
+  @media (max-width: 480px) {
+    .calc-wrap { right: 0.5rem; bottom: 0.5rem; }
+    .calculator { width: 92vw; max-width: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>IB Chemistry HL — Paper 1 Guided Practice (November 2021)</h1>
+  <p class="subtitle">Selected questions 1–5, 14–31 and 38 · Paper 1 (multiple choice), N21/4/CHEMI/HPM/ENG/TZ0</p>
+  
+</header>
+
+<div id="score-tracker">Answered 0 of 24 — score 0/0</div>
+
+<nav class="toc"><a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a><a href="#q14">14</a><a href="#q15">15</a><a href="#q16">16</a><a href="#q17">17</a><a href="#q18">18</a><a href="#q19">19</a><a href="#q20">20</a><a href="#q21">21</a><a href="#q22">22</a><a href="#q23">23</a><a href="#q24">24</a><a href="#q25">25</a><a href="#q26">26</a><a href="#q27">27</a><a href="#q28">28</a><a href="#q29">29</a><a href="#q30">30</a><a href="#q31">31</a><a href="#q38">38</a></nav>
+
+<main>
+
+    <section class="qcard" id="q1">
+      <div class="qhead">
+        <span class="qnum">Question 1</span>
+        <span class="qtopic">Topic 1 — Stoichiometry</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Avogadro's constant <span class='term' data-def='The number of particles in one mole of a substance: 6.02 × 10²³ mol⁻¹.'>L</span> (or N<sub>A</sub>) converts a number of particles into a number of moles: moles = particles ÷ L.</li><li>Work out how many atoms of the element you care about are in <em>one molecule</em> of the compound before you touch the arithmetic.</li><li>Ethanol is C₂H₅OH — count the carbons in the formula, not the hydrogens or oxygen.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">How much ethanol contains 1.20 × 10²⁴ atoms of carbon?</p>
+        <p class='given'>Avogadro's constant, <em>L</em> or N<sub>A</sub>: 6.02 × 10²³ mol⁻¹</p>
+        
+        <div class="options"><button class="opt" data-qn="1" data-idx="0" onclick="selectAnswer(1,0,2)">
+          <span class="optletter">A</span><span class="opttext">0.333 mol</span>
+        </button>
+<button class="opt" data-qn="1" data-idx="1" onclick="selectAnswer(1,1,2)">
+          <span class="optletter">B</span><span class="opttext">0.500 mol</span>
+        </button>
+<button class="opt" data-qn="1" data-idx="2" onclick="selectAnswer(1,2,2)">
+          <span class="optletter">C</span><span class="opttext">1.00 mol</span>
+        </button>
+<button class="opt" data-qn="1" data-idx="3" onclick="selectAnswer(1,3,2)">
+          <span class="optletter">D</span><span class="opttext">2.00 mol</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(1,0)" id="hintbtn-1-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(1,1)" id="hintbtn-1-1">Show hint 2</button>
+
+        <div class="hint" id="hint-1-0" hidden><span class="hintlabel">Hint 1</span>First find the moles of carbon <em>atoms</em>: divide the atom count by L.</div>
+<div class="hint" id="hint-1-1" hidden><span class="hintlabel">Hint 2</span>That gives you moles of carbon atoms, not moles of ethanol. Each ethanol molecule (C₂H₅OH) contains 2 carbon atoms, so divide your answer by 2 to get moles of ethanol.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-1" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q2">
+      <div class="qhead">
+        <span class="qnum">Question 2</span>
+        <span class="qtopic">Topic 1 — Stoichiometry</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Use the balanced equation's mole ratios to work out how much of each reactant is actually <em>used up</em>.</li><li>The reagent that runs out first is the limiting reagent; everything else is present in excess, and some of it survives unreacted.</li><li>Read the question carefully — it asks what remains <em>at the end</em>, not what you started with.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">3.00 mol of C₃H₈ is mixed with 20.00 mol of O₂. Which quantity is present at the end of the reaction?</p>
+        <p class='eqn'>C₃H₈(g) + 5O₂(g) → 3CO₂(g) + 4H₂O(g)</p>
+        
+        <div class="options"><button class="opt" data-qn="2" data-idx="0" onclick="selectAnswer(2,0,1)">
+          <span class="optletter">A</span><span class="opttext">1.00 mol of C₃H₈</span>
+        </button>
+<button class="opt" data-qn="2" data-idx="1" onclick="selectAnswer(2,1,1)">
+          <span class="optletter">B</span><span class="opttext">5.00 mol of O₂</span>
+        </button>
+<button class="opt" data-qn="2" data-idx="2" onclick="selectAnswer(2,2,1)">
+          <span class="optletter">C</span><span class="opttext">12.00 mol of CO₂</span>
+        </button>
+<button class="opt" data-qn="2" data-idx="3" onclick="selectAnswer(2,3,1)">
+          <span class="optletter">D</span><span class="opttext">16.00 mol of H₂O</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(2,0)" id="hintbtn-2-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(2,1)" id="hintbtn-2-1">Show hint 2</button>
+
+        <div class="hint" id="hint-2-0" hidden><span class="hintlabel">Hint 1</span>For every 1 mol of C₃H₈ that reacts, 5 mol of O₂ is used up. How much O₂ is needed to react with all 3.00 mol of C₃H₈?</div>
+<div class="hint" id="hint-2-1" hidden><span class="hintlabel">Hint 2</span>3.00 mol C₃H₈ requires 3.00 × 5 = 15.00 mol O₂. You started with 20.00 mol O₂, so C₃H₈ is the limiting reagent and is entirely consumed — work out what's left of the O₂.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-2" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q3">
+      <div class="qhead">
+        <span class="qnum">Question 3</span>
+        <span class="qtopic">Topic 1 — Stoichiometry (gases)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>When two gas samples at the same temperature are mixed, total pressure follows a weighted average based on volume — this comes from PV = constant for each portion, combined at constant total volume.</li><li>Useful shortcut: P<sub>total</sub> = (P₁V₁ + P₂V₂) / (V₁ + V₂), where V₁ + V₂ is the new combined volume once the valve opens.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">The two containers shown are connected by a valve. What is the total pressure after the valve is opened and the two gas samples are allowed to mix at constant temperature?</p>
+        
+        <div class="diagram-wrap">
+<svg viewBox="0 0 520 220" class="qdiagram" role="img" aria-label="Two containers connected by a valve">
+  <ellipse cx="150" cy="120" rx="130" ry="80" fill="none" stroke="currentColor" stroke-width="2"/>
+  <ellipse cx="390" cy="130" rx="90" ry="60" fill="none" stroke="currentColor" stroke-width="2"/>
+  <rect x="232" y="105" width="16" height="30" fill="currentColor"/>
+  <text x="150" y="90" text-anchor="middle" class="dlabel" font-weight="bold">Container 1</text>
+  <text x="150" y="108" text-anchor="middle" class="dlabel">volume = 4.0 dm³</text>
+  <text x="150" y="126" text-anchor="middle" class="dlabel">pressure = 2.0 × 10⁵ Pa</text>
+  <text x="390" y="105" text-anchor="middle" class="dlabel" font-weight="bold">Container 2</text>
+  <text x="390" y="123" text-anchor="middle" class="dlabel">volume = 2.0 dm³</text>
+  <text x="390" y="141" text-anchor="middle" class="dlabel">pressure = 3.0 × 10⁵ Pa</text>
+  <text x="240" y="175" text-anchor="middle" class="dlabel">Valve</text>
+  <line x1="240" y1="168" x2="240" y2="140" stroke="currentColor" stroke-width="1"/>
+</svg>
+</div>
+        <div class="options"><button class="opt" data-qn="3" data-idx="0" onclick="selectAnswer(3,0,1)">
+          <span class="optletter">A</span><span class="opttext">1.5 × 10⁵ Pa</span>
+        </button>
+<button class="opt" data-qn="3" data-idx="1" onclick="selectAnswer(3,1,1)">
+          <span class="optletter">B</span><span class="opttext">2.3 × 10⁵ Pa</span>
+        </button>
+<button class="opt" data-qn="3" data-idx="2" onclick="selectAnswer(3,2,1)">
+          <span class="optletter">C</span><span class="opttext">2.5 × 10⁵ Pa</span>
+        </button>
+<button class="opt" data-qn="3" data-idx="3" onclick="selectAnswer(3,3,1)">
+          <span class="optletter">D</span><span class="opttext">5.0 × 10⁵ Pa</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(3,0)" id="hintbtn-3-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(3,1)" id="hintbtn-3-1">Show hint 2</button>
+
+        <div class="hint" id="hint-3-0" hidden><span class="hintlabel">Hint 1</span>Think in terms of moles: n ∝ PV at constant T (Boyle's law form). Work out P₁V₁ and P₂V₂ for each container separately.</div>
+<div class="hint" id="hint-3-1" hidden><span class="hintlabel">Hint 2</span>Add P₁V₁ + P₂V₂, then divide by the new total volume (V₁ + V₂ = 6.0 dm³).</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-3" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q4">
+      <div class="qhead">
+        <span class="qnum">Question 4</span>
+        <span class="qtopic">Topic 2 — Atomic structure</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Neutrons = mass number − atomic number (proton number).</li><li>Electrons = atomic number − charge (for a cation, subtract the positive charge; for an anion, add the negative charge's magnitude).</li><li>Work through all four species systematically rather than trying to spot the answer — it's easy to make a sign error.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which species has two more neutrons than electrons?</p>
+        <p class='eqn'>⁶₃Li⁺&nbsp;&nbsp;&nbsp;&nbsp;⁹₄Be²⁺&nbsp;&nbsp;&nbsp;&nbsp;²³₁₁Na⁺&nbsp;&nbsp;&nbsp;&nbsp;⁴²₂₀Ca²⁺</p>
+        
+        <div class="options"><button class="opt" data-qn="4" data-idx="0" onclick="selectAnswer(4,0,2)">
+          <span class="optletter">A</span><span class="opttext">⁶₃Li⁺</span>
+        </button>
+<button class="opt" data-qn="4" data-idx="1" onclick="selectAnswer(4,1,2)">
+          <span class="optletter">B</span><span class="opttext">⁹₄Be²⁺</span>
+        </button>
+<button class="opt" data-qn="4" data-idx="2" onclick="selectAnswer(4,2,2)">
+          <span class="optletter">C</span><span class="opttext">²³₁₁Na⁺</span>
+        </button>
+<button class="opt" data-qn="4" data-idx="3" onclick="selectAnswer(4,3,2)">
+          <span class="optletter">D</span><span class="opttext">⁴²₂₀Ca²⁺</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(4,0)" id="hintbtn-4-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(4,1)" id="hintbtn-4-1">Show hint 2</button>
+
+        <div class="hint" id="hint-4-0" hidden><span class="hintlabel">Hint 1</span>For each species, find neutrons (mass − Z) and electrons (Z − charge) separately, then subtract.</div>
+<div class="hint" id="hint-4-1" hidden><span class="hintlabel">Hint 2</span>Na: Z = 11, mass = 23, so neutrons = 12; electrons = 11 − 1 = 10. Compare 12 − 10 to the other three species.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-4" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q5">
+      <div class="qhead">
+        <span class="qnum">Question 5</span>
+        <span class="qtopic">Topic 2/12 — Atomic structure (ionisation energy)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Write out the electron configurations before and after each ionisation — comparing sub-shells (3s vs 3p) is where most marks are lost.</li><li>First IE of Mg removes an electron from 3s² (Mg → Mg⁺, [Ne]3s¹). Second IE of Al removes an electron from Al⁺'s configuration, [Ne]3s² (Al⁺ → Al²⁺).</li><li>If two ionisations remove an electron from the <em>same type of orbital</em> and leave the <em>same number of electrons</em> behind, the difference in energy comes down to nuclear charge (proton number) alone.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which statement explains why the second ionization energy of aluminium is higher than the first ionization energy of magnesium?</p>
+        
+        
+        <div class="options"><button class="opt" data-qn="5" data-idx="0" onclick="selectAnswer(5,0,3)">
+          <span class="optletter">A</span><span class="opttext">Ionization energy increases along period 3.</span>
+        </button>
+<button class="opt" data-qn="5" data-idx="1" onclick="selectAnswer(5,1,3)">
+          <span class="optletter">B</span><span class="opttext">3p electrons are at a higher energy level than 3s electrons.</span>
+        </button>
+<button class="opt" data-qn="5" data-idx="2" onclick="selectAnswer(5,2,3)">
+          <span class="optletter">C</span><span class="opttext">3p electrons are further away from the nucleus than 2p electrons.</span>
+        </button>
+<button class="opt" data-qn="5" data-idx="3" onclick="selectAnswer(5,3,3)">
+          <span class="optletter">D</span><span class="opttext">Both have the same number of electrons and aluminium has one more proton.</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(5,0)" id="hintbtn-5-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(5,1)" id="hintbtn-5-1">Show hint 2</button>
+
+        <div class="hint" id="hint-5-0" hidden><span class="hintlabel">Hint 1</span>Al's first IE removes the single 3p electron, leaving Al⁺ as [Ne]3s² — the same electron count and arrangement as an Mg atom about to lose its first electron.</div>
+<div class="hint" id="hint-5-1" hidden><span class="hintlabel">Hint 2</span>Since both processes remove an electron from an isoelectronic [Ne]3s² arrangement, only the nuclear charge differs between the two species — which one has more protons?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-5" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q14">
+      <div class="qhead">
+        <span class="qnum">Question 14</span>
+        <span class="qtopic">Topic 5 — Energetics (bond enthalpies)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Energy released ≈ (energy of bonds <em>formed</em>) − (energy of bonds <em>broken</em>), using the bond enthalpies given.</li><li>The C–H and C–C bonds in C₃H₈, and the O–H bonds in H₂O, are identical across all four options, so they cancel when you compare — focus only on what differs: the O=O bonds broken and the C=O / C≡O bonds formed.</li><li>Incomplete combustion (forming CO rather than CO₂) uses less O₂ but forms very strong C≡O bonds (1000 kJ mol⁻¹) — don't assume incomplete combustion always releases less energy.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which combustion reaction releases the least energy per mole of C₃H₈?</p>
+        <p class='given'>Approximate bond enthalpy / kJ mol⁻¹<br>O=O&nbsp;&nbsp;&nbsp;500&nbsp;&nbsp;&nbsp;&nbsp;C=O&nbsp;&nbsp;&nbsp;800&nbsp;&nbsp;&nbsp;&nbsp;C≡O&nbsp;&nbsp;&nbsp;1000</p>
+        
+        <div class="options"><button class="opt" data-qn="14" data-idx="0" onclick="selectAnswer(14,0,3)">
+          <span class="optletter">A</span><span class="opttext">C₃H₈(g) + 5O₂(g) → 3CO₂(g) + 4H₂O(g)</span>
+        </button>
+<button class="opt" data-qn="14" data-idx="1" onclick="selectAnswer(14,1,3)">
+          <span class="optletter">B</span><span class="opttext">C₃H₈(g) + 9/2 O₂(g) → 2CO₂(g) + CO(g) + 4H₂O(g)</span>
+        </button>
+<button class="opt" data-qn="14" data-idx="2" onclick="selectAnswer(14,2,3)">
+          <span class="optletter">C</span><span class="opttext">C₃H₈(g) + 4O₂(g) → CO₂(g) + 2CO(g) + 4H₂O(g)</span>
+        </button>
+<button class="opt" data-qn="14" data-idx="3" onclick="selectAnswer(14,3,3)">
+          <span class="optletter">D</span><span class="opttext">C₃H₈(g) + 7/2 O₂(g) → 3CO(g) + 4H₂O(g)</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(14,0)" id="hintbtn-14-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(14,1)" id="hintbtn-14-1">Show hint 2</button>
+
+        <div class="hint" id="hint-14-0" hidden><span class="hintlabel">Hint 1</span>For each option, total the C=O and C≡O bonds formed (2 × 800 per CO₂, 1 × 1000 per CO) and the O=O bonds broken (500 × mol of O₂).</div>
+<div class="hint" id="hint-14-1" hidden><span class="hintlabel">Hint 2</span>Net energy released ≈ bonds formed − bonds broken. Calculate this for all four and compare — the smallest value is the answer.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-14" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q15">
+      <div class="qhead">
+        <span class="qnum">Question 15</span>
+        <span class="qtopic">Topic 5 — Energetics (enthalpy of formation)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>The standard enthalpy of formation, ΔH<sub>f</sub><sup>⊖</sup>, is defined for the formation of <strong>exactly one mole</strong> of compound from its elements in their standard states.</li><li>Check the coefficient in front of the product in each equation — if it isn't a plain '1', it isn't a formation equation as defined.</li><li>Elements must be in their standard states: for oxygen this is O₂(g), and metals are normally solids, not gases.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which equation represents the standard enthalpy of formation of lithium oxide?</p>
+        
+        
+        <div class="options"><button class="opt" data-qn="15" data-idx="0" onclick="selectAnswer(15,0,1)">
+          <span class="optletter">A</span><span class="opttext">4Li(s) + O₂(g) → 2Li₂O(s)</span>
+        </button>
+<button class="opt" data-qn="15" data-idx="1" onclick="selectAnswer(15,1,1)">
+          <span class="optletter">B</span><span class="opttext">2Li(s) + ½O₂(g) → Li₂O(s)</span>
+        </button>
+<button class="opt" data-qn="15" data-idx="2" onclick="selectAnswer(15,2,1)">
+          <span class="optletter">C</span><span class="opttext">Li(s) + ¼O₂(g) → ½Li₂O(s)</span>
+        </button>
+<button class="opt" data-qn="15" data-idx="3" onclick="selectAnswer(15,3,1)">
+          <span class="optletter">D</span><span class="opttext">Li(g) + ¼O₂(g) → ½Li₂O(g)</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(15,0)" id="hintbtn-15-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(15,1)" id="hintbtn-15-1">Show hint 2</button>
+
+        <div class="hint" id="hint-15-0" hidden><span class="hintlabel">Hint 1</span>Rule out any equation where the product's coefficient isn't 1, and any equation where an element isn't in its standard state.</div>
+<div class="hint" id="hint-15-1" hidden><span class="hintlabel">Hint 2</span>Option A makes 2 mol of Li₂O; option C and D make ½ mol; check which element states match 'standard state'.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-15" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q16">
+      <div class="qhead">
+        <span class="qnum">Question 16</span>
+        <span class="qtopic">Topic 5/15 — Energetics (Born–Haber cycle, HL)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>A Born–Haber cycle is Hess's law applied to lattice enthalpy: the direct route (ΔH<sub>f</sub>) must equal the sum of the indirect route's steps.</li><li>Go around the cycle in one consistent direction, adding each step's enthalpy change with its correct sign as printed on the diagram.</li><li>The lattice enthalpy step is usually the one 'missing' arrow you're asked to find — set up the equation ΔH<sub>f</sub> = (sum of all other steps) + (lattice enthalpy term), then rearrange.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Consider the Born–Haber cycle for the formation of sodium oxide. What is the lattice enthalpy, in kJ mol⁻¹, of sodium oxide?</p>
+        
+        <div class="diagram-wrap">
+<svg viewBox="0 0 640 420" class="qdiagram" role="img" aria-label="Born-Haber cycle for sodium oxide">
+  <text x="320" y="30" text-anchor="middle" class="dlabel" font-weight="bold">2Na⁺(g) + O²⁻(g)</text>
+  <line x1="150" y1="45" x2="150" y2="90" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="320" y="90" text-anchor="middle" class="dlabel" font-weight="bold">2Na⁺(g) + O(g) + 2e⁻</text>
+  <text x="470" y="75" class="dlabel">+790 kJ mol⁻¹</text>
+  <line x1="470" y1="55" x2="470" y2="120" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="470" y="140" class="dlabel">2Na⁺(g) + O⁻(g) + e⁻</text>
+  <text x="30" y="135" class="dlabel">2 × +496 kJ mol⁻¹</text>
+  <text x="300" y="125" class="dlabel">−141 kJ mol⁻¹</text>
+  <line x1="150" y1="150" x2="150" y2="180" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="320" y="180" text-anchor="middle" class="dlabel" font-weight="bold">2Na(g) + O(g)</text>
+  <text x="30" y="205" class="dlabel">+249 kJ mol⁻¹</text>
+  <line x1="150" y1="220" x2="150" y2="250" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="320" y="250" text-anchor="middle" class="dlabel" font-weight="bold">2Na(g) + ½O₂(g)</text>
+  <text x="30" y="280" class="dlabel">2 × +108 kJ mol⁻¹</text>
+  <line x1="150" y1="295" x2="150" y2="325" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="320" y="325" text-anchor="middle" class="dlabel" font-weight="bold">2Na(s) + ½O₂(g)</text>
+  <text x="500" y="230" class="dlabel">Lattice enthalpy</text>
+  <text x="500" y="248" class="dlabel">of sodium oxide</text>
+  <line x1="590" y1="45" x2="590" y2="380" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="300" y="360" class="dlabel">−414 kJ mol⁻¹</text>
+  <line x1="150" y1="345" x2="590" y2="380" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="320" y="400" text-anchor="middle" class="dlabel" font-weight="bold">Na₂O(s)</text>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+</svg>
+</div>
+        <div class="options"><button class="opt" data-qn="16" data-idx="0" onclick="selectAnswer(16,0,0)">
+          <span class="optletter">A</span><span class="opttext">414 + 2(108) + 249 + 2(496) − 141 + 790</span>
+        </button>
+<button class="opt" data-qn="16" data-idx="1" onclick="selectAnswer(16,1,0)">
+          <span class="optletter">B</span><span class="opttext">414 + 2(108) + 249 + 2(496) + 141 + 790</span>
+        </button>
+<button class="opt" data-qn="16" data-idx="2" onclick="selectAnswer(16,2,0)">
+          <span class="optletter">C</span><span class="opttext">−414 + 2(108) + 249 + 2(496) − 141 + 790</span>
+        </button>
+<button class="opt" data-qn="16" data-idx="3" onclick="selectAnswer(16,3,0)">
+          <span class="optletter">D</span><span class="opttext">−414 − 2(108) − 249 − 2(496) + 141 − 790</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(16,0)" id="hintbtn-16-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(16,1)" id="hintbtn-16-1">Show hint 2</button>
+
+        <div class="hint" id="hint-16-0" hidden><span class="hintlabel">Hint 1</span>Write the Hess's law equation: −414 = 2(108) + 249 + 2(496) + (−141) + 790 + (−LE), where −LE is the step going from the gaseous ions down to the solid.</div>
+<div class="hint" id="hint-16-1" hidden><span class="hintlabel">Hint 2</span>Rearrange that equation to make LE (lattice enthalpy) the subject — watch the sign changes carefully as you move each term across the equals sign.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-16" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q17">
+      <div class="qhead">
+        <span class="qnum">Question 17</span>
+        <span class="qtopic">Topic 15/17 — Energetics (Gibbs free energy, HL)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Spontaneity of a reaction is governed by ΔG: ΔG < 0 means spontaneous in the forward direction.</li><li>ΔG<sup>⊖</sup> = −RT ln K, so K > 1 under standard conditions corresponds to ΔG<sup>⊖</sup> < 0 — spontaneous.</li><li>A negative cell potential means ΔG > 0 (since ΔG = −nFE); a negative ΔS<sub>universe</sub> is the signature of a <em>non</em>-spontaneous process (2nd law); and ΔG of the reverse reaction being negative means ΔG of the forward reaction is positive.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">In which of the following situations is the forward reaction spontaneous?</p>
+        
+        
+        <div class="options"><button class="opt" data-qn="17" data-idx="0" onclick="selectAnswer(17,0,0)">
+          <span class="optletter">A</span><span class="opttext">The equilibrium constant is greater than one under standard conditions.</span>
+        </button>
+<button class="opt" data-qn="17" data-idx="1" onclick="selectAnswer(17,1,0)">
+          <span class="optletter">B</span><span class="opttext">The cell potential is negative.</span>
+        </button>
+<button class="opt" data-qn="17" data-idx="2" onclick="selectAnswer(17,2,0)">
+          <span class="optletter">C</span><span class="opttext">The Gibbs free energy change of the reverse reaction is negative.</span>
+        </button>
+<button class="opt" data-qn="17" data-idx="3" onclick="selectAnswer(17,3,0)">
+          <span class="optletter">D</span><span class="opttext">The entropy change of the universe for the forward reaction is negative.</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(17,0)" id="hintbtn-17-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(17,1)" id="hintbtn-17-1">Show hint 2</button>
+
+        <div class="hint" id="hint-17-0" hidden><span class="hintlabel">Hint 1</span>Translate each option into a statement about ΔG for the <em>forward</em> reaction — you're looking for the one where ΔG < 0.</div>
+<div class="hint" id="hint-17-1" hidden><span class="hintlabel">Hint 2</span>Remember ΔG<sup>⊖</sup> = −RT ln K: what does K > 1 do to ln K, and hence to ΔG<sup>⊖</sup>?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-17" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q18">
+      <div class="qhead">
+        <span class="qnum">Question 18</span>
+        <span class="qtopic">Topic 6 — Kinetics</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>To monitor a rate of reaction, pick an instrument that tracks a property changing continuously as the reaction proceeds.</li><li>Iodine, I₂, is coloured (a red-brown/amber solution) — its formation is easy to follow spectroscopically.</li><li>A balance suits reactions that change mass (e.g. releasing a gas to the atmosphere); a gas syringe suits reactions producing a gas; a volumetric flask is a piece of glassware for making up solutions, not a monitoring instrument.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which instrument would best monitor the rate of this reaction?</p>
+        <p class='eqn'>2KI(aq) + Cl₂(aq) → 2KCl(aq) + I₂(aq)</p>
+        
+        <div class="options"><button class="opt" data-qn="18" data-idx="0" onclick="selectAnswer(18,0,1)">
+          <span class="optletter">A</span><span class="opttext">Balance</span>
+        </button>
+<button class="opt" data-qn="18" data-idx="1" onclick="selectAnswer(18,1,1)">
+          <span class="optletter">B</span><span class="opttext">Colorimeter</span>
+        </button>
+<button class="opt" data-qn="18" data-idx="2" onclick="selectAnswer(18,2,1)">
+          <span class="optletter">C</span><span class="opttext">Volumetric flask</span>
+        </button>
+<button class="opt" data-qn="18" data-idx="3" onclick="selectAnswer(18,3,1)">
+          <span class="optletter">D</span><span class="opttext">Gas syringe</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(18,0)" id="hintbtn-18-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(18,1)" id="hintbtn-18-1">Show hint 2</button>
+
+        <div class="hint" id="hint-18-0" hidden><span class="hintlabel">Hint 1</span>Nothing in this reaction is a gas — all species are (aq) — so rule out the instruments meant for gas or mass-loss reactions.</div>
+<div class="hint" id="hint-18-1" hidden><span class="hintlabel">Hint 2</span>What colour does I₂(aq) have, and what type of instrument measures colour intensity/absorbance over time?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-18" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q19">
+      <div class="qhead">
+        <span class="qnum">Question 19</span>
+        <span class="qtopic">Topic 6 — Kinetics</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Rate increases with: (i) larger surface area (powder > strip) and (ii) higher concentration of the reacting solution.</li><li>Compare the actual concentration of CuSO₄(aq) in each option, not just the volume or the total moles present.</li><li>The fastest combination combines both rate-increasing factors at once.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which combination has the greatest rate of reaction at room temperature?</p>
+        
+        
+        <div class="options"><button class="opt" data-qn="19" data-idx="0" onclick="selectAnswer(19,0,0)">
+          <span class="optletter">A</span><span class="opttext">1.00 g Zn powder + 50.0 cm³ of 0.200 mol dm⁻³ CuSO₄(aq)</span>
+        </button>
+<button class="opt" data-qn="19" data-idx="1" onclick="selectAnswer(19,1,0)">
+          <span class="optletter">B</span><span class="opttext">1.00 g Zn powder + 100.0 cm³ of 0.100 mol dm⁻³ CuSO₄(aq)</span>
+        </button>
+<button class="opt" data-qn="19" data-idx="2" onclick="selectAnswer(19,2,0)">
+          <span class="optletter">C</span><span class="opttext">1.00 g Zn strip + 50.0 cm³ of 0.200 mol dm⁻³ CuSO₄(aq)</span>
+        </button>
+<button class="opt" data-qn="19" data-idx="3" onclick="selectAnswer(19,3,0)">
+          <span class="optletter">D</span><span class="opttext">1.00 g Zn strip + 100.0 cm³ of 0.100 mol dm⁻³ CuSO₄(aq)</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(19,0)" id="hintbtn-19-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(19,1)" id="hintbtn-19-1">Show hint 2</button>
+
+        <div class="hint" id="hint-19-0" hidden><span class="hintlabel">Hint 1</span>Zn powder always beats Zn strip for rate (greater surface area) — that narrows it to two options.</div>
+<div class="hint" id="hint-19-1" hidden><span class="hintlabel">Hint 2</span>Between those two, which CuSO₄(aq) concentration is higher: 0.200 mol dm⁻³ or 0.100 mol dm⁻³? Higher concentration means more frequent successful collisions.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-19" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q20">
+      <div class="qhead">
+        <span class="qnum">Question 20</span>
+        <span class="qtopic">Topic 6/16 — Kinetics (rate graphs, HL)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>For a first-order reaction, rate = k[A]¹, and the integrated form gives an exponential decay of concentration with time: [A] = [A]₀e⁻ᵏᵗ.</li><li>Don't confuse a graph of concentration vs time with a graph of rate vs concentration — read the axis labels on each graph carefully before choosing.</li><li>A straight-line decrease of concentration with time is characteristic of zero order, not first order.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which graph shows a first order reaction?</p>
+        
+        <div class="diagram-wrap">
+<svg viewBox="0 0 620 320" class="qdiagram" role="img" aria-label="Four graphs A to D">
+  <!-- A -->
+  <g>
+    <line x1="40" y1="30" x2="40" y2="140" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="40" y1="140" x2="180" y2="140" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M45,35 C90,45 120,90 175,135" fill="none" stroke="currentColor" stroke-width="2"/>
+    <text x="10" y="90" class="dlabel" transform="rotate(-90 10,90)">[reactant]</text>
+    <text x="110" y="158" class="dlabel" text-anchor="middle">Time</text>
+    <text x="110" y="18" class="dlabel" text-anchor="middle" font-weight="bold">A</text>
+  </g>
+  <!-- B -->
+  <g transform="translate(320,0)">
+    <line x1="40" y1="30" x2="40" y2="140" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="40" y1="140" x2="180" y2="140" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M45,138 C90,135 140,110 175,38" fill="none" stroke="currentColor" stroke-width="2"/>
+    <text x="10" y="90" class="dlabel" transform="rotate(-90 10,90)">rate</text>
+    <text x="110" y="158" class="dlabel" text-anchor="middle">[reactant]</text>
+    <text x="110" y="18" class="dlabel" text-anchor="middle" font-weight="bold">B</text>
+  </g>
+  <!-- C -->
+  <g transform="translate(0,170)">
+    <line x1="40" y1="30" x2="40" y2="140" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="40" y1="140" x2="180" y2="140" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="45" y1="35" x2="175" y2="135" stroke="currentColor" stroke-width="2"/>
+    <text x="10" y="90" class="dlabel" transform="rotate(-90 10,90)">[reactant]</text>
+    <text x="110" y="158" class="dlabel" text-anchor="middle">Time</text>
+    <text x="110" y="18" class="dlabel" text-anchor="middle" font-weight="bold">C</text>
+  </g>
+  <!-- D -->
+  <g transform="translate(320,170)">
+    <line x1="40" y1="30" x2="40" y2="140" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="40" y1="140" x2="180" y2="140" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="45" y1="80" x2="175" y2="80" stroke="currentColor" stroke-width="2"/>
+    <text x="10" y="90" class="dlabel" transform="rotate(-90 10,90)">rate</text>
+    <text x="110" y="158" class="dlabel" text-anchor="middle">[reactant]</text>
+    <text x="110" y="18" class="dlabel" text-anchor="middle" font-weight="bold">D</text>
+  </g>
+</svg>
+</div>
+        <div class="options"><button class="opt" data-qn="20" data-idx="0" onclick="selectAnswer(20,0,0)">
+          <span class="optletter">A</span><span class="opttext">Graph A</span>
+        </button>
+<button class="opt" data-qn="20" data-idx="1" onclick="selectAnswer(20,1,0)">
+          <span class="optletter">B</span><span class="opttext">Graph B</span>
+        </button>
+<button class="opt" data-qn="20" data-idx="2" onclick="selectAnswer(20,2,0)">
+          <span class="optletter">C</span><span class="opttext">Graph C</span>
+        </button>
+<button class="opt" data-qn="20" data-idx="3" onclick="selectAnswer(20,3,0)">
+          <span class="optletter">D</span><span class="opttext">Graph D</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(20,0)" id="hintbtn-20-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(20,1)" id="hintbtn-20-1">Show hint 2</button>
+
+        <div class="hint" id="hint-20-0" hidden><span class="hintlabel">Hint 1</span>First, eliminate graphs B and D — what are their axes plotting, and does that match 'concentration changing over time'?</div>
+<div class="hint" id="hint-20-1" hidden><span class="hintlabel">Hint 2</span>Between A (curved, decaying) and C (straight line down), which shape matches exponential decay rather than a constant rate of loss?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-20" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q21">
+      <div class="qhead">
+        <span class="qnum">Question 21</span>
+        <span class="qtopic">Topic 16 — Kinetics (mechanism, HL)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>The rate equation is determined only by the species involved in (and before) the <em>slow</em>, rate-determining step.</li><li>If an intermediate I forms in a fast pre-equilibrium step, its concentration can be treated as proportional to the species that formed it, and substituted into the rate expression for the slow step.</li><li>Check that the overall rate expression you derive for each mechanism actually simplifies to rate = k[A][B].</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">The rate equation for a reaction is:</p>
+        <p class='eqn'>rate = k[A][B]</p><p>Which mechanism is consistent with this rate equation?</p>
+        
+        <div class="options"><button class="opt" data-qn="21" data-idx="0" onclick="selectAnswer(21,0,3)">
+          <span class="optletter">A</span><span class="opttext">2A ⇌ I (fast); I + B → P (slow)</span>
+        </button>
+<button class="opt" data-qn="21" data-idx="1" onclick="selectAnswer(21,1,3)">
+          <span class="optletter">B</span><span class="opttext">A + B ⇌ I (fast); I + A → P (slow)</span>
+        </button>
+<button class="opt" data-qn="21" data-idx="2" onclick="selectAnswer(21,2,3)">
+          <span class="optletter">C</span><span class="opttext">A → I (slow); I + B → P (fast)</span>
+        </button>
+<button class="opt" data-qn="21" data-idx="3" onclick="selectAnswer(21,3,3)">
+          <span class="optletter">D</span><span class="opttext">B ⇌ I (fast); I + A → P (slow)</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(21,0)" id="hintbtn-21-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(21,1)" id="hintbtn-21-1">Show hint 2</button>
+
+        <div class="hint" id="hint-21-0" hidden><span class="hintlabel">Hint 1</span>The slow step controls the rate law directly: rate = k[intermediate][other species in the slow step]. Then substitute for the intermediate using the fast pre-equilibrium.</div>
+<div class="hint" id="hint-21-1" hidden><span class="hintlabel">Hint 2</span>For option D: the slow step gives rate = k[I][A]. Since I comes from B in a fast equilibrium, [I] is proportional to [B] — what does that make the overall rate expression?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-21" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q22">
+      <div class="qhead">
+        <span class="qnum">Question 22</span>
+        <span class="qtopic">Topic 7 — Equilibrium</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Compare the reaction quotient Q to the equilibrium constant K<sub>c</sub> to predict which way a reaction will shift.</li><li>If Q < K, the system has 'too much reactant' relative to equilibrium, so the <em>forward</em> reaction proceeds faster than the reverse until Q rises to meet K.</li><li>If Q > K, the reverse reaction dominates instead; if Q = K, the system is already at equilibrium.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">A reversible reaction has a reaction quotient, Q, of 4.5 and equilibrium constant, K<sub>c</sub>, of 6.2.</p>
+        <p class='eqn'>2A(g) ⇌ A₂(g)</p><p>Which statement describes the reaction at this time?</p>
+        
+        <div class="options"><button class="opt" data-qn="22" data-idx="0" onclick="selectAnswer(22,0,1)">
+          <span class="optletter">A</span><span class="opttext">The system has reached equilibrium.</span>
+        </button>
+<button class="opt" data-qn="22" data-idx="1" onclick="selectAnswer(22,1,1)">
+          <span class="optletter">B</span><span class="opttext">The rate of the forward reaction is greater than the rate of the reverse reaction.</span>
+        </button>
+<button class="opt" data-qn="22" data-idx="2" onclick="selectAnswer(22,2,1)">
+          <span class="optletter">C</span><span class="opttext">The concentration of reactant is greater than the concentration of product.</span>
+        </button>
+<button class="opt" data-qn="22" data-idx="3" onclick="selectAnswer(22,3,1)">
+          <span class="optletter">D</span><span class="opttext">At equilibrium, the concentration of reactant is greater than the concentration of product.</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(22,0)" id="hintbtn-22-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(22,1)" id="hintbtn-22-1">Show hint 2</button>
+
+        <div class="hint" id="hint-22-0" hidden><span class="hintlabel">Hint 1</span>Since Q ≠ K, the system is not yet at equilibrium — that rules out one option immediately.</div>
+<div class="hint" id="hint-22-1" hidden><span class="hintlabel">Hint 2</span>Is Q smaller or larger than K here? Which direction does the system need to shift to make Q increase toward K?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-22" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q23">
+      <div class="qhead">
+        <span class="qnum">Question 23</span>
+        <span class="qtopic">Topic 7/17 — Equilibrium (Gibbs free energy, HL)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>At constant temperature and pressure, a reacting system moves toward the composition of <strong>minimum Gibbs free energy</strong>.</li><li>The equilibrium point on a G vs composition graph is therefore the lowest point of the curve, not the midpoint of the x-axis.</li><li>Don't assume equilibrium is where the amounts of reactant and product happen to be equal — read the position of the minimum directly off the graph.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">The graph shows Gibbs free energy of a mixture of N₂O₄(g) and NO₂(g) in different proportions. Which point shows the system at equilibrium?</p>
+        <p class='eqn'>N₂O₄(g) ⇌ 2NO₂(g)</p>
+        <div class="diagram-wrap">
+<svg viewBox="0 0 560 300" class="qdiagram" role="img" aria-label="Gibbs free energy versus composition graph">
+  <line x1="60" y1="30" x2="60" y2="240" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="60" y1="240" x2="500" y2="240" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M65,110 C130,220 260,225 330,150 C400,90 460,55 495,45" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="65" cy="110" r="4" fill="currentColor"/>
+  <text x="80" y="105" class="dlabel">A</text>
+  <circle cx="130" cy="220" r="4" fill="currentColor"/>
+  <text x="115" y="238" class="dlabel">B</text>
+  <circle cx="330" cy="150" r="4" fill="currentColor"/>
+  <text x="335" y="145" class="dlabel">C</text>
+  <circle cx="495" cy="45" r="4" fill="currentColor"/>
+  <text x="500" y="45" class="dlabel">D</text>
+  <text x="20" y="140" class="dlabel" transform="rotate(-90 20,140)">Gibbs free energy / kJ</text>
+  <text x="60" y="260" class="dlabel">1.0 mol N₂O₄, 0.0 mol NO₂</text>
+  <text x="500" y="260" class="dlabel" text-anchor="end">0.0 mol N₂O₄, 2.0 mol NO₂</text>
+</svg>
+</div>
+        <div class="options"><button class="opt" data-qn="23" data-idx="0" onclick="selectAnswer(23,0,1)">
+          <span class="optletter">A</span><span class="opttext">Point A</span>
+        </button>
+<button class="opt" data-qn="23" data-idx="1" onclick="selectAnswer(23,1,1)">
+          <span class="optletter">B</span><span class="opttext">Point B</span>
+        </button>
+<button class="opt" data-qn="23" data-idx="2" onclick="selectAnswer(23,2,1)">
+          <span class="optletter">C</span><span class="opttext">Point C</span>
+        </button>
+<button class="opt" data-qn="23" data-idx="3" onclick="selectAnswer(23,3,1)">
+          <span class="optletter">D</span><span class="opttext">Point D</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(23,0)" id="hintbtn-23-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(23,1)" id="hintbtn-23-1">Show hint 2</button>
+
+        <div class="hint" id="hint-23-0" hidden><span class="hintlabel">Hint 1</span>Equilibrium corresponds to the turning point (minimum) of the Gibbs free energy curve.</div>
+<div class="hint" id="hint-23-1" hidden><span class="hintlabel">Hint 2</span>Scan the curve from N₂O₄ (left) to NO₂ (right) and find where G stops falling and starts rising again.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-23" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q24">
+      <div class="qhead">
+        <span class="qnum">Question 24</span>
+        <span class="qtopic">Topic 8 — Acids and bases</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Carbonate, CO₃²⁻, is the conjugate base of the weak acid HCO₃⁻, and undergoes hydrolysis in water: CO₃²⁻ + H₂O ⇌ HCO₃⁻ + OH⁻.</li><li>This hydrolysis is exactly why Na₂CO₃(aq) is alkaline — it generates OH⁻ and HCO₃⁻ alongside the CO₃²⁻ that hasn't yet reacted.</li><li>List every species that hydrolysis produces or leaves behind, then match it against the statements given.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which ions are present in an aqueous solution of Na₂CO₃?</p>
+        <p>I. HCO₃⁻&nbsp;&nbsp;&nbsp;&nbsp;II. OH⁻&nbsp;&nbsp;&nbsp;&nbsp;III. CO₃²⁻</p>
+        
+        <div class="options"><button class="opt" data-qn="24" data-idx="0" onclick="selectAnswer(24,0,3)">
+          <span class="optletter">A</span><span class="opttext">I and II only</span>
+        </button>
+<button class="opt" data-qn="24" data-idx="1" onclick="selectAnswer(24,1,3)">
+          <span class="optletter">B</span><span class="opttext">I and III only</span>
+        </button>
+<button class="opt" data-qn="24" data-idx="2" onclick="selectAnswer(24,2,3)">
+          <span class="optletter">C</span><span class="opttext">II and III only</span>
+        </button>
+<button class="opt" data-qn="24" data-idx="3" onclick="selectAnswer(24,3,3)">
+          <span class="optletter">D</span><span class="opttext">I, II and III</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(24,0)" id="hintbtn-24-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(24,1)" id="hintbtn-24-1">Show hint 2</button>
+
+        <div class="hint" id="hint-24-0" hidden><span class="hintlabel">Hint 1</span>Write the hydrolysis equilibrium for carbonate in water and identify every species on both sides.</div>
+<div class="hint" id="hint-24-1" hidden><span class="hintlabel">Hint 2</span>Remember the equilibrium doesn't go to completion — some CO₃²⁻ remains unreacted alongside the HCO₃⁻ and OH⁻ formed.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-24" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q25">
+      <div class="qhead">
+        <span class="qnum">Question 25</span>
+        <span class="qtopic">Topic 8 — Acids and bases (pH)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>KOH is a strong base that dissociates completely, so [OH⁻] = the given concentration of KOH.</li><li>pOH = −log₁₀[OH⁻], and pH + pOH = 14 (at 25 °C, K<sub>w</sub> = 1.00 × 10⁻¹⁴).</li><li>Powers of ten and logs like this are exactly what the paper expects you to handle without a calculator — 0.01 = 10⁻², so log(0.01) is exact.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">What is the pH of 0.01 mol dm⁻³ KOH(aq)?</p>
+        
+        
+        <div class="options"><button class="opt" data-qn="25" data-idx="0" onclick="selectAnswer(25,0,2)">
+          <span class="optletter">A</span><span class="opttext">1.0</span>
+        </button>
+<button class="opt" data-qn="25" data-idx="1" onclick="selectAnswer(25,1,2)">
+          <span class="optletter">B</span><span class="opttext">2.0</span>
+        </button>
+<button class="opt" data-qn="25" data-idx="2" onclick="selectAnswer(25,2,2)">
+          <span class="optletter">C</span><span class="opttext">12.0</span>
+        </button>
+<button class="opt" data-qn="25" data-idx="3" onclick="selectAnswer(25,3,2)">
+          <span class="optletter">D</span><span class="opttext">13.0</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(25,0)" id="hintbtn-25-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(25,1)" id="hintbtn-25-1">Show hint 2</button>
+
+        <div class="hint" id="hint-25-0" hidden><span class="hintlabel">Hint 1</span>Find pOH first: pOH = −log(0.01).</div>
+<div class="hint" id="hint-25-1" hidden><span class="hintlabel">Hint 2</span>Then use pH = 14 − pOH.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-25" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q26">
+      <div class="qhead">
+        <span class="qnum">Question 26</span>
+        <span class="qtopic">Topic 8/18 — Acids and bases (titration curves, HL)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>At the equivalence point of a titration, moles of acid = moles of base (stoichiometrically), but the pH there depends on the <em>strength</em> of the acid and base, not just the amounts.</li><li>Strong acid + weak base → the salt formed contains a weakly acidic conjugate (e.g. NH₄⁺), so the equivalence point pH is below 7 (acidic).</li><li>Contrast this with strong acid + strong base (equivalence at pH 7) and weak acid + strong base (equivalence above pH 7).</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">What is a possible value of pH at the equivalence point in the titration of a strong acid with a weak base?</p>
+        
+        
+        <div class="options"><button class="opt" data-qn="26" data-idx="0" onclick="selectAnswer(26,0,0)">
+          <span class="optletter">A</span><span class="opttext">5</span>
+        </button>
+<button class="opt" data-qn="26" data-idx="1" onclick="selectAnswer(26,1,0)">
+          <span class="optletter">B</span><span class="opttext">7</span>
+        </button>
+<button class="opt" data-qn="26" data-idx="2" onclick="selectAnswer(26,2,0)">
+          <span class="optletter">C</span><span class="opttext">9</span>
+        </button>
+<button class="opt" data-qn="26" data-idx="3" onclick="selectAnswer(26,3,0)">
+          <span class="optletter">D</span><span class="opttext">11</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(26,0)" id="hintbtn-26-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(26,1)" id="hintbtn-26-1">Show hint 2</button>
+
+        <div class="hint" id="hint-26-0" hidden><span class="hintlabel">Hint 1</span>Think about what salt forms at equivalence, and whether its ions react with water (hydrolyse) to make the solution acidic, neutral, or basic.</div>
+<div class="hint" id="hint-26-1" hidden><span class="hintlabel">Hint 2</span>A weak base's conjugate acid (e.g. NH₄⁺ from NH₃) is itself a weak acid — what does that do to the pH of the resulting solution?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-26" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q27">
+      <div class="qhead">
+        <span class="qnum">Question 27</span>
+        <span class="qtopic">Topic 8 — Acids and bases (K_w)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>The autoionisation of water, H₂O ⇌ H⁺ + OH⁻, is endothermic, so K<sub>w</sub> increases as temperature rises.</li><li>Pure water is always neutral in the sense that [H⁺] = [OH⁻] — that equality doesn't depend on temperature.</li><li>'Neutral' (equal ion concentrations) and 'pH = 7' are only the same thing at 25 °C, where K<sub>w</sub> = 1.00 × 10⁻¹⁴. At higher temperature, K<sub>w</sub> is larger, so neutral pH is lower than 7.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">What is correct for pure hot water?</p>
+        
+        
+        <div class="options"><button class="opt" data-qn="27" data-idx="0" onclick="selectAnswer(27,0,1)">
+          <span class="optletter">A</span><span class="opttext">pH exactly 7, [H⁺] = [OH⁻]</span>
+        </button>
+<button class="opt" data-qn="27" data-idx="1" onclick="selectAnswer(27,1,1)">
+          <span class="optletter">B</span><span class="opttext">pH below 7, [H⁺] = [OH⁻]</span>
+        </button>
+<button class="opt" data-qn="27" data-idx="2" onclick="selectAnswer(27,2,1)">
+          <span class="optletter">C</span><span class="opttext">pH below 7, [H⁺] > [OH⁻]</span>
+        </button>
+<button class="opt" data-qn="27" data-idx="3" onclick="selectAnswer(27,3,1)">
+          <span class="optletter">D</span><span class="opttext">pH above 7, [H⁺] = [OH⁻]</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(27,0)" id="hintbtn-27-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(27,1)" id="hintbtn-27-1">Show hint 2</button>
+
+        <div class="hint" id="hint-27-0" hidden><span class="hintlabel">Hint 1</span>Pure water always has [H⁺] = [OH⁻], whatever the temperature — this rules out two of the four options immediately.</div>
+<div class="hint" id="hint-27-1" hidden><span class="hintlabel">Hint 2</span>As temperature rises, does K<sub>w</sub> (and hence [H⁺]) increase or decrease? What happens to pH as [H⁺] increases?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-27" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q28">
+      <div class="qhead">
+        <span class="qnum">Question 28</span>
+        <span class="qtopic">Topic 9 — Redox</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>Oxidation states in peroxides (like H₂O₂) are unusual: oxygen is −1, not the more familiar −2.</li><li>In water, H₂O, oxygen is back to its normal −2 oxidation state.</li><li>Change in oxidation state = (new value) − (old value); watch the sign carefully.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">What is the change in the oxidation state of oxygen?</p>
+        <p class='eqn'>2Fe²⁺(aq) + H₂O₂(aq) + 2H⁺(aq) → 2H₂O(l) + 2Fe³⁺(aq)</p>
+        
+        <div class="options"><button class="opt" data-qn="28" data-idx="0" onclick="selectAnswer(28,0,2)">
+          <span class="optletter">A</span><span class="opttext">+1</span>
+        </button>
+<button class="opt" data-qn="28" data-idx="1" onclick="selectAnswer(28,1,2)">
+          <span class="optletter">B</span><span class="opttext">0</span>
+        </button>
+<button class="opt" data-qn="28" data-idx="2" onclick="selectAnswer(28,2,2)">
+          <span class="optletter">C</span><span class="opttext">−1</span>
+        </button>
+<button class="opt" data-qn="28" data-idx="3" onclick="selectAnswer(28,3,2)">
+          <span class="optletter">D</span><span class="opttext">−2</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(28,0)" id="hintbtn-28-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(28,1)" id="hintbtn-28-1">Show hint 2</button>
+
+        <div class="hint" id="hint-28-0" hidden><span class="hintlabel">Hint 1</span>Identify oxygen's oxidation state in H₂O₂ first — remember peroxides are the exception to the usual −2 rule.</div>
+<div class="hint" id="hint-28-1" hidden><span class="hintlabel">Hint 2</span>Now find oxygen's oxidation state in H₂O (the normal case), and subtract: (H₂O value) − (H₂O₂ value).</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-28" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q29">
+      <div class="qhead">
+        <span class="qnum">Question 29</span>
+        <span class="qtopic">Topic 9 — Redox (voltaic cells)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>In a voltaic cell, the more reactive metal is oxidised at the anode and loses electrons; those electrons travel through the external wire to the cathode.</li><li>Electrons in the wire always flow from the anode (oxidation, more reactive metal) to the cathode (reduction, less reactive metal) — never through the solution.</li><li>In the salt bridge, anions (negative ions) migrate toward the half-cell that is building up positive charge — i.e., toward the anode, where the metal is dissolving into solution as cations.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Consider this voltaic cell, where Cu is a more reactive metal than Ag. Which combination describes the movement of charge in this cell?</p>
+        
+        <div class="diagram-wrap">
+<svg viewBox="0 0 560 320" class="qdiagram" role="img" aria-label="Voltaic cell with copper and silver electrodes">
+  <circle cx="280" cy="60" r="24" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="280" y="67" text-anchor="middle" class="dlabel">V</text>
+  <line x1="130" y1="60" x2="256" y2="60" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="304" y1="60" x2="430" y2="60" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="130" y1="60" x2="130" y2="110" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="430" y1="60" x2="430" y2="110" stroke="currentColor" stroke-width="1.5"/>
+  <rect x="90" y="110" width="90" height="140" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <rect x="380" y="110" width="90" height="140" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <rect x="122" y="110" width="16" height="110" fill="currentColor" opacity="0.5"/>
+  <rect x="422" y="110" width="16" height="110" fill="currentColor" opacity="0.5"/>
+  <rect x="180" y="150" width="200" height="16" fill="#8a8a8a"/>
+  <text x="280" y="145" text-anchor="middle" class="dlabel">Salt bridge</text>
+  <text x="130" y="95" text-anchor="middle" class="dlabel">Cu(s) electrode</text>
+  <text x="430" y="95" text-anchor="middle" class="dlabel">Ag(s) electrode</text>
+  <text x="135" y="275" text-anchor="middle" class="dlabel">Cu²⁺(aq)</text>
+  <text x="425" y="275" text-anchor="middle" class="dlabel">Ag⁺(aq)</text>
+</svg>
+</div>
+        <div class="options"><button class="opt" data-qn="29" data-idx="0" onclick="selectAnswer(29,0,3)">
+          <span class="optletter">A</span><span class="opttext">Ag(s) to Cu(s) in the wire; negative ions toward Ag⁺(aq)</span>
+        </button>
+<button class="opt" data-qn="29" data-idx="1" onclick="selectAnswer(29,1,3)">
+          <span class="optletter">B</span><span class="opttext">Cu(s) to Ag(s) in the wire; negative ions toward Ag⁺(aq)</span>
+        </button>
+<button class="opt" data-qn="29" data-idx="2" onclick="selectAnswer(29,2,3)">
+          <span class="optletter">C</span><span class="opttext">Ag(s) to Cu(s) in the wire; negative ions toward Cu²⁺(aq)</span>
+        </button>
+<button class="opt" data-qn="29" data-idx="3" onclick="selectAnswer(29,3,3)">
+          <span class="optletter">D</span><span class="opttext">Cu(s) to Ag(s) in the wire; negative ions toward Cu²⁺(aq)</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(29,0)" id="hintbtn-29-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(29,1)" id="hintbtn-29-1">Show hint 2</button>
+
+        <div class="hint" id="hint-29-0" hidden><span class="hintlabel">Hint 1</span>Since Cu is more reactive, it is oxidised (loses electrons) at its electrode. Which direction does that send the electrons in the external wire — toward or away from the Cu electrode?</div>
+<div class="hint" id="hint-29-1" hidden><span class="hintlabel">Hint 2</span>As Cu²⁺ builds up in the copper half-cell, that side becomes more positively charged. Which ions in the salt bridge move to balance that charge — the negative or positive ones — and in which direction?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-29" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q30">
+      <div class="qhead">
+        <span class="qnum">Question 30</span>
+        <span class="qtopic">Topic 9/19 — Redox (electrode potentials, HL)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>The half-equation with the more positive E<sup>⊖</sup> is reduced (it 'wins' the electrons); the half-equation with the more negative E<sup>⊖</sup> is reversed and oxidised.</li><li>E<sup>⊖</sup><sub>cell</sub> = E<sup>⊖</sup><sub>reduced species</sub> − E<sup>⊖</sup><sub>oxidised species</sub>; a spontaneous reaction needs E<sup>⊖</sup><sub>cell</sub> > 0.</li><li>Check every option by identifying which species is being reduced and which oxidised as written, then testing whether that direction is thermodynamically favourable.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Consider the following standard electrode potentials. Which species will react with each other spontaneously under standard conditions?</p>
+        <table class='dtable'><tr><th>Half-equation</th><th>E<sup>⊖</sup> / V</th></tr>
+  <tr><td>Zn²⁺(aq) + 2e⁻ ⇌ Zn(s)</td><td>−0.76</td></tr>
+  <tr><td>Pb²⁺(aq) + 2e⁻ ⇌ Pb(s)</td><td>−0.13</td></tr>
+  <tr><td>½Br₂(l) + e⁻ ⇌ Br⁻(aq)</td><td>+1.09</td></tr></table>
+        
+        <div class="options"><button class="opt" data-qn="30" data-idx="0" onclick="selectAnswer(30,0,3)">
+          <span class="optletter">A</span><span class="opttext">Zn²⁺(aq) + Pb(s)</span>
+        </button>
+<button class="opt" data-qn="30" data-idx="1" onclick="selectAnswer(30,1,3)">
+          <span class="optletter">B</span><span class="opttext">Pb²⁺(aq) + Br₂(l)</span>
+        </button>
+<button class="opt" data-qn="30" data-idx="2" onclick="selectAnswer(30,2,3)">
+          <span class="optletter">C</span><span class="opttext">Zn(s) + Br⁻(aq)</span>
+        </button>
+<button class="opt" data-qn="30" data-idx="3" onclick="selectAnswer(30,3,3)">
+          <span class="optletter">D</span><span class="opttext">Pb(s) + Br₂(l)</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(30,0)" id="hintbtn-30-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(30,1)" id="hintbtn-30-1">Show hint 2</button>
+
+        <div class="hint" id="hint-30-0" hidden><span class="hintlabel">Hint 1</span>For each option, work out which species is written as being reduced and which as oxidised, then compute E°cell = E°(reduced) − E°(oxidised).</div>
+<div class="hint" id="hint-30-1" hidden><span class="hintlabel">Hint 2</span>Only one option gives a positive E°cell. Try D: Br₂ is reduced (+1.09), Pb is oxidised (its reduction potential is −0.13, so oxidation potential is +0.13).</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-30" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q31">
+      <div class="qhead">
+        <span class="qnum">Question 31</span>
+        <span class="qtopic">Topic 9/19 — Redox (electrolysis, HL)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>At an inert (unreactive) electrode, the species that is easiest to oxidise (lowest, i.e. least positive, standard reduction potential of the candidates present) is discharged at the anode.</li><li>Compare the reduction potentials of O₂/H₂O (+1.23 V) and Cl₂/Cl⁻ (+1.36 V): the less positive value (O₂/H₂O) is oxidised preferentially, especially in dilute solution where Cl⁻ concentration is low.</li><li>With a <em>reactive</em> (e.g. copper) electrode, the electrode metal itself is usually oxidised in preference to anything in solution, since Cu (E° = +0.34 V) is far easier to oxidise than either water or chloride.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">Which aqueous solutions produce oxygen gas during electrolysis?</p>
+        <p>I. Dilute CuCl₂(aq) with inert electrodes<br>II. Dilute FeSO₄(aq) with inert electrodes<br>III. Dilute CuCl₂(aq) with copper electrodes</p>
+  <table class='dtable'><tr><th>Half-equation</th><th>E<sup>⊖</sup> / V</th></tr>
+  <tr><td>Fe²⁺(aq) + 2e⁻ ⇌ Fe(s)</td><td>−0.45</td></tr>
+  <tr><td>Cu²⁺(aq) + 2e⁻ ⇌ Cu(s)</td><td>+0.34</td></tr>
+  <tr><td>½O₂(g) + 2H⁺(aq) + 2e⁻ ⇌ H₂O(l)</td><td>+1.23</td></tr>
+  <tr><td>½Cl₂(g) + e⁻ ⇌ Cl⁻(aq)</td><td>+1.36</td></tr></table>
+        
+        <div class="options"><button class="opt" data-qn="31" data-idx="0" onclick="selectAnswer(31,0,0)">
+          <span class="optletter">A</span><span class="opttext">I and II only</span>
+        </button>
+<button class="opt" data-qn="31" data-idx="1" onclick="selectAnswer(31,1,0)">
+          <span class="optletter">B</span><span class="opttext">I and III only</span>
+        </button>
+<button class="opt" data-qn="31" data-idx="2" onclick="selectAnswer(31,2,0)">
+          <span class="optletter">C</span><span class="opttext">II and III only</span>
+        </button>
+<button class="opt" data-qn="31" data-idx="3" onclick="selectAnswer(31,3,0)">
+          <span class="optletter">D</span><span class="opttext">I, II and III</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(31,0)" id="hintbtn-31-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(31,1)" id="hintbtn-31-1">Show hint 2</button>
+
+        <div class="hint" id="hint-31-0" hidden><span class="hintlabel">Hint 1</span>For I and II (inert electrodes), compare the discharge preference at the anode between water/O₂ and any halide present — with dilute CuCl₂, is Cl⁻ or water preferentially oxidised?</div>
+<div class="hint" id="hint-31-1" hidden><span class="hintlabel">Hint 2</span>For III, the electrode itself is reactive copper. What happens at a reactive anode instead of oxidising the solution?</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-31" hidden></div>
+    </section>
+
+
+    <section class="qcard" id="q38">
+      <div class="qhead">
+        <span class="qnum">Question 38</span>
+        <span class="qtopic">Topic 6 — Kinetics (graphical analysis)</span>
+      </div>
+
+      <details class="cheatsheet">
+        <summary>Cheat sheet — what you need before you start</summary>
+        <ul><li>The slope (gradient) of a concentration-time graph gives the rate of change of concentration — read two points as far apart as possible on the line for accuracy.</li><li>Gradient = Δy / Δx = (change in concentration) / (change in time); include the correct sign (the line falls, so the slope is negative) and units.</li><li>Units of a concentration/time gradient are mol dm⁻³ s⁻¹ (concentration units divided by time units) — check the answer options carefully, since some deliberately drop the 's⁻¹'.</li></ul>
+      </details>
+
+      <div class="qbody">
+        <p class="qstem">What is the slope of the graph?</p>
+        
+        <div class="diagram-wrap">
+<svg viewBox="0 0 520 300" class="qdiagram" role="img" aria-label="Concentration versus time graph">
+  <line x1="60" y1="20" x2="60" y2="240" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="60" y1="240" x2="480" y2="240" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="65" y1="30" x2="465" y2="200" stroke="currentColor" stroke-width="2"/>
+  <circle cx="65" cy="30" r="3" fill="currentColor"/>
+  <circle cx="135" cy="65" r="3" fill="currentColor"/>
+  <circle cx="205" cy="95" r="3" fill="currentColor"/>
+  <circle cx="275" cy="125" r="3" fill="currentColor"/>
+  <circle cx="345" cy="160" r="3" fill="currentColor"/>
+  <circle cx="415" cy="180" r="3" fill="currentColor"/>
+  <circle cx="465" cy="200" r="3" fill="currentColor"/>
+  <text x="20" y="130" class="dlabel" transform="rotate(-90 20,130)">Reactant conc. / mol dm⁻³</text>
+  <text x="270" y="262" class="dlabel" text-anchor="middle">Time / s</text>
+  <text x="60" y="255" class="dlabel">0</text>
+  <text x="205" y="255" class="dlabel">20.0</text>
+  <text x="465" y="255" class="dlabel">60.0</text>
+  <text x="45" y="35" class="dlabel" text-anchor="end">0.20</text>
+  <text x="45" y="205" class="dlabel" text-anchor="end">0.05</text>
+</svg>
+</div>
+        <div class="options"><button class="opt" data-qn="38" data-idx="0" onclick="selectAnswer(38,0,0)">
+          <span class="optletter">A</span><span class="opttext">−0.0025 mol dm⁻³ s⁻¹</span>
+        </button>
+<button class="opt" data-qn="38" data-idx="1" onclick="selectAnswer(38,1,0)">
+          <span class="optletter">B</span><span class="opttext">−0.0025 mol dm⁻³ s</span>
+        </button>
+<button class="opt" data-qn="38" data-idx="2" onclick="selectAnswer(38,2,0)">
+          <span class="optletter">C</span><span class="opttext">−0.0033 mol dm⁻³ s⁻¹</span>
+        </button>
+<button class="opt" data-qn="38" data-idx="3" onclick="selectAnswer(38,3,0)">
+          <span class="optletter">D</span><span class="opttext">−0.0033 mol dm⁻³ s</span>
+        </button>
+</div>
+      </div>
+
+      <div class="hints">
+        <button class="hintbtn" onclick="revealHint(38,0)" id="hintbtn-38-0">Show hint 1</button>
+<button class="hintbtn" onclick="revealHint(38,1)" id="hintbtn-38-1">Show hint 2</button>
+
+        <div class="hint" id="hint-38-0" hidden><span class="hintlabel">Hint 1</span>Pick two well-separated points on the line, e.g. (0 s, 0.20 mol dm⁻³) and (60.0 s, 0.05 mol dm⁻³), and find Δy and Δx.</div>
+<div class="hint" id="hint-38-1" hidden><span class="hintlabel">Hint 2</span>Divide Δ(concentration) by Δ(time), and check the units in each option match mol dm⁻³ <em>per second</em> — not multiplied by seconds.</div>
+
+      </div>
+
+      <div class="feedback" id="feedback-38" hidden></div>
+    </section>
+
+
+<section class="glossary-section">
+  <h2>Glossary</h2>
+  <dl class="glossary"><dt>Limiting reagent</dt><dd>The reactant that is completely used up first, stopping the reaction and determining the maximum amount of product formed.</dd><dt>Avogadro's constant (L, N_A)</dt><dd>The number of particles (atoms, molecules or ions) in one mole of a substance: 6.02 × 10²³ mol⁻¹.</dd><dt>Ionisation energy</dt><dd>The energy required to remove one mole of electrons from one mole of gaseous atoms or ions.</dd><dt>Standard enthalpy of formation (ΔH_f⊖)</dt><dd>The enthalpy change when exactly one mole of a compound is formed from its elements in their standard states under standard conditions.</dd><dt>Lattice enthalpy</dt><dd>The enthalpy change when one mole of an ionic solid is formed from its gaseous ions (or, for the reverse process, broken apart into them).</dd><dt>Born–Haber cycle</dt><dd>An application of Hess's law that relates the enthalpy of formation of an ionic compound to the sum of the individual steps (atomisation, ionisation, electron affinity, lattice enthalpy) that build it up.</dd><dt>Gibbs free energy (G)</dt><dd>A thermodynamic quantity combining enthalpy and entropy; a process is spontaneous at constant temperature and pressure when ΔG is negative.</dd><dt>Reaction quotient (Q)</dt><dd>A measure of the relative amounts of products and reactants at any point during a reaction, calculated the same way as K but not necessarily at equilibrium.</dd><dt>Rate-determining step</dt><dd>The slowest step in a reaction mechanism, which controls the overall rate and determines the form of the experimental rate equation.</dd><dt>Hydrolysis</dt><dd>A reaction in which a species reacts with water, often producing H⁺ or OH⁻ and shifting the pH of the solution.</dd><dt>Equivalence point</dt><dd>The point in a titration at which the amount of titrant added is stoichiometrically equivalent to the amount of the substance being titrated.</dd><dt>K_w (ionic product of water)</dt><dd>The equilibrium constant for the autoionisation of water, H₂O ⇌ H⁺ + OH⁻; equal to 1.00 × 10⁻¹⁴ at 25 °C, and larger at higher temperatures.</dd><dt>Oxidation state</dt><dd>A number assigned to an atom that represents the charge it would have if all bonds to different atoms were fully ionic.</dd><dt>Anode / cathode</dt><dd>In a voltaic cell, the anode is where oxidation occurs (electrons are released); the cathode is where reduction occurs (electrons are gained).</dd><dt>Salt bridge</dt><dd>A connection between the two half-cells of a voltaic cell that allows ion flow to balance charge, without allowing the solutions to mix freely.</dd><dt>Standard electrode potential (E⊖)</dt><dd>A measure of the tendency of a half-cell to be reduced, measured relative to the standard hydrogen electrode under standard conditions.</dd><dt>Inert electrode</dt><dd>An electrode (e.g. platinum or graphite) that conducts electricity but does not itself take part in the electrode reaction.</dd></dl>
+</section>
+</main>
+
+
+<section class="calc-wrap" id="calc-wrap">
+  <button class="calc-toggle" id="calc-toggle" onclick="toggleCalc()">🧮 Calculator</button>
+  <div class="calculator" id="calculator" hidden>
+    <div class="calc-display" id="calc-display">0</div>
+    <div class="calc-mem-indicator" id="calc-mem-indicator" hidden>M</div>
+    <div class="calc-grid">
+      <button onclick="calcMemory('MC')" class="calc-mem">MC</button>
+      <button onclick="calcMemory('MR')" class="calc-mem">MR</button>
+      <button onclick="calcMemory('M-')" class="calc-mem">M−</button>
+      <button onclick="calcMemory('M+')" class="calc-mem">M+</button>
+
+      <button onclick="calcConst('h')" class="calc-const">h</button>
+      <button onclick="calcConst('L')" class="calc-const">L</button>
+      <button onclick="calcInput('(')" class="calc-op">(</button>
+      <button onclick="calcInput(')')" class="calc-op">)</button>
+
+      <button onclick="calcInput('7')">7</button>
+      <button onclick="calcInput('8')">8</button>
+      <button onclick="calcInput('9')">9</button>
+      <button onclick="calcInput('/')" class="calc-op">÷</button>
+
+      <button onclick="calcInput('4')">4</button>
+      <button onclick="calcInput('5')">5</button>
+      <button onclick="calcInput('6')">6</button>
+      <button onclick="calcInput('*')" class="calc-op">×</button>
+
+      <button onclick="calcInput('1')">1</button>
+      <button onclick="calcInput('2')">2</button>
+      <button onclick="calcInput('3')">3</button>
+      <button onclick="calcInput('-')" class="calc-op">−</button>
+
+      <button onclick="calcInput('0')">0</button>
+      <button onclick="calcInput('.')">.</button>
+      <button onclick="calcClearEntry()" class="calc-op">C</button>
+      <button onclick="calcInput('+')" class="calc-op">+</button>
+
+      <button onclick="calcAllClear()" class="calc-op calc-wide">AC</button>
+      <button onclick="calcEquals()" class="calc-eq calc-wide">=</button>
+    </div>
+    <p class="calc-note">In 2021, students were not allowed use of calculators in these papers. Therefore the questions have been structured to be solved without recourse to a calculator. This changed in 2025, when calculators were then allowed, and have been since.</p>
+  </div>
+</section>
+
+
+<footer class="site-footer">
+          <p>J.J.</p>
+          <p><a href="contact.html">About / Contact</a></p>
+          <p class="ai-disclosure">My Experiments with AI -- Enhanced with AI</p>
+        </footer>
+
+<script>
+const TOTAL_Q = 24;
+const EXPLAIN = {
+  1: "1.20 × 10²⁴ ÷ 6.02 × 10²³ = 1.99 ≈ 2.00 mol of carbon <em>atoms</em>. Ethanol, C₂H₅OH, has 2 carbon atoms per molecule, so moles of ethanol = 2.00 ÷ 2 = <strong>1.00 mol</strong>.",
+  2: "3.00 mol C₃H₈ needs 3.00 × 5 = 15.00 mol O₂. Only 15.00 of the 20.00 mol O₂ available is used, leaving 20.00 − 15.00 = <strong>5.00 mol O₂</strong> unreacted. C₃H₈ is completely consumed (limiting reagent), so option A is wrong; CO₂ and H₂O are products formed (3.00 × 3 = 9.00 mol CO₂ and 3.00 × 4 = 12.00 mol H₂O), not the values given in C and D.",
+  3: "P₁V₁ + P₂V₂ = (2.0 × 10⁵ × 4.0) + (3.0 × 10⁵ × 2.0) = 8.0 × 10⁵ + 6.0 × 10⁵ = 14.0 × 10⁵ Pa dm³. Divide by the combined volume (4.0 + 2.0 = 6.0 dm³): 14.0 × 10⁵ ÷ 6.0 = <strong>2.3 × 10⁵ Pa</strong>.",
+  4: "⁶Li⁺: neutrons = 3, electrons = 2, diff = 1. ⁹Be²⁺: neutrons = 5, electrons = 2, diff = 3. ²³Na⁺: neutrons = 12, electrons = 10, diff = <strong>2</strong>. ⁴²Ca²⁺: neutrons = 22, electrons = 18, diff = 4. Only Na⁺ has exactly two more neutrons than electrons.",
+  5: "Al⁺ (after losing its 3p electron) has the configuration [Ne]3s², with 12 electrons — identical to a neutral Mg atom. Both ionisations therefore remove an electron from the same 3s² arrangement with the same number of electrons, but Al⁺ has 13 protons versus Mg's 12, so the extra nuclear charge pulls the electron in more strongly, raising the ionisation energy. <strong>D</strong> is correct; the sub-shells being compared (B, C) are red herrings once you realise the electron counts are equal.",
+  14: "A: formed 3×2×800=4800, broken 5×500=2500, net 2300. B: formed 2×2×800+1000=4200, broken 4.5×500=2250, net 1950. C: formed 1×2×800+2×1000=3600, broken 4×500=2000, net 1600. D: formed 3×1000=3000, broken 3.5×500=1750, net <strong>1250</strong> — the smallest. Full combustion to CO₂ (A) releases the most energy; complete conversion to CO with the least O₂ (D) releases the least.",
+  15: "Only <strong>B</strong> produces exactly 1 mole of Li₂O(s), with the elements Li(s) and O₂(g) in their standard states. A produces 2 mol of product; C and D produce ½ mol; D also uses Li(g) and Li₂O(g), which are not standard states.",
+  16: "Following the cycle: −414 = 2(108) + 249 + 2(496) − 141 + 790 − LE. Rearranging for LE: LE = 414 + 2(108) + 249 + 2(496) − 141 + 790, which is option <strong>A</strong>.",
+  17: "K > 1 makes ln K positive, so ΔG<sup>⊖</sup> = −RT ln K is negative — spontaneous. <strong>A</strong> is correct. B gives ΔG > 0 (non-spontaneous); C means the forward ΔG is positive; D directly violates the requirement for a spontaneous process (ΔS<sub>universe</sub> must be positive).",
+  18: "All reactants and products are aqueous, so no gas is released and mass doesn't change — this rules out the gas syringe and balance. A volumetric flask is just glassware, not a monitoring instrument. I₂(aq) is coloured, so a <strong>colorimeter</strong> (B) can track its formation over time.",
+  19: "Powder has a far greater surface area than a strip of the same mass, so options with powder (A, B) react faster than the equivalent strip options. Between A and B, both contain the same total moles of CuSO₄ (0.0100 mol), but A's solution is more concentrated (0.200 vs 0.100 mol dm⁻³), giving more frequent collisions and the greatest rate: <strong>A</strong>.",
+  20: "Graphs B and D plot rate against concentration, not concentration against time, so they answer a different question about reaction order (B would suit second order, D suits zero order — but neither shows the time-dependence asked for here). Of the remaining two, C is a straight-line (constant-rate) decrease characteristic of zero order; A shows the exponential decay of concentration with time expected for a <strong>first-order</strong> reaction.",
+  21: "For D, the slow step (I + A → P) gives rate = k[I][A]. Because B ⇌ I is fast and reaches equilibrium, [I] ∝ [B], so substituting gives rate = k[A][B] — matching exactly. Checking the others: A gives rate ∝ [A]²[B] roughly via [I] ∝ [A]²; B gives rate ∝ [A]²[B]; C's slow step is A → I alone, giving rate ∝ [A] only. Only <strong>D</strong> reproduces rate = k[A][B].",
+  22: "Q (4.5) < K<sub>c</sub> (6.2), so the system needs to shift toward products (forward direction) to reach equilibrium — meaning the forward rate currently exceeds the reverse rate: <strong>B</strong>. The system is not at equilibrium (rules out A), and C/D make claims about relative concentrations that aren't supported by comparing Q and K alone.",
+  23: "The system settles at the composition where Gibbs free energy is lowest. Reading the curve, that minimum occurs at <strong>point B</strong>, not at the pure-N₂O₄ end (A), the arbitrary midpoint (C), or the pure-NO₂ end (D).",
+  24: "CO₃²⁻ + H₂O ⇌ HCO₃⁻ + OH⁻ shows that HCO₃⁻ (I) and OH⁻ (II) are produced, while unreacted CO₃²⁻ (III) is still present since the equilibrium lies only partly toward products. All three are present: <strong>D</strong>.",
+  25: "[OH⁻] = 0.01 = 1 × 10⁻² mol dm⁻³, so pOH = 2.0. pH = 14.0 − 2.0 = <strong>12.0</strong>.",
+  26: "The salt formed (e.g. NH₄Cl) contains the conjugate acid of the weak base, which hydrolyses to release H⁺, making the equivalence-point solution acidic (pH < 7). Only <strong>5</strong> is below 7.",
+  27: "Pure water is always neutral in the sense [H⁺] = [OH⁻] (ruling out C, which shows an inequality). Heating increases K<sub>w</sub>, so [H⁺] rises above 1 × 10⁻⁷ mol dm⁻³, making pH fall below 7 — so it is not exactly 7 (rules out A). The correct description is pH below 7 with [H⁺] = [OH⁻]: <strong>B</strong>.",
+  28: "In H₂O₂, oxygen is −1 (peroxide). In H₂O, oxygen is −2 (normal). Change = −2 − (−1) = <strong>−1</strong>.",
+  29: "Cu is oxidised (Cu → Cu²⁺ + 2e⁻), releasing electrons that flow through the wire from Cu(s) to Ag(s). As Cu²⁺ accumulates in that half-cell, negative ions from the salt bridge migrate toward it to maintain charge balance — toward Cu²⁺(aq). This matches <strong>D</strong>.",
+  30: "For D: Br₂ (E° = +1.09) is reduced, Pb (E° = −0.13) is oxidised. E°cell = 1.09 − (−0.13) = +1.22 V — spontaneous. Checking the others gives a negative E°cell in each case (e.g. for A, Pb is a weaker reducing agent than Zn, so it cannot reduce Zn²⁺). <strong>D</strong> is correct.",
+  31: "I: with inert electrodes and dilute Cl⁻, water (E° = +1.23 V, easier to oxidise than Cl⁻ at +1.36 V) is discharged, giving O₂ — happens. II: FeSO₄ has no halide at all, so water is oxidised at the anode regardless — O₂ forms. III: with a reactive copper anode, the copper metal itself is oxidised (Cu → Cu²⁺ + 2e⁻) in preference to water, since Cu is far easier to oxidise — no O₂ forms here. So O₂ forms in I and II only: <strong>A</strong>.",
+  38: "Gradient = (0.05 − 0.20) / (60.0 − 0) = −0.15 / 60.0 = <strong>−0.0025 mol dm⁻³ s⁻¹</strong>. Options B and D have the units inverted (s instead of s⁻¹), and C/D use the wrong numerical value."
+};
+
+
+let calcExpr = "";
+let calcMemVal = 0;
+let calcHasMem = false;
+
+function toggleCalc(){
+  const c = document.getElementById('calculator');
+  c.hidden = !c.hidden;
+}
+function calcUpdateDisplay(){
+  document.getElementById('calc-display').textContent = calcExpr || "0";
+}
+function calcNeedsImplicitTimes(){
+  // If the expression so far ends in a digit, '.', or ')', a following '(' or constant
+  // needs an explicit multiplication sign inserted, or the expression becomes invalid.
+  return /[0-9).]$/.test(calcExpr);
+}
+function calcInput(v){
+  if (v === '(' && calcNeedsImplicitTimes()) { calcExpr += '*'; }
+  calcExpr += v;
+  calcUpdateDisplay();
+}
+function calcConst(which){
+  if (calcNeedsImplicitTimes()) { calcExpr += '*'; }
+  if (which === 'h') { calcExpr += "(6.626e-34)"; }
+  if (which === 'L') { calcExpr += "(6.022e23)"; }
+  calcUpdateDisplay();
+}
+function calcClearEntry(){
+  calcExpr = calcExpr.slice(0, -1);
+  calcUpdateDisplay();
+}
+function calcAllClear(){
+  calcExpr = "";
+  calcUpdateDisplay();
+}
+function calcEquals(){
+  try {
+    // Only allow safe characters: digits, operators, parentheses, decimal point, e, +/- exponent
+    if (!/^[0-9+\-*/().e\s]*$/i.test(calcExpr)) { throw new Error("bad"); }
+    const result = Function('"use strict"; return (' + calcExpr + ')')();
+    if (typeof result !== 'number' || !isFinite(result)) { throw new Error("bad"); }
+    // Trim floating-point noise (e.g. 0.1+0.2 -> 0.30000000000000004) without destroying
+    // very small or very large magnitudes (e.g. Planck's constant, 6.626e-34).
+    calcExpr = (result === 0) ? "0" : String(parseFloat(result.toPrecision(12)));
+    calcUpdateDisplay();
+  } catch (e) {
+    document.getElementById('calc-display').textContent = "Error";
+    calcExpr = "";
+  }
+}
+function calcMemory(op){
+  const disp = document.getElementById('calc-display');
+  const memInd = document.getElementById('calc-mem-indicator');
+  if (op === 'MC'){ calcMemVal = 0; calcHasMem = false; memInd.hidden = true; return; }
+  if (op === 'MR'){ calcExpr += String(calcMemVal); calcUpdateDisplay(); return; }
+  let current;
+  try {
+    current = Function('"use strict"; return (' + (calcExpr || "0") + ')')();
+  } catch(e){ current = 0; }
+  if (typeof current !== 'number' || !isFinite(current)) current = 0;
+  if (op === 'M+'){ calcMemVal += current; calcHasMem = true; }
+  if (op === 'M-'){ calcMemVal -= current; calcHasMem = true; }
+  memInd.hidden = !calcHasMem;
+}
+
+
+let score = 0;
+let answered = {};
+
+function revealHint(qn, idx){
+  document.getElementById('hint-' + qn + '-' + idx).hidden = false;
+  document.getElementById('hintbtn-' + qn + '-' + idx).disabled = true;
+}
+
+function selectAnswer(qn, idx, correctIdx){
+  if (answered[qn]) return;
+  answered[qn] = true;
+
+  const buttons = document.querySelectorAll('.opt[data-qn="' + qn + '"]');
+  buttons.forEach(function(b){
+    b.disabled = true;
+    const bi = parseInt(b.getAttribute('data-idx'), 10);
+    if (bi === correctIdx) b.classList.add('correct');
+    else if (bi === idx) b.classList.add('incorrect');
+  });
+
+  const fb = document.getElementById('feedback-' + qn);
+  fb.hidden = false;
+  const isRight = (idx === correctIdx);
+  if (isRight) score += 1;
+  fb.innerHTML = (isRight ? '<p class="fb-correct">Correct.</p>' : '<p class="fb-incorrect">Not quite — the correct answer is ' + 'ABCD'[correctIdx] + '.</p>')
+    + '<p class="fb-explain">' + EXPLAIN[qn] + '</p>';
+
+  updateScore();
+}
+
+function updateScore(){
+  const n = Object.keys(answered).length;
+  document.getElementById('score-tracker').textContent = 'Answered ' + n + ' of ' + TOTAL_Q + ' — score ' + score + '/' + n;
+}
+
+</script>
+
+</body>
+</html>
