@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Periodic Table in 1800</title>
+<style>
+  :root{
+    --ink:#1b1f24; --ink-soft:#4a545e; --paper:#f4f5f7;
+    --known-a:#ececec; --known-b:#d4d4d4; --known-border:#b9b9b9;
+    --unknown-a:#f4f5f7; --unknown-b:#eceef0; --unknown-border:#dde0e3;
+    --ph-a:#fbf5e4; --ph-b:#f3ead0; --ph-border:#dfc98a;
+    --red-a:#ffdede; --red-b:#ffb3b3; --red-border:#d97878; --red-text:#7a1414;
+    --red-p-a:#ffe9e9; --red-p-b:#ffcaca; --gold:#c9a227;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:40px 24px 60px; background:var(--paper);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    color:var(--ink);
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+  h1{font-size:1.5rem;margin:0 0 6px;}
+  .sub{color:var(--ink-soft);margin:0 0 28px;font-size:0.98rem;line-height:1.5;max-width:76ch;}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(18, minmax(0,1fr));
+    grid-template-rows:repeat(10, auto);
+    gap:7px;
+    margin-bottom:10px;
+  }
+  .tile{
+    aspect-ratio:1/1;
+    border-radius:11px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-weight:800; font-size:1.05rem;
+    position:relative;
+    min-width:0;
+  }
+  .tile .yr{font-size:0.42rem; font-weight:600; letter-spacing:.01em; margin-top:1px;}
+  .known{
+    background:linear-gradient(160deg,var(--known-a),var(--known-b));
+    border:1px solid var(--known-border);
+    box-shadow:0 2px 5px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.6);
+    color:#000;
+  }
+  .known .yr{color:#5a5a5a;}
+  .unknown{
+    background:linear-gradient(160deg,var(--unknown-a),var(--unknown-b));
+    border:1px dashed var(--unknown-border);
+    color:#c3c7cc;
+    font-size:0.85rem;
+  }
+  .partial{
+    background:linear-gradient(160deg,var(--known-a),var(--known-b));
+    border:1px dashed #b9b9b9;
+    color:#000;
+    opacity:.55;
+  }
+  .partial .yr{color:#5a5a5a;}
+  .placeholder{
+    background:linear-gradient(160deg,var(--ph-a),var(--ph-b));
+    border:1px dashed var(--ph-border);
+    color:#8a6d1f;
+    font-size:0.72rem;
+    font-weight:700;
+  }
+  .row-gap-label{
+    grid-row:8; grid-column:1/19;
+    font-size:0.7rem; color:#9aa0a6; align-self:center; padding-left:2px;
+  }
+  .fblock-label{
+    font-size:0.62rem; font-weight:700; color:#8a6d1f; align-self:center;
+    display:flex; align-items:center;
+  }
+  .fblock-label.lan{grid-row:9; grid-column:1/3;}
+  .fblock-label.act{grid-row:10; grid-column:1/3;}
+
+  .key{display:flex; gap:22px; flex-wrap:wrap; margin:20px 0 30px; font-size:0.85rem; color:var(--ink-soft);}
+  .key span{display:inline-flex; align-items:center; gap:8px;}
+  .swatch{width:16px;height:16px;border-radius:5px; display:inline-block;}
+  .sw-known{background:linear-gradient(160deg,var(--known-a),var(--known-b)); border:1px solid var(--known-border);}
+  .sw-partial{background:linear-gradient(160deg,var(--known-a),var(--known-b)); border:1px dashed var(--known-border); opacity:.55;}
+  .sw-unknown{background:linear-gradient(160deg,var(--unknown-a),var(--unknown-b)); border:1px dashed var(--unknown-border);}
+  .sw-ph{background:linear-gradient(160deg,var(--ph-a),var(--ph-b)); border:1px dashed var(--ph-border);}
+
+  .notes{font-size:0.92rem; line-height:1.6; color:var(--ink-soft); border-top:1px solid #dfe3e8; padding-top:20px;}
+  .notes b{color:var(--ink);}
+  .notes ul{padding-left:20px;}
+  .notes li{margin-bottom:6px;}
+  .notes h2{font-size:1.05rem; color:var(--ink); margin:26px 0 8px;}
+  .count{background:#fff; border:1px solid #dfe3e8; border-radius:12px; padding:14px 18px; margin-bottom:18px; font-size:0.92rem; color:var(--ink-soft); display:inline-block;}
+  .count b{color:var(--ink); font-size:1.1rem;}
+  .count.era1830-only{display:none;}
+  body.era1830-active .count.era1800-only{display:none;}
+  body.era1830-active .count.era1830-only{display:inline-block;}
+
+  .toggle-row{margin-bottom:22px;}
+  .toggle-btn{
+    font-family:inherit; font-size:0.92rem; font-weight:700; cursor:pointer;
+    padding:11px 20px; border-radius:999px; border:1.5px solid var(--red-border);
+    background:linear-gradient(160deg,var(--red-a),var(--red-b)); color:var(--red-text);
+    box-shadow:0 2px 5px rgba(0,0,0,.08);
+  }
+  .toggle-btn.active{
+    background:linear-gradient(160deg,#ececec,#d4d4d4); border-color:var(--known-border); color:#000;
+  }
+  .toggle-hint{font-size:0.82rem; color:var(--ink-soft); margin-top:8px; max-width:64ch; line-height:1.5;}
+
+  /* --- era 1830 tile states (hidden until toggled) --- */
+  .yr.y1830{display:none;}
+  .grid.era1830 .yr.y1800{display:none;}
+  .grid.era1830 .yr.y1830{display:block;}
+
+  .grid.era1830 .tile.new1830{
+    background:linear-gradient(160deg,var(--red-a),var(--red-b));
+    border:1px solid var(--red-border);
+    box-shadow:0 2px 5px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.5);
+    color:var(--red-text);
+    opacity:1;
+    font-size:1.05rem;
+  }
+  .grid.era1830 .tile.new1830 .yr{color:var(--red-text); opacity:.85;}
+
+  .grid.era1830 .tile.upgrade1830{
+    background:linear-gradient(160deg,var(--red-a),var(--red-b));
+    border:1px solid var(--red-border);
+    box-shadow:0 2px 5px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.5);
+    color:var(--red-text);
+    opacity:1;
+  }
+  .grid.era1830 .tile.upgrade1830 .yr{color:var(--red-text); opacity:.85;}
+
+  .grid.era1830 .tile.new1830partial{
+    background:linear-gradient(160deg,var(--red-p-a),var(--red-p-b));
+    border:1px dashed var(--red-border);
+    color:var(--red-text);
+    opacity:.7;
+    font-size:1.05rem;
+  }
+  .grid.era1830 .tile.new1830partial .yr{color:var(--red-text);}
+
+  .grid.era1830 .tile.german{
+    box-shadow:0 0 0 3px var(--gold), 0 2px 5px rgba(0,0,0,.12);
+  }
+  .sw-german{background:linear-gradient(160deg,var(--red-a),var(--red-b)); border:1px solid var(--red-border); box-shadow:0 0 0 3px var(--gold);}
+  .key.key-1830{display:none;}
+  .era1830-active .key.key-1800{display:none;}
+  .era1830-active .key.key-1830{display:flex;}
+
+  /* --- clickable element tiles & story modal --- */
+  .tile.has-story{cursor:pointer;}
+  .tile.has-story:hover{transform:translateY(-2px); box-shadow:0 5px 10px rgba(0,0,0,.18);}
+  .tile.has-story:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+  .tile.gated1830{cursor:default;}
+  .tile.gated1830:hover{transform:none; box-shadow:none;}
+  .grid.era1830 .tile.gated1830{cursor:pointer;}
+  .grid.era1830 .tile.gated1830:hover{transform:translateY(-2px); box-shadow:0 5px 10px rgba(0,0,0,.18);}
+  .tile.has-story::after{
+    content:"";
+    position:absolute; bottom:3px; right:5px;
+    width:5px; height:5px; border-radius:50%;
+    background:#8a6d1f; opacity:.35;
+  }
+  .tile.gated1830::after{display:none;}
+  .grid.era1830 .tile.gated1830::after{display:block; background:var(--red-text); opacity:.5;}
+
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(20,20,22,.55);
+    align-items:center; justify-content:center; padding:24px; z-index:100;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-card{
+    background:#fff; border-radius:16px; max-width:600px; width:100%;
+    max-height:85vh; overflow-y:auto; padding:28px 30px 26px;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+    position:relative;
+  }
+  .modal-close{
+    position:absolute; top:16px; right:18px; border:none; background:none;
+    font-size:1.4rem; line-height:1; cursor:pointer; color:#9aa0a6; padding:4px;
+  }
+  .modal-close:hover{color:var(--ink);}
+  .modal-head{display:flex; align-items:baseline; gap:14px; margin-bottom:4px;}
+  .modal-symbol{
+    font-size:2rem; font-weight:800; background:linear-gradient(160deg,var(--known-a),var(--known-b));
+    border:1px solid var(--known-border); border-radius:10px; width:56px; height:56px;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .modal-titles{flex:1;}
+  .modal-name{font-size:1.25rem; font-weight:800; color:var(--ink); margin:0;}
+  .modal-year{font-size:0.9rem; color:var(--ink-soft); margin:2px 0 0;}
+  .modal-body{margin-top:18px; font-size:0.95rem; line-height:1.62; color:var(--ink-soft);}
+  .modal-row{display:flex; gap:10px; margin-bottom:10px;}
+  .modal-row .lbl{flex:0 0 92px; font-weight:700; color:var(--ink); font-size:0.82rem; text-transform:uppercase; letter-spacing:.03em; padding-top:2px;}
+  .modal-row .val{flex:1;}
+  .eqn{
+    display:block; margin:9px 0; padding:9px 12px;
+    background:var(--paper); border:1px solid #dfe3e8; border-radius:8px;
+    font-family:"Cambria Math",Cambria,Georgia,serif;
+    font-size:0.98rem; text-align:center; color:var(--ink);
+    white-space:nowrap; overflow-x:auto;
+  }
+  .val .eqn:first-child{margin-top:2px;}
+  .val .eqn:last-child{margin-bottom:2px;}
+  .modal-story{margin-top:14px; padding-top:14px; border-top:1px solid #eceef0;}
+  .modal-story .lbl{font-weight:700; color:var(--ink); font-size:0.82rem; text-transform:uppercase; letter-spacing:.03em; display:block; margin-bottom:6px;}
+  .modal-german{
+    display:inline-flex; align-items:center; gap:6px; margin-top:14px;
+    font-size:0.78rem; font-weight:700; color:#8a6d1f;
+    background:var(--ph-a); border:1px solid var(--ph-border); border-radius:999px; padding:5px 12px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The Periodic Table in 1800</h1>
+  <p class="sub">Extended down to lead (Pb) and beyond &mdash; through every transition metal, and as far as uranium (U), the one element whose &ldquo;earth&rdquo; had already turned up in pitchblende by 1789. Elements 93 and above are 20th-century, laboratory-made additions and are left off entirely: no version of chemistry in 1800, however lucky, could have found them.</p>
+
+  <div class="toggle-row">
+    <button class="toggle-btn" id="eraBtn" type="button" onclick="toggleEra()">Show discoveries through 1830 &rarr;</button>
+    <p class="toggle-hint">Thirty more years of chemistry &mdash; and a lot of it German. Click to shade in red every element found (or finally isolated) between 1801 and 1830; a gold ring marks the ones with a German discoverer. And click any element that has a small dot in its corner &mdash; every one known or partly known at that point in time &mdash; for who found it, how, and the story behind it.</p>
+  </div>
+
+  <div class="count era1800-only"><b>33</b> of these 92 elements were known, or partly known, by 1800 (25 confirmed outright, 8 detected as a distinct &ldquo;earth&rdquo; or gas but not yet isolated) &mdash; the rest, including every noble gas, the alkali metals, and most of what we now call the transition metals, were still waiting to be found.</div>
+  <div class="count era1830-only"><b>53</b> of these 92 elements were known, or partly known, by 1830 (50 confirmed outright, 3 still only a detected &ldquo;earth&rdquo;) &mdash; twenty more than in 1800. The red tiles are the difference: 19 brand-new elements, 6 upgraded from &ldquo;earth&rdquo; to isolated metal, and one more (thorium) newly detected but still not isolated.</div>
+
+  <div class="grid" id="grid">
+    <div class="tile known has-story" style="grid-row:1; grid-column:1;" data-el="H" onclick="showElement('H', this)"><div>H</div><div class="yr">1766</div></div>
+    <div class="tile unknown" style="grid-row:1; grid-column:18;"><div>He</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:2; grid-column:1;" data-el="Li" onclick="showElement('Li', this)"><div>Li</div><div class="yr y1830">1817</div></div>
+    <div class="tile partial upgrade1830 german has-story" style="grid-row:2; grid-column:2;" data-el="Be" onclick="showElement('Be', this)"><div>Be</div><div class="yr y1800">1798*</div><div class="yr y1830">1828</div></div>
+    <div class="tile unknown" style="grid-row:2; grid-column:13;"><div>B</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:14;" data-el="C" onclick="showElement('C', this)"><div>C</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:15;" data-el="N" onclick="showElement('N', this)"><div>N</div><div class="yr">1772</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:16;" data-el="O" onclick="showElement('O', this)"><div>O</div><div class="yr">1774</div></div>
+    <div class="tile unknown" style="grid-row:2; grid-column:17;"><div>F</div></div>
+    <div class="tile unknown" style="grid-row:2; grid-column:18;"><div>Ne</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:3; grid-column:1;" data-el="Na" onclick="showElement('Na', this)"><div>Na</div><div class="yr y1830">1807</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:3; grid-column:2;" data-el="Mg" onclick="showElement('Mg', this)"><div>Mg</div><div class="yr y1830">1808</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:3; grid-column:13;" data-el="Al" onclick="showElement('Al', this)"><div>Al</div><div class="yr y1830">1825</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:3; grid-column:14;" data-el="Si" onclick="showElement('Si', this)"><div>Si</div><div class="yr y1830">1824</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:15;" data-el="P" onclick="showElement('P', this)"><div>P</div><div class="yr">1669</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:16;" data-el="S" onclick="showElement('S', this)"><div>S</div><div class="yr">ancient</div></div>
+    <div class="tile partial upgrade1830 has-story" style="grid-row:3; grid-column:17;" data-el="Cl" onclick="showElement('Cl', this)"><div>Cl</div><div class="yr y1800">1774*</div><div class="yr y1830">1810</div></div>
+    <div class="tile unknown" style="grid-row:3; grid-column:18;"><div>Ar</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:4; grid-column:1;" data-el="K" onclick="showElement('K', this)"><div>K</div><div class="yr y1830">1807</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:4; grid-column:2;" data-el="Ca" onclick="showElement('Ca', this)"><div>Ca</div><div class="yr y1830">1808</div></div>
+    <div class="tile unknown" style="grid-row:4; grid-column:3;"><div>Sc</div></div>
+    <div class="tile partial has-story" style="grid-row:4; grid-column:4;" data-el="Ti" onclick="showElement('Ti', this)"><div>Ti</div><div class="yr">1791*</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:4; grid-column:5;" data-el="V" onclick="showElement('V', this)"><div>V</div><div class="yr y1830">1801</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:6;" data-el="Cr" onclick="showElement('Cr', this)"><div>Cr</div><div class="yr">1797</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:7;" data-el="Mn" onclick="showElement('Mn', this)"><div>Mn</div><div class="yr">1774</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:8;" data-el="Fe" onclick="showElement('Fe', this)"><div>Fe</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:9;" data-el="Co" onclick="showElement('Co', this)"><div>Co</div><div class="yr">1735</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:10;" data-el="Ni" onclick="showElement('Ni', this)"><div>Ni</div><div class="yr">1751</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:11;" data-el="Cu" onclick="showElement('Cu', this)"><div>Cu</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:12;" data-el="Zn" onclick="showElement('Zn', this)"><div>Zn</div><div class="yr">1746</div></div>
+    <div class="tile unknown" style="grid-row:4; grid-column:13;"><div>Ga</div></div>
+    <div class="tile unknown" style="grid-row:4; grid-column:14;"><div>Ge</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:15;" data-el="As" onclick="showElement('As', this)"><div>As</div><div class="yr">medieval</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:4; grid-column:16;" data-el="Se" onclick="showElement('Se', this)"><div>Se</div><div class="yr y1830">1817</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:4; grid-column:17;" data-el="Br" onclick="showElement('Br', this)"><div>Br</div><div class="yr y1830">1826</div></div>
+    <div class="tile unknown" style="grid-row:4; grid-column:18;"><div>Kr</div></div>
+    <div class="tile unknown" style="grid-row:5; grid-column:1;"><div>Rb</div></div>
+    <div class="tile partial upgrade1830 has-story" style="grid-row:5; grid-column:2;" data-el="Sr" onclick="showElement('Sr', this)"><div>Sr</div><div class="yr y1800">1790*</div><div class="yr y1830">1808</div></div>
+    <div class="tile partial upgrade1830 has-story" style="grid-row:5; grid-column:3;" data-el="Y" onclick="showElement('Y', this)"><div>Y</div><div class="yr y1800">1794*</div><div class="yr y1830">1828</div></div>
+    <div class="tile partial upgrade1830 has-story" style="grid-row:5; grid-column:4;" data-el="Zr" onclick="showElement('Zr', this)"><div>Zr</div><div class="yr y1800">1789*</div><div class="yr y1830">1824</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:5; grid-column:5;" data-el="Nb" onclick="showElement('Nb', this)"><div>Nb</div><div class="yr y1830">1801</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:6;" data-el="Mo" onclick="showElement('Mo', this)"><div>Mo</div><div class="yr">1781</div></div>
+    <div class="tile unknown" style="grid-row:5; grid-column:7;"><div>Tc</div></div>
+    <div class="tile unknown" style="grid-row:5; grid-column:8;"><div>Ru</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:5; grid-column:9;" data-el="Rh" onclick="showElement('Rh', this)"><div>Rh</div><div class="yr y1830">1803</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:5; grid-column:10;" data-el="Pd" onclick="showElement('Pd', this)"><div>Pd</div><div class="yr y1830">1803</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:11;" data-el="Ag" onclick="showElement('Ag', this)"><div>Ag</div><div class="yr">ancient</div></div>
+    <div class="tile unknown new1830 german has-story gated1830" style="grid-row:5; grid-column:12;" data-el="Cd" onclick="showElement('Cd', this)"><div>Cd</div><div class="yr y1830">1817</div></div>
+    <div class="tile unknown" style="grid-row:5; grid-column:13;"><div>In</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:14;" data-el="Sn" onclick="showElement('Sn', this)"><div>Sn</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:15;" data-el="Sb" onclick="showElement('Sb', this)"><div>Sb</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:16;" data-el="Te" onclick="showElement('Te', this)"><div>Te</div><div class="yr">1782</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:5; grid-column:17;" data-el="I" onclick="showElement('I', this)"><div>I</div><div class="yr y1830">1811</div></div>
+    <div class="tile unknown" style="grid-row:5; grid-column:18;"><div>Xe</div></div>
+    <div class="tile unknown" style="grid-row:6; grid-column:1;"><div>Cs</div></div>
+    <div class="tile partial upgrade1830 has-story" style="grid-row:6; grid-column:2;" data-el="Ba" onclick="showElement('Ba', this)"><div>Ba</div><div class="yr y1800">1774*</div><div class="yr y1830">1808</div></div>
+    <div class="tile placeholder" style="grid-row:6; grid-column:3;"><div>La</div></div>
+    <div class="tile unknown" style="grid-row:6; grid-column:4;"><div>Hf</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:6; grid-column:5;" data-el="Ta" onclick="showElement('Ta', this)"><div>Ta</div><div class="yr y1830">1802</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:6;" data-el="W" onclick="showElement('W', this)"><div>W</div><div class="yr">1783</div></div>
+    <div class="tile unknown" style="grid-row:6; grid-column:7;"><div>Re</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:6; grid-column:8;" data-el="Os" onclick="showElement('Os', this)"><div>Os</div><div class="yr y1830">1803</div></div>
+    <div class="tile unknown new1830 has-story gated1830" style="grid-row:6; grid-column:9;" data-el="Ir" onclick="showElement('Ir', this)"><div>Ir</div><div class="yr y1830">1803</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:10;" data-el="Pt" onclick="showElement('Pt', this)"><div>Pt</div><div class="yr">c.1750</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:11;" data-el="Au" onclick="showElement('Au', this)"><div>Au</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:12;" data-el="Hg" onclick="showElement('Hg', this)"><div>Hg</div><div class="yr">ancient</div></div>
+    <div class="tile unknown" style="grid-row:6; grid-column:13;"><div>Tl</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:14;" data-el="Pb" onclick="showElement('Pb', this)"><div>Pb</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:15;" data-el="Bi" onclick="showElement('Bi', this)"><div>Bi</div><div class="yr">1753</div></div>
+    <div class="tile unknown" style="grid-row:6; grid-column:16;"><div>Po</div></div>
+    <div class="tile unknown" style="grid-row:6; grid-column:17;"><div>At</div></div>
+    <div class="tile unknown" style="grid-row:6; grid-column:18;"><div>Rn</div></div>
+    <div class="tile unknown" style="grid-row:7; grid-column:1;"><div>Fr</div></div>
+    <div class="tile unknown" style="grid-row:7; grid-column:2;"><div>Ra</div></div>
+    <div class="tile placeholder" style="grid-row:7; grid-column:3;"><div>Ac</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:3;"><div>La</div></div>
+    <div class="tile unknown new1830 german has-story gated1830" style="grid-row:9; grid-column:4;" data-el="Ce" onclick="showElement('Ce', this)"><div>Ce</div><div class="yr y1830">1803</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:5;"><div>Pr</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:6;"><div>Nd</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:7;"><div>Pm</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:8;"><div>Sm</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:9;"><div>Eu</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:10;"><div>Gd</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:11;"><div>Tb</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:12;"><div>Dy</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:13;"><div>Ho</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:14;"><div>Er</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:15;"><div>Tm</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:16;"><div>Yb</div></div>
+    <div class="tile unknown" style="grid-row:9; grid-column:17;"><div>Lu</div></div>
+    <div class="tile unknown" style="grid-row:10; grid-column:3;"><div>Ac</div></div>
+    <div class="tile unknown new1830partial has-story gated1830" style="grid-row:10; grid-column:4;" data-el="Th" onclick="showElement('Th', this)"><div>Th</div><div class="yr y1830">1828*</div></div>
+    <div class="tile unknown" style="grid-row:10; grid-column:5;"><div>Pa</div></div>
+    <div class="tile partial has-story" style="grid-row:10; grid-column:6;" data-el="U" onclick="showElement('U', this)"><div>U</div><div class="yr">1789*</div></div>
+
+  </div>
+
+  <div class="key key-1800">
+    <span><span class="swatch sw-known"></span> Known and confirmed as an element by 1800</span>
+    <span><span class="swatch sw-partial"></span> Detected as a distinct &ldquo;earth&rdquo; or gas, but not yet confirmed as an element (see notes)</span>
+    <span><span class="swatch sw-unknown"></span> Not yet detected in any form</span>
+    <span><span class="swatch sw-ph"></span> Placeholder for the lanthanide/actinide rows below</span>
+  </div>
+  <div class="key key-1830">
+    <span><span class="swatch sw-known"></span> Already known by 1800</span>
+    <span><span class="swatch" style="background:linear-gradient(160deg,#ffdede,#ffb3b3); border:1px solid #d97878;"></span> Newly discovered or newly isolated, 1801&ndash;1830</span>
+    <span><span class="swatch sw-german"></span> ...with a German discoverer</span>
+    <span><span class="swatch" style="background:linear-gradient(160deg,#ffe9e9,#ffcaca); border:1px dashed #d97878; opacity:.7;"></span> Newly detected as an &ldquo;earth,&rdquo; still not isolated by 1830</span>
+    <span><span class="swatch sw-unknown"></span> Still not detected in any form by 1830</span>
+  </div>
+
+  <div class="notes">
+    <h2>The 25 elements known outright by 1800</h2>
+    <p>Nine of them &mdash; gold, silver, copper, iron, tin, lead, mercury, carbon and sulfur &mdash; had been known and worked since antiquity, long before anyone had a concept of &ldquo;element&rdquo; in the modern sense. Arsenic and antimony followed in the medieval and early-modern periods, recognisable as distinct substances well before formal chemistry existed. The remaining four ancient-adjacent metals were pinned down across the 18th century by named individuals: cobalt (Georg Brandt, 1735), platinum (recognised by European chemists from the 1730s&ndash;40s onward, though rendered reliably malleable only in 1786 by Chabaneau), nickel (Axel Cronstedt, 1751) and zinc (isolated in Europe by Andreas Marggraf in 1746, though metallic zinc had been produced in India and China centuries earlier).</p>
+    <p>Then came a run of gas- and mineral-chemistry discoveries in the 1760s&ndash;90s: hydrogen (Cavendish, 1766), manganese (Johan Gottlieb Gahn, 1774), nitrogen (Daniel Rutherford, 1772), oxygen (Priestley, 1774), phosphorus (Hennig Brand, 1669 &mdash; the odd one out, isolated a century before the rest of this group), molybdenum (Peter Jacob Hjelm, 1781), tellurium (Franz-Joseph M&uuml;ller von Reichenstein, 1782, named by Klaproth 1798), tungsten (the Elhuyar brothers, 1783), chromium (Louis-Nicolas Vauquelin, 1797) and bismuth (established as distinct from lead by Claude Fran&ccedil;ois Geoffroy in 1753).</p>
+
+    <h2>The 8 half-known &ldquo;earths&rdquo; and gases (marked with *)</h2>
+    <ul>
+      <li><b>Chlorine (1774).</b> Scheele made the gas but believed it was a compound (&ldquo;dephlogisticated marine acid&rdquo;); Davy didn't prove it elemental until 1810.</li>
+      <li><b>Beryllium (1798).</b> Vauquelin identified its oxide as distinct from aluminium's; the metal itself wasn't isolated until 1828.</li>
+      <li><b>Barium (1774).</b> Scheele identified baryta as a distinct earth; Davy isolated the metal by electrolysis in 1808.</li>
+      <li><b>Strontium (1790).</b> Adair Crawford spotted strontia as chemically distinct from baryta and lime; Davy isolated the metal in 1808.</li>
+      <li><b>Yttrium (1794).</b> Johan Gadolin found yttria, the first of the rare-earth &ldquo;earths,&rdquo; in a quarry near Ytterby, Sweden; an impure metal followed only in 1828.</li>
+      <li><b>Zirconium (1789) and Titanium (1791).</b> Klaproth found zirconia in zircon in 1789; William Gregor (and, independently, Klaproth) found titanium's oxide in 1791. Neither metal was isolated until well into the 19th or even 20th century (titanium metal not produced pure until 1910).</li>
+      <li><b>Uranium (1789).</b> Klaproth found a new, dense &ldquo;earth&rdquo; in pitchblende ore and named it after the newly discovered planet Uranus. The metal itself wasn't isolated until 1841 (Eug&egrave;ne-Melchior P&eacute;ligot) &mdash; and its radioactivity, of course, was unimaginable in 1800; that was still ninety-six years away.</li>
+    </ul>
+
+    <h2>Everything that just missed the cut</h2>
+    <p>Here's the thing that's easy to miss: Volta's pile wasn't lying around waiting to be discovered in 1800 by coincidence &mdash; it was announced in March 1800, and it's the reason everything after it moves so fast. Before the pile, chemists could only attack a stubborn &ldquo;earth&rdquo; with heat, carbon, or another element already known to be more reactive &mdash; and for things like soda, potash, lime and baryta, nothing available was strong enough to crack them open. Davy's whole 1807&ndash;08 run (Na, K, Mg, Ca, Sr, Ba) depends on having a battery large enough to force electrolysis through molten or dissolved salts. So 1800 isn't an arbitrary &ldquo;before&rdquo; line that happens to sit awkwardly close to a cluster of discoveries &mdash; it's closer to a hinge date: the year the tool that unlocks the next thirty years shows up, just before anyone's had a chance to use it on these particular elements.</p>
+    <p>But electricity is only half the story. The other engine running alongside it is mineral analysis &mdash; and it's driven by two things arriving together: better technique, and a lot more ore to point it at. Klaproth in Berlin and Vauquelin in Paris were making quantitative, gravimetric analysis genuinely rigorous for the first time &mdash; weighing precipitates precisely enough to prove a mineral really did contain something new, rather than an already-known substance in an unfamiliar form. At the same time, mining, trade and colonial extraction were putting a much wider range of raw ore in front of European chemists than ever before: a heavy Mexican lead ore that turned out to hide vanadium (Andr&eacute;s Manuel del R&iacute;o, 1801); an obscure black mineral called columbite, sent to the British Museum from Connecticut, that hid niobium (Charles Hatchett, 1801); Swedish minerals that hid tantalum (Anders Ekeberg, 1802) and, a year later, cerium &mdash; found independently by Berzelius and Hisinger in Sweden and by Klaproth in Berlin, all three working from the same mineral, cerite. And crude South American platinum ore, arriving in Europe in growing quantities, turned out to be not one metal but at least five: William Hyde Wollaston and Smithson Tennant spent 1802&ndash;04 picking palladium, rhodium, osmium and iridium out of the very same crucibles.</p>
+    <p>So the honest answer to &ldquo;why did so much happen right around 1800?&rdquo; isn't luck. It's that two separate capabilities &mdash; a battery strong enough to force reluctant compounds apart, and an analytical method rigorous enough to prove a genuinely new substance was hiding in a familiar-looking rock &mdash; both matured in the same few years, and were immediately turned loose on a backlog of &ldquo;earths&rdquo; and ores that had been sitting there, unresolved, for decades.</p>
+
+    <h2>What's missing altogether</h2>
+    <p>Every noble gas (helium, neon, argon, krypton, xenon, radon) is absent, because none of them react chemically &mdash; there was no reaction in 1800 that could have revealed one. They needed 19th-century spectroscopy and precision gas-density measurement, tools that simply didn't exist yet: argon came in 1894, helium (on Earth) in 1895, neon and krypton and xenon all in 1898. The halogens beyond chlorine (fluorine, bromine, iodine), the alkali metals (Li, Na, K, Rb, Cs), most of the second and third rows of transition metals, and every lanthanide are absent for the same underlying reason as sodium and potassium: they were bound up in compounds too stable for 18th-century chemistry to crack, waiting for electrolysis, better furnaces, or (in the rare-earths' case) another century of increasingly fine mineral separation.</p>
+
+    <h2 id="1830notes">Click through to 1830 &mdash; and where Germany comes in</h2>
+    <p>Press the button above the table and twenty more elements light up red. Eight of the nineteen brand-new ones and six of the eight 1800-era &ldquo;earths&rdquo; get sorted out in a single, frantic three-decade stretch: vanadium and niobium in 1801, tantalum in 1802, then a rush of five metals &mdash; cerium, palladium, rhodium, osmium, iridium &mdash; in 1803&ndash;04 alone, several of them teased out of the very same crate of crude South American platinum ore that William Hyde Wollaston and Smithson Tennant were dissecting in London. Humphry Davy then spent 1807&ndash;08 taking an electric pile to every stubborn &ldquo;earth&rdquo; in the cabinet and walked away with sodium, potassium, magnesium, calcium, strontium and barium, one after another. Iodine followed in 1811, lithium, cadmium and selenium in 1817, silicon in 1824, aluminium (impure) in 1825, and bromine in 1826. Thorium turns up too, but only in its half-known, dashed-red form &mdash; Berzelius found its &ldquo;earth&rdquo; in 1828, and nobody would isolate the metal for decades yet.</p>
+    <p>Three of these have a gold ring, because they were German finds, made by chemists working in exactly the university and state-laboratory culture this course keeps returning to. <b>Cerium</b> (1803) was found independently and almost simultaneously by Berzelius and Hisinger in Sweden <i>and</i> by Martin Heinrich Klaproth in Berlin &mdash; the same Klaproth who had already found uranium, zirconium and titanium's &ldquo;earths&rdquo; before 1800. <b>Cadmium</b> (1817) was isolated by Friedrich Stromeyer, a chemistry professor at G&ouml;ttingen, while investigating why a batch of zinc carbonate looked slightly off-colour. And <b>beryllium metal</b> (1828) was produced independently, within weeks of each other, by Friedrich W&ouml;hler in Germany and Antoine Bussy in France &mdash; the same W&ouml;hler who, the year before, had also produced Europe's first reasonably pure sample of metallic aluminium. None of this is a coincidence: German universities were building exactly the kind of well-equipped teaching and research laboratories in this period that Liebig would later make famous at Gie&szlig;en, and mineral analysis &mdash; finding new &ldquo;earths&rdquo; in ores from Saxony, Bohemia and further afield &mdash; was one of the things those laboratories were best at. It's a thread worth pulling further when this reading series gets to the run-up to Part 2.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <button class="modal-close" aria-label="Close" onclick="closeModal()">&times;</button>
+    <div class="modal-head">
+      <div class="modal-symbol" id="modalSymbol"></div>
+      <div class="modal-titles">
+        <p class="modal-name" id="modalName"></p>
+        <p class="modal-year" id="modalYear"></p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-row"><div class="lbl">Who</div><div class="val" id="modalWho"></div></div>
+      <div class="modal-row"><div class="lbl">Where</div><div class="val" id="modalWhere"></div></div>
+      <div class="modal-row"><div class="lbl">Method</div><div class="val" id="modalMethod"></div></div>
+      <div class="modal-row" id="modalChemRow" style="display:none;"><div class="lbl">Chemistry</div><div class="val" id="modalChem"></div></div>
+      <div class="modal-story"><span class="lbl">The story</span><div id="modalStory"></div></div>
+      <div id="modalGerman" style="display:none;" class="modal-german">🇩🇪 A German discovery</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleEra(){
+  var grid = document.getElementById('grid');
+  var btn = document.getElementById('eraBtn');
+  var active = grid.classList.toggle('era1830');
+  document.body.classList.toggle('era1830-active', active);
+  btn.classList.toggle('active', active);
+  btn.textContent = active
+    ? '← Back to 1800'
+    : 'Show discoveries through 1830 →';
+}
+
+var ELEMENTS = {
+  H:{name:"Hydrogen",year:"1766",who:"Henry Cavendish",where:"his private laboratory, London",method:"Reacted various metals — iron, zinc, tin — with acids and collected the escaping “inflammable air” over water, then weighed it with unusual precision.",story:"Cavendish was famously reclusive — he communicated with his own servants by written note and was terrified of women — yet he was also one of the richest men in England and one of its sharpest experimentalists. He went on to show that burning his “inflammable air” in ordinary air produced pure water, a result Lavoisier seized on (and later took more credit for than was quite fair) to help demolish the old phlogiston theory of combustion.",chem:"Reacting a metal with acid is a redox reaction: the metal atoms give up electrons (are oxidised) and H⁺ ions from the acid pick them up (are reduced) to form H₂ gas — <span class=\"eqn\">Zn + 2HCl → ZnCl₂ + H₂</span>. Burning it is the same idea running the other way: <span class=\"eqn\">2H₂ + O₂ → 2H₂O</span> — which is why hydrogen was central to working out what “oxidation” and “reduction” actually mean at the level of electrons."},
+  C:{name:"Carbon",year:"ancient",who:"No single discoverer — known since prehistory",where:"charcoal, soot and diamond, worked and burned for millennia",method:"N/A — but Antoine Lavoisier proved in the 1770s–80s that diamond, charcoal and graphite were chemically the same element.",story:"Lavoisier's proof involved sealing a diamond in a jar with oxygen and focusing sunlight on it with a huge burning-lens until it burned away to nothing but carbon dioxide gas — a spectacular and, to onlookers, rather shocking way to make a scientific point by destroying a gemstone.",chem:"<span class=\"eqn\">C + O₂ → CO₂</span> is the same reaction whether the carbon is diamond, graphite or charcoal — proof that all three are chemically identical, differing only in how their carbon atoms are arranged in space (diamond's rigid 3-D lattice versus graphite's stacked, slippery sheets). Carbon's ability to bond to itself in long chains and rings, more than any other element, is also the entire basis of organic chemistry — everything from sugar to DNA."},
+  N:{name:"Nitrogen",year:"1772",who:"Daniel Rutherford",where:"University of Edinburgh, as part of his medical thesis under Joseph Black",method:"Kept a candle burning and a mouse breathing in a sealed jar of air until both stopped, then passed the leftover air through alkali to strip out the “fixed air” (carbon dioxide), leaving a gas that supported neither flame nor life.",story:"Rutherford, still a student, called it “noxious air” and didn't fully grasp he'd found a new element. Scheele and Priestley isolated essentially the same gas within a year or two, entirely independently — nitrogen was almost a three-way tie.",chem:"Removing both the carbon dioxide (with alkali) and the oxygen (used up by the candle and the mouse) from a sealed volume of air leaves behind a gas that is chemically almost inert — nitrogen makes up about 78% of the atmosphere precisely because its triple N≡N bond is so strong that it resists reacting with almost anything at room temperature."},
+  O:{name:"Oxygen",year:"1774",who:"Joseph Priestley (Carl Wilhelm Scheele made the same gas slightly earlier, c.1771–72, but published later)",where:"Priestley: his home laboratory, Leeds/Calne, England; Scheele: an apothecary's shop, Uppsala, Sweden",method:"Priestley focused sunlight through a large magnifying lens onto mercuric oxide, collecting the gas given off — a candle burned startlingly brighter in it than in ordinary air.",story:"Priestley described the experiment to Lavoisier over dinner in Paris later that year. Lavoisier grasped its significance immediately and used it, within months, to overturn phlogiston theory and found modern chemistry — while Priestley himself, remarkably, never accepted Lavoisier's interpretation and remained a phlogistonist until his death.",chem:"Priestley's mercuric oxide decomposes on heating: <span class=\"eqn\">2HgO → 2Hg + O₂</span> — releasing the oxygen it had picked up when the mercury was first roasted in air. That a candle burns far more vigorously in the pure gas than in ordinary air was the key clue that “ordinary air” is a mixture, and that only part of it (roughly a fifth) supports combustion."},
+  P:{name:"Phosphorus",year:"1669",who:"Hennig Brand",where:"his home laboratory, Hamburg",method:"Boiled down enormous quantities of human urine, searching for a way to turn base metal into gold, and instead distilled out a waxy substance that glowed faintly in the dark.",story:"Brand tried to keep his discovery secret to sell it, but word leaked out and other alchemists (Kunckel, then Boyle) raced to reproduce it. Phosphorus is arguably the first element in history whose discoverer is actually known by name — the moment “new elements” became things to be found, not just substances known since antiquity.",chem:"Brand's method boils urine down to a paste and heats it strongly with sand, driving off phosphorus vapour that is then condensed under water (phosphorus ignites spontaneously in air, so it has to be collected away from oxygen). The reaction is essentially reducing calcium phosphate with carbon and silica: <span class=\"eqn\">Ca₃(PO₄)₂ + 3SiO₂ + 5C → 3CaSiO₃ + 5CO + P₂</span>, though Brand had no idea of any of this chemistry — he was following alchemical intuition, not a worked-out equation."},
+  S:{name:"Sulfur",year:"ancient",who:"No single discoverer — known since prehistory",where:"volcanic deposits and “brimstone”, worked since antiquity",method:"N/A",story:"Mentioned as “brimstone” in the Bible and in Homer, and later a core ingredient of gunpowder alongside charcoal and saltpetre — sulfur's smell and its association with volcanoes gave it a long folkloric link to fire and the underworld.",chem:"<span class=\"eqn\">S + O₂ → SO₂</span> is the reaction at the heart of gunpowder's bang — sulfur burns readily, feeding oxygen to the reaction fast enough (helped by the saltpetre, KNO₃, which supplies still more oxygen) to produce an explosive rush of hot gas. Sulfur is also the acrid smell most people actually mean when they say something “smells like rotten eggs” — that's hydrogen sulfide, H₂S, a different sulfur compound entirely, but the association stuck to the element's reputation."},
+  Cr:{name:"Chromium",year:"1797 (earth) / 1798 (metal)",who:"Louis-Nicolas Vauquelin",where:"École des Mines / École Polytechnique, Paris",method:"Analysed a brilliant red Siberian mineral (crocoite, “Siberian red lead”), extracted a new oxide from it, then reduced that oxide to metal with charcoal.",story:"Vauquelin named it from the Greek for colour, chrôma, because its compounds come in such vivid and varied hues — chrome yellow, chrome green, chrome red — a name chosen for the element's most obvious property rather than for its discoverer or its ore.",chem:"Vauquelin reduced chromium(III) oxide with charcoal: <span class=\"eqn\">Cr₂O₃ + 3C → 2Cr + 3CO</span> — the same basic strategy (heat a metal oxide with carbon, and let the carbon “steal” the oxygen) used for iron in a blast furnace, just requiring a hotter furnace because chromium's oxide is more stable than iron's."},
+  Mn:{name:"Manganese",year:"1774",who:"Johan Gottlieb Gahn",where:"Falun copper-mine laboratory, Sweden",method:"Heated pyrolusite ore (manganese dioxide) with charcoal in a furnace, reducing it directly to metal.",story:"Scheele had already shown the mineral contained something new but, characteristically generous, didn't isolate the metal himself — he encouraged his friend Gahn to finish the job instead.",chem:"Reducing pyrolusite (MnO₂) with charcoal — <span class=\"eqn\">MnO₂ + 2C → Mn + 2CO</span> — is chemically similar to smelting iron, but manganese's oxide bonds are stronger, which is one reason it took until the 1770s rather than being known since antiquity like iron."},
+  Fe:{name:"Iron",year:"ancient",who:"No single discoverer — known since prehistory",where:"worked from meteoric iron before smelting was mastered",method:"N/A",story:"Iron is one of the very few elements whose earliest worked form — meteoric iron, which needs no chemical reduction at all — predates any deliberate chemistry whatsoever; the transition to smelted iron marks the start of the Iron Age proper.",chem:"Smelting iron ore is a reduction: <span class=\"eqn\">Fe₂O₃ + 3CO → 2Fe + 3CO₂</span>, with carbon monoxide (from burning charcoal in a limited air supply) doing the reducing. Meteoric iron needed no such chemistry at all — it arrives already as metal, which is why it could be worked millennia before smelting was understood."},
+  Co:{name:"Cobalt",year:"1735",who:"Georg Brandt",where:"Royal Swedish Board of Mines laboratory, Stockholm",method:"Separated a blue-colouring substance out of certain ores from bismuth and arsenic, proving German miners' folklore about the ore wrong.",story:"German miners called the ore “kobold” (goblin) because it looked like it should yield silver or copper but never did, and its arsenic fumes made smelters ill — they blamed a mischievous spirit. Brandt proved the “goblin ore” actually held an entirely new metal, and the name stuck.",chem:"Cobalt ores contain arsenic compounds (arsenides) that give off toxic arsenic trioxide fumes when roasted — the real reason medieval miners blamed a “goblin” for the ore's bad behaviour, when in fact they were being poisoned by real, if unidentified, arsenic chemistry."},
+  Ni:{name:"Nickel",year:"1751",who:"Axel Fredrik Cronstedt",where:"Swedish Board of Mines, Stockholm",method:"Analysed a reddish ore (“kupfernickel”) that miners believed held copper but that stubbornly refused to yield any, and isolated a new white metal from it instead.",story:"Like cobalt, nickel's name preserves a miners' curse: “kupfernickel” translates roughly as “Old Nick's copper” or “devil's copper”, blaming a mischievous spirit for the ore's refusal to behave like real copper ore.",chem:"“Kupfernickel” is nickel arsenide (NiAs) — it looks coppery-red like a copper ore, but yields no copper on smelting, which is exactly the mismatch between appearance and chemical behaviour that alerted Cronstedt something else was going on."},
+  Cu:{name:"Copper",year:"ancient",who:"No single discoverer — known since prehistory",where:"worked from native (metallic) copper nuggets",method:"N/A",story:"One of the first metals humans ever worked, alongside gold, because natural metallic copper nuggets could simply be found and hammered into shape without any smelting at all.",chem:"Native copper is unusually easy to find as pure metal because copper is one of the few elements low enough in reactivity to occur naturally uncombined — most metals are far too reactive to exist as anything but compounds (oxides, sulfides, carbonates) in the ground."},
+  Zn:{name:"Zinc",year:"1746 (Europe)",who:"Andreas Sigismund Marggraf",where:"Prussian Academy of Sciences, Berlin",method:"Heated calamine (zinc ore) with charcoal in a closed vessel, rigorously proving the resulting metal was a genuinely new substance rather than an impure form of something already known.",story:"Metallic zinc had actually been smelted in India (the Zawar mines, Rajasthan) since at least the 1400s, using a distillation technique Europe wouldn't match for centuries. Marggraf's contribution wasn't the first metal — it was the first rigorous European scientific proof of what it actually was.",chem:"Reducing calamine (zinc carbonate/oxide) with charcoal: <span class=\"eqn\">ZnCO₃ → ZnO + CO₂</span>, then <span class=\"eqn\">ZnO + C → Zn + CO</span>. Zinc's low boiling point (907°C, below the temperature of a charcoal furnace) means it distils off as a vapour and has to be condensed rather than collected as a molten pool — the extra step that made zinc smelting far trickier to work out than iron or copper, and part of why India's early mastery of it was so technically impressive."},
+  As:{name:"Arsenic",year:"medieval, c.1250",who:"Traditionally credited to Albertus Magnus",where:"Cologne / various German lands (an itinerant scholar-monk)",method:"Heated orpiment (an arsenic sulfide pigment) with soap, reportedly obtaining the grey metallic form.",story:"Arsenic compounds had been used as pigments and poisons since antiquity, but the metal itself is usually credited to Albertus Magnus around 1250 — one of the very few “element discoveries” anywhere in this story that predates the Renaissance by centuries.",chem:"Heating orpiment (arsenic sulfide, As₂S₃) with a reducing agent like soap or charcoal frees the arsenic as a metal-like solid — one of the earliest recorded reductions of a sulfide ore to a pure element, centuries before anyone had a systematic theory of what reduction was."},
+  Mo:{name:"Molybdenum",year:"1781",who:"Peter Jacob Hjelm",where:"Sweden, working from Scheele's earlier analysis",method:"Reduced molybdic oxide — which Scheele had identified in 1778 but lacked the equipment to reduce further — with carbon, obtaining the metal.",story:"Molybdenite ore had been confused with both graphite and lead ore for centuries (the name comes from the Greek for “lead-like”) before Scheele proved it was chemically distinct from both, setting up Hjelm's isolation three years later.",chem:"Reducing molybdic oxide with carbon: <span class=\"eqn\">MoO₃ + 3C → Mo + 3CO</span> — only became possible once Scheele had proved molybdenite wasn't graphite or lead ore — molybdenum's oxide is chemically stubborn, needing high heat, which is why the discovery of the element lagged the discovery of the mineral by several years."},
+  Ag:{name:"Silver",year:"ancient",who:"No single discoverer — known since prehistory",where:"worked since antiquity",method:"N/A",story:"Prized across every ancient civilization for coinage and ornament — its resistance to tarnish (compared to copper) and its lustre made it a natural choice for currency long before anyone had a concept of “element”.",chem:"Silver's resistance to oxygen and moisture (though not to sulfur — hence tarnishing, Ag₂S) is why it survives in usable metallic form for millennia, making it, alongside gold, one of the only metals ancient peoples could reliably find already as metal."},
+  Sn:{name:"Tin",year:"ancient",who:"No single discoverer — known since prehistory",where:"worked since antiquity, traded across enormous distances",method:"N/A",story:"Tin's scarcity in the ancient Near East, and the long trade routes needed to supply it for bronze-making (as far as Cornwall and Central Asia), is one of the great logistics stories of the ancient world — the Bronze Age quite literally ran on tin supply chains.",chem:"Bronze-making — copper plus roughly 10% tin — works because the two metals form a genuine alloy that is harder than either pure metal alone, a fact ancient metallurgists discovered by trial and error long before anyone understood crystal structure or metallic bonding."},
+  Sb:{name:"Antimony",year:"ancient / formalised early 1700s",who:"No single discoverer; established as chemically distinct by Nicolas Lémery's generation",where:"ancient Egypt and the medieval Islamic world, later Paris",method:"N/A",story:"Antimony compounds (kohl, from stibnite) were used as cosmetics in ancient Egypt. Alchemists gave the element the symbol of a wolf, supposedly after a story about it poisoning monks' cattle — more colourful legend than confirmed history.",chem:"Antimony's compounds (notably stibnite, Sb₂S₃) were prized partly because heating them gives sharp, well-formed crystals — a visually striking transformation that made antimony a favourite subject for early experimental chemists cataloguing how different “calces” (what we'd now call oxides and sulfides) behaved on heating."},
+  Te:{name:"Tellurium",year:"1782 (found) / 1798 (confirmed & named)",who:"Franz-Joseph Müller von Reichenstein (found); Martin Heinrich Klaproth (confirmed, named)",where:"Müller: mining administration, Transylvania, Habsburg Empire; Klaproth: Berlin",method:"Müller extracted a strange metal from Transylvanian gold ore that behaved unlike anything known; Klaproth later verified the claim chemically and gave it a name.",story:"Müller doubted his own result so much that he sent samples to other chemists for sixteen years without anyone confirming it. Klaproth finally did, naming it after the Latin for Earth, tellus — one more thread back to Klaproth's remarkable Berlin laboratory.",chem:"Tellurium sits directly below selenium and sulfur in the same chemical family (Group 16), which is exactly why Berzelius, decades later, mistook selenium for tellurium contamination when he first found it — their compounds behave in strikingly similar ways."},
+  W:{name:"Tungsten",year:"1783",who:"Juan José and Fausto Elhuyar (brothers)",where:"Royal Basque Society's Seminary of Bergara, Spain",method:"Extracted the metal from wolframite ore, following up on Scheele's 1781 finding that a Swedish mineral (scheelite — Swedish “tung sten”, heavy stone) contained the same new acid.",story:"One of the very few element discoveries credited to Spain, made not in a royal capital but in a small Basque scientific academy — a reminder that the chemical revolution wasn't only a Paris-London-Berlin-Stockholm story.",chem:"Reducing tungsten oxide with hydrogen: <span class=\"eqn\">WO₃ + 3H₂ → W + 3H₂O</span> — needs extremely high temperatures, because tungsten has the highest melting point of any metal (3,422°C) — a property that makes it hard to isolate but, over a century later, made it the obvious choice for incandescent light bulb filaments."},
+  Pt:{name:"Platinum",year:"recognised c.1735–40s; reliably purified 1786",who:"Antonio de Ulloa (early description); Pierre-François Chabaneau (malleable metal)",where:"Ulloa: Colombia, on a Spanish expedition; Chabaneau: Spain",method:"Chabaneau worked out how to forge platinum despite its then-impossibly-high melting point, alloying it temporarily with arsenic, then driving the arsenic back off by heating.",story:"Platinum had been known to South American peoples for centuries before Spanish colonists encountered it in their gold-panning. Unable to melt it, they initially treated it as a worthless nuisance contaminating their gold — hence “platina”, a dismissive Spanish diminutive meaning “little silver”.",chem:"Platinum resists virtually every acid except aqua regia (a mixture of nitric and hydrochloric acids) — the same fierce solvent used to dissolve gold — which is precisely what let Wollaston and Tennant dissolve crude platinum ore and then use step-by-step precipitation to tease apart the five other metals hiding inside it."},
+  Au:{name:"Gold",year:"ancient",who:"No single discoverer — known since prehistory",where:"worked since antiquity",method:"N/A",story:"Gold's chemical inertness — it barely reacts with anything — is exactly why it survives in the archaeological and historical record as bright and untarnished as the day it was worked, five thousand years ago or more.",chem:"Gold's chemical inertness comes down to its electron configuration — its outer electrons are held unusually tightly (a relativistic effect, as it happens, that also gives gold its colour), which is why it resists oxidation by air or water far better than almost any other metal."},
+  Hg:{name:"Mercury",year:"ancient",who:"No single discoverer — known since prehistory",where:"worked since antiquity",method:"N/A",story:"Called “quicksilver” for millennia because of its strange liquid mobility at room temperature; alchemists considered it one of the primordial substances thought to underlie all metals.",chem:"Mercury's uniquely low melting point (−39°C, the only metal liquid at room temperature) comes from unusually weak metallic bonding between its atoms — the same relativistic effects that make gold yellow make mercury's atoms cling to each other far more weakly than neighbouring metals."},
+  Pb:{name:"Lead",year:"ancient",who:"No single discoverer — known since prehistory",where:"worked since antiquity",method:"N/A",story:"Roman plumbing — the word “plumber” comes straight from plumbum, Latin for lead — is one of the more consequential ancient uses of any element, given what's now understood about lead's toxicity.",chem:"Lead readily forms the stable Pb²⁺ ion, which is exactly why it's so good at quietly substituting for calcium (Ca²⁺, a similar size and charge) in bone — the chemical basis of lead's long-term toxicity, unsuspected for millennia of Roman plumbing."},
+  Bi:{name:"Bismuth",year:"1753",who:"Claude François Geoffroy",where:"Paris",method:"Ran careful chemical tests showing that bismuth, long confused with both tin and lead, was a genuinely distinct substance.",story:"Alchemists had used bismuth for centuries without ever quite settling whether it was a form of lead, a form of tin, or something else entirely — Geoffroy's contribution is really an act of careful taxonomic tidying rather than a dramatic new find.",chem:"Bismuth sits at the very edge of the periodic table's “island of stability” — it was long assumed to be a completely stable, non-radioactive element, until 2003 when it was shown to undergo alpha decay with a half-life over a billion times the age of the universe, making it stable for all practical purposes but not, technically, forever."},
+  Be:{name:"Beryllium",year:"1798 (earth) / 1828 (metal)",who:"Louis-Nicolas Vauquelin (earth, 1798); Friedrich Wöhler and Antoine Bussy, independently (metal, 1828)",where:"Vauquelin: Paris; Wöhler: Berlin; Bussy: Paris",method:"Vauquelin analysed beryl and emerald and found both contained an oxide distinct from aluminium's, sweet-tasting (hence an early name, “glucina”, from the Greek for sweet). Thirty years later, Wöhler and Bussy each reduced that oxide to metal, within weeks of one another and without knowing of each other's work.",story:"France kept calling it glucinium/glucinum for generations, rejecting “beryllium” officially well into the 20th century — a rare case of a losing element name refusing to die in one particular country.",german:true,chem:"Vauquelin's beryllium oxide (BeO) resembles aluminium oxide closely enough that it took careful, quantitative analysis to prove they were different substances at all — this is exactly the kind of rigorous gravimetric proof (precise weighing of precipitates) that Klaproth and Vauquelin were pioneering. Isolating the metal needed reducing beryllium chloride with potassium: <span class=\"eqn\">BeCl₂ + 2K → Be + 2KCl</span>."},
+  Cl:{name:"Chlorine",year:"1774 (made) / 1810 (confirmed as an element)",who:"Carl Wilhelm Scheele (made the gas); Humphry Davy (proved it elemental)",where:"Scheele: his apothecary shop, Sweden; Davy: Royal Institution, London",method:"Scheele reacted manganese dioxide with hydrochloric acid, producing a choking yellow-green gas he assumed (wrongly) was a compound; Davy proved 36 years later, through careful tests, that it couldn't be broken down any further.",story:"Scheele, chronically underappreciated and working essentially alone in a small-town pharmacy, made an extraordinary run of discoveries — oxygen, chlorine, several organic acids — and died young, possibly poisoned by decades of tasting and smelling his own experiments, standard chemical practice at the time.",chem:"Scheele's reaction — <span class=\"eqn\">MnO₂ + 4HCl → MnCl₂ + Cl₂ + 2H₂O</span> — is a redox reaction in which manganese is reduced (Mn⁴⁺ to Mn²⁺) while chloride ions are oxidised to chlorine gas. Because he believed all acids contained oxygen, Scheele assumed the gas must still hold oxygen bound up in it — Davy's 1810 proof that no oxygen could be extracted from it at all was what finally established chlorine as a true element."},
+  Ti:{name:"Titanium",year:"1791 (earth); metal not pure until 1910",who:"William Gregor (1791); confirmed independently and named by Martin Heinrich Klaproth (1795)",where:"Gregor: a country parish, Creed, Cornwall; Klaproth: Berlin",method:"Gregor, a clergyman with a passion for mineralogy, analysed black sand from a local stream and found an unfamiliar “earth” within it, which he called “menachanite”. Klaproth later found the same earth independently in a different mineral, rutile.",story:"Klaproth named it after the Titans of Greek myth. The metal itself proved so stubborn to purify that a truly pure sample wasn't produced until 1910 — well over a century after a rural English vicar first noticed something odd in his local stream sand.",chem:"Titanium's oxide (TiO₂) is exceptionally stable — so stable that even Berzelius, decades later, couldn't reduce it to pure metal, and the job wasn't solved until the 20th-century Kroll process (reducing titanium tetrachloride with molten magnesium). It's the same stability that makes titanium dioxide inert enough to use as the white pigment in paint and sunscreen today."},
+  Sr:{name:"Strontium",year:"1790 (earth) / 1808 (metal)",who:"Adair Crawford (earth); Humphry Davy (metal)",where:"Crawford: London; Davy: Royal Institution, London",method:"Crawford examined a mineral from a lead mine near Strontian, Scotland, and showed its properties differed subtly from baryta, proving a second new “earth” existed. Davy isolated the metal by electrolysis eighteen years later.",story:"One of very few elements named after a small village — Strontian, in the Scottish Highlands — rather than a person, a property, or a figure from mythology.",chem:"Strontium salts burn with a brilliant crimson-red flame — the same flame-colour chemistry (electrons jumping between energy levels and releasing red light as they fall back down) that makes strontium compounds the standard red colourant in fireworks."},
+  Y:{name:"Yttrium",year:"1794 (earth); impure metal 1828",who:"Johan Gadolin",where:"University of Åbo (Turku), Finland",method:"Analysed a heavy black mineral from a quarry at Ytterby, near Stockholm, and identified an entirely new “earth” within it.",story:"The tiny village of Ytterby is a genuine oddity in the history of chemistry — four different elements (yttrium, ytterbium, terbium, erbium) all take their names from this one small quarry, an unusually rich source of rare-earth minerals.",chem:"Yttrium and the other rare earths found at Ytterby are chemically so similar to one another (they sit together at the bottom of the periodic table for a reason) that separating them cleanly from a single ore took chemists the better part of a century of painstaking, repeated crystallisation — yttria wasn't shown to actually contain several different elements tangled together until later work by Mosander in the 1840s."},
+  Zr:{name:"Zirconium",year:"1789 (earth) / 1824 (impure metal)",who:"Martin Heinrich Klaproth (earth); Jöns Jacob Berzelius (metal)",where:"Klaproth: Berlin; Berzelius: Stockholm",method:"Klaproth found the new earth in zircon gemstones from Ceylon. Berzelius later reduced it to an impure metal by heating potassium with a zirconium-potassium fluoride salt inside an iron tube.",story:"Klaproth's Berlin laboratory produced an astonishing run of new “earths” within a single decade — uranium, zirconium, the confirmation of titanium, later cerium — almost single-handedly building the case that Germany's chemical institutions could rival Sweden's and France's.",chem:"Berzelius reduced a zirconium-potassium fluoride salt with potassium metal inside a sealed iron tube — <span class=\"eqn\">K₂ZrF₆ + 4K → Zr + 6KF</span> — the same basic “more reactive metal displaces less reactive metal from its salt” logic used across almost every one of these early-19th-century isolations."},
+  Ba:{name:"Barium",year:"1774 (earth) / 1808 (metal)",who:"Carl Wilhelm Scheele (earth); Humphry Davy (metal)",where:"Scheele: Sweden; Davy: Royal Institution, London",method:"Scheele identified baryta as a distinct “heavy earth” while investigating manganese ore; the metal wasn't isolated for another 34 years.",story:"Barium's extreme density is the reason for the name (Greek barys, heavy) — and, much later, the reason for its role in medical imaging, in the “barium meal” still used for gut X-rays today.",chem:"Barium salts burn with a distinctive apple-green flame, again a direct result of the element's electron structure — and, much later, barium sulfate's extreme insolubility and opacity to X-rays is exactly why it's swallowed as a “barium meal” to make the gut visible on an X-ray image."},
+  U:{name:"Uranium",year:"1789 (earth); metal 1841",who:"Martin Heinrich Klaproth",where:"Berlin",method:"Analysed pitchblende ore from the Saxon silver mines of Joachimsthal and extracted a dense yellow compound he couldn't reduce any further with the tools available to him.",story:"Klaproth named it after the planet Uranus, discovered by William Herschel only eight years earlier — deliberately tying his new “earth” to the excitement of the newest astronomical find, with no possible inkling of what uranium would come to mean in the 20th century.",chem:"Klaproth's yellow uranium compound was uranium oxide; he tried reducing it with charcoal and got only a black powder, which he took to be the metal but which later analysis showed was still an oxide — the true metal wasn't produced until 1841, when Eugène-Melchior Péligot reduced uranium tetrachloride with potassium."},
+  Li:{name:"Lithium",year:"1817 (identified); metal isolated 1821",who:"Johan August Arfvedson",where:"working in Berzelius's laboratory, Stockholm",method:"Analysed petalite ore from Utö, Sweden, and found an alkali similar to soda and potash but distinctly lighter.",story:"Arfvedson could never isolate the metal itself — it was too reactive for his methods — so it fell to Davy, by electrolysis, to actually produce metallic lithium in 1821. The name comes from the Greek “lithos”, stone, because unlike soda and potash it was found in a mineral rather than plant ash.",chem:"Lithium salts also colour a flame — a striking crimson-pink, close to strontium's — and being the lightest of all metals (and the lightest solid element), it floats on water and reacts with it far more gently than sodium or potassium do, which is one clue Arfvedson used to argue it was a genuinely new alkali rather than just impure soda or potash."},
+  Na:{name:"Sodium",year:"1807",who:"Humphry Davy",where:"Royal Institution, London",method:"Passed a powerful current from a large voltaic battery through molten caustic soda, watching globules of a new silvery metal form and immediately catch fire on contact with air.",story:"Davy reportedly danced around his laboratory in delight. The Royal Institution's fashionable public lectures turned discoveries like this into genuine spectator entertainment for London society — chemistry as theatre.",chem:"Davy's electrolysis works because molten sodium hydroxide contains free Na⁺ ions; driving a current through it forces electrons onto those ions at the negative electrode: <span class=\"eqn\">Na⁺ + e⁻ → Na</span> — depositing pure sodium metal — the first time anyone had used electricity itself, rather than a chemical reducing agent, to isolate an element."},
+  Mg:{name:"Magnesium",year:"1808",who:"Humphry Davy",where:"Royal Institution, London",method:"Electrolysed a moist mixture of magnesia and mercuric oxide, forming a magnesium amalgam, then distilled the mercury away.",story:"Part of Davy's extraordinary 1807–08 run — he isolated six new metallic elements in barely two years, using essentially one electrochemical technique applied to six different stubborn “earths”.",chem:"The same electrolytic logic as sodium, but starting from magnesia (MgO): Davy's amalgam method sidesteps the fact that magnesium oxide's melting point is far too high to electrolyse directly, by first alloying the magnesium into liquid mercury as it forms, then boiling the mercury off afterwards."},
+  V:{name:"Vanadium",year:"1801 (first found); 1830 (confirmed, renamed)",who:"Andrés Manuel del Río (1801); Nils Gabriel Sefström, independently (1830)",where:"del Río: Royal School of Mines, Mexico City; Sefström: Stockholm",method:"del Río found a new element in a brown Mexican lead ore and initially named it “erythronium” for the range of colours its salts showed.",story:"A visiting French chemist convinced del Río his find was just impure chromium, and he withdrew the claim. Three decades later Sefström found the same element independently in Swedish iron ore and got the lasting credit — and the name, vanadium, after the Norse goddess Vanadis — that arguably should have gone to del Río all along.",chem:"Vanadium's chemistry is unusually colourful because the element can exist in several different oxidation states (+2 through +5), each with its own characteristic colour in solution — exactly the property that led del Río to his first name for it, “panchromium” (all-colour), before he was talked out of the discovery entirely."},
+  Al:{name:"Aluminium",year:"1825 (impure) / 1827 (purer)",who:"Hans Christian Ørsted (1825); Friedrich Wöhler (1827, purer sample)",where:"Ørsted: Copenhagen; Wöhler: Berlin",method:"Ørsted reacted aluminium chloride with potassium amalgam. Unconvinced by the result, Wöhler redid the reaction two years later with potassium metal directly, producing a more convincing (if still impure and grey) lump of metal.",story:"Ørsted is much better remembered today for a completely different discovery from the same decade — that an electric current deflects a compass needle, founding the field of electromagnetism. Aluminium was almost a side project by comparison.",chem:"Aluminium's oxide (Al₂O₃, as the mineral corundum) is so chemically stable that reducing it needed potassium — itself only isolated the year before by Davy — as a reducing agent: <span class=\"eqn\">AlCl₃ + 3K → Al + 3KCl</span>. This dependency chain (you need one new element to isolate the next) is a big part of why aluminium, despite being the most abundant metal in the Earth's crust, was one of the last common ones discovered."},
+  Si:{name:"Silicon",year:"1824",who:"Jöns Jacob Berzelius",where:"Stockholm",method:"Heated potassium fluorosilicate with potassium metal, then carefully washed the resulting impure silicon free of by-products — a purification step earlier attempts, including Davy's, had skipped.",story:"Silicon is the second most abundant element in the Earth's crust by mass, after oxygen — yet because it's almost always locked into extremely stable silicate rock, it was one of the later “common” elements to be isolated.",chem:"<span class=\"eqn\">K₂SiF₆ + 4K → Si + 6KF</span>: the same reduction-by-potassium strategy as aluminium, applied to a fluorosilicate salt. Silicon's own oxide, silica (SiO₂), is essentially ordinary sand — its extreme stability (it's the main component of most rock on Earth) is exactly why silicon stayed hidden in plain sight for so long."},
+  K:{name:"Potassium",year:"1807",who:"Humphry Davy",where:"Royal Institution, London",method:"Electrolysed molten potash (potassium hydroxide); tiny globules of metal appeared at the negative electrode and immediately caught fire in the air.",story:"Potassium was isolated a few days before sodium, making it the first metal ever produced by electrolysis. Davy is said to have been so excited he could barely finish the experiment properly.",chem:"K⁺ ions in molten potash gain an electron at the cathode: <span class=\"eqn\">K⁺ + e⁻ → K</span> — exactly as sodium's do — but because potassium is even more reactive than sodium, the metal catches fire in air within seconds of forming, which is what made the demonstration so visually dramatic."},
+  Ca:{name:"Calcium",year:"1808",who:"Humphry Davy",where:"Royal Institution, London",method:"Electrolysed a moist mixture of lime and mercuric oxide, forming a calcium amalgam, then distilled away the mercury.",story:"The last and most stubborn of Davy's six 1807–08 metals — lime had resisted every chemist's attempt to reduce it for over a decade, including several of Davy's own earlier failed attempts.",chem:"Calcium sits one step further down the reactivity series from magnesium — its oxide (lime, CaO) is even harder to reduce chemically, which is exactly why it needed Davy's electrochemical method rather than yielding to any 18th-century furnace technique."},
+  Nb:{name:"Niobium",year:"1801",who:"Charles Hatchett",where:"London, working from the British Museum's mineral collection",method:"Analysed an obscure dark mineral, sent to the Museum from Connecticut decades earlier and labelled simply “a very heavy black stone”, and found a new metal's oxide within it.",story:"Hatchett named it “columbium” after Columbia (America), and the name never fully died out — American chemists kept using it into the 20th century even after Europe standardised on niobium (chosen later, after Niobe, daughter of the mythical Tantalus, since niobium ore is so easily confused with tantalum's).",chem:"Niobium and tantalum (found the year after) are chemically almost identical twins — they sit directly above and below each other in the periodic table — which is exactly why they were confused with one another for decades until Heinrich Rose worked out, in the 1840s, that “columbium” and tantalum were in fact two distinct elements, not one."},
+  Rh:{name:"Rhodium",year:"1803",who:"William Hyde Wollaston",where:"his private laboratory, London",method:"Dissolved crude platinum ore in acid, chemically removed platinum and palladium, then precipitated a rose-coloured salt from what remained.",story:"Wollaston named it from the Greek “rhodon”, rose, for the striking colour of its salts — one of relatively few elements named for the colour of a compound rather than of the pure metal, which is actually silvery-white.",chem:"Wollaston's separation worked because platinum, palladium and rhodium each form differently soluble compounds when the crude platinum ore is dissolved in aqua regia — platinum precipitates as ammonium chloroplatinate, palladium is pulled out with mercury cyanide, and what's left, treated further, gives rhodium's rose-red salt — a genuinely elegant piece of sequential, selective chemistry."},
+  Pd:{name:"Palladium",year:"1802/1803",who:"William Hyde Wollaston",where:"his private laboratory, London",method:"Dissolved crude platinum ore, removed the platinum, then precipitated palladium from the remaining solution using mercury cyanide.",story:"Wollaston kept the discovery secret and sold the new metal anonymously through a shop before publishing. A rival chemist accused it of being a hoax or an alloy — so Wollaston publicly offered a cash reward to anyone who could make “palladium” artificially. Nobody could, and his priority was vindicated.",chem:"Mercury(II) cyanide selectively precipitates palladium cyanide out of the acidic platinum-ore solution while leaving platinum and rhodium behind in solution — a reagent chosen by trial and error, decades before anyone could explain in modern terms why it worked selectively at all."},
+  Cd:{name:"Cadmium",year:"1817",who:"Friedrich Stromeyer",where:"University of Göttingen",method:"As Hanover's state pharmaceutical inspector, noticed a batch of zinc oxide at a pharmacy that looked slightly the wrong colour when heated, tracked the impurity down, and proved it was a whole new metal.",story:"A wonderfully mundane origin story — routine drug-quality inspection, not a grand mineralogical expedition — and a nice example of German university chemistry doing double duty as public health regulation.",german:true,chem:"Cadmium sits directly below zinc in the periodic table and shares its chemistry closely — which is exactly why a cadmium impurity in zinc oxide is so easy to miss (it behaves almost identically) and so telling once you notice it, since heated cadmium compounds turn a distinctive yellow rather than zinc's white."},
+  I:{name:"Iodine",year:"1811",who:"Bernard Courtois",where:"his father's saltpetre works, Paris",method:"While extracting sodium and potassium salts from seaweed ash for gunpowder production, accidentally added too much sulfuric acid to a batch and watched a cloud of violet vapour rise off it, condensing into dark crystals.",story:"A genuine accident — Courtois was too short of money to fully investigate his own discovery and handed samples to other chemists (including Gay-Lussac) to work out what it actually was. The name comes from the Greek for “violet”, after the colour of the vapour.",chem:"Iodine is the least reactive of the common halogens, but Courtois's excess sulfuric acid was strong and hot enough to oxidise iodide ions from the seaweed ash straight to iodine vapour — violet-coloured because iodine, unusually among the halogens, sublimes directly from solid to a vividly coloured gas without melting first."},
+  Ta:{name:"Tantalum",year:"1802",who:"Anders Gustaf Ekeberg",where:"Uppsala University, Sweden",method:"Analysed Scandinavian and Finnish minerals and found a new oxide that stubbornly resisted dissolving in acid no matter what he tried.",story:"Ekeberg named it after the mythical king Tantalus, condemned to stand in water he could never drink — a direct pun on the oxide's insolubility, and one of chemistry's better in-joke element names.",chem:"Tantalum's oxide is so resistant to acid that “won't dissolve in anything” was itself the diagnostic clue that led Ekeberg to it — and that same resistance to corrosion is exactly why tantalum is used in surgical implants and capacitors today."},
+  Os:{name:"Osmium",year:"1803",who:"Smithson Tennant",where:"his laboratory, London",method:"Working alongside (and partly in competition with) Wollaston, dissolved crude platinum residue and found a black powder that wouldn't dissolve at all — which turned out to contain two new metals at once.",story:"Named from the Greek “osme”, smell, because osmium tetroxide has an intensely sharp, penetrating odour — reportedly Tennant's assistants could tell what he was working on from the smell alone.",chem:"Osmium tetroxide (OsO₄) is the villain of the smell story — it's volatile, intensely reactive with biological tissue, and was later found useful (in tiny doses) for staining fatty tissue in microscopy, precisely because it reacts so readily with the double bonds in fats."},
+  Ir:{name:"Iridium",year:"1803",who:"Smithson Tennant",where:"his laboratory, London",method:"The second of the two new metals Tennant extracted from that same insoluble platinum residue as osmium.",story:"Named for Iris, the Greek goddess who personified the rainbow, because iridium's salts come in such a wide and vivid range of colours — a discovery made from the literal leftovers other chemists had already thrown away as waste.",chem:"Iridium is the most corrosion-resistant metal known — untouched by virtually every acid, including aqua regia at room temperature — which is exactly why it turned up as the insoluble black residue left behind after everything else in the platinum ore had already dissolved away."},
+  Br:{name:"Bromine",year:"1826",who:"Antoine Jérôme Balard",where:"a pharmacy school, Montpellier, France",method:"Treated the bitter mother-liquor left over from salt-marsh evaporation with chlorine gas, and watched a dense red-brown liquid with an overpowering smell separate out.",story:"Balard, a young and unknown pharmacist, was so uncertain of his find that he sent samples to the most eminent chemists in Paris for verification before publishing. Bromine is named from the Greek “bromos”, stench, for its notoriously foul odour.",chem:"<span class=\"eqn\">Cl₂ + 2Br⁻ → Br₂ + 2Cl⁻</span> is a halogen displacement reaction: chlorine, higher up the reactivity series of the halogen group, pulls electrons away from bromide ions more strongly than bromine can hold onto them, kicking free elemental bromine — the same reactivity-series logic used throughout this whole period to displace one element with a more reactive relative."},
+  Ce:{name:"Cerium",year:"1803",who:"Jöns Jacob Berzelius and Wilhelm Hisinger (Sweden); independently, Martin Heinrich Klaproth (Berlin)",where:"Berzelius/Hisinger: Hisinger's own mine and laboratory, Skinnskatteberg, Sweden; Klaproth: Berlin",method:"Both teams analysed the same heavy mineral, cerite, from a Swedish mine, and both arrived at the same new “earth” within months of each other, apparently without knowledge of the other's work.",story:"Named after the recently discovered dwarf planet Ceres (spotted in 1801) — a lovely echo of uranium's naming after Uranus fourteen years earlier, and a sign of how closely chemists were tracking contemporary astronomy for element names.",german:true,chem:"Cerium is the most abundant of all the rare-earth elements — despite the name suggesting scarcity, cerium is actually more common in the Earth's crust than copper — but because it's chemically so similar to its lanthanide neighbours, it stayed hidden inside cerite for who-knows-how-long until quantitative analysis was rigorous enough to catch it."},
+  Se:{name:"Selenium",year:"1817",who:"Jöns Jacob Berzelius",where:"Stockholm, consulting for a sulfuric acid factory",method:"Found a red sediment building up in the lead chambers of the acid works, assumed at first (as everyone did) it was tellurium contamination, then proved through careful testing it was something new and closely related to tellurium.",story:"Berzelius named it “selenium” after Selene, the Greek moon goddess, deliberately pairing it with tellurium (“tellus”, Earth) since the two are chemical twins — continuing the loose pattern of celestial names running through this whole 1800–1830 burst: Uranium/Uranus, Cerium/Ceres, Selenium/Selene.",chem:"Selenium and tellurium are close chemical cousins (both Group 16, like oxygen and sulfur), which is exactly why Berzelius's first instinct — “this must be tellurium contamination” — was such a reasonable mistake to make, and why telling them apart needed careful, quantitative testing rather than a quick glance."},
+  Th:{name:"Thorium",year:"1828 (earth only — metal not isolated for decades)",who:"Jöns Jacob Berzelius",where:"Stockholm",method:"Analysed a black mineral sent to him from Norway by the amateur mineral collector Morten Thrane Esmark, and found a new “earth” within it.",story:"Named after Thor, the Norse god of thunder. Ironically, Berzelius had used the name “thorina” once before, in 1815, for a substance that turned out not to be a new element at all, and had to retire that name before reusing it properly in 1828.",chem:"Thorium's oxide, thoria, is one of the most refractory (heat-resistant) substances known — a property with no practical use in Berzelius's own lifetime, but one that made thoria a favourite additive in incandescent gas mantles decades later, since it glows brilliantly white-hot without melting."}
+};
+
+function showElement(sym, tileEl){
+  var grid = document.getElementById('grid');
+  if(tileEl.classList.contains('gated1830') && !grid.classList.contains('era1830')) return;
+  var d = ELEMENTS[sym];
+  if(!d) return;
+  document.getElementById('modalSymbol').textContent = sym;
+  document.getElementById('modalName').textContent = d.name;
+  document.getElementById('modalYear').textContent = 'Discovered ' + d.year;
+  document.getElementById('modalWho').textContent = d.who;
+  document.getElementById('modalWhere').textContent = d.where;
+  document.getElementById('modalMethod').textContent = d.method;
+  var chemRow = document.getElementById('modalChemRow');
+  if(d.chem){
+    document.getElementById('modalChem').innerHTML = d.chem;
+    chemRow.style.display = 'flex';
+  } else {
+    chemRow.style.display = 'none';
+  }
+  document.getElementById('modalStory').textContent = d.story;
+  document.getElementById('modalGerman').style.display = d.german ? 'inline-flex' : 'none';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
