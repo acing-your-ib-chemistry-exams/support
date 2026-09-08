@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Label the Hofmann Voltameter</title>
+<style>
+  body {
+    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #23282e;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+    line-height: 1.5;
+    background: #fff;
+  }
+  h1 { font-size: 1.5em; margin-bottom: 4px; }
+  .hv-subtitle { color: #555; margin-top: 0; margin-bottom: 24px; }
+  .hv-instructions {
+    background: #f1f5fb;
+    border: 1px solid #c9d8ee;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 0.98em;
+  }
+  .hv-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .hv-diagram-wrap {
+    position: relative;
+    width: 320px;
+    max-width: 100%;
+    flex-shrink: 0;
+  }
+  .hv-diagram-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .hv-battery-symbol {
+    position: absolute;
+    left: 43.3%;
+    top: 92.3%;
+    width: 13.8%;
+    height: 6.1%;
+  }
+  .hv-battery-symbol svg { display: block; width: 100%; height: 100%; }
+  .hv-slot { position: absolute; box-sizing: border-box; }
+  .hv-mask {
+    background: #ffffff;
+  }
+  .hv-mask .hv-slot-fill {
+    position: absolute;
+    inset: 0;
+    border: 1.5px dashed #9aa7b8;
+    border-radius: 4px;
+    background: #ffffff;
+  }
+  .hv-mask.hv-filled .hv-slot-fill { border-style: solid; }
+  .hv-mask .hv-slot-btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.72em;
+    font-weight: 700;
+    color: #2f5fb3;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .hv-pin { width: 22px; height: 22px; transform: translate(-50%, -50%); z-index: 5; }
+  .hv-pin .hv-slot-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2f5fb3;
+    color: #fff;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    cursor: pointer;
+    font-size: 0.72em;
+    font-weight: 700;
+    padding: 0;
+    overflow: visible;
+  }
+  .hv-pin-tag {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+    white-space: nowrap;
+    background: #eaf1ff;
+    border: 1px solid #3667c9;
+    color: #234a8f;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-size: 0.78em;
+    font-weight: 700;
+    display: none;
+  }
+  .hv-pin.hv-filled .hv-pin-tag { display: block; }
+  .hv-pin.hv-filled .hv-slot-btn { font-size: 0; }
+  .hv-pin.hv-correct .hv-pin-tag { background: #e3f6e8; border-color: #2f9e52; color: #206b39; }
+  .hv-pin.hv-incorrect .hv-pin-tag { background: #fdecec; border-color: #d64545; color: #a23434; }
+  .hv-slot.hv-correct .hv-slot-fill,
+  .hv-slot.hv-correct .hv-slot-btn {
+    background: #e3f6e8 !important;
+  }
+  .hv-mask.hv-correct .hv-slot-fill { border-color: #2f9e52; }
+  .hv-mask.hv-correct .hv-slot-btn { color: #206b39; }
+  .hv-pin.hv-correct .hv-slot-btn { background: #2f9e52 !important; }
+  .hv-slot.hv-incorrect .hv-slot-fill { border-color: #d64545; background: #fdecec !important; }
+  .hv-slot.hv-incorrect .hv-slot-btn { color: #a23434; }
+  .hv-pin.hv-incorrect .hv-slot-btn { background: #d64545 !important; }
+  .hv-slot.hv-selected .hv-slot-fill { box-shadow: 0 0 0 2px #3667c9 inset; }
+  .hv-slot.hv-selected.hv-pin .hv-slot-btn { box-shadow: 0 0 0 3px #b9cdf5; }
+
+  .hv-panel { flex: 1; min-width: 260px; }
+  .hv-panel h2 { font-size: 1.05em; margin-bottom: 8px; }
+  .hv-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 12px;
+    border: 1px dashed #b7bfc9;
+    border-radius: 8px;
+    min-height: 44px;
+  }
+  .hv-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid #4a5568;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.92em;
+    user-select: none;
+  }
+  .hv-chip.hv-used { visibility: hidden; }
+  .hv-chip.hv-selected { background: #eaf1ff; border-color: #3667c9; box-shadow: 0 0 0 2px #b9cdf5; }
+  .hv-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+  .hv-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #4a5568;
+    background: #f8f9fa;
+    cursor: pointer;
+    font-size: 0.92em;
+  }
+  .hv-btn:hover { background: #eef1f4; }
+  .hv-feedback {
+    font-size: 0.95em;
+    font-weight: 600;
+    min-height: 1.3em;
+  }
+  .hv-key {
+    margin-top: 8px;
+    font-size: 0.88em;
+    color: #555;
+  }
+  .hv-key ol { padding-left: 20px; margin: 6px 0 0; }
+  .hv-key li { margin-bottom: 3px; }
+
+  .hv-explainer {
+    margin-top: 40px;
+    border-top: 1px solid #e2e6ea;
+    padding-top: 24px;
+  }
+  .hv-explainer h2 { font-size: 1.15em; }
+  .hv-glossary {
+    margin-top: 18px;
+    background: #f8f9fa;
+    border: 1px solid #e2e6ea;
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+  .hv-glossary dt { font-weight: 700; margin-top: 8px; }
+  .hv-glossary dt:first-child { margin-top: 0; }
+  .hv-glossary dd { margin: 2px 0 0; color: #333; }
+
+  footer.hv-footer {
+    margin-top: 40px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e6ea;
+    font-size: 0.82em;
+    color: #888;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .hv-layout { flex-direction: column; align-items: stretch; }
+    .hv-diagram-wrap { margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Label the Hofmann voltameter</h1>
+<p class="hv-subtitle">Electrolysis of water &mdash; identify every part of the apparatus</p>
+
+<div class="hv-instructions">
+Click a label in the word bank below, then click the matching numbered blank on the diagram to place it.
+Click a filled blank again to take the label back. When you are happy with your answers, press <strong>Check</strong>.
+</div>
+
+<div class="hv-layout">
+  <div class="hv-diagram-wrap" id="hv-diagram">
+    <img src="data:image/png;base64,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" alt="Diagram of a Hofmann voltameter with its printed labels hidden behind numbered blanks">
+    <div class="hv-battery-symbol" aria-hidden="true">
+      <svg viewBox="0 0 100 46" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="100" height="46" fill="#ffffff"></rect>
+        <line x1="0" y1="23" x2="35" y2="23" stroke="#000" stroke-width="3"></line>
+        <line x1="35" y1="5" x2="35" y2="41" stroke="#000" stroke-width="3"></line>
+        <line x1="55" y1="12" x2="55" y2="34" stroke="#000" stroke-width="7"></line>
+        <line x1="55" y1="23" x2="100" y2="23" stroke="#000" stroke-width="3"></line>
+      </svg>
+    </div>
+<div class="hv-slot hv-mask" data-id="o2" data-answer="O₂ (oxygen)" data-short="O₂" style="left:7.5%;top:16.0%;width:13.5%;height:6.5%;"><span class="hv-slot-fill"></span><button type="button" class="hv-slot-btn" aria-label="Label 1">1</button></div>
+<div class="hv-slot hv-mask" data-id="h2o" data-answer="H₂O (water)" data-short="H₂O" style="left:45.0%;top:16.0%;width:13.0%;height:6.5%;"><span class="hv-slot-fill"></span><button type="button" class="hv-slot-btn" aria-label="Label 2">2</button></div>
+<div class="hv-slot hv-mask" data-id="2h2" data-answer="2H₂ (hydrogen)" data-short="2H₂" style="left:75.0%;top:15.0%;width:19.0%;height:7.5%;"><span class="hv-slot-fill"></span><button type="button" class="hv-slot-btn" aria-label="Label 3">3</button></div>
+<div class="hv-slot hv-mask" data-id="anode" data-answer="Anode" data-short="Anode" style="left:19.0%;top:78.0%;width:22.0%;height:7.0%;"><span class="hv-slot-fill"></span><button type="button" class="hv-slot-btn" aria-label="Label 4">4</button></div>
+<div class="hv-slot hv-mask" data-id="cathode" data-answer="Cathode" data-short="Cathode" style="left:53.0%;top:78.0%;width:27.0%;height:7.0%;"><span class="hv-slot-fill"></span><button type="button" class="hv-slot-btn" aria-label="Label 5">5</button></div>
+<div class="hv-slot hv-mask" data-id="plus" data-answer="+ (positive terminal)" data-short="+" style="left:37.0%;top:90.5%;width:6.7%;height:6.0%;"><span class="hv-slot-fill"></span><button type="button" class="hv-slot-btn" aria-label="Label 6">6</button></div>
+<div class="hv-slot hv-mask" data-id="minus" data-answer="− (negative terminal)" data-short="−" style="left:55.3%;top:91.0%;width:5.2%;height:5.5%;"><span class="hv-slot-fill"></span><button type="button" class="hv-slot-btn" aria-label="Label 7">7</button></div>
+<div class="hv-slot hv-pin" data-id="battery" data-answer="Power source (battery)" data-short="Battery" style="left:50.2%;top:89.3%;"><span class="hv-pin-tag"></span><button type="button" class="hv-slot-btn" aria-label="Label 8">8</button></div>
+  </div>
+
+  <div class="hv-panel">
+    <h2>Word bank</h2>
+    <div class="hv-bank" id="hv-bank" aria-label="Word bank"></div>
+    <div class="hv-controls">
+      <button type="button" class="hv-btn" id="hv-check">Check</button>
+      <button type="button" class="hv-btn" id="hv-solution">Show solution</button>
+      <button type="button" class="hv-btn" id="hv-retry">Retry</button>
+    </div>
+    <div class="hv-feedback" id="hv-feedback" role="status"></div>
+    <div class="hv-key">
+      <strong>Numbered blanks:</strong>
+      <ol>
+        <li>1&ndash;3: gas/liquid contents of each tube</li>
+        <li>4&ndash;5: the two electrodes</li>
+        <li>6&ndash;7: the battery terminals</li>
+        <li>8: the part that drives the reaction (work it out from the wires)</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="hv-explainer">
+  <h2>What is happening here?</h2>
+  <p>A Hofmann voltameter is used to electrolyse water into its two elements. A small amount of
+  acid or alkali is added to the water so that it conducts electricity (pure water alone is too poor
+  a conductor). When a direct current is passed through, water molecules are split apart at each
+  electrode:</p>
+  <ul style="margin:8px 0 14px;">
+    <li>At the <strong>anode</strong> (connected to the <strong>positive</strong> terminal), water is
+    oxidised and <strong>oxygen gas</strong> is given off.</li>
+    <li>At the <strong>cathode</strong> (connected to the <strong>negative</strong> terminal), water is
+    reduced and <strong>hydrogen gas</strong> is given off.</li>
+  </ul>
+  <p>Because water is H<sub>2</sub>O, electrolysis produces hydrogen and oxygen in a 2:1 ratio by
+  volume &mdash; which is exactly what the diagram shows: the tube on the right collects twice the
+  volume of gas as the tube on the left. The gas bubbles rise from each electrode and collect at the
+  top of their tube, pushing the liquid level down; the connecting tube along the bottom keeps both
+  sides filled with the same electrolyte and lets ions move between the two half-cells to complete the
+  circuit.</p>
+
+  <dl class="hv-glossary">
+    <dt>Electrolysis</dt>
+    <dd>Using an electric current to break down a compound into its elements.</dd>
+    <dt>Electrolyte</dt>
+    <dd>The liquid (here, water with a little acid or alkali added) that conducts electricity by allowing ions to move through it.</dd>
+    <dt>Electrode</dt>
+    <dd>A conductor (often an unreactive metal such as platinum) that carries current into or out of the electrolyte.</dd>
+    <dt>Anode</dt>
+    <dd>The electrode connected to the positive terminal of the power source. Negative ions move towards it and are oxidised (lose electrons).</dd>
+    <dt>Cathode</dt>
+    <dd>The electrode connected to the negative terminal of the power source. Positive ions move towards it and are reduced (gain electrons).</dd>
+  </dl>
+</div>
+
+<footer class="hv-footer">Science Department &middot; Refined with AI</footer>
+
+<script>
+(function(){
+  var ANSWERS = ["O₂ (oxygen)", "H₂O (water)", "2H₂ (hydrogen)", "Anode", "Cathode", "+ (positive terminal)", "− (negative terminal)", "Power source (battery)"];
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  var slots = Array.prototype.slice.call(document.querySelectorAll('.hv-slot'));
+  var bank = document.getElementById('hv-bank');
+  var feedback = document.getElementById('hv-feedback');
+  var selectedChip = null;
+
+  var order = shuffle(ANSWERS.map(function(w, i){ return {word: w, index: i}; }));
+
+  function slotForAnswer(answer){
+    return slots.filter(function(s){ return s.dataset.answer === answer; });
+  }
+
+  function makeChip(word){
+    var chip = document.createElement('span');
+    chip.className = 'hv-chip';
+    chip.textContent = word;
+    chip.dataset.word = word;
+    chip.tabIndex = 0;
+    chip.setAttribute('role', 'button');
+    chip.addEventListener('click', function(){
+      if (chip.classList.contains('hv-used')) return;
+      if (selectedChip === chip) { chip.classList.remove('hv-selected'); selectedChip = null; return; }
+      if (selectedChip) selectedChip.classList.remove('hv-selected');
+      selectedChip = chip;
+      chip.classList.add('hv-selected');
+    });
+    chip.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chip.click(); }
+    });
+    return chip;
+  }
+
+  order.forEach(function(o){ bank.appendChild(makeChip(o.word)); });
+
+  function clearSlotVisual(slot){
+    slot.classList.remove('hv-filled', 'hv-correct', 'hv-incorrect', 'hv-selected');
+  }
+
+  function returnWordFromSlot(slot){
+    var word = slot.dataset.filled;
+    if (!word) return;
+    var chips = bank.querySelectorAll('.hv-chip.hv-used');
+    for (var i = 0; i < chips.length; i++) {
+      if (chips[i].dataset.word === word) { chips[i].classList.remove('hv-used'); break; }
+    }
+    delete slot.dataset.filled;
+    var btn = slot.querySelector('.hv-slot-btn');
+    btn.textContent = btn.dataset.num;
+    var tag = slot.querySelector('.hv-pin-tag');
+    if (tag) tag.textContent = '';
+    clearSlotVisual(slot);
+  }
+
+  function placeWordInSlot(slot, word){
+    returnWordFromSlot(slot);
+    var chips = bank.querySelectorAll('.hv-chip:not(.hv-used)');
+    for (var i = 0; i < chips.length; i++) {
+      if (chips[i].dataset.word === word) { chips[i].classList.add('hv-used'); break; }
+    }
+    slot.dataset.filled = word;
+    var btn = slot.querySelector('.hv-slot-btn');
+    if (!btn.dataset.num) btn.dataset.num = btn.textContent;
+    var displayText = slot.dataset.short || word;
+    var tag = slot.querySelector('.hv-pin-tag');
+    if (tag) {
+      tag.textContent = displayText;
+      btn.title = word;
+    } else {
+      btn.textContent = displayText;
+      btn.title = word;
+    }
+    clearSlotVisual(slot);
+    slot.classList.add('hv-filled');
+  }
+
+  slots.forEach(function(slot){
+    var btn = slot.querySelector('.hv-slot-btn');
+    btn.dataset.num = btn.textContent;
+    btn.addEventListener('click', function(){
+      if (slot.dataset.filled) { returnWordFromSlot(slot); return; }
+      if (selectedChip) {
+        placeWordInSlot(slot, selectedChip.dataset.word);
+        selectedChip.classList.remove('hv-selected');
+        selectedChip = null;
+      }
+    });
+  });
+
+  document.getElementById('hv-check').addEventListener('click', function(){
+    var correct = 0;
+    slots.forEach(function(slot){
+      slot.classList.remove('hv-correct', 'hv-incorrect');
+      if (!slot.dataset.filled) { slot.classList.add('hv-incorrect'); return; }
+      if (slot.dataset.filled === slot.dataset.answer) { slot.classList.add('hv-correct'); correct++; }
+      else { slot.classList.add('hv-incorrect'); }
+    });
+    feedback.textContent = 'You got ' + correct + ' out of ' + slots.length + ' correct.';
+    feedback.style.color = (correct === slots.length) ? '#206b39' : '#a23434';
+  });
+
+  document.getElementById('hv-solution').addEventListener('click', function(){
+    slots.forEach(function(slot){
+      placeWordInSlot(slot, slot.dataset.answer);
+      slot.classList.add('hv-correct');
+    });
+    var chips = bank.querySelectorAll('.hv-chip');
+    chips.forEach(function(c){ c.classList.add('hv-used'); });
+    feedback.textContent = 'Solution shown.';
+    feedback.style.color = '#333';
+  });
+
+  document.getElementById('hv-retry').addEventListener('click', function(){
+    slots.forEach(function(slot){ returnWordFromSlot(slot); });
+    var chips = bank.querySelectorAll('.hv-chip');
+    chips.forEach(function(c){ c.classList.remove('hv-used', 'hv-selected'); });
+    selectedChip = null;
+    feedback.textContent = '';
+  });
+})();
+</script>
+
+</body>
+</html>
