@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 5: IG Farben in the Third Reich, 1933&ndash;1945</title>
+<style>
+:root{
+  --ink:#1b1f24; --ink-soft:#4a545e; --rule:#dfe3e8; --paper:#ffffff; --wash:#f6f7f9;
+  --accent:#8a6d1f; --accent-w:#fbf5e4;
+  --src:#1f6b63;  --src-w:#e6f3f1;
+  --warn:#8a2f4d; --warn-w:#fbebf0;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--wash);color:var(--ink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman","Apple Symbols","Segoe UI Symbol","Arial Unicode MS","DejaVu Sans",serif;
+  font-size:17px;line-height:1.65;
+}
+.sheet{max-width:920px;margin:0 auto;background:var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.06),0 14px 44px rgba(0,0,0,.07)}
+header.masthead{padding:52px 56px 34px;border-bottom:3px double var(--rule);
+  background:radial-gradient(1100px 200px at 12% -60px,#f3f0e6 0%,transparent 70%),var(--paper)}
+.eyebrow{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:0;font-weight:600;letter-spacing:-.01em}
+h1 .num{color:var(--accent)}
+.sub{display:block;font-size:.46em;font-weight:400;font-style:italic;color:var(--ink-soft);margin-top:14px;letter-spacing:0}
+.standfirst{max-width:62ch;color:var(--ink-soft);margin:22px 0 0}
+.meta-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px}
+.chip{border:1px solid var(--rule);border-radius:999px;padding:5px 13px;color:var(--ink-soft);background:#fff}
+main{padding:8px 56px 20px}
+section{padding:34px 0;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+h2{font-size:clamp(20px,2.4vw,26px);line-height:1.25;margin:0 0 4px;font-weight:600}
+.period{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 8px}
+h3{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin:26px 0 10px;
+  padding-bottom:6px;border-bottom:1px solid var(--rule)}
+p{margin:0 0 14px;max-width:70ch}
+ul,ol{max-width:70ch}
+li{margin-bottom:7px}
+b,strong{font-weight:600}
+.lead{font-size:1.06em}
+.pull{margin:22px 0;padding:16px 22px;background:var(--accent-w);border-left:4px solid var(--accent);
+  border-radius:0 7px 7px 0;max-width:74ch}
+.pull p:last-child{margin-bottom:0}
+/* ---------- source blocks ---------- */
+.source{margin:24px 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden;background:#fcfcfd}
+.source-head{padding:9px 18px;background:var(--src-w);border-bottom:1px solid var(--rule);
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:700;color:var(--src)}
+.source-body{padding:16px 22px}
+.de{font-size:1.02em;line-height:1.6;margin:0;color:#2a2f35}
+.de p{margin:0 0 10px}
+.de p:last-child{margin-bottom:0}
+details.tr{margin-top:12px;border-top:1px dashed var(--rule);padding-top:10px}
+details.tr>summary{cursor:pointer;list-style:none;display:inline-block;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.06em;color:var(--src);background:var(--src-w);border:1px solid #cfe4e0;
+  border-radius:6px;padding:5px 12px}
+details.tr>summary::-webkit-details-marker{display:none}
+details.tr>summary::after{content:" \2192"}
+details.tr[open]>summary::after{content:" \2193"}
+details.tr .en{margin-top:12px;color:#333;font-style:italic}
+details.tr .en p{margin:0 0 10px}
+.cite{margin:12px 0 0;font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:11.5px;color:var(--ink-soft)}
+.cite a{color:#1155cc}
+main section p a,main section li a,main section td a{
+  color:var(--accent);text-decoration:underline;text-decoration-color:#e2d3a6;text-underline-offset:2px;
+}
+main section p a:hover,main section li a:hover,main section td a:hover{text-decoration-color:var(--accent)}
+.chip a{color:inherit;text-decoration:underline;text-decoration-color:currentColor;opacity:.85}
+.chip a:hover{opacity:1}
+/* ---------- timeline ---------- */
+table.tl{width:100%;border-collapse:collapse;font-size:14.5px;margin:18px 0 4px}
+table.tl th{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;
+  text-align:left;padding:6px 10px;border-bottom:1.5px solid var(--rule)}
+table.tl td{padding:6px 10px;border-bottom:1px solid #eef0f3;vertical-align:top}
+td.yr{white-space:nowrap;color:var(--accent);font-weight:600;width:96px}
+/* ---------- figures / boxes ---------- */
+.fact{margin:20px 0;padding:15px 20px;border:1px dashed var(--rule);border-radius:9px;background:#fcfcfd}
+.fact h4{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);margin:0 0 9px;font-weight:700}
+.fact p:last-child,.fact ul:last-child{margin-bottom:0}
+.check{margin:24px 0;padding:16px 22px;background:var(--warn-w);border-left:4px solid var(--warn);border-radius:0 7px 7px 0}
+.check h4{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--warn);margin:0 0 9px;font-weight:700}
+.check p:last-child,.check ol:last-child,.check ul:last-child{margin-bottom:0}
+.still{margin:24px 0;padding:16px 22px;background:var(--src-w);border-left:4px solid var(--src);border-radius:0 7px 7px 0}
+.still h4{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--src);margin:0 0 9px;font-weight:700}
+.still p:last-child,.still ol:last-child,.still ul:last-child{margin-bottom:0}
+.qs{counter-reset:q;list-style:none;padding:0;margin:0}
+.qs li{position:relative;padding-left:34px;margin-bottom:13px}
+.qs li::before{counter-increment:q;content:counter(q);position:absolute;left:0;top:.05em;
+  width:23px;height:23px;border-radius:50%;background:var(--accent-w);border:1px solid var(--accent);
+  color:var(--accent);font-family:ui-sans-serif,Arial,sans-serif;font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+footer.colophon{padding:30px 56px 44px;background:var(--wash);border-top:1px solid var(--rule);
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-soft)}
+footer.colophon p{margin:0 0 8px;max-width:74ch}
+footer a{color:#1155cc}
+footer.ai-footer{padding:34px 56px 40px;background:var(--ink);border-top:3px double #3a4048;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:13px;color:#c7ccd2;text-align:center}
+.ai-footer-title{margin:0 0 12px;font-size:15px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:700;color:#f0d98a}
+footer.ai-footer p{margin:0 auto 10px;max-width:64ch;line-height:1.6}
+footer.ai-footer p:last-child{margin-bottom:0}
+@media print{footer.ai-footer{background:#fff;color:#000;border-top:1px solid #000}
+  .ai-footer-title{color:#000}}
+@media (max-width:700px){footer.ai-footer{padding-left:22px;padding-right:22px}}
+
+
+/* ---------- source link pills ---------- */
+.srclinks{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:7px}
+.srclinks a{
+  display:inline-block;text-decoration:none;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:600;
+  padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:#fff;color:var(--ink);
+}
+.srclinks a:hover{border-color:var(--src);color:var(--src);background:var(--src-w)}
+.srclinks a.de-link{border-color:#cfd8dd}
+.srclinks a.en-link{border-color:#cfe4e0;background:var(--src-w);color:var(--src)}
+.srclinks a::before{content:"\2197  ";font-weight:400;opacity:.6}
+.srclinks .none{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  color:var(--ink-soft);padding:6px 2px;font-style:italic;
+}
+/* ---------- glossary tool-tips ---------- */
+.gl{position:relative;border-bottom:1px dotted var(--accent);cursor:help;outline:none}
+.gl:hover,.gl:focus{background:var(--accent-w)}
+.gl .tip{
+  visibility:hidden;opacity:0;transition:opacity .12s ease;
+  position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);
+  width:min(300px,78vw);z-index:40;
+  background:#1b1f24;color:#f4f5f7;text-align:left;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:13px;font-style:normal;font-weight:400;line-height:1.45;
+  padding:10px 13px;border-radius:8px;box-shadow:0 6px 22px rgba(0,0,0,.28);
+}
+.gl .tip::after{content:"";position:absolute;top:100%;left:50%;margin-left:-6px;
+  border:6px solid transparent;border-top-color:#1b1f24}
+.gl:hover .tip,.gl:focus .tip,.gl:focus-within .tip{visibility:visible;opacity:1}
+.gl .tip b{color:#f0d98a;font-weight:600}
+@media print{.gl .tip{display:none}.gl{border-bottom:0;background:none}}
+sub,sup{line-height:0;font-size:75%}
+.eqn{font-family:"Iowan Old Style",Georgia,serif;background:var(--wash);border:1px solid var(--rule);border-radius:4px;padding:0 5px;white-space:nowrap;font-size:.95em}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .sheet{box-shadow:none;max-width:none}
+  header.masthead{padding:0 0 14pt}
+  main{padding:0}
+  section{padding:12pt 0;break-inside:auto}
+  details.tr>summary{display:none}
+  details.tr .en{display:block!important;margin-top:8pt}
+  .source{break-inside:avoid}
+  footer.colophon{padding:12pt 0 0}
+  a{color:inherit}
+}
+
+/* ---------- map gallery + lightbox ---------- */
+.gallery-label{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--src);margin:18px 0 10px;font-weight:700}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:0 0 6px}
+.gallery figure{margin:0}
+.gallery button.thumb{display:block;width:100%;padding:0;margin:0;border:1px solid var(--rule);border-radius:8px;
+  overflow:hidden;background:#fff;cursor:zoom-in}
+.gallery button.thumb img{display:block;width:100%;height:170px;object-fit:cover;transition:transform .18s ease}
+.gallery button.thumb:hover img{transform:scale(1.05)}
+.gallery button.thumb:focus-visible{outline:2px solid var(--src);outline-offset:2px}
+.gallery figcaption{margin-top:8px;font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  color:var(--ink-soft);line-height:1.4}
+.single-figure{margin:22px 0}
+.single-figure button.thumb{display:block;width:100%;padding:0;margin:0;border:1px solid var(--rule);border-radius:9px;
+  overflow:hidden;background:#fff;cursor:zoom-in}
+.single-figure button.thumb img{display:block;width:100%;height:auto}
+.single-figure figcaption{margin-top:8px;font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  color:var(--ink-soft);line-height:1.4}
+.lb-overlay{position:fixed;inset:0;background:rgba(10,12,14,.94);display:none;align-items:center;justify-content:center;
+  z-index:999;padding:32px;cursor:zoom-out}
+.lb-overlay.open{display:flex}
+.lb-overlay img{max-width:100%;max-height:84vh;border-radius:4px;box-shadow:0 10px 50px rgba(0,0,0,.55);cursor:default}
+.lb-cap{position:absolute;bottom:20px;left:24px;right:24px;text-align:center;color:#f4f5f7;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:13px}
+.lb-close{position:absolute;top:16px;right:26px;color:#fff;font-size:32px;line-height:1;
+  font-family:ui-sans-serif,Arial,sans-serif;cursor:pointer;opacity:.85}
+.lb-close:hover{opacity:1}
+@media print{.gallery,.lb-overlay{display:none!important}}
+@media (max-width:700px){
+  header.masthead,main,footer.colophon{padding-left:22px;padding-right:22px}
+  body{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header class="masthead">
+  <p class="eyebrow">Industrial Chemistry &middot; Unit 2 &middot; Background reading &middot; Draft</p>
+  <h1><span class="num">Part 5</span> IG Farben in the Third Reich: 1933&ndash;1945
+    <span class="sub">How the largest chemical company on Earth was captured by a regime it had not supported, built a synthetic-rubber factory beside a death camp, and answered for it &mdash; only partly &mdash; in a Nuremberg courtroom</span>
+  </h1>
+  <p class="standfirst">Part 4 ended, deliberately flatly, on <b>30 January 1933</b>: IG Farben was the largest chemical company on Earth, its pre-1933 management contained no Nazi supporters, and its supervisory board included prominent Jewish industrialists, even as the company had quietly hedged its political bets with contributions to the Nazi Party in 1931&ndash;32. This reading follows the same company through the twelve years that turned that uneasy starting position into direct participation in the machinery of the Holocaust, and asks what a single, self-contained history of one company, told honestly, can teach about how institutions behave under a regime that captures them one committee, one contract and one compromise at a time.</p>
+  <div class="meta-row">
+    <span class="chip">Part 5 &middot; draft</span>
+    <span class="chip">30 January 1933 &ndash; 1948</span>
+    <span class="chip"><a href="https://www.openstreetmap.org/search?query=Ludwigshafen%20am%20Rhein%2C%20Germany" target="_blank" rel="noopener">Ludwigshafen</a> &middot; <a href="https://www.openstreetmap.org/search?query=Leuna%2C%20Germany" target="_blank" rel="noopener">Leuna</a> &middot; <a href="https://www.openstreetmap.org/search?query=O%C5%9Bwi%C4%99cim%2C%20Poland" target="_blank" rel="noopener">O&#347;wi&#281;cim (Auschwitz)</a> &middot; <a href="https://www.openstreetmap.org/search?query=Frankfurt%20am%20Main%2C%20Germany" target="_blank" rel="noopener">Frankfurt</a> &middot; <a href="https://www.openstreetmap.org/search?query=Oberursel%2C%20Germany" target="_blank" rel="noopener">Oberursel</a></span>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <p class="lead">This reading is different from the four before it. It is not organised around a chemical discovery, but around a single company's twelve-year descent into direct involvement in mass murder &mdash; and around the much smaller, much less satisfying story of how little of that involvement was ever formally answered for. It is told from several vantage points on purpose: the boardroom, the factory floor, the SS office that supplied the workers, and the courtroom that judged it all afterward, because no single vantage point tells the whole story on its own.</p>
+
+  <p>Five threads run through it. First, how a company whose pre-1933 leadership <b>opposed no active Nazi supporters</b> was drawn, step by step from 1933 to 1939, into the regime's rearmament economy. Second, the <b>Four Year Plan</b> of 1936, and the IG Farben director who ran much of German chemical production for it. Third, the construction of a synthetic-rubber factory at <b>Auschwitz</b>, built with forced and slave labour supplied by the SS. Fourth, IG Farben's ownership stake in the company that supplied <b>Zyklon B</b> to the camps. And fifth, the reckoning &mdash; such as it was &mdash; at Nuremberg, and what became of the men convicted there.</p>
+
+  <div class="fact">
+    <h4>How to use the German sources</h4>
+    <p>The same rules as Parts 1&ndash;4 apply. <b>Words with a dotted underline</b> are technical terms &mdash; hover or tap for the meaning, and check the glossary at the end. Source boxes give you the <b>German first</b>, then a <b>Translate &rarr;</b> button, then the author, the date, and links to where the text actually lives.</p>
+  </div>
+
+  <div class="check">
+    <h4>A note on this reading, before you start</h4>
+    <p>This reading covers the Holocaust, forced and slave labour, and mass murder as historical facts your syllabus expects you to understand. It does this in the same way the rest of this series treats difficult material: plainly, with sources, and without inventing detail beyond what the record supports. It does not describe camp conditions or violence in graphic detail; the point of this reading is to understand how a company's decisions and structures made these things possible, not to dwell on suffering for its own sake. If any part of this reading is difficult for you personally, that is a normal response, and you should feel able to say so to your teacher.</p>
+  </div>
+</section>
+
+<!-- ============ 1933-1936: capture ============ -->
+<section>
+  <p class="period">Part one &middot; 1933&ndash;1936</p>
+  <h2>A company the regime did not trust, absorbed anyway</h2>
+
+  <p>IG Farben's position on 30 January 1933 did not protect it from what followed. Within weeks of the Nazi seizure of power, the new regime's antisemitic laws began forcing Jewish members off IG Farben's supervisory board and out of its senior management &mdash; the same &ldquo;Council of Gods&rdquo; that Part 4 described as unusually prominent and, in part, Jewish. Some directors resigned voluntarily to avoid worse; others were dismissed outright under the April 1933 Law for the Restoration of the Professional Civil Service and its extensions into private industry. By the mid-1930s, IG Farben's boardroom looked nothing like it had in 1932, not because the company had changed its mind about the regime, but because the regime had reached in and changed the company.</p>
+
+  <p>At the same time, the regime's rearmament drive created enormous, and enormously profitable, demand for exactly what IG Farben already made best: synthetic nitrogen (for both fertiliser and explosives, as in Part 3), and increasingly, synthetic fuel and synthetic rubber, since Germany had almost none of either raw material domestically. A company that had made secret political donations in 1931&ndash;32 out of ordinary self-interest now found that self-interest and the regime's goals were converging on their own, without anyone needing to force the issue.</p>
+
+  <div class="pull">
+    <p><b>Hold on to this.</b> Nothing about IG Farben's earlier position &mdash; no Nazi supporters in management, Jewish board members, propaganda attacks against it &mdash; made the company immune to capture. If anything, the purge of 1933 shows the opposite: a regime does not need a company's ideological agreement to take control of it. It only needs the legal power to remove the people who disagree, and a replacement willing to keep the business running.</p>
+  </div>
+</section>
+
+<!-- ============ 1936-1939: Four Year Plan / Krauch ============ -->
+<section>
+  <p class="period">Part two &middot; 1936&ndash;1939</p>
+  <h2>The Four Year Plan and the man who ran chemistry for it</h2>
+
+  <p>In 1936, Hitler announced the <b><span class="gl" tabindex="0">Four Year Plan<span class="tip"><b>Four Year Plan</b> &mdash; a 1936 Nazi economic programme aimed at making Germany self-sufficient (&ldquo;autarkic&rdquo;) in strategic materials, including synthetic fuel and rubber, and ready for war within four years.</span></span></b>, a programme intended to make Germany <b>autarkic</b> &mdash; self-sufficient &mdash; in strategic raw materials within four years, in explicit preparation for war. Synthetic fuel (the Bergius-process chemistry from Part 4) and synthetic rubber were two of the plan's central targets, since Germany had almost no domestic oil and no colonies producing natural rubber. Both were things IG Farben already knew how to make at industrial scale.</p>
+
+  <p>The IG Farben director placed at the centre of this effort was <b><span class="gl" tabindex="0">Carl Krauch<span class="tip"><b>Carl Krauch</b> (1887&ndash;1968) &mdash; IG Farben chemist and director who became the Nazi regime's &ldquo;Plenipotentiary for Special Questions of Chemical Production&rdquo; and, from 1940, IG Farben's supervisory board chairman.</span></span></b>. From 1936 Krauch headed the research-and-materials office coordinating the Four Year Plan's chemical targets, and from 1938 he held the formal Nazi state title of <b>&ldquo;Plenipotentiary for Special Questions of Chemical Production.&rdquo;</b> The overlap between his company role and his state role was so complete that contemporaries nicknamed his office the <i>Amt f&uuml;r IG-Farben Ausbau</i> &mdash; roughly, &ldquo;the office for expanding IG Farben.&rdquo; Krauch was, simultaneously, a senior IG Farben director and one of the regime's chief planners for the entire German chemical war economy: there was no meaningful line between the company's interests and the state's during these years, because the same man was managing both.</p>
+
+  <table class="tl">
+    <thead><tr><th style="width:110px">Year</th><th>Event</th></tr></thead>
+    <tbody>
+      <tr><td class="yr">1933</td><td>Nazi seizure of power; Jewish IG Farben board members and executives dismissed or forced to resign.</td></tr>
+      <tr><td class="yr">1936</td><td>Four Year Plan announced; Carl Krauch put in charge of its chemical-production research office.</td></tr>
+      <tr><td class="yr">1938</td><td>Krauch appointed Plenipotentiary for Special Questions of Chemical Production.</td></tr>
+      <tr><td class="yr">1939</td><td>Outbreak of the Second World War; Krauch heads the Reich Office for Economic Expansion from this year.</td></tr>
+      <tr><td class="yr">1940</td><td>Carl Bosch dies (30 April); Krauch succeeds him as IG Farben's supervisory-board chairman.</td></tr>
+      <tr><td class="yr">Dec 1940&ndash;Jan 1941</td><td>IG Farben selects a site near O&#347;wi&#281;cim (Auschwitz) for a new synthetic-rubber works.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ Bosch's death, bridge ============ -->
+<section>
+  <p class="period">Meanwhile &middot; 1933&ndash;1940</p>
+  <h2>Carl Bosch's decline, and a chairmanship that changed hands</h2>
+
+  <p><b><a href="https://en.wikipedia.org/wiki/Carl_Bosch" target="_blank" rel="noopener">Carl Bosch</a></b> &mdash; the engineer who scaled up Haber's ammonia synthesis, led the Bergius fuel work, and became IG Farben's first chairman in 1925 &mdash; did not support the direction his own company was taking. Accounts drawn largely from BASF's own corporate history describe a man increasingly sidelined through the 1930s: reportedly rebuffed after a tense meeting with Hitler over the regime's treatment of Jewish scientists, sidelined into a mostly ceremonial supervisory-board role by 1935, and, in his 1937 presidency of the Kaiser Wilhelm Society, an outspoken (and, by 1939, reportedly drunken and despairing) critic of the regime's assault on independent science. He died on 30 April 1940, no longer in any position to shape the company that still bore the mark of his earlier engineering triumphs.</p>
+
+  <div class="check">
+    <h4>As historians, be on your guard! &mdash; a source worth treating carefully</h4>
+    <p>Much of what is known about Bosch's personal despair in these years comes from a single strand of sourcing: BASF's own published corporate history, drawing on the biographer Karl Holdermann. A company's own account of its most famous chairman's finest moral moments is exactly the kind of source a careful historian treats with polite suspicion rather than takes at face value, however plausible it sounds. This reading includes it because it is widely repeated and broadly consistent with Bosch's documented actions (his 1937 Kaiser Wilhelm Society presidency and outspoken defence of Fritz Haber's memory are independently attested), but it should be checked against sources with no institutional stake in the story before being treated as settled.</p>
+  </div>
+
+  <p>Bosch's successor as chairman, from 1940, was Carl Krauch &mdash; already, by that point, the regime's own chief planner for chemical war production. The company's most senior position now belonged to a man with no meaningful separation between his corporate and state loyalties.</p>
+</section>
+
+<!-- ============ Auschwitz III - Monowitz ============ -->
+<section>
+  <p class="period">Part three &middot; 1941&ndash;1945</p>
+  <h2>A factory built beside a camp, on purpose</h2>
+
+  <p>In December 1940 and January 1941, IG Farben selected a site for a new synthetic-rubber (<b><span class="gl" tabindex="0">Buna<span class="tip"><b>Buna</b> &mdash; IG Farben's trade name for synthetic rubber, produced by polymerising butadiene; the name gives the Auschwitz works, the Buna Werke, its name.</span></span></b>) works near the Polish town of O&#347;wi&#281;cim, better known by its German name: <b>Auschwitz</b>. The location offered good rail access, water from the Vistula, and nearby coal, lime and salt &mdash; the same kind of practical industrial logic that had shaped site choices throughout this series. It offered one more thing, and company records make clear this was not incidental to the decision: the site sat next to an existing concentration camp, and IG Farben's own planners recognised from the start that camp prisoners could be used as its workforce.</p>
+
+  <p>The company bought land seized without compensation from its Polish owners; Jewish residents of O&#347;wi&#281;cim were expelled from their homes, which were then sold to IG Farben as staff housing. IG Farben negotiated directly with the camp's SS commandant to lease prisoners' labour, at a daily rate the company itself set out in its own records &mdash; roughly three to four Reichsmarks per prisoner per day, paid to the SS rather than the worker. One company director's private comment on the arrangement, preserved in the historical record, was blunt: &ldquo;our new friendship with the SS is very fruitful.&rdquo;</p>
+
+  <p>In October 1942, at IG Farben's request, the SS formally established a new camp beside the construction site: <b><span class="gl" tabindex="0">Monowitz<span class="tip"><b>Monowitz</b> (Auschwitz III) &mdash; a concentration camp established in October 1942 specifically to house forced labourers building and operating IG Farben's Buna Werke.</span></span></b>, also known as Auschwitz III, built at IG Farben's own expense specifically to house its forced labourers. Estimates of the numbers involved vary by source and by exactly what is being counted, but they are consistently enormous: at any one time the camp held roughly 12,000 prisoners, while the factory as a whole is estimated to have used something like 80,000 people as forced or slave labour across its years of operation, as the camp population was continually replaced. Conditions were lethal by design: prisoners who could no longer work were selected for death, whether at Monowitz itself or, more often, back at the main Auschwitz camp nearby. Two of the best-known survivors of Monowitz, the chemist and writer <b><a href="https://en.wikipedia.org/wiki/Primo_Levi" target="_blank" rel="noopener">Primo Levi</a></b> and the writer <b><a href="https://en.wikipedia.org/wiki/Elie_Wiesel" target="_blank" rel="noopener">Elie Wiesel</a></b>, were both liberated there by the Red Army on 27 January 1945.</p>
+
+  <div class="check">
+    <h4>As historians, be on your guard! &mdash; numbers that will not agree, and a company that knew</h4>
+    <p>Different reputable sources give different figures for how many people passed through Monowitz, how many died there specifically as opposed to being sent elsewhere for death, and how directly individual IG Farben managers controlled day-to-day treatment of prisoners. This reading gives ranges rather than single numbers for exactly that reason. What is not in serious dispute, and what the Nuremberg trial below turned on, is that IG Farben's own senior management &mdash; not just the SS &mdash; chose this site, negotiated this labour arrangement, and knew, at the time, what conditions their workforce lived and died under.</p>
+  </div>
+</section>
+
+<!-- ============ Degesch / Zyklon B ============ -->
+<section>
+  <p class="period">Part four &middot; 1919&ndash;1945</p>
+  <h2>A pesticide company, a patent, and the gas chambers</h2>
+
+  <p>A separate, and in some ways more direct, chemical thread connects IG Farben to the machinery of mass murder. <b><span class="gl" tabindex="0">Degesch<span class="tip"><b>Degesch</b> &mdash; <i>Deutsche Gesellschaft f&uuml;r Sch&auml;dlingsbek&auml;mpfung</i> (&ldquo;German Corporation for Pest Control&rdquo;), founded 1919, holder of the Zyklon patent.</span></span></b>, the <i>Deutsche Gesellschaft f&uuml;r Sch&auml;dlingsbek&auml;mpfung</i> (&ldquo;German Corporation for Pest Control&rdquo;), had been founded in 1919 with the chemist <a href="https://en.wikipedia.org/wiki/Fritz_Haber" target="_blank" rel="noopener">Fritz Haber</a> &mdash; already familiar from Parts 3 and 4 &mdash; as its first director. By the mid-1930s its ownership was split between the chemical firm Degussa and <b>IG Farben</b>, each holding <b>42.5%</b> of its shares, with the remaining 15% held by Th. Goldschmidt AG. Degesch's most significant product was a cyanide-based pesticide called <b>Zyklon</b>, sold in a stabilised form &mdash; <b>Zyklon B</b> &mdash; and distributed through subsidiary firms to German military and SS customers.</p>
+
+  <p>From 1942, the SS used Zyklon B as the killing agent in the gas chambers of Auschwitz-Birkenau and other extermination camps, ultimately in the murder of more than a million people. Degesch's own production director later testified that he understood German army orders for Zyklon B <b>without its usual warning odour</b> &mdash; an additive present in every normal commercial use of the pesticide, there specifically so people would smell it and evacuate before lethal concentrations built up &mdash; to mean the gas was intended for uses where no one was meant to survive to smell it at all.</p>
+
+  <div class="check">
+    <h4>As historians, be on your guard! &mdash; ownership is not the same question as knowledge</h4>
+    <p>IG Farben's 42.5% ownership stake in Degesch is a documented fact. What individual IG Farben executives actually knew about how Zyklon B was being used, and when, is a separate question that postwar trials examined specifically and did not resolve identically for every defendant: some were convicted, others acquitted on appeal for exactly this reason. Owning part of a company that supplied a substance used in mass murder is not automatically the same, legally or morally, as ordering or knowing about that specific use &mdash; and this reading is deliberately precise about which of the two claims the evidence for each individual actually supports.</p>
+  </div>
+
+  <p>A further, separate strand belongs here rather than being left out: researchers employed by IG Farben's Bayer division conducted medical experiments on concentration-camp prisoners at Auschwitz and Mauthausen during the war, testing experimental drugs on already-ill prisoners in trials that killed some of the people subjected to them. This reading names the fact rather than describes the trials in detail; it belongs in the same account as the Buna Werke and Degesch precisely because it shows the same pattern &mdash; ordinary scientific and industrial activity, continued without evident limit once its human cost was made invisible by a camp system built to make it so.</p>
+</section>
+
+<!-- ============ Local Taunus echo: Oberursel ============ -->
+<section>
+  <p class="period">Meanwhile, in the Taunus hills &middot; 1934&ndash;1945</p>
+  <h2>An engine works finds new work, and new limits</h2>
+
+  <p>Part 4 left Motorenfabrik Oberursel closed, its 1932 Depression-era shutdown ended only by a 1934 reopening for what records describe as small-scale production. From 1940, under wartime pressure, the Oberursel works became a centre for diesel aero-engine research, led by the engineer <a href="https://de.wikipedia.org/wiki/Adolf_Schn%C3%BCrle" target="_blank" rel="noopener">Adolf Schn&uuml;rle</a>: a series of experimental engines &mdash; the DZ 700, DZ 710 and DZ 720, ranging up to a 32-cylinder design &mdash; were developed there, though none reached operational service before the war ended. The factory's realised wartime output was more modest and more mundane: roughly 12,500 units of the <i><span class="gl" tabindex="0">Raupenschlepper Ost<span class="tip"><b>Raupenschlepper Ost</b> (&ldquo;Eastern tracked tractor&rdquo;) &mdash; a lightweight tracked artillery tractor built for the harsh terrain and weather of the Eastern Front.</span></span></i>, a tracked artillery tractor built for the mud and snow of the Eastern Front.</p>
+
+  <div class="pull">
+    <p><b>Hold on to this.</b> Not every wartime chemical or engineering story from this period is the Buna Werke. Oberursel's ambitious experimental engines never worked out; its real contribution to the war was a much less glamorous tractor. Keep both scales in view &mdash; the vast, murderous industrial project at Auschwitz, and the small, ordinary, largely failed research programme in the Taunus hills &mdash; as two very different pictures of what &ldquo;wartime chemistry and engineering&rdquo; actually looked like, most of the time, in most places.</p>
+  </div>
+</section>
+
+<!-- ============ Meanwhile elsewhere: Britain and the bomb ============ -->
+<section>
+  <p class="period">Meanwhile, elsewhere</p>
+  <h2>Two threads this reading only touches: a rival cartel, and a bomb that was never built</h2>
+
+  <p>IG Farben's 1925 formation had not gone unnoticed abroad. In 1926, four of Britain's leading chemical firms merged into <b><span class="gl" tabindex="0">Imperial Chemical Industries<span class="tip"><b>Imperial Chemical Industries (ICI)</b> &mdash; a British chemical conglomerate formed in 1926 from four merging firms, competing directly with IG Farben and DuPont.</span></span></b> (ICI), explicitly positioning itself to compete with IG Farben and the American firm DuPont at similar scale. During the Second World War, ICI supplied explosives and synthetic ammonia to the British war effort, and separately took part in Britain's own nuclear-weapons research programme, codenamed <b>Tube Alloys</b>.</p>
+
+  <p>Germany ran a nuclear-weapons research programme of its own, usually called the <i><span class="gl" tabindex="0">Uranverein<span class="tip"><b>Uranverein</b> (&ldquo;Uranium Club&rdquo;) &mdash; Germany's wartime nuclear-research programme, led scientifically by Werner Heisenberg, which never approached building a working bomb.</span></span></i> (&ldquo;Uranium Club&rdquo;), led scientifically by the physicist <a href="https://en.wikipedia.org/wiki/Werner_Heisenberg" target="_blank" rel="noopener">Werner Heisenberg</a> from 1939. It never came close to producing a weapon: German resources went instead to the V-2 rocket programme, the effort suffered from poor coordination between rival institutions, many of Germany's most capable physicists had already fled the country (several to join the American Manhattan Project instead), and a technical choice to use heavy water rather than graphite as a neutron moderator left the programme dependent on a single Norwegian plant that Allied raids repeatedly disrupted. When German physicists interned in England were told of the Hiroshima bombing in August 1945, secret recordings made at Farm Hall show Heisenberg's first reaction was disbelief: &ldquo;I don't believe a word of the whole thing.&rdquo;</p>
+
+  <div class="fact">
+    <h4>Why this reading does not follow either thread further</h4>
+    <p>Both stories are genuinely important, and either could fill a reading of its own. This series keeps IG Farben as its spine for Part 5 because it is the company this whole series has already spent four readings following, and because its story &mdash; ordinary industrial decision-making, gradually and then completely subordinated to a genocidal regime &mdash; is the clearest lens available on the question this reading actually asks. ICI and the Uranverein are included here only as points of comparison: one shows chemistry mobilised for the same kind of war from the winning side, the other shows that German scientific brilliance did not, by itself, guarantee the outcome many people assumed it would.</p>
+  </div>
+</section>
+
+<!-- ============ Nuremberg trial ============ -->
+<section>
+  <p class="period">Part five &middot; 1947&ndash;1951</p>
+  <h2>A courtroom, twenty-four defendants, and a reckoning that mostly wasn't</h2>
+
+  <p>After Germany's defeat, the Allies seized IG Farben in 1945, and from 1947 to 1948 a United States military tribunal at Nuremberg tried <b>twenty-four</b> of its directors in what is usually called the <b><a href="https://en.wikipedia.org/wiki/IG_Farben_Trial" target="_blank" rel="noopener">IG Farben Trial</a></b> (formally, <i>United States v. Carl Krauch et al.</i>). The charges included planning aggressive war, plundering occupied territories, and &mdash; the count that mattered most for the Auschwitz story &mdash; enslavement and mass murder of concentration-camp workers and civilians.</p>
+
+  <p>The verdicts, delivered in July&ndash;August 1948, disappointed many observers at the time and have disappointed most historians since. Every defendant was acquitted of planning aggressive war. Ten of the twenty-four were acquitted entirely. Of the thirteen convicted on other counts, sentences ranged from eighteen months to eight years &mdash; the harshest terms, eight years each, going to <b><a href="https://en.wikipedia.org/wiki/Otto_Ambros" target="_blank" rel="noopener">Otto Ambros</a></b> and <b><a href="http://www.wollheim-memorial.de/en/walther_duerrfeld_18991967" target="_blank" rel="noopener">Walther D&uuml;rrfeld</a></b>, the engineers most directly responsible for building and running the Buna Werke, for enslavement and mass murder. <b><a href="https://en.wikipedia.org/wiki/Fritz_ter_Meer" target="_blank" rel="noopener">Fritz ter Meer</a></b>, the board member the tribunal found had exercised &ldquo;the greatest authority&rdquo; over the Monowitz decision, received seven years. <b>Carl Krauch</b> received six. One of the tribunal's own judges, <a href="https://en.wikipedia.org/wiki/Paul_M._Hebert" target="_blank" rel="noopener">Paul Hebert</a>, dissented publicly, arguing the sentences did not fit the scale of what the evidence had shown.</p>
+
+  <div class="check">
+    <h4>As historians, be on your guard! &mdash; a reckoning that undid itself</h4>
+    <p>Every single defendant convicted at the IG Farben Trial was released early, most by 1951, under a wave of post-war clemency reviews. Fritz ter Meer left prison in the summer of 1950 for &ldquo;good behaviour&rdquo; &mdash; and in 1956 became <b>chairman of Bayer AG</b>, one of IG Farben's own successor companies, a position he held for eight years. Judge Hebert's dissent asked, in effect, whether a sentence that light could really be called justice for a crime that large. Whatever answer you reach, ter Meer's later career is itself part of the historical record, not a rumour: it is the single clearest fact this reading can offer about how thoroughly &mdash; or how thinly &mdash; this particular reckoning actually reached.</p>
+  </div>
+
+  <table class="tl">
+    <thead><tr><th style="width:190px">Defendant</th><th>Convicted of</th><th style="width:150px">Sentence &middot; outcome</th></tr></thead>
+    <tbody>
+      <tr><td class="yr">Otto Ambros</td><td>Enslavement and mass murder (Buna Werke construction and operation)</td><td>8 years; released 1951</td></tr>
+      <tr><td class="yr">Walther D&uuml;rrfeld</td><td>Enslavement and mass murder (Buna Werke site manager)</td><td>8 years; released 1951</td></tr>
+      <tr><td class="yr">Fritz ter Meer</td><td>Mass murder, enslavement, plunder, SS membership</td><td>7 years; released 1950, later Bayer chairman</td></tr>
+      <tr><td class="yr">Carl Krauch</td><td>War crimes and crimes against humanity (enslavement, deportation)</td><td>6 years; released 1950</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ Breakup / closing ============ -->
+<section>
+  <p class="period">The close &middot; 1945&ndash;1951</p>
+  <h2>The end of IG Farben, formally speaking</h2>
+
+  <p>Alongside the trial, the Allied occupying powers moved to dismantle IG Farben itself, on the reasoning that a concern of its size and history should never again be allowed to concentrate that much of Germany's chemical industry, and that much of its political influence, in one boardroom. The formal <b>decartelisation</b> was completed in <b>1951&ndash;52</b>, splitting IG Farben into a set of independent successor companies &mdash; principally <b><a href="https://en.wikipedia.org/wiki/BASF" target="_blank" rel="noopener">BASF</a></b>, <b><a href="https://en.wikipedia.org/wiki/Bayer" target="_blank" rel="noopener">Bayer</a></b> and <b><a href="https://en.wikipedia.org/wiki/Hoechst_AG" target="_blank" rel="noopener">Hoechst</a></b>, restoring the three great dye firms of Part 2 to separate existence for the first time since 1925, alongside smaller successors including Agfa. A residual legal shell, IG Farben in Liquidation, continued to exist on paper &mdash; mainly to process shareholder claims &mdash; for another six decades, and was not formally dissolved until <b>31 October 2012</b>.</p>
+
+  <p>This reading ends here, in 1951, with the company that dominated the first four readings of this series broken back into the pieces it had once been assembled from. What those pieces &mdash; BASF, Bayer and Hoechst, chastened, restructured and, in time, once again enormously successful &mdash; did with the rest of the twentieth century is a different, calmer story, and it belongs to the next reading.</p>
+</section>
+
+<!-- ============ Questions ============ -->
+<section>
+  <p class="period">Before the next reading</p>
+  <h2>Questions to think about</h2>
+  <ol class="qs">
+    <li>Carl Krauch held a senior IG Farben directorship and a formal Nazi state planning title at the same time, with contemporaries joking there was no real distinction between the two roles. Why might this kind of overlap between a company's interests and a state's interests be more dangerous than either a fully independent company or a fully nationalised one?</li>
+    <li>IG Farben chose the Auschwitz site partly because it could use camp labour, and applied to have a camp (Monowitz) built specifically for that purpose. Explain, using this example, the difference between a company that is forced by a regime to use forced labour and a company that actively requests the arrangement because it is convenient. Does the distinction matter morally? Does it matter legally?</li>
+    <li>Different reputable historical sources give different figures for how many people worked at or died at Monowitz. Using what you have learned across this whole series about checking sources, explain why exact casualty figures from this period are often contested, without that contestation casting any doubt on whether the underlying atrocity occurred.</li>
+    <li>Owning 42.5% of a company (Degesch) that made a substance later used in mass murder is a documented fact about IG Farben. Knowing, at the time, that the substance was being used for that purpose is a separate claim requiring separate evidence. Why is it important for a historian to keep these two claims distinct, even when writing about a subject as morally serious as this one?</li>
+    <li>Every defendant convicted at the 1948 IG Farben Trial was free again within three years, and one, Fritz ter Meer, became chairman of a major successor company within a decade. What does this suggest about the limits of a legal reckoning, compared with a full moral or historical one? Can the two ever be made to match?</li>
+    <li>This reading compared IG Farben's story with two others it chose not to tell in full: Britain's ICI and Germany's failed Uranverein nuclear programme. Pick one of these two threads and explain, in a few sentences, what a full reading built around it might emphasise differently from a reading built around IG Farben.</li>
+  </ol>
+</section>
+
+<!-- ============ Glossary ============ -->
+<section id="glossary">
+  <p class="period">Reference</p>
+  <h2>Glossary: the new words in this reading</h2>
+  <p>These build on the glossaries in Parts 1&ndash;4 &mdash; look back if an earlier term (IG Farben, Bergius process, and so on) is unfamiliar.</p>
+  <table class="tl">
+    <thead><tr><th style="width:170px">Word</th><th>What it means</th><th style="width:33%">Where it appears here</th></tr></thead>
+    <tbody>
+      <tr><td class="yr">Four Year Plan</td><td>A 1936 Nazi economic programme aiming for German self-sufficiency in strategic materials, in preparation for war.</td><td>Set the targets (synthetic rubber and fuel) that drove IG Farben's wartime expansion.</td></tr>
+      <tr><td class="yr">autarky</td><td>National self-sufficiency, especially in raw materials, without reliance on imports.</td><td>The Four Year Plan's central economic goal.</td></tr>
+      <tr><td class="yr">Buna</td><td>IG Farben's trade name for synthetic rubber.</td><td>Gives the Auschwitz &ldquo;Buna Werke&rdquo; its name.</td></tr>
+      <tr><td class="yr">Monowitz (Auschwitz III)</td><td>A concentration camp built by the SS at IG Farben's request and expense, to house its forced labourers.</td><td>Established October 1942; liberated 27 January 1945.</td></tr>
+      <tr><td class="yr">Degesch</td><td><i>Deutsche Gesellschaft f&uuml;r Sch&auml;dlingsbek&auml;mpfung</i>, a pesticide firm 42.5% owned by IG Farben, holder of the Zyklon patent.</td><td>Supplied Zyklon B, used in gas chambers from 1942.</td></tr>
+      <tr><td class="yr">decartelisation</td><td>The post-war Allied policy of breaking up large industrial combines to prevent renewed concentration of economic and political power.</td><td>Split IG Farben into BASF, Bayer, Hoechst and others, 1951&ndash;52.</td></tr>
+      <tr><td class="yr">Imperial Chemical Industries (ICI)</td><td>Britain's major chemical conglomerate, formed 1926 partly in response to IG Farben's 1925 merger.</td><td>Britain's wartime chemical and (Tube Alloys) nuclear-research counterpart.</td></tr>
+      <tr><td class="yr">Uranverein</td><td>&ldquo;Uranium Club&rdquo;: Germany's wartime nuclear-weapons research programme, led by Werner Heisenberg.</td><td>Never produced a working bomb, unlike the American Manhattan Project.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<footer class="colophon">
+  <p><b>What this draft still needs.</b> This is a first draft built from a focused research pass rather than the page-by-page primary-source checking some sections of earlier Parts have had, and given the subject matter it deserves more scrutiny before classroom use, not less. The Carl Bosch decline material is flagged above as resting on a single, institutionally interested source and needs independent verification. Casualty and labour-force figures for Monowitz are given as ranges deliberately, since sources disagree; a closer comparison of the Auschwitz Memorial's own figures against other academic accounts (for instance the Wollheim Memorial) would sharpen this further. No images have yet been added to this reading, and given the subject matter any images chosen will need particular care and discussion before inclusion, not just historical relevance &mdash; the gallery and lightbox infrastructure below is included ready for that conversation. The ICI/Uranverein comparison section is deliberately brief and could be expanded into its own reading if that would serve the course better.</p>
+  <p><b>Sources.</b> Wikipedia and German Wikipedia (IG Farben, Carl Krauch, Fritz ter Meer, Monowitz concentration camp, Degesch, Imperial Chemical Industries, Motorenfabrik Oberursel); the Auschwitz-Birkenau State Museum's own published history of the IG Farben/Auschwitz III site; the Fritz Bauer Institut and Wollheim Memorial's published histories and trial documentation of IG Farben and Buna-Monowitz, including their summary of the 1948 Nuremberg judgment; the Jewish Virtual Library's and Yad Vashem's accounts of the IG Farben Trial; BASF's own published corporate history (for the Bosch material, flagged above for independent verification); the American Nuclear Museum's account of the German Uranverein and the Farm Hall transcripts; and our own Parts 3 and 4 (for Haber, Bosch, Krauch and the 1925 merger, that this reading builds on).</p>
+  <p style="margin-top:14px;opacity:.75">Science Department &middot; Refined with AI</p>
+</footer>
+
+</div>
+
+<div id="lb-overlay" class="lb-overlay" onclick="closeLBBg(event)">
+  <span class="lb-close" onclick="closeLB()" role="button" aria-label="Close">&times;</span>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+<script>
+function openLB(src, cap){
+  var ov = document.getElementById('lb-overlay');
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-cap').textContent = cap;
+  ov.classList.add('open');
+}
+function closeLB(){
+  document.getElementById('lb-overlay').classList.remove('open');
+}
+function closeLBBg(e){
+  if (e.target && e.target.id === 'lb-overlay') { closeLB(); }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') { closeLB(); }
+});
+</script>
+</body>
+</html>

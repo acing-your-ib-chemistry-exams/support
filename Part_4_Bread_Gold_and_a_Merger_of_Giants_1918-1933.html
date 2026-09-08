@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 4: Bread, Gold, and a Merger of Giants, 1918&ndash;1933</title>
+<style>
+:root{
+  --ink:#1b1f24; --ink-soft:#4a545e; --rule:#dfe3e8; --paper:#ffffff; --wash:#f6f7f9;
+  --accent:#8a6d1f; --accent-w:#fbf5e4;
+  --src:#1f6b63;  --src-w:#e6f3f1;
+  --warn:#8a2f4d; --warn-w:#fbebf0;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--wash);color:var(--ink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman","Apple Symbols","Segoe UI Symbol","Arial Unicode MS","DejaVu Sans",serif;
+  font-size:17px;line-height:1.65;
+}
+.sheet{max-width:920px;margin:0 auto;background:var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.06),0 14px 44px rgba(0,0,0,.07)}
+header.masthead{padding:52px 56px 34px;border-bottom:3px double var(--rule);
+  background:radial-gradient(1100px 200px at 12% -60px,#f3f0e6 0%,transparent 70%),var(--paper)}
+.eyebrow{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+h1{font-size:clamp(27px,4vw,40px);line-height:1.12;margin:0;font-weight:600;letter-spacing:-.01em}
+h1 .num{color:var(--accent)}
+.sub{display:block;font-size:.46em;font-weight:400;font-style:italic;color:var(--ink-soft);margin-top:14px;letter-spacing:0}
+.standfirst{max-width:62ch;color:var(--ink-soft);margin:22px 0 0}
+.meta-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px}
+.chip{border:1px solid var(--rule);border-radius:999px;padding:5px 13px;color:var(--ink-soft);background:#fff}
+main{padding:8px 56px 20px}
+section{padding:34px 0;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+h2{font-size:clamp(20px,2.4vw,26px);line-height:1.25;margin:0 0 4px;font-weight:600}
+.period{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 8px}
+h3{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin:26px 0 10px;
+  padding-bottom:6px;border-bottom:1px solid var(--rule)}
+p{margin:0 0 14px;max-width:70ch}
+ul,ol{max-width:70ch}
+li{margin-bottom:7px}
+b,strong{font-weight:600}
+.lead{font-size:1.06em}
+.pull{margin:22px 0;padding:16px 22px;background:var(--accent-w);border-left:4px solid var(--accent);
+  border-radius:0 7px 7px 0;max-width:74ch}
+.pull p:last-child{margin-bottom:0}
+/* ---------- source blocks ---------- */
+.source{margin:24px 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden;background:#fcfcfd}
+.source-head{padding:9px 18px;background:var(--src-w);border-bottom:1px solid var(--rule);
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:700;color:var(--src)}
+.source-body{padding:16px 22px}
+.de{font-size:1.02em;line-height:1.6;margin:0;color:#2a2f35}
+.de p{margin:0 0 10px}
+.de p:last-child{margin-bottom:0}
+details.tr{margin-top:12px;border-top:1px dashed var(--rule);padding-top:10px}
+details.tr>summary{cursor:pointer;list-style:none;display:inline-block;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.06em;color:var(--src);background:var(--src-w);border:1px solid #cfe4e0;
+  border-radius:6px;padding:5px 12px}
+details.tr>summary::-webkit-details-marker{display:none}
+details.tr>summary::after{content:" \2192"}
+details.tr[open]>summary::after{content:" \2193"}
+details.tr .en{margin-top:12px;color:#333;font-style:italic}
+details.tr .en p{margin:0 0 10px}
+.cite{margin:12px 0 0;font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:11.5px;color:var(--ink-soft)}
+.cite a{color:#1155cc}
+main section p a,main section li a,main section td a{
+  color:var(--accent);text-decoration:underline;text-decoration-color:#e2d3a6;text-underline-offset:2px;
+}
+main section p a:hover,main section li a:hover,main section td a:hover{text-decoration-color:var(--accent)}
+.chip a{color:inherit;text-decoration:underline;text-decoration-color:currentColor;opacity:.85}
+.chip a:hover{opacity:1}
+/* ---------- timeline ---------- */
+table.tl{width:100%;border-collapse:collapse;font-size:14.5px;margin:18px 0 4px}
+table.tl th{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;
+  text-align:left;padding:6px 10px;border-bottom:1.5px solid var(--rule)}
+table.tl td{padding:6px 10px;border-bottom:1px solid #eef0f3;vertical-align:top}
+td.yr{white-space:nowrap;color:var(--accent);font-weight:600;width:96px}
+/* ---------- figures / boxes ---------- */
+.fact{margin:20px 0;padding:15px 20px;border:1px dashed var(--rule);border-radius:9px;background:#fcfcfd}
+.fact h4{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);margin:0 0 9px;font-weight:700}
+.fact p:last-child,.fact ul:last-child{margin-bottom:0}
+.check{margin:24px 0;padding:16px 22px;background:var(--warn-w);border-left:4px solid var(--warn);border-radius:0 7px 7px 0}
+.check h4{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--warn);margin:0 0 9px;font-weight:700}
+.check p:last-child,.check ol:last-child,.check ul:last-child{margin-bottom:0}
+.still{margin:24px 0;padding:16px 22px;background:var(--src-w);border-left:4px solid var(--src);border-radius:0 7px 7px 0}
+.still h4{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--src);margin:0 0 9px;font-weight:700}
+.still p:last-child,.still ol:last-child,.still ul:last-child{margin-bottom:0}
+.qs{counter-reset:q;list-style:none;padding:0;margin:0}
+.qs li{position:relative;padding-left:34px;margin-bottom:13px}
+.qs li::before{counter-increment:q;content:counter(q);position:absolute;left:0;top:.05em;
+  width:23px;height:23px;border-radius:50%;background:var(--accent-w);border:1px solid var(--accent);
+  color:var(--accent);font-family:ui-sans-serif,Arial,sans-serif;font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+footer.colophon{padding:30px 56px 44px;background:var(--wash);border-top:1px solid var(--rule);
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-soft)}
+footer.colophon p{margin:0 0 8px;max-width:74ch}
+footer a{color:#1155cc}
+footer.ai-footer{padding:34px 56px 40px;background:var(--ink);border-top:3px double #3a4048;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:13px;color:#c7ccd2;text-align:center}
+.ai-footer-title{margin:0 0 12px;font-size:15px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:700;color:#f0d98a}
+footer.ai-footer p{margin:0 auto 10px;max-width:64ch;line-height:1.6}
+footer.ai-footer p:last-child{margin-bottom:0}
+@media print{footer.ai-footer{background:#fff;color:#000;border-top:1px solid #000}
+  .ai-footer-title{color:#000}}
+@media (max-width:700px){footer.ai-footer{padding-left:22px;padding-right:22px}}
+
+
+/* ---------- source link pills ---------- */
+.srclinks{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:7px}
+.srclinks a{
+  display:inline-block;text-decoration:none;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:600;
+  padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:#fff;color:var(--ink);
+}
+.srclinks a:hover{border-color:var(--src);color:var(--src);background:var(--src-w)}
+.srclinks a.de-link{border-color:#cfd8dd}
+.srclinks a.en-link{border-color:#cfe4e0;background:var(--src-w);color:var(--src)}
+.srclinks a::before{content:"\2197  ";font-weight:400;opacity:.6}
+.srclinks .none{
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  color:var(--ink-soft);padding:6px 2px;font-style:italic;
+}
+/* ---------- glossary tool-tips ---------- */
+.gl{position:relative;border-bottom:1px dotted var(--accent);cursor:help;outline:none}
+.gl:hover,.gl:focus{background:var(--accent-w)}
+.gl .tip{
+  visibility:hidden;opacity:0;transition:opacity .12s ease;
+  position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);
+  width:min(300px,78vw);z-index:40;
+  background:#1b1f24;color:#f4f5f7;text-align:left;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  font-size:13px;font-style:normal;font-weight:400;line-height:1.45;
+  padding:10px 13px;border-radius:8px;box-shadow:0 6px 22px rgba(0,0,0,.28);
+}
+.gl .tip::after{content:"";position:absolute;top:100%;left:50%;margin-left:-6px;
+  border:6px solid transparent;border-top-color:#1b1f24}
+.gl:hover .tip,.gl:focus .tip,.gl:focus-within .tip{visibility:visible;opacity:1}
+.gl .tip b{color:#f0d98a;font-weight:600}
+@media print{.gl .tip{display:none}.gl{border-bottom:0;background:none}}
+sub,sup{line-height:0;font-size:75%}
+.eqn{font-family:"Iowan Old Style",Georgia,serif;background:var(--wash);border:1px solid var(--rule);border-radius:4px;padding:0 5px;white-space:nowrap;font-size:.95em}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .sheet{box-shadow:none;max-width:none}
+  header.masthead{padding:0 0 14pt}
+  main{padding:0}
+  section{padding:12pt 0;break-inside:auto}
+  details.tr>summary{display:none}
+  details.tr .en{display:block!important;margin-top:8pt}
+  .source{break-inside:avoid}
+  footer.colophon{padding:12pt 0 0}
+  a{color:inherit}
+}
+
+/* ---------- map gallery + lightbox ---------- */
+.gallery-label{font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--src);margin:18px 0 10px;font-weight:700}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:0 0 6px}
+.gallery figure{margin:0}
+.gallery button.thumb{display:block;width:100%;padding:0;margin:0;border:1px solid var(--rule);border-radius:8px;
+  overflow:hidden;background:#fff;cursor:zoom-in}
+.gallery button.thumb img{display:block;width:100%;height:170px;object-fit:cover;transition:transform .18s ease}
+.gallery button.thumb:hover img{transform:scale(1.05)}
+.gallery button.thumb:focus-visible{outline:2px solid var(--src);outline-offset:2px}
+.gallery figcaption{margin-top:8px;font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  color:var(--ink-soft);line-height:1.4}
+.single-figure{margin:22px 0}
+.single-figure button.thumb{display:block;width:100%;padding:0;margin:0;border:1px solid var(--rule);border-radius:9px;
+  overflow:hidden;background:#fff;cursor:zoom-in}
+.single-figure button.thumb img{display:block;width:100%;height:auto}
+.single-figure figcaption{margin-top:8px;font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  color:var(--ink-soft);line-height:1.4}
+.lb-overlay{position:fixed;inset:0;background:rgba(10,12,14,.94);display:none;align-items:center;justify-content:center;
+  z-index:999;padding:32px;cursor:zoom-out}
+.lb-overlay.open{display:flex}
+.lb-overlay img{max-width:100%;max-height:84vh;border-radius:4px;box-shadow:0 10px 50px rgba(0,0,0,.55);cursor:default}
+.lb-cap{position:absolute;bottom:20px;left:24px;right:24px;text-align:center;color:#f4f5f7;
+  font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;font-size:13px}
+.lb-close{position:absolute;top:16px;right:26px;color:#fff;font-size:32px;line-height:1;
+  font-family:ui-sans-serif,Arial,sans-serif;cursor:pointer;opacity:.85}
+.lb-close:hover{opacity:1}
+@media print{.gallery,.lb-overlay{display:none!important}}
+@media (max-width:700px){
+  header.masthead,main,footer.colophon{padding-left:22px;padding-right:22px}
+  body{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header class="masthead">
+  <p class="eyebrow">Industrial Chemistry &middot; Unit 2 &middot; Background reading &middot; Draft</p>
+  <h1><span class="num">Part 4</span> Bread, Gold, and a Merger of Giants: 1918&ndash;1933
+    <span class="sub">From the armistice to the eve of the Nazi seizure of power: reparations, hyperinflation, a Nobel Prize won under a cloud, gold fished out of the sea, coal turned into petrol, and six rival companies merged into the largest chemical concern on Earth</span>
+  </h1>
+  <p class="standfirst">Part 3 ended on <b>11 November 1918</b>, with an armistice, a defeated Empire, and a nitrogen-fixing process that had spent four years making explosives instead of the fertiliser it was built for. This reading covers the fourteen years in which German chemistry tried to find its footing again &mdash; through reparations, hyperinflation, and the political chaos of the young Weimar Republic &mdash; and in which the same firms from Parts 2 and 3 combined into a single vast concern just as the ground under all of them began, very quietly at first, to shift.</p>
+  <div class="meta-row">
+    <span class="chip">Part 4 &middot; draft</span>
+    <span class="chip">11 November 1918 &ndash; 30 January 1933</span>
+    <span class="chip"><a href="https://www.openstreetmap.org/search?query=Ludwigshafen%20am%20Rhein%2C%20Germany" target="_blank" rel="noopener">Ludwigshafen</a> &middot; <a href="https://www.openstreetmap.org/search?query=Oppau%2C%20Ludwigshafen%2C%20Germany" target="_blank" rel="noopener">Oppau</a> &middot; <a href="https://www.openstreetmap.org/search?query=Leuna%2C%20Germany" target="_blank" rel="noopener">Leuna</a> &middot; <a href="https://www.openstreetmap.org/search?query=Frankfurt%20am%20Main%2C%20Germany" target="_blank" rel="noopener">Frankfurt</a> &middot; <a href="https://www.openstreetmap.org/search?query=Oberursel%2C%20Germany" target="_blank" rel="noopener">Oberursel</a> &middot; the <a href="https://www.openstreetmap.org/search?query=Taunus%2C%20Germany" target="_blank" rel="noopener">Taunus</a></span>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <p class="lead">Germany lost the First World War on 11 November 1918. What that meant for a chemical industry that had spent four years making explosives, and for the scientists who had built the process that made them, took the better part of the next decade and a half to work out &mdash; and the answer was not simple. This reading follows five threads through that decade and a half.</p>
+
+  <p>First, <b>reparations and their strange chemistry</b>: the Treaty of Versailles left Germany owing a debt so large that one of its most famous chemists spent six years trying to pay part of it by extracting gold from seawater. Second, <b>Haber's Nobel Prize</b>, awarded for the very process that had kept the German army supplied with nitrates, and the controversy that followed him to Stockholm. Third, a wartime <b>explosives factory turned into a fuel factory</b>, as the Bergius process and Leuna's engineers found a way to turn German coal into the petrol Germany otherwise had almost none of. Fourth, the <b>1925 merger</b> that combined six rival companies &mdash; including the dye firms of Parts 2 and 3 &mdash; into a single concern so large it needed a nickname for its own supervisory board. And fifth, a much smaller, local thread: what happened to a Taunus aero-engine works once the war that had made it briefly important was over.</p>
+
+  <div class="fact">
+    <h4>How to use the German sources</h4>
+    <p>The same rules as Parts 1&ndash;3 apply. <b>Words with a dotted underline</b> are technical terms &mdash; hover or tap for the meaning, and check the glossary at the end. Source boxes give you the <b>German first</b>, then a <b>Translate &rarr;</b> button, then the author, the date, and links to where the text actually lives.</p>
+  </div>
+
+  <div class="check">
+    <h4>A note on this reading, before you start</h4>
+    <p>This draft ends deliberately at <b>30 January 1933</b> &mdash; the day Hitler was appointed Chancellor &mdash; and stops there flatly, without looking ahead. What happened to these same companies and scientists after that date is a different, much darker story, and it gets its own reading rather than a preview here. Some of the material below, particularly on Carl Bosch's later career, rests on a single company-history source that still needs independent checking; that gap is flagged again where it matters.</p>
+  </div>
+</section>
+
+<!-- ============ Reparations & Haber's Nobel ============ -->
+<section>
+  <p class="period">Part one &middot; 1918&ndash;1926</p>
+  <h2>A debt, a disputed prize, and gold that was not there</h2>
+
+  <p>The <b><span class="gl" tabindex="0">Treaty of Versailles<span class="tip"><b>Treaty of Versailles</b> &mdash; the 1919 peace treaty that formally ended the First World War between Germany and the Allied powers, imposing territorial losses, military restrictions, and reparations payments on Germany.</span></span></b>, signed in June 1919, required Germany to pay reparations that were eventually fixed, in 1921, at <b>132 billion gold marks</b>. The sum was so far beyond what the shattered German economy could realistically raise that it distorted German politics and finance for the whole of the 1920s: it was a direct cause of the French and Belgian occupation of the Ruhr in 1923, and a major contributor to the hyperinflation of that same year, in which the mark collapsed so completely that banknotes were printed in denominations of trillions and, by some accounts, used as wallpaper or cheaper than the firewood needed to burn them.</p>
+
+  <p>Chemistry offered, briefly, a genuinely strange response to this crisis. <b><a href="https://en.wikipedia.org/wiki/Fritz_Haber" target="_blank" rel="noopener">Fritz Haber</a></b> &mdash; the chemist whose 1909 laboratory synthesis of ammonia had, via Bosch's industrial scale-up, fed the German war effort with nitrates for four years &mdash; had been awarded the <b>1918 Nobel Prize in Chemistry</b> (presented in 1919, since the 1918 ceremony itself was cancelled) for exactly that process. The award was, and remains, controversial: Haber had also personally overseen Germany's chemical-weapons programme during the war, including the first large-scale chlorine gas attack at Ypres in 1915, and some scientists from Allied countries objected to honouring him so soon afterward. It is often reported that <a href="https://en.wikipedia.org/wiki/Ernest_Rutherford" target="_blank" rel="noopener">Ernest Rutherford</a> refused to shake Haber's hand at the Nobel ceremony; this specific anecdote is widely repeated but not consistently well-sourced, and this reading flags it as a story worth checking further before treating it as settled fact, rather than presenting it as certain.</p>
+
+  <div class="fact">
+    <h4>What &ldquo;cut off by blockade&rdquo; actually meant</h4>
+    <p>Britain's blockade of Germany did not mean warships sitting outside German harbours. From 1914 the Royal Navy ran what is usually called a &ldquo;distant blockade&rdquo;: instead of closing German ports directly, it closed the two ways in and out of the North Sea &mdash; the narrow Dover Strait in the south, and the wider gap between Scotland and Norway in the north. Day-to-day, the actual stopping and searching of merchant ships in that northern gap was done by an unglamorous fleet of ageing cruisers and requisitioned civilian liners hastily fitted with guns, known as the Northern Patrol.</p>
+    <p>What made that patrol impossible for Germany to simply brush aside was what stood behind it: Britain's <b><span class="gl" tabindex="0">Grand Fleet<span class="tip"><b>Grand Fleet</b> &mdash; the main British battle fleet of the First World War, based at Scapa Flow in the Orkney Islands, built around dozens of dreadnought-class battleships.</span></span></b>, based at Scapa Flow in the Orkney Islands. It was built around dozens of <b>dreadnought-class battleships</b> &mdash; ships of immense firepower, each carrying batteries of guns twelve inches in calibre or larger, and heavily outnumbering Germany's own High Seas Fleet. The Grand Fleet rarely had to fire a shot at a blockade-runner: its dreadnoughts did their work simply by existing in overwhelming force at Scapa Flow, close enough to intercept the German fleet if it ever sailed out to break the blockade by force. Germany's navy judged that risk too great to take on any large scale, and so <b>Chilean saltpetre</b> &mdash; the nitrate Germany had relied on for both fertiliser and explosives before 1914 &mdash; simply stopped arriving, which is exactly why the Haber&ndash;Bosch process mattered so much once war broke out.</p>
+  </div>
+
+  <div class="check">
+    <h4>As historians, be on your guard! &mdash; the same chemist, two entirely different legacies</h4>
+    <p>Haber's ammonia synthesis is one of the most consequential chemical discoveries in history: the fertiliser it makes possible is estimated to help feed roughly half the world's population today. The same chemistry, scaled up for wartime nitrates, also kept Germany's guns supplied for four years after Chilean saltpetre was cut off by blockade, and Haber himself went on to pioneer chemical warfare. Historians and scientists still disagree sharply about how to weigh these facts against each other, and about whether a Nobel Prize awarded for a discovery can or should be separated from other uses its discoverer put science to. This reading will not resolve that argument for you.</p>
+  </div>
+
+  <p>What is much better documented is Haber's next project. Convinced that Germany's reparations debt might be paid off if enough gold could be recovered from an unlikely source, Haber spent roughly <b>1920 to 1926</b> leading a secret research programme to extract gold dissolved in seawater. Earlier, imprecise measurements had suggested the oceans held gold in concentrations that might make extraction profitable at industrial scale; Haber had a specially equipped ship, the research vessel <i>Meteor</i>, take thousands of water samples across the Atlantic to test the idea directly. The results were a disappointment: the real concentration of gold in seawater turned out to be several orders of magnitude lower than the earlier estimates, far too dilute to ever be extracted economically, and the project was quietly abandoned in 1926.</p>
+
+  <div class="pull">
+    <p><b>Hold on to this.</b> A brilliant scientist, working from an over-optimistic measurement, spent six years chasing a solution that the actual data could not support. It is worth asking what it took for Haber &mdash; a careful chemist by training &mdash; to keep going as long as he did, and what that tells you about the difference between believing a number and checking it yourself.</p>
+  </div>
+</section>
+
+<!-- ============ Bergius / Leuna synthetic fuel ============ -->
+<section>
+  <p class="period">Part two &middot; 1913&ndash;1927</p>
+  <h2>From explosives to petrol: turning coal into fuel</h2>
+
+  <p>Germany has always been rich in coal and almost entirely without its own oil. That mismatch became a serious strategic problem once cars, trucks and aircraft made petroleum products indispensable, and it is the reason a second major chemical process, alongside Haber&ndash;Bosch, mattered so much to interwar Germany: the <b><span class="gl" tabindex="0">Bergius process<span class="tip"><b>Bergius process</b> &mdash; a method of hydrogenating coal (reacting it with hydrogen gas under high pressure and temperature, with a catalyst) to produce liquid hydrocarbon fuels.</span></span></b>, patented by the chemist <b><a href="https://en.wikipedia.org/wiki/Friedrich_Bergius" target="_blank" rel="noopener">Friedrich Bergius</a></b> in 1913.</p>
+
+  <p>The Bergius process works by reacting pulverised coal with hydrogen gas at very high pressure and temperature, in the presence of a catalyst, breaking the coal's large carbon structures down into smaller hydrocarbon molecules similar to those in petroleum. It is, in other words, a way of making something chemically similar to oil out of something that is not oil at all. Bergius developed the chemistry, but making it work at industrial scale &mdash; sustaining the extreme pressures involved reliably, in equipment that would not simply fail &mdash; needed exactly the high-pressure engineering expertise that Carl Bosch and his team at BASF had already built for ammonia synthesis. From the early 1920s, Bosch's engineers at BASF adapted the Bergius process for large-scale production, and by 1927 the <b>Leuna</b> works &mdash; the same site built during the war to make nitrates for explosives &mdash; had converted a substantial part of its capacity to producing synthetic petrol from coal instead.</p>
+
+  <div class="still">
+    <h4>Still true today</h4>
+    <p>Coal-to-liquid hydrogenation, descended directly from Bergius's 1913 patent, kept Germany's air force and army supplied with fuel through the Second World War once other oil imports were blocked, and variants of the same basic chemistry are still used today, including in South Africa's Sasol plants, in contexts where coal is cheap and imported oil is not reliably available.</p>
+  </div>
+
+  <p>The scale of the achievement was recognised in 1931, when Bergius and Bosch jointly received the <b>Nobel Prize in Chemistry</b> &ldquo;for their contributions to the invention and development of chemical high-pressure methods.&rdquo; It was, in effect, a second Nobel Prize for the same high-pressure engineering tradition Haber and Bosch had begun with ammonia twenty years earlier &mdash; recognition that turning a laboratory reaction into an industrial process at enormous pressure was, itself, a scientific achievement worth honouring separately from the underlying chemistry.</p>
+</section>
+
+<!-- ============ Motorenfabrik Oberursel Weimar collapse ============ -->
+<section>
+  <p class="period">Meanwhile, in the Taunus hills &middot; 1921&ndash;1934</p>
+  <h2>An aero-engine works with nothing left to build</h2>
+
+  <p>Part 3 introduced <b><a href="https://en.wikipedia.org/wiki/Motorenfabrik_Oberursel" target="_blank" rel="noopener">Motorenfabrik Oberursel</a></b>, the local engine works that had built rotary aero-engines for German fighter aircraft during the war. The Treaty of Versailles banned Germany from building military aircraft or aero-engines at all, and the collapse in demand this created &mdash; combined with the postwar economic chaos &mdash; left the works with a factory built for a product it was no longer allowed to make. In <b>1921</b> it was sold to the Cologne engine manufacturer <b><span class="gl" tabindex="0">Gasmotorenfabrik Deutz<span class="tip">A Cologne-based manufacturer of gas and diesel engines, founded in the 19th century; still exists today as Deutz AG.</span></span></b>, and pivoted toward manufacturing diesel engines instead of aero-engines.</p>
+
+  <p>The pivot did not fully insulate the works from Weimar Germany's broader economic turbulence. In <b>1930</b> the Oberursel plant was merged into a combined operation known as &ldquo;Humboldt-Deutz,&rdquo; and when the Depression tightened its grip on German industry the works <b>closed entirely in 1932</b> &mdash; standing empty for two years before reopening, under quite different political circumstances, in <b>1934</b>.</p>
+
+  <div class="pull">
+    <p><b>Hold on to this.</b> A factory's fate is not decided only by what it can build, but by what it is legally allowed to build, and what the wider economy can afford to buy. Versailles closed one door (military aero-engines); the Depression closed a second (diesel engines nobody could afford); and it took a change of regime in 1933&ndash;34 to reopen the works at all. Keep this quiet, local story in mind &mdash; it will look very different again once the next reading gets underway.</p>
+  </div>
+</section>
+
+<!-- ============ 1925 IG Farben merger ============ -->
+<section>
+  <p class="period">Part three &middot; 1904&ndash;1926</p>
+  <h2>Six companies become one: the founding of IG Farben</h2>
+
+  <p>The idea of combining Germany's major chemical firms into a single, coordinated concern was not new in 1925. As early as <b>1904</b>, <a href="https://en.wikipedia.org/wiki/Carl_Duisberg" target="_blank" rel="noopener">Carl Duisberg</a> &mdash; the same Bayer director who had helped drive the dye cartel of Part 3 &mdash; had circulated a memorandum arguing that German dye firms should combine to compete more effectively against each other's wasteful duplication and, especially, against foreign competitors. Looser cooperative agreements between several of the major firms followed over the next two decades, but it was the pressures of the First World War and its aftermath &mdash; wartime coordination of production, then the shared struggle of reparations, hyperinflation and foreign competition &mdash; that finally pushed the idea to completion.</p>
+
+  <p>On <b>2 December 1925</b>, six companies formally merged into <b><span class="gl" tabindex="0">IG Farben<span class="tip"><b>IG Farben</b> &mdash; short for <i>Interessen-Gemeinschaft Farbenindustrie AG</i>, &ldquo;Community of Interests of the Dye Industry&rdquo;: the merged German chemical conglomerate formed in 1925, combining BASF, Bayer, Hoechst and three smaller firms.</span></span></b>, formally the <i>Interessen-Gemeinschaft Farbenindustrie AG</i> (&ldquo;Community of Interests of the Dye Industry&rdquo;). The merging firms included BASF and Hoechst and Bayer &mdash; all three already familiar from Parts 2 and 3 &mdash; along with three smaller companies, combined on negotiated equity shares reflecting each firm's relative size. The result was, almost overnight, the largest chemical company in the world and the largest single corporation in Europe: by 1926 it employed roughly <b>100,000 people</b> and had a market capitalisation of around <b>1.4 billion Reichsmarks</b>. Its supervisory board grew so large and so laden with the most prominent names in German industry and science that it earned an informal nickname &mdash; the <b>&ldquo;Council of Gods&rdquo;</b> (<i>Rat der G&ouml;tter</i>).</p>
+
+  <table class="tl">
+    <thead><tr><th style="width:110px">Year</th><th>Event</th></tr></thead>
+    <tbody>
+      <tr><td class="yr">1904</td><td>Carl Duisberg's memorandum first proposes combining Germany's major dye firms.</td></tr>
+      <tr><td class="yr">1916&ndash;1925</td><td>A series of looser cooperative agreements between major German chemical firms, tightening over time.</td></tr>
+      <tr><td class="yr">2 Dec 1925</td><td>Formal merger of BASF, Bayer, Hoechst and three smaller firms into IG Farben.</td></tr>
+      <tr><td class="yr">1926</td><td>IG Farben reaches roughly 100,000 employees and a market capitalisation of about 1.4 billion Reichsmarks.</td></tr>
+      <tr><td class="yr">1931</td><td>Carl Bosch and Friedrich Bergius jointly awarded the Nobel Prize in Chemistry for high-pressure methods.</td></tr>
+    </tbody>
+  </table>
+
+  <p><b><a href="https://en.wikipedia.org/wiki/Carl_Bosch" target="_blank" rel="noopener">Carl Bosch</a></b>, the engineer who had scaled up Haber's ammonia synthesis at BASF and gone on to lead the Bergius fuel work at Leuna, became IG Farben's first chairman. His scientific standing was confirmed the same year the company's early growth peaked in the record books: the 1931 Nobel Prize, shared with Bergius, recognised the same high-pressure engineering tradition that had, by then, produced ammonia, nitrate explosives, and synthetic fuel from a single family of techniques.</p>
+</section>
+
+<!-- ============ Flat closing: IG Farben on the eve of 1933 ============ -->
+<section>
+  <p class="period">The hinge &middot; 30 January 1933</p>
+  <h2>A company on the eve, seen plainly</h2>
+
+  <p>By the start of 1933, IG Farben was the largest chemical company on Earth, and its position with respect to the Nazi movement that was about to take power was, by the historical record, an awkward and largely unsympathetic one. According to the company's own postwar historical accounts and independent historians alike, <b>not a single member of IG Farben's management before 1933 was a supporter of the Nazi Party</b>, and its supervisory board &mdash; the &ldquo;Council of Gods&rdquo; &mdash; included several prominent Jewish industrialists and scientists. Nazi propaganda, for its part, regularly attacked IG Farben during this period as exactly the kind of target its ideology despised: an &ldquo;international capitalist Jewish company.&rdquo;</p>
+
+  <div class="check">
+    <h4>As historians, be on your guard! &mdash; a company that was targeted, and also compromised</h4>
+    <p>None of this makes IG Farben's position in early 1933 a simple or admirable one. The same company that Nazi propagandists denounced as un-German also made secret political contributions to the Nazi Party in 1931 and 1932, in the ordinary and cynical way many large German firms hedged their political bets during the chaos of the Weimar Republic's final years. A company can be an ideological target and a political accommodator of the same movement at the same time; both things were true of IG Farben on 30 January 1933, the day Hitler was appointed Chancellor.</p>
+  </div>
+
+  <p>This reading stops here, deliberately, without following IG Farben, Carl Bosch, or any of the scientists named above into what came next. What happened to this company, and to German chemistry more broadly, under Nazi rule is a substantially different and much darker story, told on its own terms in the next reading.</p>
+</section>
+
+<!-- ============ Questions ============ -->
+<section>
+  <p class="period">Before the next reading</p>
+  <h2>Questions to think about</h2>
+  <ol class="qs">
+    <li>Haber's gold-from-seawater project (1920&ndash;1926) was based on earlier measurements of seawater's gold content that turned out to be badly wrong. What does this episode suggest about the difference between having a plausible idea and having good enough data to act on it? Can you think of a modern example where an over-optimistic early measurement led people astray for years before being corrected?</li>
+    <li>The Bergius process and the Haber&ndash;Bosch process both rely on high-pressure, high-temperature chemistry, and both were scaled to industrial size by Carl Bosch's engineering team. Explain, in your own words, why getting a reaction to work in a small laboratory flask is a very different problem from making the same reaction work safely and reliably at the scale of an entire factory.</li>
+    <li>IG Farben's 1925 merger combined six previously competing companies. Using what you know about the earlier Alizarine Convention cartel (Part 3), suggest two advantages and two risks of combining rival firms into a single, much larger concern.</li>
+    <li>By early 1933, IG Farben was attacked by Nazi propaganda as an &ldquo;international capitalist Jewish company,&rdquo; while also having made secret contributions to the same party. Explain why these two facts are not actually contradictory, and what they suggest about how large companies sometimes behave under political pressure, even before an authoritarian regime is fully in power.</li>
+    <li>Motorenfabrik Oberursel's fortunes between 1918 and 1934 were shaped by a legal restriction (the Versailles ban on military aircraft), then by a general economic collapse (the Depression), and only then by a political change (1933&ndash;34). Why is it useful, as a historian, to keep these three different kinds of cause &mdash; legal, economic, and political &mdash; separate from one another, rather than treating &ldquo;the situation in Germany&rdquo; as a single undifferentiated cause?</li>
+    <li>This reading stops at 30 January 1933 without describing what happened next. Why might a historian, or a teacher, deliberately choose to end a reading at a sharp date like this rather than letting it drift forward into the following period?</li>
+  </ol>
+</section>
+
+<!-- ============ Glossary ============ -->
+<section id="glossary">
+  <p class="period">Reference</p>
+  <h2>Glossary: the new words in this reading</h2>
+  <p>These build on the glossaries in Parts 1&ndash;3 &mdash; look back if an earlier term (Haber&ndash;Bosch process, Gr&uuml;nderzeit, and so on) is unfamiliar.</p>
+  <table class="tl">
+    <thead><tr><th style="width:170px">Word</th><th>What it means</th><th style="width:33%">Where it appears here</th></tr></thead>
+    <tbody>
+      <tr><td class="yr">Treaty of Versailles</td><td>The 1919 peace treaty ending the First World War, imposing reparations and military restrictions on Germany.</td><td>Sets the reparations and Versailles-ban context for this whole reading.</td></tr>
+      <tr><td class="yr">reparations</td><td>Payments required from a defeated power to compensate the victors; fixed for Germany in 1921 at 132 billion gold marks.</td><td>Drove the hyperinflation of 1923 and Haber's gold-from-seawater project.</td></tr>
+      <tr><td class="yr">hyperinflation</td><td>An extremely rapid, out-of-control rise in prices, destroying the value of a currency.</td><td>Germany, 1923, partly a consequence of reparations and the Ruhr occupation.</td></tr>
+      <tr><td class="yr">Bergius process</td><td>Hydrogenation of coal under high pressure and heat, with a catalyst, to produce liquid fuel.</td><td>Patented 1913; scaled up industrially at Leuna from the early 1920s.</td></tr>
+      <tr><td class="yr">hydrogenation</td><td>A chemical reaction adding hydrogen to a compound, here used to break down and saturate large coal molecules into smaller fuel-like ones.</td><td>The core chemistry of the Bergius process.</td></tr>
+      <tr><td class="yr">IG Farben</td><td><i>Interessen-Gemeinschaft Farbenindustrie AG</i>: the 1925 merger of BASF, Bayer, Hoechst and three smaller firms.</td><td>The largest chemical company in the world by 1926; central to the next reading.</td></tr>
+      <tr><td class="yr">&ldquo;Council of Gods&rdquo;</td><td>Informal nickname (<i>Rat der G&ouml;tter</i>) for IG Farben's unusually large and prominent supervisory board.</td><td>Reflected the scale and prestige of the 1925 merger.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<footer class="colophon">
+  <p><b>What this draft still needs.</b> This reading was built from a planning conversation and a first research pass rather than the page-by-page primary-source checking some sections of Parts 2 and 3 have had; treat it as a working draft. The Rutherford-handshake anecdote at Haber's Nobel ceremony is flagged above as needing better sourcing before it is presented as settled. Carl Bosch's personal decline through the 1930s &mdash; his sidelining within IG Farben, his 1937 Kaiser Wilhelm Society presidency, and his death in 1940 &mdash; was deliberately left out of this reading's flat 1933 ending, since it belongs properly to the post-1933 story; when it is written up, it currently rests mainly on BASF's own corporate-history account (citing biographer Karl Holdermann), which needs independent verification before classroom use. A local-history source for the Motorenfabrik Oberursel closure and reopening dates, beyond Wikipedia, would strengthen that section. No images have yet been added to this reading; the gallery and lightbox infrastructure below is included ready for when suitable historical images are found, following the same convention as Parts 1&ndash;3.</p>
+  <p><b>Sources.</b> Wikipedia and German Wikipedia (Treaty of Versailles, Weimar Republic hyperinflation, Fritz Haber, Carl Bosch, Friedrich Bergius, Bergius process, IG Farben, Motorenfabrik Oberursel, Carl Duisberg, Northern Patrol, Grand Fleet); a University of York chemistry-education page on Fritz Haber's Nobel Prize and its controversy; general historical accounts of Haber's 1920&ndash;1926 gold-from-seawater project cross-referenced across several encyclopaedic and popular-science summaries; and our own Parts 2 and 3 (for the Haber&ndash;Bosch process, the Alizarine Convention, and Motorenfabrik Oberursel's wartime role, that this reading builds on).</p>
+  <p style="margin-top:14px;opacity:.75">Science Department &middot; Refined with AI</p>
+</footer>
+
+</div>
+
+<div id="lb-overlay" class="lb-overlay" onclick="closeLBBg(event)">
+  <span class="lb-close" onclick="closeLB()" role="button" aria-label="Close">&times;</span>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+<script>
+function openLB(src, cap){
+  var ov = document.getElementById('lb-overlay');
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-cap').textContent = cap;
+  ov.classList.add('open');
+}
+function closeLB(){
+  document.getElementById('lb-overlay').classList.remove('open');
+}
+function closeLBBg(e){
+  if (e.target && e.target.id === 'lb-overlay') { closeLB(); }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') { closeLB(); }
+});
+</script>
+</body>
+</html>
