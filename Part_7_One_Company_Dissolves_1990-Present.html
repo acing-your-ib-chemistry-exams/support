@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Part 4: Bread, Gold, and a Merger of Giants, 1918&ndash;1933</title>
+<title>Part 7: One Company Dissolves, Another Cannot Afford the Gas, 1990&ndash;Present</title>
 <style>
 :root{
   --ink:#1b1f24; --ink-soft:#4a545e; --rule:#dfe3e8; --paper:#ffffff; --wash:#f6f7f9;
@@ -195,8 +195,8 @@ sub,sup{line-height:0;font-size:75%}
   header.masthead,main,footer.colophon{padding-left:22px;padding-right:22px}
   body{font-size:16px}
 }
-/* ============ Interlude: Periodic Table in pt1918 interactive (scoped under .pt1918) ============ */
-  .pt1918{
+/* ============ Interlude: Periodic Table in pt1990 interactive (scoped under .pt1990) ============ */
+  .pt1990{
     --ink:#1b1f24; --ink-soft:#4a545e; --paper:#f4f5f7;
     --known-a:#ececec; --known-b:#d4d4d4; --known-border:#b9b9b9;
     --unknown-a:#f4f5f7; --unknown-b:#eceef0; --unknown-border:#dde0e3;
@@ -204,22 +204,22 @@ sub,sup{line-height:0;font-size:75%}
     --red-a:#ffdede; --red-b:#ffb3b3; --red-border:#d97878; --red-text:#7a1414;
     --red-p-a:#ffe9e9; --red-p-b:#ffcaca; --gold:#c9a227;
   }
-  .pt1918{
+  .pt1990{
     margin:0; padding:40px 24px 60px; background:var(--paper);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
     color:var(--ink);
   }
-  .pt1918 .wrap{max-width:1180px;margin:0 auto;}
-  .pt1918 h1{font-size:1.5rem;margin:0 0 6px;}
-  .pt1918 .sub{color:var(--ink-soft);margin:0 0 28px;font-size:0.98rem;line-height:1.5;max-width:76ch;}
-  .pt1918 .grid{
+  .pt1990 .wrap{max-width:1180px;margin:0 auto;}
+  .pt1990 h1{font-size:1.5rem;margin:0 0 6px;}
+  .pt1990 .sub{color:var(--ink-soft);margin:0 0 28px;font-size:0.98rem;line-height:1.5;max-width:76ch;}
+  .pt1990 .grid{
     display:grid;
     grid-template-columns:repeat(18, minmax(0,1fr));
     grid-template-rows:repeat(10, auto);
     gap:7px;
     margin-bottom:10px;
   }
-  .pt1918 .tile{
+  .pt1990 .tile{
     aspect-ratio:1/1;
     border-radius:11px;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -227,77 +227,77 @@ sub,sup{line-height:0;font-size:75%}
     position:relative;
     min-width:0;
   }
-  .pt1918 .tile .yr{font-size:0.42rem; font-weight:600; letter-spacing:.01em; margin-top:1px;}
-  .pt1918 .known{
+  .pt1990 .tile .yr{font-size:0.42rem; font-weight:600; letter-spacing:.01em; margin-top:1px;}
+  .pt1990 .known{
     background:linear-gradient(160deg,var(--known-a),var(--known-b));
     border:1px solid var(--known-border);
     box-shadow:0 2px 5px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.6);
     color:#000;
   }
-  .pt1918 .known .yr{color:#5a5a5a;}
-  .pt1918 .unknown{
+  .pt1990 .known .yr{color:#5a5a5a;}
+  .pt1990 .unknown{
     background:linear-gradient(160deg,var(--unknown-a),var(--unknown-b));
     border:1px dashed var(--unknown-border);
     color:#c3c7cc;
     font-size:0.85rem;
   }
-  .pt1918 .partial{
+  .pt1990 .partial{
     background:linear-gradient(160deg,var(--known-a),var(--known-b));
     border:1px dashed #b9b9b9;
     color:#000;
     opacity:.55;
   }
-  .pt1918 .partial .yr{color:#5a5a5a;}
-  .pt1918 .placeholder{
+  .pt1990 .partial .yr{color:#5a5a5a;}
+  .pt1990 .placeholder{
     background:linear-gradient(160deg,var(--ph-a),var(--ph-b));
     border:1px dashed var(--ph-border);
     color:#8a6d1f;
     font-size:0.72rem;
     font-weight:700;
   }
-  .pt1918 .row-gap-label{
+  .pt1990 .row-gap-label{
     grid-row:8; grid-column:1/19;
     font-size:0.7rem; color:#9aa0a6; align-self:center; padding-left:2px;
   }
-  .pt1918 .fblock-label{
+  .pt1990 .fblock-label{
     font-size:0.62rem; font-weight:700; color:#8a6d1f; align-self:center;
     display:flex; align-items:center;
   }
-  .pt1918 .fblock-label.lan{grid-row:9; grid-column:1/3;}
-  .pt1918 .fblock-label.act{grid-row:10; grid-column:1/3;}
-  .pt1918 .key{display:flex; gap:22px; flex-wrap:wrap; margin:20px 0 30px; font-size:0.85rem; color:var(--ink-soft);}
-  .pt1918 .key span{display:inline-flex; align-items:center; gap:8px;}
-  .pt1918 .swatch{width:16px;height:16px;border-radius:5px; display:inline-block;}
-  .pt1918 .sw-known{background:linear-gradient(160deg,var(--known-a),var(--known-b)); border:1px solid var(--known-border);}
-  .pt1918 .sw-partial{background:linear-gradient(160deg,var(--known-a),var(--known-b)); border:1px dashed var(--known-border); opacity:.55;}
-  .pt1918 .sw-unknown{background:linear-gradient(160deg,var(--unknown-a),var(--unknown-b)); border:1px dashed var(--unknown-border);}
-  .pt1918 .sw-ph{background:linear-gradient(160deg,var(--ph-a),var(--ph-b)); border:1px dashed var(--ph-border);}
-  .pt1918 .notes{font-size:0.92rem; line-height:1.6; color:var(--ink-soft); border-top:1px solid #dfe3e8; padding-top:20px;}
-  .pt1918 .notes b{color:var(--ink);}
-  .pt1918 .notes ul{padding-left:20px;}
-  .pt1918 .notes li{margin-bottom:6px;}
-  .pt1918 .notes h2{font-size:1.05rem; color:var(--ink); margin:26px 0 8px;}
-  .pt1918 .count{background:#fff; border:1px solid #dfe3e8; border-radius:12px; padding:14px 18px; margin-bottom:18px; font-size:0.92rem; color:var(--ink-soft); display:inline-block;}
-  .pt1918 .count b{color:var(--ink); font-size:1.1rem;}
-  .pt1918 .count.era1933-only{display:none;}
-  .pt1918.era1933-active .count.era1918-only{display:none;}
-  .pt1918.era1933-active .count.era1933-only{display:inline-block;}
-  .pt1918 .toggle-row{margin-bottom:22px;}
-  .pt1918 .toggle-btn{
+  .pt1990 .fblock-label.lan{grid-row:9; grid-column:1/3;}
+  .pt1990 .fblock-label.act{grid-row:10; grid-column:1/3;}
+  .pt1990 .key{display:flex; gap:22px; flex-wrap:wrap; margin:20px 0 30px; font-size:0.85rem; color:var(--ink-soft);}
+  .pt1990 .key span{display:inline-flex; align-items:center; gap:8px;}
+  .pt1990 .swatch{width:16px;height:16px;border-radius:5px; display:inline-block;}
+  .pt1990 .sw-known{background:linear-gradient(160deg,var(--known-a),var(--known-b)); border:1px solid var(--known-border);}
+  .pt1990 .sw-partial{background:linear-gradient(160deg,var(--known-a),var(--known-b)); border:1px dashed var(--known-border); opacity:.55;}
+  .pt1990 .sw-unknown{background:linear-gradient(160deg,var(--unknown-a),var(--unknown-b)); border:1px dashed var(--unknown-border);}
+  .pt1990 .sw-ph{background:linear-gradient(160deg,var(--ph-a),var(--ph-b)); border:1px dashed var(--ph-border);}
+  .pt1990 .notes{font-size:0.92rem; line-height:1.6; color:var(--ink-soft); border-top:1px solid #dfe3e8; padding-top:20px;}
+  .pt1990 .notes b{color:var(--ink);}
+  .pt1990 .notes ul{padding-left:20px;}
+  .pt1990 .notes li{margin-bottom:6px;}
+  .pt1990 .notes h2{font-size:1.05rem; color:var(--ink); margin:26px 0 8px;}
+  .pt1990 .count{background:#fff; border:1px solid #dfe3e8; border-radius:12px; padding:14px 18px; margin-bottom:18px; font-size:0.92rem; color:var(--ink-soft); display:inline-block;}
+  .pt1990 .count b{color:var(--ink); font-size:1.1rem;}
+  .pt1990 .count.erapresent-only{display:none;}
+  .pt1990.erapresent-active .count.era1990-only{display:none;}
+  .pt1990.erapresent-active .count.erapresent-only{display:inline-block;}
+  .pt1990 .toggle-row{margin-bottom:22px;}
+  .pt1990 .toggle-btn{
     font-family:inherit; font-size:0.92rem; font-weight:700; cursor:pointer;
     padding:11px 20px; border-radius:999px; border:1.5px solid var(--red-border);
     background:linear-gradient(160deg,var(--red-a),var(--red-b)); color:var(--red-text);
     box-shadow:0 2px 5px rgba(0,0,0,.08);
   }
-  .pt1918 .toggle-btn.active{
+  .pt1990 .toggle-btn.active{
     background:linear-gradient(160deg,#ececec,#d4d4d4); border-color:var(--known-border); color:#000;
   }
-  .pt1918 .toggle-hint{font-size:0.82rem; color:var(--ink-soft); margin-top:8px; max-width:64ch; line-height:1.5;}
-  .pt1918 /* --- era 1918 tile states (hidden until toggled) --- */
-  .yr.y1933{display:none;}
-  .pt1918 .grid.era1933 .yr.y1918{display:none;}
-  .pt1918 .grid.era1933 .yr.y1933{display:block;}
-  .pt1918 .grid.era1933 .tile.new1933{
+  .pt1990 .toggle-hint{font-size:0.82rem; color:var(--ink-soft); margin-top:8px; max-width:64ch; line-height:1.5;}
+  .pt1990 /* --- era 1951 tile states (hidden until toggled) --- */
+  .yr.ypresent{display:none;}
+  .pt1990 .grid.erapresent .yr.y1990{display:none;}
+  .pt1990 .grid.erapresent .yr.ypresent{display:block;}
+  .pt1990 .grid.erapresent .tile.newpresent{
     background:linear-gradient(160deg,var(--red-a),var(--red-b));
     border:1px solid var(--red-border);
     box-shadow:0 2px 5px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.5);
@@ -305,89 +305,89 @@ sub,sup{line-height:0;font-size:75%}
     opacity:1;
     font-size:1.05rem;
   }
-  .pt1918 .grid.era1933 .tile.new1933 .yr{color:var(--red-text); opacity:.85;}
-  .pt1918 .grid.era1933 .tile.upgrade1933{
+  .pt1990 .grid.erapresent .tile.newpresent .yr{color:var(--red-text); opacity:.85;}
+  .pt1990 .grid.erapresent .tile.upgradepresent{
     background:linear-gradient(160deg,var(--red-a),var(--red-b));
     border:1px solid var(--red-border);
     box-shadow:0 2px 5px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.5);
     color:var(--red-text);
     opacity:1;
   }
-  .pt1918 .grid.era1933 .tile.upgrade1933 .yr{color:var(--red-text); opacity:.85;}
-  .pt1918 .grid.era1933 .tile.new1933partial{
+  .pt1990 .grid.erapresent .tile.upgradepresent .yr{color:var(--red-text); opacity:.85;}
+  .pt1990 .grid.erapresent .tile.newpresentpartial{
     background:linear-gradient(160deg,var(--red-p-a),var(--red-p-b));
     border:1px dashed var(--red-border);
     color:var(--red-text);
     opacity:.7;
     font-size:1.05rem;
   }
-  .pt1918 .grid.era1933 .tile.new1933partial .yr{color:var(--red-text);}
-  .pt1918 .grid.era1933 .tile.german{
+  .pt1990 .grid.erapresent .tile.newpresentpartial .yr{color:var(--red-text);}
+  .pt1990 .grid.erapresent .tile.german{
     box-shadow:0 0 0 3px var(--gold), 0 2px 5px rgba(0,0,0,.12);
   }
-  .pt1918 .sw-german{background:linear-gradient(160deg,var(--red-a),var(--red-b)); border:1px solid var(--red-border); box-shadow:0 0 0 3px var(--gold);}
-  .pt1918 .key.key-1933{display:none;}
-  .pt1918 .era1933-active .key.key-1918{display:none;}
-  .pt1918 .era1933-active .key.key-1933{display:flex;}
-  .pt1918 /* --- clickable element tiles & story modal --- */
+  .pt1990 .sw-german{background:linear-gradient(160deg,var(--red-a),var(--red-b)); border:1px solid var(--red-border); box-shadow:0 0 0 3px var(--gold);}
+  .pt1990 .key.key-present{display:none;}
+  .pt1990 .erapresent-active .key.key-1990{display:none;}
+  .pt1990 .erapresent-active .key.key-present{display:flex;}
+  .pt1990 /* --- clickable element tiles & story modal --- */
   .tile.has-story{cursor:pointer;}
-  .pt1918 .tile.has-story:hover{transform:translateY(-2px); box-shadow:0 5px 10px rgba(0,0,0,.18);}
-  .pt1918 .tile.has-story:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
-  .pt1918 .tile.gated1933{cursor:default;}
-  .pt1918 .tile.gated1933:hover{transform:none; box-shadow:none;}
-  .pt1918 .grid.era1933 .tile.gated1933{cursor:pointer;}
-  .pt1918 .grid.era1933 .tile.gated1933:hover{transform:translateY(-2px); box-shadow:0 5px 10px rgba(0,0,0,.18);}
-  .pt1918 .tile.has-story::after{
+  .pt1990 .tile.has-story:hover{transform:translateY(-2px); box-shadow:0 5px 10px rgba(0,0,0,.18);}
+  .pt1990 .tile.has-story:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+  .pt1990 .tile.gatedpresent{cursor:default;}
+  .pt1990 .tile.gatedpresent:hover{transform:none; box-shadow:none;}
+  .pt1990 .grid.erapresent .tile.gatedpresent{cursor:pointer;}
+  .pt1990 .grid.erapresent .tile.gatedpresent:hover{transform:translateY(-2px); box-shadow:0 5px 10px rgba(0,0,0,.18);}
+  .pt1990 .tile.has-story::after{
     content:"";
     position:absolute; bottom:3px; right:5px;
     width:5px; height:5px; border-radius:50%;
     background:#8a6d1f; opacity:.35;
   }
-  .pt1918 .tile.gated1933::after{display:none;}
-  .pt1918 .grid.era1933 .tile.gated1933::after{display:block; background:var(--red-text); opacity:.5;}
-  .pt1918 .modal-overlay{
+  .pt1990 .tile.gatedpresent::after{display:none;}
+  .pt1990 .grid.erapresent .tile.gatedpresent::after{display:block; background:var(--red-text); opacity:.5;}
+  .pt1990 .modal-overlay{
     display:none; position:fixed; inset:0; background:rgba(20,20,22,.55);
     align-items:center; justify-content:center; padding:24px; z-index:100;
   }
-  .pt1918 .modal-overlay.open{display:flex;}
-  .pt1918 .modal-card{
+  .pt1990 .modal-overlay.open{display:flex;}
+  .pt1990 .modal-card{
     background:#fff; border-radius:16px; max-width:600px; width:100%;
     max-height:85vh; overflow-y:auto; padding:28px 30px 26px;
     box-shadow:0 20px 50px rgba(0,0,0,.35);
     position:relative;
   }
-  .pt1918 .modal-close{
+  .pt1990 .modal-close{
     position:absolute; top:16px; right:18px; border:none; background:none;
     font-size:1.4rem; line-height:1; cursor:pointer; color:#9aa0a6; padding:4px;
   }
-  .pt1918 .modal-close:hover{color:var(--ink);}
-  .pt1918 .modal-head{display:flex; align-items:baseline; gap:14px; margin-bottom:4px;}
-  .pt1918 .modal-symbol{
+  .pt1990 .modal-close:hover{color:var(--ink);}
+  .pt1990 .modal-head{display:flex; align-items:baseline; gap:14px; margin-bottom:4px;}
+  .pt1990 .modal-symbol{
     font-size:2rem; font-weight:800; background:linear-gradient(160deg,var(--known-a),var(--known-b));
     border:1px solid var(--known-border); border-radius:10px; width:56px; height:56px;
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
   }
-  .pt1918 .modal-titles{flex:1;}
-  .pt1918 .modal-name{font-size:1.25rem; font-weight:800; color:var(--ink); margin:0;}
-  .pt1918 .modal-year{font-size:0.9rem; color:var(--ink-soft); margin:2px 0 0;}
-  .pt1918 .modal-body{margin-top:18px; font-size:0.95rem; line-height:1.62; color:var(--ink-soft);}
-  .pt1918 .modal-row{display:flex; gap:10px; margin-bottom:10px;}
-  .pt1918 .modal-row .lbl{flex:0 0 92px; font-weight:700; color:var(--ink); font-size:0.82rem; text-transform:uppercase; letter-spacing:.03em; padding-top:2px;}
-  .pt1918 .modal-row .val{flex:1;}
-  .pt1918 .eqn{
+  .pt1990 .modal-titles{flex:1;}
+  .pt1990 .modal-name{font-size:1.25rem; font-weight:800; color:var(--ink); margin:0;}
+  .pt1990 .modal-year{font-size:0.9rem; color:var(--ink-soft); margin:2px 0 0;}
+  .pt1990 .modal-body{margin-top:18px; font-size:0.95rem; line-height:1.62; color:var(--ink-soft);}
+  .pt1990 .modal-row{display:flex; gap:10px; margin-bottom:10px;}
+  .pt1990 .modal-row .lbl{flex:0 0 92px; font-weight:700; color:var(--ink); font-size:0.82rem; text-transform:uppercase; letter-spacing:.03em; padding-top:2px;}
+  .pt1990 .modal-row .val{flex:1;}
+  .pt1990 .eqn{
     display:block; margin:9px 0; padding:9px 12px;
     background:var(--paper); border:1px solid #dfe3e8; border-radius:8px;
     font-family:"Cambria Math",Cambria,Georgia,serif;
     font-size:0.98rem; text-align:center; color:var(--ink);
     white-space:nowrap; overflow-x:auto;
   }
-  .pt1918 .val .eqn:first-child{margin-top:2px;}
-  .pt1918 .val .eqn:last-child{margin-bottom:2px;}
-  .pt1918 .modal-body a{color:#8a1f1f; text-decoration:underline; text-decoration-color:#d9b3b3; text-underline-offset:2px;}
-  .pt1918 .modal-body a:hover{text-decoration-color:#8a1f1f;}
-  .pt1918 .modal-story{margin-top:14px; padding-top:14px; border-top:1px solid #eceef0;}
-  .pt1918 .modal-story .lbl{font-weight:700; color:var(--ink); font-size:0.82rem; text-transform:uppercase; letter-spacing:.03em; display:block; margin-bottom:6px;}
-  .pt1918 .modal-german{
+  .pt1990 .val .eqn:first-child{margin-top:2px;}
+  .pt1990 .val .eqn:last-child{margin-bottom:2px;}
+  .pt1990 .modal-body a{color:#8a1f1f; text-decoration:underline; text-decoration-color:#d9b3b3; text-underline-offset:2px;}
+  .pt1990 .modal-body a:hover{text-decoration-color:#8a1f1f;}
+  .pt1990 .modal-story{margin-top:14px; padding-top:14px; border-top:1px solid #eceef0;}
+  .pt1990 .modal-story .lbl{font-weight:700; color:var(--ink); font-size:0.82rem; text-transform:uppercase; letter-spacing:.03em; display:block; margin-bottom:6px;}
+  .pt1990 .modal-german{
     display:inline-flex; align-items:center; gap:6px; margin-top:14px;
     font-size:0.78rem; font-weight:700; color:#8a6d1f;
     background:var(--ph-a); border:1px solid var(--ph-border); border-radius:999px; padding:5px 12px;
@@ -399,309 +399,297 @@ sub,sup{line-height:0;font-size:75%}
 
 <header class="masthead">
   <p class="eyebrow">Industrial Chemistry &middot; Unit 2 &middot; Background reading &middot; Draft</p>
-  <h1><span class="num">Part 4</span> Bread, Gold, and a Merger of Giants: 1918&ndash;1933
-    <span class="sub">From the armistice to the eve of the Nazi seizure of power: reparations, hyperinflation, a Nobel Prize won under a cloud, gold fished out of the sea, coal turned into petrol, and six rival companies merged into the largest chemical concern on Earth</span>
+  <h1><span class="num">Part 7</span> One Company Dissolves, Another Cannot Afford the Gas: 1990&ndash;Present
+    <span class="sub">The last reading in this series: what reunification's economics actually did to Leuna and Buna, how three national chemical giants became something bigger and stranger, and why the company this whole series started with is, in 2026, struggling to afford its own gas bill</span>
   </h1>
-  <p class="standfirst">Part 3 ended on <b>11 November 1918</b>, with an armistice, a defeated Empire, and a nitrogen-fixing process that had spent four years making explosives instead of the fertiliser it was built for. This reading covers the fourteen years in which German chemistry tried to find its footing again &mdash; through reparations, hyperinflation, and the political chaos of the young Weimar Republic &mdash; and in which the same firms from Parts 2 and 3 combined into a single vast concern just as the ground under all of them began, very quietly at first, to shift.</p>
+  <p class="standfirst">Part 6 ended on 3 October 1990, deliberately without following Leuna, Buna or the rest of the former East German chemical industry into what reunification actually did to them. This reading picks that up, and carries the whole series &mdash; Ludwigshafen, Leverkusen, Frankfurt, Leuna, the Buna works, and Motorenfabrik Oberursel &mdash; all the way to the present day. It closes a story that began, in Part 1, with a scattering of small chemical trades along the Rhine and Main before 1800.</p>
   <div class="meta-row">
-    <span class="chip">Part 4 &middot; draft</span>
-    <span class="chip">11 November 1918 &ndash; 30 January 1933</span>
-    <span class="chip"><a href="https://www.openstreetmap.org/search?query=Ludwigshafen%20am%20Rhein%2C%20Germany" target="_blank" rel="noopener">Ludwigshafen</a> &middot; <a href="https://www.openstreetmap.org/search?query=Oppau%2C%20Ludwigshafen%2C%20Germany" target="_blank" rel="noopener">Oppau</a> &middot; <a href="https://www.openstreetmap.org/search?query=Leuna%2C%20Germany" target="_blank" rel="noopener">Leuna</a> &middot; <a href="https://www.openstreetmap.org/search?query=Frankfurt%20am%20Main%2C%20Germany" target="_blank" rel="noopener">Frankfurt</a> &middot; <a href="https://www.openstreetmap.org/search?query=Oberursel%2C%20Germany" target="_blank" rel="noopener">Oberursel</a> &middot; the <a href="https://www.openstreetmap.org/search?query=Taunus%2C%20Germany" target="_blank" rel="noopener">Taunus</a></span>
+    <span class="chip">Part 7 &middot; draft</span>
+    <span class="chip">1990 &ndash; present</span>
+    <span class="chip"><a href="https://www.openstreetmap.org/search?query=Ludwigshafen%20am%20Rhein%2C%20Germany" target="_blank" rel="noopener">Ludwigshafen</a> &middot; <a href="https://www.openstreetmap.org/search?query=Leverkusen%2C%20Germany" target="_blank" rel="noopener">Leverkusen</a> &middot; <a href="https://www.openstreetmap.org/search?query=Frankfurt%20am%20Main%2C%20Germany" target="_blank" rel="noopener">Frankfurt</a> &middot; <a href="https://www.openstreetmap.org/search?query=Leuna%2C%20Germany" target="_blank" rel="noopener">Leuna</a> &middot; <a href="https://www.openstreetmap.org/search?query=Schkopau%2C%20Germany" target="_blank" rel="noopener">Schkopau</a> &middot; <a href="https://www.openstreetmap.org/search?query=Oberursel%2C%20Germany" target="_blank" rel="noopener">Oberursel</a></span>
   </div>
 </header>
 
 <main>
 
 <section>
-  <p class="lead">Germany lost the First World War on 11 November 1918. What that meant for a chemical industry that had spent four years making explosives, and for the scientists who had built the process that made them, took the better part of the next decade and a half to work out &mdash; and the answer was not simple. This reading follows five threads through that decade and a half.</p>
+  <p class="lead">This is the last reading in the series, and it is built around a fact that would have sounded absurd to almost anyone in either Germany in 1990: within a few years of reunification, two of the most fought-over industrial sites in this entire story &mdash; Leuna and Buna, built by IG Farben, nationalised by the Soviets, run for decades as flagships of a planned economy &mdash; ended up owned by a French oil major and an American chemical company. Meanwhile, in the West, the three companies this series has followed since 1952 stopped being simply German companies at all: one dissolved into a French-German pharmaceutical group and no longer exists under its own name; another became, through its biggest acquisition ever, the centre of one of the largest product-liability disputes in corporate history; and the third &mdash; BASF, the very company this whole series began with in Part 2 &mdash; is, as this is being written, struggling with an energy bill it cannot make work at its own founding site.</p>
 
-  <p>First, <b>reparations and their strange chemistry</b>: the Treaty of Versailles left Germany owing a debt so large that one of its most famous chemists spent six years trying to pay part of it by extracting gold from seawater. Second, <b>Haber's Nobel Prize</b>, awarded for the very process that had kept the German army supplied with nitrates, and the controversy that followed him to Stockholm. Third, a wartime <b>explosives factory turned into a fuel factory</b>, as the Bergius process and Leuna's engineers found a way to turn German coal into the petrol Germany otherwise had almost none of. Fourth, the <b>1925 merger</b> that combined six rival companies &mdash; including the dye firms of Parts 2 and 3 &mdash; into a single concern so large it needed a nickname for its own supervisory board. And fifth, a much smaller, local thread: what happened to a Taunus aero-engine works once the war that had made it briefly important was over.</p>
+  <p>Three threads run through it, in roughly chronological order. First, what privatisation actually did to Leuna and Buna in the 1990s &mdash; not as an abstract economic story, but in terms of jobs, ownership, and what physically happened to the plants. Second, the West German successors' continued consolidation into global companies that, by the 2000s and 2010s, were barely recognisable as the tidy three-way 1952 split Part 5 described. Third, the present-day energy crisis at Ludwigshafen, which closes the series roughly where it can be closed responsibly: not with a tidy ending, but with an open, ongoing problem.</p>
 
   <div class="fact">
     <h4>How to use the German sources</h4>
-    <p>The same rules as Parts 1&ndash;3 apply. <b>Words with a dotted underline</b> are technical terms &mdash; hover or tap for the meaning, and check the glossary at the end. Source boxes give you the <b>German first</b>, then a <b>Translate &rarr;</b> button, then the author, the date, and links to where the text actually lives.</p>
+    <p>The same rules as Parts 1&ndash;6 apply. <b>Words with a dotted underline</b> are technical terms &mdash; hover or tap for the meaning, and check the glossary at the end. Source boxes give you the <b>German first</b>, then a <b>Translate &rarr;</b> button, then the author, the date, and links to where the text actually lives.</p>
   </div>
-
-  <div class="check">
-    <h4>A note on this reading, before you start</h4>
-    <p>This draft ends deliberately at <b>30 January 1933</b> &mdash; the day Hitler was appointed Chancellor &mdash; and stops there flatly, without looking ahead. What happened to these same companies and scientists after that date is a different, much darker story, and it gets its own reading rather than a preview here. Some of the material below, particularly on Carl Bosch's later career, rests on a single company-history source that still needs independent checking; that gap is flagged again where it matters.</p>
-  </div>
-</section>
-
-<!-- ============ Reparations & Haber's Nobel ============ -->
-<section>
-  <p class="period">Part one &middot; 1918&ndash;1926</p>
-  <h2>A debt, a disputed prize, and gold that was not there</h2>
-
-  <p>The <b><span class="gl" tabindex="0">Treaty of Versailles<span class="tip"><b>Treaty of Versailles</b> &mdash; the 1919 peace treaty that formally ended the First World War between Germany and the Allied powers, imposing territorial losses, military restrictions, and reparations payments on Germany.</span></span></b>, signed in June 1919, required Germany to pay reparations that were eventually fixed, in 1921, at <b>132 billion gold marks</b>. The sum was so far beyond what the shattered German economy could realistically raise that it distorted German politics and finance for the whole of the 1920s: it was a direct cause of the French and Belgian occupation of the Ruhr in 1923, and a major contributor to the hyperinflation of that same year, in which the mark collapsed so completely that banknotes were printed in denominations of trillions and, by some accounts, used as wallpaper or cheaper than the firewood needed to burn them.</p>
-
-  <p>Chemistry offered, briefly, a genuinely strange response to this crisis. <b><a href="https://en.wikipedia.org/wiki/Fritz_Haber" target="_blank" rel="noopener">Fritz Haber</a></b> &mdash; the chemist whose 1909 laboratory synthesis of ammonia had, via Bosch's industrial scale-up, fed the German war effort with nitrates for four years &mdash; had been awarded the <b>1918 Nobel Prize in Chemistry</b> (presented in 1919, since the 1918 ceremony itself was cancelled) for exactly that process. The award was, and remains, controversial: Haber had also personally overseen Germany's chemical-weapons programme during the war, including the first large-scale chlorine gas attack at Ypres in 1915, and some scientists from Allied countries objected to honouring him so soon afterward. It is often reported that <a href="https://en.wikipedia.org/wiki/Ernest_Rutherford" target="_blank" rel="noopener">Ernest Rutherford</a> refused to shake Haber's hand at the Nobel ceremony; this specific anecdote is widely repeated but not consistently well-sourced, and this reading flags it as a story worth checking further before treating it as settled fact, rather than presenting it as certain.</p>
-
-  <div class="fact">
-    <h4>What &ldquo;cut off by blockade&rdquo; actually meant</h4>
-    <p>Britain's blockade of Germany did not mean warships sitting outside German harbours. From 1914 the Royal Navy ran what is usually called a &ldquo;distant blockade&rdquo;: instead of closing German ports directly, it closed the two ways in and out of the North Sea &mdash; the narrow Dover Strait in the south, and the wider gap between Scotland and Norway in the north. Day-to-day, the actual stopping and searching of merchant ships in that northern gap was done by an unglamorous fleet of ageing cruisers and requisitioned civilian liners hastily fitted with guns, known as the Northern Patrol.</p>
-    <p>What made that patrol impossible for Germany to simply brush aside was what stood behind it: Britain's <b><span class="gl" tabindex="0">Grand Fleet<span class="tip"><b>Grand Fleet</b> &mdash; the main British battle fleet of the First World War, based at Scapa Flow in the Orkney Islands, built around dozens of dreadnought-class battleships.</span></span></b>, based at Scapa Flow in the Orkney Islands. It was built around dozens of <b>dreadnought-class battleships</b> &mdash; ships of immense firepower, each carrying batteries of guns twelve inches in calibre or larger, and heavily outnumbering Germany's own High Seas Fleet. The Grand Fleet rarely had to fire a shot at a blockade-runner: its dreadnoughts did their work simply by existing in overwhelming force at Scapa Flow, close enough to intercept the German fleet if it ever sailed out to break the blockade by force. Germany's navy judged that risk too great to take on any large scale, and so <b>Chilean saltpetre</b> &mdash; the nitrate Germany had relied on for both fertiliser and explosives before 1914 &mdash; simply stopped arriving, which is exactly why the Haber&ndash;Bosch process mattered so much once war broke out.</p>
-  </div>
-
-  <div class="check">
-    <h4>As historians, be on your guard! &mdash; the same chemist, two entirely different legacies</h4>
-    <p>Haber's ammonia synthesis is one of the most consequential chemical discoveries in history: the fertiliser it makes possible is estimated to help feed roughly half the world's population today. The same chemistry, scaled up for wartime nitrates, also kept Germany's guns supplied for four years after Chilean saltpetre was cut off by blockade, and Haber himself went on to pioneer chemical warfare. Historians and scientists still disagree sharply about how to weigh these facts against each other, and about whether a Nobel Prize awarded for a discovery can or should be separated from other uses its discoverer put science to. This reading will not resolve that argument for you.</p>
-  </div>
-
-  <p>What is much better documented is Haber's next project. Convinced that Germany's reparations debt might be paid off if enough gold could be recovered from an unlikely source, Haber spent roughly <b>1920 to 1926</b> leading a secret research programme to extract gold dissolved in seawater. Earlier, imprecise measurements had suggested the oceans held gold in concentrations that might make extraction profitable at industrial scale; Haber had a specially equipped ship, the research vessel <i>Meteor</i>, take thousands of water samples across the Atlantic to test the idea directly. The results were a disappointment: the real concentration of gold in seawater turned out to be several orders of magnitude lower than the earlier estimates, far too dilute to ever be extracted economically, and the project was quietly abandoned in 1926.</p>
 
   <div class="pull">
-    <p><b>Hold on to this.</b> A brilliant scientist, working from an over-optimistic measurement, spent six years chasing a solution that the actual data could not support. It is worth asking what it took for Haber &mdash; a careful chemist by training &mdash; to keep going as long as he did, and what that tells you about the difference between believing a number and checking it yourself.</p>
+    <p><b>Hold on to this, before either half of the story gets underway.</b> This reading covers events up to and including 2026 &mdash; the year you are reading it in. Everything from roughly the last decade onward is, by definition, recent enough that historians have not yet had the distance to fully judge it. Treat the most recent material in this reading with the same care you would treat this morning's news: informative, useful, but not yet history in the settled sense the rest of this series has been able to offer.</p>
   </div>
 </section>
 
-<!-- ============ Bergius / Leuna synthetic fuel ============ -->
+<!-- ============ East: privatisation of Leuna and Buna ============ -->
 <section>
-  <p class="period">Part two &middot; 1913&ndash;1927</p>
-  <h2>From explosives to petrol: turning coal into fuel</h2>
+  <p class="period">Part one &middot; 1990&ndash;2004</p>
+  <h2>What reunification actually did to Leuna and Buna</h2>
 
-  <p>Germany has always been rich in coal and almost entirely without its own oil. That mismatch became a serious strategic problem once cars, trucks and aircraft made petroleum products indispensable, and it is the reason a second major chemical process, alongside Haber&ndash;Bosch, mattered so much to interwar Germany: the <b><span class="gl" tabindex="0">Bergius process<span class="tip"><b>Bergius process</b> &mdash; a method of hydrogenating coal (reacting it with hydrogen gas under high pressure and temperature, with a catalyst) to produce liquid hydrocarbon fuels.</span></span></b>, patented by the chemist <b><a href="https://en.wikipedia.org/wiki/Friedrich_Bergius" target="_blank" rel="noopener">Friedrich Bergius</a></b> in 1913.</p>
+  <p>After 1989, the former East German state's industrial holdings, including Leuna and Buna, passed to the <b><span class="gl" tabindex="0">Treuhandanstalt<span class="tip"><b>Treuhandanstalt</b> &mdash; the West German state agency set up in 1990 to privatise, restructure or liquidate the roughly 8,000 formerly state-owned enterprises of East Germany.</span></span></b>, the West German agency created specifically to privatise, restructure, or shut down the several thousand state-owned enterprises the GDR had left behind. Neither site survived this process intact, and neither was simply sold whole to a single buyer &mdash; both were broken apart.</p>
 
-  <p>The Bergius process works by reacting pulverised coal with hydrogen gas at very high pressure and temperature, in the presence of a catalyst, breaking the coal's large carbon structures down into smaller hydrocarbon molecules similar to those in petroleum. It is, in other words, a way of making something chemically similar to oil out of something that is not oil at all. Bergius developed the chemistry, but making it work at industrial scale &mdash; sustaining the extreme pressures involved reliably, in equipment that would not simply fail &mdash; needed exactly the high-pressure engineering expertise that Carl Bosch and his team at BASF had already built for ammonia synthesis. From the early 1920s, Bosch's engineers at BASF adapted the Bergius process for large-scale production, and by 1927 the <b>Leuna</b> works &mdash; the same site built during the war to make nitrates for explosives &mdash; had converted a substantial part of its capacity to producing synthetic petrol from coal instead.</p>
+  <p>Leuna's oil refinery went, in the early 1990s, to the French energy company <b>Elf Aquitaine</b> (later absorbed into <b>Total</b>), which built an entirely new, modern refinery on the site &mdash; the MIDER plant, later renamed TRM &mdash; that began production in <b>1997</b>: a genuinely large piece of French investment landing in what had been, six years earlier, Soviet-administered territory. The rest of the old Leuna works was broken into pieces sold separately to different buyers, including BASF itself, the industrial-gas firm Linde, and the Belgian plastics group DOMO, with a new joint infrastructure company, InfraLeuna, created just to keep water, power, and site services running across all the resulting fragments. The workforce fell from around 28,000 in the late 1970s to roughly 9,000 by 2014, as the older, less competitive parts of the old plant were closed rather than modernised.</p>
+
+  <p>Buna followed a similar, if somewhat harder, path. Employment collapsed from around 18,000 under GDR management to just 7,200 by 1992, before the American company <b>Dow Chemical</b> took over large parts of the site in <b>1995</b> &mdash; acquiring, in the historian's phrasing available to us, &ldquo;large parts of the facilities, but only a few of the employees.&rdquo; Dow rebuilt much of the plant around modern petroleum-based production; since 2004 the site has operated as Dow Olefinverbund GmbH, a Dow subsidiary. Decontaminating and rehabilitating the surrounding land &mdash; the accumulated pollution Part 6 described &mdash; cost the privatisation agency an estimated 809 million Deutschmarks in 1999 alone. In 2021, part of the site's synthetic-rubber production was sold on again, this time to the Polish chemical company Synthos: a reminder that this process of buying, closing and reselling pieces of the old IG Farben sites has not, even now, fully stopped.</p>
+
+  <div class="check">
+    <h4>As historians, be on your guard! &mdash; two numbers that both matter</h4>
+    <p>It is tempting to reduce this to a single figure &mdash; jobs lost &mdash; and treat it as the whole story. But two things are true at once: the scale of job losses at both sites was genuinely severe and fell on real communities with no real say in the matter, and the environmental rehabilitation these sites needed (that 809-million-Deutschmark figure is for one year, at one site) was itself a direct, delayed cost of the pollution Part 6 described, not a cost the privatisation created out of nothing. Assigning blame cleanly between &ldquo;the plan that polluted&rdquo; and &ldquo;the market that closed things down&rdquo; is harder than either side of that argument usually admits.</p>
+  </div>
+</section>
+
+<!-- ============ West: consolidation, Hoechst dissolves, Bayer-Monsanto ============ -->
+<section>
+  <p class="period">Part two &middot; 1999&ndash;2018</p>
+  <h2>The tidy three-way split stops being tidy</h2>
+
+  <p>Part 5's 1952 breakup of IG Farben into BASF, Bayer and Hoechst held, as a clean three-way structure, for almost half a century. It did not last through this reading's period. In <b>1999</b>, Hoechst merged with the French company Rh&ocirc;ne-Poulenc to form a new pharmaceutical group, <b>Aventis</b>, based not in Frankfurt but in Strasbourg &mdash; meaning the Hoechst name, and the independent company Part 6 described building the Trevira fibre business, stopped existing as a going concern. Aventis itself lasted only a few years before its own 2004 merger with Sanofi-Synth&eacute;labo produced Sanofi-Aventis, and by 2005 the remaining Hoechst legal entity had become simply a wholly owned subsidiary of what is today called <b>Sanofi</b>. Of the three great dye firms Part 2 introduced founding themselves in the 1860s, one has now, in every meaningful sense, ceased to exist under its own name.</p>
+
+  <p>Bayer took a different, more dramatic path: growth by acquisition on a scale even BASF's 1969 Wintershall purchase did not approach. On <b>7 June 2018</b>, Bayer completed its purchase of the American agricultural giant <b><span class="gl" tabindex="0">Monsanto<span class="tip"><b>Monsanto</b> &mdash; an American agrochemical and agricultural biotechnology company, acquired by Bayer in 2018 for $63 billion in Bayer's largest-ever acquisition, bringing with it extensive product-liability litigation over its glyphosate weedkiller.</span></span></b> for <b>$63 billion</b> including debt &mdash; the largest acquisition in Bayer's history, combining Bayer's crop-protection chemistry with Monsanto's seed and genetic-engineering business. The deal came with a cost few chemical mergers in this series have carried: Monsanto's glyphosate-based weedkiller, Roundup, was already the subject of litigation in the United States over claims it caused cancer, and Bayer inherited tens of thousands of lawsuits along with the company, a legal and financial burden that has weighed on Bayer's share price and reputation ever since.</p>
 
   <div class="still">
-    <h4>Still true today</h4>
-    <p>Coal-to-liquid hydrogenation, descended directly from Bergius's 1913 patent, kept Germany's air force and army supplied with fuel through the Second World War once other oil imports were blocked, and variants of the same basic chemistry are still used today, including in South Africa's Sasol plants, in contexts where coal is cheap and imported oil is not reliably available.</p>
-  </div>
-
-  <p>The scale of the achievement was recognised in 1931, when Bergius and Bosch jointly received the <b>Nobel Prize in Chemistry</b> &ldquo;for their contributions to the invention and development of chemical high-pressure methods.&rdquo; It was, in effect, a second Nobel Prize for the same high-pressure engineering tradition Haber and Bosch had begun with ammonia twenty years earlier &mdash; recognition that turning a laboratory reaction into an industrial process at enormous pressure was, itself, a scientific achievement worth honouring separately from the underlying chemistry.</p>
-</section>
-
-<!-- ============ Motorenfabrik Oberursel Weimar collapse ============ -->
-<section>
-  <p class="period">Meanwhile, in the Taunus hills &middot; 1921&ndash;1934</p>
-  <h2>An aero-engine works with nothing left to build</h2>
-
-  <p>Part 3 introduced <b><a href="https://en.wikipedia.org/wiki/Motorenfabrik_Oberursel" target="_blank" rel="noopener">Motorenfabrik Oberursel</a></b>, the local engine works that had built rotary aero-engines for German fighter aircraft during the war. The Treaty of Versailles banned Germany from building military aircraft or aero-engines at all, and the collapse in demand this created &mdash; combined with the postwar economic chaos &mdash; left the works with a factory built for a product it was no longer allowed to make. In <b>1921</b> it was sold to the Cologne engine manufacturer <b><span class="gl" tabindex="0">Gasmotorenfabrik Deutz<span class="tip">A Cologne-based manufacturer of gas and diesel engines, founded in the 19th century; still exists today as Deutz AG.</span></span></b>, and pivoted toward manufacturing diesel engines instead of aero-engines.</p>
-
-  <p>The pivot did not fully insulate the works from Weimar Germany's broader economic turbulence. In <b>1930</b> the Oberursel plant was merged into a combined operation known as &ldquo;Humboldt-Deutz,&rdquo; and when the Depression tightened its grip on German industry the works <b>closed entirely in 1932</b> &mdash; standing empty for two years before reopening, under quite different political circumstances, in <b>1934</b>.</p>
-
-  <div class="pull">
-    <p><b>Hold on to this.</b> A factory's fate is not decided only by what it can build, but by what it is legally allowed to build, and what the wider economy can afford to buy. Versailles closed one door (military aero-engines); the Depression closed a second (diesel engines nobody could afford); and it took a change of regime in 1933&ndash;34 to reopen the works at all. Keep this quiet, local story in mind &mdash; it will look very different again once the next reading gets underway.</p>
+    <h4>What stayed recognisably the same</h4>
+    <p>BASF is the one member of the original 1952 trio still trading today under its own name, on largely its own historic site at Ludwigshafen, as an independent German chemical company &mdash; which is precisely why it, rather than Bayer or the former Hoechst, carries this reading's closing section.</p>
   </div>
 </section>
 
-<!-- ============ 1925 IG Farben merger ============ -->
+<!-- ============ Present day: BASF energy crisis ============ -->
 <section>
-  <p class="period">Part three &middot; 1904&ndash;1926</p>
-  <h2>Six companies become one: the founding of IG Farben</h2>
+  <p class="period">Part three &middot; 2022&ndash;present</p>
+  <h2>The company this series began with cannot afford its own gas bill</h2>
 
-  <p>The idea of combining Germany's major chemical firms into a single, coordinated concern was not new in 1925. As early as <b>1904</b>, <a href="https://en.wikipedia.org/wiki/Carl_Duisberg" target="_blank" rel="noopener">Carl Duisberg</a> &mdash; the same Bayer director who had helped drive the dye cartel of Part 3 &mdash; had circulated a memorandum arguing that German dye firms should combine to compete more effectively against each other's wasteful duplication and, especially, against foreign competitors. Looser cooperative agreements between several of the major firms followed over the next two decades, but it was the pressures of the First World War and its aftermath &mdash; wartime coordination of production, then the shared struggle of reparations, hyperinflation and foreign competition &mdash; that finally pushed the idea to completion.</p>
-
-  <p>On <b>2 December 1925</b>, six companies formally merged into <b><span class="gl" tabindex="0">IG Farben<span class="tip"><b>IG Farben</b> &mdash; short for <i>Interessen-Gemeinschaft Farbenindustrie AG</i>, &ldquo;Community of Interests of the Dye Industry&rdquo;: the merged German chemical conglomerate formed in 1925, combining BASF, Bayer, Hoechst and three smaller firms.</span></span></b>, formally the <i>Interessen-Gemeinschaft Farbenindustrie AG</i> (&ldquo;Community of Interests of the Dye Industry&rdquo;). The merging firms included BASF and Hoechst and Bayer &mdash; all three already familiar from Parts 2 and 3 &mdash; along with three smaller companies, combined on negotiated equity shares reflecting each firm's relative size. The result was, almost overnight, the largest chemical company in the world and the largest single corporation in Europe: by 1926 it employed roughly <b>100,000 people</b> and had a market capitalisation of around <b>1.4 billion Reichsmarks</b>. Its supervisory board grew so large and so laden with the most prominent names in German industry and science that it earned an informal nickname &mdash; the <b>&ldquo;Council of Gods&rdquo;</b> (<i>Rat der G&ouml;tter</i>).</p>
-
-  <table class="tl">
-    <thead><tr><th style="width:110px">Year</th><th>Event</th></tr></thead>
-    <tbody>
-      <tr><td class="yr">1904</td><td>Carl Duisberg's memorandum first proposes combining Germany's major dye firms.</td></tr>
-      <tr><td class="yr">1916&ndash;1925</td><td>A series of looser cooperative agreements between major German chemical firms, tightening over time.</td></tr>
-      <tr><td class="yr">2 Dec 1925</td><td>Formal merger of BASF, Bayer, Hoechst and three smaller firms into IG Farben.</td></tr>
-      <tr><td class="yr">1926</td><td>IG Farben reaches roughly 100,000 employees and a market capitalisation of about 1.4 billion Reichsmarks.</td></tr>
-      <tr><td class="yr">1931</td><td>Carl Bosch and Friedrich Bergius jointly awarded the Nobel Prize in Chemistry for high-pressure methods.</td></tr>
-    </tbody>
-  </table>
-
-  <p><b><a href="https://en.wikipedia.org/wiki/Carl_Bosch" target="_blank" rel="noopener">Carl Bosch</a></b>, the engineer who had scaled up Haber's ammonia synthesis at BASF and gone on to lead the Bergius fuel work at Leuna, became IG Farben's first chairman. His scientific standing was confirmed the same year the company's early growth peaked in the record books: the 1931 Nobel Prize, shared with Bergius, recognised the same high-pressure engineering tradition that had, by then, produced ammonia, nitrate explosives, and synthetic fuel from a single family of techniques.</p>
-</section>
-
-<!-- ============ Flat closing: IG Farben on the eve of 1933 ============ -->
-<section>
-  <p class="period">The hinge &middot; 30 January 1933</p>
-  <h2>A company on the eve, seen plainly</h2>
-
-  <p>By the start of 1933, IG Farben was the largest chemical company on Earth, and its position with respect to the Nazi movement that was about to take power was, by the historical record, an awkward and largely unsympathetic one. According to the company's own postwar historical accounts and independent historians alike, <b>not a single member of IG Farben's management before 1933 was a supporter of the Nazi Party</b>, and its supervisory board &mdash; the &ldquo;Council of Gods&rdquo; &mdash; included several prominent Jewish industrialists and scientists. Nazi propaganda, for its part, regularly attacked IG Farben during this period as exactly the kind of target its ideology despised: an &ldquo;international capitalist Jewish company.&rdquo;</p>
+  <p>Russia's full-scale invasion of Ukraine in February 2022, and the collapse of Russian pipeline gas supply to Europe that followed, hit no major European industrial site harder than BASF's home works at Ludwigshafen &mdash; the same site Part 2 followed from its 1865 founding. BASF's own figures put the extra cost of natural gas across its European operations in 2022 alone at <b>$2.9 billion</b>, on top of sales volumes at the company that fell 7% that year, against a 12% fall in German chemical-industry output as a whole. In response, BASF announced in early 2023 that it would permanently close one of Ludwigshafen's two ammonia plants &mdash; the single largest natural-gas consumer on the entire site, and, in a straight line back to Part 3, a direct descendant of the Haber&ndash;Bosch chemistry this series has followed since the 1910s &mdash; along with associated nitrogen-fertiliser and specialty-chemical plants making caprolactam, adipic acid and polyurethane precursors. Around 2,600 jobs, roughly 2.3% of BASF's global workforce, were cut across 2023&ndash;24, with some 700 of those at Ludwigshafen itself.</p>
 
   <div class="check">
-    <h4>As historians, be on your guard! &mdash; a company that was targeted, and also compromised</h4>
-    <p>None of this makes IG Farben's position in early 1933 a simple or admirable one. The same company that Nazi propagandists denounced as un-German also made secret political contributions to the Nazi Party in 1931 and 1932, in the ordinary and cynical way many large German firms hedged their political bets during the chaos of the Weimar Republic's final years. A company can be an ideological target and a political accommodator of the same movement at the same time; both things were true of IG Farben on 30 January 1933, the day Hitler was appointed Chancellor.</p>
+    <h4>As historians, be on your guard! &mdash; this is not yet history</h4>
+    <p>Everything in this section describes events from the last few years, some from the last few months before this reading was written. It is drawn from contemporary business reporting rather than the settled historical accounts the rest of this series has been able to draw on, and it may look different in ten years' time than it does now &mdash; BASF might recover fully, might restructure further, or something in between. This reading includes it anyway, because ending a seven-part series on the safely distant past would quietly suggest history stops being made once it becomes uncomfortable to assess. It does not.</p>
   </div>
 
-  <p>This reading stops here, deliberately, without following IG Farben, Carl Bosch, or any of the scientists named above into what came next. What happened to this company, and to German chemistry more broadly, under Nazi rule is a substantially different and much darker story, told on its own terms in the next reading.</p>
+  <p>BASF frames these closures as permanent, not temporary: the company has said the affected ammonia and fertiliser capacity will not return even if gas prices eventually fall, and is instead investing in production capacity elsewhere, including in China. Whether Ludwigshafen a decade from now still resembles the site this series has followed since 1865, or has become substantially smaller as BASF's global centre of gravity shifts elsewhere, is a genuinely open question &mdash; one this reading cannot answer, because it has not happened yet.</p>
+</section>
+
+<!-- ============ Local Taunus thread: closing beat ============ -->
+<section>
+  <p class="period">Meanwhile, in the Taunus hills &middot; 1990&ndash;present</p>
+  <h2>The smallest site in this series, still open for business</h2>
+
+  <p>Of every site this series has followed, only one is, as far as this reading can establish, doing much the same work today that it was doing when this reading's period began. Motorenfabrik Oberursel &mdash; sold to what was then BMW Rolls-Royce in the same year as reunification, as Part 6 described &mdash; continues to operate today as part of <b><a href="https://en.wikipedia.org/wiki/Rolls-Royce_Deutschland" target="_blank" rel="noopener">Rolls-Royce Deutschland</a></b>, developing and building jet engines in the Rolls-Royce BR700 family and its successors, in the same Taunus market town this series first visited in Part 3. No merger has dissolved it into a larger foreign entity; no energy crisis has forced its closure; no privatisation agency has had to break it into pieces. It is, admittedly, a much smaller and much less politically weighted site than Leuna, Buna or Ludwigshafen ever were &mdash; but its continuity, of all things, is the one genuinely stable thread this entire seven-part series has to offer.</p>
+</section>
+
+<!-- ============ The close ============ -->
+<section>
+  <p class="period">The close &middot; 1800&ndash;present</p>
+  <h2>Where this series actually ends</h2>
+
+  <p>This series began, in Part 1, with a scattering of small chemical trades along the Rhine and Main before 1800, and the question of how industrialised Germany really was at that point (not very, it turned out). It followed those trades through the founding of Bayer, BASF, Hoechst and Cassella in the 1860s; through the Haber&ndash;Bosch process and a war that a British naval blockade helped decide; through a merger that created, briefly, the largest chemical company on Earth; through that company's capture by a genocidal regime and its use of slave labour beside a death camp; through a legal reckoning that mostly wasn't one; through four decades of the same industry rebuilt as two rival economic systems either side of one border; and now, here, to a set of companies that are French-German pharmaceutical groups, defendants in mass litigation, or simply trying to keep the lights on at a plant founded in 1865.</p>
+
+  <p>This reading, and this series, ends without a tidy conclusion, because the industry it describes has not reached one. That is not a failure of the writing. It is what an honest history of something still happening actually looks like.</p>
 </section>
 
 <!-- ============ Interlude: Periodic Table ============ -->
 <section>
   <p class="period">Interlude</p>
-  <h2>How had the Periodic Table changed by 1933?</h2>
-  <p>This reading opens with eighty-six of the periodic table's ninety-two natural elements known, and closes with eighty-eight: only hafnium and rhenium, the last two elements ever tracked down just by knowing exactly which atomic number was still missing, get discovered in this window. The interactive table below shows exactly what changed, and toggles forward to this reading's own close. A fuller, standalone version of this table lives at <a href="PeriodicTablein1918.html">PeriodicTablein1918.html</a>.</p>
+  <h2>Finishing the table: the last nine elements</h2>
+  <p>This series has followed the periodic table since 1800, from twenty-five known elements to all ninety-two natural ones, complete by 1951. The last nine elements on it &mdash; darmstadtium, roentgenium and copernicium from that same German laboratory in Darmstadt, and six more from Russian, American and Japanese collaborations &mdash; were made between 1994 and 2010, completing the table exactly as it stands today, 118 elements wide, with not one atom of the last nine ever existing anywhere outside the accelerator that made it. A fuller, standalone version of this table lives at <a href="PeriodicTablein1990.html">PeriodicTablein1990.html</a>.</p>
 
-<div class="pt1918" id="pt1918Root">
+<div class="pt1990" id="pt1990Root">
 <div class="wrap">
-  <p class="sub">This picks up where <a href="PeriodicTablein1871.html">The Periodic Table in 1871</a> leaves off: eighty-six of the ninety-two elements are now known or partly known, after the single biggest wave of new discoveries the table would ever see &mdash; the noble gases, most of the rare earths, and the first elements radioactivity itself gave away. Toggle forward to 1933 to watch two of the last stubborn gaps get filled: hafnium and rhenium, the final two “missing” elements X-ray spectroscopy was able to hunt down by name and place in the table before anyone had found them in nature. Elements 93 and above are still 20th-century, laboratory-made additions and stay off the table entirely.</p>
+  <p class="sub">This picks up where <a href="PeriodicTablein1951.html">The Periodic Table in 1951: Beyond Uranium</a> leaves off, with 109 elements known, three of them &mdash; bohrium, hassium and meitnerium &mdash; made only a few years earlier at a laboratory in Darmstadt, Germany. Toggle forward to see the last nine elements arrive, completing the table exactly as it stands today: three more from that same German laboratory, and the rest from an international, sometimes cooperative, sometimes competitive push involving Russia, the United States and Japan. Every one of them exists only for a fraction of a second before decaying away, and not one has ever existed anywhere except inside the accelerator that made it.</p>
 
   <div class="toggle-row">
-    <button class="toggle-btn" id="pt1918EraBtn" type="button" onclick="pt1918ToggleEra()">Show discoveries through 1933 &rarr;</button>
-    <p class="toggle-hint">Only two elements left this narrow gap between 1918 and 1933, and both were found the same way Moseley’s X-ray method had made possible since 1914: knowing exactly which atomic number was still missing, and going looking for it on purpose. A gold ring still marks a German discoverer. Click any element with a small dot in its corner for who found it, how, and the story behind it.</p>
+    <button class="toggle-btn" id="pt1990EraBtn" type="button" onclick="pt1990ToggleEra()">Show discoveries through today &rarr;</button>
+    <p class="toggle-hint">Click to shade in red the last nine elements ever added to this table, completing it exactly as it stands today, one hundred and eighteen elements wide. A gold ring marks a German discovery &mdash; there are three more of them here, finishing what bohrium, hassium and meitnerium started. Click any element for who found it, how, and the story behind it.</p>
   </div>
 
-  <div class="count era1918-only"><b>86</b> of these 92 elements were known, or partly known, by 1918 (85 confirmed outright, 1 still only a detected trace: thorium) &mdash; every gap left over from 1871 has now been filled except two.</div>
-  <div class="count era1933-only"><b>88</b> of these 92 elements were known, or partly known, by 1933 (87 confirmed outright, thorium still the lone holdout) &mdash; hafnium and rhenium, tracked down by their place in Moseley’s X-ray sequence rather than stumbled on by chance, are the difference.</div>
+  <div class="count era1990-only"><b>109</b> elements were known by 1990, including three &mdash; bohrium, hassium and meitnerium &mdash; made only a few years earlier at a single laboratory in Darmstadt, Germany.</div>
+  <div class="count erapresent-only"><b>118</b> elements are known today, completing the table exactly as it stands now &mdash; a full seven periods, with no gaps left anywhere on it. The nine red tiles are the difference: three more German discoveries, and six more from an international, occasionally competitive push between Russia, the United States and Japan.</div>
 
-  <div class="grid" id="pt1918Grid">
-    <div class="tile known has-story" style="grid-row:1; grid-column:1;" data-el="H" onclick="pt1918ShowElement('H', this)"><div>H</div><div class="yr">1766</div></div>
-    <div class="tile known has-story" style="grid-row:1; grid-column:18;" data-el="He" onclick="pt1918ShowElement('He', this)"><div>He</div><div class="yr">1895</div></div>
-    <div class="tile known has-story" style="grid-row:2; grid-column:1;" data-el="Li" onclick="pt1918ShowElement('Li', this)"><div>Li</div><div class="yr">1817</div></div>
-    <div class="tile known has-story" style="grid-row:2; grid-column:2;" data-el="Be" onclick="pt1918ShowElement('Be', this)"><div>Be</div><div class="yr">1828</div></div>
-    <div class="tile known has-story" style="grid-row:2; grid-column:13;" data-el="B" onclick="pt1918ShowElement('B', this)"><div>B</div><div class="yr">1808</div></div>
-    <div class="tile known has-story" style="grid-row:2; grid-column:14;" data-el="C" onclick="pt1918ShowElement('C', this)"><div>C</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:2; grid-column:15;" data-el="N" onclick="pt1918ShowElement('N', this)"><div>N</div><div class="yr">1772</div></div>
-    <div class="tile known has-story" style="grid-row:2; grid-column:16;" data-el="O" onclick="pt1918ShowElement('O', this)"><div>O</div><div class="yr">1774</div></div>
-    <div class="tile known has-story" style="grid-row:2; grid-column:17;" data-el="F" onclick="pt1918ShowElement('F', this)"><div>F</div><div class="yr">1886</div></div>
-    <div class="tile known has-story" style="grid-row:2; grid-column:18;" data-el="Ne" onclick="pt1918ShowElement('Ne', this)"><div>Ne</div><div class="yr">1898</div></div>
-    <div class="tile known has-story" style="grid-row:3; grid-column:1;" data-el="Na" onclick="pt1918ShowElement('Na', this)"><div>Na</div><div class="yr">1807</div></div>
-    <div class="tile known has-story" style="grid-row:3; grid-column:2;" data-el="Mg" onclick="pt1918ShowElement('Mg', this)"><div>Mg</div><div class="yr">1808</div></div>
-    <div class="tile known has-story" style="grid-row:3; grid-column:13;" data-el="Al" onclick="pt1918ShowElement('Al', this)"><div>Al</div><div class="yr">1825</div></div>
-    <div class="tile known has-story" style="grid-row:3; grid-column:14;" data-el="Si" onclick="pt1918ShowElement('Si', this)"><div>Si</div><div class="yr">1824</div></div>
-    <div class="tile known has-story" style="grid-row:3; grid-column:15;" data-el="P" onclick="pt1918ShowElement('P', this)"><div>P</div><div class="yr">1669</div></div>
-    <div class="tile known has-story" style="grid-row:3; grid-column:16;" data-el="S" onclick="pt1918ShowElement('S', this)"><div>S</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:3; grid-column:17;" data-el="Cl" onclick="pt1918ShowElement('Cl', this)"><div>Cl</div><div class="yr">1810</div></div>
-    <div class="tile known has-story" style="grid-row:3; grid-column:18;" data-el="Ar" onclick="pt1918ShowElement('Ar', this)"><div>Ar</div><div class="yr">1894</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:1;" data-el="K" onclick="pt1918ShowElement('K', this)"><div>K</div><div class="yr">1807</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:2;" data-el="Ca" onclick="pt1918ShowElement('Ca', this)"><div>Ca</div><div class="yr">1808</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:3;" data-el="Sc" onclick="pt1918ShowElement('Sc', this)"><div>Sc</div><div class="yr">1879</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:4;" data-el="Ti" onclick="pt1918ShowElement('Ti', this)"><div>Ti</div><div class="yr">1910</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:5;" data-el="V" onclick="pt1918ShowElement('V', this)"><div>V</div><div class="yr">1801</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:6;" data-el="Cr" onclick="pt1918ShowElement('Cr', this)"><div>Cr</div><div class="yr">1797</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:7;" data-el="Mn" onclick="pt1918ShowElement('Mn', this)"><div>Mn</div><div class="yr">1774</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:8;" data-el="Fe" onclick="pt1918ShowElement('Fe', this)"><div>Fe</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:9;" data-el="Co" onclick="pt1918ShowElement('Co', this)"><div>Co</div><div class="yr">1735</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:10;" data-el="Ni" onclick="pt1918ShowElement('Ni', this)"><div>Ni</div><div class="yr">1751</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:11;" data-el="Cu" onclick="pt1918ShowElement('Cu', this)"><div>Cu</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:12;" data-el="Zn" onclick="pt1918ShowElement('Zn', this)"><div>Zn</div><div class="yr">1746</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:13;" data-el="Ga" onclick="pt1918ShowElement('Ga', this)"><div>Ga</div><div class="yr">1875</div></div>
-    <div class="tile known german has-story" style="grid-row:4; grid-column:14;" data-el="Ge" onclick="pt1918ShowElement('Ge', this)"><div>Ge</div><div class="yr">1886</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:15;" data-el="As" onclick="pt1918ShowElement('As', this)"><div>As</div><div class="yr">medieval</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:16;" data-el="Se" onclick="pt1918ShowElement('Se', this)"><div>Se</div><div class="yr">1817</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:17;" data-el="Br" onclick="pt1918ShowElement('Br', this)"><div>Br</div><div class="yr">1826</div></div>
-    <div class="tile known has-story" style="grid-row:4; grid-column:18;" data-el="Kr" onclick="pt1918ShowElement('Kr', this)"><div>Kr</div><div class="yr">1898</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:1;" data-el="Rb" onclick="pt1918ShowElement('Rb', this)"><div>Rb</div><div class="yr">1861</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:2;" data-el="Sr" onclick="pt1918ShowElement('Sr', this)"><div>Sr</div><div class="yr">1808</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:3;" data-el="Y" onclick="pt1918ShowElement('Y', this)"><div>Y</div><div class="yr">1828</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:4;" data-el="Zr" onclick="pt1918ShowElement('Zr', this)"><div>Zr</div><div class="yr">1824</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:5;" data-el="Nb" onclick="pt1918ShowElement('Nb', this)"><div>Nb</div><div class="yr">1801</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:6;" data-el="Mo" onclick="pt1918ShowElement('Mo', this)"><div>Mo</div><div class="yr">1781</div></div>
-    <div class="tile unknown" style="grid-row:5; grid-column:7;"><div>Tc</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:8;" data-el="Ru" onclick="pt1918ShowElement('Ru', this)"><div>Ru</div><div class="yr">1844</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:9;" data-el="Rh" onclick="pt1918ShowElement('Rh', this)"><div>Rh</div><div class="yr">1803</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:10;" data-el="Pd" onclick="pt1918ShowElement('Pd', this)"><div>Pd</div><div class="yr">1803</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:11;" data-el="Ag" onclick="pt1918ShowElement('Ag', this)"><div>Ag</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:12;" data-el="Cd" onclick="pt1918ShowElement('Cd', this)"><div>Cd</div><div class="yr">1817</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:13;" data-el="In" onclick="pt1918ShowElement('In', this)"><div>In</div><div class="yr">1863</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:14;" data-el="Sn" onclick="pt1918ShowElement('Sn', this)"><div>Sn</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:15;" data-el="Sb" onclick="pt1918ShowElement('Sb', this)"><div>Sb</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:16;" data-el="Te" onclick="pt1918ShowElement('Te', this)"><div>Te</div><div class="yr">1782</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:17;" data-el="I" onclick="pt1918ShowElement('I', this)"><div>I</div><div class="yr">1811</div></div>
-    <div class="tile known has-story" style="grid-row:5; grid-column:18;" data-el="Xe" onclick="pt1918ShowElement('Xe', this)"><div>Xe</div><div class="yr">1898</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:1;" data-el="Cs" onclick="pt1918ShowElement('Cs', this)"><div>Cs</div><div class="yr">1860</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:2;" data-el="Ba" onclick="pt1918ShowElement('Ba', this)"><div>Ba</div><div class="yr">1808</div></div>
+  <div class="grid" id="pt1990Grid">
+    <div class="tile known has-story" style="grid-row:1; grid-column:1;" data-el="H" onclick="pt1990ShowElement('H', this)"><div>H</div><div class="yr">1766</div></div>
+    <div class="tile known has-story" style="grid-row:1; grid-column:18;" data-el="He" onclick="pt1990ShowElement('He', this)"><div>He</div><div class="yr">1895</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:1;" data-el="Li" onclick="pt1990ShowElement('Li', this)"><div>Li</div><div class="yr">1817</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:2;" data-el="Be" onclick="pt1990ShowElement('Be', this)"><div>Be</div><div class="yr">1828</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:13;" data-el="B" onclick="pt1990ShowElement('B', this)"><div>B</div><div class="yr">1808</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:14;" data-el="C" onclick="pt1990ShowElement('C', this)"><div>C</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:15;" data-el="N" onclick="pt1990ShowElement('N', this)"><div>N</div><div class="yr">1772</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:16;" data-el="O" onclick="pt1990ShowElement('O', this)"><div>O</div><div class="yr">1774</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:17;" data-el="F" onclick="pt1990ShowElement('F', this)"><div>F</div><div class="yr">1886</div></div>
+    <div class="tile known has-story" style="grid-row:2; grid-column:18;" data-el="Ne" onclick="pt1990ShowElement('Ne', this)"><div>Ne</div><div class="yr">1898</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:1;" data-el="Na" onclick="pt1990ShowElement('Na', this)"><div>Na</div><div class="yr">1807</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:2;" data-el="Mg" onclick="pt1990ShowElement('Mg', this)"><div>Mg</div><div class="yr">1808</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:13;" data-el="Al" onclick="pt1990ShowElement('Al', this)"><div>Al</div><div class="yr">1825</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:14;" data-el="Si" onclick="pt1990ShowElement('Si', this)"><div>Si</div><div class="yr">1824</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:15;" data-el="P" onclick="pt1990ShowElement('P', this)"><div>P</div><div class="yr">1669</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:16;" data-el="S" onclick="pt1990ShowElement('S', this)"><div>S</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:17;" data-el="Cl" onclick="pt1990ShowElement('Cl', this)"><div>Cl</div><div class="yr">1810</div></div>
+    <div class="tile known has-story" style="grid-row:3; grid-column:18;" data-el="Ar" onclick="pt1990ShowElement('Ar', this)"><div>Ar</div><div class="yr">1894</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:1;" data-el="K" onclick="pt1990ShowElement('K', this)"><div>K</div><div class="yr">1807</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:2;" data-el="Ca" onclick="pt1990ShowElement('Ca', this)"><div>Ca</div><div class="yr">1808</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:3;" data-el="Sc" onclick="pt1990ShowElement('Sc', this)"><div>Sc</div><div class="yr">1879</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:4;" data-el="Ti" onclick="pt1990ShowElement('Ti', this)"><div>Ti</div><div class="yr">1910</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:5;" data-el="V" onclick="pt1990ShowElement('V', this)"><div>V</div><div class="yr">1801</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:6;" data-el="Cr" onclick="pt1990ShowElement('Cr', this)"><div>Cr</div><div class="yr">1797</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:7;" data-el="Mn" onclick="pt1990ShowElement('Mn', this)"><div>Mn</div><div class="yr">1774</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:8;" data-el="Fe" onclick="pt1990ShowElement('Fe', this)"><div>Fe</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:9;" data-el="Co" onclick="pt1990ShowElement('Co', this)"><div>Co</div><div class="yr">1735</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:10;" data-el="Ni" onclick="pt1990ShowElement('Ni', this)"><div>Ni</div><div class="yr">1751</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:11;" data-el="Cu" onclick="pt1990ShowElement('Cu', this)"><div>Cu</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:12;" data-el="Zn" onclick="pt1990ShowElement('Zn', this)"><div>Zn</div><div class="yr">1746</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:13;" data-el="Ga" onclick="pt1990ShowElement('Ga', this)"><div>Ga</div><div class="yr">1875</div></div>
+    <div class="tile known german has-story" style="grid-row:4; grid-column:14;" data-el="Ge" onclick="pt1990ShowElement('Ge', this)"><div>Ge</div><div class="yr">1886</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:15;" data-el="As" onclick="pt1990ShowElement('As', this)"><div>As</div><div class="yr">medieval</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:16;" data-el="Se" onclick="pt1990ShowElement('Se', this)"><div>Se</div><div class="yr">1817</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:17;" data-el="Br" onclick="pt1990ShowElement('Br', this)"><div>Br</div><div class="yr">1826</div></div>
+    <div class="tile known has-story" style="grid-row:4; grid-column:18;" data-el="Kr" onclick="pt1990ShowElement('Kr', this)"><div>Kr</div><div class="yr">1898</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:1;" data-el="Rb" onclick="pt1990ShowElement('Rb', this)"><div>Rb</div><div class="yr">1861</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:2;" data-el="Sr" onclick="pt1990ShowElement('Sr', this)"><div>Sr</div><div class="yr">1808</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:3;" data-el="Y" onclick="pt1990ShowElement('Y', this)"><div>Y</div><div class="yr">1828</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:4;" data-el="Zr" onclick="pt1990ShowElement('Zr', this)"><div>Zr</div><div class="yr">1824</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:5;" data-el="Nb" onclick="pt1990ShowElement('Nb', this)"><div>Nb</div><div class="yr">1801</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:6;" data-el="Mo" onclick="pt1990ShowElement('Mo', this)"><div>Mo</div><div class="yr">1781</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:7;" data-el="Tc" onclick="pt1990ShowElement('Tc', this)"><div>Tc</div><div class="yr">1937</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:8;" data-el="Ru" onclick="pt1990ShowElement('Ru', this)"><div>Ru</div><div class="yr">1844</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:9;" data-el="Rh" onclick="pt1990ShowElement('Rh', this)"><div>Rh</div><div class="yr">1803</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:10;" data-el="Pd" onclick="pt1990ShowElement('Pd', this)"><div>Pd</div><div class="yr">1803</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:11;" data-el="Ag" onclick="pt1990ShowElement('Ag', this)"><div>Ag</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:12;" data-el="Cd" onclick="pt1990ShowElement('Cd', this)"><div>Cd</div><div class="yr">1817</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:13;" data-el="In" onclick="pt1990ShowElement('In', this)"><div>In</div><div class="yr">1863</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:14;" data-el="Sn" onclick="pt1990ShowElement('Sn', this)"><div>Sn</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:15;" data-el="Sb" onclick="pt1990ShowElement('Sb', this)"><div>Sb</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:16;" data-el="Te" onclick="pt1990ShowElement('Te', this)"><div>Te</div><div class="yr">1782</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:17;" data-el="I" onclick="pt1990ShowElement('I', this)"><div>I</div><div class="yr">1811</div></div>
+    <div class="tile known has-story" style="grid-row:5; grid-column:18;" data-el="Xe" onclick="pt1990ShowElement('Xe', this)"><div>Xe</div><div class="yr">1898</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:1;" data-el="Cs" onclick="pt1990ShowElement('Cs', this)"><div>Cs</div><div class="yr">1860</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:2;" data-el="Ba" onclick="pt1990ShowElement('Ba', this)"><div>Ba</div><div class="yr">1808</div></div>
     <div class="tile placeholder" style="grid-row:6; grid-column:3;"><div>La</div></div>
-    <div class="tile unknown new1933 has-story gated1933" style="grid-row:6; grid-column:4;" data-el="Hf" onclick="pt1918ShowElement('Hf', this)"><div>Hf</div><div class="yr y1933">1923</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:5;" data-el="Ta" onclick="pt1918ShowElement('Ta', this)"><div>Ta</div><div class="yr">1802</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:6;" data-el="W" onclick="pt1918ShowElement('W', this)"><div>W</div><div class="yr">1783</div></div>
-    <div class="tile unknown new1933 german has-story gated1933" style="grid-row:6; grid-column:7;" data-el="Re" onclick="pt1918ShowElement('Re', this)"><div>Re</div><div class="yr y1933">1925</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:8;" data-el="Os" onclick="pt1918ShowElement('Os', this)"><div>Os</div><div class="yr">1803</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:9;" data-el="Ir" onclick="pt1918ShowElement('Ir', this)"><div>Ir</div><div class="yr">1803</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:10;" data-el="Pt" onclick="pt1918ShowElement('Pt', this)"><div>Pt</div><div class="yr">c.1750</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:11;" data-el="Au" onclick="pt1918ShowElement('Au', this)"><div>Au</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:12;" data-el="Hg" onclick="pt1918ShowElement('Hg', this)"><div>Hg</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:13;" data-el="Tl" onclick="pt1918ShowElement('Tl', this)"><div>Tl</div><div class="yr">1861</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:14;" data-el="Pb" onclick="pt1918ShowElement('Pb', this)"><div>Pb</div><div class="yr">ancient</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:15;" data-el="Bi" onclick="pt1918ShowElement('Bi', this)"><div>Bi</div><div class="yr">1753</div></div>
-    <div class="tile known has-story" style="grid-row:6; grid-column:16;" data-el="Po" onclick="pt1918ShowElement('Po', this)"><div>Po</div><div class="yr">1898</div></div>
-    <div class="tile unknown" style="grid-row:6; grid-column:17;"><div>At</div></div>
-    <div class="tile known german has-story" style="grid-row:6; grid-column:18;" data-el="Rn" onclick="pt1918ShowElement('Rn', this)"><div>Rn</div><div class="yr">1900</div></div>
-    <div class="tile unknown" style="grid-row:7; grid-column:1;"><div>Fr</div></div>
-    <div class="tile known has-story" style="grid-row:7; grid-column:2;" data-el="Ra" onclick="pt1918ShowElement('Ra', this)"><div>Ra</div><div class="yr">1898</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:4;" data-el="Hf" onclick="pt1990ShowElement('Hf', this)"><div>Hf</div><div class="yr">1923</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:5;" data-el="Ta" onclick="pt1990ShowElement('Ta', this)"><div>Ta</div><div class="yr">1802</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:6;" data-el="W" onclick="pt1990ShowElement('W', this)"><div>W</div><div class="yr">1783</div></div>
+    <div class="tile known german has-story" style="grid-row:6; grid-column:7;" data-el="Re" onclick="pt1990ShowElement('Re', this)"><div>Re</div><div class="yr">1925</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:8;" data-el="Os" onclick="pt1990ShowElement('Os', this)"><div>Os</div><div class="yr">1803</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:9;" data-el="Ir" onclick="pt1990ShowElement('Ir', this)"><div>Ir</div><div class="yr">1803</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:10;" data-el="Pt" onclick="pt1990ShowElement('Pt', this)"><div>Pt</div><div class="yr">c.1750</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:11;" data-el="Au" onclick="pt1990ShowElement('Au', this)"><div>Au</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:12;" data-el="Hg" onclick="pt1990ShowElement('Hg', this)"><div>Hg</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:13;" data-el="Tl" onclick="pt1990ShowElement('Tl', this)"><div>Tl</div><div class="yr">1861</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:14;" data-el="Pb" onclick="pt1990ShowElement('Pb', this)"><div>Pb</div><div class="yr">ancient</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:15;" data-el="Bi" onclick="pt1990ShowElement('Bi', this)"><div>Bi</div><div class="yr">1753</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:16;" data-el="Po" onclick="pt1990ShowElement('Po', this)"><div>Po</div><div class="yr">1898</div></div>
+    <div class="tile known has-story" style="grid-row:6; grid-column:17;" data-el="At" onclick="pt1990ShowElement('At', this)"><div>At</div><div class="yr">1940</div></div>
+    <div class="tile known german has-story" style="grid-row:6; grid-column:18;" data-el="Rn" onclick="pt1990ShowElement('Rn', this)"><div>Rn</div><div class="yr">1900</div></div>
+    <div class="tile known has-story" style="grid-row:7; grid-column:1;" data-el="Fr" onclick="pt1990ShowElement('Fr', this)"><div>Fr</div><div class="yr">1939</div></div>
+    <div class="tile known has-story" style="grid-row:7; grid-column:2;" data-el="Ra" onclick="pt1990ShowElement('Ra', this)"><div>Ra</div><div class="yr">1898</div></div>
     <div class="tile placeholder" style="grid-row:7; grid-column:3;"><div>Ac</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:3;" data-el="La" onclick="pt1918ShowElement('La', this)"><div>La</div><div class="yr">1839</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:4;" data-el="Ce" onclick="pt1918ShowElement('Ce', this)"><div>Ce</div><div class="yr">1803</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:5;" data-el="Pr" onclick="pt1918ShowElement('Pr', this)"><div>Pr</div><div class="yr">1885</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:6;" data-el="Nd" onclick="pt1918ShowElement('Nd', this)"><div>Nd</div><div class="yr">1885</div></div>
-    <div class="tile unknown" style="grid-row:9; grid-column:7;"><div>Pm</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:8;" data-el="Sm" onclick="pt1918ShowElement('Sm', this)"><div>Sm</div><div class="yr">1879</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:9;" data-el="Eu" onclick="pt1918ShowElement('Eu', this)"><div>Eu</div><div class="yr">1901</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:10;" data-el="Gd" onclick="pt1918ShowElement('Gd', this)"><div>Gd</div><div class="yr">1880</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:11;" data-el="Tb" onclick="pt1918ShowElement('Tb', this)"><div>Tb</div><div class="yr">1843</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:12;" data-el="Dy" onclick="pt1918ShowElement('Dy', this)"><div>Dy</div><div class="yr">1886</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:13;" data-el="Ho" onclick="pt1918ShowElement('Ho', this)"><div>Ho</div><div class="yr">1878/79</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:14;" data-el="Er" onclick="pt1918ShowElement('Er', this)"><div>Er</div><div class="yr">1843</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:15;" data-el="Tm" onclick="pt1918ShowElement('Tm', this)"><div>Tm</div><div class="yr">1879</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:16;" data-el="Yb" onclick="pt1918ShowElement('Yb', this)"><div>Yb</div><div class="yr">1878</div></div>
-    <div class="tile known has-story" style="grid-row:9; grid-column:17;" data-el="Lu" onclick="pt1918ShowElement('Lu', this)"><div>Lu</div><div class="yr">1907</div></div>
-    <div class="tile known has-story" style="grid-row:10; grid-column:3;" data-el="Ac" onclick="pt1918ShowElement('Ac', this)"><div>Ac</div><div class="yr">1899</div></div>
-    <div class="tile partial has-story" style="grid-row:10; grid-column:4;" data-el="Th" onclick="pt1918ShowElement('Th', this)"><div>Th</div><div class="yr">1828*</div></div>
-    <div class="tile known german has-story" style="grid-row:10; grid-column:5;" data-el="Pa" onclick="pt1918ShowElement('Pa', this)"><div>Pa</div><div class="yr">1917</div></div>
-    <div class="tile known has-story" style="grid-row:10; grid-column:6;" data-el="U" onclick="pt1918ShowElement('U', this)"><div>U</div><div class="yr">1841</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:3;" data-el="La" onclick="pt1990ShowElement('La', this)"><div>La</div><div class="yr">1839</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:4;" data-el="Ce" onclick="pt1990ShowElement('Ce', this)"><div>Ce</div><div class="yr">1803</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:5;" data-el="Pr" onclick="pt1990ShowElement('Pr', this)"><div>Pr</div><div class="yr">1885</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:6;" data-el="Nd" onclick="pt1990ShowElement('Nd', this)"><div>Nd</div><div class="yr">1885</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:7;" data-el="Pm" onclick="pt1990ShowElement('Pm', this)"><div>Pm</div><div class="yr">1945</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:8;" data-el="Sm" onclick="pt1990ShowElement('Sm', this)"><div>Sm</div><div class="yr">1879</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:9;" data-el="Eu" onclick="pt1990ShowElement('Eu', this)"><div>Eu</div><div class="yr">1901</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:10;" data-el="Gd" onclick="pt1990ShowElement('Gd', this)"><div>Gd</div><div class="yr">1880</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:11;" data-el="Tb" onclick="pt1990ShowElement('Tb', this)"><div>Tb</div><div class="yr">1843</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:12;" data-el="Dy" onclick="pt1990ShowElement('Dy', this)"><div>Dy</div><div class="yr">1886</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:13;" data-el="Ho" onclick="pt1990ShowElement('Ho', this)"><div>Ho</div><div class="yr">1878/79</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:14;" data-el="Er" onclick="pt1990ShowElement('Er', this)"><div>Er</div><div class="yr">1843</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:15;" data-el="Tm" onclick="pt1990ShowElement('Tm', this)"><div>Tm</div><div class="yr">1879</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:16;" data-el="Yb" onclick="pt1990ShowElement('Yb', this)"><div>Yb</div><div class="yr">1878</div></div>
+    <div class="tile known has-story" style="grid-row:9; grid-column:17;" data-el="Lu" onclick="pt1990ShowElement('Lu', this)"><div>Lu</div><div class="yr">1907</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:3;" data-el="Ac" onclick="pt1990ShowElement('Ac', this)"><div>Ac</div><div class="yr">1899</div></div>
+    <div class="tile partial has-story" style="grid-row:10; grid-column:4;" data-el="Th" onclick="pt1990ShowElement('Th', this)"><div>Th</div><div class="yr">1828*</div></div>
+    <div class="tile known german has-story" style="grid-row:10; grid-column:5;" data-el="Pa" onclick="pt1990ShowElement('Pa', this)"><div>Pa</div><div class="yr">1917</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:6;" data-el="U" onclick="pt1990ShowElement('U', this)"><div>U</div><div class="yr">1841</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:7;" data-el="Np" onclick="pt1990ShowElement('Np', this)"><div>Np</div><div class="yr">1940</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:8;" data-el="Pu" onclick="pt1990ShowElement('Pu', this)"><div>Pu</div><div class="yr">1940</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:9;" data-el="Am" onclick="pt1990ShowElement('Am', this)"><div>Am</div><div class="yr">1944</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:10;" data-el="Cm" onclick="pt1990ShowElement('Cm', this)"><div>Cm</div><div class="yr">1944</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:11;" data-el="Bk" onclick="pt1990ShowElement('Bk', this)"><div>Bk</div><div class="yr">1949</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:12;" data-el="Cf" onclick="pt1990ShowElement('Cf', this)"><div>Cf</div><div class="yr">1950</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:13;" data-el="Es" onclick="pt1990ShowElement('Es', this)"><div>Es</div><div class="yr">1952</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:14;" data-el="Fm" onclick="pt1990ShowElement('Fm', this)"><div>Fm</div><div class="yr">1952</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:15;" data-el="Md" onclick="pt1990ShowElement('Md', this)"><div>Md</div><div class="yr">1955</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:16;" data-el="No" onclick="pt1990ShowElement('No', this)"><div>No</div><div class="yr">1958</div></div>
+    <div class="tile known has-story" style="grid-row:10; grid-column:17;" data-el="Lr" onclick="pt1990ShowElement('Lr', this)"><div>Lr</div><div class="yr">1961</div></div>
+    <div class="tile known has-story" style="grid-row:7; grid-column:4;" data-el="Rf" onclick="pt1990ShowElement('Rf', this)"><div>Rf</div><div class="yr">1964/69</div></div>
+    <div class="tile known has-story" style="grid-row:7; grid-column:5;" data-el="Db" onclick="pt1990ShowElement('Db', this)"><div>Db</div><div class="yr">1967/70</div></div>
+    <div class="tile known has-story" style="grid-row:7; grid-column:6;" data-el="Sg" onclick="pt1990ShowElement('Sg', this)"><div>Sg</div><div class="yr">1974</div></div>
+    <div class="tile known german has-story" style="grid-row:7; grid-column:7;" data-el="Bh" onclick="pt1990ShowElement('Bh', this)"><div>Bh</div><div class="yr">1981</div></div>
+    <div class="tile known german has-story" style="grid-row:7; grid-column:8;" data-el="Hs" onclick="pt1990ShowElement('Hs', this)"><div>Hs</div><div class="yr">1984</div></div>
+    <div class="tile known german has-story" style="grid-row:7; grid-column:9;" data-el="Mt" onclick="pt1990ShowElement('Mt', this)"><div>Mt</div><div class="yr">1982</div></div>
+    <div class="tile unknown newpresent german has-story gatedpresent" style="grid-row:7; grid-column:10;" data-el="Ds" onclick="pt1990ShowElement('Ds', this)"><div>Ds</div><div class="yr ypresent">1994</div></div>
+    <div class="tile unknown newpresent german has-story gatedpresent" style="grid-row:7; grid-column:11;" data-el="Rg" onclick="pt1990ShowElement('Rg', this)"><div>Rg</div><div class="yr ypresent">1994</div></div>
+    <div class="tile unknown newpresent german has-story gatedpresent" style="grid-row:7; grid-column:12;" data-el="Cn" onclick="pt1990ShowElement('Cn', this)"><div>Cn</div><div class="yr ypresent">1996</div></div>
+    <div class="tile unknown newpresent has-story gatedpresent" style="grid-row:7; grid-column:13;" data-el="Nh" onclick="pt1990ShowElement('Nh', this)"><div>Nh</div><div class="yr ypresent">2004</div></div>
+    <div class="tile unknown newpresent has-story gatedpresent" style="grid-row:7; grid-column:14;" data-el="Fl" onclick="pt1990ShowElement('Fl', this)"><div>Fl</div><div class="yr ypresent">1998</div></div>
+    <div class="tile unknown newpresent has-story gatedpresent" style="grid-row:7; grid-column:15;" data-el="Mc" onclick="pt1990ShowElement('Mc', this)"><div>Mc</div><div class="yr ypresent">2003</div></div>
+    <div class="tile unknown newpresent has-story gatedpresent" style="grid-row:7; grid-column:16;" data-el="Lv" onclick="pt1990ShowElement('Lv', this)"><div>Lv</div><div class="yr ypresent">2000</div></div>
+    <div class="tile unknown newpresent has-story gatedpresent" style="grid-row:7; grid-column:17;" data-el="Ts" onclick="pt1990ShowElement('Ts', this)"><div>Ts</div><div class="yr ypresent">2010</div></div>
+    <div class="tile unknown newpresent has-story gatedpresent" style="grid-row:7; grid-column:18;" data-el="Og" onclick="pt1990ShowElement('Og', this)"><div>Og</div><div class="yr ypresent">2002</div></div>
 
   </div>
 
-  <div class="key key-1918">
-    <span><span class="swatch sw-known"></span> Known and confirmed as an element by 1918</span>
+  <div class="key key-1990">
+    <span><span class="swatch sw-known"></span> Known and made by 1990</span>
     <span><span class="swatch sw-partial"></span> Detected as a distinct trace, but not yet fully isolated (see notes)</span>
-    <span><span class="swatch sw-unknown"></span> Not yet detected in any form</span>
+    <span><span class="swatch sw-unknown"></span> Not yet made by 1990</span>
     <span><span class="swatch sw-ph"></span> Placeholder for the lanthanide/actinide rows below</span>
   </div>
-  <div class="key key-1933">
-    <span><span class="swatch sw-known"></span> Already known by 1918</span>
-    <span><span class="swatch" style="background:linear-gradient(160deg,#ffdede,#ffb3b3); border:1px solid #d97878;"></span> Newly discovered, 1919&ndash;1933</span>
-    <span><span class="swatch sw-german"></span> ...with a German discoverer</span>
-    <span><span class="swatch sw-unknown"></span> Still not detected in any form by 1933</span>
+  <div class="key key-present">
+    <span><span class="swatch sw-known"></span> Already known by 1990</span>
+    <span><span class="swatch" style="background:linear-gradient(160deg,#ffdede,#ffb3b3); border:1px solid #d97878;"></span> Made 1991&ndash;2010, completing the table</span>
+    <span><span class="swatch sw-german"></span> ...at a laboratory in Germany</span>
   </div>
 
   <div class="notes">
-    <h2>The 86 elements known, or partly known, by 1918</h2>
-    <p>This baseline is exactly where <a href="PeriodicTablein1871.html">The Periodic Table in 1871</a> leaves off, toggled forward: sixty-two of these were already in hand by 1871, and that page (and the two behind it) tells the story of how they arrived. Almost everything new between 1871 and 1918 came down three roads &mdash; spectroscopy matured to catch fainter and fainter signals, liquefied air giving up an entire missing column of the table, and the brand-new science of radioactivity giving away elements that reacted with nothing and existed nowhere in large enough quantities to see, weigh or smell. One element, boron, appears here for the first time on this series of tables in its correct 1808 place &mdash; a gap in the table's own record, not a gap in the history: boron was isolated in Paris and London decades before 1800 even, and belongs with the earliest elements on this whole series, not with anything discovered in this window.</p>
+    <h2>The 109 elements known by 1990</h2>
+    <p>This baseline is exactly where <a href="PeriodicTablein1951.html">The Periodic Table in 1951: Beyond Uranium</a> leaves off: ninety-eight elements known by 1951, natural and laboratory-made together, and eleven more added over the following four decades in the contested, sometimes genuinely disputed race between American, Soviet and, from 1981, German laboratories. The last three of those eleven &mdash; bohrium, hassium and meitnerium &mdash; came from the GSI laboratory in Darmstadt, West Germany, using the precise one-atom-at-a-time technique that would go on to finish the table almost entirely.</p>
 
-    <h2>The 1 element still only half-known by 1918 (marked with *)</h2>
-    <ul>
-      <li><b>Thorium (1828).</b> Berzelius found its &ldquo;earth&rdquo; in a Norwegian mineral in 1828, and it never quite gets a fully commercially pure metal to go with it on this table's own terms &mdash; the last holdout, carried over unchanged from 1871.</li>
-    </ul>
-
-    <h2 id="1933notes">Click through to 1933 &mdash; the last two elements found the old-fashioned way</h2>
-    <p>By 1918, thanks largely to Henry Moseley's 1913&ndash;14 X-ray work, chemists didn't just know elements were missing &mdash; they knew exactly which atomic numbers, 43, 61, 72, 75, 85 and 87, still had nobody's name attached to them, and could go looking on purpose rather than by accident. Two of those six searches succeeded in this window. In Copenhagen, <a href="https://en.wikipedia.org/wiki/Dirk_Coster" target="_blank" rel="noopener">Dirk Coster</a> and <a href="https://en.wikipedia.org/wiki/Georg_de_Hevesy" target="_blank" rel="noopener">Georg von Hevesy</a>, acting on a suggestion from Niels Bohr's new theory of the atom that element 72 ought to resemble zirconium rather than a rare earth, went looking in zirconium ore and found it within weeks in late 1922 &mdash; a satisfying end to a search that had earlier been muddied by a French chemist's mistaken claim to have already found it among the rare earths. They named it hafnium, after Hafnia, the Latin name for Copenhagen. In Berlin, <a href="https://en.wikipedia.org/wiki/Walter_Noddack" target="_blank" rel="noopener">Walter Noddack</a>, <a href="https://en.wikipedia.org/wiki/Ida_Noddack" target="_blank" rel="noopener">Ida Tacke</a> and Otto Berg used the same X-ray spectroscopy to identify element 75 in platinum ore and the mineral columbite in 1925, naming it rhenium after the Rhine. It turned out to be so rare that three years later the team had to process 660 kilograms of the mineral molybdenite just to extract a single gram of it pure. The other four gaps &mdash; technetium, promethium, astatine and francium &mdash; would not be filled this way at all: nature, it turned out, simply doesn't keep stable or long-lived supplies of them lying around to be found, and each would eventually be tracked down only in laboratories that could make or catch them, not mine them.</p>
+    <h2 id="presentnotes">Click through to today &mdash; finishing the table</h2>
+    <p>GSI's Darmstadt laboratory went on, through the 1990s, to make three more elements with the very same cold-fusion technique that had produced bohrium, hassium and meitnerium: darmstadtium (1994), roentgenium (1994) and copernicium (1996), named respectively for the city itself, for the discoverer of X-rays, and for Copernicus. Germany's run of new elements, which had begun at the very end of Part 6's story, ended there, but the wider hunt for the last empty squares on the table did not. Element 113, nihonium, was made in 2004 at the RIKEN laboratory in Japan &mdash; the first element ever discovered in Asia, and named, fittingly, for Japan itself (Nihon). The remaining five &mdash; flerovium (1998), livermorium (2000), moscovium (2003), tennessine (2010) and oganesson (2002) &mdash; came from a sustained collaboration between the Joint Institute for Nuclear Research at Dubna, Russia, and the Lawrence Livermore National Laboratory in the United States, with tennessine also crediting Oak Ridge National Laboratory and Vanderbilt University in Tennessee. Oganesson, element 118, is named for the Russian physicist Yuri Oganessian, who led much of this later work himself &mdash; one of only two elements on the entire table named for someone still living at the time. With its discovery in 2002, the periodic table reached its seventh full period and, for now, its end: no laboratory anywhere has yet confirmed a new element since.</p>
   </div>
 </div>
 
-<div class="modal-overlay" id="pt1918ModalOverlay" onclick="if(event.target===this)pt1918CloseModal()">
+<div class="modal-overlay" id="pt1990ModalOverlay" onclick="if(event.target===this)pt1990CloseModal()">
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalName">
-    <button class="modal-close" aria-label="Close" onclick="pt1918CloseModal()">&times;</button>
+    <button class="modal-close" aria-label="Close" onclick="pt1990CloseModal()">&times;</button>
     <div class="modal-head">
-      <div class="modal-symbol" id="pt1918ModalSymbol"></div>
+      <div class="modal-symbol" id="pt1990ModalSymbol"></div>
       <div class="modal-titles">
-        <p class="modal-name" id="pt1918ModalName"></p>
-        <p class="modal-year" id="pt1918ModalYear"></p>
+        <p class="modal-name" id="pt1990ModalName"></p>
+        <p class="modal-year" id="pt1990ModalYear"></p>
       </div>
     </div>
     <div class="modal-body">
-      <div class="modal-row"><div class="lbl">Who</div><div class="val" id="pt1918ModalWho"></div></div>
-      <div class="modal-row"><div class="lbl">Where</div><div class="val" id="pt1918ModalWhere"></div></div>
-      <div class="modal-row"><div class="lbl">Method</div><div class="val" id="pt1918ModalMethod"></div></div>
-      <div class="modal-row" id="pt1918ModalChemRow" style="display:none;"><div class="lbl">Chemistry</div><div class="val" id="pt1918ModalChem"></div></div>
-      <div class="modal-story"><span class="lbl">The story</span><div id="pt1918ModalStory"></div></div>
-      <div id="pt1918ModalGerman" style="display:none;" class="modal-german">🇩🇪 A German discovery</div>
+      <div class="modal-row"><div class="lbl">Who</div><div class="val" id="pt1990ModalWho"></div></div>
+      <div class="modal-row"><div class="lbl">Where</div><div class="val" id="pt1990ModalWhere"></div></div>
+      <div class="modal-row"><div class="lbl">Method</div><div class="val" id="pt1990ModalMethod"></div></div>
+      <div class="modal-row" id="pt1990ModalChemRow" style="display:none;"><div class="lbl">Chemistry</div><div class="val" id="pt1990ModalChem"></div></div>
+      <div class="modal-story"><span class="lbl">The story</span><div id="pt1990ModalStory"></div></div>
+      <div id="pt1990ModalGerman" style="display:none;" class="modal-german">🇩🇪 A German discovery</div>
     </div>
   </div>
 </div>
 
 </div>
 <script>
-function pt1918ToggleEra(){
-  var grid = document.getElementById('pt1918Grid');
-  var btn = document.getElementById('pt1918EraBtn');
-  var active = grid.classList.toggle('era1933');
-  document.getElementById('pt1918Root').classList.toggle('era1933-active', active);
+function pt1990ToggleEra(){
+  var grid = document.getElementById('pt1990Grid');
+  var btn = document.getElementById('pt1990EraBtn');
+  var active = grid.classList.toggle('erapresent');
+  document.getElementById('pt1990Root').classList.toggle('erapresent-active', active);
   btn.classList.toggle('active', active);
   btn.textContent = active
-    ? '← Back to 1918'
-    : 'Show discoveries through 1933 →';
+    ? '← Back to 1990'
+    : 'Show discoveries through today →';
 }
 
-var PT1918_ELEMENTS = {
+var PT1990_ELEMENTS = {
   H:{name:"Hydrogen",year:"1766",who:"<a href=\"https://en.wikipedia.org/wiki/Henry_Cavendish\" target=\"_blank\" rel=\"noopener\">Henry Cavendish</a>",where:"his private laboratory, <a href=\"https://www.openstreetmap.org/search?query=London%2C%20UK\" target=\"_blank\" rel=\"noopener\">London</a>",method:"Reacted various metals — iron, zinc, tin — with acids and collected the escaping “inflammable air” over water, then weighed it with unusual precision.",story:"Cavendish was famously reclusive — he communicated with his own servants by written note and was terrified of women — yet he was also one of the richest men in England and one of its sharpest experimentalists. He went on to show that burning his “inflammable air” in ordinary air produced pure water, a result <a href=\"https://en.wikipedia.org/wiki/Antoine_Lavoisier\" target=\"_blank\" rel=\"noopener\">Lavoisier</a> seized on (and later took more credit for than was quite fair) to help demolish the old phlogiston theory of combustion.",chem:"Reacting a metal with acid is a redox reaction: the metal atoms give up electrons (are oxidised) and H⁺ ions from the acid pick them up (are reduced) to form H₂ gas — <span class=\"eqn\">Zn + 2HCl → ZnCl₂ + H₂</span>. Burning it is the same idea running the other way: <span class=\"eqn\">2H₂ + O₂ → 2H₂O</span> — which is why hydrogen was central to working out what “oxidation” and “reduction” actually mean at the level of electrons."},
   C:{name:"Carbon",year:"ancient",who:"No single discoverer — known since prehistory",where:"charcoal, soot and diamond, worked and burned for millennia",method:"N/A — but <a href=\"https://en.wikipedia.org/wiki/Antoine_Lavoisier\" target=\"_blank\" rel=\"noopener\">Antoine Lavoisier</a> proved in the 1770s–80s that diamond, charcoal and graphite were chemically the same element.",story:"Lavoisier's proof involved sealing a diamond in a jar with oxygen and focusing sunlight on it with a huge burning-lens until it burned away to nothing but carbon dioxide gas — a spectacular and, to onlookers, rather shocking way to make a scientific point by destroying a gemstone.",chem:"<span class=\"eqn\">C + O₂ → CO₂</span> is the same reaction whether the carbon is diamond, graphite or charcoal — proof that all three are chemically identical, differing only in how their carbon atoms are arranged in space (diamond's rigid 3-D lattice versus graphite's stacked, slippery sheets). Carbon's ability to bond to itself in long chains and rings, more than any other element, is also the entire basis of organic chemistry — everything from sugar to DNA."},
   N:{name:"Nitrogen",year:"1772",who:"<a href=\"https://en.wikipedia.org/wiki/Daniel_Rutherford\" target=\"_blank\" rel=\"noopener\">Daniel Rutherford</a>",where:"<a href=\"https://www.openstreetmap.org/search?query=University%20of%20Edinburgh\" target=\"_blank\" rel=\"noopener\">University of Edinburgh</a>, as part of his medical thesis under <a href=\"https://en.wikipedia.org/wiki/Joseph_Black\" target=\"_blank\" rel=\"noopener\">Joseph Black</a>",method:"Kept a candle burning and a mouse breathing in a sealed jar of air until both stopped, then passed the leftover air through alkali to strip out the “fixed air” (carbon dioxide), leaving a gas that supported neither flame nor life.",story:"Rutherford, still a student, called it “noxious air” and didn't fully grasp he'd found a new element. <a href=\"https://en.wikipedia.org/wiki/Carl_Wilhelm_Scheele\" target=\"_blank\" rel=\"noopener\">Scheele</a> and <a href=\"https://en.wikipedia.org/wiki/Joseph_Priestley\" target=\"_blank\" rel=\"noopener\">Priestley</a> isolated essentially the same gas within a year or two, entirely independently — nitrogen was almost a three-way tie.",chem:"Removing both the carbon dioxide (with alkali) and the oxygen (used up by the candle and the mouse) from a sealed volume of air leaves behind a gas that is chemically almost inert — nitrogen makes up about 78% of the atmosphere precisely because its triple N≡N bond is so strong that it resists reacting with almost anything at room temperature."},
@@ -790,32 +778,62 @@ var PT1918_ELEMENTS = {
   B:{name:"Boron",year:"1808",who:"<a href=\"https://en.wikipedia.org/wiki/Joseph_Louis_Gay-Lussac\" target=\"_blank\" rel=\"noopener\">Joseph Louis Gay-Lussac</a> and <a href=\"https://en.wikipedia.org/wiki/Louis_Jacques_Th%C3%A9nard\" target=\"_blank\" rel=\"noopener\">Louis Jacques Th\u00e9nard</a>; independently and just days later, <a href=\"https://en.wikipedia.org/wiki/Humphry_Davy\" target=\"_blank\" rel=\"noopener\">Humphry Davy</a>",where:"Gay-Lussac and Th\u00e9nard: <a href=\"https://www.openstreetmap.org/search?query=Paris%2C%20France\" target=\"_blank\" rel=\"noopener\">Paris, France</a>; Davy: <a href=\"https://www.openstreetmap.org/search?query=London%2C%20UK\" target=\"_blank\" rel=\"noopener\">London, UK</a>",method:"Gay-Lussac and Th\u00e9nard heated boric acid with red-hot iron to reduce it to a new brown powder. Davy, working independently in London only about a week later, passed an electric current through boric acid and separately reduced it with potassium.",story:"Boron very nearly became an early casualty of the French Revolution's push for chemical self-sufficiency: boric acid itself had been known since the Middle Ages as a mineral, borax, prized for glassmaking and metalworking, long before anyone suspected a new element was locked inside it. Davy briefly called his version &ldquo;boracium&rdquo;; neither sample was more than about 60&ndash;70% pure, and genuinely pure boron wasn't produced until the American chemist Ezekiel Weintraub managed it in 1909, a full century later.",chem:"Boric acid, B(OH)\u2083, gives up its oxygen when heated with a more reactive element: <span class=\"eqn\">B\u2082O\u2083 + 3Mg \u2192 2B + 3MgO</span> is the same idea Gay-Lussac and Th\u00e9nard used with iron. Boron's odd position &mdash; a metalloid with only three outer electrons, sitting alone above aluminium &mdash; makes its chemistry famously hard to predict from its neighbours, which is part of why it took two independent teams working in parallel to pin it down at all."},
   Hf:{name:"Hafnium",year:"1923",who:"<a href=\"https://en.wikipedia.org/wiki/Dirk_Coster\" target=\"_blank\" rel=\"noopener\">Dirk Coster</a> and <a href=\"https://en.wikipedia.org/wiki/Georg_de_Hevesy\" target=\"_blank\" rel=\"noopener\">Georg von Hevesy</a>",where:"Niels Bohr's institute, <a href=\"https://www.openstreetmap.org/search?query=Copenhagen%2C%20Denmark\" target=\"_blank\" rel=\"noopener\">Copenhagen, Denmark</a>",method:"Following Bohr's new theory of atomic structure, which predicted element 72 should chemically resemble zirconium rather than the rare earths, Coster and Hevesy used X-ray spectroscopy &mdash; Moseley's technique of reading an atomic number directly off an element's characteristic X-ray lines &mdash; to search zirconium ore from Norway, and found it within weeks.",story:"The search had been muddied for years by a false claim: the French chemist Georges Urbain announced in 1911 that he had already found element 72 among the rare earths and named it &ldquo;celtium&rdquo;, a claim that stood, disputed, until Coster and Hevesy's clean 1923 result settled the matter for good. They named their element hafnium, after Hafnia, the Latin name for Copenhagen &mdash; the University of Copenhagen still uses a stylised hafnium atom in its science faculty seal.",chem:"X-ray spectroscopy sidesteps chemistry almost entirely: each element's atoms, when struck by fast electrons, emit X-rays at wavelengths fixed by their atomic number alone, so a new spectral line at exactly the right position is as good as a fingerprint. Hafnium's chemical similarity to zirconium &mdash; the very property Bohr's theory predicted &mdash; is also why it had escaped ordinary chemical detection for so long: the two elements are so alike that hafnium had simply been hiding, unnoticed, inside zirconium ore all along."},
   Re:{name:"Rhenium",year:"1925",who:"<a href=\"https://en.wikipedia.org/wiki/Walter_Noddack\" target=\"_blank\" rel=\"noopener\">Walter Noddack</a>, <a href=\"https://en.wikipedia.org/wiki/Ida_Noddack\" target=\"_blank\" rel=\"noopener\">Ida Tacke</a> and Otto Berg",where:"<a href=\"https://www.openstreetmap.org/search?query=Berlin%2C%20Germany\" target=\"_blank\" rel=\"noopener\">Berlin, Germany</a>",method:"The team used X-ray spectroscopy, the same atomic-number-reading technique that had just found hafnium, to hunt through platinum ore and the mineral columbite for the two remaining gaps in that part of the table, and identified element 75 in 1925.",story:"Rhenium turned out to be extraordinarily rare: extracting a usable sample meant processing enormous quantities of ore, and in 1928 Noddack and colleagues had to work through 660 kilograms of the mineral molybdenite just to isolate a single gram of pure rhenium. They named the element after the Rhine. A Japanese chemist, Masataka Ogawa, had announced a similar discovery back in 1908 and named it &ldquo;nipponium&rdquo;, but his results, published only in Japanese and never confirmed at the time, turned out on later re-examination to have actually been rhenium's neighbour, element 75 itself &mdash; a near-miss recognised only decades afterward.",german:true,chem:"Rhenium's extreme rarity in the Earth's crust &mdash; among the rarest of all naturally occurring elements &mdash; is exactly why it survived undiscovered until X-ray spectroscopy made it possible to detect an element from a vanishingly small trace rather than needing enough of it to see or weigh. It remains prized today for exactly the property that made it so hard to find: an extraordinarily high melting point, useful in jet engine parts that have to survive extreme heat."},
+  Tc:{name:"Technetium",year:"1937",who:"<a href=\"https://en.wikipedia.org/wiki/Carlo_Perrier\" target=\"_blank\" rel=\"noopener\">Carlo Perrier</a> and <a href=\"https://en.wikipedia.org/wiki/Emilio_Segr%C3%A8\" target=\"_blank\" rel=\"noopener\">Emilio Segr\u00e8</a>",where:"University of <a href=\"https://www.openstreetmap.org/search?query=Palermo%2C%20Italy\" target=\"_blank\" rel=\"noopener\">Palermo, Italy</a> (using material irradiated at the cyclotron in <a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">Berkeley, California</a>)",method:"Segr\u00e8 persuaded Ernest Lawrence to send him a discarded strip of molybdenum foil that had become radioactive simply from sitting inside Lawrence's cyclotron during unrelated experiments. Back in Palermo, Perrier and Segr\u00e8 used careful comparative chemistry to show the radioactivity belonged to a new element, sitting exactly at atomic number 43.",story:"Technetium was the first element in history to be produced artificially rather than found in nature, and its name &mdash; proposed a decade later, in 1947 &mdash; comes from the Greek word for &ldquo;artificial&rdquo;. The University of Palermo had initially hoped it would be named &ldquo;panormium&rdquo;, after the city's own Latin name, but technetium's genuinely unprecedented origin won out. Mendeleev had predicted this gap, calling it &ldquo;eka-manganese&rdquo;, as far back as 1871.",chem:"Every isotope of technetium is radioactive, which is exactly why no trace of it survived from the Earth's formation to be dug up: even its longest-lived isotope decays away far faster than the age of the planet. That single fact is what separates technetium, and the three elements that complete this table, from every element discovered before it &mdash; they had to be made, not found."},
+  Fr:{name:"Francium",year:"1939",who:"<a href=\"https://en.wikipedia.org/wiki/Marguerite_Perey\" target=\"_blank\" rel=\"noopener\">Marguerite Perey</a>",where:"the Curie Institute, <a href=\"https://www.openstreetmap.org/search?query=Paris%2C%20France\" target=\"_blank\" rel=\"noopener\">Paris, France</a>",method:"While purifying a sample of actinium-227, Perey noticed decay particles with energies far too low to belong to actinium itself. Systematically ruling out every other known element that might explain them, and testing the new substance's chemistry against caesium salts, she showed it behaved like an alkali metal &mdash; exactly where the long-predicted &ldquo;eka-caesium&rdquo; belonged on the table.",story:"Perey, who had begun her career at the Institute as a laboratory assistant with no formal degree, made the discovery alone and initially proposed calling it &ldquo;catium&rdquo;; her supervisor, Ir\u00e8ne Joliot-Curie, thought the name implied the element was positively charged in a misleading way, and Perey renamed it francium, for her own country. It was the last element ever discovered by purifying it out of a naturally occurring ore rather than making it in an accelerator or a reactor.",chem:"Francium is created naturally, in vanishingly tiny amounts, as one step in the radioactive decay of actinium &mdash; at any given moment, the entire Earth's crust is estimated to contain less than an ounce of it, all of it decaying away and being replaced at the same slow trickle. That scarcity, not any difficulty of chemistry, is why it was the very last element found this way."},
+  At:{name:"Astatine",year:"1940",who:"<a href=\"https://en.wikipedia.org/wiki/Dale_R._Corson\" target=\"_blank\" rel=\"noopener\">Dale R. Corson</a>, <a href=\"https://en.wikipedia.org/wiki/Kenneth_Ross_MacKenzie\" target=\"_blank\" rel=\"noopener\">Kenneth MacKenzie</a> and <a href=\"https://en.wikipedia.org/wiki/Emilio_Segr%C3%A8\" target=\"_blank\" rel=\"noopener\">Emilio Segr\u00e8</a>",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">University of California, Berkeley</a>",method:"The team bombarded a target of bismuth-209 with alpha particles in Berkeley's cyclotron; each bismuth nucleus that absorbed an alpha particle and then emitted two neutrons became a nucleus of element 85.",story:"Because it was made in the laboratory in quantities far too small to see, chemists at the time hesitated to treat astatine as fully &ldquo;discovered&rdquo; in the way earlier, naturally occurring elements had been &mdash; the team itself waited until 1947 to propose a name. They settled on astatine, from the Greek word for &ldquo;unstable&rdquo;, since every known isotope decays away within hours at most. Two earlier claimed discoveries, in Alabama in 1931 and Romania through the 1930s, were later shown to have been mistaken.",chem:"Astatine is the rarest naturally occurring element in the Earth's crust: it is also produced, fleetingly, as a trace step in natural radioactive decay chains, but so little exists at any moment that the entire planet is thought to contain less than a gram of it. As the heaviest halogen, its predicted chemistry sits at the borderline between a non-metal and a metal, though so little of it has ever existed at once that many of its properties are still inferred rather than directly measured."},
+  Pm:{name:"Promethium",year:"1945",who:"Jacob A. Marinsky, Lawrence E. Glendenin and <a href=\"https://en.wikipedia.org/wiki/Charles_D._Coryell\" target=\"_blank\" rel=\"noopener\">Charles D. Coryell</a>",where:"Clinton Laboratories, <a href=\"https://www.openstreetmap.org/search?query=Oak%20Ridge%2C%20Tennessee\" target=\"_blank\" rel=\"noopener\">Oak Ridge, Tennessee</a>",method:"The team separated and analysed the fission products left behind when uranium fuel was irradiated in the graphite reactor at Oak Ridge, and identified element 61 &mdash; the last gap in the rare-earth row &mdash; among the debris.",story:"The discovery was made in 1945 but kept unpublished until 1947, since the team's wartime work at Oak Ridge was classified. They first considered naming it &ldquo;clintonium&rdquo; after the laboratory, before Coryell's wife, Grace Mary Coryell, suggested promethium instead, after the Titan Prometheus who stole fire from the Greek gods &mdash; a name meant to capture both the achievement and the danger of the nuclear science that had produced it. A metal sample of the element wasn't actually made until 1963, eighteen years later.",chem:"Promethium is the only rare-earth element with no stable or long-lived isotope, which is exactly why every other member of that crowded family had been found in ore over the previous 170 years while this one, alone among them, had to wait for a nuclear reactor to manufacture it as a byproduct of splitting uranium atoms apart."},
+  Np:{name:"Neptunium",year:"1940",who:"<a href=\"https://en.wikipedia.org/wiki/Edwin_McMillan\" target=\"_blank\" rel=\"noopener\">Edwin McMillan</a> and <a href=\"https://en.wikipedia.org/wiki/Philip_H._Abelson\" target=\"_blank\" rel=\"noopener\">Philip Abelson</a>",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">University of California, Berkeley</a>",method:"McMillan and Abelson bombarded uranium with neutrons from Berkeley's cyclotron and identified a new element formed when a uranium nucleus absorbed a neutron and then decayed, one step up the periodic table from uranium itself.",story:"Neptunium was the first element ever made that does not occur naturally in any usable amount on Earth &mdash; named, following uranium's own naming after the planet Uranus, for the next planet out, Neptune. It opened the door to everything else on this table.",chem:"Uranium-238 absorbs a neutron to form uranium-239, which then undergoes beta decay &mdash; a neutron in the nucleus converts to a proton, raising the atomic number by one without changing the mass much: <span class=\"eqn\">U-239 \u2192 Np-239 + e\u207b</span>. Almost every element beyond uranium on this table is made by some version of this same idea: add a particle, then wait for the nucleus to settle into a new element."},
+  Pu:{name:"Plutonium",year:"1940/41",who:"<a href=\"https://en.wikipedia.org/wiki/Glenn_T._Seaborg\" target=\"_blank\" rel=\"noopener\">Glenn Seaborg</a>, Edwin McMillan, Joseph Kennedy and Arthur Wahl",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">University of California, Berkeley</a>",method:"Following directly on from neptunium, the team bombarded uranium with deuterons (heavy hydrogen nuclei) and showed that the neptunium produced decayed, in turn, into a still-heavier new element.",story:"Plutonium's discovery was kept secret throughout the Second World War: within five years, it had gone from a few invisible atoms in a Berkeley laboratory to the explosive core of the bomb dropped on Nagasaki in August 1945, an outcome none of its discoverers had anticipated when they first made it.",chem:"Plutonium is fissile in the same way as uranium-235 &mdash; its nucleus can be split by a neutron, releasing enormous energy and more neutrons in a chain reaction &mdash; which is exactly the property that made it, within only a few years of its purely scientific discovery, a matter of the greatest possible consequence."},
+  Am:{name:"Americium",year:"1944",who:"Glenn Seaborg, Ralph James, Leon Morgan and <a href=\"https://en.wikipedia.org/wiki/Albert_Ghiorso\" target=\"_blank\" rel=\"noopener\">Albert Ghiorso</a>",where:"the Metallurgical Laboratory, <a href=\"https://www.openstreetmap.org/search?query=Chicago%2C%20Illinois\" target=\"_blank\" rel=\"noopener\">Chicago, Illinois</a> (a wartime Manhattan Project site)",method:"The team bombarded plutonium with neutrons in a nuclear reactor, building it up two places further along the table, and chemically separated the tiny resulting quantity of the new element.",story:"Discovered and kept secret during wartime work on the Manhattan Project, americium's existence was only announced publicly in 1945, on a radio quiz show, of all places &mdash; a deliberately informal way of breaking classified news once the war's end allowed it.",chem:"Named after the Americas, by analogy with europium sitting in the same column of the periodic table one row up &mdash; a rare case of an element being named for the continent where it was made rather than for a person or a place."},
+  Cm:{name:"Curium",year:"1944",who:"Glenn Seaborg, Ralph James and Albert Ghiorso",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">University of California, Berkeley</a>",method:"The team bombarded plutonium with alpha particles in Berkeley's cyclotron, producing curium before americium was even announced, though americium's atomic number is lower.",story:"Named for Marie and Pierre Curie, continuing the pattern the periodic table had already set for radioactive elements &mdash; a direct, deliberate echo of polonium and radium, the elements the Curies themselves had found half a century earlier.",chem:"Curium's intense radioactivity makes it glow faintly with its own heat and light in the dark, a visible echo of the same property that made radium famous in 1898."},
+  Bk:{name:"Berkelium",year:"1949",who:"<a href=\"https://en.wikipedia.org/wiki/Stanley_G._Thompson\" target=\"_blank\" rel=\"noopener\">Stanley Thompson</a>, Albert Ghiorso and Glenn Seaborg",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">University of California, Berkeley</a>",method:"The team bombarded americium with alpha particles in Berkeley's cyclotron and chemically identified the new element from only about a billion atoms of it &mdash; far too little to see, weigh, or do anything with except detect its radioactivity.",story:"Named for the city of Berkeley itself, continuing a run of Berkeley-made elements that would eventually put the laboratory's name, in one form or another, on more of the periodic table than anywhere else on Earth.",chem:"By this point on the table, an element's entire &ldquo;discovery&rdquo; typically meant identifying a few thousand or million atoms by their radioactive decay signature, not isolating a visible sample &mdash; ordinary 19th-century chemistry, done at this scale, simply no longer applies."},
+  Cf:{name:"Californium",year:"1950",who:"Stanley Thompson, Kenneth Street, Albert Ghiorso and Glenn Seaborg",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">University of California, Berkeley</a>",method:"The team bombarded curium with alpha particles in Berkeley's cyclotron, producing element 98 in quantities of only a few dozen atoms.",story:"Named for the state and university where it, and so many of its neighbours, were made &mdash; by this point the Berkeley team had run through the Americas, the Curies, and their own city, and simply kept going up the map.",chem:"Californium is one of the few transuranium elements to find a genuine practical use: its spontaneous fission releases neutrons steadily enough to be used as a portable neutron source, for starting up nuclear reactors and for detecting gold and silver ore underground."},
+  Es:{name:"Einsteinium",year:"1952",who:"Albert Ghiorso and colleagues at Berkeley, Argonne and Los Alamos",where:"debris from the first hydrogen bomb test, <a href=\"https://www.openstreetmap.org/search?query=Enewetak%20Atoll\" target=\"_blank\" rel=\"noopener\">Enewetak Atoll, Pacific Ocean</a>; analysed at Berkeley",method:"Filter paper flown through the radioactive cloud left by the November 1952 &ldquo;Ivy Mike&rdquo; test collected debris that, on analysis back in California, contained two new elements formed when uranium nuclei absorbed a huge number of neutrons all at once in the explosion.",story:"The discovery was kept classified for three years because it revealed details of the bomb's design; the team could only publish once a slower, ordinary cyclotron-based route to the same element had also been found. It was named for Albert Einstein.",chem:"Making an element by exposing uranium to an enormous, instantaneous burst of neutrons, as a bomb does, is a completely different route from patiently firing one particle at a time in a cyclotron &mdash; einsteinium and fermium are the only two elements on this table discovered this way."},
+  Fm:{name:"Fermium",year:"1952",who:"Albert Ghiorso and colleagues at Berkeley, Argonne and Los Alamos",where:"debris from the first hydrogen bomb test, <a href=\"https://www.openstreetmap.org/search?query=Enewetak%20Atoll\" target=\"_blank\" rel=\"noopener\">Enewetak Atoll, Pacific Ocean</a>; analysed at Berkeley",method:"Found in the same batch of test debris as einsteinium, one element further along, formed by an even larger number of successive neutron captures in the same instant of the explosion.",story:"Named for Enrico Fermi, the physicist who had built the first nuclear reactor a decade earlier; like einsteinium, its discovery stayed secret until 1955 for the same reasons of nuclear-weapons secrecy.",chem:"Fermium is the heaviest element that can still be made in weighable, if microscopic, quantities using ordinary particle-accelerator methods; every element after it on this table has only ever existed as a handful of individual atoms at a time."},
+  Md:{name:"Mendelevium",year:"1955",who:"Albert Ghiorso, Bernard Harvey, Gregory Choppin, Stanley Thompson and Glenn Seaborg",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">University of California, Berkeley</a>",method:"The team bombarded a target of only about a billion atoms of einsteinium with alpha particles and detected mendelevium from just seventeen atoms produced, one at a time, identifying each by its radioactive decay before it vanished.",story:"With only seventeen atoms ever made, this was, at the time, the most extreme instance yet of identifying an element from almost nothing at all. It was named, fittingly for a table like this one, after Dmitri Mendeleev himself.",chem:"Detecting an element from seventeen atoms means detecting seventeen individual radioactive decay events, one after another, and inferring an atomic number from the pattern &mdash; there was and could be no chemistry in the ordinary sense involved at all."},
+  No:{name:"Nobelium",year:"1958 (Berkeley) / 1966 (Dubna)",who:"Disputed: a Berkeley team led by Albert Ghiorso claimed it in 1958; a team at the Joint Institute for Nuclear Research in Dubna, USSR, produced convincing evidence in 1966",where:"Berkeley, California, and <a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Dubna, Soviet Union</a>",method:"Both teams bombarded curium with lighter nuclei in a particle accelerator, aiming to fuse the two together into element 102.",story:"Nobelium's discovery was the opening shot of what chemists later called the &ldquo;transfermium wars&rdquo;: a Cold War-era dispute between American and Soviet laboratories over who had actually made several of the heaviest elements first, which dragged on, unresolved by any neutral authority, for decades. An international committee eventually credited Dubna's later work, though the Nobel-honouring name proposed by a Swedish team survived regardless.",chem:"Disputes like this became routine at this end of the table for a simple reason: with only a handful of atoms made, decaying within seconds, and two labs racing each other without sharing data, it was often genuinely unclear who had produced convincing proof first."},
+  Lr:{name:"Lawrencium",year:"1961",who:"Albert Ghiorso and colleagues",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">Lawrence Berkeley Laboratory, California</a>",method:"The team bombarded californium with boron nuclei in Berkeley's heavy-ion linear accelerator, fusing the two together to form element 103.",story:"Named for Ernest Lawrence, the inventor of the cyclotron and founder of the laboratory where so many of these elements were made &mdash; a fitting element to close out the actinide row with, on the very machine his invention had made possible.",chem:"Lawrencium is the last element in the actinide row, directly below lutetium &mdash; the last element in the equivalent lanthanide row, discovered fifty-four years earlier by entirely different, purely chemical means."},
+  Rf:{name:"Rutherfordium",year:"1964 (Dubna) / 1969 (Berkeley)",who:"Disputed: a Dubna team led by Georgy Flyorov claimed it in 1964; a Berkeley team led by Albert Ghiorso produced independent evidence in 1969",where:"<a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Dubna, Soviet Union</a>, and <a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">Berkeley, California</a>",method:"Both teams fused lighter nuclei together in a particle accelerator to build element 104, one proton heavier than lawrencium.",story:"Element 104 opened the main dispute of the transfermium wars in earnest: Dubna proposed naming it kurchatovium, after the Soviet physicist Igor Kurchatov, while Berkeley proposed rutherfordium, after Ernest Rutherford. IUPAC did not settle on rutherfordium until 1997, more than three decades after the first claim.",chem:"Element 104 is the first of the so-called superheavy elements to sit below hafnium in the periodic table, and its chemistry, tested in the handful of atoms ever made, does largely behave as a heavier cousin of hafnium and zirconium &mdash; a small, hard-won confirmation that the periodic law still holds this far down the table."},
+  Db:{name:"Dubnium",year:"1967 (Dubna) / 1970 (Berkeley)",who:"Disputed: claimed by the Dubna team in 1967 and by a Berkeley team in 1970",where:"<a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Dubna, Soviet Union</a>, and <a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">Berkeley, California</a>",method:"Both teams fused lighter nuclei together to build element 105.",story:"Dubna proposed nielsbohrium; Berkeley proposed hahnium, after Otto Hahn. IUPAC eventually resolved the dispute by naming the element dubnium, after the Russian laboratory town itself, in recognition of Dubna's role in this whole run of contested discoveries.",chem:"By element 105, direct chemical experiments &mdash; not just physical detection of decay &mdash; had become possible on the tiny number of atoms produced, confirming its place below tantalum in the periodic table."},
+  Sg:{name:"Seaborgium",year:"1974",who:"Teams at both Berkeley and Dubna, working independently",where:"<a href=\"https://www.openstreetmap.org/search?query=Berkeley%2C%20California\" target=\"_blank\" rel=\"noopener\">Berkeley, California</a>, and <a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Dubna, Soviet Union</a>",method:"Both laboratories produced element 106 independently in 1974 by fusing lighter nuclei together, close enough in time that a clean priority claim for either side proved impossible.",story:"An international review committee eventually recommended, in 1993, that the two laboratories share credit for element 106 &mdash; a rare resolution to the transfermium wars that satisfied both sides. It was named seaborgium, after Glenn Seaborg, while he was still alive to see it, itself a controversial break from the tradition of naming elements only after the dead.",chem:"Sharing credit for seaborgium set something of a precedent for how the remaining, still-unresolved transfermium disputes would eventually be settled through the 1990s &mdash; not by picking a single winner, but by international committee."},
+  Bh:{name:"Bohrium",year:"1981",who:"<a href=\"https://en.wikipedia.org/wiki/Peter_Armbruster\" target=\"_blank\" rel=\"noopener\">Peter Armbruster</a>, Gottfried M\u00fcnzenberg and colleagues",where:"GSI Helmholtz Centre for Heavy Ion Research, <a href=\"https://www.openstreetmap.org/search?query=Darmstadt%2C%20Germany\" target=\"_blank\" rel=\"noopener\">Darmstadt, West Germany</a>",method:"The team used GSI's heavy-ion accelerator and a new technique called cold fusion &mdash; firing a single heavy nucleus at a target one atom-layer thick and fusing the two together gently enough that the resulting nucleus didn't immediately fly apart &mdash; to make element 107, one atom at a time.",german:true,story:"Bohrium's discovery marked West Germany's entry into the race to extend the periodic table, using a technique precise enough to identify a single new atom, decaying within milliseconds, against Berkeley and Dubna's older, cruder methods. Named for Niels Bohr, it was the first uncontested new element in years.",chem:"GSI's cold-fusion technique proved so much more precise than what came before that it, rather than Berkeley's or Dubna's older methods, would go on to make almost every subsequent superheavy element for the next fifteen years."},
+  Hs:{name:"Hassium",year:"1984",who:"Peter Armbruster, Gottfried M\u00fcnzenberg and colleagues",where:"GSI Helmholtz Centre for Heavy Ion Research, <a href=\"https://www.openstreetmap.org/search?query=Darmstadt%2C%20Germany\" target=\"_blank\" rel=\"noopener\">Darmstadt, West Germany</a>",method:"Using the same cold-fusion technique that had produced bohrium, the GSI team fused nuclei together to make element 108, again identifying it from single atoms decaying within a fraction of a second.",german:true,story:"Named for Hesse, the German state in which Darmstadt sits &mdash; Hassia is the region's Latin name &mdash; making hassium one of the few elements named for a place smaller than a country.",chem:"Hassium's chemistry, tested on the extremely rare atoms produced, was confirmed to sit correctly below osmium in the periodic table &mdash; a striking confirmation that the periodic law holds even at element 108, seventeen places further than anyone would have guessed possible in Mendeleev's own lifetime."},
+  Mt:{name:"Meitnerium",year:"1982",who:"Peter Armbruster, Gottfried M\u00fcnzenberg and colleagues",where:"GSI Helmholtz Centre for Heavy Ion Research, <a href=\"https://www.openstreetmap.org/search?query=Darmstadt%2C%20Germany\" target=\"_blank\" rel=\"noopener\">Darmstadt, West Germany</a>",method:"The same GSI cold-fusion technique, applied one more step up the table, produced a single atom of element 109, detected from its decay just a few milliseconds after it formed.",german:true,story:"Meitnerium, discovered in 1982 but not confirmed and named until years later, was the only element-naming proposal in this entire dispute-ridden stretch of the table that nobody contested: it honours Lise Meitner, the physicist whose 1938&ndash;39 work on nuclear fission, alongside Otto Hahn, had made all of this &mdash; the reactors, the bombs, and every element from neptunium onward &mdash; possible in the first place.",chem:"That Meitner's own name reached the periodic table only in 1997, decades after Hahn had been given a Nobel Prize partly for her uncredited work, has often been read as a quiet, belated correction to one of twentieth-century physics' more well-known injustices."},
+  Ds:{name:"Darmstadtium",year:"1994",who:"Sigurd Hofmann and colleagues",where:"GSI Helmholtz Centre for Heavy Ion Research, <a href=\"https://www.openstreetmap.org/search?query=Darmstadt%2C%20Germany\" target=\"_blank\" rel=\"noopener\">Darmstadt, Germany</a>",method:"Using the same cold-fusion technique that had produced bohrium, hassium and meitnerium, the GSI team fused nickel nuclei with a lead target to make a single atom of element 110.",german:true,story:"Darmstadtium was named simply for the city where it, and five of its neighbours, were made &mdash; by 1994 GSI's Darmstadt laboratory had become, for a run of about fifteen years, the most productive element factory on Earth.",chem:"Element 110 sits below platinum on the table, and the handful of atoms ever made have behaved, as far as anyone has been able to test in the fraction of a second before they decay, consistently with that position."},
+  Rg:{name:"Roentgenium",year:"1994",who:"Sigurd Hofmann and colleagues",where:"GSI Helmholtz Centre for Heavy Ion Research, <a href=\"https://www.openstreetmap.org/search?query=Darmstadt%2C%20Germany\" target=\"_blank\" rel=\"noopener\">Darmstadt, Germany</a>",method:"The same cold-fusion technique, one step further along the table, produced a single atom of element 111 later in 1994.",german:true,story:"Named for Wilhelm R\u00f6ntgen, the German physicist who discovered X-rays in 1895 &mdash; a discovery that, decades later, would become one of the standard tools used to identify new elements like this one from their radiation.",chem:"Roentgenium sits below gold on the table, in the same group as copper and silver &mdash; the pattern of the periodic table continuing to hold at the very edge of what can be made at all."},
+  Cn:{name:"Copernicium",year:"1996",who:"Sigurd Hofmann and colleagues",where:"GSI Helmholtz Centre for Heavy Ion Research, <a href=\"https://www.openstreetmap.org/search?query=Darmstadt%2C%20Germany\" target=\"_blank\" rel=\"noopener\">Darmstadt, Germany</a>",method:"The GSI team's cold-fusion technique produced element 112 in 1996, the last element GSI itself would discover.",german:true,story:"Named for Nicolaus Copernicus, on the anniversary of his heliocentric theory's publication &mdash; a deliberate nod, GSI's own scientists said, to a change in worldview as significant, in its own field, as Copernicus's had been in his.",chem:"Copernicium is a striking case of relativistic effects becoming significant in chemistry: theoretical predictions suggest it may behave more like a noble gas than a typical metal, because its innermost electrons move fast enough, this far down the table, for Einstein's relativity to measurably change how the atom's outer electrons behave."},
+  Nh:{name:"Nihonium",year:"2004",who:"Kosuke Morita and colleagues",where:"<a href=\"https://www.openstreetmap.org/search?query=RIKEN%2C%20Wako%2C%20Japan\" target=\"_blank\" rel=\"noopener\">RIKEN, Wako, Japan</a>",method:"The team fused zinc nuclei with a bismuth target using RIKEN's own heavy-ion accelerator, detecting a single atom of element 113 from its decay chain.",story:"Nihonium was the first new element ever discovered in Asia, and IUPAC's confirmation of the Japanese team's priority, after a long-running rival claim from Dubna and Livermore, took over a decade. It is named for Nihon, one of the two Japanese words for Japan itself.",chem:"The RIKEN team had to repeat their accelerator run for years, detecting only a handful of atoms in total, before the evidence was considered conclusive enough for the discovery to be formally recognised in 2015 and named in 2016."},
+  Fl:{name:"Flerovium",year:"1998",who:"A joint Dubna&ndash;Livermore team led by Yuri Oganessian",where:"<a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Joint Institute for Nuclear Research, Dubna, Russia</a>",method:"The team fused calcium-48 nuclei, a particularly efficient projectile for reaching this part of the table, with a plutonium target to make element 114.",story:"Named for Georgy Flyorov, the Soviet physicist who founded the Dubna laboratory itself, flerovium marked a shift in method: calcium-48 fusion proved so much more efficient than earlier techniques that it became the standard route to every element made from here on.",chem:"Some early results suggested flerovium might be volatile enough to behave almost like a gas at room temperature, an exotic, still not fully settled prediction for an element two rows below lead on the table."},
+  Lv:{name:"Livermorium",year:"2000",who:"A joint Dubna&ndash;Livermore team",where:"<a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Joint Institute for Nuclear Research, Dubna, Russia</a>",method:"The team fused calcium-48 nuclei with a curium target to make element 116.",story:"Named for the Lawrence Livermore National Laboratory in California, the American partner in this long Dubna collaboration &mdash; one of the few elements on the table named for a laboratory rather than a person or place.",chem:"Livermorium sits directly below polonium, the element the Curies discovered exactly a century before it, on the same table, using nothing more sophisticated than patience and a pitchblende residue."},
+  Mc:{name:"Moscovium",year:"2003",who:"A joint Dubna&ndash;Livermore team",where:"<a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Joint Institute for Nuclear Research, Dubna, Russia</a>",method:"The team fused calcium-48 nuclei with an americium target &mdash; itself a laboratory-made element from 1944 &mdash; to make element 115.",story:"Named for the Moscow region in which Dubna sits, moscovium's confirmation was delayed for years by exactly the kind of careful, repeated cross-checking that had eventually resolved the older transfermium disputes &mdash; a sign of how much more rigorous the standard of proof had become since the 1960s.",chem:"Using an already-artificial element, americium, as the raw material for making a still-heavier one is itself a measure of how far this table had travelled from 1800, when every element still had to be dug, however indirectly, out of the ground."},
+  Ts:{name:"Tennessine",year:"2010",who:"A joint Dubna&ndash;Oak Ridge&ndash;Vanderbilt&ndash;Livermore team",where:"<a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Joint Institute for Nuclear Research, Dubna, Russia</a>",method:"The team fused calcium-48 nuclei with a rare, specially manufactured berkelium target &mdash; supplied by Oak Ridge National Laboratory in Tennessee, one of the only places on Earth able to make it &mdash; to produce element 117.",story:"Tennessine is named for the American state whose laboratories supplied both the target material and much of the analysis, a rare instance of a state, rather than a country, city or scientist, being honoured on the periodic table.",chem:"As the second-heaviest halogen ever made, tennessine's predicted chemistry is of real theoretical interest, though, like its neighbours, only a handful of atoms have ever existed, each for a small fraction of a second, nowhere near enough to test any of those predictions directly."},
+  Og:{name:"Oganesson",year:"2002",who:"A joint Dubna&ndash;Livermore team led by Yuri Oganessian",where:"<a href=\"https://www.openstreetmap.org/search?query=Dubna%2C%20Russia\" target=\"_blank\" rel=\"noopener\">Joint Institute for Nuclear Research, Dubna, Russia</a>",method:"The team fused calcium-48 nuclei with a californium target to make element 118, the heaviest element yet confirmed.",story:"Oganesson is named for Yuri Oganessian himself, the physicist who led much of the calcium-48 fusion programme that produced most of the elements on this last row of the table &mdash; only the second element ever named for someone who was still alive when it happened, after seaborgium.",chem:"Oganesson sits in the noble-gas column, directly below radon, but decays away so quickly &mdash; existing for only a tiny fraction of a millisecond &mdash; that essentially nothing about its actual chemistry has ever been directly measured; everything known about it comes from theoretical prediction alone. With its confirmation in 2002, and formal naming in 2016, the periodic table's seventh row was complete."},
 };
 
-function pt1918ShowElement(sym, tileEl){
-  var grid = document.getElementById('pt1918Grid');
-  if(tileEl.classList.contains('gated1933') && !grid.classList.contains('era1933')) return;
-  var d = PT1918_ELEMENTS[sym];
+function pt1990ShowElement(sym, tileEl){
+  var grid = document.getElementById('pt1990Grid');
+  if(tileEl.classList.contains('gatedpresent') && !grid.classList.contains('erapresent')) return;
+  var d = PT1990_ELEMENTS[sym];
   if(!d) return;
-  document.getElementById('pt1918ModalSymbol').textContent = sym;
-  document.getElementById('pt1918ModalName').textContent = d.name;
-  document.getElementById('pt1918ModalYear').textContent = 'Discovered ' + d.year;
-  document.getElementById('pt1918ModalWho').innerHTML = d.who;
-  document.getElementById('pt1918ModalWhere').innerHTML = d.where;
-  document.getElementById('pt1918ModalMethod').innerHTML = d.method;
-  var chemRow = document.getElementById('pt1918ModalChemRow');
+  document.getElementById('pt1990ModalSymbol').textContent = sym;
+  document.getElementById('pt1990ModalName').textContent = d.name;
+  document.getElementById('pt1990ModalYear').textContent = 'Discovered ' + d.year;
+  document.getElementById('pt1990ModalWho').innerHTML = d.who;
+  document.getElementById('pt1990ModalWhere').innerHTML = d.where;
+  document.getElementById('pt1990ModalMethod').innerHTML = d.method;
+  var chemRow = document.getElementById('pt1990ModalChemRow');
   if(d.chem){
-    document.getElementById('pt1918ModalChem').innerHTML = d.chem;
+    document.getElementById('pt1990ModalChem').innerHTML = d.chem;
     chemRow.style.display = 'flex';
   } else {
     chemRow.style.display = 'none';
   }
-  document.getElementById('pt1918ModalStory').innerHTML = d.story;
-  document.getElementById('pt1918ModalGerman').style.display = d.german ? 'inline-flex' : 'none';
-  document.getElementById('pt1918ModalOverlay').classList.add('open');
+  document.getElementById('pt1990ModalStory').innerHTML = d.story;
+  document.getElementById('pt1990ModalGerman').style.display = d.german ? 'inline-flex' : 'none';
+  document.getElementById('pt1990ModalOverlay').classList.add('open');
 }
-function pt1918CloseModal(){
-  document.getElementById('pt1918ModalOverlay').classList.remove('open');
+function pt1990CloseModal(){
+  document.getElementById('pt1990ModalOverlay').classList.remove('open');
 }
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape') closeModal();
@@ -825,15 +843,15 @@ document.addEventListener('keydown', function(e){
 
 <!-- ============ Questions ============ -->
 <section>
-  <p class="period">Before the next reading</p>
+  <p class="period">Looking back on the whole series</p>
   <h2>Questions to think about</h2>
   <ol class="qs">
-    <li>Haber's gold-from-seawater project (1920&ndash;1926) was based on earlier measurements of seawater's gold content that turned out to be badly wrong. What does this episode suggest about the difference between having a plausible idea and having good enough data to act on it? Can you think of a modern example where an over-optimistic early measurement led people astray for years before being corrected?</li>
-    <li>The Bergius process and the Haber&ndash;Bosch process both rely on high-pressure, high-temperature chemistry, and both were scaled to industrial size by Carl Bosch's engineering team. Explain, in your own words, why getting a reaction to work in a small laboratory flask is a very different problem from making the same reaction work safely and reliably at the scale of an entire factory.</li>
-    <li>IG Farben's 1925 merger combined six previously competing companies. Using what you know about the earlier Alizarine Convention cartel (Part 3), suggest two advantages and two risks of combining rival firms into a single, much larger concern.</li>
-    <li>By early 1933, IG Farben was attacked by Nazi propaganda as an &ldquo;international capitalist Jewish company,&rdquo; while also having made secret contributions to the same party. Explain why these two facts are not actually contradictory, and what they suggest about how large companies sometimes behave under political pressure, even before an authoritarian regime is fully in power.</li>
-    <li>Motorenfabrik Oberursel's fortunes between 1918 and 1934 were shaped by a legal restriction (the Versailles ban on military aircraft), then by a general economic collapse (the Depression), and only then by a political change (1933&ndash;34). Why is it useful, as a historian, to keep these three different kinds of cause &mdash; legal, economic, and political &mdash; separate from one another, rather than treating &ldquo;the situation in Germany&rdquo; as a single undifferentiated cause?</li>
-    <li>This reading stops at 30 January 1933 without describing what happened next. Why might a historian, or a teacher, deliberately choose to end a reading at a sharp date like this rather than letting it drift forward into the following period?</li>
+    <li>Leuna and Buna were both broken into pieces and sold to different buyers, rather than being sold whole. What might a historian or an economist gain from studying the fragments separately, that they would miss by treating "Leuna" or "Buna" as if they were still single, unified companies after 1990?</li>
+    <li>Hoechst no longer exists as an independent company; BASF still does. Using everything you have read across Parts 5, 6 and 7, suggest two or three factors that might explain why one 1952 successor survived under its own name and another did not. Which of your suggested factors do you feel most confident about, and which are more speculative?</li>
+    <li>This reading calls its most recent material "not yet history," while treating the events of the 1990s as more settled. Where, roughly, do you think the line between "recent events" and "history" actually falls, and does it fall in the same place for every kind of event?</li>
+    <li>Bayer's acquisition of Monsanto brought with it a wave of litigation the company had not itself created. What responsibilities, if any, do you think a company takes on for a previous company's actions when it buys that company outright? Does your answer change if the harm was already publicly known about before the purchase went through?</li>
+    <li>Motorenfabrik Oberursel is the one site in this whole series that has not been broken up, merged away, or forced into closure. Why might a small, comparatively unglamorous engineering site have had an easier three decades than the vast chemical works this series has otherwise followed?</li>
+    <li>Looking back across all seven parts of this series: pick one single decision, by one person or one company, that you think mattered more than any other to how this whole 225-year story turned out. Defend your choice, and explain what you think would have been different if that decision had gone the other way.</li>
   </ol>
 </section>
 
@@ -841,17 +859,15 @@ document.addEventListener('keydown', function(e){
 <section id="glossary">
   <p class="period">Reference</p>
   <h2>Glossary: the new words in this reading</h2>
-  <p>These build on the glossaries in Parts 1&ndash;3 &mdash; look back if an earlier term (Haber&ndash;Bosch process, Gr&uuml;nderzeit, and so on) is unfamiliar.</p>
+  <p>These build on the glossaries in Parts 1&ndash;6 &mdash; look back if an earlier term (Wirtschaftswunder, VEB, Comecon, and so on) is unfamiliar.</p>
   <table class="tl">
     <thead><tr><th style="width:170px">Word</th><th>What it means</th><th style="width:33%">Where it appears here</th></tr></thead>
     <tbody>
-      <tr><td class="yr">Treaty of Versailles</td><td>The 1919 peace treaty ending the First World War, imposing reparations and military restrictions on Germany.</td><td>Sets the reparations and Versailles-ban context for this whole reading.</td></tr>
-      <tr><td class="yr">reparations</td><td>Payments required from a defeated power to compensate the victors; fixed for Germany in 1921 at 132 billion gold marks.</td><td>Drove the hyperinflation of 1923 and Haber's gold-from-seawater project.</td></tr>
-      <tr><td class="yr">hyperinflation</td><td>An extremely rapid, out-of-control rise in prices, destroying the value of a currency.</td><td>Germany, 1923, partly a consequence of reparations and the Ruhr occupation.</td></tr>
-      <tr><td class="yr">Bergius process</td><td>Hydrogenation of coal under high pressure and heat, with a catalyst, to produce liquid fuel.</td><td>Patented 1913; scaled up industrially at Leuna from the early 1920s.</td></tr>
-      <tr><td class="yr">hydrogenation</td><td>A chemical reaction adding hydrogen to a compound, here used to break down and saturate large coal molecules into smaller fuel-like ones.</td><td>The core chemistry of the Bergius process.</td></tr>
-      <tr><td class="yr">IG Farben</td><td><i>Interessen-Gemeinschaft Farbenindustrie AG</i>: the 1925 merger of BASF, Bayer, Hoechst and three smaller firms.</td><td>The largest chemical company in the world by 1926; central to the next reading.</td></tr>
-      <tr><td class="yr">&ldquo;Council of Gods&rdquo;</td><td>Informal nickname (<i>Rat der G&ouml;tter</i>) for IG Farben's unusually large and prominent supervisory board.</td><td>Reflected the scale and prestige of the 1925 merger.</td></tr>
+      <tr><td class="yr">Treuhandanstalt</td><td>The West German state agency set up in 1990 to privatise, restructure or liquidate East Germany's roughly 8,000 formerly state-owned enterprises.</td><td>Administered Leuna and Buna's breakup after 1990.</td></tr>
+      <tr><td class="yr">Aventis</td><td>The pharmaceutical company formed in 1999 by the merger of Hoechst and the French company Rh&ocirc;ne-Poulenc.</td><td>Ended Hoechst's existence as an independent company.</td></tr>
+      <tr><td class="yr">Sanofi</td><td>The French pharmaceutical multinational formed from Aventis's 2004 merger with Sanofi-Synth&eacute;labo; the former Hoechst became its wholly owned subsidiary in 2005.</td><td>The company the old Hoechst name has, in effect, dissolved into.</td></tr>
+      <tr><td class="yr">Monsanto</td><td>An American agrochemical and biotechnology company acquired by Bayer in 2018, bringing extensive glyphosate/Roundup litigation with it.</td><td>Bayer's largest-ever acquisition.</td></tr>
+      <tr><td class="yr">glyphosate</td><td>The active ingredient in the weedkiller Roundup, subject of extensive litigation in the United States over cancer claims.</td><td>The source of the litigation Bayer inherited with Monsanto.</td></tr>
     </tbody>
   </table>
 </section>
@@ -859,8 +875,8 @@ document.addEventListener('keydown', function(e){
 </main>
 
 <footer class="colophon">
-  <p><b>What this draft still needs.</b> This reading was built from a planning conversation and a first research pass rather than the page-by-page primary-source checking some sections of Parts 2 and 3 have had; treat it as a working draft. The Rutherford-handshake anecdote at Haber's Nobel ceremony is flagged above as needing better sourcing before it is presented as settled. Carl Bosch's personal decline through the 1930s &mdash; his sidelining within IG Farben, his 1937 Kaiser Wilhelm Society presidency, and his death in 1940 &mdash; was deliberately left out of this reading's flat 1933 ending, since it belongs properly to the post-1933 story; when it is written up, it currently rests mainly on BASF's own corporate-history account (citing biographer Karl Holdermann), which needs independent verification before classroom use. A local-history source for the Motorenfabrik Oberursel closure and reopening dates, beyond Wikipedia, would strengthen that section. No images have yet been added to this reading; the gallery and lightbox infrastructure below is included ready for when suitable historical images are found, following the same convention as Parts 1&ndash;3.</p>
-  <p><b>Sources.</b> Wikipedia and German Wikipedia (Treaty of Versailles, Weimar Republic hyperinflation, Fritz Haber, Carl Bosch, Friedrich Bergius, Bergius process, IG Farben, Motorenfabrik Oberursel, Carl Duisberg, Northern Patrol, Grand Fleet); a University of York chemistry-education page on Fritz Haber's Nobel Prize and its controversy; general historical accounts of Haber's 1920&ndash;1926 gold-from-seawater project cross-referenced across several encyclopaedic and popular-science summaries; and our own Parts 2 and 3 (for the Haber&ndash;Bosch process, the Alizarine Convention, and Motorenfabrik Oberursel's wartime role, that this reading builds on).</p>
+  <p><b>What this draft still needs.</b> This is a first draft built from a focused research pass, and the most recent material is, by its own nature, less settled than anything else in this series &mdash; the BASF energy-crisis section in particular should be revisited and updated before this reading is used again, since it describes an ongoing situation rather than a finished one. The Bayer&ndash;Monsanto litigation is summarised only in outline; a fuller account would need its own careful sourcing given how contested and legally live it still is. The Leuna and Buna privatisation material leans on Wikipedia-derived summaries of company and site histories rather than the specialist East German economic-history literature that Part 6's footer also flagged as still needed &mdash; that gap has not yet been closed. No images have been added; the gallery and lightbox infrastructure below is included ready for that.</p>
+  <p><b>Sources.</b> Wikipedia and Wikipedia-derived summaries (Leuna works, Buna Werke Schkopau, Hoechst AG, Rh&ocirc;ne-Poulenc, Sanofi, Monsanto, Rolls-Royce Deutschland); Bayer's own published account of the Monsanto acquisition; C&amp;EN (Chemical &amp; Engineering News) and Fortune's reporting on BASF's 2022&ndash;23 energy crisis and Ludwigshafen closures; and our own Parts 5 and 6 (for the 1952 breakup, Motorenfabrik Oberursel, and the Wirtschaftswunder/Chemieprogramm material), that this reading builds on and closes out.</p>
   <p style="margin-top:14px;opacity:.75">Science Department &middot; Refined with AI</p>
 </footer>
 
