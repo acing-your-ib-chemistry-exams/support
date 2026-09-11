@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Grade 9 Chemistry Test — Starting Out</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1c4b8c;
+    --blue-dark:#0d2c5c;
+    --blue-light:#dbe8fa;
+    --blue-pale:#eef4fc;
+    --ink:#152a4a;
+    --muted:#4a6086;
+    --green:#1f8a4c;
+    --green-pale:#e7f7ec;
+    --red:#c0392b;
+    --red-pale:#fdecea;
+    --amber:#a9700a;
+    --amber-pale:#fdf3e3;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:radial-gradient(circle at 50% 0%, #eef4fc 0%, #d5e4f7 45%, #b7d0ef 100%);
+    font-family:'Source Sans 3','Segoe UI',sans-serif;
+    color:var(--ink);
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:24px 20px 80px;}
+
+  header{text-align:center;padding:6px 0 22px;margin-bottom:22px;}
+  h1{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    font-weight:700;
+    font-size:clamp(24px,4.4vw,36px);
+    margin:0;
+    color:var(--blue-dark);
+    line-height:1.25;
+  }
+  .subtitle{
+    font-size:12px;
+    color:var(--blue);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-top:12px;
+    font-weight:600;
+  }
+  header::after{
+    content:"";
+    display:block;
+    width:min(320px,70%);
+    height:0;
+    margin:18px auto 0;
+    border-bottom:3px double var(--blue);
+  }
+
+  .name-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    background:#fff;
+    border:1.5px solid var(--blue);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-bottom:26px;
+    box-shadow:0 4px 10px rgba(13,44,92,.12);
+  }
+  .name-row label{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--blue-dark);
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    flex:1 1 160px;
+  }
+  .name-row input{
+    font-family:inherit;
+    font-size:14px;
+    padding:7px 9px;
+    border:1px solid #b9c7dd;
+    border-radius:8px;
+    background:#f9fbfe;
+  }
+
+  .save-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    background:#fff;
+    border:1.5px solid var(--blue);
+    border-radius:14px;
+    padding:12px 16px;
+    margin-bottom:26px;
+    box-shadow:0 4px 10px rgba(13,44,92,.12);
+  }
+  .save-row .save-status{
+    font-size:12px;
+    color:var(--muted);
+    flex:1 1 160px;
+  }
+  .save-row .save-status.ok{color:var(--green);font-weight:700;}
+  .save-row .save-status.warn{color:var(--red);font-weight:700;}
+  .autosave-note{font-size:11px;color:var(--muted);width:100%;margin-top:2px;}
+
+  .restore-banner{
+    display:none;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    background:var(--amber-pale);
+    border:1.5px solid #eecf9a;
+    border-radius:14px;
+    padding:12px 16px;
+    margin-bottom:20px;
+    font-size:13px;
+    color:var(--amber);
+  }
+  .restore-banner.show{display:flex;}
+  .restore-banner strong{color:var(--blue-dark);}
+
+  .scorebar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(3px);
+    border:1.5px solid var(--blue);
+    border-radius:14px;
+    padding:10px 16px;
+    margin-bottom:26px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    box-shadow:0 4px 14px rgba(13,44,92,.18);
+  }
+  .scorebar .label{font-size:12.5px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:1px;}
+  .scorebar .score{font-size:19px;font-weight:700;color:var(--blue-dark);}
+  .scorebar .bar-track{flex:1 1 140px;height:9px;border-radius:6px;background:#e1e9f6;overflow:hidden;min-width:100px;}
+  .scorebar .bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));width:0%;transition:width .3s ease;}
+
+  section.qsection{
+    background:#f7fafe;
+    border:1.5px solid var(--blue);
+    border-radius:18px;
+    padding:22px 22px 24px;
+    margin-bottom:26px;
+    box-shadow:0 4px 10px rgba(13,44,92,.14);
+  }
+  .sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+  .sec-letter{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    font-weight:700;
+    font-size:14px;
+    color:#fff;
+    background:var(--blue-dark);
+    border-radius:50%;
+    width:30px;height:30px;
+    display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto;
+  }
+  h2.sec-title{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    font-weight:700;
+    font-size:20px;
+    color:var(--blue-dark);
+    margin:0;
+  }
+  .sec-marks{
+    margin-left:auto;
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    background:var(--blue-light);
+    padding:4px 10px;
+    border-radius:999px;
+    flex:0 0 auto;
+  }
+  .sec-intro{font-size:14.5px;line-height:1.6;color:var(--ink);margin:10px 0 18px;}
+  .sec-intro em{color:var(--blue-dark);}
+
+  .qrow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    margin:0 0 14px;
+    font-size:14.5px;
+    line-height:1.9;
+  }
+  .qnum{font-weight:700;color:var(--blue-dark);flex:0 0 auto;}
+  .blank-input{
+    font-family:inherit;
+    font-size:14.5px;
+    padding:5px 8px;
+    border:1.5px solid #9fb3d1;
+    border-radius:7px;
+    min-width:150px;
+    background:#fff;
+    color:var(--ink);
+  }
+  .blank-input.small{min-width:64px;text-align:center;}
+  .blank-input:focus{outline:2px solid var(--blue);outline-offset:1px;}
+  .blank-input.correct{border-color:var(--green);background:var(--green-pale);}
+  .blank-input.incorrect{border-color:var(--red);background:var(--red-pale);}
+  select.blank-input{
+    min-width:220px;
+    appearance:auto;
+  }
+
+  /* Hofmann voltameter diagram */
+  .hv-wrap{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;margin-bottom:16px;}
+  .hv-svg{flex:0 0 auto;background:#fff;border:1.5px solid var(--blue);border-radius:12px;padding:8px;}
+  .hv-callout{
+    font-family:'Source Sans 3',sans-serif;
+    font-size:12px;
+    font-weight:700;
+    fill:#fff;
+  }
+  .hv-labels{flex:1 1 260px;min-width:240px;display:flex;flex-direction:column;gap:10px;}
+  .hv-label-row{display:flex;align-items:center;gap:8px;}
+  .hv-num{
+    flex:0 0 auto;
+    width:22px;height:22px;border-radius:50%;
+    background:var(--blue-dark);color:#fff;
+    font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .fb-icon{font-weight:700;font-size:14px;display:none;flex:0 0 auto;}
+  .fb-icon.show{display:inline;}
+  .fb-icon.correct{color:var(--green);}
+  .fb-icon.incorrect{color:var(--red);}
+
+  button{
+    font-family:'Source Sans 3',sans-serif;
+    cursor:pointer;
+  }
+  .btn{
+    font-size:12.5px;
+    font-weight:700;
+    color:#fff;
+    background:var(--blue);
+    border:none;
+    border-radius:8px;
+    padding:8px 16px;
+    letter-spacing:.3px;
+  }
+  .btn:hover{background:var(--blue-dark);}
+  .btn.ghost{
+    background:#fff;
+    color:var(--blue);
+    border:1.5px solid var(--blue);
+  }
+  .btn.ghost:hover{background:var(--blue-pale);}
+  .btn.small{padding:5px 11px;font-size:11.5px;border-radius:7px;}
+  .btn:disabled{opacity:.45;cursor:default;}
+
+  .hint-btn{
+    background:none;
+    border:1px dashed #9fb3d1;
+    color:var(--muted);
+    font-size:11px;
+    padding:3px 9px;
+    border-radius:999px;
+    flex:0 0 auto;
+  }
+  .hint-btn:hover{border-color:var(--blue);color:var(--blue);}
+  .hint-text{
+    display:none;
+    font-size:12.5px;
+    color:var(--amber);
+    background:var(--amber-pale);
+    border:1px solid #eecf9a;
+    border-radius:8px;
+    padding:6px 10px;
+    width:100%;
+    margin:-4px 0 6px;
+  }
+  .hint-text.show{display:block;}
+
+  .sec-actions{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap;}
+  .sec-feedback{font-size:13px;font-weight:700;color:var(--blue-dark);}
+
+  /* Section B periodic-table grid */
+  .pt-wrap{overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
+  .pt-grid{
+    display:grid;
+    grid-template-columns:64px repeat(7,66px);
+    gap:6px;
+    width:max-content;
+    min-width:100%;
+  }
+  .pt-corner{}
+  .pt-colhead{
+    font-size:10.5px;
+    font-weight:700;
+    color:var(--blue-dark);
+    text-align:center;
+    align-self:end;
+    padding-bottom:4px;
+    line-height:1.3;
+  }
+  .pt-rowhead{
+    font-size:11px;
+    font-weight:700;
+    color:var(--blue-dark);
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    padding-right:6px;
+  }
+  .pt-cell{
+    height:58px;
+    border-radius:8px;
+  }
+  .pt-cell.empty{background:transparent;}
+  .pt-cell.target{
+    background:#fff;
+    border:1.5px solid #9fb3d1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .pt-cell.target input{
+    width:100%;
+    height:100%;
+    border:none;
+    background:transparent;
+    text-align:center;
+    font-size:18px;
+    font-weight:700;
+    color:var(--blue-dark);
+    border-radius:8px;
+  }
+  .pt-cell.target input:focus{outline:2px solid var(--blue);}
+  .pt-cell.target.correct{border-color:var(--green);background:var(--green-pale);}
+  .pt-cell.target.incorrect{border-color:var(--red);background:var(--red-pale);}
+  .pt-cell.grp1{box-shadow:inset 0 0 0 999px rgba(255,196,84,.10);}
+  .pt-cell.grp17{box-shadow:inset 0 0 0 999px rgba(120,190,140,.12);}
+  .pt-legend{font-size:12px;color:var(--muted);margin:2px 0 14px;line-height:1.6;}
+  .pt-legend .sw{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:4px;}
+
+  .wordbank{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:0 0 16px;
+  }
+  .wb-item{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--blue-dark);
+    background:var(--blue-light);
+    border:1px solid #b9c7dd;
+    border-radius:999px;
+    padding:4px 12px;
+  }
+
+  /* glossary tooltips */
+  .gterm{
+    border-bottom:1.5px dotted var(--blue);
+    cursor:help;
+    position:relative;
+    color:var(--blue-dark);
+    font-weight:600;
+  }
+  .gterm .gpop{
+    display:none;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:calc(100% + 8px);
+    width:max(200px,min(280px,60vw));
+    background:#fff;
+    border:1.5px solid var(--blue);
+    border-radius:10px;
+    padding:9px 11px;
+    font-size:12px;
+    line-height:1.5;
+    color:var(--ink);
+    font-weight:400;
+    box-shadow:0 8px 20px rgba(13,44,92,.28);
+    z-index:10;
+    text-align:left;
+  }
+  .gterm:hover .gpop, .gterm:focus .gpop{display:block;}
+
+  .equation-box{
+    background:#fff;
+    border:1.5px solid var(--blue);
+    border-radius:12px;
+    padding:14px 16px;
+    font-family:'Source Sans 3',monospace;
+    font-size:15px;
+    text-align:center;
+    color:var(--blue-dark);
+    font-weight:700;
+    margin:6px 0 18px;
+    letter-spacing:.3px;
+  }
+  .equation-box sub{font-size:.7em;}
+
+  .word-eqn{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    font-size:14.5px;
+    line-height:2;
+    margin-bottom:16px;
+  }
+  .word-eqn .fixed{font-weight:700;color:var(--ink);}
+  .word-eqn .plus,.word-eqn .arrow{font-weight:700;color:var(--blue-dark);}
+
+  .report-panel{
+    background:#fff;
+    border:1.5px solid var(--blue);
+    border-radius:18px;
+    padding:22px;
+    margin-top:6px;
+    box-shadow:0 4px 10px rgba(13,44,92,.14);
+    text-align:center;
+  }
+  .report-panel h2{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    color:var(--blue-dark);
+    font-size:20px;
+    margin:0 0 10px;
+  }
+  .final-score{font-size:34px;font-weight:700;color:var(--blue-dark);margin:8px 0;}
+  .final-score span{font-size:18px;color:var(--muted);font-weight:600;}
+  #reportOut{
+    display:none;
+    text-align:left;
+    white-space:pre-wrap;
+    font-family:'Source Sans 3',monospace;
+    font-size:12.5px;
+    background:var(--blue-pale);
+    border:1px solid #b9c7dd;
+    border-radius:10px;
+    padding:14px;
+    margin-top:16px;
+    line-height:1.6;
+  }
+  #reportOut.show{display:block;}
+
+  .glossary{
+    background:#f7fafe;
+    border:1.5px solid var(--blue);
+    border-radius:18px;
+    padding:20px 22px;
+    margin-top:26px;
+  }
+  .glossary h2{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    color:var(--blue-dark);
+    font-size:18px;
+    margin:0 0 10px;
+  }
+  .glossary dl{margin:0;font-size:13px;line-height:1.6;}
+  .glossary dt{font-weight:700;color:var(--blue-dark);margin-top:8px;}
+  .glossary dd{margin:0 0 2px;color:var(--muted);}
+
+  footer{
+    text-align:center;
+    font-size:11px;
+    color:var(--blue);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    margin-top:40px;
+    padding-top:18px;
+    border-top:3px double var(--blue);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Grade 9 Chemistry Test<br>Starting Out</h1>
+    <div class="subtitle">The Periodic Table &middot; Symbols &amp; Position &middot; Filtration &middot; Word Equations</div>
+  </header>
+
+  <div class="name-row">
+    <label>Name<input type="text" id="stuName" placeholder="Your name"></label>
+    <label>Class<input type="text" id="stuClass" placeholder="e.g. Grade 9C"></label>
+    <label>Date<input type="text" id="stuDate" placeholder="dd/mm/yyyy"></label>
+  </div>
+
+  <div class="restore-banner" id="restoreBanner">
+    <span id="restoreMsg"></span>
+    <button class="btn small" onclick="restoreFromBanner()">Restore my answers</button>
+    <button class="btn ghost small" onclick="dismissBanner()">Start fresh</button>
+  </div>
+
+  <div class="save-row">
+    <button class="btn" onclick="saveState(false)">💾 Save My Answers</button>
+    <button class="btn ghost" onclick="loadState(true)">Load My Saved Answers</button>
+    <span class="save-status" id="saveStatus">Not saved yet.</span>
+    <span class="autosave-note">Enter your name &amp; class above first, then Save &mdash; your work is also auto-saved every minute, and stays on this computer even if the power cuts out.</span>
+  </div>
+
+  <div class="scorebar">
+    <div class="label">Running score</div>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <div class="score"><span id="scoreNow">0</span> / <span id="scoreMax">0</span></div>
+  </div>
+
+  <!-- ============ SECTION A ============ -->
+  <section class="qsection" id="secA">
+    <div class="sec-head">
+      <div class="sec-letter">A</div>
+      <h2 class="sec-title">The Periodic Table &mdash; Key Words</h2>
+      <div class="sec-marks">6 marks</div>
+    </div>
+    <p class="sec-intro">Fill in each blank with one of these words: <em>group, period, noble gases, alkali metals</em>. Each word may be used more than once.</p>
+
+    <div class="qrow">
+      <span class="qnum">1.</span>
+      <span>A vertical column of the periodic table is called a</span>
+      <input class="blank-input" data-q="A1" data-ans="group" placeholder="?">
+      <span>, and a horizontal row is called a</span>
+      <input class="blank-input" data-q="A2" data-ans="period" placeholder="?">
+      <span>.</span>
+      <span class="fb-icon" data-fb="A1A2"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">2.</span>
+      <span>Elements in the same <span class="gterm" tabindex="0">group<span class="gpop">Elements are placed in the same column when they have the same number of electrons in their outer shell &mdash; this is what gives them similar chemical properties.</span></span> have similar chemical properties.</span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">3.</span>
+      <span>Group 0 (also written Group 18), on the far right of the table, contains the</span>
+      <input class="blank-input" data-q="A3" data-ans="noble gases" placeholder="?">
+      <span>&mdash; elements that almost never react, because their outer electron shell is already full.</span>
+      <span class="fb-icon" data-fb="A3"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">4.</span>
+      <span>Group 1, on the far left of the table, contains the</span>
+      <input class="blank-input" data-q="A4" data-ans="alkali metals" placeholder="?">
+      <span>&mdash; a set of very reactive metals that react vigorously with water.</span>
+      <span class="fb-icon" data-fb="A4"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">5.</span>
+      <span>Sodium, potassium and caesium are all found in the same</span>
+      <input class="blank-input small" data-q="A5" data-ans="group" placeholder="?">
+      <span>of the periodic table, which is why they react in a similar way.</span>
+      <span class="fb-icon" data-fb="A5"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">6.</span>
+      <span>Carbon, nitrogen and oxygen are all in the same</span>
+      <input class="blank-input small" data-q="A6" data-ans="period" placeholder="?">
+      <span>of the periodic table, because their atoms all have the same number of electron shells.</span>
+      <span class="fb-icon" data-fb="A6"></span>
+    </div>
+
+    <div class="sec-actions">
+      <button class="btn" onclick="checkSection('A')">Check Section A</button>
+      <button class="hint-btn" onclick="toggleHint('hintA')">Need a hint?</button>
+      <span class="sec-feedback" id="fbA"></span>
+    </div>
+    <div class="hint-text" id="hintA">Hint: the periodic table has 18 <strong>columns</strong> and 7 <strong>rows</strong>. Columns share a name ending in one of our four key words &mdash; think about which word goes with "up and down" and which goes with "side to side".</div>
+  </section>
+
+  <!-- ============ SECTION B ============ -->
+  <section class="qsection" id="secB">
+    <div class="sec-head">
+      <div class="sec-letter">B</div>
+      <h2 class="sec-title">Symbols &amp; Position on the Periodic Table</h2>
+      <div class="sec-marks">11 marks</div>
+    </div>
+    <p class="sec-intro">Below is a simplified, otherwise blank periodic table &mdash; it only shows the columns (groups) and rows (periods) you need for this question. For each element in the word bank, write its correct <span class="gterm" tabindex="0">chemical symbol<span class="gpop">The one- or two-letter shorthand for an element, e.g. O for oxygen. The first letter is always a capital; a second letter, if there is one, is always lower-case.</span></span> in the box in the correct group and period.</p>
+
+    <div class="wordbank" id="wordbankB"></div>
+
+    <div class="pt-wrap">
+      <div class="pt-grid" id="ptGrid"></div>
+    </div>
+    <div class="pt-legend">
+      <span class="sw" style="background:rgba(255,196,84,.35)"></span>Group 1 &mdash; alkali metals &nbsp;&nbsp;
+      <span class="sw" style="background:rgba(120,190,140,.45)"></span>Group 17 &mdash; halogens
+    </div>
+
+    <div class="sec-actions">
+      <button class="btn" onclick="checkSection('B')">Check Section B</button>
+      <button class="hint-btn" onclick="toggleHint('hintB')">Need a hint?</button>
+      <span class="sec-feedback" id="fbB"></span>
+    </div>
+    <div class="hint-text" id="hintB">Hint: all four of sodium, potassium, rubidium and caesium belong to the <em>same</em> group &mdash; they should line up in a single column, one below the other, in the order they're listed in the word bank.</div>
+  </section>
+
+  <!-- ============ SECTION C ============ -->
+  <section class="qsection" id="secC">
+    <div class="sec-head">
+      <div class="sec-letter">C</div>
+      <h2 class="sec-title">Filtration &mdash; Key Terms</h2>
+      <div class="sec-marks">6 marks</div>
+    </div>
+    <p class="sec-intro">Fill in each blank with the correct word: <em>precipitate, filtrate, filtration, residue, conical flask, filter funnel</em>.</p>
+
+    <div class="qrow">
+      <span class="qnum">1.</span>
+      <span>When two solutions react and form an insoluble solid, that solid is called a</span>
+      <input class="blank-input" data-q="C1" data-ans="precipitate" placeholder="?">
+      <span>.</span>
+      <span class="fb-icon" data-fb="C1"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">2.</span>
+      <span>Separating an insoluble solid from a liquid by pouring the mixture through filter paper is called</span>
+      <input class="blank-input" data-q="C2" data-ans="filtration" placeholder="?">
+      <span>.</span>
+      <span class="fb-icon" data-fb="C2"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">3.</span>
+      <span>The liquid that passes <em>through</em> the filter paper is called the</span>
+      <input class="blank-input" data-q="C3" data-ans="filtrate" placeholder="?">
+      <span>.</span>
+      <span class="fb-icon" data-fb="C3"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">4.</span>
+      <span>The solid left behind <em>on</em> the filter paper is called the</span>
+      <input class="blank-input" data-q="C4" data-ans="residue" placeholder="?">
+      <span>.</span>
+      <span class="fb-icon" data-fb="C4"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">5.</span>
+      <span>The filter paper is folded into a cone and supported inside a piece of glassware called a</span>
+      <input class="blank-input" data-q="C5" data-ans="filter funnel" placeholder="?">
+      <span>.</span>
+      <span class="fb-icon" data-fb="C5"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">6.</span>
+      <span>The filtrate drips down and is collected in a piece of glassware with a flat bottom and narrow neck, called a</span>
+      <input class="blank-input" data-q="C6" data-ans="conical flask" placeholder="?">
+      <span>.</span>
+      <span class="fb-icon" data-fb="C6"></span>
+    </div>
+
+    <div class="sec-actions">
+      <button class="btn" onclick="checkSection('C')">Check Section C</button>
+      <button class="hint-btn" onclick="toggleHint('hintC')">Need a hint?</button>
+      <span class="sec-feedback" id="fbC"></span>
+    </div>
+    <div class="hint-text" id="hintC">Hint: two of the answers are pieces of <strong>equipment</strong> (glassware you can pick up); the other four are all describing something <strong>happening</strong> to the solid or the liquid during the process.</div>
+  </section>
+
+  <!-- ============ SECTION D ============ -->
+  <section class="qsection" id="secD">
+    <div class="sec-head">
+      <div class="sec-letter">D</div>
+      <h2 class="sec-title">Reacting Dilute Hydrochloric Acid with Magnesium Carbonate</h2>
+      <div class="sec-marks">5 marks</div>
+    </div>
+    <p class="sec-intro">In the practical, you made the white <span class="gterm" tabindex="0">precipitate<span class="gpop">An insoluble solid formed when two solutions react together.</span></span> of magnesium carbonate and pressed it into a "pill". When you added dilute hydrochloric acid to it, a gas was produced and the solid disappeared as it reacted. The <em>balanced symbol equation</em> below is your guide &mdash; use it to fill in the <em>word equation</em> underneath.</p>
+
+    <div class="equation-box">MgCO<sub>3</sub> (s) + 2HCl (aq) &rarr; MgCl<sub>2</sub> (aq) + H<sub>2</sub>O (l) + CO<sub>2</sub> (g)</div>
+
+    <div class="word-eqn">
+      <input class="blank-input" data-q="D1" data-ans="magnesium carbonate" placeholder="reactant 1">
+      <span class="plus">+</span>
+      <span class="fixed">hydrochloric acid</span>
+      <span class="arrow">&rarr;</span>
+      <span class="fixed">magnesium chloride</span>
+      <span class="plus">+</span>
+      <input class="blank-input" data-q="D2" data-ans="water" placeholder="product 2">
+      <span class="plus">+</span>
+      <input class="blank-input" data-q="D3" data-ans="carbon dioxide" placeholder="product 3">
+      <span class="fb-icon" data-fb="D1D2D3"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">4.</span>
+      <span>While the reaction was happening, you would have observed</span>
+      <input class="blank-input" data-q="D4" data-ans="bubbles;fizzing;effervescence" placeholder="?">
+      <span>as the gas was given off, and the white solid gradually disappearing.</span>
+      <span class="fb-icon" data-fb="D4"></span>
+    </div>
+
+    <div class="qrow">
+      <span class="qnum">5.</span>
+      <span>If you bubbled the gas produced through <span class="gterm" tabindex="0">limewater<span class="gpop">A solution of calcium hydroxide, used as the standard chemical test for carbon dioxide gas.</span></span>, it would turn</span>
+      <input class="blank-input small" data-q="D5" data-ans="cloudy;milky" placeholder="?">
+      <span>&mdash; the standard test confirming the gas is carbon dioxide.</span>
+      <span class="fb-icon" data-fb="D5"></span>
+    </div>
+
+    <div class="sec-actions">
+      <button class="btn" onclick="checkSection('D')">Check Section D</button>
+      <button class="hint-btn" onclick="toggleHint('hintD')">Need a hint?</button>
+      <span class="sec-feedback" id="fbD"></span>
+    </div>
+    <div class="hint-text" id="hintD">Hint: a word equation uses the full names of the substances, in the <em>same order</em> as the symbol equation &mdash; reactants on the left of the arrow, products on the right.</div>
+  </section>
+
+  <!-- ============ SECTION E ============ -->
+  <section class="qsection" id="secE">
+    <div class="sec-head">
+      <div class="sec-letter">E</div>
+      <h2 class="sec-title">Labelling the Hofmann Voltameter</h2>
+      <div class="sec-marks">8 marks</div>
+    </div>
+    <p class="sec-intro">The Hofmann voltameter is used to <span class="gterm" tabindex="0">electrolyse<span class="gpop">To split a compound apart using an electric current passed through it.</span></span> water into hydrogen and oxygen gas. Use the drop-down menus to label parts 1&ndash;6 on the diagram.</p>
+
+    <div class="hv-wrap">
+      <svg class="hv-svg" width="260" height="340" viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg">
+        <!-- stand / base -->
+        <rect x="20" y="320" width="220" height="8" rx="2" fill="#c7d4e8"/>
+        <!-- horizontal connecting tube -->
+        <path d="M90,150 H170" stroke="#1c4b8c" stroke-width="3" fill="none"/>
+        <!-- left vertical tube -->
+        <rect x="76" y="150" width="28" height="170" rx="6" fill="#eaf1fb" stroke="#1c4b8c" stroke-width="2.5"/>
+        <!-- right vertical tube -->
+        <rect x="156" y="150" width="28" height="170" rx="6" fill="#eaf1fb" stroke="#1c4b8c" stroke-width="2.5"/>
+        <!-- graduation ticks -->
+        <g stroke="#7f97c0" stroke-width="1.3">
+          <line x1="76" y1="190" x2="88" y2="190"/><line x1="76" y1="220" x2="88" y2="220"/><line x1="76" y1="250" x2="88" y2="250"/>
+          <line x1="172" y1="190" x2="184" y2="190"/><line x1="172" y1="220" x2="184" y2="220"/><line x1="172" y1="250" x2="184" y2="250"/>
+        </g>
+        <!-- taps at top of each tube -->
+        <circle cx="90" cy="150" r="7" fill="#fff" stroke="#a9700a" stroke-width="2.4"/>
+        <circle cx="170" cy="150" r="7" fill="#fff" stroke="#a9700a" stroke-width="2.4"/>
+        <!-- electrodes near bottom -->
+        <rect x="80" y="295" width="20" height="5" fill="#152a4a"/>
+        <rect x="160" y="295" width="20" height="5" fill="#152a4a"/>
+        <!-- central reservoir / funnel -->
+        <path d="M110,40 L150,40 L136,80 L124,80 Z" fill="#eaf1fb" stroke="#1c4b8c" stroke-width="2.5"/>
+        <path d="M124,80 L124,150 M136,80 L136,150" stroke="#1c4b8c" stroke-width="2.5" fill="none"/>
+        <!-- wires up to battery -->
+        <path d="M90,300 V30 H60" stroke="#8a5a0d" stroke-width="2" fill="none"/>
+        <path d="M170,300 V30 H200" stroke="#8a5a0d" stroke-width="2" fill="none"/>
+        <rect x="60" y="16" width="140" height="20" rx="4" fill="#fff" stroke="#152a4a" stroke-width="2"/>
+        <text x="130" y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#152a4a" font-family="Source Sans 3, sans-serif">&minus;&nbsp;&nbsp;power supply&nbsp;&nbsp;+</text>
+
+        <!-- callouts -->
+        <circle cx="130" cy="55" r="10" fill="#1c4b8c"/><text class="hv-callout" x="130" y="59" text-anchor="middle">1</text>
+        <circle cx="90" cy="150" r="10" fill="#1c4b8c"/><text class="hv-callout" x="90" y="154" text-anchor="middle">2</text>
+        <circle cx="90" cy="220" r="10" fill="#1c4b8c"/><text class="hv-callout" x="90" y="224" text-anchor="middle">3</text>
+        <circle cx="90" cy="298" r="10" fill="#1c4b8c"/><text class="hv-callout" x="90" y="302" text-anchor="middle">4</text>
+        <circle cx="170" cy="298" r="10" fill="#1c4b8c"/><text class="hv-callout" x="170" y="302" text-anchor="middle">5</text>
+        <circle cx="214" cy="10" r="10" fill="#1c4b8c"/><text class="hv-callout" x="214" y="14" text-anchor="middle">6</text>
+      </svg>
+
+      <div class="hv-labels">
+        <div class="hv-label-row"><span class="hv-num">1</span>
+          <select class="blank-input" data-q="E1" data-ans="reservoir">
+            <option value="">Choose&hellip;</option>
+            <option value="reservoir">Electrolyte reservoir (funnel)</option>
+            <option value="tap">Tap (stopcock)</option>
+            <option value="tube">Graduated gas-collection tube</option>
+            <option value="cathode">Cathode (&minus;) &mdash; produces hydrogen</option>
+            <option value="anode">Anode (+) &mdash; produces oxygen</option>
+            <option value="battery">Power supply (battery)</option>
+          </select>
+        </div>
+        <div class="hv-label-row"><span class="hv-num">2</span>
+          <select class="blank-input" data-q="E2" data-ans="tap">
+            <option value="">Choose&hellip;</option>
+            <option value="reservoir">Electrolyte reservoir (funnel)</option>
+            <option value="tap">Tap (stopcock)</option>
+            <option value="tube">Graduated gas-collection tube</option>
+            <option value="cathode">Cathode (&minus;) &mdash; produces hydrogen</option>
+            <option value="anode">Anode (+) &mdash; produces oxygen</option>
+            <option value="battery">Power supply (battery)</option>
+          </select>
+        </div>
+        <div class="hv-label-row"><span class="hv-num">3</span>
+          <select class="blank-input" data-q="E3" data-ans="tube">
+            <option value="">Choose&hellip;</option>
+            <option value="reservoir">Electrolyte reservoir (funnel)</option>
+            <option value="tap">Tap (stopcock)</option>
+            <option value="tube">Graduated gas-collection tube</option>
+            <option value="cathode">Cathode (&minus;) &mdash; produces hydrogen</option>
+            <option value="anode">Anode (+) &mdash; produces oxygen</option>
+            <option value="battery">Power supply (battery)</option>
+          </select>
+        </div>
+        <div class="hv-label-row"><span class="hv-num">4</span>
+          <select class="blank-input" data-q="E4" data-ans="cathode">
+            <option value="">Choose&hellip;</option>
+            <option value="reservoir">Electrolyte reservoir (funnel)</option>
+            <option value="tap">Tap (stopcock)</option>
+            <option value="tube">Graduated gas-collection tube</option>
+            <option value="cathode">Cathode (&minus;) &mdash; produces hydrogen</option>
+            <option value="anode">Anode (+) &mdash; produces oxygen</option>
+            <option value="battery">Power supply (battery)</option>
+          </select>
+        </div>
+        <div class="hv-label-row"><span class="hv-num">5</span>
+          <select class="blank-input" data-q="E5" data-ans="anode">
+            <option value="">Choose&hellip;</option>
+            <option value="reservoir">Electrolyte reservoir (funnel)</option>
+            <option value="tap">Tap (stopcock)</option>
+            <option value="tube">Graduated gas-collection tube</option>
+            <option value="cathode">Cathode (&minus;) &mdash; produces hydrogen</option>
+            <option value="anode">Anode (+) &mdash; produces oxygen</option>
+            <option value="battery">Power supply (battery)</option>
+          </select>
+        </div>
+        <div class="hv-label-row"><span class="hv-num">6</span>
+          <select class="blank-input" data-q="E6" data-ans="battery">
+            <option value="">Choose&hellip;</option>
+            <option value="reservoir">Electrolyte reservoir (funnel)</option>
+            <option value="tap">Tap (stopcock)</option>
+            <option value="tube">Graduated gas-collection tube</option>
+            <option value="cathode">Cathode (&minus;) &mdash; produces hydrogen</option>
+            <option value="anode">Anode (+) &mdash; produces oxygen</option>
+            <option value="battery">Power supply (battery)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <p class="sec-intro" style="margin-top:4px;"><strong>What do the gas volumes tell us about water?</strong></p>
+    <div class="qrow">
+      <span class="qnum">7.</span>
+      <span>The volume of gas collected at the cathode is</span>
+      <input class="blank-input small" data-q="E7" data-ans="double;twice" placeholder="?">
+      <span>the volume collected at the anode &mdash; a ratio of</span>
+      <input class="blank-input small" data-q="E7b" data-ans="2:1" placeholder="?">
+      <span>.</span>
+    </div>
+    <div class="qrow">
+      <span class="qnum">8.</span>
+      <span>This shows that a water molecule contains twice as many hydrogen atoms as oxygen atoms, giving water the formula</span>
+      <input class="blank-input small" data-q="E8" data-ans="h2o" placeholder="?">
+      <span>.</span>
+    </div>
+
+    <div class="sec-actions">
+      <button class="btn" onclick="checkSection('E')">Check Section E</button>
+      <button class="hint-btn" onclick="toggleHint('hintE')">Need a hint?</button>
+      <span class="sec-feedback" id="fbE"></span>
+    </div>
+    <div class="hint-text" id="hintE">Hint: hydrogen is produced at the <strong>negative</strong> electrode, oxygen at the <strong>positive</strong> electrode &mdash; and water is H&#8322;O, so think about how many hydrogen atoms there are for every oxygen atom.</div>
+  </section>
+
+  <!-- ============ SECTION F ============ -->
+  <section class="qsection" id="secF">
+    <div class="sec-head">
+      <div class="sec-letter">F</div>
+      <h2 class="sec-title">Testing for Gases</h2>
+      <div class="sec-marks">4 marks</div>
+    </div>
+    <p class="sec-intro">For each gas, choose the test and result that identifies it.</p>
+
+    <div class="qrow">
+      <span class="qnum">1.</span>
+      <span style="min-width:110px;font-weight:700;">Oxygen</span>
+      <select class="blank-input" data-q="F1" data-ans="oxygen">
+        <option value="">Choose the correct test&hellip;</option>
+        <option value="carbon-dioxide">Limewater turns cloudy (milky)</option>
+        <option value="hydrogen">A lit splint gives a squeaky pop</option>
+        <option value="oxygen">A glowing splint relights</option>
+        <option value="chlorine">Damp blue litmus paper turns red, then is bleached white</option>
+      </select>
+    </div>
+    <div class="qrow">
+      <span class="qnum">2.</span>
+      <span style="min-width:110px;font-weight:700;">Hydrogen</span>
+      <select class="blank-input" data-q="F2" data-ans="hydrogen">
+        <option value="">Choose the correct test&hellip;</option>
+        <option value="chlorine">Damp blue litmus paper turns red, then is bleached white</option>
+        <option value="oxygen">A glowing splint relights</option>
+        <option value="hydrogen">A lit splint gives a squeaky pop</option>
+        <option value="carbon-dioxide">Limewater turns cloudy (milky)</option>
+      </select>
+    </div>
+    <div class="qrow">
+      <span class="qnum">3.</span>
+      <span style="min-width:110px;font-weight:700;">Chlorine</span>
+      <select class="blank-input" data-q="F3" data-ans="chlorine">
+        <option value="">Choose the correct test&hellip;</option>
+        <option value="hydrogen">A lit splint gives a squeaky pop</option>
+        <option value="carbon-dioxide">Limewater turns cloudy (milky)</option>
+        <option value="chlorine">Damp blue litmus paper turns red, then is bleached white</option>
+        <option value="oxygen">A glowing splint relights</option>
+      </select>
+    </div>
+    <div class="qrow">
+      <span class="qnum">4.</span>
+      <span style="min-width:110px;font-weight:700;">Carbon dioxide</span>
+      <select class="blank-input" data-q="F4" data-ans="carbon-dioxide">
+        <option value="">Choose the correct test&hellip;</option>
+        <option value="oxygen">A glowing splint relights</option>
+        <option value="chlorine">Damp blue litmus paper turns red, then is bleached white</option>
+        <option value="carbon-dioxide">Limewater turns cloudy (milky)</option>
+        <option value="hydrogen">A lit splint gives a squeaky pop</option>
+      </select>
+    </div>
+
+    <div class="sec-actions">
+      <button class="btn" onclick="checkSection('F')">Check Section F</button>
+      <button class="hint-btn" onclick="toggleHint('hintF')">Need a hint?</button>
+      <span class="sec-feedback" id="fbF"></span>
+    </div>
+    <div class="hint-text" id="hintF">Hint: two of these tests use a lit or glowing <strong>splint</strong>; the other two rely on a colour change in a <strong>liquid</strong>.</div>
+  </section>
+
+  <!-- ============ SECTION G ============ -->
+  <section class="qsection" id="secG">
+    <div class="sec-head">
+      <div class="sec-letter">G</div>
+      <h2 class="sec-title">Ionic Charges &amp; Formulas</h2>
+      <div class="sec-marks">10 marks</div>
+    </div>
+    <p class="sec-intro">Recall the charge on each <span class="gterm" tabindex="0">ion<span class="gpop">An atom or group of atoms that has gained or lost electrons, giving it an overall electric charge.</span></span> to understand where the following formulas come from. Write each charge using a number and a sign, e.g. <em>2+</em> or <em>1&minus;</em>.</p>
+
+    <div class="qrow">
+      <span class="qnum">1.</span>
+      <span>Magnesium sulfate (MgSO<sub>4</sub>): the magnesium ion has a charge of</span>
+      <input class="blank-input small" data-q="G1" data-ans="2+;+2" placeholder="?">
+      <span>, and the sulfate ion has a charge of</span>
+      <input class="blank-input small" data-q="G2" data-ans="2-;-2" placeholder="?">
+      <span>.</span>
+    </div>
+    <div class="qrow">
+      <span class="qnum">2.</span>
+      <span>Sodium hydroxide (NaOH): the sodium ion has a charge of</span>
+      <input class="blank-input small" data-q="G3" data-ans="1+;+1;+" placeholder="?">
+      <span>, and the hydroxide ion has a charge of</span>
+      <input class="blank-input small" data-q="G4" data-ans="1-;-1;-" placeholder="?">
+      <span>.</span>
+    </div>
+    <div class="qrow">
+      <span class="qnum">3.</span>
+      <span>Sodium carbonate (Na<sub>2</sub>CO<sub>3</sub>): the sodium ion has a charge of</span>
+      <input class="blank-input small" data-q="G5" data-ans="1+;+1;+" placeholder="?">
+      <span>, and the carbonate ion has a charge of</span>
+      <input class="blank-input small" data-q="G6" data-ans="2-;-2" placeholder="?">
+      <span>.</span>
+    </div>
+    <div class="qrow">
+      <span class="qnum">4.</span>
+      <span>Hydrochloric acid (HCl): the hydrogen ion has a charge of</span>
+      <input class="blank-input small" data-q="G7" data-ans="1+;+1;+" placeholder="?">
+      <span>, and the chloride ion has a charge of</span>
+      <input class="blank-input small" data-q="G8" data-ans="1-;-1;-" placeholder="?">
+      <span>.</span>
+    </div>
+    <div class="qrow">
+      <span class="qnum">5.</span>
+      <span>Magnesium chloride (MgCl<sub>2</sub>): the magnesium ion has a charge of</span>
+      <input class="blank-input small" data-q="G9" data-ans="2+;+2" placeholder="?">
+      <span>, and the chloride ion has a charge of</span>
+      <input class="blank-input small" data-q="G10" data-ans="1-;-1;-" placeholder="?">
+      <span>.</span>
+    </div>
+
+    <div class="sec-actions">
+      <button class="btn" onclick="checkSection('G')">Check Section G</button>
+      <button class="hint-btn" onclick="toggleHint('hintG')">Need a hint?</button>
+      <span class="sec-feedback" id="fbG"></span>
+    </div>
+    <div class="hint-text" id="hintG">Hint: Group 1 ions are always 1+, Group 2 ions are always 2+, and Group 17 ions are always 1&minus;. Hydroxide, chloride and hydrogen all carry a single charge; sulfate and carbonate both carry a double charge.</div>
+  </section>
+
+  <!-- ============ SECTION H ============ -->
+  <section class="qsection" id="secH">
+    <div class="sec-head">
+      <div class="sec-letter">H</div>
+      <h2 class="sec-title">Group 1 &mdash; Increasing Reactivity with Water</h2>
+      <div class="sec-marks">8 marks</div>
+    </div>
+    <p class="sec-intro">Thinking back to the video of Group 1 metals reacting with water, write the five metals in order &mdash; from <em>least</em> reactive to <em>most</em> reactive.</p>
+
+    <div class="qrow"><span class="qnum">1.</span><span style="min-width:150px;">Least reactive &rarr;</span><input class="blank-input" data-q="H1" data-ans="lithium" placeholder="?"></div>
+    <div class="qrow"><span class="qnum">2.</span><span style="min-width:150px;">&nbsp;</span><input class="blank-input" data-q="H2" data-ans="sodium" placeholder="?"></div>
+    <div class="qrow"><span class="qnum">3.</span><span style="min-width:150px;">&nbsp;</span><input class="blank-input" data-q="H3" data-ans="potassium" placeholder="?"></div>
+    <div class="qrow"><span class="qnum">4.</span><span style="min-width:150px;">&nbsp;</span><input class="blank-input" data-q="H4" data-ans="rubidium" placeholder="?"></div>
+    <div class="qrow"><span class="qnum">5.</span><span style="min-width:150px;">&rarr; Most reactive</span><input class="blank-input" data-q="H5" data-ans="caesium" placeholder="?"></div>
+
+    <div class="qrow" style="margin-top:6px;">
+      <span class="qnum">6.</span>
+      <span>Going down Group 1, reactivity with water</span>
+      <input class="blank-input small" data-q="H6" data-ans="increases" placeholder="?">
+      <span>.</span>
+    </div>
+    <div class="qrow">
+      <span class="qnum">7.</span>
+      <span>This is because, as the atoms get larger, the single outer electron becomes</span>
+      <input class="blank-input small" data-q="H7" data-ans="easier" placeholder="?">
+      <span>to lose.</span>
+    </div>
+    <div class="qrow">
+      <span class="qnum">8.</span>
+      <span>That outer electron is held</span>
+      <input class="blank-input" data-q="H8" data-ans="less tightly;less" placeholder="?">
+      <span>by the nucleus, because it is further away and more shielded by inner electron shells.</span>
+    </div>
+
+    <div class="sec-actions">
+      <button class="btn" onclick="checkSection('H')">Check Section H</button>
+      <button class="hint-btn" onclick="toggleHint('hintH')">Need a hint?</button>
+      <span class="sec-feedback" id="fbH"></span>
+    </div>
+    <div class="hint-text" id="hintH">Hint: lithium was the calmest reaction in the video; caesium was the most violent. Sodium, potassium and rubidium sit in between, in the same order they appear in Group 1 of the periodic table.</div>
+  </section>
+
+  <!-- ============ REPORT ============ -->
+  <div class="report-panel">
+    <h2>Your Result</h2>
+    <div class="final-score"><span id="finalNow">0</span> / <span id="finalMax">28</span> <span>marks</span></div>
+    <div class="sec-actions" style="justify-content:center;">
+      <button class="btn" onclick="checkAll()">Check All Sections</button>
+      <button class="btn ghost" onclick="buildReport()">Generate Canvas Report</button>
+      <button class="btn ghost" onclick="resetTest()">Reset Test</button>
+    </div>
+    <div id="reportOut"></div>
+  </div>
+
+  <!-- ============ GLOSSARY ============ -->
+  <div class="glossary">
+    <h2>Glossary</h2>
+    <dl>
+      <dt>Group</dt><dd>A vertical column of the periodic table. Elements in the same group have the same number of electrons in their outer shell, and so react in similar ways.</dd>
+      <dt>Period</dt><dd>A horizontal row of the periodic table. Elements in the same period have the same number of electron shells.</dd>
+      <dt>Chemical symbol</dt><dd>The one- or two-letter shorthand for an element, e.g. Na for sodium. First letter capital, second letter (if any) lower-case.</dd>
+      <dt>Precipitate</dt><dd>An insoluble solid formed when two solutions react together.</dd>
+      <dt>Limewater</dt><dd>A solution of calcium hydroxide, used as the standard chemical test for carbon dioxide gas &mdash; it turns cloudy/milky.</dd>
+      <dt>Electrolysis</dt><dd>Splitting a compound apart using an electric current passed through it.</dd>
+      <dt>Cathode / Anode</dt><dd>The negative electrode (cathode) and positive electrode (anode) in an electrical cell. In electrolysis, hydrogen is produced at the cathode and oxygen at the anode.</dd>
+      <dt>Ion</dt><dd>An atom, or group of atoms, that has gained or lost electrons and so carries an overall electric charge.</dd>
+    </dl>
+  </div>
+
+  <footer>Science Department &middot; Refined with AI</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- scoring engine ---------- */
+  var TOTAL_MARKS = 0;
+  var answered = {}; // data-q -> boolean correct
+
+  function norm(s){
+    return (s||'').toString().trim().toLowerCase().replace(/\s+/g,' ');
+  }
+  function isCorrect(input){
+    var given = norm(input.value);
+    if(!given) return false;
+    var accepted = (input.getAttribute('data-ans')||'').split(';').map(norm);
+    return accepted.indexOf(given) !== -1;
+  }
+  function markInput(input){
+    var ok = isCorrect(input);
+    input.classList.remove('correct','incorrect');
+    if(input.value.trim()!==''){
+      input.classList.add(ok?'correct':'incorrect');
+    }
+    answered[input.getAttribute('data-q')] = ok;
+    return ok;
+  }
+  function updateScore(){
+    var now=0;
+    document.querySelectorAll('.blank-input[data-q]').forEach(function(inp){
+      if(answered[inp.getAttribute('data-q')]) now++;
+    });
+    document.querySelectorAll('.pt-cell.target input[data-q]').forEach(function(inp){
+      if(answered[inp.getAttribute('data-q')]) now++;
+    });
+    document.getElementById('scoreNow').textContent = now;
+    document.getElementById('scoreMax').textContent = TOTAL_MARKS;
+    document.getElementById('finalNow').textContent = now;
+    document.getElementById('finalMax').textContent = TOTAL_MARKS;
+    var pct = TOTAL_MARKS ? (now/TOTAL_MARKS*100) : 0;
+    document.getElementById('barFill').style.width = pct+'%';
+  }
+
+  function showFb(key, ok){
+    var el = document.querySelector('.fb-icon[data-fb="'+key+'"]');
+    if(!el) return;
+    el.classList.add('show');
+    el.classList.remove('correct','incorrect');
+    el.classList.add(ok?'correct':'incorrect');
+    el.textContent = ok ? '✓' : '✗';
+  }
+
+  window.toggleHint = function(id){
+    document.getElementById(id).classList.toggle('show');
+  };
+
+  /* ---------- Section A/C/D generic checking ---------- */
+  var FB_GROUPS = {
+    A: [['A1','A2'],['A3'],['A4'],['A5'],['A6']],
+    C: [['C1'],['C2'],['C3'],['C4'],['C5'],['C6']],
+    D: [['D1','D2','D3'],['D4'],['D5']]
+  };
+  window.checkSection = function(letter){
+    var inputs = document.querySelectorAll('#sec'+letter+' .blank-input[data-q]');
+    var right=0, total=inputs.length;
+    inputs.forEach(function(inp){ if(markInput(inp)) right++; });
+    var groups = FB_GROUPS[letter];
+    if(groups){
+      groups.forEach(function(g){
+        var key = g.join('');
+        var ok = g.every(function(q){ return answered[q]; });
+        showFb(key, ok);
+      });
+    }
+    document.getElementById('fb'+letter).textContent = right+' / '+total+' correct in this section.';
+    updateScore();
+    saveState(true);
+  };
+
+  /* ---------- Section B: build simplified periodic table grid ---------- */
+  var COLS = [
+    {group:1,  label:'Group 1'},
+    {group:2,  label:'Group 2'},
+    {group:11, label:'Group 11'},
+    {group:14, label:'Group 14'},
+    {group:15, label:'Group 15'},
+    {group:16, label:'Group 16'},
+    {group:17, label:'Group 17'}
+  ];
+  var ROWS = [2,3,4,5,6];
+  var TARGETS = [
+    {symbol:'C',  name:'Carbon',     period:2, group:14},
+    {symbol:'N',  name:'Nitrogen',   period:2, group:15},
+    {symbol:'O',  name:'Oxygen',     period:2, group:16},
+    {symbol:'F',  name:'Fluorine',   period:2, group:17},
+    {symbol:'Na', name:'Sodium',     period:3, group:1},
+    {symbol:'Mg', name:'Magnesium',  period:3, group:2},
+    {symbol:'Cl', name:'Chlorine',   period:3, group:17},
+    {symbol:'K',  name:'Potassium',  period:4, group:1},
+    {symbol:'Cu', name:'Copper',     period:4, group:11},
+    {symbol:'Rb', name:'Rubidium',   period:5, group:1},
+    {symbol:'Cs', name:'Caesium',    period:6, group:1}
+  ];
+
+  function buildGrid(){
+    var grid = document.getElementById('ptGrid');
+    var html = '<div class="pt-corner"></div>';
+    COLS.forEach(function(c){ html += '<div class="pt-colhead">'+c.label+'</div>'; });
+    ROWS.forEach(function(period){
+      html += '<div class="pt-rowhead">Period '+period+'</div>';
+      COLS.forEach(function(c){
+        var t = TARGETS.find(function(tg){ return tg.period===period && tg.group===c.group; });
+        var cls = 'pt-cell';
+        if(c.group===1) cls += ' grp1';
+        if(c.group===17) cls += ' grp17';
+        if(t){
+          cls += ' target';
+          html += '<div class="'+cls+'" data-cell="'+t.symbol+'"><input type="text" maxlength="2" data-q="B-'+t.symbol+'" data-ans="'+t.symbol.toLowerCase()+'" aria-label="'+t.name+'"></div>';
+        } else {
+          cls += ' empty';
+          html += '<div class="'+cls+'"></div>';
+        }
+      });
+    });
+    grid.innerHTML = html;
+
+    var wb = document.getElementById('wordbankB');
+    var names = TARGETS.map(function(t){ return t.name; });
+    // shuffle for display only
+    var shuffled = names.slice();
+    for(var i=shuffled.length-1;i>0;i--){
+      var j = Math.floor(((i*9301+49297)%233280)/233280 * (i+1)); // deterministic-ish shuffle
+      var tmp = shuffled[i]; shuffled[i]=shuffled[j]; shuffled[j]=tmp;
+    }
+    wb.innerHTML = shuffled.map(function(n){ return '<span class="wb-item">'+n+'</span>'; }).join('');
+  }
+
+  window.checkSection = (function(orig){
+    return function(letter){
+      if(letter==='B'){
+        var inputs = document.querySelectorAll('#ptGrid .target input[data-q]');
+        var right=0;
+        inputs.forEach(function(inp){
+          var ok = markInput(inp);
+          var cell = inp.closest('.pt-cell');
+          cell.classList.remove('correct','incorrect');
+          if(inp.value.trim()!=='') cell.classList.add(ok?'correct':'incorrect');
+          if(ok) right++;
+        });
+        document.getElementById('fbB').textContent = right+' / '+inputs.length+' correct in this section.';
+        updateScore();
+        saveState(true);
+        return;
+      }
+      orig(letter);
+    };
+  })(window.checkSection);
+
+  window.checkAll = function(){
+    ['A','B','C','D','E','F','G','H'].forEach(function(l){ checkSection(l); });
+  };
+
+  window.resetTest = function(){
+    document.querySelectorAll('.blank-input, .pt-cell.target input').forEach(function(inp){
+      inp.value='';
+      inp.classList.remove('correct','incorrect');
+    });
+    document.querySelectorAll('.pt-cell.target').forEach(function(c){ c.classList.remove('correct','incorrect'); });
+    document.querySelectorAll('.fb-icon').forEach(function(el){ el.classList.remove('show'); });
+    document.querySelectorAll('.sec-feedback').forEach(function(el){ el.textContent=''; });
+    answered = {};
+    updateScore();
+    document.getElementById('reportOut').classList.remove('show');
+    try{
+      var key = saveKeyFor(document.getElementById('stuName').value, document.getElementById('stuClass').value);
+      localStorage.removeItem(key);
+      var idx = readIndex().filter(function(k){ return k!==key; });
+      localStorage.setItem(STORE_INDEX_KEY, JSON.stringify(idx));
+    }catch(e){}
+    setSaveStatus('Test reset — your saved answers for this name/class were cleared too.', 'ok');
+  };
+
+  window.buildReport = function(){
+    checkAll();
+    var name = document.getElementById('stuName').value || '(name not entered)';
+    var cls = document.getElementById('stuClass').value || '(class not entered)';
+    var date = document.getElementById('stuDate').value || '(date not entered)';
+    var lines = [];
+    lines.push('Grade 9 Chemistry Test — Starting Out');
+    lines.push('Name: '+name+'    Class: '+cls+'    Date: '+date);
+    lines.push('');
+    ['A','B','C','D','E','F','G','H'].forEach(function(letter){
+      var titleEl = document.querySelector('#sec'+letter+' .sec-title');
+      var inputs = letter==='B'
+        ? document.querySelectorAll('#ptGrid .target input[data-q]')
+        : document.querySelectorAll('#sec'+letter+' .blank-input[data-q]');
+      var right=0;
+      inputs.forEach(function(inp){ if(answered[inp.getAttribute('data-q')]) right++; });
+      lines.push('Section '+letter+' — '+titleEl.textContent+': '+right+' / '+inputs.length);
+    });
+    lines.push('');
+    lines.push('TOTAL: '+document.getElementById('scoreNow').textContent+' / '+TOTAL_MARKS);
+    var out = document.getElementById('reportOut');
+    out.textContent = lines.join('\n');
+    out.classList.add('show');
+  };
+
+  /* ---------- save / restore (localStorage, survives reload / power loss) ---------- */
+  var STORE_PREFIX = 'g9chem:';
+  var STORE_INDEX_KEY = 'g9chem:__index';
+
+  function storageOK(){
+    try{ var k='__g9test__'; localStorage.setItem(k,'1'); localStorage.removeItem(k); return true; }
+    catch(e){ return false; }
+  }
+
+  function saveKeyFor(name, cls){
+    return STORE_PREFIX + (name||'unnamed').trim().toLowerCase() + '|' + (cls||'unnamed').trim().toLowerCase();
+  }
+
+  function readIndex(){
+    try{ return JSON.parse(localStorage.getItem(STORE_INDEX_KEY) || '[]'); }
+    catch(e){ return []; }
+  }
+  function addToIndex(key){
+    var idx = readIndex();
+    if(idx.indexOf(key)===-1){ idx.push(key); try{ localStorage.setItem(STORE_INDEX_KEY, JSON.stringify(idx)); }catch(e){} }
+  }
+
+  function collectValues(){
+    var values = {};
+    document.querySelectorAll('[data-q]').forEach(function(el){
+      values[el.getAttribute('data-q')] = el.value;
+    });
+    return values;
+  }
+
+  function setSaveStatus(msg, kind){
+    var el = document.getElementById('saveStatus');
+    el.textContent = msg;
+    el.classList.remove('ok','warn');
+    if(kind) el.classList.add(kind);
+  }
+
+  window.saveState = function(silent){
+    if(!storageOK()){
+      setSaveStatus('Could not save — your browser is blocking local storage (try turning off private/incognito mode).', 'warn');
+      return;
+    }
+    var name = document.getElementById('stuName').value;
+    var cls = document.getElementById('stuClass').value;
+    var date = document.getElementById('stuDate').value;
+    var values = collectValues();
+    var hasAnyValue = Object.keys(values).some(function(q){ return values[q] && values[q].trim()!==''; });
+    if(!hasAnyValue && Object.keys(answered).length===0){
+      // nothing entered yet — skip saving so a reset (or a blank first visit) never resurrects an empty record
+      if(!silent) setSaveStatus('Nothing to save yet — fill in some answers first.', null);
+      return;
+    }
+    var key = saveKeyFor(name, cls);
+    var state = {
+      name: name, cls: cls, date: date,
+      values: values,
+      answered: answered,
+      savedAt: Date.now()
+    };
+    try{
+      localStorage.setItem(key, JSON.stringify(state));
+      addToIndex(key);
+      var when = new Date(state.savedAt).toLocaleTimeString();
+      setSaveStatus((silent?'Auto-saved ':'Saved ')+when+(name?' as "'+name+'"':' (enter your name above so you can find this save later)'), 'ok');
+    }catch(e){
+      setSaveStatus('Could not save — storage may be full.', 'warn');
+    }
+  };
+
+  function applyState(state){
+    var vals = state.values || {};
+    Object.keys(vals).forEach(function(q){
+      var el = document.querySelector('[data-q="'+q.replace(/"/g,'\\"')+'"]');
+      if(el) el.value = vals[q];
+    });
+    answered = state.answered || {};
+    document.querySelectorAll('[data-q]').forEach(function(el){
+      var q = el.getAttribute('data-q');
+      el.classList.remove('correct','incorrect');
+      if(el.value.trim()!=='' && Object.prototype.hasOwnProperty.call(answered,q)){
+        el.classList.add(answered[q] ? 'correct' : 'incorrect');
+        var cell = el.closest('.pt-cell');
+        if(cell){ cell.classList.remove('correct','incorrect'); cell.classList.add(answered[q]?'correct':'incorrect'); }
+      }
+    });
+    if(state.name) document.getElementById('stuName').value = state.name;
+    if(state.cls) document.getElementById('stuClass').value = state.cls;
+    if(state.date) document.getElementById('stuDate').value = state.date;
+    ['A','B','C','D','E','F','G','H'].forEach(function(letter){
+      var inputs = letter==='B'
+        ? document.querySelectorAll('#ptGrid .target input[data-q]')
+        : document.querySelectorAll('#sec'+letter+' .blank-input[data-q]');
+      if(!inputs.length) return;
+      var right=0, anyAnswered=false;
+      inputs.forEach(function(inp){
+        var q = inp.getAttribute('data-q');
+        if(Object.prototype.hasOwnProperty.call(answered,q)){ anyAnswered=true; if(answered[q]) right++; }
+      });
+      if(anyAnswered) document.getElementById('fb'+letter).textContent = right+' / '+inputs.length+' correct in this section.';
+    });
+    updateScore();
+  }
+
+  window.loadState = function(alertIfMissing){
+    if(!storageOK()){
+      setSaveStatus('Local storage is unavailable in this browser.', 'warn');
+      return;
+    }
+    var key = saveKeyFor(document.getElementById('stuName').value, document.getElementById('stuClass').value);
+    var raw;
+    try{ raw = localStorage.getItem(key); }catch(e){ raw = null; }
+    if(!raw){
+      if(alertIfMissing) setSaveStatus('No saved answers found for that name & class — check the spelling, or you haven’t saved yet.', 'warn');
+      return;
+    }
+    try{
+      var state = JSON.parse(raw);
+      applyState(state);
+      setSaveStatus('Restored your save from '+new Date(state.savedAt).toLocaleString()+'.', 'ok');
+    }catch(e){
+      setSaveStatus('Could not read your saved answers.', 'warn');
+    }
+  };
+
+  window.restoreFromBanner = function(){
+    var idx = readIndex();
+    if(idx.length!==1) return;
+    var raw;
+    try{ raw = localStorage.getItem(idx[0]); }catch(e){ raw = null; }
+    if(!raw) return;
+    try{
+      applyState(JSON.parse(raw));
+      setSaveStatus('Restored your previous answers.', 'ok');
+    }catch(e){}
+    document.getElementById('restoreBanner').classList.remove('show');
+  };
+  window.dismissBanner = function(){
+    document.getElementById('restoreBanner').classList.remove('show');
+  };
+
+  function offerRestoreIfSingleSave(){
+    if(!storageOK()) return;
+    var idx = readIndex();
+    if(idx.length!==1) return;
+    var raw;
+    try{ raw = localStorage.getItem(idx[0]); }catch(e){ raw = null; }
+    if(!raw) return;
+    try{
+      var state = JSON.parse(raw);
+      var when = new Date(state.savedAt).toLocaleString();
+      var who = state.name ? ('<strong>'+state.name+'</strong>') : 'a previous attempt';
+      document.getElementById('restoreMsg').innerHTML = 'We found a saved attempt from '+who+', saved '+when+'.';
+      document.getElementById('restoreBanner').classList.add('show');
+    }catch(e){}
+  }
+
+  /* ---------- init ---------- */
+  buildGrid();
+  TOTAL_MARKS = document.querySelectorAll('.blank-input[data-q]').length + document.querySelectorAll('.pt-cell.target input[data-q]').length;
+  document.querySelectorAll('.blank-input[data-q]').forEach(function(inp){
+    inp.addEventListener('input', function(){ /* live typing, no auto-check */ });
+  });
+  updateScore();
+  offerRestoreIfSingleSave();
+  setInterval(function(){ saveState(true); }, 60000);
+  window.addEventListener('beforeunload', function(){ saveState(true); });
+})();
+</script>
+</body>
+</html>
