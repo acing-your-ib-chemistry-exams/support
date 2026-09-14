@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formulae Match</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Space+Mono:wght@400;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0e1a;
+  --bg-panel:#121a2e;
+  --bg-panel-2:#0f1526;
+  --line:#26314f;
+  --ink:#eef2ff;
+  --muted:#9aa5c9;
+  --name-card:#faf6ea;
+  --name-ink:#2a2418;
+  --name-line:#cfc4a0;
+  --formula-card:#1c3a5e;
+  --formula-ink:#eaf4ff;
+  --formula-line:#3f6c98;
+  --gold:#e8b84b;
+  --good:#3ddc84;
+  --bad:#ff5c5c;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:radial-gradient(circle at 50% 0%, #17213c 0%, var(--bg-deep) 55%, #05070d 100%);
+  color:var(--ink);
+  font-family:'Sora',system-ui,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+.app{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;}
+
+.hud{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:10px 16px;
+  background:linear-gradient(180deg, var(--bg-panel) 0%, var(--bg-panel-2) 100%);
+  border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;
+}
+.hud h1{
+  font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;margin:0;
+  letter-spacing:.03em;white-space:nowrap;
+  background:linear-gradient(90deg,#fff,#c9d4ff);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hud .stats{display:flex;gap:14px;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--muted);flex-wrap:wrap;}
+.hud .stats b{color:var(--ink);font-weight:700;}
+.hud-actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;}
+.btn{
+  font-family:'Sora',sans-serif;font-weight:600;font-size:.8rem;
+  background:#1c2740;color:var(--ink);border:1px solid var(--line);
+  padding:8px 12px;border-radius:10px;cursor:pointer;transition:.15s;white-space:nowrap;
+}
+.btn:hover{background:#25335a;border-color:#3a4a78;}
+.btn:active{transform:translateY(1px);}
+.btn.primary{background:linear-gradient(180deg,#3a63e8,#2748ab);border-color:#4a6cf0;}
+.btn.primary:hover{background:linear-gradient(180deg,#4b72f0,#3054c0);}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+
+.board-wrap{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:20px;}
+.board{
+  display:grid;gap:10px;
+  grid-template-columns:repeat(auto-fill, minmax(112px, 1fr));
+  max-width:1100px;width:100%;
+}
+.card{aspect-ratio:1/1;perspective:800px;cursor:pointer;}
+.card.matched{cursor:default;}
+.card-inner{
+  position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .45s cubic-bezier(.3,.7,.3,1.1);
+}
+.card.flipped .card-inner, .card.matched .card-inner{transform:rotateY(180deg);}
+.card-face{
+  position:absolute;inset:0;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  padding:6px;
+}
+.card-face.front{
+  background:linear-gradient(155deg,#243258,#141d38);border:1px solid #3a4a78;
+  font-size:1.6rem;color:#5d6ea0;
+}
+.card-face.back{transform:rotateY(180deg);font-family:'Space Mono',monospace;font-weight:700;font-size:.92rem;line-height:1.25;}
+.card.name .card-face.back{background:var(--name-card);color:var(--name-ink);border:2px solid var(--name-line);font-family:'Sora',sans-serif;font-weight:600;font-size:.8rem;text-transform:capitalize;}
+.card.formula .card-face.back{background:var(--formula-card);color:var(--formula-ink);border:2px solid var(--formula-line);}
+.card.matched .card-face.back{box-shadow:0 0 0 3px var(--good) inset;}
+.card.wrong .card-face.back{box-shadow:0 0 0 3px var(--bad) inset;}
+@media (max-width:520px){
+  .board{grid-template-columns:repeat(auto-fill, minmax(88px, 1fr));gap:7px;}
+  .card-face.back{font-size:.68rem;}
+  .card.name .card-face.back{font-size:.66rem;}
+}
+
+.overlay{position:fixed;inset:0;background:#05070dee;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+.overlay.hidden{display:none;}
+.panel{
+  background:var(--bg-panel);border:1px solid var(--line);border-radius:20px;
+  padding:28px 30px;max-width:560px;width:100%;text-align:center;
+}
+.panel h2{font-family:'Orbitron',sans-serif;font-size:1.4rem;margin:0 0 10px;}
+.panel p{color:var(--muted);font-size:.9rem;line-height:1.55;text-align:left;}
+.diff-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0;}
+.diff-btn{
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:.85rem;
+  background:#1c2740;border:2px solid var(--line);color:var(--ink);
+  padding:14px 18px;border-radius:14px;cursor:pointer;min-width:120px;
+}
+.diff-btn small{display:block;font-family:'Sora',sans-serif;font-weight:400;font-size:.7rem;color:var(--muted);margin-top:4px;}
+.diff-btn.selected{border-color:var(--gold);background:#2a2210;}
+.panel .btn.primary{margin-top:6px;padding:12px 24px;font-size:.95rem;}
+
+.result-panel{
+  display:none;margin:18px auto 0;max-width:640px;width:100%;
+  background:var(--bg-panel);border:1px solid var(--good);border-radius:16px;padding:20px 22px;
+}
+.result-panel.show{display:block;}
+.result-panel h3{font-family:'Orbitron',sans-serif;color:var(--good);margin:0 0 10px;font-size:1.1rem;}
+.result-row{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap;}
+.result-row label{font-size:.8rem;color:var(--muted);}
+.result-row input{
+  font-family:'Sora',sans-serif;font-size:.9rem;padding:7px 10px;border-radius:8px;
+  border:1px solid var(--line);background:#0f1526;color:var(--ink);flex:1;min-width:160px;
+}
+#resultBlock{
+  width:100%;min-height:220px;font-family:'Space Mono',monospace;font-size:.76rem;line-height:1.5;
+  background:#0a0e1a;color:#cfe0ff;border:1px solid var(--line);border-radius:10px;padding:12px;white-space:pre;
+  overflow:auto;resize:vertical;
+}
+.copy-note{font-size:.72rem;color:var(--muted);margin-top:6px;}
+
+.toast{
+  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+  background:#1c2740ee;color:#fff;padding:8px 16px;border-radius:20px;
+  font-size:.8rem;opacity:0;transition:opacity .25s, transform .25s;pointer-events:none;z-index:200;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+
+@media (prefers-reduced-motion:reduce){
+  .card-inner{transition:none;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hud">
+    <h1>🃏 Formulae Match</h1>
+    <div class="stats">
+      <span>PAIRS <b id="pairsVal">0/0</b></span>
+      <span>MOVES <b id="movesVal">0</b></span>
+      <span>MISTAKES <b id="mistakesVal">0</b></span>
+      <span>TIME <b id="timeVal">0:00</b></span>
+    </div>
+    <div class="hud-actions">
+      <button class="btn" id="newGameBtn" type="button">🔀 New Game</button>
+    </div>
+  </div>
+
+  <div class="board-wrap">
+    <div class="board" id="board"></div>
+  </div>
+
+  <div class="board-wrap" style="padding-top:0;">
+    <div class="result-panel" id="resultPanel">
+      <h3>🎉 All pairs matched!</h3>
+      <div class="result-row">
+        <label for="studentName">Your name:</label>
+        <input type="text" id="studentName" placeholder="Type your name, then click Generate">
+        <button class="btn primary" id="generateBtn" type="button">Generate Submission Block</button>
+      </div>
+      <textarea id="resultBlock" readonly placeholder="Your results will appear here once you click Generate..."></textarea>
+      <div class="result-row" style="margin-top:8px;">
+        <button class="btn primary" id="copyBtn" type="button">📋 Copy for Canvas</button>
+        <span class="copy-note">Select all the text above and copy if the button doesn't work in your browser.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="startOverlay">
+    <div class="panel">
+      <h2>🃏 Formulae Match</h2>
+      <p>A classic memory game: flip two cards at a time and find the compound name that matches its chemical formula. Every game uses a fresh random set of ions, so no two rounds are the same.</p>
+      <div class="diff-row" id="diffRow">
+        <button class="diff-btn selected" data-key="week3" type="button">Week 3<small>Basic · 6 pairs</small></button>
+        <button class="diff-btn" data-key="week4" type="button">Week 4<small>10 pairs · 20 cards</small></button>
+        <button class="diff-btn" data-key="week5" type="button">Week 5<small>15 pairs · 30 cards</small></button>
+      </div>
+      <p style="text-align:center;"><button class="btn primary" id="startBtn" type="button">🚀 Start Game</button></p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= Ion data ================= */
+var CATIONS = [
+  {sym:'Li', charge:1, name:'lithium', poly:false},
+  {sym:'Na', charge:1, name:'sodium', poly:false},
+  {sym:'K',  charge:1, name:'potassium', poly:false},
+  {sym:'Rb', charge:1, name:'rubidium', poly:false},
+  {sym:'Cs', charge:1, name:'caesium', poly:false},
+  {sym:'Mg', charge:2, name:'magnesium', poly:false},
+  {sym:'Ca', charge:2, name:'calcium', poly:false},
+  {sym:'Sr', charge:2, name:'strontium', poly:false},
+  {sym:'Ba', charge:2, name:'barium', poly:false},
+  {sym:'Fe', charge:2, name:'iron(II)', poly:false},
+  {sym:'Fe', charge:3, name:'iron(III)', poly:false},
+  {sym:'Cu', charge:1, name:'copper(I)', poly:false},
+  {sym:'Cu', charge:2, name:'copper(II)', poly:false},
+  {sym:'Zn', charge:2, name:'zinc', poly:false},
+  {sym:'Ag', charge:1, name:'silver', poly:false},
+  {sym:'Al', charge:3, name:'aluminium', poly:false},
+  {sym:'Pb', charge:2, name:'lead(II)', poly:false},
+  {sym:'NH4',charge:1, name:'ammonium', poly:true},
+  {sym:'H',  charge:1, name:'hydrogen', poly:false}
+];
+var ANIONS = [
+  {sym:'O',  charge:2, name:'oxide', poly:false},
+  {sym:'S',  charge:2, name:'sulfide', poly:false},
+  {sym:'N',  charge:3, name:'nitride', poly:false},
+  {sym:'F',  charge:1, name:'fluoride', poly:false},
+  {sym:'Cl', charge:1, name:'chloride', poly:false},
+  {sym:'Br', charge:1, name:'bromide', poly:false},
+  {sym:'I',  charge:1, name:'iodide', poly:false},
+  {sym:'OH', charge:1, name:'hydroxide', poly:true},
+  {sym:'HCO3',charge:1,name:'hydrogencarbonate', poly:true},
+  {sym:'NO3',charge:1, name:'nitrate', poly:true},
+  {sym:'MnO4',charge:1,name:'manganate(VII)', poly:true},
+  {sym:'SO4',charge:2, name:'sulfate', poly:true},
+  {sym:'CO3',charge:2, name:'carbonate', poly:true},
+  {sym:'PO4',charge:3, name:'phosphate', poly:true}
+];
+
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=b; b=a%b; a=t; } return a||1; }
+
+function buildCompound(cation, anion){
+  var g = gcd(cation.charge, anion.charge);
+  var catCount = anion.charge / g;
+  var anCount  = cation.charge / g;
+  var catPart = (catCount>1 && cation.poly) ? ('(' + cation.sym + ')' + catCount) : (cation.sym + (catCount>1 ? catCount : ''));
+  var anPart  = (anCount>1  && anion.poly)  ? ('(' + anion.sym  + ')' + anCount)  : (anion.sym  + (anCount>1  ? anCount  : ''));
+  var name = cation.name + ' ' + anion.name;
+  return {
+    formula: catPart + anPart,
+    name: name.charAt(0).toUpperCase() + name.slice(1)
+  };
+}
+
+function buildLibrary(cationList, anionList){
+  var lib = [];
+  for (var i=0;i<cationList.length;i++){
+    for (var j=0;j<anionList.length;j++){
+      lib.push(buildCompound(cationList[i], anionList[j]));
+    }
+  }
+  return lib;
+}
+
+/* Week 3 (Basic) ion set — the ions students have actually met so far:
+   sodium, potassium, magnesium, hydrogen (the acids), calcium
+   hydroxide, carbonate, chloride, sulfate, fluoride, iodide, bromide, oxide, sulfide
+   (lead and silver, and everything else, wait for Week 4/5). */
+var BASIC_CATION_SYMS = ['Na','K','Mg','H','Ca'];
+var BASIC_ANION_SYMS  = ['OH','CO3','Cl','SO4','F','I','Br','O','S'];
+var BASIC_CATIONS = CATIONS.filter(function(c){ return BASIC_CATION_SYMS.indexOf(c.sym) !== -1; });
+var BASIC_ANIONS  = ANIONS.filter(function(a){ return BASIC_ANION_SYMS.indexOf(a.sym) !== -1; });
+
+var FULL_LIBRARY  = buildLibrary(CATIONS, ANIONS);
+var BASIC_LIBRARY = buildLibrary(BASIC_CATIONS, BASIC_ANIONS);
+
+/* ================= Difficulty / week levels ================= */
+var DIFFICULTIES = {
+  week3: { label:'Week 3', pairs:6,  library:BASIC_LIBRARY, note:'Basic ion set' },
+  week4: { label:'Week 4', pairs:10, library:FULL_LIBRARY,  note:'' },
+  week5: { label:'Week 5', pairs:15, library:FULL_LIBRARY,  note:'' }
+};
+
+function shuffle(arr){
+  var a = arr.slice();
+  for (var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var t=a[i]; a[i]=a[j]; a[j]=t;
+  }
+  return a;
+}
+
+function pickRoundCompounds(n, library){
+  var pool = shuffle(library);
+  var chosen = [], seenFormula = {};
+  for (var i=0;i<pool.length && chosen.length<n;i++){
+    if (!seenFormula[pool[i].formula]){
+      seenFormula[pool[i].formula] = true;
+      chosen.push(pool[i]);
+    }
+  }
+  return chosen;
+}
+
+/* ================= State ================= */
+var state = {
+  weekKey:'week3', pairs:6, totalCards:12,
+  cards:[], // {id, kind, text, matched, el}
+  flipped:[], // currently face-up unmatched card refs
+  busy:false,
+  moves:0, mistakes:0, matches:0,
+  startTs:null, timerId:null, elapsedSec:0,
+  compounds:[]
+};
+
+var board = document.getElementById('board');
+var pairsVal = document.getElementById('pairsVal');
+var movesVal = document.getElementById('movesVal');
+var mistakesVal = document.getElementById('mistakesVal');
+var timeVal = document.getElementById('timeVal');
+var newGameBtn = document.getElementById('newGameBtn');
+var startOverlay = document.getElementById('startOverlay');
+var startBtn = document.getElementById('startBtn');
+var diffRow = document.getElementById('diffRow');
+var resultPanel = document.getElementById('resultPanel');
+var studentName = document.getElementById('studentName');
+var generateBtn = document.getElementById('generateBtn');
+var resultBlock = document.getElementById('resultBlock');
+var copyBtn = document.getElementById('copyBtn');
+var toastEl = document.getElementById('toast');
+
+/* ================= Audio ================= */
+var actx = null;
+function ensureAudio(){ if (!actx){ var AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); } if (actx && actx.state==='suspended') actx.resume(); }
+function tone(freq, dur, type, peak, delay){
+  if (!actx) return;
+  delay = delay||0;
+  var t0 = actx.currentTime + delay;
+  var osc = actx.createOscillator(), gain = actx.createGain();
+  osc.type = type||'sine'; osc.frequency.setValueAtTime(freq, t0);
+  gain.gain.setValueAtTime(0.0001, t0);
+  gain.gain.exponentialRampToValueAtTime(peak||0.2, t0+0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+  osc.connect(gain); gain.connect(actx.destination);
+  osc.start(t0); osc.stop(t0+dur+0.02);
+}
+function playFlip(){ tone(420,0.08,'triangle',0.12); }
+function playMatch(){ tone(660,0.1,'sine',0.2); tone(880,0.14,'sine',0.22,0.09); }
+function playMismatch(){ tone(200,0.18,'sawtooth',0.14); }
+function playWin(){ tone(523,0.12,'sine',0.2); tone(659,0.12,'sine',0.2,0.11); tone(784,0.12,'sine',0.2,0.22); tone(1046,0.3,'sine',0.24,0.33); }
+
+var toastTimer=null;
+function showToast(msg){
+  toastEl.textContent = msg; toastEl.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1600);
+}
+
+/* ================= Timer ================= */
+function fmtTime(sec){
+  var m = Math.floor(sec/60), s = sec%60;
+  return m + ':' + (s<10?'0':'') + s;
+}
+function startTimer(){
+  if (state.timerId) return;
+  state.startTs = Date.now() - state.elapsedSec*1000;
+  state.timerId = setInterval(function(){
+    state.elapsedSec = Math.floor((Date.now()-state.startTs)/1000);
+    timeVal.textContent = fmtTime(state.elapsedSec);
+  }, 250);
+}
+function stopTimer(){
+  if (state.timerId){ clearInterval(state.timerId); state.timerId = null; }
+}
+
+/* ================= Board setup ================= */
+function buildBoard(weekKey){
+  var cfg = DIFFICULTIES[weekKey] || DIFFICULTIES.week3;
+  stopTimer();
+  state.weekKey = weekKey;
+  state.pairs = cfg.pairs;
+  state.totalCards = cfg.pairs*2;
+  state.cards = [];
+  state.flipped = [];
+  state.busy = false;
+  state.moves = 0; state.mistakes = 0; state.matches = 0;
+  state.elapsedSec = 0; state.startTs = null;
+  resultPanel.classList.remove('show');
+  resultBlock.value = '';
+  studentName.value = '';
+
+  var compounds = pickRoundCompounds(cfg.pairs, cfg.library);
+  state.compounds = compounds;
+
+  var cardDefs = [];
+  compounds.forEach(function(c, idx){
+    cardDefs.push({id:idx, kind:'name', text:c.name});
+    cardDefs.push({id:idx, kind:'formula', text:c.formula});
+  });
+  cardDefs = shuffle(cardDefs);
+
+  board.innerHTML = '';
+  cardDefs.forEach(function(def){
+    var card = document.createElement('div');
+    card.className = 'card ' + def.kind;
+    card.innerHTML =
+      '<div class="card-inner">' +
+        '<div class="card-face front">⚛️</div>' +
+        '<div class="card-face back">'+escapeHtml(def.text)+'</div>' +
+      '</div>';
+    card.addEventListener('click', function(){ onCardClick(cardObj); });
+    var cardObj = {id:def.id, kind:def.kind, text:def.text, matched:false, flipped:false, el:card};
+    state.cards.push(cardObj);
+    board.appendChild(card);
+  });
+
+  updateStats();
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+function updateStats(){
+  pairsVal.textContent = state.matches + '/' + state.pairs;
+  movesVal.textContent = state.moves;
+  mistakesVal.textContent = state.mistakes;
+  timeVal.textContent = fmtTime(state.elapsedSec);
+}
+
+/* ================= Interaction ================= */
+function onCardClick(cardObj){
+  if (state.busy || cardObj.matched || cardObj.flipped) return;
+  ensureAudio();
+  startTimer();
+  cardObj.flipped = true;
+  cardObj.el.classList.add('flipped');
+  playFlip();
+  state.flipped.push(cardObj);
+
+  if (state.flipped.length === 2){
+    state.moves++;
+    updateStats();
+    var a = state.flipped[0], b = state.flipped[1];
+    if (a.id === b.id){
+      state.busy = true;
+      setTimeout(function(){
+        a.matched = true; b.matched = true;
+        a.el.classList.add('matched'); b.el.classList.add('matched');
+        state.matches++;
+        state.flipped = [];
+        state.busy = false;
+        playMatch();
+        updateStats();
+        if (state.matches === state.pairs){ completeGame(); }
+      }, 260);
+    } else {
+      state.mistakes++;
+      updateStats();
+      a.el.classList.add('wrong'); b.el.classList.add('wrong');
+      playMismatch();
+      state.busy = true;
+      setTimeout(function(){
+        a.flipped = false; b.flipped = false;
+        a.el.classList.remove('flipped','wrong');
+        b.el.classList.remove('flipped','wrong');
+        state.flipped = [];
+        state.busy = false;
+      }, 900);
+    }
+  }
+}
+
+function completeGame(){
+  stopTimer();
+  playWin();
+  resultPanel.classList.add('show');
+  resultPanel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+/* ================= Submission block ================= */
+function hashCode(str){
+  var h = 5381;
+  for (var i=0;i<str.length;i++){ h = (((h<<5)+h) + str.charCodeAt(i)) & 0xFFFFFFFF; }
+  return (h>>>0);
+}
+function genCode(parts){
+  var raw = parts.join('|');
+  var h = hashCode(raw);
+  var code = h.toString(36).toUpperCase();
+  while (code.length<6) code = '0'+code;
+  return 'FM-' + code.slice(0,6);
+}
+
+function difficultyLabel(){
+  var cfg = DIFFICULTIES[state.weekKey] || DIFFICULTIES.week3;
+  return cfg.label + (cfg.note ? ' (' + cfg.note + ')' : '');
+}
+
+generateBtn.addEventListener('click', function(){
+  var name = studentName.value.trim();
+  if (!name){
+    showToast('Please type your name first');
+    studentName.focus();
+    return;
+  }
+  var accuracy = state.moves>0 ? Math.round((state.matches/state.moves)*100) : 100;
+  var sortedFormulas = state.compounds.map(function(c){return c.formula;}).slice().sort();
+  var code = genCode([
+    name.toLowerCase(), state.weekKey, String(state.pairs), String(state.moves),
+    String(state.mistakes), String(state.elapsedSec), sortedFormulas.join(',')
+  ]);
+
+  var lines = [];
+  lines.push('FORMULAE MATCH — RESULTS');
+  lines.push('Student: ' + name);
+  lines.push('Level: ' + difficultyLabel() + ' (' + state.pairs + ' pairs)');
+  lines.push('Time: ' + fmtTime(state.elapsedSec));
+  lines.push('Moves: ' + state.moves + '   Mistakes: ' + state.mistakes + '   Accuracy: ' + accuracy + '%');
+  lines.push('Verification code: ' + code);
+  lines.push('');
+  lines.push('Compounds covered:');
+  state.compounds.forEach(function(c, i){
+    lines.push((i+1) + '. ' + c.name + ' — ' + c.formula);
+  });
+
+  resultBlock.value = lines.join('\n');
+});
+
+copyBtn.addEventListener('click', function(){
+  if (!resultBlock.value){ showToast('Click Generate Submission Block first'); return; }
+  resultBlock.focus();
+  resultBlock.select();
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(resultBlock.value).then(function(){
+      showToast('Copied! Paste it into Canvas.');
+    }).catch(function(){
+      fallbackCopy();
+    });
+  } else {
+    fallbackCopy();
+  }
+});
+function fallbackCopy(){
+  var copied = false;
+  try { copied = document.execCommand('copy'); } catch(e){ copied = false; }
+  showToast(copied ? 'Copied! Paste it into Canvas.' : 'Select the text above and copy manually.');
+}
+
+/* ================= Start / difficulty ================= */
+var selectedWeek = 'week3';
+diffRow.addEventListener('click', function(ev){
+  var btn = ev.target.closest('.diff-btn');
+  if (!btn) return;
+  selectedWeek = btn.getAttribute('data-key');
+  Array.prototype.forEach.call(diffRow.querySelectorAll('.diff-btn'), function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+});
+startBtn.addEventListener('click', function(){
+  ensureAudio();
+  startOverlay.classList.add('hidden');
+  buildBoard(selectedWeek);
+});
+newGameBtn.addEventListener('click', function(){
+  buildBoard(state.weekKey || selectedWeek);
+});
+
+})();
+</script>
+</body>
+</html>

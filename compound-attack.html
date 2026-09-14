@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compound Formulae Attack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Space+Mono:wght@400;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0e1a;
+  --bg-panel:#121a2e;
+  --bg-panel-2:#0f1526;
+  --line:#26314f;
+  --ink:#eef2ff;
+  --muted:#9aa5c9;
+  --cation:#ff6b6b;
+  --cation-dark:#8a2f2f;
+  --anion:#4d5a7a;
+  --anion-dark:#232c44;
+  --light-bg:#faf6ea;
+  --light-ink:#2a2418;
+  --light-line:#cfc4a0;
+  --gold:#e8b84b;
+  --good:#3ddc84;
+  --bad:#ff5c5c;
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:radial-gradient(circle at 50% 0%, #17213c 0%, var(--bg-deep) 55%, #05070d 100%);
+  color:var(--ink);
+  font-family:'Sora',system-ui,sans-serif;
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+.app{height:100vh;height:100dvh;display:flex;flex-direction:column;}
+
+/* ---------- HUD ---------- */
+.hud{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:10px 16px;
+  background:linear-gradient(180deg, var(--bg-panel) 0%, var(--bg-panel-2) 100%);
+  border-bottom:1px solid var(--line);
+  z-index:20;position:relative;
+}
+.hud h1{
+  font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;margin:0;
+  letter-spacing:.03em;white-space:nowrap;
+  background:linear-gradient(90deg,#fff,#c9d4ff);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hud .stats{display:flex;gap:14px;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--muted);}
+.hud .stats b{color:var(--ink);font-weight:700;}
+.hud-actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;}
+.btn{
+  font-family:'Sora',sans-serif;font-weight:600;font-size:.8rem;
+  background:#1c2740;color:var(--ink);border:1px solid var(--line);
+  padding:8px 12px;border-radius:10px;cursor:pointer;transition:.15s;white-space:nowrap;
+}
+.btn:hover{background:#25335a;border-color:#3a4a78;}
+.btn:active{transform:translateY(1px);}
+.btn.primary{background:linear-gradient(180deg,#3a63e8,#2748ab);border-color:#4a6cf0;}
+.btn.primary:hover{background:linear-gradient(180deg,#4b72f0,#3054c0);}
+
+/* ---------- Prompt bar ---------- */
+.promptbar{
+  padding:10px 16px;text-align:center;
+  background:var(--bg-panel-2);border-bottom:1px solid var(--line);
+  z-index:19;position:relative;
+}
+.promptbar .lead{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.promptbar .target{
+  font-family:'Orbitron',sans-serif;font-weight:800;font-size:1.35rem;color:var(--gold);
+  letter-spacing:.02em;transition:opacity .25s;
+}
+.promptbar .target.fading{opacity:0;}
+
+/* ---------- Stage ---------- */
+.stage{flex:1;display:flex;position:relative;overflow:hidden;min-height:0;}
+.stage::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(1px 1px at 8% 22%, #ffffff55 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 68%, #ffffff33 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 38% 12%, #ffffff44 50%, transparent 51%),
+    radial-gradient(1px 1px at 63% 78%, #ffffff33 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 82% 30%, #ffffff55 50%, transparent 51%),
+    radial-gradient(1px 1px at 91% 60%, #ffffff33 50%, transparent 51%),
+    radial-gradient(1px 1px at 50% 90%, #ffffff22 50%, transparent 51%);
+  pointer-events:none;
+}
+
+.pool{
+  flex:0 0 auto;width:min(27vw,230px);
+  display:flex;flex-direction:column;justify-content:space-between;gap:6px;
+  padding:10px 8px;overflow-y:auto;position:relative;z-index:5;
+}
+.pool.cations{border-right:1px solid #ffffff14;}
+.pool.anions{border-left:1px solid #ffffff14;}
+.band{display:flex;flex-direction:column;gap:6px;align-items:center;}
+.band .band-label{
+  font-family:'Space Mono',monospace;font-size:.68rem;color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:1px;
+}
+.band .icons{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+
+.ion-src{
+  font-family:'Space Mono',monospace;
+  width:54px;height:54px;border-radius:12px;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  animation:bob 3.4s ease-in-out infinite;
+  transition:transform .12s;
+}
+.ion-src:hover{transform:scale(1.08);}
+.ion-src:active{transform:scale(.96);}
+.ion-src .sym{font-size:.92rem;font-weight:700;line-height:1;}
+.ion-src .lbl{font-family:'Sora',sans-serif;font-size:.5rem;font-weight:600;opacity:.85;text-transform:capitalize;line-height:1;}
+.cation .ion-src, .flying.cation{
+  background:linear-gradient(155deg,var(--cation),var(--cation-dark));color:#fff;
+  box-shadow:0 3px 10px #ff6b6b33;
+}
+.anion .ion-src, .flying.anion{
+  background:linear-gradient(155deg,var(--anion),var(--anion-dark));color:#fff;
+  box-shadow:0 3px 10px #00000055;
+}
+.ion-src:nth-child(2n){animation-delay:.6s;}
+.ion-src:nth-child(3n){animation-delay:1.3s;}
+@keyframes bob{0%,100%{margin-top:0px;}50%{margin-top:-4px;}}
+
+.assembly-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;min-width:0;position:relative;z-index:4;}
+.assembly-zone{
+  width:min(50vw,520px);height:min(46vh,380px);
+  background:var(--light-bg);color:var(--light-ink);
+  border:3px dashed var(--light-line);border-radius:18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  position:relative;transition:box-shadow .3s, border-color .3s, background .3s;
+}
+.assembly-zone .zone-label{
+  position:absolute;top:10px;left:14px;
+  font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:#8a7d55;
+}
+.assembly-zone.reject{border-color:var(--bad);box-shadow:0 0 0 4px #ff5c5c22 inset;}
+.assembly-zone.assembled{border-style:solid;border-color:var(--good);box-shadow:0 0 30px #3ddc8455;}
+.assembled-grid{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;
+  padding:20px;width:100%;height:100%;
+}
+.docked-ion{
+  font-family:'Space Mono',monospace;font-weight:700;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:14px;color:#fff;transition:all .35s cubic-bezier(.2,.8,.3,1.2);
+  width:56px;height:56px;font-size:.95rem;
+}
+.docked-ion .charge{display:block;}
+.docked-ion.cation{background:linear-gradient(155deg,var(--cation),var(--cation-dark));}
+.docked-ion.anion{background:linear-gradient(155deg,var(--anion),var(--anion-dark));}
+.assembled-grid.full .docked-ion{
+  flex:1 1 auto;width:auto;height:100%;min-width:64px;font-size:2rem;border-radius:16px;
+}
+.assembled-grid.full{gap:6px;}
+
+.flying{
+  position:absolute;left:0;top:0;
+  width:50px;height:50px;border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-weight:700;color:#fff;font-size:.9rem;
+  transform:translate(-50%,-50%);z-index:30;pointer-events:none;
+  box-shadow:0 4px 14px #00000066;
+}
+
+.formula-panel{
+  display:none;flex-direction:column;align-items:center;gap:8px;margin-top:4px;
+}
+.formula-panel.show{display:flex;}
+.formula-panel .hint{font-size:.72rem;color:#6d6448;font-family:'Sora',sans-serif;}
+.formula-row{display:flex;gap:8px;align-items:center;}
+.formula-row input{
+  font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;
+  border:2px solid var(--light-line);border-radius:10px;padding:8px 12px;
+  width:180px;text-align:center;background:#fff;color:var(--light-ink);
+}
+.formula-row input.shake{animation:shakeit .4s;border-color:var(--bad);}
+@keyframes shakeit{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-6px);}80%{transform:translateX(6px);}}
+
+.toast{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  background:#1c2740ee;color:#fff;padding:7px 14px;border-radius:20px;
+  font-size:.78rem;font-family:'Sora',sans-serif;opacity:0;transition:opacity .25s, transform .25s;
+  pointer-events:none;white-space:nowrap;z-index:40;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px);}
+
+/* ---------- Banner ---------- */
+.banner-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:60;}
+.banner{
+  background:var(--bg-panel);border:2px solid var(--line);border-radius:18px;
+  padding:22px 34px;text-align:center;min-width:260px;max-width:80vw;
+  opacity:0;transform:scale(.85);transition:opacity .18s, transform .18s;
+}
+.banner.show{opacity:1;transform:scale(1);}
+.banner .emoji{font-size:2.4rem;line-height:1;margin-bottom:6px;}
+.banner .title{font-family:'Orbitron',sans-serif;font-weight:800;font-size:1.2rem;}
+.banner .sub{font-family:'Sora',sans-serif;font-size:.85rem;color:var(--muted);margin-top:4px;}
+.banner.good{border-color:var(--good);}
+.banner.good .title{color:var(--good);}
+.banner.bad{border-color:var(--bad);}
+.banner.bad .title{color:var(--bad);}
+
+/* ---------- D-pad ---------- */
+.dpad{
+  flex:0 0 auto;z-index:50;
+  display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px);gap:4px;
+  opacity:.92;
+}
+.dpad button{
+  font-size:1.1rem;border-radius:10px;border:1px solid var(--line);
+  background:#1c2740cc;color:#fff;cursor:pointer;
+}
+.dpad button:active{background:#3a63e8;}
+.dpad .up{grid-column:2;grid-row:1;}
+.dpad .left{grid-column:1;grid-row:2;}
+.dpad .down{grid-column:2;grid-row:2;}
+.dpad .right{grid-column:3;grid-row:2;}
+
+/* ---------- Start / Help overlay ---------- */
+.overlay{
+  position:absolute;inset:0;background:#05070dee;z-index:100;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.overlay.hidden{display:none;}
+.panel{
+  background:var(--bg-panel);border:1px solid var(--line);border-radius:20px;
+  padding:28px 30px;max-width:520px;text-align:center;
+}
+.panel h2{font-family:'Orbitron',sans-serif;font-size:1.4rem;margin:0 0 10px;}
+.panel p{color:var(--muted);font-size:.9rem;line-height:1.55;text-align:left;}
+.panel ol{color:var(--muted);font-size:.88rem;line-height:1.7;text-align:left;padding-left:20px;}
+
+.week-row{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 16px;}
+.week-btn{
+  appearance:none;flex:1 1 110px;
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:.8rem;
+  background:#1c2740;border:2px solid var(--line);color:var(--ink);
+  padding:9px 10px;border-radius:10px;cursor:pointer;text-align:center;
+}
+.week-btn small{display:block;font-family:'Sora',sans-serif;font-weight:400;font-size:.66rem;color:var(--muted);margin-top:3px;}
+.week-btn.selected{border-color:var(--gold);background:#2a2210;}
+.week-btn.selected small{color:var(--gold);}
+.week-tag{
+  font-family:'Sora',sans-serif;font-weight:600;font-size:.62rem;letter-spacing:.06em;
+  color:var(--gold);background:#2a2210;border:1px solid var(--gold);
+  padding:2px 8px;border-radius:10px;vertical-align:middle;margin-left:6px;
+}
+.panel .btn{margin-top:14px;}
+
+.help-toggle-panel{
+  position:absolute;top:8px;right:8px;z-index:80;max-width:280px;
+  background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;
+  padding:12px 14px;font-size:.78rem;color:var(--muted);line-height:1.6;display:none;
+}
+.help-toggle-panel.show{display:block;}
+.help-toggle-panel b{color:var(--ink);}
+
+@media (max-width:760px){
+  .pool{width:min(30vw,150px);}
+  .ion-src{width:44px;height:44px;}
+  .ion-src .sym{font-size:.78rem;}
+  .assembly-zone{width:min(70vw,420px);height:min(46vh,340px);}
+}
+@media (prefers-reduced-motion:reduce){
+  .ion-src{animation:none;}
+  .banner,.docked-ion,.formula-row input,.target{transition:none;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hud">
+    <h1>🧪 Compound Formulae Attack <span class="week-tag" id="weekLabel"></span></h1>
+    <div class="stats">
+      <span>SCORE <b id="scoreVal">0</b></span>
+      <span>STREAK <b id="streakVal">0</b></span>
+      <span>BEST <b id="bestVal">0</b></span>
+      <span>BUILT <b id="builtVal">0</b></span>
+    </div>
+    <div class="hud-actions">
+      <button class="btn" id="helpBtn" type="button">❓ Help</button>
+      <button class="btn" id="resetAssemblyBtn" type="button">🧹 Reset Assembly</button>
+      <button class="btn" id="skipBtn" type="button">⏭ New Compound</button>
+      <button class="btn" id="restartBtn" type="button">🔁 Restart Game</button>
+    </div>
+  </div>
+
+  <div class="promptbar">
+    <div class="lead">Build the compound:</div>
+    <div class="target" id="targetName">—</div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="pool cations" id="poolCations"></div>
+
+    <div class="assembly-wrap">
+      <div class="assembly-zone" id="assemblyZone">
+        <div class="zone-label">Assembly Zone</div>
+        <div class="assembled-grid" id="assembledGrid"></div>
+        <div class="formula-panel" id="formulaPanel">
+          <div class="hint">Balanced! Now write the formula (e.g. MgCl2):</div>
+          <div class="formula-row">
+            <input type="text" id="formulaInput" autocomplete="off" spellcheck="false" placeholder="Formula">
+            <button class="btn primary" id="formulaSubmit" type="button">Check ✓</button>
+          </div>
+        </div>
+        <div class="toast" id="toast"></div>
+      </div>
+      <div class="dpad" id="dpad">
+        <button class="up" id="btnUp" type="button">▲</button>
+        <button class="left" id="btnLeft" type="button">◀</button>
+        <button class="down" id="btnDown" type="button">▼</button>
+        <button class="right" id="btnRight" type="button">▶</button>
+      </div>
+    </div>
+
+    <div class="pool anions" id="poolAnions"></div>
+
+    <div class="banner-layer"><div class="banner" id="banner"><div class="emoji" id="bannerEmoji"></div><div class="title" id="bannerTitle"></div><div class="sub" id="bannerSub"></div></div></div>
+
+    <div class="help-toggle-panel" id="helpPanel">
+      <b>How to play</b><br>
+      1. Read the compound name above.<br>
+      2. Click a matching cation (left, red) or anion (right, blue-grey) to launch a copy.<br>
+      3. Steer it into the Assembly Zone with <b>Arrow keys or WASD</b> (or the on-screen pad).<br>
+      4. Keep adding ions until the charges balance and the Zone glows green.<br>
+      5. Type the formula and press <b>Enter</b>.
+    </div>
+  </div>
+
+  <div class="overlay" id="startOverlay">
+    <div class="panel">
+      <h2>🧪 Compound Formulae Attack</h2>
+      <p>Build real ionic compounds from their names. Choose the right cations and anions, fly them into the Assembly Zone with the arrow keys or WASD, balance the charges — then write the formula.</p>
+      <ol>
+        <li>A compound name appears at the top, e.g. <i>magnesium chloride</i>.</li>
+        <li>Click the matching ion(s) to launch a copy toward the Zone.</li>
+        <li>Steer with arrow keys / WASD (or the on-screen pad on touch devices).</li>
+        <li>When the charges balance the Zone lights up — type the formula to score.</li>
+      </ol>
+      <div class="week-row" id="weekRow">
+        <button class="week-btn selected" data-week="week3" type="button">Week 3<small>Basic ions</small></button>
+        <button class="week-btn" data-week="week4" type="button">Week 4<small>Extended</small></button>
+        <button class="week-btn" data-week="week5" type="button">Week 5<small>Full set</small></button>
+      </div>
+      <button class="btn primary" id="startBtn" type="button">🚀 Start Building</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= Ion data ================= */
+var CATIONS = [
+  {sym:'Na', charge:1, name:'sodium', poly:false, disp:'Na⁺'},
+  {sym:'K',  charge:1, name:'potassium', poly:false, disp:'K⁺'},
+  {sym:'Li', charge:1, name:'lithium', poly:false, disp:'Li⁺'},
+  {sym:'Rb', charge:1, name:'rubidium', poly:false, disp:'Rb⁺'},
+  {sym:'Cs', charge:1, name:'caesium', poly:false, disp:'Cs⁺'},
+  {sym:'Mg', charge:2, name:'magnesium', poly:false, disp:'Mg²⁺'},
+  {sym:'Ba', charge:2, name:'barium', poly:false, disp:'Ba²⁺'},
+  {sym:'Ca', charge:2, name:'calcium', poly:false, disp:'Ca²⁺'},
+  {sym:'Al', charge:3, name:'aluminium', poly:false, disp:'Al³⁺'},
+  {sym:'NH4',charge:1, name:'ammonium', poly:true,  disp:'NH₄⁺'},
+  {sym:'H',  charge:1, name:'hydrogen', poly:false, disp:'H⁺'}
+];
+var ANIONS = [
+  {sym:'Cl', charge:1, name:'chloride', poly:false, disp:'Cl⁻'},
+  {sym:'Br', charge:1, name:'bromide', poly:false, disp:'Br⁻'},
+  {sym:'I',  charge:1, name:'iodide', poly:false, disp:'I⁻'},
+  {sym:'F',  charge:1, name:'fluoride', poly:false, disp:'F⁻'},
+  {sym:'O',  charge:2, name:'oxide', poly:false, disp:'O²⁻'},
+  {sym:'S',  charge:2, name:'sulfide', poly:false, disp:'S²⁻'},
+  {sym:'N',  charge:3, name:'nitride', poly:false, disp:'N³⁻'},
+  {sym:'NO3',charge:1, name:'nitrate', poly:true, disp:'NO₃⁻'},
+  {sym:'OH', charge:1, name:'hydroxide', poly:true, disp:'OH⁻'},
+  {sym:'HCO3',charge:1,name:'hydrogencarbonate', poly:true, disp:'HCO₃⁻'},
+  {sym:'CH3COO',charge:1,name:'ethanoate', poly:true, disp:'CH₃COO⁻'},
+  {sym:'MnO4',charge:1,name:'manganate', poly:true, disp:'MnO₄⁻'},
+  {sym:'SO4',charge:2, name:'sulfate', poly:true, disp:'SO₄²⁻'},
+  {sym:'CO3',charge:2, name:'carbonate', poly:true, disp:'CO₃²⁻'},
+  {sym:'PO4',charge:3, name:'phosphate', poly:true, disp:'PO₄³⁻'}
+];
+
+// Course-week levels: which ions are in play. Week 3 sticks to the ions students have
+// actually met so far (no lead, no silver — those never appeared in this game anyway);
+// Week 4 folds in the rest of group I/II plus ammonium, nitride and nitrate; Week 5 opens
+// up the full ion set including the trickier polyatomic anions.
+var WEEK_LEVELS = {
+  week3: {
+    label:'Week 3', sub:'Basic ions',
+    cationSyms:['Na','K','Mg','H','Ca','Al','Li'],
+    anionSyms:['OH','CO3','Cl','SO4','F','I','Br','O','S']
+  },
+  week4: {
+    label:'Week 4', sub:'Extended',
+    cationSyms:['Na','K','Mg','H','Ca','Al','Li','Rb','Cs','Ba','NH4'],
+    anionSyms:['OH','CO3','Cl','SO4','F','I','Br','O','S','N','NO3','HCO3']
+  },
+  week5: {
+    label:'Week 5', sub:'Full set',
+    cationSyms:null, anionSyms:null // null = every ion, no restriction
+  }
+};
+var selectedWeek = 'week3';
+var currentCations = CATIONS;
+var currentAnions = ANIONS;
+function applyWeekLevel(weekKey){
+  var lvl = WEEK_LEVELS[weekKey] || WEEK_LEVELS.week5;
+  currentCations = lvl.cationSyms ? CATIONS.filter(function(c){ return lvl.cationSyms.indexOf(c.sym) !== -1; }) : CATIONS;
+  currentAnions  = lvl.anionSyms  ? ANIONS.filter(function(a){ return lvl.anionSyms.indexOf(a.sym) !== -1; })  : ANIONS;
+  buildPool(poolCations, currentCations, 'cation');
+  buildPool(poolAnions, currentAnions, 'anion');
+  weekLabel.textContent = lvl.label + ' · ' + lvl.sub;
+}
+
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=b; b=a%b; a=t; } return a||1; }
+
+function ionBySym(sym, role){
+  var arr = role==='cation' ? CATIONS : ANIONS;
+  for (var i=0;i<arr.length;i++){ if (arr[i].sym===sym) return arr[i]; }
+  return null;
+}
+
+function buildCompound(cation, anion){
+  var g = gcd(cation.charge, anion.charge);
+  var catCount = anion.charge / g;
+  var anCount  = cation.charge / g;
+  var catPart = (catCount>1 && cation.poly) ? ('(' + cation.sym + ')' + catCount) : (cation.sym + (catCount>1 ? catCount : ''));
+  var anPart  = (anCount>1  && anion.poly)  ? ('(' + anion.sym  + ')' + anCount)  : (anion.sym  + (anCount>1  ? anCount  : ''));
+  return {
+    cation:cation, anion:anion, catCount:catCount, anCount:anCount,
+    formula: catPart + anPart,
+    name: cation.name + ' ' + anion.name
+  };
+}
+
+/* ================= State ================= */
+var state = {
+  running:false,
+  target:null,
+  lastTarget:null,
+  dockedCounts:{},
+  dockedList:[],
+  active:null, // flying ion object
+  score:0, streak:0, best:0, built:0,
+  keys:{up:false,down:false,left:false,right:false},
+  locked:false
+};
+
+var stage = document.getElementById('stage');
+var poolCations = document.getElementById('poolCations');
+var poolAnions = document.getElementById('poolAnions');
+var assemblyZone = document.getElementById('assemblyZone');
+var assembledGrid = document.getElementById('assembledGrid');
+var formulaPanel = document.getElementById('formulaPanel');
+var formulaInput = document.getElementById('formulaInput');
+var formulaSubmit = document.getElementById('formulaSubmit');
+var targetNameEl = document.getElementById('targetName');
+var toastEl = document.getElementById('toast');
+var scoreVal = document.getElementById('scoreVal');
+var streakVal = document.getElementById('streakVal');
+var bestVal = document.getElementById('bestVal');
+var builtVal = document.getElementById('builtVal');
+var banner = document.getElementById('banner');
+var bannerEmoji = document.getElementById('bannerEmoji');
+var bannerTitle = document.getElementById('bannerTitle');
+var bannerSub = document.getElementById('bannerSub');
+var startOverlay = document.getElementById('startOverlay');
+var startBtn = document.getElementById('startBtn');
+var helpBtn = document.getElementById('helpBtn');
+var helpPanel = document.getElementById('helpPanel');
+var resetAssemblyBtn = document.getElementById('resetAssemblyBtn');
+var skipBtn = document.getElementById('skipBtn');
+var restartBtn = document.getElementById('restartBtn');
+var btnUp = document.getElementById('btnUp'), btnDown = document.getElementById('btnDown'),
+    btnLeft = document.getElementById('btnLeft'), btnRight = document.getElementById('btnRight');
+var weekLabel = document.getElementById('weekLabel');
+var weekRow = document.getElementById('weekRow');
+
+var zoneBox = {left:0, top:0, width:0, height:0};
+function updateZoneBox(){
+  var zr = assemblyZone.getBoundingClientRect();
+  var sr = stage.getBoundingClientRect();
+  zoneBox.left = zr.left - sr.left; zoneBox.top = zr.top - sr.top;
+  zoneBox.width = zr.width; zoneBox.height = zr.height;
+}
+window.addEventListener('resize', updateZoneBox);
+
+/* ================= Audio ================= */
+var actx = null;
+function ensureAudio(){ if (!actx){ var AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); } if (actx && actx.state==='suspended') actx.resume(); }
+function tone(freq, dur, type, gainPeak, delay){
+  if (!actx) return;
+  delay = delay || 0;
+  var t0 = actx.currentTime + delay;
+  var osc = actx.createOscillator(); var gain = actx.createGain();
+  osc.type = type || 'sine'; osc.frequency.setValueAtTime(freq, t0);
+  gain.gain.setValueAtTime(0.0001, t0);
+  gain.gain.exponentialRampToValueAtTime(gainPeak||0.2, t0+0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+  osc.connect(gain); gain.connect(actx.destination);
+  osc.start(t0); osc.stop(t0+dur+0.02);
+}
+function playDock(){ tone(660,0.12,'triangle',0.18); }
+function playReject(){ tone(160,0.18,'sawtooth',0.16); tone(120,0.22,'sawtooth',0.12,0.05); }
+function playAssembled(){ tone(520,0.14,'sine',0.2); tone(660,0.14,'sine',0.2,0.1); tone(880,0.22,'sine',0.22,0.2); }
+function playSuccess(){ tone(660,0.12,'sine',0.22); tone(880,0.12,'sine',0.22,0.1); tone(1180,0.28,'sine',0.24,0.2); }
+function playError(){ tone(220,0.28,'sawtooth',0.18); tone(160,0.32,'sawtooth',0.16,0.08); }
+
+/* ================= Banner / toast ================= */
+var bannerTimer = null;
+function showBanner(kind, emoji, title, sub, dur){
+  banner.className = 'banner show ' + kind;
+  bannerEmoji.textContent = emoji; bannerTitle.textContent = title; bannerSub.textContent = sub||'';
+  if (bannerTimer) clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(function(){ banner.className = 'banner ' + kind; }, dur||1600);
+}
+var toastTimer = null;
+function showToast(msg){
+  toastEl.textContent = msg; toastEl.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1500);
+}
+
+/* ================= Pools ================= */
+function buildPool(container, ions, role){
+  container.innerHTML = '';
+  container.classList.add(role);
+  var byCharge = {};
+  ions.forEach(function(ion){ (byCharge[ion.charge] = byCharge[ion.charge]||[]).push(ion); });
+  var charges = Object.keys(byCharge).sort(function(a,b){return a-b;});
+  charges.forEach(function(ch){
+    var band = document.createElement('div'); band.className = 'band';
+    var label = document.createElement('div'); label.className = 'band-label';
+    label.textContent = ch + (role==='cation' ? '+' : '-');
+    band.appendChild(label);
+    var icons = document.createElement('div'); icons.className = 'icons';
+    byCharge[ch].forEach(function(ion){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'ion-src'; b.setAttribute('data-sym', ion.sym); b.setAttribute('data-role', role);
+      b.innerHTML = '<span class="sym">'+ion.disp+'</span><span class="lbl">'+ion.name+'</span>';
+      b.addEventListener('click', function(){ onPoolClick(ion, role, b); });
+      icons.appendChild(b);
+    });
+    band.appendChild(icons);
+    container.appendChild(band);
+  });
+}
+applyWeekLevel(selectedWeek);
+
+/* ================= Flying ion ================= */
+function destroyActive(){
+  if (state.active && state.active.el && state.active.el.parentNode){
+    state.active.el.parentNode.removeChild(state.active.el);
+  }
+  state.active = null;
+}
+function onPoolClick(ion, role, srcEl){
+  if (!state.running || state.locked) return;
+  ensureAudio();
+  if (state.active) destroyActive();
+  var sr = stage.getBoundingClientRect();
+  var ir = srcEl.getBoundingClientRect();
+  var x = ir.left - sr.left + ir.width/2;
+  var y = ir.top - sr.top + ir.height/2;
+  var el = document.createElement('div');
+  el.className = 'flying ' + role;
+  el.innerHTML = '<span class="sym">'+ion.disp+'</span>';
+  el.style.left = x+'px'; el.style.top = y+'px';
+  stage.appendChild(el);
+  state.active = { el:el, x:x, y:y, sym:ion.sym, role:role, spawnX:x, spawnY:y };
+}
+function cancelActive(){
+  if (!state.active) return;
+  destroyActive();
+}
+
+var SPEED = 260;
+function stepActive(dt){
+  var a = state.active; if (!a) return;
+  var dx=0, dy=0;
+  if (state.keys.up) dy -= 1;
+  if (state.keys.down) dy += 1;
+  if (state.keys.left) dx -= 1;
+  if (state.keys.right) dx += 1;
+  if (dx || dy){
+    var len = Math.sqrt(dx*dx+dy*dy);
+    a.x += (dx/len) * SPEED * dt;
+    a.y += (dy/len) * SPEED * dt;
+    var sr = stage.getBoundingClientRect();
+    a.x = Math.max(20, Math.min(sr.width-20, a.x));
+    a.y = Math.max(20, Math.min(sr.height-20, a.y));
+    a.el.style.left = a.x+'px'; a.el.style.top = a.y+'px';
+  }
+  // collision with zone
+  if (a.x > zoneBox.left && a.x < zoneBox.left+zoneBox.width &&
+      a.y > zoneBox.top  && a.y < zoneBox.top+zoneBox.height){
+    attemptDock(a);
+  }
+}
+
+function ionName(sym, role){
+  var ion = ionBySym(sym, role);
+  return ion ? ion.name : sym;
+}
+
+function flashReject(){
+  assemblyZone.classList.add('reject');
+  setTimeout(function(){ assemblyZone.classList.remove('reject'); }, 260);
+}
+
+function attemptDock(flying){
+  var target = state.target;
+  var expectedSym = flying.role==='cation' ? target.cation.sym : target.anion.sym;
+  var neededCount = flying.role==='cation' ? target.catCount : target.anCount;
+  if (flying.sym !== expectedSym){
+    playReject(); flashReject();
+    showToast((ionName(flying.sym, flying.role)) + ' isn’t needed for ' + target.name);
+    destroyActive();
+    return;
+  }
+  var have = state.dockedCounts[flying.sym] || 0;
+  if (have >= neededCount){
+    playReject(); flashReject();
+    showToast('You already have enough ' + ionName(flying.sym, flying.role) + ' ions');
+    destroyActive();
+    return;
+  }
+  state.dockedCounts[flying.sym] = have + 1;
+  state.dockedList.push({sym:flying.sym, role:flying.role, disp:(ionBySym(flying.sym, flying.role)||{}).disp});
+  playDock();
+  destroyActive();
+  renderAssembly();
+  checkCompletion();
+}
+
+function renderAssembly(){
+  assembledGrid.innerHTML = '';
+  state.dockedList.forEach(function(item){
+    var d = document.createElement('div');
+    d.className = 'docked-ion ' + item.role;
+    d.innerHTML = '<span class="charge">'+item.disp+'</span>';
+    assembledGrid.appendChild(d);
+  });
+}
+
+function checkCompletion(){
+  var target = state.target;
+  var catHave = state.dockedCounts[target.cation.sym] || 0;
+  var anHave = state.dockedCounts[target.anion.sym] || 0;
+  if (catHave === target.catCount && anHave === target.anCount){
+    completeAssembly();
+  }
+}
+
+function completeAssembly(){
+  state.locked = true;
+  assemblyZone.classList.add('assembled');
+  assembledGrid.classList.add('full');
+  playAssembled();
+  formulaPanel.classList.add('show');
+  formulaInput.value = '';
+  setTimeout(function(){ formulaInput.focus(); }, 50);
+}
+
+/* ================= Formula check ================= */
+function submitFormula(){
+  if (!state.locked) return;
+  var raw = formulaInput.value.replace(/\s+/g,'');
+  var target = state.target;
+  if (raw.length===0) return;
+  if (raw === target.formula){
+    state.score += 10;
+    state.streak += 1;
+    if (state.streak > state.best) state.best = state.streak;
+    state.built += 1;
+    updateStats();
+    playSuccess();
+    showBanner('good','✅','Correct!', target.name.charAt(0).toUpperCase()+target.name.slice(1) + ' is ' + target.formula, 1700);
+    setTimeout(startNewRound, 1500);
+  } else {
+    state.streak = 0;
+    updateStats();
+    playError();
+    formulaInput.classList.remove('shake'); void formulaInput.offsetWidth; formulaInput.classList.add('shake');
+    showBanner('bad','✏️','Not quite yet', 'Recount the ions in the Assembly Zone and try again.', 1500);
+  }
+}
+formulaSubmit.addEventListener('click', submitFormula);
+formulaInput.addEventListener('keydown', function(ev){ if (ev.key==='Enter') submitFormula(); });
+
+function updateStats(){
+  scoreVal.textContent = state.score;
+  streakVal.textContent = state.streak;
+  bestVal.textContent = state.best;
+  builtVal.textContent = state.built;
+}
+
+/* ================= Round management ================= */
+function pickTarget(){
+  var c, a, attempts=0;
+  do {
+    c = currentCations[Math.floor(Math.random()*currentCations.length)];
+    a = currentAnions[Math.floor(Math.random()*currentAnions.length)];
+    attempts++;
+  } while (state.lastTarget && c.sym===state.lastTarget.cation.sym && a.sym===state.lastTarget.anion.sym && attempts<20);
+  return buildCompound(c, a);
+}
+function startNewRound(){
+  var newTarget = pickTarget();
+  state.target = newTarget;
+  state.lastTarget = newTarget;
+  state.dockedCounts = {};
+  state.dockedList = [];
+  state.locked = false;
+  cancelActive();
+  assemblyZone.classList.remove('assembled');
+  assembledGrid.classList.remove('full');
+  formulaPanel.classList.remove('show');
+  renderAssembly();
+  targetNameEl.classList.add('fading');
+  setTimeout(function(){
+    targetNameEl.textContent = newTarget.name;
+    targetNameEl.classList.remove('fading');
+  }, 180);
+}
+
+resetAssemblyBtn.addEventListener('click', function(){
+  if (!state.running) return;
+  state.dockedCounts = {}; state.dockedList = [];
+  state.locked = false;
+  cancelActive();
+  assemblyZone.classList.remove('assembled');
+  assembledGrid.classList.remove('full');
+  formulaPanel.classList.remove('show');
+  renderAssembly();
+});
+skipBtn.addEventListener('click', function(){ if (state.running) startNewRound(); });
+restartBtn.addEventListener('click', function(){
+  state.score=0; state.streak=0; state.best=0; state.built=0;
+  updateStats();
+  startNewRound();
+});
+
+/* ================= Controls ================= */
+var KEY_MAP = {
+  ArrowUp:'up', ArrowDown:'down', ArrowLeft:'left', ArrowRight:'right',
+  KeyW:'up', KeyS:'down', KeyA:'left', KeyD:'right'
+};
+function isTypingTarget(){
+  var el = document.activeElement;
+  return !!el && (el === formulaInput || el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+}
+window.addEventListener('keydown', function(ev){
+  if (isTypingTarget()){
+    if (ev.code === 'Escape') cancelActive();
+    return;
+  }
+  var dir = KEY_MAP[ev.code];
+  if (dir){ state.keys[dir] = true; if (state.running) ev.preventDefault(); }
+  if (ev.code === 'Escape' || ev.code === 'Backspace'){ cancelActive(); }
+});
+window.addEventListener('keyup', function(ev){
+  if (isTypingTarget()) return;
+  var dir = KEY_MAP[ev.code];
+  if (dir) state.keys[dir] = false;
+});
+function bindDpadButton(btn, dir){
+  var press = function(ev){ ev.preventDefault(); state.keys[dir] = true; };
+  var release = function(ev){ ev.preventDefault(); state.keys[dir] = false; };
+  btn.addEventListener('pointerdown', press);
+  btn.addEventListener('pointerup', release);
+  btn.addEventListener('pointercancel', release);
+  btn.addEventListener('pointerleave', release);
+}
+bindDpadButton(btnUp,'up'); bindDpadButton(btnDown,'down'); bindDpadButton(btnLeft,'left'); bindDpadButton(btnRight,'right');
+
+/* ================= Help / start ================= */
+helpBtn.addEventListener('click', function(){ helpPanel.classList.toggle('show'); });
+weekRow.addEventListener('click', function(ev){
+  var btn = ev.target.closest('.week-btn');
+  if (!btn) return;
+  selectedWeek = btn.getAttribute('data-week');
+  Array.prototype.forEach.call(weekRow.querySelectorAll('.week-btn'), function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+});
+startBtn.addEventListener('click', function(){
+  ensureAudio();
+  startOverlay.classList.add('hidden');
+  state.running = true;
+  applyWeekLevel(selectedWeek);
+  updateZoneBox();
+  startNewRound();
+});
+
+/* ================= Main loop ================= */
+var lastTs = null;
+function frame(ts){
+  if (lastTs===null) lastTs = ts;
+  var dt = Math.min(0.05, (ts-lastTs)/1000);
+  lastTs = ts;
+  if (state.running && !state.locked){
+    stepActive(dt);
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+updateZoneBox();
+updateStats();
+
+})();
+</script>
+</body>
+</html>
