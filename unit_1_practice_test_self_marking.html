@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<title>Unit 1 Practice Test (Self-Marking): Formulae, Names and Calorimetry</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm;
+    @bottom-center {
+      content: counter(page);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 10pt;
+      color: #111;
+    }
+  }
+
+  :root {
+    --ink: #111111;
+    --rule: #111111;
+    --muted: #555555;
+    --paper: #ffffff;
+    --indent: 88px;
+    --ok: #1a6b3c;
+    --ok-bg: #eaf5ee;
+    --bad: #a3271f;
+    --bad-bg: #fbeceb;
+    --accent-bg: #f4f4f2;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { background: var(--paper); color: var(--ink); margin: 0; padding: 0; }
+
+  body {
+    font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-size: 12.5pt;
+    line-height: 1.55;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 40px 80px 40px;
+  }
+
+  h1, h2, h3 {
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+
+  .running-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-weight: 400; font-size: 10.5pt; color: var(--muted);
+    padding-bottom: 6px; border-bottom: 1.4pt solid var(--rule); margin-bottom: 22px;
+  }
+  .running-head .subject { text-transform: uppercase; letter-spacing: 0.06em; }
+
+  h1.title { font-size: 21pt; margin: 0 0 4px 0; }
+  .subtitle {
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-weight: 400; color: var(--muted); font-size: 12pt; margin: 0 0 18px 0;
+  }
+
+  .intro-note {
+    margin: 0 0 22px 0;
+    padding: 14px 18px;
+    border: 1pt solid var(--rule);
+    background: var(--accent-bg);
+    font-size: 11.5pt;
+  }
+  .intro-note p { margin: 0 0 6px 0; }
+  .intro-note p:last-child { margin-bottom: 0; }
+
+  /* Score tracker */
+  #scoreboard {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--paper);
+    border: 1pt solid var(--rule);
+    padding: 12px 18px;
+    margin: 0 0 30px 0;
+    display: flex; flex-wrap: wrap; gap: 18px; align-items: center;
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-size: 11pt;
+  }
+  #scoreboard .total { font-size: 13pt; }
+  #scoreboard .sub { color: var(--muted); }
+  #scoreboard .bar-track {
+    flex: 1 1 160px; min-width: 140px; height: 8px; background: #e2e2e2; border-radius: 4px; overflow: hidden;
+  }
+  #scoreboard .bar-fill { height: 100%; background: var(--ok); width: 0%; transition: width .25s ease; }
+  #resetBtn, #pdfBtn {
+    font-family: inherit; font-size: 10pt; background: none; border: 1pt solid var(--rule);
+    padding: 6px 12px; cursor: pointer; color: var(--ink);
+  }
+  #resetBtn:hover, #pdfBtn:hover { background: var(--accent-bg); }
+  #pdfBtn { background: var(--ink); color: #fff; }
+  #pdfBtn:hover { background: #333; }
+
+  #pdfNote {
+    display: none;
+    margin: -18px 0 22px 0;
+    padding: 10px 16px;
+    border: 1pt solid var(--rule);
+    background: var(--accent-bg);
+    font-size: 10.5pt;
+    color: var(--muted);
+  }
+  #pdfNote.show { display: block; }
+
+  h2.section-heading {
+    font-size: 15pt; margin: 46px 0 4px 0; padding-top: 18px; border-top: 1pt solid var(--rule);
+  }
+  .section-marks {
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    color: var(--muted); font-size: 10.5pt; margin: 0 0 16px 0;
+  }
+  .instruction { margin: 0 0 18px var(--indent); font-style: italic; color: var(--muted); }
+  .scenario { margin: 0 0 20px var(--indent); padding: 14px 18px; border-left: 2pt solid var(--rule); background: #fafafa; }
+  .scenario p { margin: 0 0 8px 0; }
+  .scenario p:last-child { margin-bottom: 0; }
+  .scenario ul { margin: 6px 0 0 0; padding-left: 20px; }
+  .example-box { margin: 0 0 20px var(--indent); padding: 10px 16px; border: 0.8pt dashed #999; font-size: 11.5pt; color: var(--muted); }
+
+  .qcard {
+    margin: 0 0 22px var(--indent);
+    padding: 16px 18px;
+    border: 1pt solid #ccc;
+  }
+  .qcard.correct { border-color: var(--ok); background: var(--ok-bg); }
+  .qcard.incorrect { border-color: var(--bad); background: var(--bad-bg); }
+
+  .qhead { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 10px; }
+  .qprompt { flex: 1; }
+  .qnum { font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif; font-weight: 400; margin-right: 6px; }
+  .marks-tag {
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    color: var(--muted); font-size: 10pt; white-space: nowrap;
+  }
+
+  .answer-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 10px 0 8px 0; }
+  .answer-row input[type="text"], .answer-row input[type="number"] {
+    font-family: Palatino, "Palatino Linotype", Georgia, serif;
+    font-size: 12pt; padding: 7px 10px; border: 1pt solid #999; min-width: 220px;
+  }
+  .answer-row select {
+    font-family: Palatino, "Palatino Linotype", Georgia, serif;
+    font-size: 12pt; padding: 6px 8px; border: 1pt solid #999;
+  }
+  .unit-label { color: var(--muted); font-size: 11pt; }
+
+  button.action {
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-size: 10.5pt; background: var(--ink); color: #fff; border: 1pt solid var(--ink);
+    padding: 7px 14px; cursor: pointer;
+  }
+  button.action:hover { background: #333; }
+  button.link {
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-size: 10.5pt; background: none; border: none; text-decoration: underline;
+    color: var(--muted); cursor: pointer; padding: 4px 0;
+  }
+  button.link:hover { color: var(--ink); }
+
+  .feedback { margin-top: 8px; font-size: 11.5pt; }
+  .feedback.correct { color: var(--ok); }
+  .feedback.incorrect { color: var(--bad); }
+
+  .reveal-box {
+    display: none; margin-top: 10px; padding: 10px 14px;
+    background: #fff; border: 0.8pt solid #ccc; font-size: 11.5pt;
+  }
+  .reveal-box.open { display: block; }
+  .reveal-box .label {
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+    margin-bottom: 4px; display: block;
+  }
+  .reveal-box.advanced { border-left: 3pt solid var(--ink); }
+
+  .toggles { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 6px; }
+
+  ul.checklist { list-style: none; margin: 6px 0 0 0; padding: 0; }
+  ul.checklist li { margin-bottom: 8px; display: flex; gap: 8px; align-items: flex-start; }
+  ul.checklist input[type="checkbox"] { margin-top: 3px; }
+
+  .self-mark-row { margin-top: 12px; padding-top: 10px; border-top: 0.8pt dashed #ccc; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .self-mark-row label { display: flex; align-items: center; gap: 6px; font-size: 11pt; }
+
+  .end-of-test {
+    text-align: center; font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-size: 10.5pt;
+    margin: 40px 0 4px 0; padding-top: 14px; border-top: 1pt solid var(--rule);
+  }
+  #finalScore {
+    text-align: center; font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-size: 13pt; margin-bottom: 10px;
+  }
+  #finalRemark { text-align: center; color: var(--muted); font-size: 11pt; margin-bottom: 40px; }
+
+  footer.page-footer {
+    margin-top: 60px; padding-top: 12px; border-top: 0.8pt solid #ccc; text-align: center;
+    font-family: "Clear Gothic Regular", "Century Gothic", "Futura", "Avenir Next", sans-serif;
+    font-size: 9.5pt; letter-spacing: 0.04em; color: var(--muted);
+  }
+
+  @media print {
+    #scoreboard, #pdfNote, .intro-note, button.action, button.link { display: none !important; }
+    body { padding: 0; max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="running-head">
+    <span class="subject">Chemistry &middot; Unit 1: Foundations</span>
+    <span class="date" id="runningDate"></span>
+  </div>
+
+  <h1 class="title">Unit 1 Practice Test &mdash; Self-Marking</h1>
+  <p class="subtitle">Formulae, Names and Calorimetry</p>
+
+  <div class="intro-note">
+    <p>Type your answer into each box and press <strong>Check</strong> to mark it instantly. Every question has a <strong>Hint</strong> if you get stuck, and a <strong>Model answer</strong> you can reveal once you've had a proper attempt &mdash; some also have an <strong>Advanced answer</strong>, written the way a strong student would explain it.</p>
+    <p>Numerical answers are marked with a small tolerance for rounding. Questions that ask you to describe, explain or draw something are marked by <em>you</em>: compare your answer to the model, then tick the box honestly to award yourself the marks.</p>
+  </div>
+
+  <div id="scoreboard">
+    <span class="total">Score: <strong id="scoreNow">0</strong> / 86</span>
+    <div class="bar-track"><div class="bar-fill" id="scoreBar"></div></div>
+    <span class="sub" id="scoreBySection"></span>
+    <button id="pdfBtn" type="button">Make a PDF</button>
+    <button id="resetBtn" type="button">Reset test</button>
+  </div>
+  <div id="pdfNote">To save this as a PDF for Canvas: in the print dialog that opens, set <strong>Destination</strong> to <strong>Save as PDF</strong> (or "Microsoft Print to PDF" on Windows), then save the file. Your current answers, ticks and any hints or model answers you've left open will be included exactly as they appear on screen; anything still hidden won't print.</div>
+  <h2 class="section-heading">Section A &middot; Formulae to Names</h2>
+  <p class="section-marks">20 marks</p>
+  <p class="instruction">Write the correct name for each compound. Include oxidation states where necessary.</p>
+  <div id="section-A"></div>
+  <h2 class="section-heading">Section B &middot; Names to Formulae</h2>
+  <p class="section-marks">20 marks</p>
+  <p class="instruction">Write the correct chemical formula for each compound.</p>
+  <div id="section-B"></div>
+  <h2 class="section-heading">Section C &middot; Formulae to Molar Masses</h2>
+  <p class="section-marks">20 marks</p>
+  <p class="instruction">Calculate the molar mass (M<sub>r</sub>) for each compound.</p>
+
+  <div class="example-box">Worked example: H<sub>2</sub>O = (2 &times; 1) + 16 = 18 g mol<sup>&minus;1</sup></div>
+  <div id="section-C"></div>
+  <h2 class="section-heading">Section D &middot; Calorimetry Calculation</h2>
+  <p class="section-marks">16 marks</p>
+
+  <div class="scenario">
+    <p>A 2.4&nbsp;g piece of magnesium ribbon is added to 20&nbsp;cm&sup3; of 1&nbsp;M sulfuric acid in a polystyrene cup.</p>
+    <ul>
+      <li>Initial temperature: 20.0&nbsp;&deg;C</li>
+      <li>Final temperature: 50.0&nbsp;&deg;C</li>
+    </ul>
+    <p>Assume the density of the solution is 1&nbsp;g&nbsp;cm&#8315;&sup3; and its specific heat capacity is 4.2&nbsp;J&nbsp;g&#8315;&sup1;&nbsp;&deg;C&#8315;&sup1;. Take the relative atomic mass of magnesium as 24.</p>
+  </div>
+  <div id="section-D"></div>
+  <h2 class="section-heading">Section E &middot; Energy Level Diagrams</h2>
+  <p class="section-marks">10 marks</p>
+  <div id="section-E"></div>
+
+  <div class="end-of-test">End of test</div>
+  <p id="finalScore"></p>
+  <p id="finalRemark"></p>
+
+  <footer class="page-footer">Science Department &middot; Refined with AI</footer>
+
+  <script id="questionData" type="application/json">[{"id": "q1", "section": "A", "num": 1, "marks": 2, "type": "text", "prompt": "H<sub>2</sub>SO<sub>4</sub>", "accepted": ["sulfuric acid", "sulphuric acid"], "hint": "This is a strong, diprotic acid — think about what forms when sulfur trioxide reacts with water.", "advanced": "Advanced note: the “-ic” ending shows sulfur is in its higher oxidation state (+6). Its diprotic nature (two acidic hydrogens) is why it features so often in calorimetry and titration questions.", "model": "Sulfuric acid"}, {"id": "q2", "section": "A", "num": 2, "marks": 2, "type": "text", "prompt": "CaCO<sub>3</sub>", "accepted": ["calcium carbonate"], "hint": "A carbonate ion is CO₃²⁻ — pair it with the metal ion named first.", "advanced": "Advanced note: this is the compound behind limestone, chalk and marble — its thermal decomposition (CaCO₃ → CaO + CO₂) is a classic industrial reaction.", "model": "Calcium carbonate"}, {"id": "q3", "section": "A", "num": 3, "marks": 2, "type": "text", "prompt": "FeCl<sub>3</sub>", "accepted": ["iron(iii) chloride", "iron (iii) chloride", "ferric chloride"], "hint": "Iron can form 2+ or 3+ ions — use the number of chloride ions (each Cl⁻ is 1−) to work out the charge on the iron.", "advanced": "Advanced note: three Cl⁻ ions balance one Fe³⁺, so the Roman numeral (III) is essential here — 'iron chloride' alone would be ambiguous.", "model": "Iron(iii) chloride"}, {"id": "q4", "section": "A", "num": 4, "marks": 2, "type": "text", "prompt": "NH<sub>4</sub>NO<sub>3</sub>", "accepted": ["ammonium nitrate"], "hint": "Two polyatomic ions are combined here: NH₄⁺ and NO₃⁻.", "advanced": "Advanced note: a 1:1 combination of ammonium and nitrate — widely used as a nitrogen fertiliser, and notable for being both an oxidiser and capable of exothermic decomposition.", "model": "Ammonium nitrate"}, {"id": "q5", "section": "A", "num": 5, "marks": 2, "type": "text", "prompt": "KMnO<sub>4</sub>", "accepted": ["potassium manganate(vii)", "potassium manganate (vii)", "potassium permanganate"], "hint": "Manganese here is in an unusually high oxidation state — work out the charge needed to balance K⁺ and four O²⁻.", "advanced": "Advanced note: manganese is +7 in this ion (MnO₄⁻), the highest common oxidation state you'll meet at this level — it's why this compound is such a strong oxidising agent.", "model": "Potassium manganate(vii)"}, {"id": "q6", "section": "A", "num": 6, "marks": 2, "type": "text", "prompt": "CuSO<sub>4</sub>&middot;5H<sub>2</sub>O", "accepted": ["copper(ii) sulfate pentahydrate", "hydrated copper(ii) sulfate", "copper (ii) sulfate pentahydrate", "copper(ii) sulphate pentahydrate", "hydrated copper(ii) sulphate"], "hint": "The dot before 5H₂O shows water molecules trapped in the crystal lattice — name the anhydrous salt, then add 'pentahydrate'.", "advanced": "Advanced note: heating this blue crystalline solid drives off the water of crystallisation, leaving white anhydrous CuSO₄ — a standard test for the presence of water.", "model": "Copper(ii) sulfate pentahydrate"}, {"id": "q7", "section": "A", "num": 7, "marks": 2, "type": "text", "prompt": "Pb(NO<sub>3</sub>)<sub>2</sub>", "accepted": ["lead(ii) nitrate", "lead (ii) nitrate"], "hint": "Two nitrate ions (each 1−) balance the lead ion — what charge must lead carry?", "advanced": "Advanced note: lead(II) nitrate is one of the few common soluble lead salts, which is why it's the usual source of Pb²⁺(aq) in precipitation reactions such as the classic 'golden rain' with potassium iodide.", "model": "Lead(ii) nitrate"}, {"id": "q8", "section": "A", "num": 8, "marks": 2, "type": "text", "prompt": "Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>", "accepted": ["aluminium sulfate", "aluminium sulphate", "aluminum sulfate"], "hint": "Aluminium is always 3+, sulfate is always 2− — find the lowest common multiple to see why the ratio is 2:3.", "advanced": "Advanced note: because Al³⁺ and SO₄²⁻ don't cancel 1:1, you need two aluminium ions for every three sulfate ions to balance charge — a good check of your ionic-charge reasoning.", "model": "Aluminium sulfate"}, {"id": "q9", "section": "A", "num": 9, "marks": 2, "type": "text", "prompt": "NaOH", "accepted": ["sodium hydroxide"], "hint": "A Group 1 metal hydroxide — these are strong alkalis.", "advanced": "Advanced note: sodium hydroxide dissociates completely in water into Na⁺ and OH⁻, which is why it's classed as a strong base/alkali rather than a weak one.", "model": "Sodium hydroxide"}, {"id": "q10", "section": "A", "num": 10, "marks": 2, "type": "text", "prompt": "Fe<sub>2</sub>O<sub>3</sub>", "accepted": ["iron(iii) oxide", "iron (iii) oxide"], "hint": "Two iron ions balance three O²⁻ ions — work out the charge on each iron ion.", "advanced": "Advanced note: this is the reddish-brown compound in rust and haematite ore; distinguishing it from FeO (iron(II) oxide) by oxidation state is a common exam trap.", "model": "Iron(iii) oxide"}, {"id": "q11", "section": "B", "num": 11, "marks": 2, "type": "text", "prompt": "Magnesium chloride", "accepted": ["mgcl2"], "hint": "Magnesium is always 2+; chloride is always 1− — how many chlorides balance one magnesium?", "advanced": "MgCl₂ — two Cl⁻ ions are needed to balance one Mg²⁺.", "model": "MgCl₂"}, {"id": "q12", "section": "B", "num": 12, "marks": 2, "type": "text", "prompt": "Potassium carbonate", "accepted": ["k2co3"], "hint": "Potassium is 1+, carbonate (CO₃) is 2− — you'll need two potassiums.", "advanced": "K₂CO₃ — the compound used to make soft, or 'potash', glass.", "model": "K₂CO₃"}, {"id": "q13", "section": "B", "num": 13, "marks": 2, "type": "text", "prompt": "Iron(II) sulfate", "accepted": ["feso4"], "hint": "The (II) tells you the iron ion is 2+ — sulfate is also 2−, so they balance 1:1.", "advanced": "FeSO₄ — commonly seen as green vitriol / hydrated FeSO₄·7H₂O in the lab.", "model": "FeSO₄"}, {"id": "q14", "section": "B", "num": 14, "marks": 2, "type": "text", "prompt": "Calcium hydroxide", "accepted": ["ca(oh)2", "caoh2"], "hint": "Calcium is 2+, hydroxide is 1− — two hydroxides are needed.", "advanced": "Ca(OH)₂ — known as slaked lime, used to neutralise acidic soils.", "model": "Ca(OH)₂"}, {"id": "q15", "section": "B", "num": 15, "marks": 2, "type": "text", "prompt": "Ammonium sulfate", "accepted": ["(nh4)2so4", "nh42so4"], "hint": "Ammonium (NH₄⁺) is 1+, sulfate is 2− — two ammoniums balance one sulfate.", "advanced": "(NH₄)₂SO₄ — an important nitrogen-and-sulfur fertiliser.", "model": "(NH₄)₂SO₄"}, {"id": "q16", "section": "B", "num": 16, "marks": 2, "type": "text", "prompt": "Copper(II) nitrate", "accepted": ["cu(no3)2", "cuno32"], "hint": "Copper(II) is 2+; nitrate is 1− — two nitrates are needed.", "advanced": "Cu(NO₃)₂ — forms blue crystals, Cu(NO₃)₂·3H₂O, when hydrated.", "model": "Cu(NO₃)₂"}, {"id": "q17", "section": "B", "num": 17, "marks": 2, "type": "text", "prompt": "Silver chloride", "accepted": ["agcl"], "hint": "Silver is almost always 1+ in its compounds.", "advanced": "AgCl — the classic insoluble white precipitate used as a test for chloride ions.", "model": "AgCl"}, {"id": "q18", "section": "B", "num": 18, "marks": 2, "type": "text", "prompt": "Zinc oxide", "accepted": ["zno"], "hint": "Zinc is always 2+, oxide is always 2− — they balance 1:1.", "advanced": "ZnO — turns yellow when hot and white when cool, a standard observation question.", "model": "ZnO"}, {"id": "q19", "section": "B", "num": 19, "marks": 2, "type": "text", "prompt": "Sodium hydrogen carbonate", "accepted": ["nahco3"], "hint": "This is a single sodium ion with the polyatomic hydrogencarbonate ion, HCO₃⁻.", "advanced": "NaHCO₃ — commonly known as baking soda / bicarbonate of soda.", "model": "NaHCO₃"}, {"id": "q20", "section": "B", "num": 20, "marks": 2, "type": "text", "prompt": "Aluminium oxide", "accepted": ["al2o3"], "hint": "Aluminium is 3+, oxide is 2− — find the lowest common multiple of 3 and 2.", "advanced": "Al₂O₃ — a very high melting point compound (over 2000 °C), reflecting its strong ionic lattice.", "model": "Al₂O₃"}, {"id": "q21", "section": "C", "num": 21, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 58.5, "tolerance": 0.5, "prompt": "NaCl", "hint": "Ar: Na = 23, Cl = 35.5. Add them.", "advanced": null, "model": "23 + 35.5 = 58.5 g mol⁻¹"}, {"id": "q22", "section": "C", "num": 22, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 44, "tolerance": 0.5, "prompt": "CO<sub>2</sub>", "hint": "Ar: C = 12, O = 16. One carbon, two oxygens.", "advanced": null, "model": "12 + (2 × 16) = 44 g mol⁻¹"}, {"id": "q23", "section": "C", "num": 23, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 74, "tolerance": 0.5, "prompt": "Ca(OH)<sub>2</sub>", "hint": "Ar: Ca = 40, O = 16, H = 1. Remember the (OH) group is doubled.", "advanced": null, "model": "40 + 2 × (16 + 1) = 40 + 34 = 74 g mol⁻¹"}, {"id": "q24", "section": "C", "num": 24, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 98, "tolerance": 0.5, "prompt": "H<sub>2</sub>SO<sub>4</sub>", "hint": "Ar: H = 1, S = 32, O = 16. Two hydrogens, one sulfur, four oxygens.", "advanced": null, "model": "(2 × 1) + 32 + (4 × 16) = 2 + 32 + 64 = 98 g mol⁻¹"}, {"id": "q25", "section": "C", "num": 25, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 213, "tolerance": 0.5, "prompt": "Al(NO<sub>3</sub>)<sub>3</sub>", "hint": "Ar: Al = 27, N = 14, O = 16. The whole nitrate group (NO₃) is tripled.", "advanced": null, "model": "27 + 3 × (14 + 48) = 27 + 186 = 213 g mol⁻¹"}, {"id": "q26", "section": "C", "num": 26, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 249.5, "tolerance": 0.5, "prompt": "CuSO<sub>4</sub>&middot;5H<sub>2</sub>O", "hint": "Ar: Cu = 63.5, S = 32, O = 16, H = 1. Don't forget the five water molecules add their own mass.", "advanced": null, "model": "63.5 + 32 + 64 + (5 × 18) = 159.5 + 90 = 249.5 g mol⁻¹"}, {"id": "q27", "section": "C", "num": 27, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 132, "tolerance": 0.5, "prompt": "(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>", "hint": "Ar: N = 14, H = 1, S = 32, O = 16. The whole NH₄ group is doubled.", "advanced": null, "model": "2 × (14 + 4) + 32 + 64 = 36 + 96 = 132 g mol⁻¹"}, {"id": "q28", "section": "C", "num": 28, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 194, "tolerance": 0.5, "prompt": "K<sub>2</sub>CrO<sub>4</sub>", "hint": "Ar: K = 39, Cr = 52, O = 16. Two potassiums, one chromium, four oxygens.", "advanced": null, "model": "(2 × 39) + 52 + (4 × 16) = 78 + 52 + 64 = 194 g mol⁻¹"}, {"id": "q29", "section": "C", "num": 29, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 400, "tolerance": 0.5, "prompt": "Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>", "hint": "Ar: Fe = 56, S = 32, O = 16. Two irons, and the whole sulfate group tripled.", "advanced": null, "model": "(2 × 56) + 3 × (32 + 64) = 112 + 288 = 400 g mol⁻¹"}, {"id": "q30", "section": "C", "num": 30, "marks": 2, "type": "number", "unit": "g mol⁻¹", "target": 331, "tolerance": 0.5, "prompt": "Pb(NO<sub>3</sub>)<sub>2</sub>", "hint": "Ar: Pb = 207, N = 14, O = 16. One lead, the nitrate group doubled.", "advanced": null, "model": "207 + 2 × (14 + 48) = 207 + 124 = 331 g mol⁻¹"}, {"id": "q31", "section": "D", "num": 31, "marks": 1, "type": "number", "unit": "°C", "target": 30.0, "tolerance": 0.2, "prompt": "Calculate the temperature rise (ΔT).", "hint": "ΔT = final temperature − initial temperature.", "advanced": null, "model": "ΔT = 50.0 − 20.0 = 30.0 °C"}, {"id": "q32", "section": "D", "num": 32, "marks": 2, "type": "number", "unit": "J", "target": 2520, "tolerance": 20, "prompt": "Use q = volume × 4.2 × ΔT to calculate the energy released.", "hint": "Use the volume of acid (20 cm³) as the mass in grams, since the solution's density is 1 g cm⁻³.", "advanced": "Advanced note: strictly, q = mcΔT with c = 4.18 J g⁻¹ °C⁻¹ is more accurate; using c = 4.2 is a simplification common at this level and worth stating explicitly if you use it.", "model": "q = 20 × 4.2 × 30 = 2520 J"}, {"id": "q33", "section": "D", "num": 33, "marks": 2, "type": "number", "unit": "J g⁻¹", "target": 1050, "tolerance": 10, "prompt": "Now calculate the energy released per gram of magnesium.", "hint": "Divide the energy released (q) by the mass of magnesium used (2.4 g), not the mass of the acid.", "advanced": null, "model": "2520 ÷ 2.4 = 1050 J g⁻¹"}, {"id": "q34", "section": "D", "num": 34, "marks": 2, "type": "number", "unit": "kJ mol⁻¹", "target": -25.2, "tolerance": 0.5, "prompt": "Now calculate the energy released per mole of magnesium (Mg = 24 g mol⁻¹), in kJ mol⁻¹.", "hint": "First find moles of Mg (mass ÷ Mr = 2.4 ÷ 24), then divide q by that number of moles. Convert J to kJ by dividing by 1000, and remember the sign for an exothermic reaction.", "advanced": "Advanced note: moles of Mg = 2.4 ÷ 24 = 0.1 mol. Energy per mole = 2520 ÷ 0.1 = 25 200 J mol⁻¹ = 25.2 kJ mol⁻¹. This becomes the experimental ΔH, so it should be written as a negative value since the reaction is exothermic: ΔH = −25.2 kJ mol⁻¹.", "model": "moles Mg = 2.4 ÷ 24 = 0.1 mol; 2520 J ÷ 0.1 mol = 25 200 J mol⁻¹ = 25.2 kJ mol⁻¹ (so ΔH = −25.2 kJ mol⁻¹)"}, {"id": "q35", "section": "D", "num": 35, "marks": 2, "type": "selfcheck", "prompt": "Describe what you would expect to observe when the magnesium is added to the acid.", "hint": "Think about the metal itself, the sound/appearance of the gas being made, and anything you'd notice by touching the cup.", "model": "The magnesium ribbon fizzes and gradually disappears; bubbles of a colourless gas are produced; the solution feels warm (the cup heats up).", "advanced": "Advanced model answer: Effervescence is observed as bubbles of colourless, odourless gas form rapidly at the surface of the magnesium ribbon, which visibly shrinks and eventually dissolves completely as it is oxidised to Mg²⁺(aq). The reaction mixture becomes noticeably warmer to the touch, consistent with the release of thermal energy to the surroundings, and the solution remains colourless throughout since both Mg²⁺ and SO₄²⁻ are colourless in aqueous solution."}, {"id": "q36", "section": "D", "num": 36, "marks": 1, "type": "text", "accepted": ["hydrogen", "h2", "hydrogen gas", "hydrogen, h2"], "prompt": "What is the gas formed?", "hint": "Metals reacting with dilute acids always release the same gas — test it with a lit splint.", "advanced": "Advanced note: this gas gives the characteristic 'squeaky pop' with a lit splint, confirming it as H₂ rather than, say, CO₂ (which would extinguish the splint).", "model": "Hydrogen (H₂)"}, {"id": "q37", "section": "D", "num": 37, "marks": 2, "type": "selfcheck", "prompt": "Write a word equation for the reaction.", "hint": "Metal + acid → salt + hydrogen. Name the salt formed from magnesium and sulfuric acid.", "model": "magnesium + sulfuric acid → magnesium sulfate + hydrogen", "advanced": "Advanced model answer: magnesium + sulfuric acid → magnesium sulfate + hydrogen. This follows the general pattern for a reactive metal displacing hydrogen from a dilute acid: metal + acid → salt + hydrogen, where the salt takes its name from the metal (magnesium) and the acid's anion (sulfate, from sulfuric acid)."}, {"id": "q38", "section": "D", "num": 38, "marks": 2, "type": "selfcheck", "prompt": "Write a balanced equation, with state symbols, for the reaction.", "hint": "Start with Mg + H₂SO₄ → MgSO₄ + H₂, then check it's already balanced before adding state symbols (s), (aq) and (g).", "model": "Mg(s) + H₂SO₄(aq) → MgSO₄(aq) + H₂(g)", "advanced": "Advanced model answer: Mg(s) + H₂SO₄(aq) → MgSO₄(aq) + H₂(g). This is a single displacement (redox) reaction: magnesium is oxidised from Mg(0) to Mg²⁺, while two H⁺ ions are reduced to H₂(g); the equation is already balanced with one magnesium, one sulfate group and two hydrogens on each side, so no additional coefficients are needed."}, {"id": "q39", "section": "D", "num": 39, "marks": 1, "type": "choice", "options": ["Exothermic", "Endothermic"], "correct": "Exothermic", "prompt": "Is this reaction exothermic or endothermic?", "hint": "The temperature of the solution rose during the reaction — what does that tell you about the direction of energy transfer?", "advanced": "Advanced note: energy is transferred from the chemical system to the surroundings, so the enthalpy of the products is lower than that of the reactants and ΔH is negative — consistent with a rise in solution temperature.", "model": "Exothermic"}, {"id": "q40", "section": "D", "num": 40, "marks": 1, "type": "number", "unit": "kJ mol⁻¹", "target": -25.2, "tolerance": 0.5, "prompt": "State the enthalpy change for this reaction, ΔH.", "hint": "This should be the same magnitude as your answer to Question 34 — but remember the sign convention for an exothermic reaction.", "advanced": "Advanced note: the accepted (data book) value for this reaction is close to −466 kJ mol⁻¹ — a very large discrepancy from a simple polystyrene-cup calorimetry result, mostly due to heat loss to the surroundings, the cup's own heat capacity, and the calorimeter not being sealed.", "model": "ΔH = −25.2 kJ mol⁻¹"}, {"id": "q41", "section": "E", "num": 41, "marks": 5, "type": "checklist", "prompt": "Using your answer to Question 40, draw an energy level (enthalpy) diagram for the magnesium and sulfuric acid reaction. Label both axes, and mark the reactants, the products and ΔH.", "hint": "Since the reaction is exothermic, the products line should sit lower than the reactants line. You don't need an exact scale here, but the axes must be correctly labelled.", "criteria": ["y-axis labelled Energy (or Enthalpy)", "x-axis labelled Progress of reaction (or Reaction coordinate)", "Reactants (Mg + H₂SO₄) drawn as the higher, starting level", "Products (MgSO₄ + H₂) drawn lower than the reactants", "ΔH marked as the vertical drop from reactants to products, labelled −25.2 kJ mol⁻¹"], "advanced": "Advanced model answer: a correctly drawn diagram shows a curved reaction profile beginning at the reactants' energy level, rising briefly to a peak (the activation energy, even though it wasn't calculated here) before dropping to the products' level, which sits 25.2 kJ mol⁻¹ below the reactants — with ΔH shown as a downward-pointing bracket or arrow between the two horizontal levels, confirming the exothermic nature of the reaction."}, {"id": "q42", "section": "E", "num": 42, "marks": 5, "type": "checklist", "prompt": "A second reaction, R → P, has ΔH = −100 kJ mol⁻¹ and an activation energy (Eₐ) of +50 kJ mol⁻¹. Draw this energy level diagram to scale on squared paper.", "hint": "Try a scale of 1 square = 10 kJ mol⁻¹. Draw R first, then P 100 kJ mol⁻¹ lower, then the peak 50 kJ mol⁻¹ above R.", "criteria": ["Both axes correctly labelled (Energy vs Progress of reaction)", "A sensible, stated scale used (e.g. 1 square = 10 kJ mol⁻¹)", "R drawn as the starting (reactant) level", "P drawn 100 kJ mol⁻¹ lower than R", "Eₐ shown correctly as +50 kJ mol⁻¹ above R, and ΔH labelled as the drop from R to P"], "advanced": "Advanced model answer: with R set at, say, 0 kJ mol⁻¹ on the vertical axis, the curve rises to a peak at +50 kJ mol⁻¹ (the transition state, labelled Eₐ), then falls to P at −100 kJ mol⁻¹. ΔH is the difference between the final and initial levels (−100 − 0 = −100 kJ mol⁻¹), shown as a labelled vertical bracket, distinct from Eₐ, which is the difference between the peak and the reactants only."}]</script>
+
+<script>
+(function () {
+  var QUESTIONS = JSON.parse(document.getElementById('questionData').textContent);
+  var state = {}; // id -> { earned: number, status: 'unanswered'|'correct'|'incorrect'|'self' }
+
+  QUESTIONS.forEach(function (q) { state[q.id] = { earned: 0, status: 'unanswered' }; });
+
+  document.getElementById('runningDate').textContent = new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  function normText(s) {
+    return (s || '').toString().trim().toLowerCase().replace(/\s+/g, ' ').replace(/[.]/g, '');
+  }
+  function normFormula(s) {
+    return (s || '').toString().trim().toLowerCase().replace(/\s+/g, '');
+  }
+
+  function el(tag, attrs, html) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (k === 'class') e.className = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    });
+    if (html !== undefined) e.innerHTML = html;
+    return e;
+  }
+
+  function buildToggle(container, label, boxClass) {
+    var wrap = el('div');
+    var btn = el('button', { type: 'button', 'class': 'link' }, label);
+    var box = el('div', { 'class': 'reveal-box ' + (boxClass || '') });
+    btn.addEventListener('click', function () {
+      box.classList.toggle('open');
+      btn.textContent = box.classList.contains('open') ? ('Hide ' + label.toLowerCase()) : label;
+    });
+    wrap.appendChild(btn);
+    wrap.appendChild(box);
+    container.appendChild(wrap);
+    return box;
+  }
+
+  function markCard(card, q, correct) {
+    card.classList.remove('correct', 'incorrect');
+    card.classList.add(correct ? 'correct' : 'incorrect');
+    state[q.id].earned = correct ? q.marks : 0;
+    state[q.id].status = correct ? 'correct' : 'incorrect';
+    updateScoreboard();
+  }
+
+  function renderQuestion(q) {
+    var card = el('div', { 'class': 'qcard', id: 'card-' + q.id });
+    var head = el('div', { 'class': 'qhead' });
+    head.appendChild(el('div', { 'class': 'qprompt' }, '<span class="qnum">' + q.num + '.</span>' + q.prompt));
+    head.appendChild(el('div', { 'class': 'marks-tag' }, '(' + q.marks + (q.marks === 1 ? ' mark' : ' marks') + ')'));
+    card.appendChild(head);
+
+    var feedback = el('div', { 'class': 'feedback' });
+
+    if (q.type === 'text' || q.type === 'number') {
+      var row = el('div', { 'class': 'answer-row' });
+      var input = el('input', { type: q.type === 'number' ? 'number' : 'text', step: 'any', placeholder: 'Your answer' });
+      row.appendChild(input);
+      if (q.unit) row.appendChild(el('span', { 'class': 'unit-label' }, q.unit));
+      var checkBtn = el('button', { type: 'button', 'class': 'action' }, 'Check');
+      row.appendChild(checkBtn);
+      card.appendChild(row);
+
+      checkBtn.addEventListener('click', function () {
+        var ok = false;
+        if (q.type === 'number') {
+          var val = parseFloat(input.value);
+          ok = !isNaN(val) && Math.abs(val - q.target) <= q.tolerance;
+        } else {
+          var qNum = parseInt(q.id.slice(1), 10);
+          var isFormula = qNum >= 11 && qNum <= 20;
+          var normed = isFormula ? normFormula(input.value) : normText(input.value);
+          var acceptedNormed = q.accepted.map(function (a) { return isFormula ? normFormula(a) : normText(a); });
+          ok = acceptedNormed.indexOf(normed) !== -1;
+        }
+        feedback.textContent = ok ? 'Correct.' : 'Not quite \u2014 check the hint or model answer.';
+        feedback.className = 'feedback ' + (ok ? 'correct' : 'incorrect');
+        markCard(card, q, ok);
+      });
+
+      input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); checkBtn.click(); } });
+    }
+
+    if (q.type === 'choice') {
+      var row2 = el('div', { 'class': 'answer-row' });
+      var select = el('select');
+      select.appendChild(el('option', { value: '' }, 'Choose\u2026'));
+      q.options.forEach(function (opt) { select.appendChild(el('option', { value: opt }, opt)); });
+      row2.appendChild(select);
+      var checkBtn2 = el('button', { type: 'button', 'class': 'action' }, 'Check');
+      row2.appendChild(checkBtn2);
+      card.appendChild(row2);
+      checkBtn2.addEventListener('click', function () {
+        var ok = select.value === q.correct;
+        feedback.textContent = ok ? 'Correct.' : 'Not quite \u2014 check the hint or model answer.';
+        feedback.className = 'feedback ' + (ok ? 'correct' : 'incorrect');
+        markCard(card, q, ok);
+      });
+    }
+
+    card.appendChild(feedback);
+
+    var toggles = el('div', { 'class': 'toggles' });
+    buildToggle(toggles, 'Hint', '').innerHTML = '<span class="label">Hint</span>' + q.hint;
+    var modelBox = buildToggle(toggles, 'Model answer', '');
+    modelBox.innerHTML = '<span class="label">Model answer</span>' + q.model;
+    if (q.advanced) {
+      var advBox = buildToggle(toggles, 'Advanced answer', 'advanced');
+      advBox.innerHTML = '<span class="label">Advanced-level answer</span>' + q.advanced;
+    }
+    card.appendChild(toggles);
+
+    if (q.type === 'selfcheck') {
+      var selfRow = el('div', { 'class': 'self-mark-row' });
+      var label = el('label');
+      var cb = el('input', { type: 'checkbox' });
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode('I compared my answer to the model above and I\u2019ll award myself these marks'));
+      selfRow.appendChild(label);
+      card.appendChild(selfRow);
+      cb.addEventListener('change', function () {
+        card.classList.remove('correct', 'incorrect');
+        if (cb.checked) { card.classList.add('correct'); state[q.id].earned = q.marks; state[q.id].status = 'self'; }
+        else { state[q.id].earned = 0; state[q.id].status = 'unanswered'; }
+        updateScoreboard();
+      });
+    }
+
+    if (q.type === 'checklist') {
+      var ul = el('ul', { 'class': 'checklist' });
+      q.criteria.forEach(function (c, idx) {
+        var li = el('li');
+        var cb2 = el('input', { type: 'checkbox', id: q.id + '-c' + idx });
+        var lab = el('label', { for: q.id + '-c' + idx }, c);
+        li.appendChild(cb2);
+        li.appendChild(lab);
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+      var note = el('p', { 'class': 'unit-label' }, 'Tick each point your diagram includes \u2014 your marks below update automatically (1 mark per point).');
+      card.appendChild(note);
+      ul.addEventListener('change', function () {
+        var checked = ul.querySelectorAll('input[type=checkbox]:checked').length;
+        state[q.id].earned = checked;
+        state[q.id].status = checked > 0 ? 'self' : 'unanswered';
+        card.classList.remove('correct', 'incorrect');
+        if (checked === q.criteria.length) card.classList.add('correct');
+        updateScoreboard();
+      });
+    }
+
+    return card;
+  }
+
+  ['A', 'B', 'C', 'D', 'E'].forEach(function (sec) {
+    var container = document.getElementById('section-' + sec);
+    QUESTIONS.filter(function (q) { return q.section === sec; }).forEach(function (q) {
+      container.appendChild(renderQuestion(q));
+    });
+  });
+
+  var sectionTotals = { A: 20, B: 20, C: 20, D: 16, E: 10 };
+
+  function updateScoreboard() {
+    var total = 0;
+    var bySection = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+    QUESTIONS.forEach(function (q) {
+      total += state[q.id].earned;
+      bySection[q.section] += state[q.id].earned;
+    });
+    document.getElementById('scoreNow').textContent = total;
+    document.getElementById('scoreBar').style.width = Math.round((total / 86) * 100) + '%';
+    document.getElementById('scoreBySection').textContent =
+      'A ' + bySection.A + '/20 \u00b7 B ' + bySection.B + '/20 \u00b7 C ' + bySection.C + '/20 \u00b7 D ' + bySection.D + '/16 \u00b7 E ' + bySection.E + '/10';
+
+    var finalScoreEl = document.getElementById('finalScore');
+    var finalRemarkEl = document.getElementById('finalRemark');
+    finalScoreEl.textContent = 'Current score: ' + total + ' / 86 (' + Math.round((total / 86) * 100) + '%)';
+    var remark = '';
+    var pct = (total / 86) * 100;
+    if (pct >= 90) remark = 'Outstanding \u2014 a genuinely secure grasp of this unit.';
+    else if (pct >= 75) remark = 'A strong result \u2014 revisit anything marked incorrect and it will be even stronger.';
+    else if (pct >= 50) remark = 'A reasonable base \u2014 work back through the hints and model answers on anything you missed.';
+    else remark = 'Worth another pass through Unit 1 before the real test \u2014 use the hints as you go.';
+    finalRemarkEl.textContent = remark;
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    if (!confirm('Clear all answers and start again?')) return;
+    location.reload();
+  });
+
+  document.getElementById('pdfBtn').addEventListener('click', function () {
+    var note = document.getElementById('pdfNote');
+    note.classList.add('show');
+    window.print();
+  });
+
+  updateScoreboard();
+})();
+</script>
+
+</body>
+</html>
