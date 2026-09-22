@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stoichiometry — Learning Approaches to Chemistry for Curious Minds</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1c4b8c;
+    --blue-dark:#0d2c5c;
+    --blue-light:#dbe8fa;
+    --blue-pale:#e7f0fb;
+    --ink:#152a4a;
+    --muted:#4a6086;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background: radial-gradient(circle at 50% 0%, #eef4fc 0%, #d5e4f7 45%, #b7d0ef 100%);
+    font-family:'Source Sans 3','Segoe UI',sans-serif;
+    color:var(--ink);
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:24px 20px 70px;position:relative;z-index:1;}
+
+  .bg-scene{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .bg-scene svg{width:100%;height:100%;display:block;}
+
+  header{
+    text-align:center;
+    padding:6px 0 26px;
+    margin-bottom:34px;
+    position:relative;
+  }
+  h1{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    font-weight:700;
+    font-size:clamp(26px,4.8vw,41px);
+    margin:0;
+    color:var(--blue-dark);
+    letter-spacing:.3px;
+    line-height:1.3;
+  }
+  .subtitle{
+    font-size:12px;
+    color:var(--blue);
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    margin-top:14px;
+    font-weight:600;
+  }
+  header::after{
+    content:"";
+    display:block;
+    width:min(360px,70%);
+    height:0;
+    margin:20px auto 0;
+    border-bottom:3px double var(--blue);
+  }
+
+  h2.section{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    font-weight:700;
+    font-size:21px;
+    color:var(--blue-dark);
+    border-bottom:1px solid var(--blue);
+    padding-bottom:9px;
+    margin:44px 0 18px;
+    letter-spacing:.3px;
+    line-height:1.4;
+    scroll-margin-top:16px;
+  }
+
+  h3.subsection{
+    scroll-margin-top:16px;
+  }
+
+  .section-sub{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--blue);
+    margin:-14px 0 18px;
+  }
+  h3.subsection{
+    font-family:'Gill Sans Narrow','Gill Sans MT Condensed','Gill Sans MT','Gill Sans',Calibri,sans-serif;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--blue);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    margin:24px 0 12px;
+    padding-left:10px;
+    border-left:3px solid var(--blue);
+  }
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+    gap:14px;
+  }
+  a.card{
+    display:block;
+    background:#f7fafe;
+    border:1.5px solid var(--blue);
+    border-radius:16px;
+    padding:14px 16px;
+    text-decoration:none;
+    color:var(--ink);
+    box-shadow:0 4px 10px rgba(13,44,92,.18);
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  a.card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(13,44,92,.28);
+    background:var(--blue-pale);
+    border-color:var(--blue-dark);
+  }
+  .card-title{
+    font-family:'Source Sans 3',sans-serif;
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--blue-dark);
+    margin-bottom:5px;
+  }
+  .card-desc{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+
+  .card-title-row{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:5px;
+  }
+  .card-title-row .card-title{margin-bottom:0;}
+  .info-trigger{
+    flex:0 0 auto;
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    border:1.5px solid var(--blue);
+    background:#fff;
+    color:var(--blue);
+    font-family:'Source Sans 3',sans-serif;
+    font-size:12px;
+    font-weight:700;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    position:relative;
+    margin-top:1px;
+  }
+  .info-trigger:hover,
+  .info-trigger:focus,
+  .info-trigger.open{
+    background:var(--blue);
+    color:#fff;
+    outline:none;
+  }
+  .info-popover{
+    display:none;
+    position:absolute;
+    right:-8px;
+    top:calc(100% + 8px);
+    width:min(300px,86vw);
+    z-index:5;
+    background:#fff;
+    border:1.5px solid var(--blue);
+    border-radius:12px;
+    padding:12px 14px;
+    font-size:12.5px;
+    line-height:1.55;
+    color:var(--ink);
+    box-shadow:0 10px 24px rgba(13,44,92,.32);
+    text-align:left;
+    white-space:normal;
+    font-weight:400;
+  }
+  .info-popover strong{
+    color:var(--blue-dark);
+    font-weight:700;
+  }
+  .info-trigger:hover .info-popover,
+  .info-trigger:focus .info-popover,
+  .info-trigger.open .info-popover{
+    display:block;
+  }
+
+  footer{
+    text-align:center;
+    font-size:11px;
+    color:var(--blue);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    margin-top:56px;
+    padding-top:20px;
+    border-top:3px double var(--blue);
+  }
+</style>
+<style>
+  .ai-credit-line{
+    text-align:center;
+    font-size:12px;
+    color:#8a8a8a;
+    margin:22px 0 4px;
+    letter-spacing:.4px;
+  }
+  .corner-credit{
+    text-align:right;
+    margin:10px 0 20px;
+    font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+    font-size:26px;
+    line-height:1.4;
+    color:#888;
+  }
+  .corner-initials{font-weight:700;}
+  .corner-about{color:#888;text-decoration:underline;}
+  .corner-about:hover{color:#555;}
+
+  .ai-credit-line-large{
+    text-align:center;
+    font-size:24px;
+    font-weight:700;
+    color:var(--blue-dark);
+    margin:36px 0 6px;
+    letter-spacing:.3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-scene" aria-hidden="true">
+  <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="bpgrid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M40,0 L0,0 0,40" fill="none" stroke="#1c4b8c" stroke-width="0.5"/>
+      </pattern>
+      <marker id="flow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#1c4b8c"/>
+      </marker>
+      <g id="valve">
+        <polygon points="-10,-8 10,8 10,-8 -10,8"/>
+      </g>
+      <g id="gauge">
+        <circle r="13"/>
+        <line x1="0" y1="0" x2="7" y2="-9"/>
+      </g>
+    </defs>
+
+    <!-- blueprint grid -->
+    <rect width="1200" height="800" fill="url(#bpgrid)" opacity="0.07"/>
+
+    <!-- process equipment -->
+    <g fill="none" stroke="#1c4b8c" stroke-width="2" opacity="0.16">
+      <!-- distillation column T-101 -->
+      <rect x="130" y="150" width="70" height="480" rx="4"/>
+      <ellipse cx="165" cy="150" rx="35" ry="10"/>
+      <ellipse cx="165" cy="630" rx="35" ry="10"/>
+      <line x1="130" y1="220" x2="200" y2="220"/>
+      <line x1="130" y1="290" x2="200" y2="290"/>
+      <line x1="130" y1="360" x2="200" y2="360"/>
+      <line x1="130" y1="430" x2="200" y2="430"/>
+      <line x1="130" y1="500" x2="200" y2="500"/>
+      <line x1="130" y1="570" x2="200" y2="570"/>
+
+      <!-- CSTR reactor R-201 -->
+      <rect x="380" y="420" width="130" height="200" rx="6"/>
+      <ellipse cx="445" cy="420" rx="65" ry="16"/>
+      <ellipse cx="445" cy="620" rx="65" ry="16"/>
+      <rect x="425" y="360" width="40" height="60"/>
+      <line x1="445" y1="420" x2="445" y2="580"/>
+      <line x1="415" y1="580" x2="475" y2="580"/>
+      <line x1="420" y1="565" x2="470" y2="595"/>
+      <line x1="470" y1="565" x2="420" y2="595"/>
+
+      <!-- heat exchanger E-301 -->
+      <rect x="640" y="280" width="220" height="70" rx="10"/>
+      <path d="M655,315 L678,295 L701,335 L724,295 L747,335 L770,295 L793,335 L816,295 L839,315"/>
+
+      <!-- storage tank TK-401 -->
+      <rect x="930" y="480" width="120" height="180"/>
+      <path d="M930,480 Q990,425 1050,480 Z"/>
+      <line x1="950" y1="660" x2="950" y2="690"/>
+      <line x1="1030" y1="660" x2="1030" y2="690"/>
+
+      <!-- pump P-501 -->
+      <circle cx="560" cy="700" r="20"/>
+      <polygon points="552,690 552,710 572,700" fill="#1c4b8c" stroke="none"/>
+    </g>
+
+    <!-- interconnecting pipework -->
+    <g fill="none" stroke="#1c4b8c" stroke-width="1.8" opacity="0.18">
+      <path d="M200,260 H320 V335 H380" marker-end="url(#flow)"/>
+      <path d="M510,470 H600 V315 H640" marker-end="url(#flow)"/>
+      <path d="M860,315 H900 V570 H930" marker-end="url(#flow)"/>
+      <path d="M930,600 H700 V700 H580" marker-end="url(#flow)"/>
+      <path d="M540,700 H300 V500 H165 V630" marker-end="url(#flow)"/>
+    </g>
+
+    <!-- valves + gauges -->
+    <g fill="none" stroke="#1c4b8c" stroke-width="1.4" opacity="0.2">
+      <use href="#valve" transform="translate(320,300)"/>
+      <use href="#valve" transform="translate(600,390)"/>
+      <use href="#valve" transform="translate(900,470)"/>
+      <use href="#gauge" transform="translate(165,190)"/>
+      <use href="#gauge" transform="translate(760,280)"/>
+    </g>
+
+    <!-- dimension / callout lines -->
+    <g stroke="#1c4b8c" stroke-width="1" opacity="0.14" stroke-dasharray="5 4">
+      <line x1="130" y1="700" x2="200" y2="700"/>
+      <line x1="380" y1="660" x2="510" y2="660"/>
+      <line x1="930" y1="710" x2="1050" y2="710"/>
+    </g>
+
+    <!-- equipment tags -->
+    <g font-family="'Source Sans 3',monospace" font-size="12" fill="#1c4b8c" opacity="0.3">
+      <text x="120" y="700">T-101</text>
+      <text x="400" y="655">R-201</text>
+      <text x="700" y="270">E-301</text>
+      <text x="945" y="705">TK-401</text>
+      <text x="540" y="735">P-501</text>
+    </g>
+
+    <!-- corner title block -->
+    <g stroke="#1c4b8c" stroke-width="1" opacity="0.16" fill="none">
+      <rect x="960" y="720" width="220" height="60"/>
+      <line x1="960" y1="748" x2="1180" y2="748"/>
+      <line x1="1070" y1="748" x2="1070" y2="780"/>
+    </g>
+    <g font-family="'Source Sans 3',monospace" font-size="11" fill="#1c4b8c" opacity="0.28">
+      <text x="972" y="740">PROCESS FLOW DIAGRAM</text>
+      <text x="972" y="770">SHEET 1</text>
+      <text x="1082" y="770">REV. A</text>
+    </g>
+  </svg>
+</div>
+
+<div class="wrap">
+  <header>
+    <h1>Learning Approaches to Chemistry for Curious Minds</h1>
+    <div class="subtitle">Interactive Simulations · Worksheets · Maps · Games</div>
+  </header>
+
+  <h2 class="section" id="stoichiometry-practice-worksheets">Stoichiometry — Practice Worksheets</h2>
+  <div class="card-grid">
+    <a class="card" href="chemistry_unit1_molar_mass_from_formulae.html">
+      <div class="card-title-row">
+        <div class="card-title">Activity 1: Molar Mass from Formulae — Self-Marking Practice</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">Works up from single elements and diatomic molecules through simple compounds, repeated atoms and bracket multipliers, to a "spot the mistake" diagnostic section and a bonus round with a hydrate and a reverse-engineering question. Self-marking, with a Hint button on every question, a running score, and model answers gated behind a Canvas-ready PDF export.</span></span>
+      </div>
+      <div class="card-desc">Self-marking practice on working out molar mass from a formula — elements, subscripts and bracket multipliers, a "spot the mistake" section, and a hydrate in the bonus round.</div>
+    </a>
+    <a class="card" href="chemistry_unit1_moles_and_mass_conversions.html">
+      <div class="card-title-row">
+        <div class="card-title">Activity 2: Moles and Mass Conversions — Self-Marking Practice</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">A quick review of ionic formulae from charges and molar mass, then the new skill: converting moles to mass and mass to moles in both directions, plus a mixed/applied section and a "spot the mistake" diagnostic. Get a question wrong and a similar extra-practice question folds in underneath automatically, so students who are stuck get more support while those who are confident can skip straight past it.</span></span>
+      </div>
+      <div class="card-desc">Self-marking practice converting between moles and mass, after a quick review of ionic formulae and molar mass — with extra practice questions that fold in automatically if a student gets one wrong.</div>
+    </a>
+    <a class="card" href="chemistry_unit1_formula_from_experimental_data.html">
+      <div class="card-title-row">
+        <div class="card-title">Activity 3: Formula from Experimental Data — Self-Marking Practice</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">The next level after moles and mass conversions: turning experimental mass data into the empirical formula of a compound. Builds up in easy steps — simple 1:1 formulae, other whole-number ratios, three-element compounds, then percentage-composition data — plus a "spot the mistake" diagnostic. Deliberately kept straightforward, with more difficult examples to follow in later activities. Extra practice questions fold in automatically if a student gets one wrong.</span></span>
+      </div>
+      <div class="card-desc">Self-marking practice turning elemental mass data into an empirical formula, from easy 1:1 examples up to percentage-composition data — with extra practice questions that fold in automatically if a student gets one wrong.</div>
+    </a>
+    <a class="card" href="chemistry_unit1_hydrates_calculations.html">
+      <div class="card-title-row">
+        <div class="card-title">Activity 4: Calculations Involving Hydrates — Self-Marking Practice</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">A reminder of how to find the molar mass of a hydrate (the "&middot;xH&#8322;O" notation), then the main skill: hydrate analysis — using the mass of a hydrate before and after heating to constant mass to work out exactly how many water molecules it contains. Lots of worked examples across a range of common hydrates, a "spot the mistake" diagnostic, and a bonus round working the idea in reverse. Extra practice questions fold in automatically if a student gets one wrong.</span></span>
+      </div>
+      <div class="card-desc">Self-marking practice on molar mass of hydrates and hydrate analysis — finding the number of water molecules from heating-to-constant-mass data, with lots of worked examples.</div>
+    </a>
+    <a class="card" href="chemistry_unit1_writing_and_balancing_equations.html">
+      <div class="card-title-row">
+        <div class="card-title">Activity 5: Writing and Balancing Equations — Self-Marking Practice</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">A quick review of naming the missing precipitate in a word equation, then the new skills: writing the correct formula for every compound in a word equation, and balancing simple equations by adding coefficients so atoms are conserved on both sides. Includes a "spot the mistake" diagnostic on the classic coefficient-vs-subscript mix-up, and a bonus round with harder three-coefficient equations. Extra practice questions fold in automatically if a student gets one wrong.</span></span>
+      </div>
+      <div class="card-desc">Self-marking practice on turning word equations into formula equations, then balancing them with coefficients — building on the precipitate-naming activity, with lots of worked examples.</div>
+    </a>
+  </div>
+  <h2 class="section" id="learning-tools-for-element-locations-and-symbols-in-the-periodic-table">Learning Tools for Element Locations and Symbols in the Periodic Table</h2>
+
+  <div class="card-grid">
+    <a class="card" href="Learners_Guide_to_the_Element_Symbols_and_Locations.html">
+      <div class="card-title">Learner's Guide to the Element Symbols and their Locations</div>
+      <div class="card-desc">The hub page for the whole "Periodic Table Tetris" game series below — start here to pick a game by period, block, or difficulty.</div>
+    </a>
+    <a class="card" href="elements_flip_cards_curious.html">
+      <div class="card-title">Periodic Table Flip Cards — Curious Chemist's Edition</div>
+      <div class="card-desc">Flip-card study tool: the front shows an element's name and a full write-up of its properties, the back reveals its symbol and location on the table.</div>
+    </a>
+    <a class="card" href="CambridgePTAdaptedForWhiteboard.html">
+      <div class="card-title-row">
+        <div class="card-title">The Periodic Table — Whiteboard Edition</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">Based on the UCLES Periodic Table with integer masses, used for courses up to Grade 10. A hand-drawn, Noteworthy-styled periodic table built for the classroom whiteboard. Hover or click any element to pop it out in a large focus banner — perfect for pointing out an element to the whole room.</span></span>
+      </div>
+      <div class="card-desc">A hand-drawn UCLES periodic table (integer masses) for the classroom whiteboard — hover or click any element to pop it out.</div>
+    </a>
+    <a class="card" href="periodic_table_with_more_accurate_atomic_masses.html">
+      <div class="card-title-row">
+        <div class="card-title">The Periodic Table — For More Accurate Use in Calculations at IB SL &amp; HL</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">The full IB data-booklet periodic table (all 118 elements, atomic numbers and relative atomic masses), redrawn in an Excalidraw-style hand-drawn look with the Noteworthy font. Hover or click an element for a large pop-out focus banner that repositions itself away from the cursor.</span></span>
+      </div>
+      <div class="card-desc">The full IB data-booklet periodic table, hand-drawn — hover or click an element for a pop-out focus banner.</div>
+    </a>
+  </div>
+
+  <h3 class="subsection" id="periodic-table-tetris-single-period-games">Periodic Table Tetris — Single Period Games</h3>
+  <div class="card-grid">
+    <a class="card" href="period-2-drop.html">
+      <div class="card-title">Learn the Element symbols for Period 2</div>
+      <div class="card-desc">Lithium through Neon — 8 elements across the second row.</div>
+    </a>
+    <a class="card" href="period-3-drop.html">
+      <div class="card-title">Learn the Element symbols for Period 3</div>
+      <div class="card-desc">Sodium through Argon — 8 elements across the third row.</div>
+    </a>
+    <a class="card" href="period-4-drop.html">
+      <div class="card-title">Learn the Element symbols for Period 4</div>
+      <div class="card-desc">Potassium through Krypton — the first row with transition metals.</div>
+    </a>
+    <a class="card" href="period-5-drop.html">
+      <div class="card-title">Learn the Element symbols for Period 5</div>
+      <div class="card-desc">Rubidium through Xenon — 18 elements across the fifth row.</div>
+    </a>
+    <a class="card" href="period-6-drop.html">
+      <div class="card-title">Learn the Element symbols for Period 6</div>
+      <div class="card-desc">Caesium through Radon — 32 elements, including the Lanthanide gap.</div>
+    </a>
+    <a class="card" href="periodic-table-tetris.html">
+      <div class="card-title">Learn the Element symbols for Period 7</div>
+      <div class="card-desc">Francium through Oganesson — the final row, including the Actinide gap.</div>
+    </a>
+  </div>
+
+  <h3 class="subsection" id="periodic-table-tetris-f-block-series">Periodic Table Tetris — f-Block Series</h3>
+  <div class="card-grid">
+    <a class="card" href="f-block-1-lanthanides-drop.html">
+      <div class="card-title">f-Block Part 1: The Lanthanide Series</div>
+      <div class="card-desc">Cerium through Lutetium — 14 elements, with the Actinide Series shown as reference.</div>
+    </a>
+    <a class="card" href="f-block-2-actinides-drop.html">
+      <div class="card-title">f-Block Part 2: The Actinide Series</div>
+      <div class="card-desc">Thorium through Lawrencium — 14 elements, with the Lanthanide Series shown as reference.</div>
+    </a>
+  </div>
+
+  <h3 class="subsection" id="periodic-table-tetris-multi-period-complete-table-games">Periodic Table Tetris — Multi-Period & Complete Table Games</h3>
+  <div class="card-grid">
+    <a class="card" href="periods-1-2-3-drop.html">
+      <div class="card-title">Periods 1-3</div>
+      <div class="card-desc">Period 1, then Period 2, then Period 3 — 18 elements, one row at a time.</div>
+    </a>
+    <a class="card" href="periods-1-2-3-random-drop.html">
+      <div class="card-title">Periods 1-3: The Expert's Version</div>
+      <div class="card-desc">The same 18 elements, but shuffled together and dropped in random order.</div>
+    </a>
+    <a class="card" href="periods-1-7-drop.html">
+      <div class="card-title">Periods 1-7</div>
+      <div class="card-desc">Every main period in sequence, for advanced students — with an escalating score bonus.</div>
+    </a>
+    <a class="card" href="complete-periodic-table-drop.html">
+      <div class="card-title">Learn the Complete Periodic Table!</div>
+      <div class="card-desc">All 118 elements — every period plus the Lanthanide and Actinide Series, in sequence.</div>
+    </a>
+    <a class="card" href="complete-periodic-table-random-drop.html">
+      <div class="card-title">Random Element! Expert Edition</div>
+      <div class="card-desc">All 118 elements shuffled together, falling in completely random order across the whole table.</div>
+    </a>
+    <a class="card" href="periodic-table-showcase.html">
+      <div class="card-title">Showcase — Periods 1-7</div>
+      <div class="card-desc">A self-playing version for leaving running on the whiteboard — the blocks find their own way to the correct place. Students can jump in at any moment with the cursor keys, A/S/D, or the on-screen buttons.</div>
+    </a>
+  </div>
+
+  <h3 class="subsection" id="periodic-table-tetris-clue-challenge">Thinking about the Periodic Table through games</h3>
+  <div class="card-grid">
+    <a class="card" href="periodic-table-clue-challenge.html">
+      <div class="card-title">Clue Challenge</div>
+      <div class="card-desc">Statements like "an s-block element from Period 2" or "2.8.8.1" appear one at a time — click the matching element. Junior and Full Table levels, plus an Extension for s/p/d/f electron configuration clues.</div>
+    </a>
+    <a class="card" href="periodic-table-clue-challenge-2player.html">
+      <div class="card-title">Clue Challenge — Two Players</div>
+      <div class="card-desc">The same clues, head-to-head. Turns alternate, a wrong guess hands the clue to the other player to steal, and both players' scores are tracked live.</div>
+    </a>
+  </div>
+  <h2 class="section" id="data-and-graphical-analysis">Data and Graphical Analysis</h2>
+  <div class="card-grid">
+    <a class="card" href="graphical_analysis_app.html">
+      <div class="card-title-row">
+        <div class="card-title">Graphical Analysis — Uncertainties, Curve Fitting &amp; Tangents</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">An interactive graphing toolkit: plot data with uncertainties and error bars, fit a straight line by least squares, and find the instantaneous gradient of a non-linear curve by dragging a tangent. Save maximum and minimum gradient traces for a full max&ndash;min analysis, and import or export your own data as CSV.</span></span>
+      </div>
+      <div class="card-desc">Interactive toolkit for graphing data with uncertainties, fitting lines and curves, and finding gradients by tangent — with CSV import/export.</div>
+    </a>
+  </div>
+  <h2 class="section" id="periodic-tables-with-integrated-molar-mass-calculators">Periodic Tables with integrated molar mass calculators</h2>
+  <div class="card-grid">
+    <a class="card" href="molar_mass_calculator_for_IB_Chemistry.html">
+      <div class="card-title">Molar Mass Calculator — IB Periodic Table Edition</div>
+      <div class="card-desc">An interactive molar mass calculator built around the IB data-booklet periodic table — enter a formula and click elements to build up the total molar mass.</div>
+    </a>
+    <a class="card" href="MolarMassCalculatorBasedOnCambridgePeriodicTable.html">
+      <div class="card-title">Molar Mass Calculator — Cambridge Periodic Table Edition</div>
+      <div class="card-desc">An all-purpose Molar Mass Calculator which uses the simple integer atomic masses in the Cambridge UCLES papers, which are rather more memorable, and entirely suitable for Grade 9 and Grade 10 student learning.</div>
+    </a>
+  </div>
+  <h2 class="section" id="industrial-chemistry-process-simulations-and-worksheets">Industrial Chemistry — Process Simulations and Worksheets</h2>
+
+  <h3 class="subsection" id="the-contact-process-sulfuric-acid">The Contact Process (Sulfuric Acid)</h3>
+  <div class="card-grid">
+    <a class="card" href="contact_process_v5.html">
+      <div class="card-title">Contact Process — Interactive Flowsheet</div>
+      <div class="card-desc">Full interactive equilibrium flowsheet for H₂SO₄ manufacture (V₂O₅ catalyst). Basis: 1,000 kg/hr liquid sulfur — adjust temperature and pressure on a T–P map to optimize SO₂ conversion yield.</div>
+    </a>
+    <a class="card" href="contact_process_v5_worksheet.html">
+      <div class="card-title">Contact Process v5 — Student Worksheet</div>
+      <div class="card-desc">Companion worksheet for the flowsheet above: label the five unit operations and match each of the 8 numbered process streams to its main components.</div>
+    </a>
+    <a class="card" href="contact_process_monsanto.html">
+      <div class="card-title">Contact Process — Monsanto Single-Absorption Plant</div>
+      <div class="card-desc">A second interactive flowsheet modelling the classic Monsanto single-absorption design (basis: 1,000 kg/hr liquid sulfur), for comparing plant configurations.</div>
+    </a>
+    <a class="card" href="contact_process_worksheet.html">
+      <div class="card-title">Contact Process — Interactive Student Worksheet</div>
+      <div class="card-desc">A general interactive worksheet on the Contact Process, working through the reaction conditions and stages of sulfuric acid production.</div>
+    </a>
+    <a class="card" href="ChemEng_contact_process%20v2.html">
+      <div class="card-title">Contact Process — Interactive Flowsheet (ChemEng v2)</div>
+      <div class="card-desc">The ChemEng-course version of the interactive H₂SO₄ manufacture flowsheet.</div>
+    </a>
+    <a class="card" href="ChemEng_contact_process_worksheet.html">
+      <div class="card-title">Contact Process — Interactive Student Worksheet (ChemEng)</div>
+      <div class="card-desc">The ChemEng-course version of the Contact Process student worksheet.</div>
+    </a>
+    <a class="card" href="ChemEng_contact_process_answers.html">
+      <div class="card-title">Contact Process Worksheet — Answer Key &amp; Mark Scheme</div>
+      <div class="card-desc">Full answer key and mark scheme for the ChemEng Contact Process worksheet above.</div>
+    </a>
+  </div>
+
+  <h3 class="subsection" id="the-haber-bosch-process-ammonia">The Haber-Bosch Process (Ammonia)</h3>
+  <div class="card-grid">
+    <a class="card" href="haber_bosch_simulator.html">
+      <div class="card-title">Haber-Bosch Process Simulator</div>
+      <div class="card-desc">Interactive simulator for N₂ + 3H₂ ⇌ 2NH₃. Explore how temperature, pressure and catalyst affect equilibrium yield and reaction rate in ammonia synthesis.</div>
+    </a>
+    <a class="card" href="haber_bosch_worksheet_interactive.html">
+      <div class="card-title">Haber-Bosch Process — Interactive Worksheet</div>
+      <div class="card-desc">"Finding the Optimum" — a simulation-based investigation worksheet that guides students through balancing yield, rate and cost to find the best operating conditions.</div>
+    </a>
+    <a class="card" href="ChemEng_haber_bosch_worksheet_interactive%20v1.html">
+      <div class="card-title">Haber-Bosch Process — Interactive Worksheet (ChemEng v1)</div>
+      <div class="card-desc">The ChemEng-course v1 build of the Haber-Bosch investigation worksheet.</div>
+    </a>
+    <a class="card" href="ChemEng_haber_bosch_worksheet_interactive%20v2.html">
+      <div class="card-title">Haber-Bosch Process — Interactive Worksheet (ChemEng v2)</div>
+      <div class="card-desc">The ChemEng-course v2 build of the Haber-Bosch investigation worksheet, with revisions on v1.</div>
+    </a>
+  </div>
+
+  <h3 class="subsection" id="germany-s-chemical-industry-interactive-maps">Germany's Chemical Industry — Interactive Maps</h3>
+  <div class="card-grid">
+    <a class="card" href="Historical%20development%20of%20the%20chemical%20industries%20in%20Germany_chemical_map.html">
+      <div class="card-title">Historical Development of the Chemical Industries in Germany</div>
+      <div class="card-desc">The fuller version of the river map, adding a toggleable historical timeline of events alongside the chemical industry sites — see how the industry grew over time.</div>
+    </a>
+    <a class="card" href="All_Rivers_chemical_map.html">
+      <div class="card-title">Germany's Rivers — Chemical Industry Map (earlier version)</div>
+      <div class="card-desc">An interactive map plotting chemical industry sites along Germany's major rivers, filterable by river. An earlier, simpler build of the map above.</div>
+    </a>
+    <a class="card" href="ChemEng_Historical%20development%20of%20the%20chemical%20industries%20in%20Germany_chemical_map.html">
+      <div class="card-title">Historical Development of the Chemical Industries in Germany (ChemEng)</div>
+      <div class="card-desc">The ChemEng-course build of the river map with the toggleable historical timeline of events alongside the chemical industry sites.</div>
+    </a>
+    <a class="card" href="ChemEng_All_Rivers_chemical_map%20copy.html">
+      <div class="card-title">Germany's Rivers — Chemical Industry Map (ChemEng copy)</div>
+      <div class="card-desc">The ChemEng-course copy of the rivers map, filterable by river.</div>
+    </a>
+    <a class="card" href="ChemEng_Map%20of%20Germany's_Rivers_with%20locations%20of%20chemical_works.html">
+      <div class="card-title">Map of Germany's Rivers with Locations of Chemical Works</div>
+      <div class="card-desc">Another build of the interactive rivers map, focused on plotting the locations of chemical works.</div>
+    </a>
+    <a class="card" href="ChemEng_Explore%20the%20largest%20chemical%20industries%20along%20the%20Rhine%20and%20Main_map.html">
+      <div class="card-title">Rhine &amp; Main Rivers — Chemical Industry Map</div>
+      <div class="card-desc">A focused interactive map of the largest chemical industry sites along the Rhine and Main rivers specifically.</div>
+    </a>
+    <a class="card" href="ChemEng_Map%20of%20Germany's_River_Canalization_Projects_History.html">
+      <div class="card-title">Germany's Rivers — Canalization History</div>
+      <div class="card-desc">An interactive map covering the history of river canalization projects in Germany, which enabled the growth of riverside chemical industry.</div>
+    </a>
+    <a class="card" href="ChemEng_Student%20Activity%20(Resource)%20frankfurt_industries_1920s.html">
+      <div class="card-title">Frankfurt · Taunus · Wiesbaden — Industrie &amp; Güterverkehr 1920–1935</div>
+      <div class="card-desc">A student activity map of industrial sites and freight transport around Frankfurt, Taunus and Wiesbaden in the 1920s-30s — click markers for history and Google Maps links.</div>
+    </a>
+  </div>
+  <h2 class="section" id="industrial-chemical-processes-electrolysis">Industrial Chemical Processes: Electrolysis</h2>
+  <div class="card-grid">
+    <a class="card" href="Hofmann_Voltameter_Label_the_Apparatus.html">
+      <div class="card-title">Hofmann Voltameter — Label the Apparatus</div>
+      <div class="card-desc">An interactive labelling exercise on the Hofmann voltameter, used to demonstrate the electrolysis of water and collect the hydrogen and oxygen produced.</div>
+    </a>
+  </div>
+  <h2 class="section" id="introducing-chemical-calculations">Introducing Chemical Calculations</h2>
+  <div class="card-grid">
+    <a class="card" href="molar-mass-calculations.html">
+      <div class="card-title-row">
+        <div class="card-title">Molar Mass Calculations — Interactive Worksheet</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">Adapted from the Edexcel <em>Moles, Formulae and Equations</em> workbook: relative formula mass and molar mass explained, three worked examples, and all 60 Exercise 1 questions with hints, instant answer checking, before/after reflections, and a Canvas-ready progress report.</span></span>
+      </div>
+      <div class="card-desc">Molar mass theory, worked examples, and all 60 Exercise 1 questions with hints, answer checking, reflections, and a Canvas report.</div>
+    </a>
+    <a class="card" href="chemical-formulae.html">
+      <div class="card-title-row">
+        <div class="card-title">Chemical Formulae — Interactive Worksheet</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">Adapted from the Edexcel <em>Moles, Formulae and Equations</em> workbook: writing formulae from ion charges and bonding numbers, two worked examples, and all 80 Exercise 2 questions with hints, instant answer checking, before/after reflections, and a Canvas-ready progress report.</span></span>
+      </div>
+      <div class="card-desc">Ion-charge theory, worked examples, and all 80 Exercise 2 formula-writing questions with hints, answer checking, reflections, and a Canvas report.</div>
+    </a>
+  </div>
+  <h2 class="section" id="grade-10-industrial-chemistry">Grade 10 Industrial Chemistry</h2>
+  <p class="section-sub">Course materials for the Grade 10 Industrial Chemistry course</p>
+  <div class="card-grid">
+    <a class="card" href="Industrial%20Chemistry%20%E2%80%94%20Course%20Overview.html">
+      <div class="card-title-row">
+        <div class="card-title">Course Overview &mdash; the five units, from the blast furnace to the ammonia plant</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">The full course overview for Grade 10 Industrial Chemistry, with the weekly timetable embedded at the top. <strong>Unit 1</strong> reviews the four tools you need all year &mdash; equations and moles, thermochemistry, kinetics and equilibrium. <strong>Unit 2</strong> takes you through the Industrial Revolution and the railway explosion: metallic and ionic bonding, alloys, the reactivity series, the blast furnace, aluminium from bauxite, corrosion, redox, and a first look at reactors and process flow diagrams. <strong>Unit 3</strong> builds acid&ndash;base theory from Arrhenius to Br&oslash;nsted&ndash;Lowry, with titration, pH probes and LoggerPro, ammonia and the transition-metal complexes. <strong>Unit 4</strong> runs from Newlands&rsquo; octaves of 1866 through Mendeleev to electron configuration, Aufbau and periodicity. <strong>Unit 5</strong> puts the whole lot to work on Haber&ndash;Bosch and the Contact process, and on the chemical corridor of the Rhine and Main. Every section links straight through to the matching resources on Canvas.</span></span>
+      </div>
+      <div class="card-desc">The five units of the course set out in full &mdash; what each one covers, how they build on one another, and links to every resource on Canvas. With the weekly timetable embedded at the top.</div>
+    </a>
+    <a class="card" href="part_1_how-industrialised-was-germany-in-1800.html">
+      <div class="card-title-row">
+        <div class="card-title">Part 1: How industrialised was Germany in 1800?</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">The chemical trades of the Rhine and the Main, from the old Empire to the first railway (1775 &ndash; September 1825). Before asking how the great chemical works of the Rhine&ndash;Main valley came to be, this background reading looks at what was actually there before them &mdash; and the answer is not the one the phrase &ldquo;industrial revolution&rdquo; leads you to expect.</span></span>
+      </div>
+      <div class="card-desc">Background reading for Unit 1: what chemical trades and industry actually existed in the Rhine&ndash;Main region before 1800, setting up Part 2's story of German industrialisation.</div>
+    </a>
+        <a class="card" href="part-2-the-development-of-the-german-chemical-industries_1830-1871.html">
+      <div class="card-title-row">
+        <div class="card-title">Part 2: The Development of the German Chemical Industries, 1830&ndash;1871</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">How industrialised was Germany becoming? From the Zollverein customs union of 1834 and the railway reaching H&ouml;chst in 1839, through Liebig's teaching laboratory at Gie&szlig;en, the chemistry of the gasworks that gave the world coal-tar dyes, and Kekul&eacute;'s benzene ring, to the founding of H&ouml;chst, Bayer, BASF and Cassella and the proclamation of the German Empire in 1871. Illustrated with primary German sources (with translations), historical maps and photographs.</span></span>
+      </div>
+      <div class="card-desc">From the customs union to the Empire &mdash; the forty-one years that built the Rhine&ndash;Main chemical industry, with primary sources, maps and photographs throughout.</div>
+    </a>
+    <a class="card" href="part_3_iron_empire_and_the_nitrogen_war_1871-1918.html">
+      <div class="card-title-row">
+        <div class="card-title">Part 3: Iron, Empire, and the Nitrogen War, 1871&ndash;1918</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">From the founding of the German Empire in 1871 to the armistice of 11 November 1918. The Gilchrist&ndash;Thomas process turns phosphoric iron ore into steel and reshapes the Ruhr; the Alizarine Convention and the rise of the dye giants; Fritz Haber and Carl Bosch fix nitrogen from the air, and that same process keeps Germany's guns firing through a war that Chilean saltpetre could no longer reach by sea. Illustrated with primary German sources (with translations), historical maps and photographs, and local Taunus history throughout.</span></span>
+      </div>
+      <div class="card-desc">From the Empire's founding to the armistice &mdash; steel, dyes, and the Haber&ndash;Bosch process that fed Germany's guns once the British blockade cut off Chilean nitrates.</div>
+    </a>
+    <a class="card" href="part_4_bread_gold_and_a_merger_of_giants_1918-1933.html">
+      <div class="card-title-row">
+        <div class="card-title">Part 4: Bread, Gold, and a Merger of Giants, 1918&ndash;1933</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">From the armistice to Hitler's appointment as Chancellor on 30 January 1933. Reparations and hyperinflation; Fritz Haber's Nobel Prize controversy and his failed attempt to extract gold from seawater to help pay war debts; Friedrich Bergius and Carl Bosch's high-pressure coal-to-oil process; the 2 December 1925 merger that created IG Farben, the "Council of Gods"; and the quiet collapse and rebirth of Motorenfabrik Oberursel in the Taunus hills. The reading ends deliberately at the hinge of 1933, before the story it sets up in Part 5.</span></span>
+      </div>
+      <div class="card-desc">Reparations, Haber's gold-from-seawater scheme, the Bergius process, and the 1925 merger that created IG Farben &mdash; ending flatly at Hitler's appointment as Chancellor.</div>
+    </a>
+    <a class="card" href="part_5_ig_farben_in_the_third_reich_1933-1945.html">
+      <div class="card-title-row">
+        <div class="card-title">Part 5: IG Farben in the Third Reich, 1933&ndash;1945</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">Part 4 ended, deliberately flatly, on 30 January 1933 &mdash; IG Farben was the largest chemical company on Earth, its pre-1933 management contained no Nazi supporters, and its supervisory board included prominent Jewish industrialists. This reading follows the same company through the next twelve years: how it was captured by a regime it had not supported, built a synthetic-rubber factory beside a death camp, and answered for it &mdash; only partly &mdash; in a Nuremberg courtroom.</span></span>
+      </div>
+      <div class="card-desc">How the largest chemical company on Earth was captured by the Nazi regime, built a factory beside a death camp, and answered for it &mdash; only partly &mdash; at Nuremberg.</div>
+    </a>
+    <a class="card" href="part_6_two_chemistries_one_country_1951-1990.html">
+      <div class="card-title-row">
+        <div class="card-title">Part 6: Two Chemistries, One Country, 1951&ndash;1990</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">Part 5 ended in 1951&ndash;52, with IG Farben formally broken back into BASF, Bayer, Hoechst and smaller successors including Agfa. This reading follows what those pieces, and the sites this series has already visited &mdash; Ludwigshafen, Leverkusen, Frankfurt, Leuna, the Buna works, and Motorenfabrik Oberursel in the Taunus &mdash; did with the next thirty-nine years: really two stories running side by side either side of one internal German border, until the border itself came down.</span></span>
+      </div>
+      <div class="card-desc">The same firms, sites and chemistry, rebuilt as rival economic systems either side of the German border &mdash; from IG Farben's 1951 break-up to reunification.</div>
+    </a>
+    <a class="card" href="part_7_one_company_dissolves_1990-present.html">
+      <div class="card-title-row">
+        <div class="card-title">Part 7: One Company Dissolves, Another Cannot Afford the Gas, 1990&ndash;Present</div>
+        <span class="info-trigger" tabindex="0" role="button" aria-label="More detail">i<span class="info-popover">The last reading in the series. Part 6 ended on 3 October 1990, deliberately without following Leuna, Buna or the rest of the former East German chemical industry into what reunification actually did to them. This reading picks that up, and carries the whole series &mdash; Ludwigshafen, Leverkusen, Frankfurt, Leuna, the Buna works, and Motorenfabrik Oberursel &mdash; all the way to the present day, closing a story that began, in Part 1, with a scattering of small chemical trades along the Rhine.</span></span>
+      </div>
+      <div class="card-desc">Reunification's economics, the giants IG Farben's successors became, and why the company this series began with is, in 2026, struggling to afford its own gas bill.</div>
+    </a>
+  </div>
+  <h2 class="section" id="miscellaneous">Miscellaneous</h2>
+  <div class="card-grid">
+    <a class="card" href="contact.html">
+      <div class="card-title">Contact Us</div>
+      <div class="card-desc">Questions, feedback or ideas about these resources — get in touch.</div>
+    </a>
+  </div>
+
+
+  <footer>Learning Approaches to Chemistry for Curious Minds — Stoichiometry</footer>
+</div>
+
+<script>
+  // Info-trigger popovers on card tiles: hover/focus already reveal them via
+  // CSS, this adds tap-to-toggle for touch devices and stops a tap on the
+  // (i) badge from following the card's own link through to the page.
+  document.querySelectorAll('.info-popover').forEach(function(popover){
+    // let clicks inside the popover (e.g. selecting text) stay open
+    popover.addEventListener('click', function(e){ e.stopPropagation(); });
+  });
+  document.querySelectorAll('.info-trigger').forEach(function(trigger){
+    trigger.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var wasOpen = trigger.classList.contains('open');
+      document.querySelectorAll('.info-trigger.open').forEach(function(t){ t.classList.remove('open'); });
+      if(!wasOpen){ trigger.classList.add('open'); }
+    });
+    trigger.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        trigger.click();
+      }
+    });
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.info-trigger')){
+      document.querySelectorAll('.info-trigger.open').forEach(function(t){ t.classList.remove('open'); });
+    }
+  });
+</script>
+  <div class="ai-credit-line-large">My Experiments with AI -- Enhanced with AI</div>
+
+  <div class="corner-credit">
+    <div class="corner-initials">J.J.</div>
+    <a class="corner-about" href="contact.html">About</a>
+  </div>
+
+</body>
+</html>
