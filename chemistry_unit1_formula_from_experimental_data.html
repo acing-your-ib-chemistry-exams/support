@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 9 Chemistry — Activity 3: Formula from Experimental Data</title>
+<style>
+  :root{
+    --ink:#1f2a24; --paper:#faf8f3; --panel:#ffffff; --line:#d8d2c2;
+    --accent:#3d6b8a; --accent-dark:#284a61; --good:#2e7d4f; --bad:#b23b2e; --warn:#a6432d;
+    --hint:#c9a227; --adv:#7d5ba6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    line-height:1.55; padding:0 0 70px 0;
+  }
+  header.page{background:var(--accent-dark); color:#fdf6ee; padding:28px 24px 22px; border-bottom:6px solid var(--accent);}
+  header.page h1{margin:0 0 4px; font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; font-size:1.55rem;}
+  header.page p{margin:4px 0 0; opacity:0.9; font-size:0.95rem; max-width:760px;}
+  nav.stepper{max-width:960px; margin:18px auto 0; padding:0 24px; display:flex; flex-wrap:wrap; gap:8px; font-family:"Gill Sans",sans-serif; font-size:0.78rem;}
+  nav.stepper a{padding:6px 10px; border-radius:6px; text-decoration:none; color:var(--ink); background:#efe9db; border:1px solid var(--line);}
+  nav.stepper a:hover{background:#e5ddc9;}
+
+  #scoreBar{position:sticky; top:0; z-index:20; background:#efe9db; border-bottom:2px solid var(--line);
+    font-family:"Gill Sans",sans-serif; font-size:0.88rem; padding:9px 24px; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:8px;}
+  #scoreBar .tally{font-weight:bold; color:var(--accent-dark);}
+  #scoreBar .btns{display:flex; gap:8px; flex-wrap:wrap;}
+  #scoreBar button{font-family:"Gill Sans",sans-serif; background:var(--panel); border:1px solid var(--line);
+    border-radius:6px; padding:6px 11px; cursor:pointer; font-size:0.8rem;}
+  #scoreBar button:hover{background:#f3efe4;}
+  #scoreBar button#advBtn{border-color:var(--adv); color:var(--adv);}
+  #scoreBar button#advBtn:disabled{opacity:0.45; cursor:not-allowed;}
+  #scoreBar button#pdfBtn{border-color:var(--accent-dark); color:var(--accent-dark); font-weight:bold;}
+
+  main{max-width:960px; margin:0 auto; padding:20px 24px 10px;}
+  section.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:22px 26px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+  h2{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); border-bottom:2px solid var(--line); padding-bottom:6px; font-size:1.25rem; margin-top:0;}
+  h2 .weight{float:right; font-size:0.7rem; font-weight:normal; color:#7a7364; border:1px solid var(--line); border-radius:12px; padding:3px 10px; background:#f3efe4;}
+  h3{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); font-size:1.05rem;}
+
+  .term{border-bottom:1px dotted var(--accent); cursor:help; position:relative; color:var(--accent-dark);}
+  .term .tip{visibility:hidden; opacity:0; position:absolute; bottom:135%; left:50%; transform:translateX(-50%);
+    background:#2a2320; color:#fdf6ee; padding:8px 11px; border-radius:6px; width:250px; font-family:Georgia,serif;
+    font-size:0.82rem; line-height:1.4; z-index:5; transition:opacity 0.15s; box-shadow:0 4px 10px rgba(0,0,0,0.25);}
+  .term .tip::after{content:""; position:absolute; top:100%; left:50%; margin-left:-6px; border:6px solid transparent; border-top-color:#2a2320;}
+  .term:hover .tip, .term:focus .tip{visibility:visible; opacity:1;}
+
+  table.ar{width:100%; border-collapse:collapse; margin:12px 0; font-size:0.92rem;}
+  table.ar th, table.ar td{border:1px solid var(--line); padding:6px 10px; text-align:left;}
+  table.ar th{background:#efe9db; font-family:"Gill Sans",sans-serif; font-weight:normal;}
+  table.ar td.val{text-align:center; font-weight:bold;}
+
+  table.datatable{width:100%; border-collapse:collapse; margin:10px 0; font-size:0.92rem;}
+  table.datatable th, table.datatable td{border:1px solid var(--line); padding:6px 10px; text-align:center;}
+  table.datatable th{background:#eef4f7; font-family:"Gill Sans",sans-serif; font-weight:normal;}
+  table.datatable td:first-child, table.datatable th:first-child{text-align:left;}
+
+  .q{border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin:14px 0; background:#fbf9f4;}
+  .q p.stem{margin:0 0 10px; font-weight:bold;}
+  .q .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .q input[type="text"]{font-family:Georgia,serif; font-size:0.95rem; padding:6px 8px; border:1px solid var(--line); border-radius:5px; width:180px;}
+  .q .opts label{display:block; margin:4px 0; cursor:pointer; font-family:Georgia,serif;}
+  .q button.check{font-family:"Gill Sans",sans-serif; background:var(--accent); color:#fff; border:none;
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.85rem;}
+  .q button.check:hover{background:var(--accent-dark);}
+  .q button.hintbtn{font-family:"Gill Sans",sans-serif; background:#fff; color:var(--hint); border:1px solid var(--hint);
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.85rem;}
+  .q button.hintbtn:hover{background:#fdf6e3;}
+  .q button.extratoggle{font-family:"Gill Sans",sans-serif; background:#fff; color:#6a7a72; border:1px solid #b9c4bc;
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.8rem;}
+  .q button.extratoggle:hover{background:#f1f4f2;}
+  .fb{margin-top:9px; padding:8px 11px; border-radius:6px; font-size:0.9rem; display:none;}
+  .fb.good{display:block; background:#e4f2e9; border:1px solid var(--good); color:#1e5c3a;}
+  .fb.bad{display:block; background:#f7e6e3; border:1px solid var(--bad); color:#7c281c;}
+  .hintbox{display:none; margin-top:8px; padding:8px 11px; border-radius:6px; background:#fdf6e3; border:1px solid var(--hint); font-size:0.87rem; color:#6b5410;}
+  .hintbox.show{display:block;}
+  .advbox{display:none; margin-top:8px; padding:8px 11px; border-radius:6px; background:#f1ecf7; border:1px solid var(--adv); font-size:0.87rem; color:#4a3268;}
+  .advbox.show{display:block;}
+  .advbox b.label, .hintbox b.label{font-family:"Gill Sans",sans-serif; text-transform:uppercase; font-size:0.7rem; letter-spacing:0.03em; display:block; margin-bottom:3px;}
+
+  .extra{display:none; margin:0 0 18px 16px; padding:4px 0 4px 16px; border-left:3px dashed var(--hint);}
+  .extra.show{display:block;}
+  .extra-note{font-family:"Gill Sans",sans-serif; font-size:0.8rem; color:#6b5410; background:#fdf6e3; border:1px solid var(--hint);
+    border-radius:6px; padding:7px 11px; margin-bottom:4px;}
+
+  .worked{border-left:5px solid var(--accent); background:#eef4f7; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.95rem;}
+  .worked b.label{font-family:"Gill Sans",sans-serif; color:var(--accent-dark); display:block; margin-bottom:4px; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.03em;}
+  .worked .steps{margin:6px 0 0; padding-left:0; list-style:none;}
+  .worked .steps li{margin:3px 0; font-family:Georgia,serif;}
+
+  .tip-box{border-left:5px solid var(--warn); background:#f7f0e9; padding:14px 18px; border-radius:0 8px 8px 0; margin:22px 0;}
+  .tip-box h3{margin-top:0; color:var(--warn);}
+
+  .reflect textarea{width:100%; min-height:90px; font-family:Georgia,serif; font-size:0.95rem; padding:10px; border:1px solid var(--line); border-radius:6px; background:#fff; resize:vertical;}
+  .reflect p.prompt{font-style:italic; color:#5a5548; margin-top:0;}
+
+  dl dt{font-weight:bold; color:var(--accent-dark); margin-top:10px; font-family:"Gill Sans",sans-serif;}
+  dl dd{margin:2px 0 0 0;}
+
+  footer{text-align:center; font-family:"Gill Sans",sans-serif; font-size:0.8rem; color:#7a7364; margin-top:30px;}
+
+  @media print{
+    nav.stepper, #scoreBar, button.check, button.hintbtn, button.extratoggle{display:none !important;}
+    body{padding-bottom:0;}
+    section.card{box-shadow:none; break-inside:avoid; border:1px solid #999;}
+    header.page{background:#fff !important; color:#000 !important; border-bottom:2px solid #000;}
+    .fb.good{background:#eee !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .extra{display:block !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <h1>Activity 3: Formula from Experimental Data — Finding the Empirical Formula</h1>
+  <p>Turning real measurements — the mass of each element in a sample — into the formula of the compound they came from. This is the reverse of everything you've practised so far: instead of starting with a formula and finding its molar mass, you start with masses and work out the formula. Lots of examples, starting easy and building up gradually. Self-marking, with hints, and a bit of extra practice folded in automatically if a question doesn't go your way.</p>
+</header>
+
+<section class="card" id="glossary" style="max-width:912px; margin:20px auto 0;">
+  <h2>Glossary</h2>
+  <dl>
+    <dt>Empirical formula</dt><dd>The simplest whole-number ratio of atoms of each element in a compound. This is what you calculate on this page.</dd>
+    <dt>Molecular formula</dt><dd>The actual number of atoms of each element in one molecule of a compound — sometimes the same as the empirical formula, sometimes a whole-number multiple of it (you'll meet this properly later).</dd>
+    <dt>Percentage composition by mass</dt><dd>What percentage of a compound's total mass comes from each element. Treating it as a mass out of exactly 100 g uses exactly the same method as any other mass data.</dd>
+    <dt>Simplest whole-number ratio</dt><dd>The smallest set of whole numbers that has the same proportions as the numbers you started with — found by dividing every value by the smallest one.</dd>
+    <dt>Relative atomic mass (Ar)</dt><dd>The mass of one atom of an element, compared with 1/12th the mass of a carbon-12 atom. Read straight off the periodic table — for a single element, this is also its molar mass, which is what moles = mass &divide; molar mass actually divides by.</dd>
+  </dl>
+</section>
+
+<section class="card reflect" style="max-width:912px; margin:20px auto 0;">
+  <h2>Before you start</h2>
+  <p class="prompt">You've already practised mass-to-moles conversions. This page runs that idea backwards, from real data to a formula — what do you think the tricky part will be?</p>
+  <textarea placeholder="Type your thoughts here before you begin the practice questions..."></textarea>
+</section>
+
+<nav class="stepper">
+  <a href="#secA">A. Recap: mass &rarr; moles</a>
+  <a href="#secB">B. The new method</a>
+  <a href="#secC">C. Easiest case: 1:1</a>
+  <a href="#secD">D. Other simple ratios</a>
+  <a href="#secE">E. Three elements</a>
+  <a href="#secF">F. From percentages</a>
+  <a href="#secG">G. Spot the mistake</a>
+  <a href="#secH">H. Terminology</a>
+  <a href="#secBonus">Bonus round</a>
+</nav>
+
+<div id="scoreBar">
+  <span>Score so far: <span class="tally" id="tally">0 / 0</span></span>
+  <div class="btns">
+    <button id="pdfBtn">Save as PDF (for Canvas)</button>
+    <button id="advBtn" disabled title="Save your PDF first">Show model answers (advanced)</button>
+    <button onclick="resetAll()">Reset all answers</button>
+  </div>
+</div>
+
+<main>
+
+<section class="card" id="secA">
+  <h2>A. Recap: mass &rarr; moles <span class="weight">warm-up</span></h2>
+  <p>You'll need this constantly on this page. Method: moles = mass &divide; molar mass (for a single element, that's just its Ar).</p>
+
+  <table class="ar">
+    <tr><th>Element</th><th>Symbol</th><th>Ar</th><th>Element</th><th>Symbol</th><th>Ar</th></tr>
+    <tr><td>Hydrogen</td><td>H</td><td class="val">1</td><td>Aluminium</td><td>Al</td><td class="val">27</td></tr>
+    <tr><td>Carbon</td><td>C</td><td class="val">12</td><td>Phosphorus</td><td>P</td><td class="val">31</td></tr>
+    <tr><td>Nitrogen</td><td>N</td><td class="val">14</td><td>Sulfur</td><td>S</td><td class="val">32</td></tr>
+    <tr><td>Oxygen</td><td>O</td><td class="val">16</td><td>Chlorine</td><td>Cl</td><td class="val">35.5</td></tr>
+    <tr><td>Sodium</td><td>Na</td><td class="val">23</td><td>Calcium</td><td>Ca</td><td class="val">40</td></tr>
+    <tr><td>Magnesium</td><td>Mg</td><td class="val">24</td><td>Iron</td><td>Fe</td><td class="val">56</td></tr>
+    <tr><td></td><td></td><td></td><td>Copper</td><td>Cu</td><td class="val">64</td></tr>
+    <tr><td></td><td></td><td></td><td>Zinc</td><td>Zn</td><td class="val">65</td></tr>
+  </table>
+
+  <div class="q" data-type="text" data-answer="0.2">
+    <p class="stem">1. How many moles are in 4.8 g of magnesium?</p>
+    <div class="row"><input type="text" name="qa1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass, so moles = 4.8 ÷ 24.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>4.8 ÷ 24 = 0.2 mol.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="0.1">
+    <p class="stem">2. How many moles are in 5.6 g of iron?</p>
+    <div class="row"><input type="text" name="qa2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass, so moles = 5.6 ÷ 56.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>5.6 ÷ 56 = 0.1 mol.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="0.5">
+    <p class="stem">3. How many moles are in 8.0 g of oxygen atoms?</p>
+    <div class="row"><input type="text" name="qa3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass, so moles = 8.0 ÷ 16.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>8.0 ÷ 16 = 0.5 mol. Note this is oxygen atoms, not O₂ molecules — for finding a formula, you always work atom by atom.</div>
+  </div>
+</section>
+
+<section class="card" id="secB">
+  <h2>B. The new method <span class="weight">new idea</span></h2>
+  <p>Four steps, every time:</p>
+  <ol style="margin:0 0 14px; padding-left:22px;">
+    <li>Write down the mass of each element in the sample.</li>
+    <li>Convert each mass to moles (moles = mass &divide; molar mass, which for a single element is just its Ar).</li>
+    <li>Divide every one of those "moles" numbers by the <b>smallest</b> one, to get the simplest ratio.</li>
+    <li>Those numbers become the subscripts in the formula.</li>
+  </ol>
+
+  <div class="worked">
+    <b class="label">Worked example</b>
+    A sample of a compound is found to contain 0.2 g of hydrogen and 1.6 g of oxygen.
+    <ol class="steps">
+      <li>Moles of H = 0.2 ÷ 1 = 0.2</li>
+      <li>Moles of O = 1.6 ÷ 16 = 0.1</li>
+      <li>Divide both by the smaller value (0.1): H = 0.2 ÷ 0.1 = 2, O = 0.1 ÷ 0.1 = 1</li>
+      <li>Ratio H : O = 2 : 1</li>
+    </ol>
+    Formula = <b>H₂O</b>.
+  </div>
+
+  <div class="q" data-type="mc" data-answer="A">
+    <p class="stem">4. In step 3 of the method, which value do you divide everything by?</p>
+    <div class="opts">
+      <label><input type="radio" name="qb4" value="A"> The smallest number of moles</label>
+      <label><input type="radio" name="qb4" value="B"> The largest number of moles</label>
+      <label><input type="radio" name="qb4" value="C"> The total mass of the sample</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Look at the worked example above — which number was 0.1, and what happened to it?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Dividing by the smallest value always turns that element into exactly 1 in the ratio, which is what makes every other element's number easy to read off.</div>
+  </div>
+</section>
+
+<section class="card" id="secC">
+  <h2>C. Easiest case: a 1:1 ratio <span class="weight">start here</span></h2>
+  <p>In every question below, the two elements turn out to be present in exactly equal moles — so the ratio, and the formula, is as simple as it gets.</p>
+
+  <div class="q" data-type="text" data-answer="MgO" data-extra="extraC1">
+    <p class="stem">5. A sample of a compound contains 2.4 g of magnesium and 1.6 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qc5" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraC1">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Mg = 2.4 ÷ 24. Moles of O = 1.6 ÷ 16. Compare them.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 0.1 mol, so the ratio is 1:1. Formula = MgO.</div>
+  </div>
+  <div class="extra" id="extraC1">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="FeO">
+      <p class="stem">5a. A sample of a compound contains 5.6 g of iron and 1.6 g of oxygen. What is its formula?</p>
+      <div class="row"><input type="text" name="qc5a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Fe = 5.6 ÷ 56. Moles of O = 1.6 ÷ 16.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 0.1 mol, so the formula is FeO — iron(II) oxide.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="CuO" data-extra="extraC2">
+    <p class="stem">6. A sample of a compound contains 6.4 g of copper and 1.6 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qc6" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraC2">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Cu = 6.4 ÷ 64. Moles of O = 1.6 ÷ 16.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 0.1 mol, so the formula is CuO.</div>
+  </div>
+  <div class="extra" id="extraC2">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="MgS">
+      <p class="stem">6a. A sample of a compound contains 2.4 g of magnesium and 3.2 g of sulfur. What is its formula?</p>
+      <div class="row"><input type="text" name="qc6a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Mg = 2.4 ÷ 24. Moles of S = 3.2 ÷ 32.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 0.1 mol, so the formula is MgS.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="CaO" data-extra="extraC3">
+    <p class="stem">7. A sample of a compound contains 4.0 g of calcium and 1.6 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qc7" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraC3">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Ca = 4.0 ÷ 40. Moles of O = 1.6 ÷ 16.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 0.1 mol, so the formula is CaO.</div>
+  </div>
+  <div class="extra" id="extraC3">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="ZnS">
+      <p class="stem">7a. A sample of a compound contains 6.5 g of zinc and 3.2 g of sulfur. What is its formula?</p>
+      <div class="row"><input type="text" name="qc7a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Zn = 6.5 ÷ 65. Moles of S = 3.2 ÷ 32.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 0.1 mol, so the formula is ZnS.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="ZnO" data-extra="extraC4">
+    <p class="stem">8. A sample of a compound contains 6.5 g of zinc and 1.6 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qc8" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraC4">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Zn = 6.5 ÷ 65. Moles of O = 1.6 ÷ 16.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 0.1 mol, so the formula is ZnO.</div>
+  </div>
+  <div class="extra" id="extraC4">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="CuS">
+      <p class="stem">8a. A sample of a compound contains 6.4 g of copper and 3.2 g of sulfur. What is its formula?</p>
+      <div class="row"><input type="text" name="qc8a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Cu = 6.4 ÷ 64. Moles of S = 3.2 ÷ 32.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 0.1 mol, so the formula is CuS.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secD">
+  <h2>D. Other simple ratios <span class="weight">next step</span></h2>
+  <p>Now the two elements aren't present in equal moles — but the ratio still comes out as small, clean whole numbers.</p>
+
+  <div class="q" data-type="text" data-answer="CO2" data-extra="extraD1">
+    <p class="stem">9. A sample of a compound contains 1.2 g of carbon and 3.2 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qd9" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD1">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of C = 1.2 ÷ 12 = 0.1. Moles of O = 3.2 ÷ 16 = 0.2. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.2 divides down to 1 : 2. Formula = CO₂.</div>
+  </div>
+  <div class="extra" id="extraD1">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="SO2">
+      <p class="stem">9a. A sample of a compound contains 3.2 g of sulfur and 3.2 g of oxygen. What is its formula?</p>
+      <div class="row"><input type="text" name="qd9a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of S = 3.2 ÷ 32 = 0.1. Moles of O = 3.2 ÷ 16 = 0.2.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.2 divides down to 1 : 2. Formula = SO₂ — notice the two elements have the same mass here, but very different numbers of moles, since their Ar values differ.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="Na2O" data-extra="extraD2">
+    <p class="stem">10. A sample of a compound contains 4.6 g of sodium and 1.6 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qd10" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD2">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Na = 4.6 ÷ 23 = 0.2. Moles of O = 1.6 ÷ 16 = 0.1.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.2 : 0.1 divides down to 2 : 1. Formula = Na₂O — this time it's the metal that needs the bigger subscript.</div>
+  </div>
+  <div class="extra" id="extraD2">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="Na2S">
+      <p class="stem">10a. A sample of a compound contains 4.6 g of sodium and 3.2 g of sulfur. What is its formula?</p>
+      <div class="row"><input type="text" name="qd10a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Na = 4.6 ÷ 23 = 0.2. Moles of S = 3.2 ÷ 32 = 0.1.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>0.2 : 0.1 divides down to 2 : 1. Formula = Na₂S.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="SO3" data-extra="extraD3">
+    <p class="stem">11. A sample of a compound contains 3.2 g of sulfur and 4.8 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qd11" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD3">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of S = 3.2 ÷ 32 = 0.1. Moles of O = 4.8 ÷ 16 = 0.3.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.3 divides down to 1 : 3. Formula = SO₃.</div>
+  </div>
+  <div class="extra" id="extraD3">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="AlCl3">
+      <p class="stem">11a. A sample of a compound contains 2.7 g of aluminium and 10.65 g of chlorine. What is its formula?</p>
+      <div class="row"><input type="text" name="qd11a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of Al = 2.7 ÷ 27 = 0.1. Moles of Cl = 10.65 ÷ 35.5 = 0.3.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.3 divides down to 1 : 3. Formula = AlCl₃.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="CH4" data-extra="extraD4">
+    <p class="stem">12. A sample of a compound contains 1.2 g of carbon and 0.4 g of hydrogen. What is its formula?</p>
+    <div class="row"><input type="text" name="qd12" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD4">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of C = 1.2 ÷ 12 = 0.1. Moles of H = 0.4 ÷ 1 = 0.4.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.4 divides down to 1 : 4. Formula = CH₄ — methane.</div>
+  </div>
+  <div class="extra" id="extraD4">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="CCl4">
+      <p class="stem">12a. A sample of a compound contains 1.2 g of carbon and 14.2 g of chlorine. What is its formula?</p>
+      <div class="row"><input type="text" name="qd12a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles of C = 1.2 ÷ 12 = 0.1. Moles of Cl = 14.2 ÷ 35.5 = 0.4.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.4 divides down to 1 : 4. Formula = CCl₄.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secE">
+  <h2>E. Three elements <span class="weight">consolidation</span></h2>
+  <p>Exactly the same method — just one more column to work out.</p>
+
+  <div class="q" data-type="text" data-answer="CaCO3" data-extra="extraE1">
+    <p class="stem">13. A sample of a compound contains 4.0 g of calcium, 1.2 g of carbon and 4.8 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qe13" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraE1">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles: Ca = 4.0 ÷ 40 = 0.1, C = 1.2 ÷ 12 = 0.1, O = 4.8 ÷ 16 = 0.3.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.1 : 0.3 divides down to 1 : 1 : 3. Formula = CaCO₃.</div>
+  </div>
+  <div class="extra" id="extraE1">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="ZnCO3">
+      <p class="stem">13a. A sample of a compound contains 6.5 g of zinc, 1.2 g of carbon and 4.8 g of oxygen. What is its formula?</p>
+      <div class="row"><input type="text" name="qe13a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles: Zn = 6.5 ÷ 65 = 0.1, C = 1.2 ÷ 12 = 0.1, O = 4.8 ÷ 16 = 0.3.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.1 : 0.3 divides down to 1 : 1 : 3. Formula = ZnCO₃.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="MgCO3" data-extra="extraE2">
+    <p class="stem">14. A sample of a compound contains 2.4 g of magnesium, 1.2 g of carbon and 4.8 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qe14" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraE2">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles: Mg = 2.4 ÷ 24 = 0.1, C = 1.2 ÷ 12 = 0.1, O = 4.8 ÷ 16 = 0.3.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.1 : 0.3 divides down to 1 : 1 : 3. Formula = MgCO₃ — the same "pill" you reacted with hydrochloric acid.</div>
+  </div>
+  <div class="extra" id="extraE2">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="CuCO3">
+      <p class="stem">14a. A sample of a compound contains 6.4 g of copper, 1.2 g of carbon and 4.8 g of oxygen. What is its formula?</p>
+      <div class="row"><input type="text" name="qe14a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles: Cu = 6.4 ÷ 64 = 0.1, C = 1.2 ÷ 12 = 0.1, O = 4.8 ÷ 16 = 0.3.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 : 0.1 : 0.3 divides down to 1 : 1 : 3. Formula = CuCO₃.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="NaOH" data-extra="extraE3">
+    <p class="stem">15. A sample of a compound contains 4.6 g of sodium, 3.2 g of oxygen and 0.2 g of hydrogen. What is its formula?</p>
+    <div class="row"><input type="text" name="qe15" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraE3">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles: Na = 4.6 ÷ 23 = 0.2, O = 3.2 ÷ 16 = 0.2, H = 0.2 ÷ 1 = 0.2.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>All three come to 0.2 mol, so the ratio is 1 : 1 : 1. Formula = NaOH.</div>
+  </div>
+  <div class="extra" id="extraE3">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="NaOH">
+      <p class="stem">15a. A different sample contains 9.2 g of sodium, 6.4 g of oxygen and 0.4 g of hydrogen. What is its formula?</p>
+      <div class="row"><input type="text" name="qe15a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles: Na = 9.2 ÷ 23 = 0.4, O = 6.4 ÷ 16 = 0.4, H = 0.4 ÷ 1 = 0.4.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>All three come to 0.4 mol — a bigger sample of exactly the same compound, NaOH, since a ratio doesn't care how much of the sample you actually had.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="Na2CO3" data-extra="extraE4">
+    <p class="stem">16. A sample of a compound contains 4.6 g of sodium, 1.2 g of carbon and 4.8 g of oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qe16" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraE4">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles: Na = 4.6 ÷ 23 = 0.2, C = 1.2 ÷ 12 = 0.1, O = 4.8 ÷ 16 = 0.3. Divide all three by the smallest.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.2 : 0.1 : 0.3 divides down to 2 : 1 : 3. Formula = Na₂CO₃ — the trickiest one in this section, since all three numbers are different.</div>
+  </div>
+  <div class="extra" id="extraE4">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="Na2CO3">
+      <p class="stem">16a. A different sample contains 9.2 g of sodium, 2.4 g of carbon and 9.6 g of oxygen. What is its formula?</p>
+      <div class="row"><input type="text" name="qe16a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>moles = mass ÷ molar mass. Moles: Na = 9.2 ÷ 23 = 0.4, C = 2.4 ÷ 12 = 0.2, O = 9.6 ÷ 16 = 0.6.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>0.4 : 0.2 : 0.6 divides down to 2 : 1 : 3 — the same compound, Na₂CO₃, again.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secF">
+  <h2>F. Starting from percentages <span class="weight">new idea</span></h2>
+  <p>Data is sometimes given as percentage composition by mass rather than actual grams. The trick: imagine you have exactly 100 g of the compound — then each percentage is simply that many grams, and the method is identical to before.</p>
+
+  <div class="worked">
+    <b class="label">Worked example</b>
+    A compound is found to contain, by mass, 60% magnesium and 40% oxygen.
+    <ol class="steps">
+      <li>Imagine 100 g of the compound: 60 g Mg and 40 g O.</li>
+      <li>Moles of Mg = 60 ÷ 24 = 2.5. Moles of O = 40 ÷ 16 = 2.5.</li>
+      <li>Divide both by the smaller (2.5): 1 : 1.</li>
+    </ol>
+    Formula = <b>MgO</b>.
+  </div>
+
+  <div class="q" data-type="text" data-answer="CuO" data-extra="extraF1">
+    <p class="stem">17. A compound is found to contain, by mass, 80% copper and 20% oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qf17" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraF1">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Imagine 100 g: 80 g Cu, 20 g O, then moles = mass ÷ molar mass: Moles of Cu = 80 ÷ 64. Moles of O = 20 ÷ 16.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Both come to 1.25 mol, so the ratio is 1:1. Formula = CuO.</div>
+  </div>
+  <div class="extra" id="extraF1">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="MgO">
+      <p class="stem">17a. A compound is found to contain, by mass, 60% magnesium and 40% oxygen (the worked example above, with the numbers hidden). What is its formula?</p>
+      <div class="row"><input type="text" name="qf17a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Look back at the worked example just above this section.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>60 g Mg ÷ 24 = 2.5 mol; 40 g O ÷ 16 = 2.5 mol. Formula = MgO.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="CaCO3" data-extra="extraF2">
+    <p class="stem">18. A compound is found to contain, by mass, 40% calcium, 12% carbon and 48% oxygen. What is its formula?</p>
+    <div class="row"><input type="text" name="qf18" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraF2">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Imagine 100 g: 40 g Ca, 12 g C, 48 g O, then moles = mass ÷ molar mass — the same method as question 13.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>40 ÷ 40 = 1, 12 ÷ 12 = 1, 48 ÷ 16 = 3 — the moles come out as whole numbers already here, so no dividing-down step is even needed. Formula = CaCO₃, the same answer as question 13, just given as percentages instead of grams.</div>
+  </div>
+  <div class="extra" id="extraF2">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="NaOH">
+      <p class="stem">18a. A compound is found to contain, by mass, 57.5% sodium, 40% oxygen and 2.5% hydrogen. What is its formula?</p>
+      <div class="row"><input type="text" name="qf18a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Imagine 100 g: 57.5 g Na, 40 g O, 2.5 g H, then moles = mass ÷ molar mass for each.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>57.5 ÷ 23 = 2.5 mol, 40 ÷ 16 = 2.5 mol, 2.5 ÷ 1 = 2.5 mol — all equal, so the ratio is 1:1:1. Formula = NaOH.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secG">
+  <h2>G. Spot the mistake <span class="weight">diagnostic</span></h2>
+  <p>Each question shows a calculation someone actually got wrong. Work out what went wrong before you answer.</p>
+
+  <div class="q" data-type="mc" data-answer="A">
+    <p class="stem">19. A student has 2.4 g of magnesium and 1.6 g of oxygen. They write the ratio straight from the masses, 2.4 : 1.6, simplify it to 3 : 2, and give the formula as Mg₃O₂. What did they forget to do?</p>
+    <div class="opts">
+      <label><input type="radio" name="qg19" value="A"> Convert the masses to moles before finding the ratio</label>
+      <label><input type="radio" name="qg19" value="B"> Use the correct Ar for oxygen</label>
+      <label><input type="radio" name="qg19" value="C"> Round their answer to one decimal place</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>A ratio of masses is not the same thing as a ratio of moles — atoms of different elements don't weigh the same.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Mass ratios and mole ratios are only ever the same by coincidence — Mg atoms are 24 times heavier than 1 g, O atoms 16 times, so the mass ratio and the true atom ratio are quite different here.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="MgO">
+    <p class="stem">20. Using the correct method, what is the actual formula of the compound in question 19?</p>
+    <div class="row"><input type="text" name="qg20" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>You've seen this exact pair of masses already — look back at question 5.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>MgO — Mg₃O₂ from question 19 isn't just imprecise, it's a different, non-existent compound.</div>
+  </div>
+
+  <div class="q" data-type="mc" data-answer="B">
+    <p class="stem">21. A student correctly finds moles of C = 0.1 and moles of O = 0.2, but then divides both by the <em>larger</em> value (0.2) instead of the smaller one, getting 0.5 : 1. What should they have done instead?</p>
+    <div class="opts">
+      <label><input type="radio" name="qg21" value="A"> Divided both by their total, 0.3</label>
+      <label><input type="radio" name="qg21" value="B"> Divided both by the smaller value, 0.1</label>
+      <label><input type="radio" name="qg21" value="C"> Multiplied both by 10</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Look back at step 3 of the method in Section B.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Dividing by the larger value gives a fraction for the smaller element (0.5), which is much harder to read as a whole-number ratio than dividing by the smaller value, which always turns that element into a clean 1.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="1:2">
+    <p class="stem">22. What is the correct simplest whole-number ratio, C : O, from question 21? (Write it as two numbers separated by a colon, e.g. "1:2".)</p>
+    <div class="row"><input type="text" name="qg22" autocomplete="off" spellcheck="false" placeholder="e.g. 1:2"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Divide 0.1 and 0.2 by the smaller value, 0.1.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>1:2 — this is the same C and O data as question 9, giving the formula CO₂.</div>
+  </div>
+</section>
+
+<section class="card" id="secH">
+  <h2>H. Terminology check <span class="weight">consolidation</span></h2>
+  <p>These use the exact wording from the glossary at the top of this page.</p>
+
+  <div class="q" data-type="mc" data-answer="A">
+    <p class="stem">23. Which is the correct definition of the <b>empirical formula</b>?</p>
+    <div class="opts">
+      <label><input type="radio" name="qh23" value="A"> The simplest whole-number ratio of atoms of each element in a compound</label>
+      <label><input type="radio" name="qh23" value="B"> The actual number of atoms of each element in one molecule of a compound</label>
+      <label><input type="radio" name="qh23" value="C"> The mass of one mole of a substance, measured in grams per mole</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>This is exactly what every question on this page has asked you to find.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Every formula you've calculated on this page — from MgO to Na₂CO₃ — is, strictly speaking, an empirical formula, even though for most of these compounds it also happens to be their molecular formula.</div>
+  </div>
+
+  <div class="q" data-type="mc" data-answer="B">
+    <p class="stem">24. Which is the correct definition of the <b>molecular formula</b>?</p>
+    <div class="opts">
+      <label><input type="radio" name="qh24" value="A"> What percentage of a compound's total mass comes from each element</label>
+      <label><input type="radio" name="qh24" value="B"> The actual number of atoms of each element in one molecule of a compound — sometimes the same as the empirical formula, sometimes a whole-number multiple of it</label>
+      <label><input type="radio" name="qh24" value="C"> The smallest set of whole numbers with the same proportions as the numbers you started with</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>This is the one you haven't calculated yet on this page — just met the name.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Telling the two apart needs one more piece of information — the compound's actual molar mass — which is exactly what the bonus round below explores.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="subscripts">
+    <p class="stem">25. What do the numbers in the simplest whole-number ratio become, once you write out the formula?</p>
+    <div class="row"><input type="text" name="qh25" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>These are the small numbers written after each element's symbol.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>A ratio of 1 is never written at all — that's why NaOH has no visible "1"s, even though every element in it is really "NaOH₁".</div>
+  </div>
+</section>
+
+<section class="card" id="secBonus">
+  <h2>Bonus round <span class="weight">stretch</span></h2>
+  <p>A harder case where the ratio doesn't come out as whole numbers straight away, and a first look at the difference between an empirical and a molecular formula.</p>
+
+  <div class="worked">
+    <b class="label">Worked example — when dividing down isn't quite enough</b>
+    A sample of a compound contains 11.2 g of iron and 4.8 g of oxygen.
+    <ol class="steps">
+      <li>Moles of Fe = 11.2 ÷ 56 = 0.2. Moles of O = 4.8 ÷ 16 = 0.3.</li>
+      <li>Divide both by the smaller (0.2): Fe = 1, O = 1.5.</li>
+      <li>1.5 isn't a whole number — so multiply <em>both</em> numbers by 2: Fe = 2, O = 3.</li>
+    </ol>
+    Formula = <b>Fe₂O₃</b>. This "multiply up" trick is the regular territory of the next activity in this series.
+  </div>
+
+  <div class="q" data-type="text" data-answer="Fe2O3">
+    <p class="stem">26. Using the worked example above, what is the formula of the compound?</p>
+    <div class="row"><input type="text" name="qbonus26" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>It's worked out for you just above.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Fe₂O₃ — iron(III) oxide, the compound in rust.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="C3H6">
+    <p class="stem">27. A compound's empirical formula is CH₂ (the CH₂ unit has a mass of 14 g/mol). Its actual molar mass is 42 g/mol. Since 42 ÷ 14 = 3, the molecular formula must be 3 times the empirical formula. What is the molecular formula?</p>
+    <div class="row"><input type="text" name="qbonus27" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Multiply every subscript in CH₂ by 3.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>C₃H₆ — this is exactly the extra step that turns an empirical formula into a molecular formula, and it's why the two aren't always the same thing.</div>
+  </div>
+</section>
+
+</main>
+
+<section class="card reflect" style="max-width:912px; margin:0 auto 24px;">
+  <h2>After you finish</h2>
+  <p class="prompt">Was your prediction from the start of this page right about what would be tricky? Which section — the percentages, the three-element compounds, or the bonus round — would benefit from another look?</p>
+  <textarea placeholder="Type your thoughts here once you've worked through the practice questions..."></textarea>
+</section>
+
+<footer>Science Department · Refined with AI</footer>
+
+<script>
+  let correctCount = 0, attemptedCount = 0;
+  const attempted = new Set();
+
+  function normalize(s){
+    return s.trim().replace(/\s+/g,'').replace(/−/g,'-').toLowerCase();
+  }
+
+  function updateTally(){
+    document.getElementById('tally').textContent = correctCount + ' / ' + attemptedCount;
+  }
+
+  function markQuestion(qDiv, isCorrect, correctAnswerText){
+    const fb = qDiv.querySelector('.fb');
+    fb.classList.remove('good','bad');
+    if (isCorrect){
+      fb.classList.add('good');
+      fb.textContent = 'Correct.';
+    } else {
+      fb.classList.add('bad');
+      fb.textContent = 'Not quite — the answer is ' + correctAnswerText + '. Have another go on paper, then move on.';
+    }
+  }
+
+  document.querySelectorAll('.q').forEach((qDiv, idx) => {
+    const type = qDiv.dataset.type;
+    const answer = qDiv.dataset.answer;
+    const alts = answer.split('|');
+    const btn = qDiv.querySelector('button.check');
+    const qId = 'q' + idx;
+
+    btn.addEventListener('click', () => {
+      let userAnswer = '';
+      let isCorrect = false;
+
+      if (type === 'text'){
+        const input = qDiv.querySelector('input[type="text"]');
+        userAnswer = input.value;
+        if (!userAnswer.trim()) return;
+        const normUser = normalize(userAnswer);
+        isCorrect = alts.some(a => normalize(a) === normUser);
+      } else if (type === 'mc'){
+        const checked = qDiv.querySelector('input[type="radio"]:checked');
+        if (!checked) return;
+        userAnswer = checked.value;
+        isCorrect = alts.includes(userAnswer);
+      }
+
+      if (!attempted.has(qId)){
+        attempted.add(qId);
+        attemptedCount++;
+        if (isCorrect) correctCount++;
+      } else {
+        const fb = qDiv.querySelector('.fb');
+        const wasCorrect = fb.classList.contains('good');
+        if (wasCorrect && !isCorrect) correctCount--;
+        if (!wasCorrect && isCorrect) correctCount++;
+      }
+
+      let shownAnswer = alts[0].replace(/^-/, '−');
+      if (type === 'mc'){
+        const correctInput = qDiv.querySelector('input[value="' + CSS.escape(alts[0]) + '"]');
+        if (correctInput) shownAnswer = correctInput.parentElement.textContent.trim();
+      }
+
+      markQuestion(qDiv, isCorrect, shownAnswer);
+      updateTally();
+
+      // ---- Auto-reveal linked extra practice on a wrong answer ----
+      if (!isCorrect && qDiv.dataset.extra){
+        const ex = document.getElementById(qDiv.dataset.extra);
+        if (ex){
+          ex.classList.add('show');
+          const toggle = qDiv.querySelector('.extratoggle');
+          if (toggle) toggle.textContent = 'Hide extra practice';
+        }
+      }
+    });
+  });
+
+  // ---- Hint buttons ----
+  document.querySelectorAll('.hintbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const box = btn.closest('.q').querySelector('.hintbox');
+      box.classList.toggle('show');
+    });
+  });
+
+  // ---- Manual "more practice" toggles ----
+  document.querySelectorAll('.extratoggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      if (!target) return;
+      target.classList.toggle('show');
+      btn.textContent = target.classList.contains('show') ? 'Hide extra practice' : 'More practice (optional)';
+    });
+  });
+
+  // ---- Global advanced model answers toggle (gated behind Save as PDF) ----
+  const advBtn = document.getElementById('advBtn');
+  let advShown = false;
+  advBtn.addEventListener('click', () => {
+    advShown = !advShown;
+    document.querySelectorAll('.advbox').forEach(b => b.classList.toggle('show', advShown));
+    advBtn.textContent = advShown ? 'Hide advanced model answers' : 'Show model answers (advanced)';
+  });
+
+  document.getElementById('pdfBtn').addEventListener('click', () => {
+    advBtn.disabled = false;
+    advBtn.title = '';
+    window.print();
+  });
+
+  function resetAll(){
+    document.querySelectorAll('.q input[type="text"]').forEach(i => i.value = '');
+    document.querySelectorAll('.q input[type="radio"]').forEach(i => i.checked = false);
+    document.querySelectorAll('.fb').forEach(f => { f.classList.remove('good','bad'); f.textContent=''; });
+    document.querySelectorAll('.hintbox').forEach(h => h.classList.remove('show'));
+    document.querySelectorAll('.extra').forEach(e => e.classList.remove('show'));
+    document.querySelectorAll('.extratoggle').forEach(b => b.textContent = 'More practice (optional)');
+    correctCount = 0; attemptedCount = 0; attempted.clear();
+    updateTally();
+  }
+</script>
+
+</body>
+</html>

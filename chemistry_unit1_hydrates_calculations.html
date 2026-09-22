@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 9 Chemistry — Activity 4: Calculations Involving Hydrates</title>
+<style>
+  :root{
+    --ink:#1f2a24; --paper:#faf8f3; --panel:#ffffff; --line:#d8d2c2;
+    --accent:#3d6b8a; --accent-dark:#284a61; --good:#2e7d4f; --bad:#b23b2e; --warn:#a6432d;
+    --hint:#c9a227; --adv:#7d5ba6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    line-height:1.55; padding:0 0 70px 0;
+  }
+  header.page{background:var(--accent-dark); color:#fdf6ee; padding:28px 24px 22px; border-bottom:6px solid var(--accent);}
+  header.page h1{margin:0 0 4px; font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; font-size:1.55rem;}
+  header.page p{margin:4px 0 0; opacity:0.9; font-size:0.95rem; max-width:760px;}
+  nav.stepper{max-width:960px; margin:18px auto 0; padding:0 24px; display:flex; flex-wrap:wrap; gap:8px; font-family:"Gill Sans",sans-serif; font-size:0.78rem;}
+  nav.stepper a{padding:6px 10px; border-radius:6px; text-decoration:none; color:var(--ink); background:#efe9db; border:1px solid var(--line);}
+  nav.stepper a:hover{background:#e5ddc9;}
+
+  #scoreBar{position:sticky; top:0; z-index:20; background:#efe9db; border-bottom:2px solid var(--line);
+    font-family:"Gill Sans",sans-serif; font-size:0.88rem; padding:9px 24px; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:8px;}
+  #scoreBar .tally{font-weight:bold; color:var(--accent-dark);}
+  #scoreBar .btns{display:flex; gap:8px; flex-wrap:wrap;}
+  #scoreBar button{font-family:"Gill Sans",sans-serif; background:var(--panel); border:1px solid var(--line);
+    border-radius:6px; padding:6px 11px; cursor:pointer; font-size:0.8rem;}
+  #scoreBar button:hover{background:#f3efe4;}
+  #scoreBar button#advBtn{border-color:var(--adv); color:var(--adv);}
+  #scoreBar button#advBtn:disabled{opacity:0.45; cursor:not-allowed;}
+  #scoreBar button#pdfBtn{border-color:var(--accent-dark); color:var(--accent-dark); font-weight:bold;}
+
+  main{max-width:960px; margin:0 auto; padding:20px 24px 10px;}
+  section.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:22px 26px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+  h2{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); border-bottom:2px solid var(--line); padding-bottom:6px; font-size:1.25rem; margin-top:0;}
+  h2 .weight{float:right; font-size:0.7rem; font-weight:normal; color:#7a7364; border:1px solid var(--line); border-radius:12px; padding:3px 10px; background:#f3efe4;}
+  h3{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); font-size:1.05rem;}
+
+  .term{border-bottom:1px dotted var(--accent); cursor:help; position:relative; color:var(--accent-dark);}
+  .term .tip{visibility:hidden; opacity:0; position:absolute; bottom:135%; left:50%; transform:translateX(-50%);
+    background:#2a2320; color:#fdf6ee; padding:8px 11px; border-radius:6px; width:250px; font-family:Georgia,serif;
+    font-size:0.82rem; line-height:1.4; z-index:5; transition:opacity 0.15s; box-shadow:0 4px 10px rgba(0,0,0,0.25);}
+  .term .tip::after{content:""; position:absolute; top:100%; left:50%; margin-left:-6px; border:6px solid transparent; border-top-color:#2a2320;}
+  .term:hover .tip, .term:focus .tip{visibility:visible; opacity:1;}
+
+  table.ar{width:100%; border-collapse:collapse; margin:12px 0; font-size:0.92rem;}
+  table.ar th, table.ar td{border:1px solid var(--line); padding:6px 10px; text-align:left;}
+  table.ar th{background:#efe9db; font-family:"Gill Sans",sans-serif; font-weight:normal;}
+  table.ar td.val{text-align:center; font-weight:bold;}
+
+  .q{border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin:14px 0; background:#fbf9f4;}
+  .q p.stem{margin:0 0 10px; font-weight:bold;}
+  .q .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .q input[type="text"]{font-family:Georgia,serif; font-size:0.95rem; padding:6px 8px; border:1px solid var(--line); border-radius:5px; width:180px;}
+  .q .opts label{display:block; margin:4px 0; cursor:pointer; font-family:Georgia,serif;}
+  .q button.check{font-family:"Gill Sans",sans-serif; background:var(--accent); color:#fff; border:none;
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.85rem;}
+  .q button.check:hover{background:var(--accent-dark);}
+  .q button.hintbtn{font-family:"Gill Sans",sans-serif; background:#fff; color:var(--hint); border:1px solid var(--hint);
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.85rem;}
+  .q button.hintbtn:hover{background:#fdf6e3;}
+  .q button.extratoggle{font-family:"Gill Sans",sans-serif; background:#fff; color:#6a7a72; border:1px solid #b9c4bc;
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.8rem;}
+  .q button.extratoggle:hover{background:#f1f4f2;}
+  .fb{margin-top:9px; padding:8px 11px; border-radius:6px; font-size:0.9rem; display:none;}
+  .fb.good{display:block; background:#e4f2e9; border:1px solid var(--good); color:#1e5c3a;}
+  .fb.bad{display:block; background:#f7e6e3; border:1px solid var(--bad); color:#7c281c;}
+  .hintbox{display:none; margin-top:8px; padding:8px 11px; border-radius:6px; background:#fdf6e3; border:1px solid var(--hint); font-size:0.87rem; color:#6b5410;}
+  .hintbox.show{display:block;}
+  .advbox{display:none; margin-top:8px; padding:8px 11px; border-radius:6px; background:#f1ecf7; border:1px solid var(--adv); font-size:0.87rem; color:#4a3268;}
+  .advbox.show{display:block;}
+  .advbox b.label, .hintbox b.label{font-family:"Gill Sans",sans-serif; text-transform:uppercase; font-size:0.7rem; letter-spacing:0.03em; display:block; margin-bottom:3px;}
+
+  .extra{display:none; margin:0 0 18px 16px; padding:4px 0 4px 16px; border-left:3px dashed var(--hint);}
+  .extra.show{display:block;}
+  .extra-note{font-family:"Gill Sans",sans-serif; font-size:0.8rem; color:#6b5410; background:#fdf6e3; border:1px solid var(--hint);
+    border-radius:6px; padding:7px 11px; margin-bottom:4px;}
+
+  .worked{border-left:5px solid var(--accent); background:#eef4f7; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.95rem;}
+  .worked b.label{font-family:"Gill Sans",sans-serif; color:var(--accent-dark); display:block; margin-bottom:4px; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.03em;}
+  .worked .steps{margin:6px 0 0; padding-left:0; list-style:none;}
+  .worked .steps li{margin:3px 0; font-family:Georgia,serif;}
+
+  .tip-box{border-left:5px solid var(--warn); background:#f7f0e9; padding:14px 18px; border-radius:0 8px 8px 0; margin:22px 0;}
+  .tip-box h3{margin-top:0; color:var(--warn);}
+
+  .reflect textarea{width:100%; min-height:90px; font-family:Georgia,serif; font-size:0.95rem; padding:10px; border:1px solid var(--line); border-radius:6px; background:#fff; resize:vertical;}
+  .reflect p.prompt{font-style:italic; color:#5a5548; margin-top:0;}
+
+  dl dt{font-weight:bold; color:var(--accent-dark); margin-top:10px; font-family:"Gill Sans",sans-serif;}
+  dl dd{margin:2px 0 0 0;}
+
+  footer{text-align:center; font-family:"Gill Sans",sans-serif; font-size:0.8rem; color:#7a7364; margin-top:30px;}
+
+  @media print{
+    nav.stepper, #scoreBar, button.check, button.hintbtn, button.extratoggle{display:none !important;}
+    body{padding-bottom:0;}
+    section.card{box-shadow:none; break-inside:avoid; border:1px solid #999;}
+    header.page{background:#fff !important; color:#000 !important; border-bottom:2px solid #000;}
+    .fb.good{background:#eee !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .extra{display:block !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <h1>Activity 4: Calculations Involving Hydrates of Metal Compounds</h1>
+  <p>Many metal salts crystallise with water locked into their structure — this is the water of crystallisation. First, a reminder of how to work out the molar mass of a hydrate. Then the real skill: heating a hydrate to drive the water off, and using the masses before and after to work out exactly how many water molecules were there in the first place. Lots of examples. Self-marking, with hints, and extra practice folded in automatically if a question doesn't go your way.</p>
+</header>
+
+<section class="card" id="glossary" style="max-width:912px; margin:20px auto 0;">
+  <h2>Glossary</h2>
+  <dl>
+    <dt>Water of crystallisation</dt><dd>Water molecules built into the crystal structure of certain salts, in a fixed ratio — shown in the formula after a dot, e.g. the "5H₂O" in CuSO₄&middot;5H₂O.</dd>
+    <dt>Hydrate (hydrated salt)</dt><dd>A compound whose crystals include water of crystallisation.</dd>
+    <dt>Anhydrous</dt><dd>"Without water" — a compound with no water of crystallisation, either because it never had any, or because it has been driven off by heating.</dd>
+    <dt>Heating to constant mass</dt><dd>Heating, cooling and reweighing a sample repeatedly until two weighings in a row give the same mass. That steady final mass is proof that all the water has been driven off — and that you haven't stopped weighing too early.</dd>
+    <dt>Formula of a hydrate</dt><dd>Written as anhydrous formula &middot; x H₂O, e.g. MgSO₄&middot;7H₂O. The molar mass is the Mr of the anhydrous part, plus x lots of the molar mass of water (18).</dd>
+  </dl>
+</section>
+
+<section class="card reflect" style="max-width:912px; margin:20px auto 0;">
+  <h2>Before you start</h2>
+  <p class="prompt">You've already found molar masses from formulae, and formulae from experimental mass data. What do you think heating a hydrate and weighing it before and after could tell you?</p>
+  <textarea placeholder="Type your thoughts here before you begin the practice questions..."></textarea>
+</section>
+
+<nav class="stepper">
+  <a href="#secA">A. Molar mass of hydrates</a>
+  <a href="#secB">B. Hydrate analysis: the method</a>
+  <a href="#secC">C. Finding x — easy start</a>
+  <a href="#secD">D. Finding x — more examples</a>
+  <a href="#secE">E. Spot the mistake</a>
+  <a href="#secF">F. Terminology</a>
+  <a href="#secBonus">Bonus round</a>
+</nav>
+
+<div id="scoreBar">
+  <span>Score so far: <span class="tally" id="tally">0 / 0</span></span>
+  <div class="btns">
+    <button id="pdfBtn">Save as PDF (for Canvas)</button>
+    <button id="advBtn" disabled title="Save your PDF first">Show model answers (advanced)</button>
+    <button onclick="resetAll()">Reset all answers</button>
+  </div>
+</div>
+
+<main>
+
+<section class="card" id="secA">
+  <h2>A. Molar mass of hydrates <span class="weight">reminder</span></h2>
+  <p>A hydrate's formula has two parts: the anhydrous compound, and the water of crystallisation, joined by a dot. To find the molar mass, work out the Mr of the anhydrous part as normal, then add on the water — the molar mass of H₂O is 18, so multiply 18 by however many water molecules the formula shows, and add it on.</p>
+
+  <table class="ar">
+    <tr><th>Element</th><th>Symbol</th><th>Ar</th><th>Element</th><th>Symbol</th><th>Ar</th></tr>
+    <tr><td>Hydrogen</td><td>H</td><td class="val">1</td><td>Sulfur</td><td>S</td><td class="val">32</td></tr>
+    <tr><td>Carbon</td><td>C</td><td class="val">12</td><td>Chlorine</td><td>Cl</td><td class="val">35.5</td></tr>
+    <tr><td>Oxygen</td><td>O</td><td class="val">16</td><td>Calcium</td><td>Ca</td><td class="val">40</td></tr>
+    <tr><td>Sodium</td><td>Na</td><td class="val">23</td><td>Iron</td><td>Fe</td><td class="val">56</td></tr>
+    <tr><td>Magnesium</td><td>Mg</td><td class="val">24</td><td>Copper</td><td>Cu</td><td class="val">64</td></tr>
+    <tr><td></td><td></td><td></td><td>Zinc</td><td>Zn</td><td class="val">65</td></tr>
+    <tr><td></td><td></td><td></td><td>Barium</td><td>Ba</td><td class="val">137</td></tr>
+  </table>
+
+  <div class="worked">
+    <b class="label">Worked example</b>
+    Find the molar mass of copper(II) sulfate crystals, CuSO₄&middot;5H₂O.
+    <ol class="steps">
+      <li>Mr of anhydrous CuSO₄ = 64 + 32 + (4 &times; 16) = 160</li>
+      <li>Mass of water = 5 &times; 18 = 90</li>
+      <li>Total Mr = 160 + 90 = 250</li>
+    </ol>
+    Molar mass of CuSO₄&middot;5H₂O = <b>250</b>.
+  </div>
+
+  <div class="q" data-type="mc" data-answer="A">
+    <p class="stem">1. In the formula CuSO₄&middot;5H₂O, what does the "5" actually tell you?</p>
+    <div class="opts">
+      <label><input type="radio" name="qa1" value="A"> There are 5 water molecules for every one formula unit of CuSO₄</label>
+      <label><input type="radio" name="qa1" value="B"> The crystal is 5 g of water</label>
+      <label><input type="radio" name="qa1" value="C"> There are 5 oxygen atoms in the compound</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Look at what's written just after the dot.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>The dot notation is a ratio, not a mass — 5H₂O means 5 molecules of water per formula unit of the anhydrous salt.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="246" data-extra="extraA1">
+    <p class="stem">2. What is the molar mass of magnesium sulfate crystals, MgSO₄&middot;7H₂O?</p>
+    <div class="row"><input type="text" name="qa2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraA1">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Mr of MgSO₄ = 24 + 32 + (4 &times; 16) = 120. Then add 7 &times; 18.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>120 + (7 &times; 18) = 120 + 126 = 246.</div>
+  </div>
+  <div class="extra" id="extraA1">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="278">
+      <p class="stem">2a. What is the molar mass of iron(II) sulfate crystals, FeSO₄&middot;7H₂O?</p>
+      <div class="row"><input type="text" name="qa2a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Mr of FeSO₄ = 56 + 32 + (4 &times; 16) = 152. Then add 7 &times; 18.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>152 + 126 = 278.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="219" data-extra="extraA2">
+    <p class="stem">3. What is the molar mass of calcium chloride crystals, CaCl₂&middot;6H₂O?</p>
+    <div class="row"><input type="text" name="qa3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraA2">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Mr of CaCl₂ = 40 + (2 &times; 35.5) = 111. Then add 6 &times; 18.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>111 + 108 = 219.</div>
+  </div>
+  <div class="extra" id="extraA2">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="203">
+      <p class="stem">3a. What is the molar mass of magnesium chloride crystals, MgCl₂&middot;6H₂O?</p>
+      <div class="row"><input type="text" name="qa3a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Mr of MgCl₂ = 24 + (2 &times; 35.5) = 95. Then add 6 &times; 18.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>95 + 108 = 203.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="286" data-extra="extraA3">
+    <p class="stem">4. What is the molar mass of sodium carbonate crystals, Na₂CO₃&middot;10H₂O (washing soda)?</p>
+    <div class="row"><input type="text" name="qa4" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraA3">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Mr of Na₂CO₃ = (2 &times; 23) + 12 + (3 &times; 16) = 106. Then add 10 &times; 18.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>106 + 180 = 286. Ten water molecules is unusually high, but washing soda really is this hydrated.</div>
+  </div>
+  <div class="extra" id="extraA3">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="322">
+      <p class="stem">4a. What is the molar mass of sodium sulfate crystals, Na₂SO₄&middot;10H₂O?</p>
+      <div class="row"><input type="text" name="qa4a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Mr of Na₂SO₄ = (2 &times; 23) + 32 + (4 &times; 16) = 142. Then add 10 &times; 18.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>142 + 180 = 322.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="244" data-extra="extraA4">
+    <p class="stem">5. What is the molar mass of barium chloride crystals, BaCl₂&middot;2H₂O?</p>
+    <div class="row"><input type="text" name="qa5" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraA4">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Mr of BaCl₂ = 137 + (2 &times; 35.5) = 208. Then add 2 &times; 18.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>208 + 36 = 244.</div>
+  </div>
+  <div class="extra" id="extraA4">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="172">
+      <p class="stem">5a. What is the molar mass of calcium sulfate crystals, CaSO₄&middot;2H₂O (gypsum)?</p>
+      <div class="row"><input type="text" name="qa5a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Mr of CaSO₄ = 40 + 32 + (4 &times; 16) = 136. Then add 2 &times; 18.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>136 + 36 = 172.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secB">
+  <h2>B. Hydrate analysis: the method <span class="weight">new idea</span></h2>
+  <p>Now run the idea the other way. Heat a weighed sample of a hydrate strongly, and the water of crystallisation drives off as steam, leaving the anhydrous salt behind. To be sure <em>all</em> the water has gone — and that you haven't just stopped part-way — you heat, cool and reweigh the sample again and again, until the mass stops changing between two weighings in a row. That's <span class="term">heating to constant mass<span class="tip">Repeatedly heating, cooling and reweighing a sample until consecutive weighings agree — proof that no more mass is being lost.</span></span>.</p>
+  <p>From the mass lost, you can work out exactly how many water molecules were in the original formula — the value of <b>x</b> in anhydrous &middot; xH₂O.</p>
+
+  <p>Four steps, every time:</p>
+  <ol style="margin:0 0 14px; padding-left:22px;">
+    <li>Mass of water lost = mass of hydrate &minus; mass of anhydrous salt (after heating to constant mass).</li>
+    <li>Moles of water = mass of water &divide; 18 (the molar mass of H₂O).</li>
+    <li>Moles of anhydrous salt = mass of anhydrous salt &divide; its molar mass.</li>
+    <li>x = moles of water &divide; moles of anhydrous salt.</li>
+  </ol>
+
+  <div class="worked">
+    <b class="label">Worked example</b>
+    A student heats 25.0 g of hydrated copper(II) sulfate, CuSO₄&middot;xH₂O, to constant mass. 16.0 g of anhydrous CuSO₄ (Mr = 160) remains.
+    <ol class="steps">
+      <li>Mass of water lost = 25.0 &minus; 16.0 = 9.0 g</li>
+      <li>Moles of water = 9.0 &divide; 18 = 0.5 mol</li>
+      <li>Moles of CuSO₄ = 16.0 &divide; 160 = 0.1 mol</li>
+      <li>x = 0.5 &divide; 0.1 = 5</li>
+    </ol>
+    Formula = <b>CuSO₄&middot;5H₂O</b>.
+  </div>
+
+  <div class="q" data-type="mc" data-answer="A">
+    <p class="stem">6. Why do we heat the sample to <em>constant</em> mass, rather than just heating it once and weighing it?</p>
+    <div class="opts">
+      <label><input type="radio" name="qb6" value="A"> To make sure every last bit of water of crystallisation has been driven off</label>
+      <label><input type="radio" name="qb6" value="B"> To make the salt heavier</label>
+      <label><input type="radio" name="qb6" value="C"> To turn the anhydrous salt back into a hydrate</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>If you stopped too early, some water would still be trapped in the crystals — and the mass would be wrong.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Weighing only once risks under-heating, leaving some water behind and giving a final mass that's too high — which would make the calculated x too small.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="9|9.0">
+    <p class="stem">7. A hydrate sample has a mass of 21.9 g before heating and 11.1 g after heating to constant mass. What mass of water was lost?</p>
+    <div class="row"><input type="text" name="qb7" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Mass of water lost = mass of hydrate &minus; mass of anhydrous salt.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>21.9 &minus; 11.1 = 10.8 g. (This is the CaCl₂&middot;6H₂O data from the sections below — you'll use it again shortly.)</div>
+  </div>
+</section>
+
+<section class="card" id="secC">
+  <h2>C. Finding x — easy start <span class="weight">start here</span></h2>
+  <p>In each question below, work through all four steps to find x — the number of water molecules per formula unit. These first few all come out as small, clean numbers.</p>
+
+  <div class="q" data-type="text" data-answer="2" data-extra="extraC1">
+    <p class="stem">8. 17.2 g of hydrated calcium sulfate, CaSO₄&middot;xH₂O, is heated to constant mass. 13.6 g of anhydrous CaSO₄ (Mr = 136) remains. What is x?</p>
+    <div class="row"><input type="text" name="qc8" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraC1">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 17.2 &minus; 13.6 = 3.6 g. Moles of water = 3.6 &divide; 18. Moles of CaSO₄ = 13.6 &divide; 136.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.2. Moles of CaSO₄ = 0.1. x = 0.2 &divide; 0.1 = 2. Formula = CaSO₄&middot;2H₂O.</div>
+  </div>
+  <div class="extra" id="extraC1">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="2">
+      <p class="stem">8a. 17.1 g of hydrated copper(II) chloride, CuCl₂&middot;xH₂O, is heated to constant mass. 13.5 g of anhydrous CuCl₂ (Mr = 135) remains. What is x?</p>
+      <div class="row"><input type="text" name="qc8a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Water lost = 17.1 &minus; 13.5 = 3.6 g. Moles of water = 3.6 &divide; 18. Moles of CuCl₂ = 13.5 &divide; 135.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.2. Moles of CuCl₂ = 0.1. x = 2. Formula = CuCl₂&middot;2H₂O.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="2" data-extra="extraC2">
+    <p class="stem">9. 24.4 g of hydrated barium chloride, BaCl₂&middot;xH₂O, is heated to constant mass. 20.8 g of anhydrous BaCl₂ (Mr = 208) remains. What is x?</p>
+    <div class="row"><input type="text" name="qc9" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraC2">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 24.4 &minus; 20.8 = 3.6 g. Moles of water = 3.6 &divide; 18. Moles of BaCl₂ = 20.8 &divide; 208.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.2. Moles of BaCl₂ = 0.1. x = 2. Formula = BaCl₂&middot;2H₂O.</div>
+  </div>
+  <div class="extra" id="extraC2">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="2">
+      <p class="stem">9a. 8.6 g of hydrated calcium sulfate, CaSO₄&middot;xH₂O, is heated to constant mass. 6.8 g of anhydrous CaSO₄ (Mr = 136) remains. What is x?</p>
+      <div class="row"><input type="text" name="qc9a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Water lost = 8.6 &minus; 6.8 = 1.8 g. Moles of water = 1.8 &divide; 18. Moles of CaSO₄ = 6.8 &divide; 136.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.1. Moles of CaSO₄ = 0.05. x = 2 — the same compound, a smaller sample, the same answer.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secD">
+  <h2>D. Finding x — more examples <span class="weight">lots of practice</span></h2>
+  <p>The same four steps, now with a wider range of hydrates and larger values of x.</p>
+
+  <div class="q" data-type="text" data-answer="5" data-extra="extraD1">
+    <p class="stem">10. 12.5 g of hydrated copper(II) sulfate, CuSO₄&middot;xH₂O, is heated to constant mass. 8.0 g of anhydrous CuSO₄ (Mr = 160) remains. What is x?</p>
+    <div class="row"><input type="text" name="qd10" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD1">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 12.5 &minus; 8.0 = 4.5 g. Moles of water = 4.5 &divide; 18. Moles of CuSO₄ = 8.0 &divide; 160.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.25. Moles of CuSO₄ = 0.05. x = 0.25 &divide; 0.05 = 5. Formula = CuSO₄&middot;5H₂O — the same result as the worked example, from a smaller sample.</div>
+  </div>
+  <div class="extra" id="extraD1">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="5">
+      <p class="stem">10a. 4.96 g of hydrated sodium thiosulfate, Na₂S₂O₃&middot;xH₂O, is heated to constant mass. 3.16 g of anhydrous Na₂S₂O₃ (Mr = 158) remains. What is x?</p>
+      <div class="row"><input type="text" name="qd10a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Water lost = 4.96 &minus; 3.16 = 1.8 g. Moles of water = 1.8 &divide; 18. Moles of Na₂S₂O₃ = 3.16 &divide; 158.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.1. Moles of Na₂S₂O₃ = 0.02. x = 5. Formula = Na₂S₂O₃&middot;5H₂O — this one is sometimes called "hypo", once used in photographic film developing.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="7" data-extra="extraD2">
+    <p class="stem">11. 24.6 g of hydrated magnesium sulfate, MgSO₄&middot;xH₂O, is heated to constant mass. 12.0 g of anhydrous MgSO₄ (Mr = 120) remains. What is x?</p>
+    <div class="row"><input type="text" name="qd11" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD2">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 24.6 &minus; 12.0 = 12.6 g. Moles of water = 12.6 &divide; 18. Moles of MgSO₄ = 12.0 &divide; 120.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.7. Moles of MgSO₄ = 0.1. x = 7. Formula = MgSO₄&middot;7H₂O — Epsom salts.</div>
+  </div>
+  <div class="extra" id="extraD2">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="7">
+      <p class="stem">11a. 13.9 g of hydrated iron(II) sulfate, FeSO₄&middot;xH₂O, is heated to constant mass. 7.6 g of anhydrous FeSO₄ (Mr = 152) remains. What is x?</p>
+      <div class="row"><input type="text" name="qd11a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Water lost = 13.9 &minus; 7.6 = 6.3 g. Moles of water = 6.3 &divide; 18. Moles of FeSO₄ = 7.6 &divide; 152.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.35. Moles of FeSO₄ = 0.05. x = 7. Formula = FeSO₄&middot;7H₂O.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="6" data-extra="extraD3">
+    <p class="stem">12. 21.9 g of hydrated calcium chloride, CaCl₂&middot;xH₂O, is heated to constant mass. 11.1 g of anhydrous CaCl₂ (Mr = 111) remains. What is x?</p>
+    <div class="row"><input type="text" name="qd12" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD3">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>You worked out the mass of water lost for this exact pair of numbers back in question 7.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Water lost = 10.8 g. Moles of water = 0.6. Moles of CaCl₂ = 0.1. x = 6. Formula = CaCl₂&middot;6H₂O.</div>
+  </div>
+  <div class="extra" id="extraD3">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="6">
+      <p class="stem">12a. 20.3 g of hydrated magnesium chloride, MgCl₂&middot;xH₂O, is heated to constant mass. 9.5 g of anhydrous MgCl₂ (Mr = 95) remains. What is x?</p>
+      <div class="row"><input type="text" name="qd12a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Water lost = 20.3 &minus; 9.5 = 10.8 g. Moles of water = 10.8 &divide; 18. Moles of MgCl₂ = 9.5 &divide; 95.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.6. Moles of MgCl₂ = 0.1. x = 6. Formula = MgCl₂&middot;6H₂O.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="10" data-extra="extraD4">
+    <p class="stem">13. 14.3 g of hydrated sodium carbonate, Na₂CO₃&middot;xH₂O, is heated to constant mass. 5.3 g of anhydrous Na₂CO₃ (Mr = 106) remains. What is x?</p>
+    <div class="row"><input type="text" name="qd13" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD4">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 14.3 &minus; 5.3 = 9.0 g. Moles of water = 9.0 &divide; 18. Moles of Na₂CO₃ = 5.3 &divide; 106.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.5. Moles of Na₂CO₃ = 0.05. x = 10. Formula = Na₂CO₃&middot;10H₂O — washing soda, the most heavily hydrated salt on this page.</div>
+  </div>
+  <div class="extra" id="extraD4">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="10">
+      <p class="stem">13a. 16.1 g of hydrated sodium sulfate, Na₂SO₄&middot;xH₂O, is heated to constant mass. 7.1 g of anhydrous Na₂SO₄ (Mr = 142) remains. What is x?</p>
+      <div class="row"><input type="text" name="qd13a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Water lost = 16.1 &minus; 7.1 = 9.0 g. Moles of water = 9.0 &divide; 18. Moles of Na₂SO₄ = 7.1 &divide; 142.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.5. Moles of Na₂SO₄ = 0.05. x = 10. Formula = Na₂SO₄&middot;10H₂O.</div>
+    </div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="7" data-extra="extraD5">
+    <p class="stem">14. 28.7 g of hydrated zinc sulfate, ZnSO₄&middot;xH₂O, is heated to constant mass. 16.1 g of anhydrous ZnSO₄ (Mr = 161) remains. What is x?</p>
+    <div class="row"><input type="text" name="qd14" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button><button class="extratoggle" data-target="extraD5">More practice (optional)</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 28.7 &minus; 16.1 = 12.6 g. Moles of water = 12.6 &divide; 18. Moles of ZnSO₄ = 16.1 &divide; 161.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.7. Moles of ZnSO₄ = 0.1. x = 7. Formula = ZnSO₄&middot;7H₂O.</div>
+  </div>
+  <div class="extra" id="extraD5">
+    <div class="extra-note">Since that one didn't land, try this before moving on — skip it if you'd rather push ahead.</div>
+    <div class="q" data-type="text" data-answer="7">
+      <p class="stem">14a. 12.3 g of hydrated magnesium sulfate, MgSO₄&middot;xH₂O, is heated to constant mass. 6.0 g of anhydrous MgSO₄ (Mr = 120) remains. What is x?</p>
+      <div class="row"><input type="text" name="qd14a" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+      <div class="fb"></div>
+      <div class="hintbox"><b class="label">Hint</b>Water lost = 12.3 &minus; 6.0 = 6.3 g. Moles of water = 6.3 &divide; 18. Moles of MgSO₄ = 6.0 &divide; 120.</div>
+      <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.35. Moles of MgSO₄ = 0.05. x = 7. Formula = MgSO₄&middot;7H₂O — a smaller sample, same answer as question 11.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secE">
+  <h2>E. Spot the mistake <span class="weight">diagnostic</span></h2>
+
+  <div class="q" data-type="mc" data-answer="A">
+    <p class="stem">15. Working out x for a hydrate, a student wrote: "moles of anhydrous salt &divide; moles of water = x." What's wrong with this?</p>
+    <div class="opts">
+      <label><input type="radio" name="qe15" value="A"> The division is the wrong way round — x = moles of water &divide; moles of anhydrous salt</label>
+      <label><input type="radio" name="qe15" value="B"> Nothing — both give the same answer</label>
+      <label><input type="radio" name="qe15" value="C"> You should multiply, not divide, either way round</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>There's always more moles of water than moles of the anhydrous salt (that's the whole point of x). Which order gives a number bigger than 1?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Flipping the division gives a fraction less than 1 instead of a whole number like 5, 6, 7 or 10 — an easy way to notice the mistake even without redoing the working.</div>
+  </div>
+
+  <div class="q" data-type="mc" data-answer="B">
+    <p class="stem">16. A student has 21.9 g of hydrate and 11.1 g of anhydrous salt left after heating. They calculate x as 21.9 &divide; 11.1 = 1.97, and round it to 2. What's the actual mistake here?</p>
+    <div class="opts">
+      <label><input type="radio" name="qe16" value="A"> Rounding to 2 is fine — hydrates always have whole-number x values</label>
+      <label><input type="radio" name="qe16" value="B"> They divided the two masses directly, instead of first converting both to moles and finding the mass of water lost</label>
+      <label><input type="radio" name="qe16" value="C"> They should have added the two masses instead of dividing them</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water and the anhydrous salt have very different molar masses — a ratio of grams is not the same as a ratio of moles.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>This is CaCl₂&middot;6H₂O data from question 12 — the real answer is x = 6, not 2. Grams of hydrate compared directly to grams of anhydrous salt ignores that water (Mr = 18) and CaCl₂ (Mr = 111) don't weigh the same per mole, so the ratio of masses is nothing like the ratio of moles.</div>
+  </div>
+</section>
+
+<section class="card" id="secF">
+  <h2>F. Terminology <span class="weight">check</span></h2>
+
+  <div class="q" data-type="mc" data-answer="B">
+    <p class="stem">17. Which is the correct definition of "anhydrous"?</p>
+    <div class="opts">
+      <label><input type="radio" name="qf17" value="A"> Containing extra water of crystallisation</label>
+      <label><input type="radio" name="qf17" value="B"> Containing no water of crystallisation</label>
+      <label><input type="radio" name="qf17" value="C"> Dissolved completely in water</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>The prefix "an-" means "without", like "anaerobic" means without air.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Anhydrous means without water — the state a hydrate reaches once it's been heated to constant mass.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="anhydrous">
+    <p class="stem">18. In the formula MgSO₄&middot;7H₂O, the dot separates the water of crystallisation from the ______ part of the compound.</p>
+    <div class="row"><input type="text" name="qf18" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>This is the same word as in question 17.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Anhydrous — the MgSO₄ part, which is what remains once every water molecule has been driven off.</div>
+  </div>
+
+  <div class="q" data-type="mc" data-answer="C">
+    <p class="stem">19. Which best explains why a student re-weighs a heated hydrate sample more than once before trusting the final mass?</p>
+    <div class="opts">
+      <label><input type="radio" name="qf19" value="A"> To let the sample cool down completely, which is the only reason</label>
+      <label><input type="radio" name="qf19" value="B"> Because the first weighing is always wrong</label>
+      <label><input type="radio" name="qf19" value="C"> To check the mass has stopped decreasing, confirming all the water has gone</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Look back at the definition of "heating to constant mass" in the glossary.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>If the mass were still dropping, there'd still be water left to drive off — a single weighing can't tell you that on its own.</div>
+  </div>
+</section>
+
+<section class="card" id="secBonus">
+  <h2>Bonus round <span class="weight">going further</span></h2>
+
+  <div class="q" data-type="text" data-answer="2.4">
+    <p class="stem">20. A student heats 4.92 g of magnesium sulfate crystals, MgSO₄&middot;7H₂O (Mr = 246), to constant mass. What mass of anhydrous MgSO₄ (Mr = 120) should remain?</p>
+    <div class="row"><input type="text" name="qbonus20" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>This is the reverse direction — start by finding moles of the whole hydrate: 4.92 &divide; 246.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of hydrate = 4.92 &divide; 246 = 0.02 mol. Since each mole of hydrate contains one mole of MgSO₄, mass of MgSO₄ = 0.02 &times; 120 = 2.4 g.</div>
+  </div>
+
+  <div class="q" data-type="text" data-answer="36">
+    <p class="stem">21. What percentage of the mass of CuSO₄&middot;5H₂O (Mr = 250) is water? Give your answer as a whole number, without the % sign.</p>
+    <div class="row"><input type="text" name="qbonus21" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Mass of water per mole = 5 &times; 18 = 90. Percentage = (90 &divide; 250) &times; 100.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(90 &divide; 250) &times; 100 = 36%. This is why heating a hydrate can lose well over a third of its mass — worth remembering next time you see a "before and after" hydrate question.</div>
+  </div>
+</section>
+
+</main>
+
+<section class="card reflect" style="max-width:912px; margin:0 auto 24px;">
+  <h2>After you finish</h2>
+  <p class="prompt">Which felt more solid by the end — finding the molar mass of a hydrate, or working out x from heating data? Which section would benefit from another look?</p>
+  <textarea placeholder="Type your thoughts here once you've worked through the practice questions..."></textarea>
+</section>
+
+<footer>Science Department · Refined with AI</footer>
+
+<script>
+  let correctCount = 0, attemptedCount = 0;
+  const attempted = new Set();
+
+  function normalize(s){
+    return s.trim().replace(/\s+/g,'').replace(/−/g,'-').toLowerCase();
+  }
+
+  function updateTally(){
+    document.getElementById('tally').textContent = correctCount + ' / ' + attemptedCount;
+  }
+
+  function markQuestion(qDiv, isCorrect, correctAnswerText){
+    const fb = qDiv.querySelector('.fb');
+    fb.classList.remove('good','bad');
+    if (isCorrect){
+      fb.classList.add('good');
+      fb.textContent = 'Correct.';
+    } else {
+      fb.classList.add('bad');
+      fb.textContent = 'Not quite — the answer is ' + correctAnswerText + '. Have another go on paper, then move on.';
+    }
+  }
+
+  document.querySelectorAll('.q').forEach((qDiv, idx) => {
+    const type = qDiv.dataset.type;
+    const answer = qDiv.dataset.answer;
+    const alts = answer.split('|');
+    const btn = qDiv.querySelector('button.check');
+    const qId = 'q' + idx;
+
+    btn.addEventListener('click', () => {
+      let userAnswer = '';
+      let isCorrect = false;
+
+      if (type === 'text'){
+        const input = qDiv.querySelector('input[type="text"]');
+        userAnswer = input.value;
+        if (!userAnswer.trim()) return;
+        const normUser = normalize(userAnswer);
+        isCorrect = alts.some(a => normalize(a) === normUser);
+      } else if (type === 'mc'){
+        const checked = qDiv.querySelector('input[type="radio"]:checked');
+        if (!checked) return;
+        userAnswer = checked.value;
+        isCorrect = alts.includes(userAnswer);
+      }
+
+      if (!attempted.has(qId)){
+        attempted.add(qId);
+        attemptedCount++;
+        if (isCorrect) correctCount++;
+      } else {
+        const fb = qDiv.querySelector('.fb');
+        const wasCorrect = fb.classList.contains('good');
+        if (wasCorrect && !isCorrect) correctCount--;
+        if (!wasCorrect && isCorrect) correctCount++;
+      }
+
+      let shownAnswer = alts[0].replace(/^-/, '−');
+      if (type === 'mc'){
+        const correctInput = qDiv.querySelector('input[value="' + CSS.escape(alts[0]) + '"]');
+        if (correctInput) shownAnswer = correctInput.parentElement.textContent.trim();
+      }
+
+      markQuestion(qDiv, isCorrect, shownAnswer);
+      updateTally();
+
+      // ---- Auto-reveal linked extra practice on a wrong answer ----
+      if (!isCorrect && qDiv.dataset.extra){
+        const ex = document.getElementById(qDiv.dataset.extra);
+        if (ex){
+          ex.classList.add('show');
+          const toggle = qDiv.querySelector('.extratoggle');
+          if (toggle) toggle.textContent = 'Hide extra practice';
+        }
+      }
+    });
+  });
+
+  // ---- Hint buttons ----
+  document.querySelectorAll('.hintbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const box = btn.closest('.q').querySelector('.hintbox');
+      box.classList.toggle('show');
+    });
+  });
+
+  // ---- Manual "more practice" toggles ----
+  document.querySelectorAll('.extratoggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      if (!target) return;
+      target.classList.toggle('show');
+      btn.textContent = target.classList.contains('show') ? 'Hide extra practice' : 'More practice (optional)';
+    });
+  });
+
+  // ---- Global advanced model answers toggle (gated behind Save as PDF) ----
+  const advBtn = document.getElementById('advBtn');
+  let advShown = false;
+  advBtn.addEventListener('click', () => {
+    advShown = !advShown;
+    document.querySelectorAll('.advbox').forEach(b => b.classList.toggle('show', advShown));
+    advBtn.textContent = advShown ? 'Hide advanced model answers' : 'Show model answers (advanced)';
+  });
+
+  document.getElementById('pdfBtn').addEventListener('click', () => {
+    advBtn.disabled = false;
+    advBtn.title = '';
+    window.print();
+  });
+
+  function resetAll(){
+    document.querySelectorAll('.q input[type="text"]').forEach(i => i.value = '');
+    document.querySelectorAll('.q input[type="radio"]').forEach(i => i.checked = false);
+    document.querySelectorAll('.fb').forEach(f => { f.classList.remove('good','bad'); f.textContent=''; });
+    document.querySelectorAll('.hintbox').forEach(h => h.classList.remove('show'));
+    document.querySelectorAll('.extra').forEach(e => e.classList.remove('show'));
+    document.querySelectorAll('.extratoggle').forEach(b => b.textContent = 'More practice (optional)');
+    correctCount = 0; attemptedCount = 0; attempted.clear();
+    updateTally();
+  }
+</script>
+
+</body>
+</html>
