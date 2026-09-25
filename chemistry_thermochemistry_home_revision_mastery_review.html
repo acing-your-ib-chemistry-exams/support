@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 9 Chemistry — Thermochemistry Home Revision Review: Towards Mastery</title>
+<style>
+  :root{
+    --ink:#1f2a24; --paper:#faf8f3; --panel:#ffffff; --line:#d8d2c2;
+    --accent:#3d6b8a; --accent-dark:#284a61; --good:#2e7d4f; --bad:#b23b2e; --warn:#a6432d;
+    --hint:#c9a227; --adv:#7d5ba6; --cheat:#2e7d4f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    line-height:1.55; padding:0 0 70px 0;
+  }
+  header.page{background:var(--accent-dark); color:#fdf6ee; padding:28px 24px 22px; border-bottom:6px solid var(--accent);}
+  header.page h1{margin:0 0 4px; font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; font-size:1.55rem;}
+  header.page p{margin:4px 0 0; opacity:0.9; font-size:0.95rem; max-width:760px;}
+  nav.stepper{max-width:960px; margin:18px auto 0; padding:0 24px; display:flex; flex-wrap:wrap; gap:8px; font-family:"Gill Sans",sans-serif; font-size:0.78rem;}
+  nav.stepper a{padding:6px 10px; border-radius:6px; text-decoration:none; color:var(--ink); background:#efe9db; border:1px solid var(--line);}
+  nav.stepper a:hover{background:#e5ddc9;}
+
+  #scoreBar{position:sticky; top:0; z-index:20; background:#efe9db; border-bottom:2px solid var(--line);
+    font-family:"Gill Sans",sans-serif; font-size:0.88rem; padding:9px 24px; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:8px;}
+  #scoreBar .tally{font-weight:bold; color:var(--accent-dark);}
+  #scoreBar .btns{display:flex; gap:8px; flex-wrap:wrap;}
+  #scoreBar button{font-family:"Gill Sans",sans-serif; background:var(--panel); border:1px solid var(--line);
+    border-radius:6px; padding:6px 11px; cursor:pointer; font-size:0.8rem;}
+  #scoreBar button:hover{background:#f3efe4;}
+  #scoreBar button#advBtn{border-color:var(--adv); color:var(--adv);}
+  #scoreBar button#advBtn:disabled{opacity:0.45; cursor:not-allowed;}
+  #scoreBar button#pdfBtn{border-color:var(--accent-dark); color:var(--accent-dark); font-weight:bold;}
+
+  main{max-width:960px; margin:0 auto; padding:20px 24px 10px;}
+  section.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:22px 26px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+  h2{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); border-bottom:2px solid var(--line); padding-bottom:6px; font-size:1.25rem; margin-top:0;}
+  h2 .weight{float:right; font-size:0.7rem; font-weight:normal; color:#7a7364; border:1px solid var(--line); border-radius:12px; padding:3px 10px; background:#f3efe4;}
+  h3{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); font-size:1.05rem;}
+
+  .term{border-bottom:1px dotted var(--accent); cursor:help; position:relative; color:var(--accent-dark);}
+  .term .tip{visibility:hidden; opacity:0; position:absolute; bottom:135%; left:50%; transform:translateX(-50%);
+    background:#2a2320; color:#fdf6ee; padding:8px 11px; border-radius:6px; width:250px; font-family:Georgia,serif;
+    font-size:0.82rem; line-height:1.4; z-index:5; transition:opacity 0.15s; box-shadow:0 4px 10px rgba(0,0,0,0.25);}
+  .term .tip::after{content:""; position:absolute; top:100%; left:50%; margin-left:-6px; border:6px solid transparent; border-top-color:#2a2320;}
+  .term:hover .tip, .term:focus .tip{visibility:visible; opacity:1;}
+
+  table.ar{width:100%; border-collapse:collapse; margin:12px 0; font-size:0.92rem;}
+  table.ar th, table.ar td{border:1px solid var(--line); padding:6px 10px; text-align:left;}
+  table.ar th{background:#efe9db; font-family:"Gill Sans",sans-serif; font-weight:normal;}
+  table.ar td.val{text-align:center; font-weight:bold;}
+
+  .q{border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin:14px 0; background:#fbf9f4;}
+  .q p.stem{margin:0 0 10px; font-weight:bold;}
+  .q .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .q input[type="text"]{font-family:Georgia,serif; font-size:0.95rem; padding:6px 8px; border:1px solid var(--line); border-radius:5px; width:180px;}
+  .q .opts label{display:block; margin:4px 0; cursor:pointer; font-family:Georgia,serif;}
+  .q button.check{font-family:"Gill Sans",sans-serif; background:var(--accent); color:#fff; border:none;
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.85rem;}
+  .q button.check:hover{background:var(--accent-dark);}
+  .q button.hintbtn{font-family:"Gill Sans",sans-serif; background:#fff; color:var(--hint); border:1px solid var(--hint);
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.85rem;}
+  .q button.hintbtn:hover{background:#fdf6e3;}
+  .fb{margin-top:9px; padding:8px 11px; border-radius:6px; font-size:0.9rem; display:none;}
+  .fb.good{display:block; background:#e4f2e9; border:1px solid var(--good); color:#1e5c3a;}
+  .fb.bad{display:block; background:#f7e6e3; border:1px solid var(--bad); color:#7c281c;}
+  .hintbox{display:none; margin-top:8px; padding:8px 11px; border-radius:6px; background:#fdf6e3; border:1px solid var(--hint); font-size:0.87rem; color:#6b5410;}
+  .hintbox.show{display:block;}
+  .advbox{display:none; margin-top:8px; padding:8px 11px; border-radius:6px; background:#f1ecf7; border:1px solid var(--adv); font-size:0.87rem; color:#4a3268;}
+  .advbox.show{display:block;}
+  .advbox b.label, .hintbox b.label{font-family:"Gill Sans",sans-serif; text-transform:uppercase; font-size:0.7rem; letter-spacing:0.03em; display:block; margin-bottom:3px;}
+
+  .worked{border-left:5px solid var(--accent); background:#eef4f7; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.95rem;}
+  .worked b.label{font-family:"Gill Sans",sans-serif; color:var(--accent-dark); display:block; margin-bottom:4px; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.03em;}
+  .worked .steps{margin:6px 0 0; padding-left:0; list-style:none;}
+  .worked .steps li{margin:3px 0; font-family:Georgia,serif;}
+
+  .cheatsheet{border:2px solid var(--cheat); background:#eef7f0; padding:14px 18px; border-radius:8px; margin:0 0 18px;}
+  .cheatsheet h3{margin-top:0; color:var(--cheat); display:flex; align-items:center; gap:8px;}
+  .cheatsheet h3::before{content:"\2713"; display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; background:var(--cheat); color:#fff; font-size:0.72rem;}
+  .cheatsheet dl{margin:6px 0 10px;}
+  .cheatsheet dl dt{font-weight:bold; color:var(--accent-dark); margin-top:6px; font-family:"Gill Sans",sans-serif; font-size:0.9rem;}
+  .cheatsheet dl dd{margin:1px 0 0 0; font-size:0.92rem;}
+  .cheatsheet .formulabox{background:#fff; border:1px solid var(--cheat); border-radius:6px; padding:8px 12px; margin:8px 0; font-family:Georgia,serif; font-weight:bold; text-align:center;}
+  .cheatsheet .worked{background:#fff;}
+
+  .tip-box{border-left:5px solid var(--warn); background:#f7f0e9; padding:14px 18px; border-radius:0 8px 8px 0; margin:22px 0;}
+  .tip-box h3{margin-top:0; color:var(--warn);}
+
+  .reflect textarea{width:100%; min-height:90px; font-family:Georgia,serif; font-size:0.95rem; padding:10px; border:1px solid var(--line); border-radius:6px; background:#fff; resize:vertical;}
+  .reflect p.prompt{font-style:italic; color:#5a5548; margin-top:0;}
+
+  dl dt{font-weight:bold; color:var(--accent-dark); margin-top:10px; font-family:"Gill Sans",sans-serif;}
+  dl dd{margin:2px 0 0 0;}
+
+  footer{text-align:center; font-family:"Gill Sans",sans-serif; font-size:0.8rem; color:#7a7364; margin-top:30px;}
+
+  @media print{
+    nav.stepper, #scoreBar, button.check, button.hintbtn{display:none !important;}
+    body{padding-bottom:0;}
+    section.card{box-shadow:none; break-inside:avoid; border:1px solid #999;}
+    header.page{background:#fff !important; color:#000 !important; border-bottom:2px solid #000;}
+    .fb.good{background:#eee !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  }
+
+  .idea{margin:22px 0 8px; padding-top:14px; border-top:1px dashed var(--line);}
+  .idea:first-of-type{border-top:none; padding-top:0; margin-top:6px;}
+  .idea-title{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); font-size:1.02rem; margin:0 0 4px;}
+  .masterybank{display:none; margin-top:10px; padding:14px 16px; border-radius:8px; border:2px dashed var(--warn); background:#f9f1ec;}
+  .masterybank.show{display:block;}
+  .masterybank .bank-intro{margin:0 0 10px; font-style:italic; color:#6b3420; font-size:0.88rem;}
+  .masterybadge{margin-top:6px; padding:8px 12px; border-radius:6px; font-family:"Gill Sans",sans-serif; font-size:0.85rem; font-weight:bold; display:none;}
+  .masterybadge.achieved{display:block; background:#e4f2e9; border:1px solid var(--good); color:#1e5c3a;}
+  .masterybadge.trying{display:block; background:#fdf6e3; border:1px solid var(--hint); color:#6b5410;}
+
+  .diagram-wrap{margin:10px 0; text-align:center;}
+  .diagram-wrap svg{max-width:360px; width:100%; height:auto; background:#fdfcf9; border:1px solid var(--line); border-radius:6px;}
+
+  .drawdiagram{border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin:18px 0; background:#fbf9f4;}
+  .drawdiagram p.stem{margin:0 0 10px; font-weight:bold;}
+  .drawdiagram svg{max-width:420px; width:100%; height:auto; background:#fdfcf9; border:1px solid var(--line); border-radius:6px; touch-action:none;}
+  .drawdiagram .row{margin-top:10px;}
+  .draghandle{cursor:ns-resize;}
+</style>
+</head>
+<body>
+
+<header class="page">
+  <h1>Thermochemistry Home Revision Review: Towards Mastery</h1>
+  <p>A longer, in-depth review for revising thermochemistry at home: reading energy level diagrams for exothermic and endothermic reactions, first without and then with activation energy shown; drawing your own level diagram on screen from given &Delta;H and Ea data; and calorimetry calculations using water, working from the thermal energy released through to the energy change per mole, across four different reactions &mdash; two exothermic (magnesium with dilute sulfuric acid, and acid&ndash;alkali neutralisation) and one endothermic (dissolving ammonium nitrate), alongside the bare formula on its own. Sections A, B and D use the same mastery structure as the stoichiometry reviews &mdash; two starter questions per idea, with three extra questions unlocking if you get one wrong. Section C is a hands-on drawing exercise instead. Take your time; there's no rush working through this at home.</p>
+</header>
+
+<section class="card" id="glossary" style="max-width:912px; margin:20px auto 0;">
+  <h2>Glossary — quick reference</h2>
+  <dl>
+
+    <dt>Exothermic</dt><dd>A reaction that releases energy to the surroundings. The products end up with less energy than the reactants, and &Delta;H is negative.</dd>
+    <dt>Endothermic</dt><dd>A reaction that absorbs energy from the surroundings. The products end up with more energy than the reactants, and &Delta;H is positive.</dd>
+    <dt>&Delta;H (enthalpy change)</dt><dd>The energy difference between products and reactants, measured in kJ/mol. Negative for exothermic reactions, positive for endothermic reactions.</dd>
+    <dt>Activation energy (Ea)</dt><dd>The minimum energy needed before a reaction can happen &mdash; the height of the energy barrier from the reactants level up to the peak of the curve.</dd>
+    <dt>Limiting reactant</dt><dd>Whichever reactant runs out first, stopping the reaction. Everything else (here, the acid) is in excess.</dd>
+    <dt>Specific heat capacity</dt><dd>The energy needed to raise the temperature of 1 g of a substance by 1&deg;C. For water, this is 4.2 J/g/&deg;C.</dd>
+
+  </dl>
+</section>
+
+<nav class="stepper">
+  <a href="#secA">A. Level Diagrams (No Ea)</a>
+  <a href="#secB">B. Level Diagrams (With Ea)</a>
+  <a href="#secC">C. Draw the Level Diagram</a>
+  <a href="#secD">D. Calorimetry</a>
+</nav>
+
+<div id="scoreBar">
+  <span>Score so far: <span class="tally" id="tally">0 / 0</span></span>
+  <div class="btns">
+    <button id="pdfBtn">Save as PDF (for Canvas)</button>
+    <button id="advBtn" disabled title="Save your PDF first">Show model answers (advanced)</button>
+    <button onclick="resetAll()">Reset all answers</button>
+  </div>
+</div>
+
+<main>
+
+<section class="card" id="secA">
+  <h2>A. Level Diagrams for Exothermic and Endothermic Reactions (Ignoring Activation Energy)</h2>
+  
+  <div class="worked">
+    <b class="label">Reading these diagrams</b>
+    Each diagram plots energy (vertical axis) against reaction progress (horizontal axis), with no activation-energy hump &mdash; just a reactants level and a products level. If the products level is <em>lower</em> than the reactants level, energy has been given out to the surroundings: the reaction is <b>exothermic</b>, and &Delta;H is negative. If the products level is <em>higher</em>, energy has been taken in from the surroundings: the reaction is <b>endothermic</b>, and &Delta;H is positive.
+  </div>
+
+  <div class="idea" data-idea="a1">
+    <h4 class="idea-title">Idea A1 &mdash; Exothermic or endothermic?</h4>
+    
+  <div class="q" data-role="core" data-type="mc" data-answer="A">
+    <p class="stem">1. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="105" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 105)">Energy</text><line x1="45" y1="70" x2="120" y2="70" stroke="#284a61" stroke-width="4"/><text x="82" y="62" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="140" x2="295" y2="140" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="156" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="70" x2="295" y2="70" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="70" x2="220" y2="140" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="70" x2="270" y2="140" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="105" font-size="10" fill="#6b5410">&#916;H</text></svg></div>Look at this energy level diagram. Is this reaction exothermic or endothermic?</p>
+    <div class="opts">
+      <label><input type="radio" name="a1c1" value="A"> Exothermic</label>
+      <label><input type="radio" name="a1c1" value="B"> Endothermic</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Compare the heights of the two plateaus &mdash; is the products level higher or lower than the reactants level?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Exothermic &mdash; the products level is lower than the reactants level, so energy has been released to the surroundings.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="mc" data-answer="B">
+    <p class="stem">2. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="115" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 115)">Energy</text><line x1="45" y1="150" x2="120" y2="150" stroke="#284a61" stroke-width="4"/><text x="82" y="142" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="80" x2="295" y2="80" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="72" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="150" x2="295" y2="150" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="150" x2="220" y2="80" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="150" x2="270" y2="80" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="115" font-size="10" fill="#6b5410">&#916;H</text></svg></div>Look at this energy level diagram. Is this reaction exothermic or endothermic?</p>
+    <div class="opts">
+      <label><input type="radio" name="a1c2" value="A"> Exothermic</label>
+      <label><input type="radio" name="a1c2" value="B"> Endothermic</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Compare the heights of the two plateaus &mdash; is the products level higher or lower than the reactants level?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Endothermic &mdash; the products level is higher than the reactants level, so energy has been absorbed from the surroundings.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">1. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="110" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 110)">Energy</text><line x1="45" y1="60" x2="120" y2="60" stroke="#284a61" stroke-width="4"/><text x="82" y="52" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="160" x2="295" y2="160" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="176" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="60" x2="295" y2="60" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="60" x2="220" y2="160" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="60" x2="270" y2="160" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="110" font-size="10" fill="#6b5410">&#916;H</text></svg></div>Look at this energy level diagram. Is this reaction exothermic or endothermic?</p>
+    <div class="opts">
+      <label><input type="radio" name="a1b1" value="A"> Exothermic</label>
+      <label><input type="radio" name="a1b1" value="B"> Endothermic</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Compare the heights of the two plateaus &mdash; is the products level higher or lower than the reactants level?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Exothermic &mdash; the products level is lower than the reactants level, so energy has been released to the surroundings.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="B">
+    <p class="stem">2. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="125" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 125)">Energy</text><line x1="45" y1="160" x2="120" y2="160" stroke="#284a61" stroke-width="4"/><text x="82" y="152" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="90" x2="295" y2="90" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="82" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="160" x2="295" y2="160" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="160" x2="220" y2="90" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="160" x2="270" y2="90" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="125" font-size="10" fill="#6b5410">&#916;H</text></svg></div>Look at this energy level diagram. Is this reaction exothermic or endothermic?</p>
+    <div class="opts">
+      <label><input type="radio" name="a1b2" value="A"> Exothermic</label>
+      <label><input type="radio" name="a1b2" value="B"> Endothermic</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Compare the heights of the two plateaus &mdash; is the products level higher or lower than the reactants level?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Endothermic &mdash; the products level is higher than the reactants level, so energy has been absorbed from the surroundings.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">3. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="112" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 112)">Energy</text><line x1="45" y1="110" x2="120" y2="110" stroke="#284a61" stroke-width="4"/><text x="82" y="102" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="115" x2="295" y2="115" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="131" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="110" x2="295" y2="110" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="110" x2="220" y2="115" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="110" x2="270" y2="115" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="112" font-size="10" fill="#6b5410">&#916;H</text></svg></div>Look at this energy level diagram. Is this reaction exothermic or endothermic?</p>
+    <div class="opts">
+      <label><input type="radio" name="a1b3" value="A"> Exothermic</label>
+      <label><input type="radio" name="a1b3" value="B"> Endothermic</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Compare the heights of the two plateaus &mdash; is the products level higher or lower than the reactants level?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Exothermic &mdash; the products level is lower than the reactants level, so energy has been released to the surroundings.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="a2">
+    <h4 class="idea-title">Idea A2 &mdash; The sign of &Delta;H and the direction of energy transfer</h4>
+    
+  <div class="q" data-role="core" data-type="mc" data-answer="A">
+    <p class="stem">1. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="110" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 110)">Energy</text><line x1="45" y1="60" x2="120" y2="60" stroke="#284a61" stroke-width="4"/><text x="82" y="52" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="160" x2="295" y2="160" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="176" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="60" x2="295" y2="60" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="60" x2="220" y2="160" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="60" x2="270" y2="160" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="110" font-size="10" fill="#6b5410">&#916;H</text></svg></div>For this diagram, what is the sign of &Delta;H, and in which direction has energy been transferred?</p>
+    <div class="opts">
+      <label><input type="radio" name="a2c1" value="A"> &Delta;H is negative; energy transferred to the surroundings</label>
+      <label><input type="radio" name="a2c1" value="B"> &Delta;H is positive; energy transferred from the surroundings</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>The sign of &Delta;H always matches whether the products end up lower (negative) or higher (positive) than the reactants.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>&Delta;H is negative, and energy has been transferred from the reacting chemicals to the surroundings (which is why the surroundings warm up).</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="mc" data-answer="B">
+    <p class="stem">2. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="125" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 125)">Energy</text><line x1="45" y1="160" x2="120" y2="160" stroke="#284a61" stroke-width="4"/><text x="82" y="152" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="90" x2="295" y2="90" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="82" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="160" x2="295" y2="160" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="160" x2="220" y2="90" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="160" x2="270" y2="90" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="125" font-size="10" fill="#6b5410">&#916;H</text></svg></div>For this diagram, what is the sign of &Delta;H, and in which direction has energy been transferred?</p>
+    <div class="opts">
+      <label><input type="radio" name="a2c2" value="A"> &Delta;H is negative; energy transferred to the surroundings</label>
+      <label><input type="radio" name="a2c2" value="B"> &Delta;H is positive; energy transferred from the surroundings</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>The sign of &Delta;H always matches whether the products end up lower (negative) or higher (positive) than the reactants.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>&Delta;H is positive, and energy has been transferred from the surroundings into the reacting chemicals (which is why the surroundings cool down).</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">1. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="105" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 105)">Energy</text><line x1="45" y1="70" x2="120" y2="70" stroke="#284a61" stroke-width="4"/><text x="82" y="62" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="140" x2="295" y2="140" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="156" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="70" x2="295" y2="70" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="70" x2="220" y2="140" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="70" x2="270" y2="140" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="105" font-size="10" fill="#6b5410">&#916;H</text></svg></div>For this diagram, what is the sign of &Delta;H, and in which direction has energy been transferred?</p>
+    <div class="opts">
+      <label><input type="radio" name="a2b1" value="A"> &Delta;H is negative; energy transferred to the surroundings</label>
+      <label><input type="radio" name="a2b1" value="B"> &Delta;H is positive; energy transferred from the surroundings</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>The sign of &Delta;H always matches whether the products end up lower (negative) or higher (positive) than the reactants.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>&Delta;H is negative, and energy has been transferred from the reacting chemicals to the surroundings (which is why the surroundings warm up).</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="B">
+    <p class="stem">2. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="115" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 115)">Energy</text><line x1="45" y1="150" x2="120" y2="150" stroke="#284a61" stroke-width="4"/><text x="82" y="142" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="80" x2="295" y2="80" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="72" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="150" x2="295" y2="150" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="150" x2="220" y2="80" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="150" x2="270" y2="80" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="115" font-size="10" fill="#6b5410">&#916;H</text></svg></div>For this diagram, what is the sign of &Delta;H, and in which direction has energy been transferred?</p>
+    <div class="opts">
+      <label><input type="radio" name="a2b2" value="A"> &Delta;H is negative; energy transferred to the surroundings</label>
+      <label><input type="radio" name="a2b2" value="B"> &Delta;H is positive; energy transferred from the surroundings</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>The sign of &Delta;H always matches whether the products end up lower (negative) or higher (positive) than the reactants.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>&Delta;H is positive, and energy has been transferred from the surroundings into the reacting chemicals (which is why the surroundings cool down).</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">3. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="112" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 112)">Energy</text><line x1="45" y1="110" x2="120" y2="110" stroke="#284a61" stroke-width="4"/><text x="82" y="102" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="115" x2="295" y2="115" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="131" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="110" x2="295" y2="110" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="110" x2="220" y2="115" stroke="#5a5548" stroke-width="1.6"/><line x1="270" y1="110" x2="270" y2="115" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="112" font-size="10" fill="#6b5410">&#916;H</text></svg></div>For this diagram, what is the sign of &Delta;H, and in which direction has energy been transferred?</p>
+    <div class="opts">
+      <label><input type="radio" name="a2b3" value="A"> &Delta;H is negative; energy transferred to the surroundings</label>
+      <label><input type="radio" name="a2b3" value="B"> &Delta;H is positive; energy transferred from the surroundings</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>The sign of &Delta;H always matches whether the products end up lower (negative) or higher (positive) than the reactants.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>&Delta;H is negative, and energy has been transferred from the reacting chemicals to the surroundings (which is why the surroundings warm up).</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="a3">
+    <h4 class="idea-title">Idea A3 &mdash; From a temperature change to the correct energy profile</h4>
+    
+  <div class="q" data-role="core" data-type="mc" data-answer="A">
+    <p class="stem">1. A student mixes two solutions in a test tube. The temperature of the mixture rises from 19&deg;C to 27&deg;C. Was this reaction exothermic or endothermic, and which energy profile matches it?</p>
+    <div class="opts">
+      <label><input type="radio" name="a3c1" value="A"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="130" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="130" x2="150" y2="130" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="145" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products lower than reactants</label>
+      <label><input type="radio" name="a3c1" value="B"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="40" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="40" x2="150" y2="40" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="33" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products higher than reactants</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>A temperature <em>rise</em> means the reaction released energy to the surroundings (exothermic) &mdash; look for the profile where products end up lower. A temperature <em>fall</em> means the reaction absorbed energy from the surroundings (endothermic) &mdash; look for the profile where products end up higher.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Exothermic. The temperature rose, so energy was released to the surroundings by the reaction &mdash; the products end up lower than the reactants (profile A).</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="mc" data-answer="B">
+    <p class="stem">2. A student mixes two solutions in a test tube. The temperature of the mixture falls from 22&deg;C to 15&deg;C. Was this reaction exothermic or endothermic, and which energy profile matches it?</p>
+    <div class="opts">
+      <label><input type="radio" name="a3c2" value="A"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="130" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="130" x2="150" y2="130" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="145" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products lower than reactants</label>
+      <label><input type="radio" name="a3c2" value="B"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="40" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="40" x2="150" y2="40" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="33" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products higher than reactants</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>A temperature <em>rise</em> means the reaction released energy to the surroundings (exothermic) &mdash; look for the profile where products end up lower. A temperature <em>fall</em> means the reaction absorbed energy from the surroundings (endothermic) &mdash; look for the profile where products end up higher.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Endothermic. The temperature fell, so energy was absorbed from the surroundings by the reaction &mdash; the products end up higher than the reactants (profile B).</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">1. A reaction is carried out in an insulated cup. The temperature rises from 18&deg;C to 24&deg;C. Was this reaction exothermic or endothermic, and which energy profile matches it?</p>
+    <div class="opts">
+      <label><input type="radio" name="a3b1" value="A"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="130" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="130" x2="150" y2="130" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="145" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products lower than reactants</label>
+      <label><input type="radio" name="a3b1" value="B"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="40" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="40" x2="150" y2="40" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="33" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products higher than reactants</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>A temperature <em>rise</em> means the reaction released energy to the surroundings (exothermic) &mdash; look for the profile where products end up lower. A temperature <em>fall</em> means the reaction absorbed energy from the surroundings (endothermic) &mdash; look for the profile where products end up higher.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Exothermic. The temperature rose, so energy was released to the surroundings by the reaction &mdash; the products end up lower than the reactants (profile A).</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="B">
+    <p class="stem">2. A reaction is carried out in an insulated cup. The temperature falls from 25&deg;C to 19&deg;C. Was this reaction exothermic or endothermic, and which energy profile matches it?</p>
+    <div class="opts">
+      <label><input type="radio" name="a3b2" value="A"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="130" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="130" x2="150" y2="130" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="145" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products lower than reactants</label>
+      <label><input type="radio" name="a3b2" value="B"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="40" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="40" x2="150" y2="40" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="33" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products higher than reactants</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>A temperature <em>rise</em> means the reaction released energy to the surroundings (exothermic) &mdash; look for the profile where products end up lower. A temperature <em>fall</em> means the reaction absorbed energy from the surroundings (endothermic) &mdash; look for the profile where products end up higher.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Endothermic. The temperature fell, so energy was absorbed from the surroundings by the reaction &mdash; the products end up higher than the reactants (profile B).</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">3. A student notices that the reaction flask feels noticeably warmer to the touch just after the two chemicals are mixed. Was this reaction exothermic or endothermic, and which energy profile matches it?</p>
+    <div class="opts">
+      <label><input type="radio" name="a3b3" value="A"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="130" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="130" x2="150" y2="130" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="145" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products lower than reactants</label>
+      <label><input type="radio" name="a3b3" value="B"> <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:110px; height:110px; vertical-align:middle; margin-right:10px; background:#fdfcf9; border:1px solid var(--line); border-radius:5px;"><line x1="15" y1="145" x2="150" y2="145" stroke="#7a7364" stroke-width="1"/><line x1="20" y1="85" x2="70" y2="85" stroke="#284a61" stroke-width="4"/><text x="45" y="78" font-size="10" text-anchor="middle" fill="#284a61">R</text><line x1="70" y1="85" x2="100" y2="40" stroke="#5a5548" stroke-width="1.4"/><line x1="100" y1="40" x2="150" y2="40" stroke="#2e7d4f" stroke-width="4"/><text x="125" y="33" font-size="10" text-anchor="middle" fill="#2e7d4f">P</text></svg>Products higher than reactants</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>A temperature <em>rise</em> means the reaction released energy to the surroundings (exothermic) &mdash; look for the profile where products end up lower. A temperature <em>fall</em> means the reaction absorbed energy from the surroundings (endothermic) &mdash; look for the profile where products end up higher.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Exothermic. The temperature rose, so energy was released to the surroundings by the reaction &mdash; the products end up lower than the reactants (profile A).</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secB">
+  <h2>B. Level Diagrams Including Activation Energy</h2>
+  
+  <div class="worked">
+    <b class="label">Adding activation energy</b>
+    Every reaction &mdash; exothermic or endothermic &mdash; has to climb over an energy barrier first, called the activation energy, Ea. On the diagram this is drawn as a hump: the peak is always the highest point on the curve, higher than <em>both</em> the reactants and the products. Ea is measured from the reactants level up to the peak. &Delta;H is still measured from the reactants level to the products level, exactly as before &mdash; the hump doesn't change &Delta;H at all.
+  </div>
+
+  <div class="idea" data-idea="b1">
+    <h4 class="idea-title">Idea B1 &mdash; Reading Ea and &Delta;H from the same diagram</h4>
+    
+  <div class="q" data-role="core" data-type="mc" data-answer="B">
+    <p class="stem">1. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="105" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 105)">Energy</text><line x1="45" y1="70" x2="120" y2="70" stroke="#284a61" stroke-width="4"/><text x="82" y="62" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="140" x2="295" y2="140" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="156" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="70" x2="295" y2="70" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="70" x2="170" y2="40" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="40" x2="220" y2="140" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="40" x2="195" y2="40" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="70" x2="170" y2="40" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="55" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="70" x2="270" y2="140" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="105" font-size="10" fill="#6b5410">&#916;H</text></svg></div>On this diagram, which is larger: the activation energy (Ea), or the size of &Delta;H?</p>
+    <div class="opts">
+      <label><input type="radio" name="b1c1" value="A"> Ea is larger</label>
+      <label><input type="radio" name="b1c1" value="B"> &Delta;H is larger</label>
+      <label><input type="radio" name="b1c1" value="C"> They are the same size</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Ea is measured from the reactants level up to the peak. &Delta;H is measured from the reactants level to the products level. Compare the two vertical distances.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>&Delta;H is larger here &mdash; measure both gaps from the reactants line to see it clearly.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="mc" data-answer="A">
+    <p class="stem">2. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="115" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 115)">Energy</text><line x1="45" y1="150" x2="120" y2="150" stroke="#284a61" stroke-width="4"/><text x="82" y="142" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="80" x2="295" y2="80" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="72" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="150" x2="295" y2="150" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="150" x2="170" y2="40" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="40" x2="220" y2="80" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="40" x2="195" y2="40" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="150" x2="170" y2="40" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="95" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="150" x2="270" y2="80" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="115" font-size="10" fill="#6b5410">&#916;H</text></svg></div>On this diagram, which is larger: the activation energy (Ea), or the size of &Delta;H?</p>
+    <div class="opts">
+      <label><input type="radio" name="b1c2" value="A"> Ea is larger</label>
+      <label><input type="radio" name="b1c2" value="B"> &Delta;H is larger</label>
+      <label><input type="radio" name="b1c2" value="C"> They are the same size</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Ea is measured from the reactants level up to the peak. &Delta;H is measured from the reactants level to the products level. Compare the two vertical distances.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Ea is larger here &mdash; measure both gaps from the reactants line to see it clearly.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="mc" data-answer="B">
+    <p class="stem">1. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="110" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 110)">Energy</text><line x1="45" y1="60" x2="120" y2="60" stroke="#284a61" stroke-width="4"/><text x="82" y="52" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="160" x2="295" y2="160" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="176" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="60" x2="295" y2="60" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="60" x2="170" y2="30" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="30" x2="220" y2="160" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="30" x2="195" y2="30" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="60" x2="170" y2="30" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="45" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="60" x2="270" y2="160" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="110" font-size="10" fill="#6b5410">&#916;H</text></svg></div>On this diagram, which is larger: the activation energy (Ea), or the size of &Delta;H?</p>
+    <div class="opts">
+      <label><input type="radio" name="b1b1" value="A"> Ea is larger</label>
+      <label><input type="radio" name="b1b1" value="B"> &Delta;H is larger</label>
+      <label><input type="radio" name="b1b1" value="C"> They are the same size</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Ea is measured from the reactants level up to the peak. &Delta;H is measured from the reactants level to the products level. Compare the two vertical distances.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>&Delta;H is larger here &mdash; measure both gaps from the reactants line to see it clearly.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="B">
+    <p class="stem">2. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="130" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 130)">Energy</text><line x1="45" y1="90" x2="120" y2="90" stroke="#284a61" stroke-width="4"/><text x="82" y="82" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="170" x2="295" y2="170" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="186" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="90" x2="295" y2="90" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="90" x2="170" y2="75" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="75" x2="220" y2="170" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="75" x2="195" y2="75" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="90" x2="170" y2="75" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="82" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="90" x2="270" y2="170" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="130" font-size="10" fill="#6b5410">&#916;H</text></svg></div>On this diagram, which is larger: the activation energy (Ea), or the size of &Delta;H?</p>
+    <div class="opts">
+      <label><input type="radio" name="b1b2" value="A"> Ea is larger</label>
+      <label><input type="radio" name="b1b2" value="B"> &Delta;H is larger</label>
+      <label><input type="radio" name="b1b2" value="C"> They are the same size</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Ea is measured from the reactants level up to the peak. &Delta;H is measured from the reactants level to the products level. Compare the two vertical distances.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>&Delta;H is larger here &mdash; measure both gaps from the reactants line to see it clearly.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">3. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="125" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 125)">Energy</text><line x1="45" y1="160" x2="120" y2="160" stroke="#284a61" stroke-width="4"/><text x="82" y="152" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="90" x2="295" y2="90" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="82" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="160" x2="295" y2="160" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="160" x2="170" y2="35" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="35" x2="220" y2="90" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="35" x2="195" y2="35" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="160" x2="170" y2="35" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="97" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="160" x2="270" y2="90" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="125" font-size="10" fill="#6b5410">&#916;H</text></svg></div>On this diagram, which is larger: the activation energy (Ea), or the size of &Delta;H?</p>
+    <div class="opts">
+      <label><input type="radio" name="b1b3" value="A"> Ea is larger</label>
+      <label><input type="radio" name="b1b3" value="B"> &Delta;H is larger</label>
+      <label><input type="radio" name="b1b3" value="C"> They are the same size</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Ea is measured from the reactants level up to the peak. &Delta;H is measured from the reactants level to the products level. Compare the two vertical distances.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Ea is larger here &mdash; measure both gaps from the reactants line to see it clearly.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="b2">
+    <h4 class="idea-title">Idea B2 &mdash; Comparing the forward and reverse activation energies</h4>
+    
+  <div class="q" data-role="core" data-type="mc" data-answer="A">
+    <p class="stem">1. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="105" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 105)">Energy</text><line x1="45" y1="70" x2="120" y2="70" stroke="#284a61" stroke-width="4"/><text x="82" y="62" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="140" x2="295" y2="140" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="156" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="70" x2="295" y2="70" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="70" x2="170" y2="40" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="40" x2="220" y2="140" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="40" x2="195" y2="40" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="70" x2="170" y2="40" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="55" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="70" x2="270" y2="140" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="105" font-size="10" fill="#6b5410">&#916;H</text></svg></div>The reverse reaction would run this diagram from right to left, starting at the products level. Compared with the forward reaction's Ea, is the reverse reaction's activation energy bigger or smaller?</p>
+    <div class="opts">
+      <label><input type="radio" name="b2c1" value="A"> Bigger &mdash; the reverse reaction has further to climb, from the lower products level up to the peak</label>
+      <label><input type="radio" name="b2c1" value="B"> Smaller &mdash; the reverse reaction only has to climb from the higher products level up to the peak</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Find the peak's height, then compare how far it is above the reactants level versus how far it is above the products level.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Bigger. For an exothermic forward reaction, the products sit lower than the reactants, so running the reaction backwards means climbing the whole way from that lower level up to the peak &mdash; a bigger activation energy than the forward reaction had.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="mc" data-answer="B">
+    <p class="stem">2. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="115" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 115)">Energy</text><line x1="45" y1="150" x2="120" y2="150" stroke="#284a61" stroke-width="4"/><text x="82" y="142" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="80" x2="295" y2="80" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="72" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="150" x2="295" y2="150" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="150" x2="170" y2="40" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="40" x2="220" y2="80" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="40" x2="195" y2="40" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="150" x2="170" y2="40" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="95" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="150" x2="270" y2="80" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="115" font-size="10" fill="#6b5410">&#916;H</text></svg></div>The reverse reaction would run this diagram from right to left, starting at the products level. Compared with the forward reaction's Ea, is the reverse reaction's activation energy bigger or smaller?</p>
+    <div class="opts">
+      <label><input type="radio" name="b2c2" value="A"> Bigger &mdash; the reverse reaction has further to climb, from the lower products level up to the peak</label>
+      <label><input type="radio" name="b2c2" value="B"> Smaller &mdash; the reverse reaction only has to climb from the higher products level up to the peak</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Find the peak's height, then compare how far it is above the reactants level versus how far it is above the products level.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Smaller. For an endothermic forward reaction, the products sit higher than the reactants, so running the reaction backwards starts closer to the peak already &mdash; a smaller activation energy than the forward reaction had.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">1. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="110" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 110)">Energy</text><line x1="45" y1="60" x2="120" y2="60" stroke="#284a61" stroke-width="4"/><text x="82" y="52" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="160" x2="295" y2="160" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="176" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="60" x2="295" y2="60" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="60" x2="170" y2="30" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="30" x2="220" y2="160" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="30" x2="195" y2="30" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="60" x2="170" y2="30" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="45" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="60" x2="270" y2="160" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="110" font-size="10" fill="#6b5410">&#916;H</text></svg></div>The reverse reaction would run this diagram from right to left, starting at the products level. Compared with the forward reaction's Ea, is the reverse reaction's activation energy bigger or smaller?</p>
+    <div class="opts">
+      <label><input type="radio" name="b2b1" value="A"> Bigger &mdash; the reverse reaction has further to climb, from the lower products level up to the peak</label>
+      <label><input type="radio" name="b2b1" value="B"> Smaller &mdash; the reverse reaction only has to climb from the higher products level up to the peak</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Find the peak's height, then compare how far it is above the reactants level versus how far it is above the products level.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Bigger. For an exothermic forward reaction, the products sit lower than the reactants, so running the reaction backwards means climbing the whole way from that lower level up to the peak &mdash; a bigger activation energy than the forward reaction had.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="A">
+    <p class="stem">2. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="130" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 130)">Energy</text><line x1="45" y1="90" x2="120" y2="90" stroke="#284a61" stroke-width="4"/><text x="82" y="82" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="170" x2="295" y2="170" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="186" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="90" x2="295" y2="90" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="90" x2="170" y2="75" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="75" x2="220" y2="170" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="75" x2="195" y2="75" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="90" x2="170" y2="75" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="82" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="90" x2="270" y2="170" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="130" font-size="10" fill="#6b5410">&#916;H</text></svg></div>The reverse reaction would run this diagram from right to left, starting at the products level. Compared with the forward reaction's Ea, is the reverse reaction's activation energy bigger or smaller?</p>
+    <div class="opts">
+      <label><input type="radio" name="b2b2" value="A"> Bigger &mdash; the reverse reaction has further to climb, from the lower products level up to the peak</label>
+      <label><input type="radio" name="b2b2" value="B"> Smaller &mdash; the reverse reaction only has to climb from the higher products level up to the peak</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Find the peak's height, then compare how far it is above the reactants level versus how far it is above the products level.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Bigger. For an exothermic forward reaction, the products sit lower than the reactants, so running the reaction backwards means climbing the whole way from that lower level up to the peak &mdash; a bigger activation energy than the forward reaction had.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="mc" data-answer="B">
+    <p class="stem">3. <div class="diagram-wrap"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="195" x2="300" y2="195" stroke="#7a7364" stroke-width="1.3"/><text x="165" y="212" font-size="10" text-anchor="middle" fill="#5a5548">Reaction progress</text><text x="12" y="125" font-size="10" text-anchor="middle" fill="#5a5548" transform="rotate(-90 12 125)">Energy</text><line x1="45" y1="160" x2="120" y2="160" stroke="#284a61" stroke-width="4"/><text x="82" y="152" font-size="10" text-anchor="middle" fill="#284a61">Reactants</text><line x1="220" y1="90" x2="295" y2="90" stroke="#2e7d4f" stroke-width="4"/><text x="257" y="82" font-size="10" text-anchor="middle" fill="#2e7d4f">Products</text><line x1="120" y1="160" x2="295" y2="160" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/><line x1="120" y1="160" x2="170" y2="35" stroke="#5a5548" stroke-width="1.6"/><line x1="170" y1="35" x2="220" y2="90" stroke="#5a5548" stroke-width="1.6"/><line x1="145" y1="35" x2="195" y2="35" stroke="#a6432d" stroke-width="3"/><line x1="170" y1="160" x2="170" y2="35" stroke="#a6432d" stroke-width="1.3" stroke-dasharray="2,2"/><text x="176" y="97" font-size="10" fill="#a6432d">Ea</text><line x1="270" y1="160" x2="270" y2="90" stroke="#c9a227" stroke-width="1.3"/><text x="277" y="125" font-size="10" fill="#6b5410">&#916;H</text></svg></div>The reverse reaction would run this diagram from right to left, starting at the products level. Compared with the forward reaction's Ea, is the reverse reaction's activation energy bigger or smaller?</p>
+    <div class="opts">
+      <label><input type="radio" name="b2b3" value="A"> Bigger &mdash; the reverse reaction has further to climb, from the lower products level up to the peak</label>
+      <label><input type="radio" name="b2b3" value="B"> Smaller &mdash; the reverse reaction only has to climb from the higher products level up to the peak</label>
+    </div>
+    <div class="row"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Find the peak's height, then compare how far it is above the reactants level versus how far it is above the products level.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Smaller. For an endothermic forward reaction, the products sit higher than the reactants, so running the reaction backwards starts closer to the peak already &mdash; a smaller activation energy than the forward reaction had.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secC">
+  <h2>C. Draw and Adjust the Level Diagram Yourself</h2>
+  
+  <p>Given &Delta;H and Ea, draw the level diagram yourself. The reactants line is fixed as your reference point (energy = 0). Drag the red peak line and the green products line up or down the axis until the diagram matches the data, then check your answer. Remember: the peak must always be the highest point on the diagram, above <em>both</em> the reactants and the products.</p>
+
+  <div class="drawdiagram" data-target-dh="-60" data-target-ea="90" data-scale="2" data-ref-y="180">
+    <p class="stem">Scenario 1: a reaction with &Delta;H = -60 kJ/mol and Ea = 90 kJ/mol (this reaction is exothermic). Drag the peak line and the products line into position to match this data. Watch the live readout boxes next to each line as you drag, and use the faint gridlines (every 100 kJ/mol) for extra reference.</p>
+    
+    <svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="230.0" x2="405" y2="230.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="233.0" font-size="9" text-anchor="end" fill="#9a927e">-100</text><line x1="30" y1="180.0" x2="405" y2="180.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="183.0" font-size="9" text-anchor="end" fill="#9a927e">0</text><line x1="30" y1="130.0" x2="405" y2="130.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="133.0" font-size="9" text-anchor="end" fill="#9a927e">100</text><line x1="30" y1="80.0" x2="405" y2="80.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="83.0" font-size="9" text-anchor="end" fill="#9a927e">200</text><line x1="30" y1="30.0" x2="405" y2="30.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="33.0" font-size="9" text-anchor="end" fill="#9a927e">300</text>
+      <line x1="30" y1="280" x2="405" y2="280" stroke="#7a7364" stroke-width="1.3"/>
+      <text x="217" y="296" font-size="11" text-anchor="middle" fill="#5a5548">Reaction progress</text>
+      <text x="14" y="150" font-size="11" text-anchor="middle" fill="#5a5548" transform="rotate(-90 14 150)">Energy (kJ/mol)</text>
+      <line x1="60" y1="180" x2="150" y2="180" stroke="#284a61" stroke-width="4"/>
+      <text x="105" y="172" font-size="10" text-anchor="middle" fill="#284a61">Reactants (fixed, 0 kJ/mol)</text>
+      <line x1="150" y1="180" x2="390" y2="180" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/>
+      <line class="legin" x1="150" y1="180" x2="225" y2="170" stroke="#5a5548" stroke-width="1.6"/>
+      <line class="legout" x1="225" y1="170" x2="300" y2="180" stroke="#5a5548" stroke-width="1.6"/>
+      <line class="peakline draghandle" data-role="peak" x1="185" y1="170" x2="265" y2="170" stroke="#a6432d" stroke-width="5"/>
+      <text class="peaklabel" x="225" y="162" font-size="10" text-anchor="middle" fill="#a6432d">Peak (drag me)</text>
+      <line class="prodline draghandle" data-role="product" x1="300" y1="180" x2="390" y2="180" stroke="#2e7d4f" stroke-width="5"/>
+      <text class="prodlabel" x="345" y="198" font-size="10" text-anchor="middle" fill="#2e7d4f">Products (drag me)</text>
+      <rect x="270" y="24" width="135" height="42" fill="#fdfcf9" stroke="#bbb" stroke-width="1" rx="4"/>
+      <text class="peakreadout" x="337" y="40" font-size="11" text-anchor="middle" fill="#a6432d" font-weight="bold">Peak (Ea) &asymp; 20 kJ/mol</text>
+      <text class="prodreadout" x="337" y="58" font-size="11" text-anchor="middle" fill="#2e7d4f" font-weight="bold">Products (&#916;H) &asymp; 0 kJ/mol</text>
+    </svg>
+    <div class="row"><button class="checkdraw">Check my diagram</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Exothermic, so the green products line moves down (below the reactants line). The red peak line still moves up, above the reactants line, since a reaction always needs to climb an energy barrier first, even one that releases energy overall.</div>
+  </div>
+
+  <div class="drawdiagram" data-target-dh="70" data-target-ea="130" data-scale="2" data-ref-y="180">
+    <p class="stem">Scenario 2: a reaction with &Delta;H = 70 kJ/mol and Ea = 130 kJ/mol (this reaction is endothermic). Drag the peak line and the products line into position to match this data. Watch the live readout boxes next to each line as you drag, and use the faint gridlines (every 100 kJ/mol) for extra reference.</p>
+    
+    <svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="230.0" x2="405" y2="230.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="233.0" font-size="9" text-anchor="end" fill="#9a927e">-100</text><line x1="30" y1="180.0" x2="405" y2="180.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="183.0" font-size="9" text-anchor="end" fill="#9a927e">0</text><line x1="30" y1="130.0" x2="405" y2="130.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="133.0" font-size="9" text-anchor="end" fill="#9a927e">100</text><line x1="30" y1="80.0" x2="405" y2="80.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="83.0" font-size="9" text-anchor="end" fill="#9a927e">200</text><line x1="30" y1="30.0" x2="405" y2="30.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="33.0" font-size="9" text-anchor="end" fill="#9a927e">300</text>
+      <line x1="30" y1="280" x2="405" y2="280" stroke="#7a7364" stroke-width="1.3"/>
+      <text x="217" y="296" font-size="11" text-anchor="middle" fill="#5a5548">Reaction progress</text>
+      <text x="14" y="150" font-size="11" text-anchor="middle" fill="#5a5548" transform="rotate(-90 14 150)">Energy (kJ/mol)</text>
+      <line x1="60" y1="180" x2="150" y2="180" stroke="#284a61" stroke-width="4"/>
+      <text x="105" y="172" font-size="10" text-anchor="middle" fill="#284a61">Reactants (fixed, 0 kJ/mol)</text>
+      <line x1="150" y1="180" x2="390" y2="180" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/>
+      <line class="legin" x1="150" y1="180" x2="225" y2="170" stroke="#5a5548" stroke-width="1.6"/>
+      <line class="legout" x1="225" y1="170" x2="300" y2="180" stroke="#5a5548" stroke-width="1.6"/>
+      <line class="peakline draghandle" data-role="peak" x1="185" y1="170" x2="265" y2="170" stroke="#a6432d" stroke-width="5"/>
+      <text class="peaklabel" x="225" y="162" font-size="10" text-anchor="middle" fill="#a6432d">Peak (drag me)</text>
+      <line class="prodline draghandle" data-role="product" x1="300" y1="180" x2="390" y2="180" stroke="#2e7d4f" stroke-width="5"/>
+      <text class="prodlabel" x="345" y="198" font-size="10" text-anchor="middle" fill="#2e7d4f">Products (drag me)</text>
+      <rect x="270" y="24" width="135" height="42" fill="#fdfcf9" stroke="#bbb" stroke-width="1" rx="4"/>
+      <text class="peakreadout" x="337" y="40" font-size="11" text-anchor="middle" fill="#a6432d" font-weight="bold">Peak (Ea) &asymp; 20 kJ/mol</text>
+      <text class="prodreadout" x="337" y="58" font-size="11" text-anchor="middle" fill="#2e7d4f" font-weight="bold">Products (&#916;H) &asymp; 0 kJ/mol</text>
+    </svg>
+    <div class="row"><button class="checkdraw">Check my diagram</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Endothermic, so the green products line moves up (above the reactants line). The red peak must be even higher still, since it's the highest point on the whole diagram.</div>
+  </div>
+
+  <div class="drawdiagram" data-target-dh="-140" data-target-ea="40" data-scale="2" data-ref-y="180">
+    <p class="stem">Scenario 3: a reaction with &Delta;H = -140 kJ/mol and Ea = 40 kJ/mol (this reaction is exothermic). Drag the peak line and the products line into position to match this data. Watch the live readout boxes next to each line as you drag, and use the faint gridlines (every 100 kJ/mol) for extra reference.</p>
+    
+    <svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="230.0" x2="405" y2="230.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="233.0" font-size="9" text-anchor="end" fill="#9a927e">-100</text><line x1="30" y1="180.0" x2="405" y2="180.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="183.0" font-size="9" text-anchor="end" fill="#9a927e">0</text><line x1="30" y1="130.0" x2="405" y2="130.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="133.0" font-size="9" text-anchor="end" fill="#9a927e">100</text><line x1="30" y1="80.0" x2="405" y2="80.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="83.0" font-size="9" text-anchor="end" fill="#9a927e">200</text><line x1="30" y1="30.0" x2="405" y2="30.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="33.0" font-size="9" text-anchor="end" fill="#9a927e">300</text>
+      <line x1="30" y1="280" x2="405" y2="280" stroke="#7a7364" stroke-width="1.3"/>
+      <text x="217" y="296" font-size="11" text-anchor="middle" fill="#5a5548">Reaction progress</text>
+      <text x="14" y="150" font-size="11" text-anchor="middle" fill="#5a5548" transform="rotate(-90 14 150)">Energy (kJ/mol)</text>
+      <line x1="60" y1="180" x2="150" y2="180" stroke="#284a61" stroke-width="4"/>
+      <text x="105" y="172" font-size="10" text-anchor="middle" fill="#284a61">Reactants (fixed, 0 kJ/mol)</text>
+      <line x1="150" y1="180" x2="390" y2="180" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/>
+      <line class="legin" x1="150" y1="180" x2="225" y2="170" stroke="#5a5548" stroke-width="1.6"/>
+      <line class="legout" x1="225" y1="170" x2="300" y2="180" stroke="#5a5548" stroke-width="1.6"/>
+      <line class="peakline draghandle" data-role="peak" x1="185" y1="170" x2="265" y2="170" stroke="#a6432d" stroke-width="5"/>
+      <text class="peaklabel" x="225" y="162" font-size="10" text-anchor="middle" fill="#a6432d">Peak (drag me)</text>
+      <line class="prodline draghandle" data-role="product" x1="300" y1="180" x2="390" y2="180" stroke="#2e7d4f" stroke-width="5"/>
+      <text class="prodlabel" x="345" y="198" font-size="10" text-anchor="middle" fill="#2e7d4f">Products (drag me)</text>
+      <rect x="270" y="24" width="135" height="42" fill="#fdfcf9" stroke="#bbb" stroke-width="1" rx="4"/>
+      <text class="peakreadout" x="337" y="40" font-size="11" text-anchor="middle" fill="#a6432d" font-weight="bold">Peak (Ea) &asymp; 20 kJ/mol</text>
+      <text class="prodreadout" x="337" y="58" font-size="11" text-anchor="middle" fill="#2e7d4f" font-weight="bold">Products (&#916;H) &asymp; 0 kJ/mol</text>
+    </svg>
+    <div class="row"><button class="checkdraw">Check my diagram</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>A strongly exothermic reaction with a small activation energy: the products line drops a long way down, but the peak only needs a small hump above the reactants line.</div>
+  </div>
+
+  <div class="drawdiagram" data-target-dh="30" data-target-ea="200" data-scale="2" data-ref-y="180">
+    <p class="stem">Scenario 4: a reaction with &Delta;H = 30 kJ/mol and Ea = 200 kJ/mol (this reaction is endothermic). Drag the peak line and the products line into position to match this data. Watch the live readout boxes next to each line as you drag, and use the faint gridlines (every 100 kJ/mol) for extra reference.</p>
+    
+    <svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="230.0" x2="405" y2="230.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="233.0" font-size="9" text-anchor="end" fill="#9a927e">-100</text><line x1="30" y1="180.0" x2="405" y2="180.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="183.0" font-size="9" text-anchor="end" fill="#9a927e">0</text><line x1="30" y1="130.0" x2="405" y2="130.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="133.0" font-size="9" text-anchor="end" fill="#9a927e">100</text><line x1="30" y1="80.0" x2="405" y2="80.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="83.0" font-size="9" text-anchor="end" fill="#9a927e">200</text><line x1="30" y1="30.0" x2="405" y2="30.0" stroke="#e6e1d3" stroke-width="1"/><text x="26" y="33.0" font-size="9" text-anchor="end" fill="#9a927e">300</text>
+      <line x1="30" y1="280" x2="405" y2="280" stroke="#7a7364" stroke-width="1.3"/>
+      <text x="217" y="296" font-size="11" text-anchor="middle" fill="#5a5548">Reaction progress</text>
+      <text x="14" y="150" font-size="11" text-anchor="middle" fill="#5a5548" transform="rotate(-90 14 150)">Energy (kJ/mol)</text>
+      <line x1="60" y1="180" x2="150" y2="180" stroke="#284a61" stroke-width="4"/>
+      <text x="105" y="172" font-size="10" text-anchor="middle" fill="#284a61">Reactants (fixed, 0 kJ/mol)</text>
+      <line x1="150" y1="180" x2="390" y2="180" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/>
+      <line class="legin" x1="150" y1="180" x2="225" y2="170" stroke="#5a5548" stroke-width="1.6"/>
+      <line class="legout" x1="225" y1="170" x2="300" y2="180" stroke="#5a5548" stroke-width="1.6"/>
+      <line class="peakline draghandle" data-role="peak" x1="185" y1="170" x2="265" y2="170" stroke="#a6432d" stroke-width="5"/>
+      <text class="peaklabel" x="225" y="162" font-size="10" text-anchor="middle" fill="#a6432d">Peak (drag me)</text>
+      <line class="prodline draghandle" data-role="product" x1="300" y1="180" x2="390" y2="180" stroke="#2e7d4f" stroke-width="5"/>
+      <text class="prodlabel" x="345" y="198" font-size="10" text-anchor="middle" fill="#2e7d4f">Products (drag me)</text>
+      <rect x="270" y="24" width="135" height="42" fill="#fdfcf9" stroke="#bbb" stroke-width="1" rx="4"/>
+      <text class="peakreadout" x="337" y="40" font-size="11" text-anchor="middle" fill="#a6432d" font-weight="bold">Peak (Ea) &asymp; 20 kJ/mol</text>
+      <text class="prodreadout" x="337" y="58" font-size="11" text-anchor="middle" fill="#2e7d4f" font-weight="bold">Products (&#916;H) &asymp; 0 kJ/mol</text>
+    </svg>
+    <div class="row"><button class="checkdraw">Check my diagram</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>A mildly endothermic reaction with a large activation energy: the products line rises only a little, but the peak needs a tall hump well above both levels.</div>
+  </div>
+</section>
+
+<section class="card" id="secD">
+  <h2>D. Calorimetry: Four Common Reactions</h2>
+  
+  <div class="cheatsheet">
+    <h3>Cheat sheet &mdash; Calorimetry with Water</h3>
+    <dl>
+      <dt>The formula</dt>
+      <dd>thermal energy change (q) = volume of solution reacting &times; 4.2 &times; temperature change. This treats the solution as if it were pure water (1 mL &asymp; 1 g), with a specific heat capacity of 4.2 J per gram per &deg;C.</dd>
+      <dt>Finding energy per mole of the limiting reactant</dt>
+      <dd>1. Calculate q from the formula above. 2. Divide q by the mass of the limiting reactant to get energy per gram. 3. Use the limiting reactant's molar mass to convert moles, then divide q by moles instead (or multiply your per-gram answer by the molar mass) to get energy per mole.</dd>
+      <dt>Why the acid must be in excess</dt>
+      <dd>If the acid is in excess (XS), the metal is the limiting reactant &mdash; it all dissolves. That's exactly what lets you calculate moles of metal reacted directly from the mass you started with, with nothing left over and unreacted.</dd>
+    </dl>
+    <div class="worked">
+      <b class="label">Fresh worked example</b>
+      0.20 g of magnesium ribbon is added to 40 cm&#179; of dilute sulfuric acid (in excess). All of the magnesium dissolves, and the temperature rises by 16.7 &deg;C.
+      <ol class="steps">
+        <li>q = volume &times; 4.2 &times; temperature change = 40 &times; 4.2 &times; 16.7 = 2805.6 J</li>
+        <li>Energy per gram of magnesium = 2805.6 &divide; 0.20 = 14028 J/g</li>
+        <li>Moles of magnesium = 0.20 &divide; 24 (molar mass of Mg) = 0.00833 mol</li>
+        <li>Energy per mole = 2805.6 &divide; 0.00833 = 336700 J/mol &asymp; 336.7 kJ/mol</li>
+      </ol>
+      Since the reaction is exothermic (the temperature rose), this is quoted as <b>&Delta;H = &minus;336.7 kJ/mol</b>.
+    </div>
+  </div>
+
+  <div class="idea" data-idea="d1">
+    <h4 class="idea-title">Idea D1 &mdash; Calculating the thermal energy change, q</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="3150">
+    <p class="stem">1. 50 cm&#179; of water is heated (or cooled) and its temperature changes by 15.0&deg;C. What is the thermal energy change, q, in joules?</p>
+    <div class="row"><input type="text" name="d1c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>q = volume &times; 4.2 &times; temperature change, so q = 50 &times; 4.2 &times; 15.0.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>50 &times; 4.2 &times; 15.0 = 3150 J.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="2352">
+    <p class="stem">2. 25 cm&#179; of water is heated (or cooled) and its temperature changes by 22.4&deg;C. What is the thermal energy change, q, in joules?</p>
+    <div class="row"><input type="text" name="d1c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>q = volume &times; 4.2 &times; temperature change, so q = 25 &times; 4.2 &times; 22.4.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>25 &times; 4.2 &times; 22.4 = 2352 J.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="3108">
+    <p class="stem">1. 40 cm&#179; of water is heated (or cooled) and its temperature changes by 18.5&deg;C. What is the thermal energy change, q, in joules?</p>
+    <div class="row"><input type="text" name="d1b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>q = volume &times; 4.2 &times; temperature change, so q = 40 &times; 4.2 &times; 18.5.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>40 &times; 4.2 &times; 18.5 = 3108 J.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="3444">
+    <p class="stem">2. 100 cm&#179; of water is heated (or cooled) and its temperature changes by 8.2&deg;C. What is the thermal energy change, q, in joules?</p>
+    <div class="row"><input type="text" name="d1b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>q = volume &times; 4.2 &times; temperature change, so q = 100 &times; 4.2 &times; 8.2.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>100 &times; 4.2 &times; 8.2 = 3444 J.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="3276">
+    <p class="stem">3. 30 cm&#179; of water is heated (or cooled) and its temperature changes by 26.0&deg;C. What is the thermal energy change, q, in joules?</p>
+    <div class="row"><input type="text" name="d1b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>q = volume &times; 4.2 &times; temperature change, so q = 30 &times; 4.2 &times; 26.0.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>30 &times; 4.2 &times; 26.0 = 3276 J.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="d2">
+    <h4 class="idea-title">Idea D2 &mdash; Energy released per mole of the limiting reactant</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="466.2|466">
+    <p class="stem">1. 0.12 g of magnesium ribbon is added to 50 cm&#179; of dilute sulfuric acid, which is in excess (XS). All of the magnesium dissolves, and the temperature rises by 11.1&deg;C. Calculate the energy released per mole of magnesium, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d2c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>First find q = 50 &times; 4.2 &times; 11.1. Then energy per gram = q &divide; 0.12. Since all the magnesium reacted, moles of Mg = 0.12 &divide; 24 (its molar mass). Energy per mole = q &divide; moles &mdash; don't forget to convert your answer from J/mol to kJ/mol by dividing by 1000.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>q = 50 &times; 4.2 &times; 11.1 = 2331 J. Energy per gram = 2331 &divide; 0.12 = 19425 J/g. Moles of Mg = 0.12 &divide; 24 = 0.005 mol. Energy per mole = 2331 &divide; 0.005 = 466200 J/mol = 466.2 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;466.2 kJ/mol.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="480.5|480">
+    <p class="stem">2. 0.18 g of magnesium ribbon is added to 60 cm&#179; of dilute sulfuric acid, which is in excess (XS). All of the magnesium dissolves, and the temperature rises by 14.3&deg;C. Calculate the energy released per mole of magnesium, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d2c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>First find q = 60 &times; 4.2 &times; 14.3. Then energy per gram = q &divide; 0.18. Since all the magnesium reacted, moles of Mg = 0.18 &divide; 24 (its molar mass). Energy per mole = q &divide; moles &mdash; don't forget to convert your answer from J/mol to kJ/mol by dividing by 1000.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>q = 60 &times; 4.2 &times; 14.3 = 3603.6 J. Energy per gram = 3603.6 &divide; 0.18 = 20020 J/g. Moles of Mg = 0.18 &divide; 24 = 0.0075 mol. Energy per mole = 3603.6 &divide; 0.0075 = 480480 J/mol = 480.5 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;480.5 kJ/mol.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="440.2|440">
+    <p class="stem">1. 0.15 g of magnesium ribbon is added to 50 cm&#179; of dilute sulfuric acid, which is in excess (XS). All of the magnesium dissolves, and the temperature rises by 13.1&deg;C. Calculate the energy released per mole of magnesium, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d2b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>First find q = 50 &times; 4.2 &times; 13.1. Then energy per gram = q &divide; 0.15. Since all the magnesium reacted, moles of Mg = 0.15 &divide; 24 (its molar mass). Energy per mole = q &divide; moles &mdash; don't forget to convert your answer from J/mol to kJ/mol by dividing by 1000.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>q = 50 &times; 4.2 &times; 13.1 = 2751 J. Energy per gram = 2751 &divide; 0.15 = 18340 J/g. Moles of Mg = 0.15 &divide; 24 = 0.0062 mol. Energy per mole = 2751 &divide; 0.0062 = 440160 J/mol = 440.2 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;440.2 kJ/mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="500.6|501">
+    <p class="stem">2. 0.24 g of magnesium ribbon is added to 80 cm&#179; of dilute sulfuric acid, which is in excess (XS). All of the magnesium dissolves, and the temperature rises by 14.9&deg;C. Calculate the energy released per mole of magnesium, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d2b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>First find q = 80 &times; 4.2 &times; 14.9. Then energy per gram = q &divide; 0.24. Since all the magnesium reacted, moles of Mg = 0.24 &divide; 24 (its molar mass). Energy per mole = q &divide; moles &mdash; don't forget to convert your answer from J/mol to kJ/mol by dividing by 1000.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>q = 80 &times; 4.2 &times; 14.9 = 5006.4 J. Energy per gram = 5006.4 &divide; 0.24 = 20860 J/g. Moles of Mg = 0.24 &divide; 24 = 0.01 mol. Energy per mole = 5006.4 &divide; 0.01 = 500640 J/mol = 500.6 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;500.6 kJ/mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="419.3|419">
+    <p class="stem">3. 0.1 g of magnesium ribbon is added to 40 cm&#179; of dilute sulfuric acid, which is in excess (XS). All of the magnesium dissolves, and the temperature rises by 10.4&deg;C. Calculate the energy released per mole of magnesium, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d2b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>First find q = 40 &times; 4.2 &times; 10.4. Then energy per gram = q &divide; 0.1. Since all the magnesium reacted, moles of Mg = 0.1 &divide; 24 (its molar mass). Energy per mole = q &divide; moles &mdash; don't forget to convert your answer from J/mol to kJ/mol by dividing by 1000.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>q = 40 &times; 4.2 &times; 10.4 = 1747.2 J. Energy per gram = 1747.2 &divide; 0.1 = 17472 J/g. Moles of Mg = 0.1 &divide; 24 = 0.0042 mol. Energy per mole = 1747.2 &divide; 0.0042 = 419328 J/mol = 419.3 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;419.3 kJ/mol.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="d3">
+    <h4 class="idea-title">Idea D3 &mdash; A second exothermic reaction: neutralisation</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="55.4|55">
+    <p class="stem">1. 25 cm&#179; of 2.0 mol/dm&#179; hydrochloric acid is mixed with an equal volume of 2.0 mol/dm&#179; sodium hydroxide, which exactly neutralises it (HCl + NaOH &rarr; NaCl + H&#8322;O). The temperature of the mixture rises by 13.2&deg;C. Calculate the energy released per mole of water formed, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d3c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of HCl (and of NaOH, and of water formed) = 25 &divide; 1000 &times; 2.0. The total volume heated is both solutions added together, 50 cm&#179;, since they're mixed into one beaker. q = total volume &times; 4.2 &times; 13.2. Energy per mole = q &divide; moles of water formed, then convert J/mol to kJ/mol.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water formed = 25 &divide; 1000 &times; 2.0 = 0.05 mol. q = 50 &times; 4.2 &times; 13.2 = 2772 J. Energy per mole = 2772 &divide; 0.05 = 55440 J/mol = 55.4 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;55.4 kJ/mol &mdash; close to the accepted value for any strong acid neutralising a strong alkali, about &minus;57 kJ/mol.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="52.5|52">
+    <p class="stem">2. 20 cm&#179; of 2.0 mol/dm&#179; hydrochloric acid is mixed with an equal volume of 2.0 mol/dm&#179; sodium hydroxide, which exactly neutralises it (HCl + NaOH &rarr; NaCl + H&#8322;O). The temperature of the mixture rises by 12.5&deg;C. Calculate the energy released per mole of water formed, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d3c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of HCl (and of NaOH, and of water formed) = 20 &divide; 1000 &times; 2.0. The total volume heated is both solutions added together, 40 cm&#179;, since they're mixed into one beaker. q = total volume &times; 4.2 &times; 12.5. Energy per mole = q &divide; moles of water formed, then convert J/mol to kJ/mol.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water formed = 20 &divide; 1000 &times; 2.0 = 0.04 mol. q = 40 &times; 4.2 &times; 12.5 = 2100 J. Energy per mole = 2100 &divide; 0.04 = 52500 J/mol = 52.5 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;52.5 kJ/mol &mdash; close to the accepted value for any strong acid neutralising a strong alkali, about &minus;57 kJ/mol.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="60.5|60">
+    <p class="stem">1. 30 cm&#179; of 1.5 mol/dm&#179; hydrochloric acid is mixed with an equal volume of 1.5 mol/dm&#179; sodium hydroxide, which exactly neutralises it (HCl + NaOH &rarr; NaCl + H&#8322;O). The temperature of the mixture rises by 10.8&deg;C. Calculate the energy released per mole of water formed, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d3b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of HCl (and of NaOH, and of water formed) = 30 &divide; 1000 &times; 1.5. The total volume heated is both solutions added together, 60 cm&#179;, since they're mixed into one beaker. q = total volume &times; 4.2 &times; 10.8. Energy per mole = q &divide; moles of water formed, then convert J/mol to kJ/mol.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water formed = 30 &divide; 1000 &times; 1.5 = 0.045 mol. q = 60 &times; 4.2 &times; 10.8 = 2721.6 J. Energy per mole = 2721.6 &divide; 0.045 = 60480 J/mol = 60.5 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;60.5 kJ/mol &mdash; close to the accepted value for any strong acid neutralising a strong alkali, about &minus;57 kJ/mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="56.3|56">
+    <p class="stem">2. 25 cm&#179; of 1.0 mol/dm&#179; hydrochloric acid is mixed with an equal volume of 1.0 mol/dm&#179; sodium hydroxide, which exactly neutralises it (HCl + NaOH &rarr; NaCl + H&#8322;O). The temperature of the mixture rises by 6.7&deg;C. Calculate the energy released per mole of water formed, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d3b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of HCl (and of NaOH, and of water formed) = 25 &divide; 1000 &times; 1.0. The total volume heated is both solutions added together, 50 cm&#179;, since they're mixed into one beaker. q = total volume &times; 4.2 &times; 6.7. Energy per mole = q &divide; moles of water formed, then convert J/mol to kJ/mol.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water formed = 25 &divide; 1000 &times; 1.0 = 0.025 mol. q = 50 &times; 4.2 &times; 6.7 = 1407 J. Energy per mole = 1407 &divide; 0.025 = 56280 J/mol = 56.3 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;56.3 kJ/mol &mdash; close to the accepted value for any strong acid neutralising a strong alkali, about &minus;57 kJ/mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="57.1|57">
+    <p class="stem">3. 40 cm&#179; of 2.0 mol/dm&#179; hydrochloric acid is mixed with an equal volume of 2.0 mol/dm&#179; sodium hydroxide, which exactly neutralises it (HCl + NaOH &rarr; NaCl + H&#8322;O). The temperature of the mixture rises by 13.6&deg;C. Calculate the energy released per mole of water formed, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d3b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of HCl (and of NaOH, and of water formed) = 40 &divide; 1000 &times; 2.0. The total volume heated is both solutions added together, 80 cm&#179;, since they're mixed into one beaker. q = total volume &times; 4.2 &times; 13.6. Energy per mole = q &divide; moles of water formed, then convert J/mol to kJ/mol.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water formed = 40 &divide; 1000 &times; 2.0 = 0.08 mol. q = 80 &times; 4.2 &times; 13.6 = 4569.6 J. Energy per mole = 4569.6 &divide; 0.08 = 57120 J/mol = 57.1 kJ/mol. Since the reaction is exothermic, this is quoted as &Delta;H = &minus;57.1 kJ/mol &mdash; close to the accepted value for any strong acid neutralising a strong alkali, about &minus;57 kJ/mol.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="d4">
+    <h4 class="idea-title">Idea D4 &mdash; An endothermic example: dissolving ammonium nitrate</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="25.6|26">
+    <p class="stem">1. 4.0 g of solid ammonium nitrate, NH&#8324;NO&#8323; (molar mass = 80 g/mol), is added to 50 cm&#179; of water in an insulated cup and stirred until it all dissolves. The temperature of the water <b>falls</b> by 6.1&deg;C. Calculate the energy absorbed per mole of ammonium nitrate, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d4c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of NH&#8324;NO&#8323; = 4.0 &divide; 80. q = 50 &times; 4.2 &times; 6.1 (use the size of the temperature fall, not a negative number). Energy per mole = q &divide; moles, then convert J/mol to kJ/mol. The water is losing this energy to the dissolving process, which is why it cools down.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of NH&#8324;NO&#8323; = 4.0 &divide; 80 = 0.05 mol. q = 50 &times; 4.2 &times; 6.1 = 1281 J. Energy per mole = 1281 &divide; 0.05 = 25620 J/mol = 25.6 kJ/mol. Since the water cooled down, the dissolving process absorbed energy from it &mdash; this is endothermic, quoted as &Delta;H = +25.6 kJ/mol, close to the accepted value of about +25.7 kJ/mol. This is the same process used in instant cold packs.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="25.5|26">
+    <p class="stem">2. 6.0 g of solid ammonium nitrate, NH&#8324;NO&#8323; (molar mass = 80 g/mol), is added to 60 cm&#179; of water in an insulated cup and stirred until it all dissolves. The temperature of the water <b>falls</b> by 7.6&deg;C. Calculate the energy absorbed per mole of ammonium nitrate, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d4c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of NH&#8324;NO&#8323; = 6.0 &divide; 80. q = 60 &times; 4.2 &times; 7.6 (use the size of the temperature fall, not a negative number). Energy per mole = q &divide; moles, then convert J/mol to kJ/mol. The water is losing this energy to the dissolving process, which is why it cools down.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of NH&#8324;NO&#8323; = 6.0 &divide; 80 = 0.075 mol. q = 60 &times; 4.2 &times; 7.6 = 1915.2 J. Energy per mole = 1915.2 &divide; 0.075 = 25536 J/mol = 25.5 kJ/mol. Since the water cooled down, the dissolving process absorbed energy from it &mdash; this is endothermic, quoted as &Delta;H = +25.5 kJ/mol, close to the accepted value of about +25.7 kJ/mol. This is the same process used in instant cold packs.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="24.6|25">
+    <p class="stem">1. 3.0 g of solid ammonium nitrate, NH&#8324;NO&#8323; (molar mass = 80 g/mol), is added to 40 cm&#179; of water in an insulated cup and stirred until it all dissolves. The temperature of the water <b>falls</b> by 5.5&deg;C. Calculate the energy absorbed per mole of ammonium nitrate, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d4b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of NH&#8324;NO&#8323; = 3.0 &divide; 80. q = 40 &times; 4.2 &times; 5.5 (use the size of the temperature fall, not a negative number). Energy per mole = q &divide; moles, then convert J/mol to kJ/mol. The water is losing this energy to the dissolving process, which is why it cools down.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of NH&#8324;NO&#8323; = 3.0 &divide; 80 = 0.0375 mol. q = 40 &times; 4.2 &times; 5.5 = 924 J. Energy per mole = 924 &divide; 0.0375 = 24640 J/mol = 24.6 kJ/mol. Since the water cooled down, the dissolving process absorbed energy from it &mdash; this is endothermic, quoted as &Delta;H = +24.6 kJ/mol, close to the accepted value of about +25.7 kJ/mol. This is the same process used in instant cold packs.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="25.5|26">
+    <p class="stem">2. 8.0 g of solid ammonium nitrate, NH&#8324;NO&#8323; (molar mass = 80 g/mol), is added to 80 cm&#179; of water in an insulated cup and stirred until it all dissolves. The temperature of the water <b>falls</b> by 7.6&deg;C. Calculate the energy absorbed per mole of ammonium nitrate, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d4b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of NH&#8324;NO&#8323; = 8.0 &divide; 80. q = 80 &times; 4.2 &times; 7.6 (use the size of the temperature fall, not a negative number). Energy per mole = q &divide; moles, then convert J/mol to kJ/mol. The water is losing this energy to the dissolving process, which is why it cools down.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of NH&#8324;NO&#8323; = 8.0 &divide; 80 = 0.1 mol. q = 80 &times; 4.2 &times; 7.6 = 2553.6 J. Energy per mole = 2553.6 &divide; 0.1 = 25536 J/mol = 25.5 kJ/mol. Since the water cooled down, the dissolving process absorbed energy from it &mdash; this is endothermic, quoted as &Delta;H = +25.5 kJ/mol, close to the accepted value of about +25.7 kJ/mol. This is the same process used in instant cold packs.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="21.2|21">
+    <p class="stem">3. 5.0 g of solid ammonium nitrate, NH&#8324;NO&#8323; (molar mass = 80 g/mol), is added to 50 cm&#179; of water in an insulated cup and stirred until it all dissolves. The temperature of the water <b>falls</b> by 6.3&deg;C. Calculate the energy absorbed per mole of ammonium nitrate, in kJ/mol (to 1 decimal place).</p>
+    <div class="row"><input type="text" name="d4b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Moles of NH&#8324;NO&#8323; = 5.0 &divide; 80. q = 50 &times; 4.2 &times; 6.3 (use the size of the temperature fall, not a negative number). Energy per mole = q &divide; moles, then convert J/mol to kJ/mol. The water is losing this energy to the dissolving process, which is why it cools down.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of NH&#8324;NO&#8323; = 5.0 &divide; 80 = 0.0625 mol. q = 50 &times; 4.2 &times; 6.3 = 1323 J. Energy per mole = 1323 &divide; 0.0625 = 21168 J/mol = 21.2 kJ/mol. Since the water cooled down, the dissolving process absorbed energy from it &mdash; this is endothermic, quoted as &Delta;H = +21.2 kJ/mol, close to the accepted value of about +25.7 kJ/mol. This is the same process used in instant cold packs.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="card reflect" style="max-width:912px; margin:0 auto 24px;">
+  <h2>After you finish</h2>
+  <p class="prompt">Which idea took the extra three questions to get right, and which section &mdash; the diagrams, the drawing exercise, or the calorimetry &mdash; needed the most thought? Look back at the cheat sheet or the worked examples for anything that didn't feel solid.</p>
+  <textarea placeholder="Type your thoughts here once you've worked through the practice questions..."></textarea>
+</section>
+
+<footer>Science Department &middot; Refined with AI</footer>
+
+<script>
+  let correctCount = 0, attemptedCount = 0;
+  const attempted = new Set();
+
+  function normalize(s){
+    return s.trim().replace(/\s+/g,'').replace(/\u2212/g,'-').toLowerCase();
+  }
+
+  function updateTally(){
+    document.getElementById('tally').textContent = correctCount + ' / ' + attemptedCount;
+  }
+
+  function markQuestion(qDiv, isCorrect, correctAnswerText){
+    const fb = qDiv.querySelector('.fb');
+    fb.classList.remove('good','bad');
+    if (isCorrect){
+      fb.classList.add('good');
+      fb.textContent = 'Correct.';
+    } else {
+      fb.classList.add('bad');
+      fb.textContent = 'Not quite \u2014 the answer is ' + correctAnswerText + '. Have another go on paper, then move on.';
+    }
+  }
+
+  document.querySelectorAll('.q').forEach((qDiv, idx) => {
+    const type = qDiv.dataset.type;
+    const answer = qDiv.dataset.answer;
+    const alts = answer.split('|');
+    const btn = qDiv.querySelector('button.check');
+    const qId = 'q' + idx;
+
+    btn.addEventListener('click', () => {
+      let userAnswer = '';
+      let isCorrect = false;
+
+      if (type === 'text'){
+        const input = qDiv.querySelector('input[type="text"]');
+        userAnswer = input.value;
+        if (!userAnswer.trim()) return;
+        const normUser = normalize(userAnswer);
+        isCorrect = alts.some(a => normalize(a) === normUser);
+      } else if (type === 'mc'){
+        const checked = qDiv.querySelector('input[type="radio"]:checked');
+        if (!checked) return;
+        userAnswer = checked.value;
+        isCorrect = alts.includes(userAnswer);
+      }
+
+      if (!attempted.has(qId)){
+        attempted.add(qId);
+        attemptedCount++;
+        if (isCorrect) correctCount++;
+      } else {
+        const fb = qDiv.querySelector('.fb');
+        const wasCorrect = fb.classList.contains('good');
+        if (wasCorrect && !isCorrect) correctCount--;
+        if (!wasCorrect && isCorrect) correctCount++;
+      }
+
+      let shownAnswer = alts[0].replace(/^-/, '\u2212');
+      if (type === 'mc'){
+        const correctInput = qDiv.querySelector('input[value="' + CSS.escape(alts[0]) + '"]');
+        if (correctInput) shownAnswer = correctInput.parentElement.textContent.trim();
+      }
+
+      markQuestion(qDiv, isCorrect, shownAnswer);
+      updateTally();
+    });
+  });
+
+  document.querySelectorAll('.hintbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const box = btn.closest('.q').querySelector('.hintbox');
+      box.classList.toggle('show');
+    });
+  });
+
+  const advBtn = document.getElementById('advBtn');
+  let advShown = false;
+  advBtn.addEventListener('click', () => {
+    advShown = !advShown;
+    document.querySelectorAll('.advbox').forEach(b => b.classList.toggle('show', advShown));
+    advBtn.textContent = advShown ? 'Hide advanced model answers' : 'Show model answers (advanced)';
+  });
+
+  document.getElementById('pdfBtn').addEventListener('click', () => {
+    advBtn.disabled = false;
+    advBtn.title = '';
+    window.print();
+  });
+
+  function resetAll(){
+    document.querySelectorAll('.q input[type="text"]').forEach(i => i.value = '');
+    document.querySelectorAll('.q input[type="radio"]').forEach(i => i.checked = false);
+    document.querySelectorAll('.fb').forEach(f => { f.classList.remove('good','bad'); f.textContent=''; });
+    document.querySelectorAll('.hintbox').forEach(h => h.classList.remove('show'));
+    correctCount = 0; attemptedCount = 0; attempted.clear();
+    updateTally();
+  }
+
+  const ideaExtraStats = {};
+  document.querySelectorAll('.idea').forEach(idea => {
+    ideaExtraStats[idea.dataset.idea] = {correct:0, attempted:0};
+  });
+
+  document.querySelectorAll('.hintbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const q = btn.closest('.q');
+      if (!q || q.dataset.role !== 'core') return;
+      const box = q.querySelector('.hintbox');
+      const fb = q.querySelector('.fb');
+      if (box.classList.contains('show') && fb.classList.contains('bad')){
+        const idea = q.closest('.idea');
+        const bank = idea ? idea.querySelector('.masterybank') : null;
+        if (bank) bank.classList.add('show');
+      }
+    });
+  });
+
+  function updateBadge(ideaId){
+    const stats = ideaExtraStats[ideaId];
+    const idea = document.querySelector('.idea[data-idea="' + ideaId + '"]');
+    if (!idea) return;
+    const badge = idea.querySelector('.masterybadge');
+    if (!badge) return;
+    badge.classList.remove('achieved','trying');
+    if (stats.correct >= 2){
+      badge.textContent = 'Mastery shown on this idea \u2014 ' + stats.correct + '/' + stats.attempted + ' correct.';
+      badge.classList.add('achieved');
+    } else if (stats.attempted >= 3){
+      badge.textContent = 'Not quite yet (' + stats.correct + '/3 correct) \u2014 re-read the cheat sheet above, then ask your teacher.';
+      badge.classList.add('trying');
+    } else if (stats.attempted > 0){
+      badge.textContent = 'Keep going \u2014 ' + stats.correct + '/' + stats.attempted + ' correct so far.';
+      badge.classList.add('trying');
+    }
+  }
+
+  document.querySelectorAll('.q[data-role="extra"]').forEach(q => {
+    const btn = q.querySelector('button.check');
+    const idea = q.closest('.idea');
+    const ideaId = idea ? idea.dataset.idea : null;
+    if (!btn || !ideaId) return;
+    btn.addEventListener('click', () => {
+      if (q.dataset.counted === '1') return;
+      const type = q.dataset.type;
+      if (type === 'text'){
+        const input = q.querySelector('input[type="text"]');
+        if (!input || !input.value.trim()) return;
+      } else if (type === 'mc'){
+        const checked = q.querySelector('input[type="radio"]:checked');
+        if (!checked) return;
+      }
+      q.dataset.counted = '1';
+      ideaExtraStats[ideaId].attempted++;
+      const fb = q.querySelector('.fb');
+      if (fb.classList.contains('good')) ideaExtraStats[ideaId].correct++;
+      updateBadge(ideaId);
+    });
+  });
+
+  const _origResetAll = resetAll;
+  resetAll = function(){
+    _origResetAll();
+    document.querySelectorAll('.masterybank').forEach(b => b.classList.remove('show'));
+    document.querySelectorAll('.masterybadge').forEach(b => { b.classList.remove('achieved','trying'); b.textContent=''; });
+    document.querySelectorAll('.q[data-role="extra"]').forEach(q => { delete q.dataset.counted; });
+    Object.keys(ideaExtraStats).forEach(k => { ideaExtraStats[k] = {correct:0, attempted:0}; });
+  };
+
+  // ---------- interactive draw-and-adjust diagrams ----------
+  document.querySelectorAll('.drawdiagram').forEach(box => {
+    const svg = box.querySelector('svg');
+    const peakLine = svg.querySelector('.peakline');
+    const peakLabel = svg.querySelector('.peaklabel');
+    const prodLine = svg.querySelector('.prodline');
+    const prodLabel = svg.querySelector('.prodlabel');
+    const legIn = svg.querySelector('.legin');
+    const legOut = svg.querySelector('.legout');
+    const peakReadout = svg.querySelector('.peakreadout');
+    const prodReadout = svg.querySelector('.prodreadout');
+    const refY = parseFloat(box.dataset.refY);
+    const scale = parseFloat(box.dataset.scale);
+    const reactX1 = 60, reactX2 = 150, peakX = 225, prodX1 = 300, prodX2 = 390;
+    const minY = 20, maxY = 260;
+
+    function updateCurve(){
+      const py = parseFloat(peakLine.getAttribute('y1'));
+      const qy = parseFloat(prodLine.getAttribute('y1'));
+      legIn.setAttribute('x1', reactX2); legIn.setAttribute('y1', refY);
+      legIn.setAttribute('x2', peakX); legIn.setAttribute('y2', py);
+      legOut.setAttribute('x1', peakX); legOut.setAttribute('y1', py);
+      legOut.setAttribute('x2', prodX1); legOut.setAttribute('y2', qy);
+      peakLabel.setAttribute('y', py - 8);
+      prodLabel.setAttribute('y', qy + 18);
+      const liveEa = Math.round((refY - py) * scale);
+      const liveDH = Math.round((refY - qy) * scale);
+      peakReadout.textContent = 'Peak (Ea) \u2248 ' + liveEa + ' kJ/mol';
+      prodReadout.textContent = 'Products (\u0394H) \u2248 ' + liveDH + ' kJ/mol';
+    }
+    updateCurve();
+
+    let dragging = null;
+    svg.querySelectorAll('.draghandle').forEach(handle => {
+      handle.addEventListener('pointerdown', e => { dragging = handle; e.preventDefault(); });
+    });
+    document.addEventListener('pointermove', e => {
+      if (!dragging || !box.contains(dragging)) return;
+      const rect = svg.getBoundingClientRect();
+      const scaleY = 300 / rect.height;
+      let y = (e.clientY - rect.top) * scaleY;
+      if (dragging === peakLine){
+        const prodY = parseFloat(prodLine.getAttribute('y1'));
+        const hi = Math.min(maxY, refY, prodY);
+        y = Math.max(minY, Math.min(hi, y));
+        peakLine.setAttribute('y1', y); peakLine.setAttribute('y2', y);
+      } else if (dragging === prodLine){
+        const peakY = parseFloat(peakLine.getAttribute('y1'));
+        y = Math.max(peakY, Math.min(maxY, y));
+        prodLine.setAttribute('y1', y); prodLine.setAttribute('y2', y);
+      }
+      updateCurve();
+    });
+    document.addEventListener('pointerup', () => { dragging = null; });
+    document.addEventListener('pointercancel', () => { dragging = null; });
+
+    box.querySelector('.checkdraw').addEventListener('click', () => {
+      const targetDH = parseFloat(box.dataset.targetDh);
+      const targetEa = parseFloat(box.dataset.targetEa);
+      const prodY = parseFloat(prodLine.getAttribute('y1'));
+      const peakY = parseFloat(peakLine.getAttribute('y1'));
+      const drawnDH = Math.round((refY - prodY) * scale);
+      const drawnEa = Math.round((refY - peakY) * scale);
+      const fb = box.querySelector('.fb');
+      fb.classList.remove('good','bad');
+      const tol = 20;
+      const okDH = Math.abs(drawnDH - targetDH) <= tol;
+      const okEa = Math.abs(drawnEa - targetEa) <= tol;
+      if (okDH && okEa){
+        fb.classList.add('good');
+        fb.textContent = 'Well placed \u2014 your diagram matches \u0394H = ' + targetDH + ' kJ/mol and Ea = ' + targetEa + ' kJ/mol.';
+      } else {
+        fb.classList.add('bad');
+        let msg = 'Not quite there yet. ';
+        if (!okDH) msg += 'Your products line currently reads about ' + drawnDH + ' kJ/mol \u2014 it should be ' + targetDH + ' kJ/mol. ';
+        if (!okEa) msg += 'Your peak currently reads about ' + drawnEa + ' kJ/mol above the reactants \u2014 it should be ' + targetEa + ' kJ/mol. ';
+        msg += 'Keep dragging the lines, then check again.';
+        fb.textContent = msg;
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
