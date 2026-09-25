@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 9 Chemistry — Home Revision Review: Unit 1 Stoichiometry, Towards Mastery</title>
+<style>
+  :root{
+    --ink:#1f2a24; --paper:#faf8f3; --panel:#ffffff; --line:#d8d2c2;
+    --accent:#3d6b8a; --accent-dark:#284a61; --good:#2e7d4f; --bad:#b23b2e; --warn:#a6432d;
+    --hint:#c9a227; --adv:#7d5ba6; --cheat:#2e7d4f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    line-height:1.55; padding:0 0 70px 0;
+  }
+  header.page{background:var(--accent-dark); color:#fdf6ee; padding:28px 24px 22px; border-bottom:6px solid var(--accent);}
+  header.page h1{margin:0 0 4px; font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; font-size:1.55rem;}
+  header.page p{margin:4px 0 0; opacity:0.9; font-size:0.95rem; max-width:760px;}
+  nav.stepper{max-width:960px; margin:18px auto 0; padding:0 24px; display:flex; flex-wrap:wrap; gap:8px; font-family:"Gill Sans",sans-serif; font-size:0.78rem;}
+  nav.stepper a{padding:6px 10px; border-radius:6px; text-decoration:none; color:var(--ink); background:#efe9db; border:1px solid var(--line);}
+  nav.stepper a:hover{background:#e5ddc9;}
+
+  #scoreBar{position:sticky; top:0; z-index:20; background:#efe9db; border-bottom:2px solid var(--line);
+    font-family:"Gill Sans",sans-serif; font-size:0.88rem; padding:9px 24px; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:8px;}
+  #scoreBar .tally{font-weight:bold; color:var(--accent-dark);}
+  #scoreBar .btns{display:flex; gap:8px; flex-wrap:wrap;}
+  #scoreBar button{font-family:"Gill Sans",sans-serif; background:var(--panel); border:1px solid var(--line);
+    border-radius:6px; padding:6px 11px; cursor:pointer; font-size:0.8rem;}
+  #scoreBar button:hover{background:#f3efe4;}
+  #scoreBar button#advBtn{border-color:var(--adv); color:var(--adv);}
+  #scoreBar button#advBtn:disabled{opacity:0.45; cursor:not-allowed;}
+  #scoreBar button#pdfBtn{border-color:var(--accent-dark); color:var(--accent-dark); font-weight:bold;}
+
+  main{max-width:960px; margin:0 auto; padding:20px 24px 10px;}
+  section.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:22px 26px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+  h2{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); border-bottom:2px solid var(--line); padding-bottom:6px; font-size:1.25rem; margin-top:0;}
+  h2 .weight{float:right; font-size:0.7rem; font-weight:normal; color:#7a7364; border:1px solid var(--line); border-radius:12px; padding:3px 10px; background:#f3efe4;}
+  h3{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); font-size:1.05rem;}
+
+  .term{border-bottom:1px dotted var(--accent); cursor:help; position:relative; color:var(--accent-dark);}
+  .term .tip{visibility:hidden; opacity:0; position:absolute; bottom:135%; left:50%; transform:translateX(-50%);
+    background:#2a2320; color:#fdf6ee; padding:8px 11px; border-radius:6px; width:250px; font-family:Georgia,serif;
+    font-size:0.82rem; line-height:1.4; z-index:5; transition:opacity 0.15s; box-shadow:0 4px 10px rgba(0,0,0,0.25);}
+  .term .tip::after{content:""; position:absolute; top:100%; left:50%; margin-left:-6px; border:6px solid transparent; border-top-color:#2a2320;}
+  .term:hover .tip, .term:focus .tip{visibility:visible; opacity:1;}
+
+  table.ar{width:100%; border-collapse:collapse; margin:12px 0; font-size:0.92rem;}
+  table.ar th, table.ar td{border:1px solid var(--line); padding:6px 10px; text-align:left;}
+  table.ar th{background:#efe9db; font-family:"Gill Sans",sans-serif; font-weight:normal;}
+  table.ar td.val{text-align:center; font-weight:bold;}
+
+  .q{border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin:14px 0; background:#fbf9f4;}
+  .q p.stem{margin:0 0 10px; font-weight:bold;}
+  .q .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .q input[type="text"]{font-family:Georgia,serif; font-size:0.95rem; padding:6px 8px; border:1px solid var(--line); border-radius:5px; width:180px;}
+  .q .opts label{display:block; margin:4px 0; cursor:pointer; font-family:Georgia,serif;}
+  .q button.check{font-family:"Gill Sans",sans-serif; background:var(--accent); color:#fff; border:none;
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.85rem;}
+  .q button.check:hover{background:var(--accent-dark);}
+  .q button.hintbtn{font-family:"Gill Sans",sans-serif; background:#fff; color:var(--hint); border:1px solid var(--hint);
+    border-radius:6px; padding:7px 14px; cursor:pointer; font-size:0.85rem;}
+  .q button.hintbtn:hover{background:#fdf6e3;}
+  .fb{margin-top:9px; padding:8px 11px; border-radius:6px; font-size:0.9rem; display:none;}
+  .fb.good{display:block; background:#e4f2e9; border:1px solid var(--good); color:#1e5c3a;}
+  .fb.bad{display:block; background:#f7e6e3; border:1px solid var(--bad); color:#7c281c;}
+  .hintbox{display:none; margin-top:8px; padding:8px 11px; border-radius:6px; background:#fdf6e3; border:1px solid var(--hint); font-size:0.87rem; color:#6b5410;}
+  .hintbox.show{display:block;}
+  .advbox{display:none; margin-top:8px; padding:8px 11px; border-radius:6px; background:#f1ecf7; border:1px solid var(--adv); font-size:0.87rem; color:#4a3268;}
+  .advbox.show{display:block;}
+  .advbox b.label, .hintbox b.label{font-family:"Gill Sans",sans-serif; text-transform:uppercase; font-size:0.7rem; letter-spacing:0.03em; display:block; margin-bottom:3px;}
+
+  .worked{border-left:5px solid var(--accent); background:#eef4f7; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.95rem;}
+  .worked b.label{font-family:"Gill Sans",sans-serif; color:var(--accent-dark); display:block; margin-bottom:4px; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.03em;}
+  .worked .steps{margin:6px 0 0; padding-left:0; list-style:none;}
+  .worked .steps li{margin:3px 0; font-family:Georgia,serif;}
+
+  .cheatsheet{border:2px solid var(--cheat); background:#eef7f0; padding:14px 18px; border-radius:8px; margin:0 0 18px;}
+  .cheatsheet h3{margin-top:0; color:var(--cheat); display:flex; align-items:center; gap:8px;}
+  .cheatsheet h3::before{content:"\2713"; display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; background:var(--cheat); color:#fff; font-size:0.72rem;}
+  .cheatsheet dl{margin:6px 0 10px;}
+  .cheatsheet dl dt{font-weight:bold; color:var(--accent-dark); margin-top:6px; font-family:"Gill Sans",sans-serif; font-size:0.9rem;}
+  .cheatsheet dl dd{margin:1px 0 0 0; font-size:0.92rem;}
+  .cheatsheet .formulabox{background:#fff; border:1px solid var(--cheat); border-radius:6px; padding:8px 12px; margin:8px 0; font-family:Georgia,serif; font-weight:bold; text-align:center;}
+  .cheatsheet .worked{background:#fff;}
+
+  .tip-box{border-left:5px solid var(--warn); background:#f7f0e9; padding:14px 18px; border-radius:0 8px 8px 0; margin:22px 0;}
+  .tip-box h3{margin-top:0; color:var(--warn);}
+
+  .reflect textarea{width:100%; min-height:90px; font-family:Georgia,serif; font-size:0.95rem; padding:10px; border:1px solid var(--line); border-radius:6px; background:#fff; resize:vertical;}
+  .reflect p.prompt{font-style:italic; color:#5a5548; margin-top:0;}
+
+  dl dt{font-weight:bold; color:var(--accent-dark); margin-top:10px; font-family:"Gill Sans",sans-serif;}
+  dl dd{margin:2px 0 0 0;}
+
+  footer{text-align:center; font-family:"Gill Sans",sans-serif; font-size:0.8rem; color:#7a7364; margin-top:30px;}
+
+  @media print{
+    nav.stepper, #scoreBar, button.check, button.hintbtn{display:none !important;}
+    body{padding-bottom:0;}
+    section.card{box-shadow:none; break-inside:avoid; border:1px solid #999;}
+    header.page{background:#fff !important; color:#000 !important; border-bottom:2px solid #000;}
+    .fb.good{background:#eee !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  }
+
+  .idea{margin:22px 0 8px; padding-top:14px; border-top:1px dashed var(--line);}
+  .idea:first-of-type{border-top:none; padding-top:0; margin-top:6px;}
+  .idea-title{font-family:"Gill Sans","Clear Gothic",sans-serif; font-weight:400; color:var(--accent-dark); font-size:1.02rem; margin:0 0 4px;}
+  .masterybank{display:none; margin-top:10px; padding:14px 16px; border-radius:8px; border:2px dashed var(--warn); background:#f9f1ec;}
+  .masterybank.show{display:block;}
+  .masterybank .bank-intro{margin:0 0 10px; font-style:italic; color:#6b3420; font-size:0.88rem;}
+  .masterybadge{margin-top:6px; padding:8px 12px; border-radius:6px; font-family:"Gill Sans",sans-serif; font-size:0.85rem; font-weight:bold; display:none;}
+  .masterybadge.achieved{display:block; background:#e4f2e9; border:1px solid var(--good); color:#1e5c3a;}
+  .masterybadge.trying{display:block; background:#fdf6e3; border:1px solid var(--hint); color:#6b5410;}
+</style>
+</head>
+<body>
+
+<header class="page">
+  <h1>Home Revision Review: Unit 1 Stoichiometry, Towards Mastery</h1>
+  <p>A longer, in-depth review for revising at home, covering all five topics from Unit 1: molar mass from formulae, mass&ndash;mole conversions, finding a formula from experimental data, hydrate calculations, and writing and balancing equations. Each topic is split into two ideas, with just two questions to start on each idea. Get one wrong? Once you've checked the hint, three extra questions on that same idea appear underneath &mdash; get at least two of those three right, and you've shown you've mastered it. Take your time; there's no rush working through this at home.</p>
+</header>
+
+<section class="card" id="glossary" style="max-width:912px; margin:20px auto 0;">
+  <h2>Glossary — quick reference</h2>
+  <dl>
+
+    <dt>Relative atomic mass (Ar)</dt><dd>The mass of one atom of an element, compared with 1/12th the mass of a carbon-12 atom. Read straight off the periodic table.</dd>
+    <dt>Molar mass</dt><dd>The mass of one mole of a substance, in grams per mole (g/mol) &mdash; found by adding the Ar values of every atom in the formula.</dd>
+    <dt>Mole</dt><dd>The chemist's "counting unit" for atoms, molecules or formula units. moles = mass &divide; molar mass.</dd>
+    <dt>Empirical formula</dt><dd>The simplest whole-number ratio of atoms of each element in a compound, found from experimental mass data.</dd>
+    <dt>Water of crystallisation</dt><dd>Water molecules built into a hydrate's crystal structure in a fixed ratio, shown after a dot, e.g. the "5H&#8322;O" in CuSO&#8324;&middot;5H&#8322;O.</dd>
+    <dt>Hydrate</dt><dd>A compound whose crystals include water of crystallisation.</dd>
+    <dt>Coefficient</dt><dd>A number placed in front of a whole formula in an equation, showing how many units of it react or form.</dd>
+    <dt>Balanced equation</dt><dd>An equation in which the number of atoms of each element is exactly the same on both sides of the arrow.</dd>
+
+  </dl>
+</section>
+
+<nav class="stepper">
+  <a href="#secA">A. Molar Mass from Formulae</a>
+  <a href="#secB">B. Moles and Mass Conversions</a>
+  <a href="#secC">C. Formula from Experimental Data</a>
+  <a href="#secD">D. Calculations Involving Hydrates</a>
+  <a href="#secE">E. Writing and Balancing Equations</a>
+</nav>
+
+<div id="scoreBar">
+  <span>Score so far: <span class="tally" id="tally">0 / 0</span></span>
+  <div class="btns">
+    <button id="pdfBtn">Save as PDF (for Canvas)</button>
+    <button id="advBtn" disabled title="Save your PDF first">Show model answers (advanced)</button>
+    <button onclick="resetAll()">Reset all answers</button>
+  </div>
+</div>
+
+<main>
+
+<section class="card" id="secA">
+  <h2>A. Molar Mass from Formulae</h2>
+  
+  <div class="cheatsheet">
+    <h3>Cheat sheet &mdash; Molar Mass from Formulae</h3>
+    <dl>
+      <dt>Method</dt>
+      <dd>1. Write out every atom in the formula, including any hidden by a subscript or bracket. 2. Look up each element's Ar. 3. Multiply each Ar by how many times that atom appears. 4. Add all the totals together &mdash; that's the molar mass, in g/mol.</dd>
+      <dt>Remember</dt>
+      <dd>A subscript after a closing bracket multiplies <em>everything</em> inside the bracket. A coefficient of 1 is never written, and neither is a subscript of 1.</dd>
+    </dl>
+    <div class="worked">
+      <b class="label">Fresh worked example</b>
+      Molar mass of potassium phosphate, K&#8323;PO&#8324;: 3 potassium (Ar = 39) + 1 phosphorus (Ar = 31) + 4 oxygen (Ar = 16).
+      <ol class="steps">
+        <li>Potassium: 3 &times; 39 = 117</li>
+        <li>Phosphorus: 1 &times; 31 = 31</li>
+        <li>Oxygen: 4 &times; 16 = 64</li>
+        <li>Total: 117 + 31 + 64 = 212</li>
+      </ol>
+      Molar mass of K&#8323;PO&#8324; = <b>212 g/mol</b>.
+    </div>
+  </div>
+
+  <div class="idea" data-idea="a1">
+    <h4 class="idea-title">Idea A1 &mdash; Molar mass of simple ionic formulae</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="56">
+    <p class="stem">1. What is the molar mass of calcium oxide, CaO?</p>
+    <div class="row"><input type="text" name="a1c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (1 &times; 40) + (1 &times; 16).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(1 &times; 40) + (1 &times; 16) = 56 g/mol.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="119">
+    <p class="stem">2. What is the molar mass of potassium bromide, KBr?</p>
+    <div class="row"><input type="text" name="a1c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (1 &times; 39) + (1 &times; 80).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(1 &times; 39) + (1 &times; 80) = 119 g/mol.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="95">
+    <p class="stem">1. What is the molar mass of magnesium chloride, MgCl&#8322;?</p>
+    <div class="row"><input type="text" name="a1b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (1 &times; 24) + (2 &times; 35.5).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(1 &times; 24) + (2 &times; 35.5) = 95 g/mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="150">
+    <p class="stem">2. What is the molar mass of sodium iodide, NaI?</p>
+    <div class="row"><input type="text" name="a1b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (1 &times; 23) + (1 &times; 127).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(1 &times; 23) + (1 &times; 127) = 150 g/mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="81">
+    <p class="stem">3. What is the molar mass of zinc oxide, ZnO?</p>
+    <div class="row"><input type="text" name="a1b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (1 &times; 65) + (1 &times; 16).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(1 &times; 65) + (1 &times; 16) = 81 g/mol.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="a2">
+    <h4 class="idea-title">Idea A2 &mdash; Molar mass of formulae with brackets</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="164">
+    <p class="stem">1. What is the molar mass of calcium nitrate, Ca(NO&#8323;)&#8322;?</p>
+    <div class="row"><input type="text" name="a2c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (1 &times; 40) + (2 &times; 14) + (6 &times; 16).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(1 &times; 40) + (2 &times; 14) + (6 &times; 16) = 164 g/mol.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="132">
+    <p class="stem">2. What is the molar mass of ammonium sulfate, (NH&#8324;)&#8322;SO&#8324;?</p>
+    <div class="row"><input type="text" name="a2c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (2 &times; 14) + (8 &times; 1) + (1 &times; 32) + (4 &times; 16).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(2 &times; 14) + (8 &times; 1) + (1 &times; 32) + (4 &times; 16) = 132 g/mol.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="342">
+    <p class="stem">1. What is the molar mass of aluminium sulfate, Al&#8322;(SO&#8324;)&#8323;?</p>
+    <div class="row"><input type="text" name="a2b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (2 &times; 27) + (3 &times; 32) + (12 &times; 16).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(2 &times; 27) + (3 &times; 32) + (12 &times; 16) = 342 g/mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="242">
+    <p class="stem">2. What is the molar mass of iron(III) nitrate, Fe(NO&#8323;)&#8323;?</p>
+    <div class="row"><input type="text" name="a2b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (1 &times; 56) + (3 &times; 14) + (9 &times; 16).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(1 &times; 56) + (3 &times; 14) + (9 &times; 16) = 242 g/mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="149">
+    <p class="stem">3. What is the molar mass of ammonium phosphate, (NH&#8324;)&#8323;PO&#8324;?</p>
+    <div class="row"><input type="text" name="a2b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Add up the Ar values: (3 &times; 14) + (12 &times; 1) + (1 &times; 31) + (4 &times; 16).</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>(3 &times; 14) + (12 &times; 1) + (1 &times; 31) + (4 &times; 16) = 149 g/mol.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secB">
+  <h2>B. Moles and Mass Conversions</h2>
+  
+  <div class="cheatsheet">
+    <h3>Cheat sheet &mdash; Moles and Mass Conversions</h3>
+    <dl>
+      <dt>The two formulae</dt>
+      <dd>moles = mass &divide; molar mass, and (rearranged the other way) mass = moles &times; molar mass. Same triangle, same three quantities, just read off in whichever direction the question needs.</dd>
+    </dl>
+    <div class="formulabox">moles = mass &divide; molar mass &nbsp;&nbsp;|&nbsp;&nbsp; mass = moles &times; molar mass</div>
+    <div class="worked">
+      <b class="label">Fresh worked example</b>
+      A sample contains 4.4 g of carbon dioxide, CO&#8322; (molar mass = 44 g/mol).
+      <ol class="steps">
+        <li>moles = mass &divide; molar mass, so moles = 4.4 &divide; 44 = 0.1 mol</li>
+      </ol>
+      And working the other way: what mass is 0.02 mol of CO&#8322;?
+      <ol class="steps">
+        <li>mass = moles &times; molar mass, so mass = 0.02 &times; 44 = 0.88 g</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="b1">
+    <h4 class="idea-title">Idea B1 &mdash; Mass to moles</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="0.2">
+    <p class="stem">1. How many moles are in 11.2 g of CaO (molar mass = 56 g/mol)?</p>
+    <div class="row"><input type="text" name="b1c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass, so moles = 11.2 &divide; 56.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>11.2 &divide; 56 = 0.2 mol.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="0.05">
+    <p class="stem">2. How many moles are in 6.9 g of K&#8322;CO&#8323; (molar mass = 138 g/mol)?</p>
+    <div class="row"><input type="text" name="b1c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass, so moles = 6.9 &divide; 138.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>6.9 &divide; 138 = 0.05 mol.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="0.05">
+    <p class="stem">1. How many moles are in 6.8 g of ZnCl&#8322; (molar mass = 136 g/mol)?</p>
+    <div class="row"><input type="text" name="b1b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass, so moles = 6.8 &divide; 136.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>6.8 &divide; 136 = 0.05 mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="0.05">
+    <p class="stem">2. How many moles are in 10.4 g of BaCl&#8322; (molar mass = 208 g/mol)?</p>
+    <div class="row"><input type="text" name="b1b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass, so moles = 10.4 &divide; 208.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>10.4 &divide; 208 = 0.05 mol.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="0.05">
+    <p class="stem">3. How many moles are in 8.125 g of FeCl&#8323; (molar mass = 162.5 g/mol)?</p>
+    <div class="row"><input type="text" name="b1b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass, so moles = 8.125 &divide; 162.5.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>8.125 &divide; 162.5 = 0.05 mol.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="b2">
+    <h4 class="idea-title">Idea B2 &mdash; Moles to mass</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="51">
+    <p class="stem">1. What mass, in grams, is 0.5 mol of Al&#8322;O&#8323; (molar mass = 102 g/mol)?</p>
+    <div class="row"><input type="text" name="b2c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.5 &times; 102.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.5 &times; 102 = 51 g.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="42.6">
+    <p class="stem">2. What mass, in grams, is 0.3 mol of Na&#8322;SO&#8324; (molar mass = 142 g/mol)?</p>
+    <div class="row"><input type="text" name="b2c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.3 &times; 142.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.3 &times; 142 = 42.6 g.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="47.6">
+    <p class="stem">1. What mass, in grams, is 0.4 mol of KBr (molar mass = 119 g/mol)?</p>
+    <div class="row"><input type="text" name="b2b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.4 &times; 119.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.4 &times; 119 = 47.6 g.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="20">
+    <p class="stem">2. What mass, in grams, is 0.25 mol of CuO (molar mass = 80 g/mol)?</p>
+    <div class="row"><input type="text" name="b2b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.25 &times; 80.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.25 &times; 80 = 20 g.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="26.7">
+    <p class="stem">3. What mass, in grams, is 0.1 mol of AlBr&#8323; (molar mass = 267 g/mol)?</p>
+    <div class="row"><input type="text" name="b2b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.1 &times; 267.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 &times; 267 = 26.7 g.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secC">
+  <h2>C. Formula from Experimental Data</h2>
+  
+  <div class="cheatsheet">
+    <h3>Cheat sheet &mdash; Formula from Experimental Data</h3>
+    <dl>
+      <dt>Method</dt>
+      <dd>1. Write down the mass of each element in the sample. 2. Convert each mass to moles (moles = mass &divide; molar mass, which for a single element is just its Ar). 3. Divide every "moles" value by the <b>smallest</b> one, to get the simplest ratio. 4. Those numbers become the subscripts in the formula.</dd>
+      <dt>From percentages</dt>
+      <dd>Imagine you have exactly 100 g of the compound &mdash; then each percentage is simply that many grams, and the method is identical.</dd>
+    </dl>
+    <div class="worked">
+      <b class="label">Fresh worked example</b>
+      A sample of a compound contains 1.2 g of magnesium and 0.8 g of oxygen.
+      <ol class="steps">
+        <li>Moles of Mg = 1.2 &divide; 24 = 0.05</li>
+        <li>Moles of O = 0.8 &divide; 16 = 0.05</li>
+        <li>Divide both by the smaller (0.05): Mg = 1, O = 1</li>
+      </ol>
+      Formula = <b>MgO</b>.
+    </div>
+  </div>
+
+  <div class="idea" data-idea="c1">
+    <h4 class="idea-title">Idea C1 &mdash; Formula from masses in grams</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="ZnCl2">
+    <p class="stem">1. A sample of a compound contains 6.5 g of Zn and 7.1 g of Cl. What is its formula?</p>
+    <div class="row"><input type="text" name="c1c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass. Moles of Zn = 6.5 &divide; 65 = 0.1. Moles of Cl = 7.1 &divide; 35.5 = 0.2. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Zn = 1, Cl = 2 &mdash; divides down to give the formula ZnCl2.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="BaO">
+    <p class="stem">2. A sample of a compound contains 6.85 g of Ba and 0.8 g of O. What is its formula?</p>
+    <div class="row"><input type="text" name="c1c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass. Moles of Ba = 6.85 &divide; 137 = 0.05. Moles of O = 0.8 &divide; 16 = 0.05. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Ba = 1, O = 1 &mdash; divides down to give the formula BaO.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="AgCl">
+    <p class="stem">1. A sample of a compound contains 10.8 g of Ag and 3.55 g of Cl. What is its formula?</p>
+    <div class="row"><input type="text" name="c1b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass. Moles of Ag = 10.8 &divide; 108 = 0.1. Moles of Cl = 3.55 &divide; 35.5 = 0.1. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Ag = 1, Cl = 1 &mdash; divides down to give the formula AgCl.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="MgS">
+    <p class="stem">2. A sample of a compound contains 4.8 g of Mg and 6.4 g of S. What is its formula?</p>
+    <div class="row"><input type="text" name="c1b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass. Moles of Mg = 4.8 &divide; 24 = 0.2. Moles of S = 6.4 &divide; 32 = 0.2. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Mg = 1, S = 1 &mdash; divides down to give the formula MgS.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="K2Br">
+    <p class="stem">3. A sample of a compound contains 15.6 g of K and 16.0 g of Br. What is its formula?</p>
+    <div class="row"><input type="text" name="c1b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>moles = mass &divide; molar mass. Moles of K = 15.6 &divide; 39 = 0.4. Moles of Br = 16.0 &divide; 80 = 0.2. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>K = 2, Br = 1 &mdash; divides down to give the formula K2Br.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="c2">
+    <h4 class="idea-title">Idea C2 &mdash; Formula from percentage composition</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="CuO">
+    <p class="stem">1. A compound is found by analysis to be 80.0% Cu and 20.0% O by mass. What is its formula?</p>
+    <div class="row"><input type="text" name="c2c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Imagine exactly 100 g of the compound &mdash; then each percentage is that many grams. Moles of Cu = 80.0 &divide; 64. Moles of O = 20.0 &divide; 16. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>In 100 g: Cu = 1, O = 1 &mdash; divides down to give the formula CuO.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="CaO">
+    <p class="stem">2. A compound is found by analysis to be 71.4% Ca and 28.6% O by mass. What is its formula?</p>
+    <div class="row"><input type="text" name="c2c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Imagine exactly 100 g of the compound &mdash; then each percentage is that many grams. Moles of Ca = 71.4 &divide; 40. Moles of O = 28.6 &divide; 16. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>In 100 g: Ca = 1, O = 1.0014 &mdash; divides down to give the formula CaO.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="FeO2">
+    <p class="stem">1. A compound is found by analysis to be 70.0% Fe and 30.0% O by mass. What is its formula?</p>
+    <div class="row"><input type="text" name="c2b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Imagine exactly 100 g of the compound &mdash; then each percentage is that many grams. Moles of Fe = 70.0 &divide; 56. Moles of O = 30.0 &divide; 16. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>In 100 g: Fe = 1, O = 1.5 &mdash; divides down to give the formula FeO2.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="Na2SO4">
+    <p class="stem">2. A compound is found by analysis to be 32.4% Na and 22.5% S by mass. What is its formula?</p>
+    <div class="row"><input type="text" name="c2b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Imagine exactly 100 g of the compound &mdash; then each percentage is that many grams. Moles of Na = 32.4 &divide; 23. Moles of S = 22.5 &divide; 32. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>In 100 g: Na = 2.0035, S = 1, O = 4.0089 &mdash; divides down to give the formula Na2SO4.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="AlO2">
+    <p class="stem">3. A compound is found by analysis to be 52.9% Al and 47.1% O by mass. What is its formula?</p>
+    <div class="row"><input type="text" name="c2b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Imagine exactly 100 g of the compound &mdash; then each percentage is that many grams. Moles of Al = 52.9 &divide; 27. Moles of O = 47.1 &divide; 16. Divide both by the smaller.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>In 100 g: Al = 1, O = 1.5025 &mdash; divides down to give the formula AlO2.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secD">
+  <h2>D. Calculations Involving Hydrates</h2>
+  
+  <div class="cheatsheet">
+    <h3>Cheat sheet &mdash; Calculations Involving Hydrates</h3>
+    <dl>
+      <dt>Molar mass of a hydrate</dt>
+      <dd>Find the Mr of the anhydrous part as normal, then add x &times; 18 (the molar mass of H&#8322;O) for the water of crystallisation.</dd>
+      <dt>Finding x from heating data</dt>
+      <dd>1. Mass of water lost = mass of hydrate &minus; mass of anhydrous salt (after heating to constant mass). 2. Moles of water = mass of water &divide; 18. 3. Moles of anhydrous salt = mass of anhydrous salt &divide; its molar mass. 4. x = moles of water &divide; moles of anhydrous salt.</dd>
+    </dl>
+    <div class="worked">
+      <b class="label">Fresh worked example</b>
+      A student heats 25.0 g of hydrated copper(II) sulfate, CuSO&#8324;&middot;xH&#8322;O, to constant mass. 16.0 g of anhydrous CuSO&#8324; (Mr = 160) remains.
+      <ol class="steps">
+        <li>Mass of water lost = 25.0 &minus; 16.0 = 9.0 g</li>
+        <li>Moles of water = 9.0 &divide; 18 = 0.5 mol</li>
+        <li>Moles of CuSO&#8324; = 16.0 &divide; 160 = 0.1 mol</li>
+        <li>x = 0.5 &divide; 0.1 = 5</li>
+      </ol>
+      Formula = <b>CuSO&#8324;&middot;5H&#8322;O</b>.
+    </div>
+  </div>
+
+  <div class="idea" data-idea="d1">
+    <h4 class="idea-title">Idea D1 &mdash; Working with a hydrate's molar mass</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="49.2">
+    <p class="stem">1. What mass, in grams, is 0.2 mol of hydrated MgSO&#8324;&middot;7H&#8322;O (Manh = 120, so Mhyd = 246)?</p>
+    <div class="row"><input type="text" name="d1c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.2 &times; 246.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.2 &times; 246 = 49.2 g.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="12.5">
+    <p class="stem">2. What mass, in grams, is 0.05 mol of hydrated CuSO&#8324;&middot;5H&#8322;O (Manh = 160, so Mhyd = 250)?</p>
+    <div class="row"><input type="text" name="d1c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.05 &times; 250.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.05 &times; 250 = 12.5 g.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="28.7">
+    <p class="stem">1. What mass, in grams, is 0.1 mol of hydrated ZnSO&#8324;&middot;7H&#8322;O (Manh = 161, so Mhyd = 287)?</p>
+    <div class="row"><input type="text" name="d1b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.1 &times; 287.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.1 &times; 287 = 28.7 g.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="32.85">
+    <p class="stem">2. What mass, in grams, is 0.15 mol of hydrated CaCl&#8322;&middot;6H&#8322;O (Manh = 111, so Mhyd = 219)?</p>
+    <div class="row"><input type="text" name="d1b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.15 &times; 219.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.15 &times; 219 = 32.85 g.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="73.2">
+    <p class="stem">3. What mass, in grams, is 0.3 mol of hydrated BaCl&#8322;&middot;2H&#8322;O (Manh = 208, so Mhyd = 244)?</p>
+    <div class="row"><input type="text" name="d1b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>mass = moles &times; molar mass, so mass = 0.3 &times; 244.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>0.3 &times; 244 = 73.2 g.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="d2">
+    <h4 class="idea-title">Idea D2 &mdash; Finding x from heating data</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="10">
+    <p class="stem">1. 14.3 g of hydrated Na&#8322;CO&#8323;&middot;xH&#8322;O is heated to constant mass. 5.3 g of anhydrous Na&#8322;CO&#8323; (Mr = 106) remains. What is x?</p>
+    <div class="row"><input type="text" name="d2c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 14.3 &minus; 5.3 = 9 g. Moles of water = 9 &divide; 18. Moles of Na&#8322;CO&#8323; = 5.3 &divide; 106.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.5. Moles of Na&#8322;CO&#8323; = 0.05. x = 0.5 &divide; 0.05 = 10. Formula = Na&#8322;CO&#8323;&middot;10H&#8322;O.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="7">
+    <p class="stem">2. 22.24 g of hydrated FeSO&#8324;&middot;xH&#8322;O is heated to constant mass. 12.16 g of anhydrous FeSO&#8324; (Mr = 152) remains. What is x?</p>
+    <div class="row"><input type="text" name="d2c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 22.24 &minus; 12.16 = 10.08 g. Moles of water = 10.08 &divide; 18. Moles of FeSO&#8324; = 12.16 &divide; 152.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.56. Moles of FeSO&#8324; = 0.08. x = 0.56 &divide; 0.08 = 7. Formula = FeSO&#8324;&middot;7H&#8322;O.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="6">
+    <p class="stem">1. 12.18 g of hydrated MgCl&#8322;&middot;xH&#8322;O is heated to constant mass. 5.7 g of anhydrous MgCl&#8322; (Mr = 95) remains. What is x?</p>
+    <div class="row"><input type="text" name="d2b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 12.18 &minus; 5.7 = 6.48 g. Moles of water = 6.48 &divide; 18. Moles of MgCl&#8322; = 5.7 &divide; 95.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.36. Moles of MgCl&#8322; = 0.06. x = 0.36 &divide; 0.06 = 6. Formula = MgCl&#8322;&middot;6H&#8322;O.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="2">
+    <p class="stem">2. 43 g of hydrated CaSO&#8324;&middot;xH&#8322;O is heated to constant mass. 34 g of anhydrous CaSO&#8324; (Mr = 136) remains. What is x?</p>
+    <div class="row"><input type="text" name="d2b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 43 &minus; 34 = 9 g. Moles of water = 9 &divide; 18. Moles of CaSO&#8324; = 34 &divide; 136.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.5. Moles of CaSO&#8324; = 0.25. x = 0.5 &divide; 0.25 = 2. Formula = CaSO&#8324;&middot;2H&#8322;O.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="10">
+    <p class="stem">3. 9.66 g of hydrated Na&#8322;SO&#8324;&middot;xH&#8322;O is heated to constant mass. 4.26 g of anhydrous Na&#8322;SO&#8324; (Mr = 142) remains. What is x?</p>
+    <div class="row"><input type="text" name="d2b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Water lost = 9.66 &minus; 4.26 = 5.4 g. Moles of water = 5.4 &divide; 18. Moles of Na&#8322;SO&#8324; = 4.26 &divide; 142.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>Moles of water = 0.3. Moles of Na&#8322;SO&#8324; = 0.03. x = 0.3 &divide; 0.03 = 10. Formula = Na&#8322;SO&#8324;&middot;10H&#8322;O.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="secE">
+  <h2>E. Writing and Balancing Equations</h2>
+  
+  <div class="cheatsheet">
+    <h3>Cheat sheet &mdash; Writing and Balancing Equations</h3>
+    <dl>
+      <dt>Method</dt>
+      <dd>Count the atoms of each element on both sides. If one doesn't match, place a coefficient in front of a formula &mdash; never change a subscript &mdash; then recount everything, since fixing one element can unbalance another. Keep going until every element matches. A coefficient of 1 is never written.</dd>
+      <dt>Remember</dt>
+      <dd>A coefficient sits outside and in front of a whole formula, multiplying it as a unit. A subscript is fixed as part of the formula itself &mdash; changing one makes a different substance entirely.</dd>
+    </dl>
+    <div class="worked">
+      <b class="label">Fresh worked example</b>
+      Aluminium reacts with oxygen: Al + O&#8322; &rarr; Al&#8322;O&#8323;.
+      <ol class="steps">
+        <li>Count: left has 1 Al, 2 O. Right has 2 Al, 3 O. Nothing matches yet.</li>
+        <li>Oxygen needs a multiple of both 2 and 3 &mdash; that's 6. Al&#8322;O&#8323; &times; 2 gives 6 oxygens: Al + O&#8322; &rarr; 2Al&#8322;O&#8323;. O&#8322; &times; 3 also gives 6: Al + 3O&#8322; &rarr; 2Al&#8322;O&#8323;.</li>
+        <li>Recount aluminium: the right side now has 4 (2 &times; 2). Al &times; 4 fixes it: 4Al + 3O&#8322; &rarr; 2Al&#8322;O&#8323;.</li>
+      </ol>
+      Balanced equation = <b>4Al + 3O&#8322; &rarr; 2Al&#8322;O&#8323;</b>.
+    </div>
+  </div>
+
+  <div class="idea" data-idea="e1">
+    <h4 class="idea-title">Idea E1 &mdash; Balancing simple molecular equations</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="4">
+    <p class="stem">1. Potassium burns in oxygen: ___K + O&#8322; &rarr; 2K&#8322;O. The right side has 4 potassiums (2 &times; 2). What coefficient goes in front of K?</p>
+    <div class="row"><input type="text" name="e1c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Match the 4 potassiums now shown on the right.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>4 &mdash; 4K + O&#8322; &rarr; 2K&#8322;O.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="1">
+    <p class="stem">2. Zinc reacts with sulfur: Zn + S &rarr; ___ZnS. What coefficient goes in front of ZnS?</p>
+    <div class="row"><input type="text" name="e1c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Count zinc and sulfur on both sides as written &mdash; are they already equal?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>1 (nothing is written). Zn + S &rarr; ZnS is already balanced.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="3">
+    <p class="stem">1. Magnesium burns in nitrogen: ___Mg + N&#8322; &rarr; Mg&#8323;N&#8322;. The right side has 3 magnesiums. What coefficient goes in front of Mg?</p>
+    <div class="row"><input type="text" name="e1b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Match the 3 magnesiums now shown on the right.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>3 &mdash; 3Mg + N&#8322; &rarr; Mg&#8323;N&#8322;. Checking nitrogen too: both sides already have 2 &mdash; balanced.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="2">
+    <p class="stem">2. Hydrogen reacts with chlorine: H&#8322; + Cl&#8322; &rarr; ___HCl. Counting atoms on the left (2 H, 2 Cl), what coefficient goes in front of HCl?</p>
+    <div class="row"><input type="text" name="e1b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Each HCl supplies 1 hydrogen and 1 chlorine. How many HCl are needed to use up 2 of each?</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>2 &mdash; H&#8322; + Cl&#8322; &rarr; 2HCl.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="4">
+    <p class="stem">3. Phosphorus burns in oxygen: ___P + 5O&#8322; &rarr; 2P&#8322;O&#8325;. The right side has 4 phosphorus atoms (2 &times; 2). What coefficient goes in front of P?</p>
+    <div class="row"><input type="text" name="e1b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Match the 4 phosphorus atoms now shown on the right.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>4 &mdash; 4P + 5O&#8322; &rarr; 2P&#8322;O&#8325;. Checking oxygen too: left has 10 (5 &times; 2), right has 10 (2 &times; 5) &mdash; balanced.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+
+  <div class="idea" data-idea="e2">
+    <h4 class="idea-title">Idea E2 &mdash; Balancing equations with polyatomic ions</h4>
+    
+  <div class="q" data-role="core" data-type="text" data-answer="2">
+    <p class="stem">1. A double-decomposition reaction: BaCl&#8322; + Na&#8322;SO&#8324; &rarr; BaSO&#8324; + ___NaCl. The left side has 2 chlorines (from BaCl&#8322;). What coefficient goes in front of NaCl?</p>
+    <div class="row"><input type="text" name="e2c1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Match the 2 chlorines already present on the left, from BaCl&#8322;.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>2 &mdash; BaCl&#8322; + Na&#8322;SO&#8324; &rarr; BaSO&#8324; + 2NaCl. Checking sodium too: left has 2 (from Na&#8322;SO&#8324;), right has 2 (2 &times; 1) &mdash; balanced.</div>
+  </div>
+
+  <div class="q" data-role="core" data-type="text" data-answer="2">
+    <p class="stem">2. A precipitation reaction: ___AgNO&#8323; + CaCl&#8322; &rarr; 2AgCl + Ca(NO&#8323;)&#8322;. The right side has 2 silvers (from 2AgCl). What coefficient goes in front of AgNO&#8323;?</p>
+    <div class="row"><input type="text" name="e2c2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Match the 2 silvers now shown on the right.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>2 &mdash; 2AgNO&#8323; + CaCl&#8322; &rarr; 2AgCl + Ca(NO&#8323;)&#8322;. Checking nitrate too: 2AgNO&#8323; supplies 2 NO&#8323; groups, matching the 2 in Ca(NO&#8323;)&#8322;.</div>
+  </div>
+    <div class="masterybank">
+      <p class="bank-intro">Got one of the two questions above wrong? After checking the hint, try these three extra questions on the same idea &mdash; getting at least two of the three right shows you've mastered it.</p>
+      
+  <div class="q" data-role="extra" data-type="text" data-answer="3">
+    <p class="stem">1. Iron(III) oxide reacts with sulfuric acid: Fe&#8322;O&#8323; + ___H&#8322;SO&#8324; &rarr; Fe&#8322;(SO&#8324;)&#8323; + 3H&#8322;O. The right side has 3 sulfate groups (from Fe&#8322;(SO&#8324;)&#8323;). What coefficient goes in front of H&#8322;SO&#8324;?</p>
+    <div class="row"><input type="text" name="e2b1" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Match the 3 sulfate groups now shown on the right &mdash; also check this gives enough hydrogen for the 3H&#8322;O.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>3 &mdash; Fe&#8322;O&#8323; + 3H&#8322;SO&#8324; &rarr; Fe&#8322;(SO&#8324;)&#8323; + 3H&#8322;O. Checking hydrogen too: left has 6 (3 &times; 2), right has 6 (3 &times; 2) &mdash; balanced.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="2">
+    <p class="stem">2. Aluminium hydroxide decomposes on heating: ___Al(OH)&#8323; &rarr; Al&#8322;O&#8323; + 3H&#8322;O. The right side has 2 aluminiums (from Al&#8322;O&#8323;). What coefficient goes in front of Al(OH)&#8323;?</p>
+    <div class="row"><input type="text" name="e2b2" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Match the 2 aluminiums now shown on the right.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>2 &mdash; 2Al(OH)&#8323; &rarr; Al&#8322;O&#8323; + 3H&#8322;O. Checking oxygen and hydrogen too: left has 6 O and 6 H, right has 6 O (3+3) and 6 H &mdash; balanced.</div>
+  </div>
+
+  <div class="q" data-role="extra" data-type="text" data-answer="2">
+    <p class="stem">3. A double-decomposition reaction: Na&#8322;CO&#8323; + CaCl&#8322; &rarr; CaCO&#8323; + ___NaCl. The left side has 2 chlorines (from CaCl&#8322;). What coefficient goes in front of NaCl?</p>
+    <div class="row"><input type="text" name="e2b3" autocomplete="off" spellcheck="false" placeholder="type your answer"><button class="check">Check</button><button class="hintbtn">Hint</button></div>
+    <div class="fb"></div>
+    <div class="hintbox"><b class="label">Hint</b>Match the 2 chlorines already present on the left, from CaCl&#8322;.</div>
+    <div class="advbox"><b class="label">Model answer (advanced)</b>2 &mdash; Na&#8322;CO&#8323; + CaCl&#8322; &rarr; CaCO&#8323; + 2NaCl. Checking sodium too: left has 2 (from Na&#8322;CO&#8323;), right has 2 (2 &times; 1) &mdash; balanced. This is how insoluble calcium carbonate is precipitated out of solution.</div>
+  </div>
+      <div class="masterybadge"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="card reflect" style="max-width:912px; margin:0 auto 24px;">
+  <h2>After you finish</h2>
+  <p class="prompt">Look back over the mastery badges on each idea. Which ideas did you get straight away, and which needed the extra three questions? Those are the ones worth revisiting again tomorrow, once they've had a chance to settle.</p>
+  <textarea placeholder="Type your thoughts here once you've worked through the practice questions..."></textarea>
+</section>
+
+<footer>Science Department &middot; Refined with AI</footer>
+
+<script>
+  let correctCount = 0, attemptedCount = 0;
+  const attempted = new Set();
+
+  function normalize(s){
+    return s.trim().replace(/\s+/g,'').replace(/\u2212/g,'-').toLowerCase();
+  }
+
+  function updateTally(){
+    document.getElementById('tally').textContent = correctCount + ' / ' + attemptedCount;
+  }
+
+  function markQuestion(qDiv, isCorrect, correctAnswerText){
+    const fb = qDiv.querySelector('.fb');
+    fb.classList.remove('good','bad');
+    if (isCorrect){
+      fb.classList.add('good');
+      fb.textContent = 'Correct.';
+    } else {
+      fb.classList.add('bad');
+      fb.textContent = 'Not quite \u2014 the answer is ' + correctAnswerText + '. Have another go on paper, then move on.';
+    }
+  }
+
+  document.querySelectorAll('.q').forEach((qDiv, idx) => {
+    const type = qDiv.dataset.type;
+    const answer = qDiv.dataset.answer;
+    const alts = answer.split('|');
+    const btn = qDiv.querySelector('button.check');
+    const qId = 'q' + idx;
+
+    btn.addEventListener('click', () => {
+      let userAnswer = '';
+      let isCorrect = false;
+
+      if (type === 'text'){
+        const input = qDiv.querySelector('input[type="text"]');
+        userAnswer = input.value;
+        if (!userAnswer.trim()) return;
+        const normUser = normalize(userAnswer);
+        isCorrect = alts.some(a => normalize(a) === normUser);
+      } else if (type === 'mc'){
+        const checked = qDiv.querySelector('input[type="radio"]:checked');
+        if (!checked) return;
+        userAnswer = checked.value;
+        isCorrect = alts.includes(userAnswer);
+      }
+
+      if (!attempted.has(qId)){
+        attempted.add(qId);
+        attemptedCount++;
+        if (isCorrect) correctCount++;
+      } else {
+        const fb = qDiv.querySelector('.fb');
+        const wasCorrect = fb.classList.contains('good');
+        if (wasCorrect && !isCorrect) correctCount--;
+        if (!wasCorrect && isCorrect) correctCount++;
+      }
+
+      let shownAnswer = alts[0].replace(/^-/, '\u2212');
+      if (type === 'mc'){
+        const correctInput = qDiv.querySelector('input[value="' + CSS.escape(alts[0]) + '"]');
+        if (correctInput) shownAnswer = correctInput.parentElement.textContent.trim();
+      }
+
+      markQuestion(qDiv, isCorrect, shownAnswer);
+      updateTally();
+    });
+  });
+
+  document.querySelectorAll('.hintbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const box = btn.closest('.q').querySelector('.hintbox');
+      box.classList.toggle('show');
+    });
+  });
+
+  const advBtn = document.getElementById('advBtn');
+  let advShown = false;
+  advBtn.addEventListener('click', () => {
+    advShown = !advShown;
+    document.querySelectorAll('.advbox').forEach(b => b.classList.toggle('show', advShown));
+    advBtn.textContent = advShown ? 'Hide advanced model answers' : 'Show model answers (advanced)';
+  });
+
+  document.getElementById('pdfBtn').addEventListener('click', () => {
+    advBtn.disabled = false;
+    advBtn.title = '';
+    window.print();
+  });
+
+  function resetAll(){
+    document.querySelectorAll('.q input[type="text"]').forEach(i => i.value = '');
+    document.querySelectorAll('.q input[type="radio"]').forEach(i => i.checked = false);
+    document.querySelectorAll('.fb').forEach(f => { f.classList.remove('good','bad'); f.textContent=''; });
+    document.querySelectorAll('.hintbox').forEach(h => h.classList.remove('show'));
+    correctCount = 0; attemptedCount = 0; attempted.clear();
+    updateTally();
+  }
+
+  const ideaExtraStats = {};
+  document.querySelectorAll('.idea').forEach(idea => {
+    ideaExtraStats[idea.dataset.idea] = {correct:0, attempted:0};
+  });
+
+  document.querySelectorAll('.hintbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const q = btn.closest('.q');
+      if (!q || q.dataset.role !== 'core') return;
+      const box = q.querySelector('.hintbox');
+      const fb = q.querySelector('.fb');
+      if (box.classList.contains('show') && fb.classList.contains('bad')){
+        const idea = q.closest('.idea');
+        const bank = idea ? idea.querySelector('.masterybank') : null;
+        if (bank) bank.classList.add('show');
+      }
+    });
+  });
+
+  function updateBadge(ideaId){
+    const stats = ideaExtraStats[ideaId];
+    const idea = document.querySelector('.idea[data-idea="' + ideaId + '"]');
+    if (!idea) return;
+    const badge = idea.querySelector('.masterybadge');
+    if (!badge) return;
+    badge.classList.remove('achieved','trying');
+    if (stats.correct >= 2){
+      badge.textContent = 'Mastery shown on this idea \u2014 ' + stats.correct + '/' + stats.attempted + ' correct.';
+      badge.classList.add('achieved');
+    } else if (stats.attempted >= 3){
+      badge.textContent = 'Not quite yet (' + stats.correct + '/3 correct) \u2014 re-read the cheat sheet above, then ask your teacher.';
+      badge.classList.add('trying');
+    } else if (stats.attempted > 0){
+      badge.textContent = 'Keep going \u2014 ' + stats.correct + '/' + stats.attempted + ' correct so far.';
+      badge.classList.add('trying');
+    }
+  }
+
+  document.querySelectorAll('.q[data-role="extra"]').forEach(q => {
+    const btn = q.querySelector('button.check');
+    const idea = q.closest('.idea');
+    const ideaId = idea ? idea.dataset.idea : null;
+    if (!btn || !ideaId) return;
+    btn.addEventListener('click', () => {
+      if (q.dataset.counted === '1') return;
+      const type = q.dataset.type;
+      if (type === 'text'){
+        const input = q.querySelector('input[type="text"]');
+        if (!input || !input.value.trim()) return;
+      } else if (type === 'mc'){
+        const checked = q.querySelector('input[type="radio"]:checked');
+        if (!checked) return;
+      }
+      q.dataset.counted = '1';
+      ideaExtraStats[ideaId].attempted++;
+      const fb = q.querySelector('.fb');
+      if (fb.classList.contains('good')) ideaExtraStats[ideaId].correct++;
+      updateBadge(ideaId);
+    });
+  });
+
+  const _origResetAll = resetAll;
+  resetAll = function(){
+    _origResetAll();
+    document.querySelectorAll('.masterybank').forEach(b => b.classList.remove('show'));
+    document.querySelectorAll('.masterybadge').forEach(b => { b.classList.remove('achieved','trying'); b.textContent=''; });
+    document.querySelectorAll('.q[data-role="extra"]').forEach(q => { delete q.dataset.counted; });
+    Object.keys(ideaExtraStats).forEach(k => { ideaExtraStats[k] = {correct:0, attempted:0}; });
+  };
+</script>
+
+</body>
+</html>
