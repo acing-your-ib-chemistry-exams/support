@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enthalpy level diagrams and calorimetry (self-marking)</title>
+<style>
+:root{--indent:88px;--ink:#111;--grey:#666;--line:#bbb;--tint:#f2f2f2}
+*{box-sizing:border-box}
+html{background:#fff}
+body{margin:0;background:#fff;color:var(--ink);font-family:Palatino,"Palatino Linotype","Book Antiqua","URW Palladio L",serif;font-size:17px;line-height:1.55;counter-reset:sec}
+.sheet{max-width:794px;margin:0 auto;padding:28px 32px 40px;background:#fff}
+.runhead{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:6px;font-size:14px}
+h1,h2,h3,.sans{font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif;font-weight:400}
+h1{font-size:30px;line-height:1.2;margin:30px 0 6px}
+.standard{margin:0 0 8px;font-style:italic}
+h2{counter-increment:sec;font-size:23px;line-height:1.25;margin:38px 0 10px}
+h2::before{content:counter(sec) "\00a0\00a0"}
+h3{font-size:18px;margin:26px 0 6px}
+section>*:not(h2):not(h3){margin-left:var(--indent)}
+p{margin-top:0;margin-bottom:.8em}
+ul,ol{padding-left:1.3em}
+li{margin-bottom:.3em}
+sub,sup{line-height:0}
+.box{border:1px solid var(--ink);padding:10px 14px;margin-top:12px;margin-bottom:14px;background:#fff}
+.box .boxhead{font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif;margin:0 0 4px;font-size:17px}
+.tool{border:1px solid var(--ink);padding:12px 14px;margin-top:12px;margin-bottom:14px;background:var(--tint)}
+button{font:inherit;font-size:16px;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:8px 14px;min-height:40px;cursor:pointer;border-radius:0;margin:3px 6px 3px 0}
+button:hover,button:focus-visible{background:var(--ink);color:#fff}
+button.on{background:var(--ink);color:#fff}
+button[disabled]{color:var(--grey);border-color:var(--grey);cursor:default;background:#fff}
+input[type=text],select,textarea{font:inherit;font-size:16px;padding:5px 8px;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:0;min-height:38px;max-width:100%}
+input.numin{width:9em}
+textarea{width:100%;min-height:150px;font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}
+th,td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:middle}
+th{font-weight:400;border-bottom:1px solid var(--ink);font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif}
+td.n,th.n{text-align:right;white-space:nowrap}
+svg{max-width:100%;height:auto;display:block;background:#fff}
+svg text{font-family:Palatino,"Palatino Linotype","Book Antiqua",serif}
+.figs{display:flex;flex-wrap:wrap;gap:12px}
+.figs>div{flex:1 1 260px;min-width:0}
+.term{border-bottom:1px dotted var(--ink);cursor:help;position:relative}
+.term::after{content:attr(data-def);position:absolute;left:0;top:1.6em;width:min(280px,80vw);background:var(--ink);color:#fff;font:14px/1.35 "Century Gothic","Avenir Next",Avenir,"Trebuchet MS",sans-serif;padding:7px 9px;display:none;z-index:20;text-align:left;font-weight:400;font-style:normal}
+.term.r::after{left:auto;right:0}
+.term:hover::after,.term:focus::after{display:block}
+.term:focus{outline:1px solid var(--ink);outline-offset:2px}
+dl.gloss dt{font-weight:700;margin-top:.7em}
+dl.gloss dd{margin:0}
+/* marking */
+.scorebar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--ink);padding:6px 0;margin-top:6px;font-size:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.q{border-top:1px solid var(--line);padding:10px 0 6px;margin-bottom:2px}
+.qtext{margin-bottom:.4em}
+.qnum{font-weight:700;margin-right:4px}
+.marks{color:var(--grey);font-size:14px;white-space:nowrap}
+.opt{display:flex;gap:8px;align-items:flex-start;margin:4px 0;cursor:pointer}
+.opt input{margin-top:.45em;width:18px;height:18px;flex:none}
+.qctl{display:flex;align-items:center;flex-wrap:wrap;margin-top:6px}
+.badge{margin-left:8px;font-size:14px;color:var(--grey)}
+.fb{margin:6px 0;padding:0 0 0 10px;font-size:16px;border-left:3px solid transparent;min-height:0}
+.fb.ok{border-left-color:var(--ink);background:var(--tint);padding:6px 10px}
+.fb.no{border-left:3px dashed var(--ink);padding:6px 10px}
+.fb.part{border-left:3px double var(--ink);padding:6px 10px}
+.fb.rev{border-left:3px dotted var(--ink);padding:6px 10px;background:var(--tint)}
+select.good{outline:2px solid var(--ink)}
+select.bad{outline:2px dashed var(--ink)}
+.mk{font-size:15px;margin-left:3px}
+.unit{margin-left:4px}
+.cloze{line-height:2.2}
+.mini{max-width:200px;display:inline-block;vertical-align:middle;border:1px solid var(--line);margin-right:8px}
+.row2{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0}
+input[type=range]{width:min(420px,100%);height:28px}
+@media (max-width:640px){
+ :root{--indent:16px}
+ .sheet{padding:16px 16px 32px}
+ h1{font-size:25px}
+}
+.sbbtn button{min-height:30px;padding:3px 10px;font-size:14px;margin:0 0 0 6px}
+.sbmsg{flex-basis:100%;font-size:14px;min-height:1.2em}
+#restore{border:1px solid var(--ink);padding:8px 12px;margin:10px 0;font-size:15px;background:var(--tint)}
+#printmeta{display:none}
+#r_summary table{max-width:520px}
+.cheat{border:1px solid var(--ink);margin:10px 0 14px;padding:0 14px;background:#fff}
+.cheat>summary{font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif;font-style:normal;cursor:pointer;padding:8px 0}
+.cheat[open]>summary{border-bottom:1px solid var(--line);margin-bottom:8px}
+.cheat ul,.cheat ol{margin:.3em 0 .6em}
+.cheat p{margin:.3em 0 .6em}
+.cheat table{font-size:14px}
+.cheat .eg{border-left:3px solid var(--ink);padding-left:10px;margin:.5em 0 .8em;font-size:16px}
+.refl{border:1px solid var(--ink);border-left:6px solid var(--ink);padding:10px 14px;margin:18px 0 14px;background:#fff}
+.refl .rtitle{margin:0 0 4px;font-size:17px}
+.refl .rprompt{margin:0 0 6px}
+.refl .rq{margin:6px 0 2px;font-size:15px}
+.scale{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.cbtn{flex:1 1 90px;margin:0;text-align:center;line-height:1.2;padding:6px 4px;min-height:48px}
+.cbtn small{font-size:12px;display:block}
+.refl textarea{width:100%;min-height:96px;font-size:16px;resize:vertical}
+.rlab{font-size:15px;display:block;margin-top:4px}
+.ratep,.reflprint{display:none}
+#r_conf table{max-width:520px}
+@page{size:A4;margin:14mm}
+@media print{
+ .noprint,.qctl,.sbbtn,.sbmsg,#restore,.tool button,.scale,.refl textarea,.rlab{display:none!important}
+ .ratep{display:block;margin:2px 0 6px;font-size:15px}
+ .reflprint{display:block;white-space:pre-wrap;border:1px solid var(--line);padding:6px 8px;min-height:3em;font-size:16px}
+ .refl,.cheat{break-inside:avoid}
+ .scorebar{position:static;border-bottom:1px solid var(--ink)}
+ #printmeta{display:block;margin:10px 0 0;font-size:16px;border:1px solid var(--ink);padding:6px 10px}
+ .q,.tool,.figs,.box,table{break-inside:avoid}
+ h2,h3{break-after:avoid}
+ .fb.ok,.fb.rev,.tool,.box{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ select,input[type=text]{border:1px solid #111}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<div class="runhead"><span>Chemistry · Thermochemistry</span><span>Monday, 12 October 2026</span></div>
+
+<h1>Enthalpy level diagrams and calorimetry: exothermic and endothermic changes</h1>
+<p class="standard" style="margin-left:0">Links to NGSS HS-PS1-4: a graph of the relative energies of reactants and products is a model of the energy released or absorbed by a chemical reaction system.</p>
+
+<div class="scorebar" id="scorebar"><span id="sb_marks" role="status">Marks: 0 / 0</span><span id="sb_done">Questions finished: 0 of 0</span><span class="sbbtn"><button type="button" id="sb_save">Save my progress</button><button type="button" id="sb_pdf">Save as .pdf</button></span><span class="sbmsg" id="sb_msg" aria-live="polite"></span></div>
+<div id="restore" hidden><span id="restore_txt"></span> <button type="button" id="restore_yes">Restore my work</button><button type="button" id="restore_no">Start fresh</button></div>
+<div id="printmeta"></div>
+
+<section>
+<h2>Safety</h2>
+<p>The calculations below use results from two experiments. If you carry the experiments out yourself:</p>
+<ul>
+<li>Wear eye protection throughout.</li>
+<li>Copper(II) sulfate solution is harmful if swallowed and irritates the eyes. It is very toxic to aquatic life, so none goes down the sink: pour all of it into the labelled waste container.</li>
+<li>Zinc powder is flammable as a dust. Keep it away from flames.</li>
+<li>Ammonium nitrate is an oxidiser and harmful if swallowed. Keep it away from fuels and flames, and wash your hands after the experiment.</li>
+<li>Stir with a stirring rod, never with the thermometer. Report any breakage at once.</li>
+</ul>
+</section>
+
+<section>
+<h2>Learning objectives and key ideas</h2>
+<p>By the end of this page you will be able to:</p>
+<ul>
+<li>draw and read an <span class="term" data-def="A diagram with enthalpy on the vertical axis and a bar for the reactants and a bar for the products. A drop from reactants to products shows a negative ΔH, and a rise shows a positive ΔH. (see the definitions at the end)">enthalpy level diagram</span> for an <span class="term" data-def="A change in which the system releases energy to the surroundings. The enthalpy of the system falls, ΔH is negative, and the surroundings get warmer. (see the definitions at the end)">exothermic</span> and an <span class="term" data-def="A change in which the system absorbs energy from the surroundings. The enthalpy of the system rises, ΔH is positive, and the surroundings get cooler. (see the definitions at the end)">endothermic</span> change;</li>
+<li>link the sign of Δ<i>H</i> to a drop or a rise on the diagram, and explain the link with the <span class="term" data-def="The chemical reaction or change being studied: the reactants and products. (see the definitions at the end)">system</span> and the <span class="term" data-def="Everything outside the system that can exchange energy with it: the solvent, the cup, the thermometer and the air. A thermometer in the solution measures the temperature of the surroundings. (see the definitions at the end)">surroundings</span>;</li>
+<li>calculate Δ<i>H</i> from the temperature change in a <span class="term" data-def="An insulated container in which a change takes place so that the energy it transfers can be found from the temperature change of the contents. A polystyrene cup with a lid is a simple calorimeter. (see the definitions at the end)">calorimeter</span> for an exothermic change and for an endothermic change.</li>
+</ul>
+<div class="box">
+<p class="boxhead">Key ideas</p>
+<ul>
+<li>Δ<i>H</i> = <i>H</i>(products) − <i>H</i>(reactants).</li>
+<li>Exothermic: the system releases energy to the surroundings. The enthalpy of the system drops, Δ<i>H</i> is <b>negative</b>, and the surroundings warm up.</li>
+<li>Endothermic: the system absorbs energy from the surroundings. The enthalpy of the system rises, Δ<i>H</i> is <b>positive</b>, and the surroundings cool down.</li>
+<li>A thermometer in the solution measures the surroundings. The energy gained or lost by the water is <i>q</i> = <i>mc</i>Δ<i>T</i>, and Δ<i>H</i> is that energy per mole of the limiting reactant, with the sign of the <i>system</i>.</li>
+<li>These diagrams show only the starting level and the finishing level. The route between them is for a later lesson.</li>
+</ul>
+</div>
+<div data-r="r0"></div>
+<div class="box noprint">
+<p class="boxhead">How the marking works</p>
+<p>Press <b>Check</b> on each question. A correct answer at the first attempt earns full marks, and a correct answer at a later attempt earns half marks. The feedback after a wrong attempt tells you what to look at. <b>Show answer</b> ends the question and keeps the marks you already have. At the end of the page you save your work as a PDF to hand in on Canvas.</p>
+<p>Each part opens with a <b>cheat sheet</b> of the ideas you need. Fold it away once you no longer need it. At the start, after each part and at the end there is a short <b>reflection</b>: rate your confidence from 1 to 5 and write about what you learned. Reflections are not marked and they go into the PDF you upload.</p>
+<p><b>Save my progress</b> keeps your answers in this browser and downloads a small progress file as a back-up. To carry on later, open this page again and press <b>Restore my work</b> if it appears, or open the progress file here: <input type="file" id="load_file" accept=".json,application/json" aria-label="Open a saved progress file"></p>
+</div>
+</section>
+
+<section>
+<h2>The Exploration</h2>
+
+<h3>Part A: enthalpy level diagrams</h3>
+<details class="cheat" open><summary>Cheat sheet: enthalpy level diagrams</summary>
+<ul>
+<li>The vertical axis is <span class="term" data-def="The heat content of a system at constant pressure. The total enthalpy cannot be measured, but changes in enthalpy can. (see the definitions at the end)">enthalpy</span>. Draw one bar for the reactants and one bar for the products.</li>
+<li>Δ<i>H</i> = <i>H</i>(products) − <i>H</i>(reactants). The arrow always runs <b>from the reactants to the products</b>.</li>
+<li><b>Drop</b> (products lower): Δ<i>H</i> is <b>negative</b>, the change is <b>exothermic</b>.</li>
+<li><b>Rise</b> (products higher): Δ<i>H</i> is <b>positive</b>, the change is <b>endothermic</b>.</li>
+<li>The length of the arrow is the size of Δ<i>H</i>, in kJ mol<sup>−1</sup>.</li>
+</ul>
+<div class="figs"><div><svg class="cfig" data-k="exo" role="img" aria-label="Exothermic: products bar lower than reactants bar"></svg></div><div><svg class="cfig" data-k="endo" role="img" aria-label="Endothermic: products bar higher than reactants bar"></svg></div></div>
+<p><b>To draw one:</b> (1) draw the axis and the reactants bar. (2) Ask: does the system release energy or absorb it? (3) Put the products bar lower if it releases energy and higher if it absorbs energy. (4) Draw the arrow from the reactants to the products and label it with the sign and value of Δ<i>H</i>.</p>
+<p><b>Common slip:</b> the left-hand bar is not always the reactants. Work out which bar is which from the type of change.</p>
+</details>
+
+<p>An enthalpy level diagram has <span class="term" data-def="The heat content of a system at constant pressure. The total enthalpy cannot be measured, but changes in enthalpy can. (see the definitions at the end)">enthalpy</span> on the vertical axis. A horizontal bar marks the enthalpy of the reactants and another marks the enthalpy of the products. The vertical gap between them is the size of the <span class="term" data-def="H(products) − H(reactants). It is the energy released or absorbed by the system at constant pressure, in kJ per mole of reaction as written (kJ mol−1). (see the definitions at the end)">enthalpy change</span>, Δ<i>H</i>, and the direction of the move from reactants to products gives its sign.</p>
+<div data-q="q11"></div>
+<div data-q="q12"></div>
+<div data-q="q13"></div>
+<div data-q="q14"></div>
+<div data-q="q15"></div>
+<div data-r="rA"></div>
+
+<h3>Part B: the sign of ΔH, the system and the surroundings</h3>
+<details class="cheat" open><summary>Cheat sheet: the sign of ΔH, the system and the surroundings</summary>
+<ul>
+<li>The <b>system</b> is the reacting chemicals. The <b>surroundings</b> are everything else: water, cup, thermometer, air.</li>
+<li>A thermometer in the solution measures the <b>surroundings</b>. Δ<i>H</i> belongs to the <b>system</b>. They move in opposite directions.</li>
+<li>Energy is conserved: energy lost by the system = energy gained by the surroundings, and the reverse.</li>
+</ul>
+<table>
+<tr><th></th><th>Exothermic</th><th>Endothermic</th></tr>
+<tr><td>Energy flows</td><td>system → surroundings</td><td>surroundings → system</td></tr>
+<tr><td>Enthalpy of the system</td><td>falls</td><td>rises</td></tr>
+<tr><td>On the diagram</td><td>drop</td><td>rise</td></tr>
+<tr><td>Δ<i>H</i></td><td>negative</td><td>positive</td></tr>
+<tr><td>Thermometer (surroundings)</td><td>rises</td><td>falls</td></tr>
+</table>
+<p><b>Chain to remember:</b> thermometer up → surroundings gained energy → system lost it → enthalpy of the system fell → Δ<i>H</i> negative.</p>
+</details>
+
+<p>Chemists divide the world into two parts. The <b>system</b> is the reacting chemicals. The <b>surroundings</b> are everything else that can exchange energy with them: the water, the cup, the thermometer and the air. A thermometer in the solution reads the <span class="term" data-def="A measure of the average kinetic energy of the particles in a substance. A thermometer in a solution gives the temperature of the surroundings. (see the definitions at the end)">temperature</span> of the surroundings, not of the system. Energy is <span class="term" data-def="Energy cannot be created or destroyed, only transferred or converted. Energy lost by the system is gained by the surroundings, and the reverse. (see the definitions at the end)">conserved</span>, so energy that leaves the system arrives in the surroundings, and the reverse.</p>
+
+<div class="tool" id="toolX">
+<p class="sans" style="margin:0 0 8px">Explorer: choose a change and compare the scene with the diagram</p>
+<div>
+<button type="button" id="x_exo" class="on">Exothermic: zinc added to copper(II) sulfate solution</button>
+<button type="button" id="x_endo">Endothermic: ammonium nitrate dissolving in water</button>
+</div>
+<div class="figs" style="margin-top:8px">
+<div><svg id="x_scene" role="img" aria-label="System inside its surroundings, with a thermometer"></svg></div>
+<div><svg id="x_diag" role="img" aria-label="Enthalpy level diagram for the chosen change"></svg></div>
+</div>
+<p id="x_text" style="margin:8px 0 0" aria-live="polite"></p>
+</div>
+
+<div data-q="q21"></div>
+<div data-q="q22"></div>
+<div data-q="q23"></div>
+<div data-q="q24"></div>
+<div data-q="q25"></div>
+<div data-q="q26"></div>
+<div data-r="rB"></div>
+
+<h3>Part C: calorimetry with an exothermic reaction</h3>
+<details class="cheat" open><summary>Cheat sheet: calorimetry step by step</summary>
+<ol>
+<li><i>m</i> = volume of solution in cm<sup>3</sup>, used as grams (density 1.00 g cm<sup>−3</sup>).</li>
+<li>Δ<i>T</i> = final temperature − initial temperature, in °C.</li>
+<li><i>q</i> = <i>m</i> × <i>c</i> × Δ<i>T</i>, with <i>c</i> = 4.18 J g<sup>−1</sup> °C<sup>−1</sup>. The answer is in J. Divide by 1000 for kJ.</li>
+<li>Amount of substance: <i>n</i> = concentration × volume in dm<sup>3</sup> (dm<sup>3</sup> = cm<sup>3</sup> ÷ 1000), or <i>n</i> = mass ÷ molar mass.</li>
+<li>Limiting reactant: in a 1 : 1 reaction it is the one with the smaller <i>n</i>. Use its <i>n</i> in the next step.</li>
+<li>Δ<i>H</i> = −<i>q</i> ÷ <i>n</i>, in kJ mol<sup>−1</sup>. Temperature rose → <i>q</i> positive → Δ<i>H</i> negative.</li>
+</ol>
+<p class="eg"><b>Worked example (different numbers).</b> 80.0 g of water warms from 18.0 °C to 24.5 °C when 0.0150 mol of a solid reacts. Δ<i>T</i> = +6.5 °C. <i>q</i> = 80.0 × 4.18 × 6.5 = 2174 J = 2.17 kJ. Δ<i>H</i> = −2.17 ÷ 0.0150 = <b>−145 kJ mol<sup>−1</sup></b>. Exothermic.</p>
+<p><b>Why the measured size is too small:</b> energy is lost to the air and absorbed by the cup and thermometer, so the highest reading is too low. Plotting temperature against time and <span class="term" data-def="Extending a line beyond the measured points to estimate a value. Extending the cooling (or warming) line back to the time of mixing gives the temperature the mixture would have reached with no heat exchange with the room. (see the definitions at the end)">extending the cooling line back</span> to the time of mixing gives a larger, better Δ<i>T</i>.</p>
+<p><b>Common slips:</b> using cm<sup>3</sup> instead of dm<sup>3</sup> in <i>n</i> = <i>cV</i>; dividing by the amount of the reactant in excess; forgetting to change J to kJ; losing the negative sign.</p>
+</details>
+
+<p>Zinc powder is added to copper(II) sulfate solution in a polystyrene cup with a lid. Zn(s) + CuSO<sub>4</sub>(aq) → ZnSO<sub>4</sub>(aq) + Cu(s). The solution (the surroundings) is stirred and its temperature recorded. The <span class="term" data-def="The reactant that is used up first. It sets how much reaction takes place, so ΔH per mole is calculated from the amount of this reactant. (see the definitions at the end)">limiting reactant</span> sets the amount of reaction.</p>
+<table>
+<caption style="text-align:left;font-style:italic;padding-bottom:4px">Table 1. Results</caption>
+<tr><td>Volume of 0.200 mol dm<sup>−3</sup> CuSO<sub>4</sub>(aq)</td><td class="n">100.0 cm<sup>3</sup></td></tr>
+<tr><td>Mass of zinc powder (in excess)</td><td class="n">2.00 g</td></tr>
+<tr><td>Initial temperature of the solution</td><td class="n">21.0 °C</td></tr>
+<tr><td>Maximum temperature of the solution</td><td class="n">30.5 °C</td></tr>
+<tr><td>Temperature at the time of mixing, from <span class="term" data-def="Extending a line beyond the measured points to estimate a value. Extending the cooling (or warming) line back to the time of mixing gives the temperature the mixture would have reached with no heat exchange with the room. (see the definitions at the end)">extending the cooling line back</span></td><td class="n">31.4 °C</td></tr>
+</table>
+<p>Treat the solution as 100.0 g of water with a <span class="term" data-def="The energy needed to raise the temperature of 1 g of a substance by 1 °C (or 1 K). For water it is 4.18 J g−1 °C−1. (see the definitions at the end)">specific heat capacity</span> of 4.18 J g<sup>−1</sup> °C<sup>−1</sup>. <i>A</i><sub>r</sub>(Zn) = 65.4. The published value of Δ<i>H</i> for this reaction is about −218 kJ mol<sup>−1</sup>.</p>
+<div data-q="q31"></div>
+<div data-q="q32"></div>
+<div data-q="q33"></div>
+<div data-q="q34"></div>
+<div data-q="q35"></div>
+<div data-q="q36"></div>
+<div data-q="q37"></div>
+<div data-q="q38"></div>
+<div data-q="q39"></div>
+<div data-r="rC"></div>
+
+<h3>Part D: calorimetry with an endothermic change</h3>
+<details class="cheat" open><summary>Cheat sheet: endothermic calorimetry</summary>
+<ul>
+<li>The recipe is the same as in Part C. The water is the surroundings and the dissolving solid is the system.</li>
+<li>The water <b>cools</b>, so Δ<i>T</i> is negative and <i>q</i> = <i>mc</i>Δ<i>T</i> is negative. Then Δ<i>H</i> = −<i>q</i> ÷ <i>n</i> comes out <b>positive</b>.</li>
+<li>Energy flows into the system, so on the diagram the products sit <b>above</b> the reactants.</li>
+<li>Heat leaks <b>in</b> from the warmer room, so the lowest reading is too high and the measured size is too small. Extending the warming line back to the time of mixing gives a larger |Δ<i>T</i>|.</li>
+</ul>
+<p class="eg"><b>Worked example (different numbers).</b> 60.0 g of water cools from 23.0 °C to 19.5 °C when 0.0200 mol of a solid dissolves. Δ<i>T</i> = −3.5 °C. <i>q</i> = 60.0 × 4.18 × (−3.5) = −878 J = −0.878 kJ. Δ<i>H</i> = −(−0.878) ÷ 0.0200 = <b>+43.9 kJ mol<sup>−1</sup></b>. Endothermic.</p>
+<p><b>Common slips:</b> writing a positive Δ<i>T</i> for a fall in temperature; giving Δ<i>H</i> a negative sign because the thermometer reading went down.</p>
+</details>
+
+<p>Solid ammonium nitrate is stirred into water in a polystyrene cup with a lid. NH<sub>4</sub>NO<sub>3</sub>(s) → NH<sub>4</sub><sup>+</sup>(aq) + NO<sub>3</sub><sup>−</sup>(aq). Here the dissolving solid is the system and the water is the surroundings.</p>
+<table>
+<caption style="text-align:left;font-style:italic;padding-bottom:4px">Table 2. Results</caption>
+<tr><td>Volume of water</td><td class="n">50.0 cm<sup>3</sup></td></tr>
+<tr><td>Mass of ammonium nitrate</td><td class="n">4.00 g</td></tr>
+<tr><td>Initial temperature of the water</td><td class="n">22.0 °C</td></tr>
+<tr><td>Lowest temperature of the solution</td><td class="n">17.0 °C</td></tr>
+<tr><td>Temperature at the time of mixing, from extending the warming line back</td><td class="n">16.0 °C</td></tr>
+</table>
+<p>Treat the solution as 50.0 g of water with a specific heat capacity of 4.18 J g<sup>−1</sup> °C<sup>−1</sup>. <i>M</i><sub>r</sub>(NH<sub>4</sub>NO<sub>3</sub>) = 80.0. The published value of Δ<i>H</i> for dissolving ammonium nitrate is about +25.7 kJ mol<sup>−1</sup>.</p>
+<div data-q="q41"></div>
+<div data-q="q42"></div>
+<div data-q="q43"></div>
+<div data-q="q44"></div>
+<div data-q="q45"></div>
+<div data-q="q46"></div>
+<div data-q="q47"></div>
+<div data-q="q48"></div>
+<div data-r="rD"></div>
+</section>
+
+<section>
+<h2>Underlying ideas: definitions to learn</h2>
+<dl class="gloss" id="glossary">
+<dt>Calorimeter</dt>
+<dd>An insulated container in which a change takes place so that the energy it transfers can be found from the temperature change of the contents. A polystyrene cup with a lid is a simple calorimeter.</dd>
+<dt>Conservation of energy</dt>
+<dd>Energy cannot be created or destroyed, only transferred or converted. Energy lost by the system is gained by the surroundings, and the reverse.</dd>
+<dt>Endothermic change</dt>
+<dd>A change in which the system absorbs energy from the surroundings. The enthalpy of the system rises, Δ<i>H</i> is positive, and the surroundings get cooler.</dd>
+<dt>Enthalpy (<i>H</i>)</dt>
+<dd>The heat content of a system at constant pressure. The total enthalpy cannot be measured, but changes in enthalpy can.</dd>
+<dt>Enthalpy change (Δ<i>H</i>)</dt>
+<dd><i>H</i>(products) − <i>H</i>(reactants). It is the energy released or absorbed by the system at constant pressure, in kJ per mole of reaction as written (kJ mol<sup>−1</sup>).</dd>
+<dt>Enthalpy level diagram (energy profile)</dt>
+<dd>A diagram with enthalpy on the vertical axis and a bar for the reactants and a bar for the products. A drop from reactants to products shows a negative Δ<i>H</i>, and a rise shows a positive Δ<i>H</i>.</dd>
+<dt>Exothermic change</dt>
+<dd>A change in which the system releases energy to the surroundings. The enthalpy of the system falls, Δ<i>H</i> is negative, and the surroundings get warmer.</dd>
+<dt>Extrapolation</dt>
+<dd>Extending a line beyond the measured points to estimate a value. Extending the cooling (or warming) line back to the time of mixing gives the temperature the mixture would have reached with no heat exchange with the room.</dd>
+<dt>Limiting reactant</dt>
+<dd>The reactant that is used up first. It sets how much reaction takes place, so Δ<i>H</i> per mole is calculated from the amount of this reactant.</dd>
+<dt>Specific heat capacity (<i>c</i>)</dt>
+<dd>The energy needed to raise the temperature of 1 g of a substance by 1 °C (or 1 K). For water it is 4.18 J g<sup>−1</sup> °C<sup>−1</sup>.</dd>
+<dt>Surroundings</dt>
+<dd>Everything outside the system that can exchange energy with it: the solvent, the cup, the thermometer and the air. A thermometer in the solution measures the temperature of the surroundings.</dd>
+<dt>System</dt>
+<dd>The chemical reaction or change being studied: the reactants and products.</dd>
+<dt>Temperature</dt>
+<dd>A measure of the average kinetic energy of the particles in a substance. A thermometer in a solution gives the temperature of the surroundings.</dd>
+
+</dl>
+</section>
+
+<section>
+<h2>Scale up: a cold pack</h2>
+<details class="cheat" open><summary>Cheat sheet: scaling up with Δ<i>H</i></summary>
+<ul>
+<li>Amount: <i>n</i> = mass ÷ molar mass.</li>
+<li>Energy absorbed or released: <i>q</i> = <i>n</i> × |Δ<i>H</i>|, in kJ.</li>
+<li>Temperature change of a mass of water: Δ<i>T</i> = <i>q</i> ÷ (<i>m</i> × <i>c</i>), with <i>q</i> in J.</li>
+</ul>
+<p class="eg"><b>Worked example (different numbers).</b> 20.0 g of a solid (<i>M</i> = 40.0 g mol<sup>−1</sup>) has Δ<i>H</i> = +12 kJ mol<sup>−1</sup>. <i>n</i> = 20.0 ÷ 40.0 = 0.500 mol. Energy absorbed = 0.500 × 12 = 6.0 kJ = 6000 J. In 150 g of water: Δ<i>T</i> = 6000 ÷ (150 × 4.18) = 9.6 °C fall.</p>
+</details>
+
+<p>A single-use cold pack contains 80.0 g of ammonium nitrate that dissolves in water when the pack is squeezed. Use the published value of Δ<i>H</i> = +25.7 kJ mol<sup>−1</sup>.</p>
+<div data-q="q51"></div>
+<div data-q="q52"></div>
+<div data-r="rE"></div>
+</section>
+
+<section>
+<h2>My submission on Canvas</h2>
+<p>When you have finished, hand in your work as a PDF.</p>
+<ol>
+<li>Type your name in the box below.</li>
+<li>Press <b>Save as .pdf</b>. In the window that opens, choose <b>Save as PDF</b> as the destination (on a Mac, use the PDF menu at the bottom left and choose Save as PDF) and save the file on your computer.</li>
+<li>Open today’s Assignment on Canvas, select <b>Upload File</b>, choose the PDF you saved, and submit it.</li>
+</ol>
+<p>Not finished yet? Press <b>Save my progress</b> and come back to this page later.</p>
+<div class="tool">
+<div class="row2"><label for="r_name">Name</label><input type="text" id="r_name" autocomplete="name"><button type="button" id="r_pdf" class="noprint">Save as .pdf</button><button type="button" id="r_save" class="noprint">Save my progress</button></div>
+<div id="r_summary"></div>
+<div id="r_conf"></div>
+<p id="r_msg" class="noprint" style="margin:6px 0 0" aria-live="polite"></p>
+</div>
+</section>
+
+<footer style="margin-top:44px;padding-top:6px;border-top:1px solid #111;font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span>Science Department · Refined with AI</span><span>Chemistry · Thermochemistry</span></footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+var MINUS="−",uid=0,svgid=0;
+var SVGNS="http://www.w3.org/2000/svg";
+var KEY="selfmark-enthalpy-diagrams-v1",pending=false;
+var SEC=["","Part A: enthalpy level diagrams","Part B: sign of ΔH, system and surroundings","Part C: exothermic calorimetry","Part D: endothermic calorimetry","Scale up: a cold pack"];
+var nameEl=document.getElementById("r_name");
+function el(tag,attrs,html){var e=(tag==="svg")?document.createElementNS(SVGNS,"svg"):document.createElement(tag);if(attrs){for(var k in attrs){e.setAttribute(k,attrs[k]);}}if(html!=null){e.innerHTML=html;}return e;}
+function r1(x){return String(Math.round(x*10)/10);}
+function sg(x,dp){var a=Math.abs(x).toFixed(dp);return (x<0?MINUS:"+")+a;}
+
+/* tool-tips */
+Array.prototype.forEach.call(document.querySelectorAll(".term"),function(t){
+  t.setAttribute("tabindex","0");
+  function place(){t.classList.remove("r");var r=t.getBoundingClientRect();if(r.left+290>window.innerWidth){t.classList.add("r");}}
+  t.addEventListener("mouseenter",place);t.addEventListener("focus",place);
+});
+
+/* ---------- enthalpy level diagram drawing ---------- */
+function levels(svg,s){
+  var W=s.w||560,H=s.h||300,top=s.top!=null?s.top:34,bot=s.bot!=null?s.bot:54,ph=H-top-bot,mx=s.max,mn=s.min,fz=s.fz||15,id="ah"+(++svgid);
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  function Y(v){return top+(mx-v)/(mx-mn)*ph;}
+  var o="<defs><marker id=\""+id+"\" markerWidth=\"8\" markerHeight=\"8\" refX=\"4\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 z\" fill=\"#111\"/></marker></defs>";
+  o+="<line x1=\"22\" y1=\""+(H-bot+16)+"\" x2=\"22\" y2=\""+(top-14)+"\" stroke=\"#111\" marker-end=\"url(#"+id+")\"/>";
+  o+="<text transform=\"translate(12 "+((top+H-bot)/2)+") rotate(-90)\" font-size=\""+fz+"\" text-anchor=\"middle\">Enthalpy</text>";
+  var i,b;
+  for(i=0;i<s.bars.length;i++){
+    b=s.bars[i];var y=Y(b.v),x1=b.x1*W,x2=b.x2*W;
+    o+="<line x1=\""+x1+"\" y1=\""+y+"\" x2=\""+x2+"\" y2=\""+y+"\" stroke=\"#111\" stroke-width=\"4\"/>";
+    o+="<text x=\""+((x1+x2)/2)+"\" y=\""+(y+(b.above?-8:fz+6))+"\" font-size=\""+fz+"\" text-anchor=\"middle\">"+b.label+"</text>";
+  }
+  if(s.arrow&&s.bars.length>1){
+    var a=s.arrow,ax=a.x*W,y0=Y(s.bars[0].v),y1=Y(s.bars[1].v);
+    if(Math.abs(y1-y0)>4){
+      o+="<line x1=\""+(s.bars[0].x2*W)+"\" y1=\""+y0+"\" x2=\""+ax+"\" y2=\""+y0+"\" stroke=\"#666\" stroke-dasharray=\"3 3\"/>";
+      o+="<line x1=\""+ax+"\" y1=\""+y1+"\" x2=\""+(s.bars[1].x1*W)+"\" y2=\""+y1+"\" stroke=\"#666\" stroke-dasharray=\"3 3\"/>";
+      o+="<line x1=\""+ax+"\" y1=\""+y0+"\" x2=\""+ax+"\" y2=\""+(y1+(y1>y0?-3:3))+"\" stroke=\"#111\" stroke-width=\"2\" marker-end=\"url(#"+id+")\"/>";
+      if(a.text){o+="<text x=\""+(ax+8)+"\" y=\""+((y0+y1)/2+5)+"\" font-size=\""+fz+"\" style=\"paint-order:stroke;stroke:#fff;stroke-width:4px\">"+a.text+"</text>";}
+    }
+  }
+  svg.innerHTML=o;
+}
+
+/* ---------- item types ---------- */
+var TYPES={};
+function figFor(cfg,body){
+  if(!cfg.fig){return null;}
+  var s=el("svg",{"class":"fig",role:"img","aria-label":cfg.figAlt||"Enthalpy level diagram"});
+  s.style.maxWidth="420px";body.appendChild(s);levels(s,cfg.fig);return s;
+}
+TYPES.mc=function(cfg,body){
+  figFor(cfg,body);
+  var name="r"+(++uid),wrap=el("div");
+  cfg.options.forEach(function(o,i){
+    var l=el("label",{"class":"opt"});
+    l.innerHTML="<input type=\"radio\" name=\""+name+"\" value=\""+i+"\"> <span>"+(o.spec?"<svg class=\"mini\" data-i=\""+i+"\" role=\"img\" aria-label=\"Option diagram\"></svg>":"")+o.t+"</span>";
+    wrap.appendChild(l);
+  });
+  body.appendChild(wrap);
+  Array.prototype.forEach.call(wrap.querySelectorAll("svg.mini"),function(s){levels(s,cfg.options[+s.getAttribute("data-i")].spec);});
+  var inputs=wrap.querySelectorAll("input");
+  function correct(){for(var i=0;i<cfg.options.length;i++){if(cfg.options[i].ok){return i;}}}
+  return{
+    check:function(){var c=wrap.querySelector("input:checked");if(!c){return null;}var o=cfg.options[+c.value];return{frac:o.ok?1:0,msg:o.why};},
+    lock:function(){Array.prototype.forEach.call(inputs,function(x){x.disabled=true;});},
+    fill:function(){inputs[correct()].checked=true;},
+    get:function(){var c=wrap.querySelector("input:checked");return c?+c.value:null;},
+    set:function(v){if(v!==null&&inputs[v]){inputs[v].checked=true;}},
+    reveal:function(){this.fill();return cfg.options[correct()].why;}
+  };
+};
+TYPES.multi=function(cfg,body){
+  var wrap=el("div");
+  cfg.options.forEach(function(o,i){wrap.appendChild(el("label",{"class":"opt"},"<input type=\"checkbox\" value=\""+i+"\"> <span>"+o.t+"</span>"));});
+  body.appendChild(wrap);
+  var inputs=wrap.querySelectorAll("input");
+  return{
+    check:function(){
+      var hit=0,wrong=[],miss=0,nOk=0,any=false;
+      cfg.options.forEach(function(o,i){var c=inputs[i].checked;if(c){any=true;}if(o.ok){nOk++;if(c){hit++;}else{miss++;}}else if(c){wrong.push(o.why);}});
+      if(!any){return null;}
+      var frac=Math.max(0,(hit-wrong.length)/nOk);
+      if(miss===0&&wrong.length===0){return{frac:1,msg:cfg.explain};}
+      var m=wrong.join(" ");
+      if(miss>0){m+=(m?" ":"")+"At least one more correct explanation is missing.";}
+      return{frac:frac,msg:m};
+    },
+    lock:function(){Array.prototype.forEach.call(inputs,function(x){x.disabled=true;});},
+    fill:function(){cfg.options.forEach(function(o,i){inputs[i].checked=!!o.ok;});},
+    get:function(){return Array.prototype.map.call(inputs,function(x){return x.checked;});},
+    set:function(v){Array.prototype.forEach.call(inputs,function(x,i){x.checked=!!(v&&v[i]);});},
+    reveal:function(){this.fill();return cfg.explain;}
+  };
+};
+TYPES.num=function(cfg,body){
+  var h="<input type=\"text\" inputmode=\"decimal\" autocomplete=\"off\" class=\"numin\" aria-label=\"Your answer\">";
+  if(cfg.units){h+=" <select class=\"unitsel\" aria-label=\"Unit\">"+Object.keys(cfg.units).map(function(u){return "<option>"+u+"</option>";}).join("")+"</select>";}
+  else if(cfg.unit){h+=" <span class=\"unit\">"+cfg.unit+"</span>";}
+  body.innerHTML=h;
+  var inp=body.querySelector("input"),us=body.querySelector("select");
+  function parse(){var s=inp.value.trim().replace(/−/g,"-").replace(",",".").replace(/\s/g,"");if(s===""||isNaN(Number(s))){return null;}return Number(s);}
+  return{
+    check:function(){
+      var v=parse();if(v===null){return null;}
+      var u=us?us.value:null,b=us?v*cfg.units[u]:v;
+      if(Math.abs(b-cfg.ans)<=cfg.tol){return{frac:1,msg:cfg.explain};}
+      var m=cfg.hint?cfg.hint(v,u,b):null;
+      return{frac:0,msg:m||cfg.generic};
+    },
+    lock:function(){inp.disabled=true;if(us){us.disabled=true;}},
+    fill:function(){inp.value=String(cfg.fillv!=null?cfg.fillv:cfg.ans);if(us&&cfg.fillu){us.value=cfg.fillu;}},
+    get:function(){return {v:inp.value,u:us?us.value:null};},
+    set:function(v){inp.value=v.v||"";if(us&&v.u){us.value=v.u;}},
+    reveal:function(){this.fill();return cfg.explain;}
+  };
+};
+TYPES.cloze=function(cfg,body){
+  var sels=[],marks=[],p=el("p",{"class":"cloze"});
+  var html=cfg.template.replace(/\{(\d+)\}/g,function(m,i){
+    var b=cfg.blanks[+i];
+    return "<select data-i=\""+i+"\" aria-label=\"Blank "+(+i+1)+"\"><option value=\"\">choose</option>"+b.opts.map(function(o,k){return "<option value=\""+k+"\">"+o+"</option>";}).join("")+"</select><span class=\"mk\" data-m=\""+i+"\"></span>";
+  });
+  p.innerHTML=html;body.appendChild(p);
+  sels=p.querySelectorAll("select");marks=p.querySelectorAll(".mk");
+  return{
+    check:function(){
+      var n=cfg.blanks.length,ok=0,any=false,bad=[];
+      for(var i=0;i<n;i++){
+        var v=sels[i].value;
+        if(v!==""){any=true;}
+        if(v!==""&&+v===cfg.blanks[i].ans){ok++;sels[i].className="good";marks[i].textContent="✓";sels[i].disabled=true;}
+        else{sels[i].className=(v===""?"":"bad");marks[i].textContent=(v===""?"":"✗");if(v!==""||true){bad.push(i+1);}}
+      }
+      if(!any){return null;}
+      if(ok===n){return{frac:1,msg:cfg.explain};}
+      return{frac:ok/n,msg:("Right so far: "+ok+" of "+n+" (marked ✓ and locked). Look again at blank"+(bad.length>1?"s ":" ")+bad.join(", ")+". "+(cfg.hint||""))};
+    },
+    lock:function(){Array.prototype.forEach.call(sels,function(s){s.disabled=true;});},
+    fill:function(){for(var i=0;i<sels.length;i++){sels[i].value=String(cfg.blanks[i].ans);sels[i].disabled=false;}},
+    get:function(){return Array.prototype.map.call(sels,function(s){return s.value;});},
+    set:function(v,att){for(var i=0;i<sels.length;i++){sels[i].value=v[i]||"";if(att&&sels[i].value!==""){if(+sels[i].value===cfg.blanks[i].ans){sels[i].className="good";sels[i].disabled=true;marks[i].textContent="✓";}else{sels[i].className="bad";marks[i].textContent="✗";}}}},
+    reveal:function(){this.fill();for(var i=0;i<sels.length;i++){sels[i].className="good";marks[i].textContent="✓";}return cfg.explain;}
+  };
+};
+TYPES.table=function(cfg,body){
+  var h="<table><tr><th>"+cfg.head[0]+"</th><th>"+cfg.head[1]+"</th><th>"+cfg.head[2]+"</th><th></th></tr>";
+  cfg.rows.forEach(function(r,i){
+    h+="<tr><td>"+r.t+"</td><td><select data-r=\""+i+"\" data-c=\"0\" aria-label=\"Type of change\"><option value=\"\">choose</option><option value=\"0\">exothermic</option><option value=\"1\">endothermic</option></select></td>"+
+       "<td><select data-r=\""+i+"\" data-c=\"1\" aria-label=\"Sign of ΔH\"><option value=\"\">choose</option><option value=\"0\">negative</option><option value=\"1\">positive</option></select></td><td class=\"mk\" data-m=\""+i+"\"></td></tr>";
+  });
+  h+="</table>";body.innerHTML="<div style=\"overflow-x:auto\">"+h+"</div>";
+  var sels=body.querySelectorAll("select"),marks=body.querySelectorAll(".mk");
+  function rowSel(i){return [sels[i*2],sels[i*2+1]];}
+  return{
+    check:function(){
+      var n=cfg.rows.length,ok=0,any=false,badRows=[];
+      for(var i=0;i<n;i++){
+        var rs=rowSel(i),a=rs[0].value,b=rs[1].value;
+        if(a!==""||b!==""){any=true;}
+        if(a!==""&&b!==""&&+a===cfg.rows[i].k&&+b===cfg.rows[i].k){ok++;marks[i].textContent="✓";rs[0].disabled=rs[1].disabled=true;rs[0].className=rs[1].className="good";}
+        else{marks[i].textContent=(a===""&&b===""?"":"✗");badRows.push(i+1);}
+      }
+      if(!any){return null;}
+      if(ok===n){return{frac:1,msg:cfg.explain};}
+      return{frac:ok/n,msg:"Right so far: "+ok+" of "+n+" rows (marked ✓ and locked). Look again at row"+(badRows.length>1?"s ":" ")+badRows.join(", ")+". Exothermic means ΔH is negative and endothermic means ΔH is positive, so the two choices in a row must agree."};
+    },
+    lock:function(){Array.prototype.forEach.call(sels,function(s){s.disabled=true;});},
+    fill:function(){cfg.rows.forEach(function(r,i){var rs=rowSel(i);rs[0].disabled=rs[1].disabled=false;rs[0].value=String(r.k);rs[1].value=String(r.k);});},
+    get:function(){return Array.prototype.map.call(sels,function(s){return s.value;});},
+    set:function(v,att){for(var i=0;i<sels.length;i++){sels[i].value=v[i]||"";}
+      if(att){cfg.rows.forEach(function(r,i){var rs=rowSel(i),a=rs[0].value,b=rs[1].value;if(a===""&&b===""){return;}
+        if(+a===r.k&&+b===r.k&&a!==""&&b!==""){rs[0].disabled=rs[1].disabled=true;rs[0].className=rs[1].className="good";marks[i].textContent="✓";}else{marks[i].textContent="✗";}});}},
+    reveal:function(){this.fill();for(var i=0;i<marks.length;i++){marks[i].textContent="✓";}return cfg.explain;}
+  };
+};
+TYPES.builder=function(cfg,body){
+  var svg=el("svg",{"class":"fig",role:"img","aria-label":"Enthalpy level diagram you are building"});svg.style.maxWidth="560px";body.appendChild(svg);
+  var row=el("div",{"class":"row2"},"<label>Products level (kJ mol<sup>−1</sup> relative to the reactants) <input type=\"range\" min=\""+cfg.smin+"\" max=\""+cfg.smax+"\" step=\"10\" value=\"0\"></label><output>0</output>");
+  body.appendChild(row);
+  var rng=row.querySelector("input"),out=row.querySelector("output");
+  var r2=el("div",{"class":"row2"},"The sign of Δ<i>H</i> is <select data-k=\"s\"><option value=\"\">choose</option><option value=\"0\">negative</option><option value=\"1\">positive</option></select> and the system <select data-k=\"e\"><option value=\"\">choose</option><option value=\"0\">releases energy to</option><option value=\"1\">absorbs energy from</option></select> the surroundings.");
+  body.appendChild(r2);
+  var ss=r2.querySelector("[data-k=s]"),se=r2.querySelector("[data-k=e]");
+  function draw(){
+    var v=+rng.value;out.textContent=(v===0?"0":sg(v,0));
+    levels(svg,{w:560,h:300,min:cfg.smin-40,max:cfg.smax+40,bars:[{x1:.12,x2:.38,v:0,label:cfg.rLab},{x1:.62,x2:.88,v:v,label:cfg.pLab}],arrow:{x:.5,text:(v===0?"":"ΔH = "+sg(v,0)+" kJ mol⁻¹")}});
+  }
+  rng.addEventListener("input",draw);draw();
+  var kind=cfg.target<0?0:1;
+  return{
+    check:function(){
+      var v=+rng.value,f=0,m=[];
+      var signOk=(v<0)===(cfg.target<0)&&v!==0,sizeOk=Math.abs(v-cfg.target)<=cfg.tol;
+      if(signOk&&sizeOk){f+=0.5;}
+      else if(v===0){m.push("The products are still level with the reactants. Move the slider.");}
+      else if(!signOk){m.push("The products are on the wrong side of the reactants for this sign of ΔH. "+(cfg.target<0?"A negative ΔH is a drop.":"A positive ΔH is a rise."));}
+      else{m.push("The direction is right but the gap is not to scale. The gap should match the value of ΔH given in the question ("+sg(cfg.target,0)+" kJ mol"+"⁻¹).");}
+      if(ss.value===""||se.value===""){m.push("Complete both choices in the sentence.");}
+      if(ss.value!==""&&+ss.value===kind){f+=0.25;}else if(ss.value!==""){m.push("Check the sign of ΔH: a "+(kind===0?"drop":"rise")+" is "+(kind===0?"negative":"positive")+".");}
+      if(se.value!==""&&+se.value===kind){f+=0.25;}else if(se.value!==""){m.push("Check the direction of energy flow: in an "+(kind===0?"exothermic":"endothermic")+" change the system "+(kind===0?"releases energy to":"absorbs energy from")+" the surroundings.");}
+      if(f===1){return{frac:1,msg:cfg.explain};}
+      return{frac:f,msg:m.join(" ")};
+    },
+    lock:function(){rng.disabled=ss.disabled=se.disabled=true;},
+    fill:function(){rng.value=String(cfg.target);ss.value=String(kind);se.value=String(kind);draw();},
+    get:function(){return {r:rng.value,s:ss.value,e:se.value};},
+    set:function(v){rng.value=v.r;ss.value=v.s;se.value=v.e;draw();},
+    reveal:function(){this.fill();return cfg.explain;}
+  };
+};
+
+/* ---------- item data ---------- */
+var UNITS_J={J:1,kJ:1000};
+var D=[];
+function add(c){D.push(c);}
+
+/* Part A */
+add({id:"q11",num:"1.1",sec:1,type:"mc",max:1,
+ text:"Diagram 1 is for an <b>exothermic</b> reaction. Which bar shows the <b>reactants</b>?",
+ fig:{w:360,h:200,top:20,bot:44,min:0,max:100,bars:[{x1:.1,x2:.36,v:25,label:"Bar X"},{x1:.62,x2:.88,v:75,label:"Bar Y"}]},figAlt:"Diagram 1: bar X lower on the left, bar Y higher on the right",
+ options:[
+  {t:"Bar X",ok:false,why:"Bar X is the lower bar. In an exothermic reaction the system releases energy, so the products are the lower bar and the reactants are the higher one."},
+  {t:"Bar Y",ok:true,why:"Bar Y is higher in enthalpy. The system releases energy to the surroundings, so it drops from the reactants (bar Y) to the products (bar X)."}]});
+add({id:"q12",num:"1.2",sec:1,type:"mc",max:1,
+ text:"Diagram 2 is for an <b>endothermic</b> reaction. Which bar shows the <b>products</b>?",
+ fig:{w:360,h:200,top:20,bot:44,min:0,max:100,bars:[{x1:.1,x2:.36,v:78,label:"Bar M"},{x1:.62,x2:.88,v:28,label:"Bar N"}]},figAlt:"Diagram 2: bar M higher on the left, bar N lower on the right",
+ options:[
+  {t:"Bar M",ok:true,why:"Bar M is higher in enthalpy. In an endothermic reaction the system absorbs energy, so its enthalpy rises: the products are the higher bar."},
+  {t:"Bar N",ok:false,why:"Bar N is the lower bar. That would be the reactants: the system absorbs energy in an endothermic reaction, so it ends higher than it started."}]});
+add({id:"q13",num:"1.3",sec:1,type:"builder",max:2,
+ text:"Build the enthalpy level diagram for the combustion of methane: CH<sub>4</sub>(g) + 2O<sub>2</sub>(g) → CO<sub>2</sub>(g) + 2H<sub>2</sub>O(l), Δ<i>H</i> = −890 kJ mol<sup>−1</sup>. The reactants are fixed at the reference level. Use the slider to place the products so that the gap is to scale, then complete the sentence.",
+ smin:-1000,smax:200,target:-890,tol:100,rLab:"Reactants: CH₄ + 2O₂",pLab:"Products: CO₂ + 2H₂O",
+ explain:"The products are 890 kJ mol⁻¹ below the reactants. The system released energy, so its enthalpy fell and Δ<i>H</i> is negative."});
+add({id:"q14",num:"1.4",sec:1,type:"builder",max:2,
+ text:"Build the enthalpy level diagram for the thermal decomposition of calcium carbonate: CaCO<sub>3</sub>(s) → CaO(s) + CO<sub>2</sub>(g), Δ<i>H</i> = +180 kJ mol<sup>−1</sup>.",
+ smin:-100,smax:300,target:180,tol:30,rLab:"Reactant: CaCO₃",pLab:"Products: CaO + CO₂",
+ explain:"The products are 180 kJ mol⁻¹ above the reactant. The system absorbed energy, so its enthalpy rose and Δ<i>H</i> is positive."});
+add({id:"q15",num:"1.5",sec:1,type:"mc",max:1,
+ text:"On an enthalpy level diagram, the vertical gap between the reactants bar and the products bar represents:",
+ options:[
+  {t:"the size of the enthalpy change, Δ<i>H</i>",ok:true,why:"The gap is the difference in enthalpy between products and reactants, so its length is the size of Δ<i>H</i>."},
+  {t:"the temperature of the surroundings",ok:false,why:"Temperature is not plotted on this diagram. The vertical axis is enthalpy, the heat content of the system."},
+  {t:"the time the reaction takes",ok:false,why:"Time is not on either axis. The diagram compares two states of the system, the start and the finish."},
+  {t:"the number of moles of reactant",ok:false,why:"The amount of reactant fixes the scale (kJ per mole of reaction as written), not the gap itself."}]});
+
+/* Part B */
+add({id:"q21",num:"2.1",sec:2,type:"cloze",max:5,
+ text:"Complete the explanation for an <b>exothermic</b> reaction.",
+ template:"The system {0} energy to the surroundings. The enthalpy of the system {1}, so on the enthalpy level diagram the products sit {2} the reactants and Δ<i>H</i> is {3}. The surroundings, including the thermometer and the solution, {4}.",
+ blanks:[{opts:["releases","absorbs"],ans:0},{opts:["decreases","increases","stays the same"],ans:0},{opts:["below","above","level with"],ans:0},{opts:["negative","positive","zero"],ans:0},{opts:["get warmer","get cooler","stay at the same temperature"],ans:0}],
+ explain:"The system releases energy, its enthalpy decreases, the products sit below the reactants, Δ<i>H</i> is negative, and the surroundings get warmer because they receive the energy the system lost."});
+add({id:"q22",num:"2.2",sec:2,type:"cloze",max:5,
+ text:"Complete the explanation for an <b>endothermic</b> change.",
+ template:"The system {0} energy from the surroundings. The enthalpy of the system {1}, so on the enthalpy level diagram the products sit {2} the reactants and Δ<i>H</i> is {3}. The surroundings, including the thermometer and the solution, {4}.",
+ blanks:[{opts:["releases","absorbs"],ans:1},{opts:["decreases","increases","stays the same"],ans:1},{opts:["below","above","level with"],ans:1},{opts:["negative","positive","zero"],ans:1},{opts:["get warmer","get cooler","stay at the same temperature"],ans:1}],
+ explain:"The system absorbs energy, its enthalpy increases, the products sit above the reactants, Δ<i>H</i> is positive, and the surroundings get cooler because they supply the energy the system gained."});
+add({id:"q23",num:"2.3",sec:2,type:"table",max:6,
+ text:"For each change, choose the type and the sign of Δ<i>H</i>.",
+ head:["Change","Type","Sign of ΔH"],
+ rows:[
+  {t:"Methane burns on a gas hob and heats a pan.",k:0},
+  {t:"A chemical cold pack feels cold as ammonium nitrate dissolves.",k:1},
+  {t:"A hand warmer feels warm as iron reacts with oxygen in the air.",k:0},
+  {t:"Plants use sunlight to make glucose and oxygen from carbon dioxide and water (photosynthesis).",k:1},
+  {t:"Calcium carbonate is heated strongly and breaks down into calcium oxide and carbon dioxide.",k:1},
+  {t:"An acid is mixed with an alkali and the mixture warms up (neutralisation).",k:0}],
+ explain:"Burning, rusting (a hand warmer) and neutralisation release energy: exothermic, Δ<i>H</i> negative. Dissolving ammonium nitrate, photosynthesis and thermal decomposition absorb energy: endothermic, Δ<i>H</i> positive."});
+add({id:"q24",num:"2.4",sec:2,type:"mc",max:1,
+ text:"A student places a thermometer in a solution in which a reaction takes place. It rises from 21.0 °C to 30.5 °C. Which statement is correct?",
+ options:[
+  {t:"The system gained energy, so Δ<i>H</i> is positive.",ok:false,why:"The solution is part of the surroundings. It warmed because it gained energy, and it gained that energy from the system, so the system lost energy."},
+  {t:"The system lost energy to the surroundings, so its enthalpy fell and Δ<i>H</i> is negative.",ok:true,why:"The thermometer reads the surroundings. They warmed, so energy passed from the system to them: the system’s enthalpy fell and Δ<i>H</i> is negative."},
+  {t:"The enthalpy of the system rose because the temperature rose.",ok:false,why:"The temperature that rose is the temperature of the surroundings. The enthalpy of the system moves the other way."},
+  {t:"No energy was transferred, because energy is conserved.",ok:false,why:"Conservation of energy means the energy lost by the system equals the energy gained by the surroundings. It does not mean that nothing is transferred."}]});
+add({id:"q25",num:"2.5",sec:2,type:"mc",max:1,
+ text:"A student writes: “Δ<i>H</i> is negative, so the reaction loses energy and the beaker gets colder.” What is the error?",
+ options:[
+  {t:"There is no error: a negative Δ<i>H</i> means the surroundings cool.",ok:false,why:"A negative Δ<i>H</i> means the system released energy, and the surroundings received it, so they warm up."},
+  {t:"The system does lose energy, but the surroundings gain it, so the beaker gets warmer.",ok:true,why:"The beaker and its contents are surroundings. Energy lost by the system is gained by the surroundings, so the beaker warms."},
+  {t:"Δ<i>H</i> is negative only when the temperature falls.",ok:false,why:"The sign of Δ<i>H</i> belongs to the system. A fall in the temperature of the surroundings goes with a positive Δ<i>H</i>."},
+  {t:"Energy is destroyed in exothermic reactions.",ok:false,why:"Energy is never destroyed. It moves from the system to the surroundings."}]});
+add({id:"q26",num:"2.6",sec:2,type:"mc",max:1,
+ text:"Which statement about Δ<i>H</i> and the enthalpy level diagram is correct?",
+ options:[
+  {t:"Δ<i>H</i> = <i>H</i>(products) − <i>H</i>(reactants). A positive value is a rise from reactants to products.",ok:true,why:"This is the definition. Products above reactants gives a positive value, and products below reactants gives a negative value."},
+  {t:"Δ<i>H</i> = <i>H</i>(reactants) − <i>H</i>(products). A positive value is a rise from reactants to products.",ok:false,why:"The subtraction is the wrong way round. With this formula a rise would give a negative value, but Δ<i>H</i> is defined as products minus reactants."},
+  {t:"Δ<i>H</i> = <i>H</i>(products) − <i>H</i>(reactants). A positive value is a drop from reactants to products.",ok:false,why:"With products minus reactants, a drop gives a negative number."},
+  {t:"Δ<i>H</i> is the temperature of the surroundings after the reaction minus before. A positive value is a rise in temperature.",ok:false,why:"That describes Δ<i>T</i>. Δ<i>H</i> is the enthalpy change of the system."}]});
+
+/* Part C: exothermic calorimetry */
+add({id:"q31",num:"3.1",sec:3,type:"num",max:1,text:"What mass of solution is heated, <i>m</i>?",unit:"g",ans:100,tol:0.5,
+ explain:"100.0 cm³ of solution is treated as 100.0 g of water (density 1.00 g cm⁻³), so <i>m</i> = 100.0 g.",
+ generic:"Treat the solution as water with a density of 1.00 g cm⁻³, so 1 cm³ has a mass of 1 g. Use the volume of the copper(II) sulfate solution."});
+add({id:"q32",num:"3.2",sec:3,type:"num",max:1,text:"Calculate the temperature change of the solution, Δ<i>T</i>, using the maximum temperature.",unit:"°C",ans:9.5,tol:0.05,
+ explain:"Δ<i>T</i> = final − initial = 30.5 − 21.0 = +9.5 °C.",
+ hint:function(v){if(Math.abs(v-30.5)<0.1){return "30.5 °C is the final temperature. The change is final minus initial.";}if(Math.abs(v+9.5)<0.06){return "Δ<i>T</i> is final minus initial, so a rise in temperature is positive.";}return null;},
+ generic:"Δ<i>T</i> = final temperature − initial temperature."});
+add({id:"q33",num:"3.3",sec:3,type:"num",max:1,text:"Calculate the energy gained by the solution, <i>q</i> = <i>mc</i>Δ<i>T</i>. Choose the unit.",units:UNITS_J,fillu:"J",fillv:3971,ans:3971,tol:40,
+ explain:"<i>q</i> = 100.0 × 4.18 × 9.5 = 3971 J (3.97 kJ).",
+ hint:function(v,u,b){if(u==="J"&&Math.abs(v-3.971)<0.05){return "That value is in kJ. You have chosen J. Change the unit or multiply by 1000.";}if(u==="kJ"&&Math.abs(v-3971)<40){return "That value is in J. You have chosen kJ.";}return "<i>q</i> = <i>m</i> × <i>c</i> × Δ<i>T</i> = 100.0 × 4.18 × 9.5. Use the mass of solution and the temperature change from the last two questions.";},
+ generic:"<i>q</i> = <i>m</i> × <i>c</i> × Δ<i>T</i>."});
+add({id:"q34",num:"3.4",sec:3,type:"num",max:1,text:"Calculate the amount of copper(II) sulfate in the 100.0 cm³ of 0.200 mol dm<sup>−3</sup> solution.",unit:"mol",ans:0.02,tol:0.0002,
+ explain:"<i>n</i> = <i>c</i> × <i>V</i> = 0.200 mol dm⁻³ × 0.1000 dm³ = 0.0200 mol.",
+ hint:function(v){if(v>1){return "The volume has to be in dm³ for a concentration in mol dm⁻³: 100.0 cm³ = 0.1000 dm³.";}return null;},
+ generic:"<i>n</i> = concentration × volume in dm³."});
+add({id:"q35",num:"3.5",sec:3,type:"num",max:1,text:"Calculate the amount of zinc in 2.00 g. (<i>A</i><sub>r</sub> = 65.4)",unit:"mol",ans:0.0306,tol:0.0003,
+ explain:"<i>n</i>(Zn) = 2.00 g ÷ 65.4 g mol⁻¹ = 0.0306 mol.",
+ generic:"<i>n</i> = mass ÷ molar mass = 2.00 ÷ 65.4."});
+add({id:"q36",num:"3.6",sec:3,type:"mc",max:1,text:"Which is the limiting reactant? The reaction is 1 : 1.",
+ options:[
+  {t:"Copper(II) sulfate (0.0200 mol is less than 0.0306 mol)",ok:true,why:"Copper(II) sulfate is used up first, so it sets the amount of reaction. Zinc is in excess."},
+  {t:"Zinc (0.0306 mol is more than 0.0200 mol)",ok:false,why:"The reactant with the smaller amount of substance (in a 1 : 1 reaction) runs out first. That is copper(II) sulfate, and zinc is in excess."},
+  {t:"Neither: both are used up completely",ok:false,why:"The amounts are different (0.0200 mol and 0.0306 mol) in a 1 : 1 reaction, so one is left over."}]});
+add({id:"q37",num:"3.7",sec:3,type:"num",max:1,text:"Calculate Δ<i>H</i> for the reaction, per mole of the limiting reactant, using the maximum temperature. Include the sign.",unit:"kJ mol<sup>−1</sup>",ans:-198.6,tol:3,
+ explain:"The solution warmed, so the system released energy: Δ<i>H</i> is negative. Δ<i>H</i> = −3.971 kJ ÷ 0.0200 mol = −198.6 kJ mol⁻¹ (about −199).",
+ hint:function(v){
+  if(Math.abs(v-198.6)<3){return "The size is right but the sign is not. The solution (the surroundings) warmed up, so the system released energy and Δ<i>H</i> is negative.";}
+  if(Math.abs(Math.abs(v)-129.8)<3){return "You divided by the amount of zinc. Divide by the amount of the limiting reactant, copper(II) sulfate.";}
+  if(Math.abs(Math.abs(v)-198600)<3000){return "Convert from J to kJ: divide by 1000.";}return null;},
+ generic:"Δ<i>H</i> = −<i>q</i> ÷ <i>n</i>, with <i>q</i> in kJ and <i>n</i> the amount of the limiting reactant."});
+add({id:"q38",num:"3.8",sec:3,type:"multi",max:1,text:"The measured value is smaller in size than the published −218 kJ mol<sup>−1</sup>. Tick <b>all</b> the explanations that fit.",
+ options:[
+  {t:"Some energy was lost from the cup to the air while the temperature was still rising.",ok:true},
+  {t:"The cup, thermometer and stirrer absorbed some of the energy.",ok:true},
+  {t:"Zinc was in excess, which makes Δ<i>H</i> larger in size.",ok:false,why:"Excess zinc makes sure all the copper(II) ions react. Δ<i>H</i> per mole is set by the limiting reactant, so excess zinc does not change it."},
+  {t:"The temperatures were measured in °C rather than kelvin.",ok:false,why:"A temperature change has the same size in °C and in K."},
+  {t:"Energy from the surroundings flowed into the reacting mixture.",ok:false,why:"The mixture was warmer than the room (up to 30.5 °C against 21.0 °C), so energy flowed out of it, not in."}],
+ explain:"Heat lost to the air and heat absorbed by the cup and thermometer both make the highest temperature reading too low, so Δ<i>T</i> is too small and the measured Δ<i>H</i> is smaller in size than the published value."});
+add({id:"q39",num:"3.9",sec:3,type:"num",max:1,text:"Extending the cooling line back to the time of mixing gives 31.4 °C. Use this temperature to recalculate Δ<i>H</i>.",unit:"kJ mol<sup>−1</sup>",ans:-217.4,tol:3,
+ explain:"Δ<i>T</i> = 31.4 − 21.0 = 10.4 °C. <i>q</i> = 100.0 × 4.18 × 10.4 = 4347 J. Δ<i>H</i> = −4.347 kJ ÷ 0.0200 mol = −217 kJ mol⁻¹, close to the published −218 kJ mol⁻¹. The correction for heat loss removes most of the difference.",
+ hint:function(v){if(Math.abs(v+198.6)<3){return "That is the answer from the maximum temperature. Use 31.4 °C for the final temperature.";}if(v>0){return "The solution warmed, so Δ<i>H</i> is negative.";}return null;},
+ generic:"Δ<i>T</i> = 31.4 − 21.0. Then <i>q</i> = <i>mc</i>Δ<i>T</i>, and Δ<i>H</i> = −<i>q</i> ÷ <i>n</i> (limiting reactant)."});
+
+/* Part D: endothermic calorimetry */
+add({id:"q41",num:"4.1",sec:4,type:"num",max:1,text:"Calculate the temperature change of the water, Δ<i>T</i>, using the lowest temperature. Include the sign.",unit:"°C",ans:-5,tol:0.05,
+ explain:"Δ<i>T</i> = final − initial = 17.0 − 22.0 = −5.0 °C. The surroundings cooled.",
+ hint:function(v){if(Math.abs(v-5)<0.06){return "The size is right but the water got colder, so Δ<i>T</i> is negative (final minus initial).";}return null;},
+ generic:"Δ<i>T</i> = final temperature − initial temperature."});
+add({id:"q42",num:"4.2",sec:4,type:"num",max:1,text:"Calculate the size of the energy transferred out of the water, |<i>mc</i>Δ<i>T</i>|. Choose the unit.",units:UNITS_J,fillu:"J",fillv:1045,ans:1045,tol:10,
+ explain:"|<i>q</i>| = 50.0 × 4.18 × 5.0 = 1045 J (1.045 kJ). The water (the surroundings) lost this energy and the dissolving ammonium nitrate (the system) gained it.",
+ hint:function(v,u){if(u==="J"&&Math.abs(v-1.045)<0.02){return "That value is in kJ. You have chosen J.";}if(u==="kJ"&&Math.abs(v-1045)<10){return "That value is in J. You have chosen kJ.";}return null;},
+ generic:"|<i>q</i>| = <i>m</i> × <i>c</i> × |Δ<i>T</i>| = 50.0 × 4.18 × 5.0."});
+add({id:"q43",num:"4.3",sec:4,type:"num",max:1,text:"Calculate the amount of ammonium nitrate in 4.00 g. (<i>M</i><sub>r</sub> = 80.0)",unit:"mol",ans:0.05,tol:0.0003,
+ explain:"<i>n</i> = 4.00 g ÷ 80.0 g mol⁻¹ = 0.0500 mol.",generic:"<i>n</i> = mass ÷ molar mass = 4.00 ÷ 80.0."});
+add({id:"q44",num:"4.4",sec:4,type:"num",max:1,text:"Calculate Δ<i>H</i> for dissolving, per mole of ammonium nitrate, using the lowest temperature. Include the sign.",unit:"kJ mol<sup>−1</sup>",ans:20.9,tol:0.5,
+ explain:"The water cooled, so the system absorbed energy: Δ<i>H</i> is positive. Δ<i>H</i> = +1.045 kJ ÷ 0.0500 mol = +20.9 kJ mol⁻¹.",
+ hint:function(v){if(Math.abs(v+20.9)<0.6){return "The size is right but the sign is not. The water (the surroundings) cooled, so the system absorbed energy and Δ<i>H</i> is positive.";}if(Math.abs(v-20900)<600){return "Convert from J to kJ: divide by 1000.";}return null;},
+ generic:"Δ<i>H</i> = +(energy lost by the water in kJ) ÷ <i>n</i>."});
+add({id:"q45",num:"4.5",sec:4,type:"mc",max:1,text:"Which enthalpy level diagram matches this result?",
+ options:[
+  {spec:{w:200,h:130,top:14,bot:34,min:0,max:100,fz:12,bars:[{x1:.12,x2:.4,v:25,label:"Reactants"},{x1:.6,x2:.88,v:75,label:"Products"}],arrow:{x:.5}},t:"Diagram A",ok:true,why:"Diagram A: the products are higher than the reactants. The system absorbed energy and Δ<i>H</i> is positive."},
+  {spec:{w:200,h:130,top:14,bot:34,min:0,max:100,fz:12,bars:[{x1:.12,x2:.4,v:75,label:"Reactants"},{x1:.6,x2:.88,v:25,label:"Products"}],arrow:{x:.5}},t:"Diagram B",ok:false,why:"Diagram B shows a drop, which is an exothermic change with a negative Δ<i>H</i>. The water cooled, so the system absorbed energy."},
+  {spec:{w:200,h:130,top:14,bot:34,min:0,max:100,fz:12,bars:[{x1:.12,x2:.4,v:50,label:"Reactants"},{x1:.6,x2:.88,v:50,label:"Products"}]},t:"Diagram C",ok:false,why:"Diagram C has no change in enthalpy, but the temperature of the water fell by 5.0 °C, so energy was transferred."}]});
+add({id:"q46",num:"4.6",sec:4,type:"mc",max:1,text:"Which statement explains why Δ<i>H</i> is positive?",
+ options:[
+  {t:"The water (the surroundings) cooled, so energy passed from the surroundings into the system, and the enthalpy of the system rose.",ok:true,why:"The thermometer read the surroundings. They cooled because they supplied energy to the dissolving ammonium nitrate (the system), whose enthalpy increased."},
+  {t:"The water cooled, so the system lost energy to it.",ok:false,why:"If the system lost energy to the water, the water would warm up. It cooled, so energy went the other way."},
+  {t:"The water cooled, so the enthalpy of the system fell.",ok:false,why:"The temperature that fell belongs to the surroundings. The enthalpy of the system rose as it gained energy."},
+  {t:"The mass of ammonium nitrate was small, so the sign is positive.",ok:false,why:"The sign of Δ<i>H</i> depends on the direction of energy flow, not on the amount of substance."}]});
+add({id:"q47",num:"4.7",sec:4,type:"multi",max:1,text:"The measured value (+20.9 kJ mol<sup>−1</sup>) is smaller in size than the published +25.7 kJ mol<sup>−1</sup>. Tick <b>all</b> the explanations that fit.",
+ options:[
+  {t:"Energy flowed from the warmer room into the cold solution through the cup, so the temperature fell by less than it should have.",ok:true},
+  {t:"The cup, thermometer and stirrer, at room temperature, gave some energy to the water.",ok:true},
+  {t:"The water lost energy to the air.",ok:false,why:"The solution was colder than the room, so energy flowed into it from the air, not out."},
+  {t:"The ammonium nitrate released energy as it dissolved.",ok:false,why:"Dissolving ammonium nitrate absorbs energy. That is why the water cooled."},
+  {t:"Δ<i>T</i> should have been measured in kelvin.",ok:false,why:"A temperature change has the same size in °C and in K."}],
+ explain:"Here the surroundings are warmer than the solution, so heat leaks in. That makes the lowest temperature reading too high, Δ<i>T</i> too small, and the measured Δ<i>H</i> smaller in size than the published value."});
+add({id:"q48",num:"4.8",sec:4,type:"num",max:1,text:"Extending the warming line back to the time of mixing gives 16.0 °C. Use this temperature to recalculate Δ<i>H</i>.",unit:"kJ mol<sup>−1</sup>",ans:25.1,tol:0.5,
+ explain:"|Δ<i>T</i>| = 22.0 − 16.0 = 6.0 °C. |<i>q</i>| = 50.0 × 4.18 × 6.0 = 1254 J. Δ<i>H</i> = +1.254 kJ ÷ 0.0500 mol = +25.1 kJ mol⁻¹, close to the published +25.7 kJ mol⁻¹.",
+ hint:function(v){if(Math.abs(v-20.9)<0.6){return "That is the answer from the lowest temperature reading. Use 16.0 °C for the final temperature.";}if(v<0){return "The water cooled, so Δ<i>H</i> is positive.";}return null;},
+ generic:"Δ<i>T</i> = 16.0 − 22.0 = −6.0 °C. Then |<i>q</i>| = <i>mc</i>|Δ<i>T</i>|, and Δ<i>H</i> = +|<i>q</i>| ÷ <i>n</i>."});
+
+/* Scale up */
+add({id:"q51",num:"5.1",sec:5,type:"num",max:1,text:"How much energy does the cold pack absorb when all 80.0 g of ammonium nitrate dissolves? (<i>M</i><sub>r</sub> = 80.0)",unit:"kJ",ans:25.7,tol:0.3,
+ explain:"<i>n</i> = 80.0 ÷ 80.0 = 1.00 mol, so the energy absorbed is 1.00 × 25.7 = 25.7 kJ.",generic:"Work out the amount in moles (mass ÷ molar mass), then multiply by Δ<i>H</i> per mole."});
+add({id:"q52",num:"5.2",sec:5,type:"num",max:1,text:"If all of that energy came from 250 g of water (<i>c</i> = 4.18 J g<sup>−1</sup> °C<sup>−1</sup>), by how many °C would the water cool?",unit:"°C",ans:24.6,tol:0.4,
+ explain:"Δ<i>T</i> = <i>q</i> ÷ (<i>mc</i>) = 25 700 J ÷ (250 × 4.18) = 24.6 °C. A real pack cools less than this, because energy flows in from the room as it cools.",
+ hint:function(v){if(Math.abs(v-0.0246)<0.001){return "Convert kJ to J before dividing: 25.7 kJ = 25 700 J.";}return null;},
+ generic:"Δ<i>T</i> = <i>q</i> ÷ (<i>m</i> × <i>c</i>), with <i>q</i> in J."});
+
+/* ---------- mounting ---------- */
+var items=[];
+function fmt(x){return r1(x);}
+function update(){
+  var tot=0,max=0,fin=0;
+  items.forEach(function(s){tot+=s.best;max+=s.cfg.max;if(s.done){fin++;}});
+  document.getElementById("sb_marks").textContent="Marks: "+fmt(tot)+" / "+max;
+  document.getElementById("sb_done").textContent="Questions finished: "+fin+" of "+items.length;
+  refreshSummary();
+}
+D.forEach(function(cfg){
+  var host=document.querySelector("[data-q=\""+cfg.id+"\"]");if(!host){return;}
+  var st={cfg:cfg,attempts:0,best:0,locked:false,done:false};items.push(st);
+  var box=el("div",{"class":"q",id:"q-"+cfg.id});
+  box.appendChild(el("p",{"class":"qtext"},"<span class=\"qnum\">"+cfg.num+"</span> "+cfg.text+" <span class=\"marks\">["+cfg.max+(cfg.max===1?" mark":" marks")+"]</span>"));
+  var body=el("div",{"class":"qbody"});box.appendChild(body);
+  var T=TYPES[cfg.type](cfg,body);st.T=T;
+  var ctl=el("div",{"class":"qctl"}),bC=el("button",{type:"button"},"Check"),bS=el("button",{type:"button"},"Show answer"),badge=el("span",{"class":"badge"},"0 / "+cfg.max);
+  bS.disabled=true;ctl.appendChild(bC);ctl.appendChild(bS);ctl.appendChild(badge);box.appendChild(ctl);
+  var fb=el("div",{"class":"fb","aria-live":"polite"});box.appendChild(fb);host.appendChild(box);
+  st.fb=fb;st.badge=badge;st.bC=bC;st.bS=bS;
+  bC.addEventListener("click",function(){
+    if(st.locked){return;}
+    var r=T.check();
+    if(r===null){fb.className="fb no";fb.textContent="Choose or enter an answer first.";return;}
+    st.attempts++;
+    var sc=cfg.max*r.frac*(st.attempts===1?1:0.5);
+    if(sc>st.best){st.best=sc;}
+    badge.textContent=fmt(st.best)+" / "+cfg.max;
+    fb.className="fb "+(r.frac===1?"ok":(r.frac>0?"part":"no"));
+    fb.innerHTML=(r.frac===1?"✓ Correct. ":(r.frac>0?"◐ Part right. ":"✗ Not yet. "))+r.msg;
+    if(r.frac===1){st.locked=true;st.done=true;T.lock();bC.disabled=true;bS.disabled=true;}else{bS.disabled=false;}
+    update();autosave();
+  });
+  bS.addEventListener("click",function(){
+    if(st.locked){return;}
+    st.locked=true;st.done=true;var m=T.reveal();T.lock();
+    fb.className="fb rev";fb.innerHTML="Answer. "+m;
+    bC.disabled=true;bS.disabled=true;update();autosave();
+  });
+});
+update();
+
+/* ---------- explorer ---------- */
+var XS={
+ exo:{start:21.0,end:30.5,dH:-218,title:"Exothermic",
+  text:"The system (zinc and copper(II) sulfate reacting) releases energy. The surroundings gain it, so the thermometer rises from 21.0 °C to 30.5 °C. On the diagram the products sit below the reactants: a drop, so Δ<i>H</i> is negative."},
+ endo:{start:22.0,end:17.0,dH:25.7,title:"Endothermic",
+  text:"The system (ammonium nitrate dissolving) absorbs energy. The surroundings supply it, so the thermometer falls from 22.0 °C to 17.0 °C. On the diagram the products sit above the reactants: a rise, so Δ<i>H</i> is positive."}
+};
+function drawScene(k){
+  var s=XS[k],svg=document.getElementById("x_scene"),id="sa"+(++svgid),exo=(k==="exo");
+  svg.setAttribute("viewBox","0 0 400 250");
+  function Ty(t){return 214-(t-10)/30*170;}
+  var o="<defs><marker id=\""+id+"\" markerWidth=\"8\" markerHeight=\"8\" refX=\"4\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 z\" fill=\"#111\"/></marker></defs>";
+  o+="<rect x=\"8\" y=\"8\" width=\"250\" height=\"234\" rx=\"8\" fill=\"#fff\" stroke=\"#111\" stroke-dasharray=\"6 4\"/>";
+  o+="<text x=\"133\" y=\"30\" font-size=\"15\" text-anchor=\"middle\">SURROUNDINGS</text><text x=\"133\" y=\"48\" font-size=\"12\" text-anchor=\"middle\">water, cup, thermometer, air</text>";
+  o+="<rect x=\"68\" y=\"92\" width=\"130\" height=\"84\" rx=\"6\" fill=\"#e6e6e6\" stroke=\"#111\" stroke-width=\"2\"/>";
+  o+="<text x=\"133\" y=\"128\" font-size=\"15\" text-anchor=\"middle\">SYSTEM</text><text x=\"133\" y=\"146\" font-size=\"12\" text-anchor=\"middle\">"+(exo?"reacting chemicals":"dissolving solid")+"</text>";
+  if(exo){o+="<line x1=\"68\" y1=\"134\" x2=\"22\" y2=\"134\" stroke=\"#111\" stroke-width=\"2\" marker-end=\"url(#"+id+")\"/><line x1=\"198\" y1=\"134\" x2=\"244\" y2=\"134\" stroke=\"#111\" stroke-width=\"2\" marker-end=\"url(#"+id+")\"/>";}
+  else{o+="<line x1=\"22\" y1=\"134\" x2=\"66\" y2=\"134\" stroke=\"#111\" stroke-width=\"2\" marker-end=\"url(#"+id+")\"/><line x1=\"244\" y1=\"134\" x2=\"200\" y2=\"134\" stroke=\"#111\" stroke-width=\"2\" marker-end=\"url(#"+id+")\"/>";}
+  o+="<text x=\"133\" y=\"206\" font-size=\"13\" text-anchor=\"middle\">energy flows "+(exo?"out of":"into")+" the system</text>";
+  /* thermometer */
+  o+="<rect x=\"296\" y=\"40\" width=\"18\" height=\"176\" rx=\"9\" fill=\"#fff\" stroke=\"#111\"/><circle cx=\"305\" cy=\"222\" r=\"15\" fill=\"#111\"/>";
+  o+="<rect x=\"300\" y=\""+Ty(s.end)+"\" width=\"10\" height=\""+(222-Ty(s.end))+"\" fill=\"#111\"/>";
+  o+="<line x1=\"288\" y1=\""+Ty(s.start)+"\" x2=\"322\" y2=\""+Ty(s.start)+"\" stroke=\"#666\" stroke-dasharray=\"3 2\"/>";
+  o+="<text x=\"324\" y=\""+(Ty(s.start)+4)+"\" font-size=\"12\" text-anchor=\"start\">"+s.start.toFixed(1)+" °C</text>";
+  o+="<text x=\"324\" y=\""+(exo?Ty(s.end)+4:Ty(s.end)+4)+"\" font-size=\"12\" text-anchor=\"start\" font-weight=\"bold\">"+s.end.toFixed(1)+" °C</text>";
+  svg.innerHTML=o;
+}
+function drawDiag(k){
+  var s=XS[k],svg=document.getElementById("x_diag"),exo=(k==="exo");
+  levels(svg,{w:360,h:250,top:30,bot:46,min:exo?-260:-10,max:exo?40:40,fz:14,
+   bars:[{x1:.14,x2:.4,v:0,label:"Reactants"},{x1:.6,x2:.86,v:s.dH,label:"Products"}],
+   arrow:{x:.5,text:"ΔH "+(exo?"negative":"positive")}});
+}
+function showX(k){
+  document.getElementById("x_exo").classList.toggle("on",k==="exo");document.getElementById("x_endo").classList.toggle("on",k==="endo");
+  drawScene(k);drawDiag(k);document.getElementById("x_text").innerHTML="<b>"+XS[k].title+".</b> "+XS[k].text+" (Not to scale. Published values: Δ<i>H</i> = "+sg(XS[k].dH,k==="exo"?0:1)+" kJ mol<sup>−1</sup>.)";
+}
+document.getElementById("x_exo").addEventListener("click",function(){showX("exo");});
+document.getElementById("x_endo").addEventListener("click",function(){showX("endo");});
+showX("exo");
+
+/* ---------- cheat sheet figures ---------- */
+Array.prototype.forEach.call(document.querySelectorAll("svg.cfig"),function(s){
+  var exo=s.getAttribute("data-k")==="exo";
+  levels(s,{w:260,h:150,top:12,bot:34,min:0,max:100,fz:12,bars:[{x1:.08,x2:.36,v:exo?75:25,label:"Reactants"},{x1:.64,x2:.92,v:exo?25:75,label:"Products"}],arrow:{x:.5,text:"ΔH "+(exo?"negative":"positive")}});
+});
+
+/* ---------- reflections ---------- */
+var CONF=["","Lost","Unsure","Getting there","Confident","Could teach it"];
+var RF=[
+ {id:"r0",label:"Start",title:"Reflection: before you start",prompt:"Write a sentence or two: what do you already know about energy changes in reactions, and what do you expect to find challenging?"},
+ {id:"rA",label:"After Part A",title:"Reflection: Part A",prompt:"Write two or three sentences in your own words: what an enthalpy level diagram shows, and how you decide whether the products bar goes above or below the reactants bar. Name the question in Part A that taught you the most."},
+ {id:"rB",label:"After Part B",title:"Reflection: Part B",prompt:"Explain in your own words why the thermometer rises when ΔH is negative. Then say whether the system or the surroundings is the idea you are less sure of, and what you will do about it."},
+ {id:"rC",label:"After Part C",title:"Reflection: Part C",prompt:"Describe the first step of the calorimetry calculation where you went wrong or hesitated, and what the hint or the answer taught you. Complete the sentence: “Next time I will check …”"},
+ {id:"rD",label:"After Part D",title:"Reflection: Part D",prompt:"Say how endothermic calorimetry is the same as exothermic calorimetry and what changes (think about the signs and the direction of energy flow). Which part of Part D feels more secure than it did in Part C?"},
+ {id:"rE",label:"End",title:"Reflection: looking back",prompt:"Compare your confidence now with your first rating. What changed it? Which idea could you now explain to a classmate, and which one do you still need to practise before the next lesson?"}
+];
+var refl={},saveTimer=null;
+function schedSave(){clearTimeout(saveTimer);saveTimer=setTimeout(function(){autosave();},500);}
+function grow(ta){ta.style.height="auto";ta.style.height=Math.max(96,ta.scrollHeight+4)+"px";}
+function setConf(id,v){
+  var r=refl[id];r.c=v;
+  Array.prototype.forEach.call(r.box.querySelectorAll(".cbtn"),function(b){var on=(+b.getAttribute("data-v")===v);b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");});
+  r.rate.textContent=v?("Confidence: "+v+" of 5 ("+CONF[v]+")"):"Confidence: not rated";
+}
+function setText(id,txt){var r=refl[id];r.t=txt;r.ta.value=txt;r.pr.textContent=txt||"(nothing written)";grow(r.ta);}
+RF.forEach(function(rf){
+  var host=document.querySelector("[data-r=\""+rf.id+"\"]");if(!host){return;}
+  var box=el("div",{"class":"refl"});
+  var btns="";for(var i=1;i<=5;i++){btns+="<button type=\"button\" class=\"cbtn\" data-v=\""+i+"\" aria-pressed=\"false\"><b>"+i+"</b><small>"+CONF[i]+"</small></button>";}
+  box.innerHTML="<p class=\"rtitle sans\">"+rf.title+" <span class=\"marks\">[not marked]</span></p><p class=\"rprompt\">"+rf.prompt+"</p><p class=\"rq\">How confident are you now? 1 is lost, 5 is could teach it.</p><div class=\"scale\" role=\"group\" aria-label=\"Confidence from 1 to 5\">"+btns+"</div><p class=\"ratep\"></p><label class=\"rlab\" for=\"ta-"+rf.id+"\">Write in your own words</label><textarea id=\"ta-"+rf.id+"\" rows=\"4\"></textarea><div class=\"reflprint\"></div>";
+  host.appendChild(box);
+  refl[rf.id]={c:0,t:"",rf:rf,box:box,ta:box.querySelector("textarea"),pr:box.querySelector(".reflprint"),rate:box.querySelector(".ratep")};
+  setConf(rf.id,0);setText(rf.id,"");
+  Array.prototype.forEach.call(box.querySelectorAll(".cbtn"),function(b){b.addEventListener("click",function(){setConf(rf.id,+b.getAttribute("data-v"));refreshSummary();schedSave();});});
+  refl[rf.id].ta.addEventListener("input",function(){var r=refl[rf.id];r.t=r.ta.value;r.pr.textContent=r.t||"(nothing written)";grow(r.ta);refreshSummary();schedSave();});
+});
+
+/* ---------- summary, progress, pdf ---------- */
+function totals(){var per={},mx={},tot=0,max=0;items.forEach(function(s){var k=s.cfg.sec;per[k]=(per[k]||0)+s.best;mx[k]=(mx[k]||0)+s.cfg.max;tot+=s.best;max+=s.cfg.max;});return{per:per,mx:mx,tot:tot,max:max};}
+function refreshSummary(){
+  var T=totals(),i,h="<table><tr><th>Section</th><th class=\"n\">Marks</th></tr>";
+  for(i=1;i<SEC.length;i++){h+="<tr><td>"+SEC[i]+"</td><td class=\"n\">"+fmt(T.per[i]||0)+" / "+(T.mx[i]||0)+"</td></tr>";}
+  h+="<tr class=\"tot\"><td>Total</td><td class=\"n\">"+fmt(T.tot)+" / "+T.max+"</td></tr></table>";
+  var un=items.filter(function(s){return !s.done;}).map(function(s){return s.cfg.num;});
+  if(un.length){h+="<p style=\"margin:4px 0 0;font-size:15px\">Not yet finished: "+un.join(", ")+"</p>";}
+  document.getElementById("r_summary").innerHTML=h;
+  if(!RF||!refl){return;}
+  var ch="<table><tr><th>Confidence over time</th><th class=\"n\">Rating</th></tr>",written=0;
+  RF.forEach(function(rf){var r=refl[rf.id];if(!r){return;}if(r.c||r.t.trim()){written++;}
+    var sq="";for(var k=1;k<=5;k++){sq+=(k<=r.c?"■":"□");}
+    ch+="<tr><td>"+rf.label+"</td><td class=\"n\">"+(r.c?sq+" "+r.c+" / 5":"not rated")+"</td></tr>";});
+  ch+="</table><p style=\"margin:4px 0 0;font-size:15px\">Reflections written: "+written+" of "+RF.length+"</p>";
+  document.getElementById("r_conf").innerHTML=ch;
+  var nm=nameEl.value.trim()||"(name not entered)";
+  document.getElementById("printmeta").innerHTML="<b>Name:</b> "+nm.replace(/</g,"&lt;")+" &nbsp; <b>Date:</b> "+new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"})+" &nbsp; <b>Marks:</b> "+fmt(T.tot)+" / "+T.max;
+}
+function say(m){document.getElementById("sb_msg").textContent=m;document.getElementById("r_msg").textContent=m;}
+nameEl.addEventListener("input",refreshSummary);
+function snapshot(){var o={v:1,name:nameEl.value,t:new Date().toISOString(),items:{},refl:{}};RF.forEach(function(rf){var r=refl[rf.id];if(r){o.refl[rf.id]={c:r.c,t:r.t};}});items.forEach(function(s){o.items[s.cfg.id]={a:s.attempts,b:s.best,l:s.locked,d:s.done,v:s.T.get(),fb:s.fb.innerHTML,fc:s.fb.className};});return o;}
+function applySnap(o){
+  if(!o||o.v!==1||!o.items){throw new Error("not a progress file");}
+  nameEl.value=o.name||"";
+  if(o.refl){RF.forEach(function(rf){var x=o.refl[rf.id];if(x&&refl[rf.id]){setConf(rf.id,x.c||0);setText(rf.id,x.t||"");}});}
+  items.forEach(function(s){
+    var x=o.items[s.cfg.id];if(!x){return;}
+    s.attempts=x.a;s.best=x.b;s.locked=x.l;s.done=x.d;
+    s.T.set(x.v,x.a>0);
+    s.badge.textContent=fmt(s.best)+" / "+s.cfg.max;
+    s.fb.className=x.fc||"fb";s.fb.innerHTML=x.fb||"";
+    if(s.locked){s.T.lock();s.bC.disabled=true;s.bS.disabled=true;}
+    else if(s.attempts>0){s.bS.disabled=false;}
+  });
+  update();
+}
+function lsSave(){try{localStorage.setItem(KEY,JSON.stringify(snapshot()));return true;}catch(e){return false;}}
+function autosave(){if(!pending){lsSave();}}
+function slug(s){return (s||"student").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"student";}
+function saveProgress(){
+  pending=false;document.getElementById("restore").hidden=true;
+  var snap=snapshot(),ok=lsSave(),dl=false;
+  try{
+    var blob=new Blob([JSON.stringify(snap)],{type:"application/json"}),a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);a.download="progress_"+slug(nameEl.value)+".json";document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},800);dl=true;
+  }catch(e){dl=false;}
+  say(ok&&dl?"Progress saved in this browser and downloaded as a file.":(ok?"Progress saved in this browser. The file download was blocked here.":(dl?"Progress downloaded as a file. This browser would not keep a copy, so keep the file.":"Progress could not be saved here. Save as .pdf to keep a record of your work.")));
+}
+function doPdf(){
+  var nm=nameEl.value.trim();
+  if(!nm){say("Type your name in the box under “My submission on Canvas”, then press Save as .pdf again.");nameEl.scrollIntoView({block:"center"});nameEl.focus();return;}
+  refreshSummary();say("");
+  var old=document.title;document.title="Enthalpy diagrams and calorimetry - "+nm;
+  var back=function(){document.title=old;window.removeEventListener("afterprint",back);};
+  window.addEventListener("afterprint",back);
+  window.print();
+}
+window.addEventListener("beforeprint",refreshSummary);
+["sb_save","r_save"].forEach(function(id){document.getElementById(id).addEventListener("click",saveProgress);});
+["sb_pdf","r_pdf"].forEach(function(id){document.getElementById(id).addEventListener("click",doPdf);});
+document.getElementById("load_file").addEventListener("change",function(e){
+  var f=e.target.files[0];if(!f){return;}
+  var r=new FileReader();
+  r.onload=function(){try{applySnap(JSON.parse(r.result));pending=false;document.getElementById("restore").hidden=true;say("Progress file opened.");}catch(err){say("That file is not a progress file from this page.");}};
+  r.readAsText(f);
+});
+(function(){
+  var raw=null;try{raw=localStorage.getItem(KEY);}catch(e){raw=null;}
+  if(!raw){return;}
+  var o;try{o=JSON.parse(raw);}catch(e){return;}
+  var any=o&&o.items&&(Object.keys(o.items).some(function(k){return o.items[k].a>0;})||(o.refl&&Object.keys(o.refl).some(function(k){return o.refl[k].c>0||(o.refl[k].t||"").trim();})));
+  if(!any){return;}
+  pending=true;
+  var when="";try{when=new Date(o.t).toLocaleString("en-GB",{weekday:"long",day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"});}catch(e){}
+  document.getElementById("restore_txt").textContent="Saved work found"+(o.name?" for "+o.name:"")+(when?" ("+when+")":"")+".";
+  document.getElementById("restore").hidden=false;
+  document.getElementById("restore_yes").addEventListener("click",function(){try{applySnap(o);}catch(e){say("The saved work could not be restored.");}pending=false;document.getElementById("restore").hidden=true;say("Saved work restored.");});
+  document.getElementById("restore_no").addEventListener("click",function(){try{localStorage.removeItem(KEY);}catch(e){}pending=false;document.getElementById("restore").hidden=true;});
+})();
+refreshSummary();
+window.__selfmark={items:items};
+})();
+</script>
+</body>
+</html>
