@@ -239,14 +239,14 @@ input[type=range]{width:min(420px,100%);height:28px}
 <li><i>v</i> = volume of solution in cm<sup>3</sup>.</li>
 <li>Δ<i>T</i> = how far the temperature moved: the difference between the starting temperature and the highest (or lowest) temperature, in °C. Subtract the smaller from the larger.</li>
 <li><i>q</i> = <i>v</i> × <i>c</i> × Δ<i>T</i>, with <i>c</i> = 4.18 J cm<sup>−3</sup> °C<sup>−1</sup>. The answer is in J. Divide by 1000 for kJ.</li>
-<li>Amount of substance: <i>n</i> = concentration × volume in dm<sup>3</sup> (dm<sup>3</sup> = cm<sup>3</sup> ÷ 1000), or <i>n</i> = mass ÷ molar mass.</li>
+<li><b>Learn:</b> how to find the number of moles in a solution of known concentration when you know its volume in cm<sup>3</sup>.<br><b><i>n</i> = concentration × volume ÷ 1000</b><br>Concentration in mol dm<sup>−3</sup> (mol/litre) and volume in cm<sup>3</sup> give <i>n</i> in mol. The ÷ 1000 changes cm<sup>3</sup> into dm<sup>3</sup> for you. For a solid, use <i>n</i> = mass ÷ molar mass.</li>
 <li>Limiting reactant: in a 1 : 1 reaction it is the one with the smaller <i>n</i>. Use its <i>n</i> in the next step.</li>
 <li>Δ<i>H</i> = <i>q</i> (in kJ) ÷ <i>n</i>, in kJ mol<sup>−1</sup>.</li>
 <li>Last, the sign. <b>Learn:</b> temperature <b>rise</b> → <b>exothermic</b> → Δ<i>H</i> <b>negative</b>. Temperature <b>fall</b> → <b>endothermic</b> → Δ<i>H</i> <b>positive</b>.</li>
 </ol>
 <p class="eg"><b>Worked example (different numbers).</b> 80.0 cm<sup>3</sup> of solution warms from 18.0 °C to 24.5 °C when 0.0150 mol of a solid reacts. Δ<i>T</i> = 24.5 − 18.0 = 6.5 °C. <i>q</i> = 80.0 × 4.18 × 6.5 = 2174 J = 2.17 kJ. Δ<i>H</i> = 2.17 ÷ 0.0150 = 145 kJ mol<sup>−1</sup>. The temperature rose, so the reaction is exothermic: Δ<i>H</i> = <b>−145 kJ mol<sup>−1</sup></b>.</p>
 <p><b>Why the measured size is too small:</b> energy is lost to the air and absorbed by the cup and thermometer, so the highest reading is too low. Plotting temperature against time and <span class="term" data-def="Extending a line beyond the measured points to estimate a value. Extending the cooling (or warming) line back to the time of mixing gives the temperature the mixture would have reached with no heat exchange with the room. (see the definitions at the end)">extending the cooling line back</span> to the time of mixing gives a larger, better Δ<i>T</i>.</p>
-<p><b>Common slips:</b> using cm<sup>3</sup> instead of dm<sup>3</sup> in <i>n</i> = <i>cV</i>; dividing by the amount of the reactant in excess; forgetting to change J to kJ; forgetting to put the sign on Δ<i>H</i> at the end.</p>
+<p><b>Common slips:</b> forgetting the ÷ 1000 in <i>n</i> = concentration × volume ÷ 1000; dividing by the amount of the reactant in excess; forgetting to change J to kJ; forgetting to put the sign on Δ<i>H</i> at the end.</p>
 </details>
 
 <p>Zinc powder is added to copper(II) sulfate solution in a polystyrene cup with a lid. Zn(s) + CuSO<sub>4</sub>(aq) → ZnSO<sub>4</sub>(aq) + Cu(s). The solution (the surroundings) is stirred and its temperature recorded. The <span class="term" data-def="The reactant that is used up first. It sets how much reaction takes place, so ΔH per mole is calculated from the amount of this reactant. (see the definitions at the end)">limiting reactant</span> sets the amount of reaction.</p>
@@ -677,9 +677,9 @@ add({id:"q33",num:"3.3",sec:3,type:"num",max:1,text:"Calculate the energy gained
  hint:function(v,u,b){if(u==="J"&&Math.abs(v-3.971)<0.05){return "That value is in kJ. You have chosen J. Change the unit or multiply by 1000.";}if(u==="kJ"&&Math.abs(v-3971)<40){return "That value is in J. You have chosen kJ.";}return "<i>q</i> = <i>v</i> × <i>c</i> × Δ<i>T</i> = 100.0 × 4.18 × 9.5. Use the volume of solution and the temperature change from the last two questions.";},
  generic:"<i>q</i> = <i>v</i> × <i>c</i> × Δ<i>T</i>."});
 add({id:"q34",num:"3.4",sec:3,type:"num",max:1,text:"Calculate the amount of copper(II) sulfate in the 100.0 cm<sup>3</sup> of 0.200 mol dm<sup>−3</sup> solution.",unit:"mol",ans:0.02,tol:0.0002,
- explain:"<i>n</i> = <i>c</i> × <i>V</i> = 0.200 mol dm⁻³ × 0.1000 dm³ = 0.0200 mol.",
- hint:function(v){if(v>1){return "The volume has to be in dm³ for a concentration in mol dm⁻³: 100.0 cm³ = 0.1000 dm³.";}return null;},
- generic:"<i>n</i> = concentration × volume in dm³."});
+ explain:"<i>n</i> = concentration × volume ÷ 1000 = 0.200 × 100.0 ÷ 1000 = 0.0200 mol.",
+ hint:function(v){if(v>1){return "Divide by 1000 to turn the volume in cm³ into dm³: <i>n</i> = 0.200 × 100.0 ÷ 1000.";}return null;},
+ generic:"<i>n</i> = concentration × volume ÷ 1000, with the volume in cm³."});
 add({id:"q35",num:"3.5",sec:3,type:"num",max:1,text:"Calculate the amount of zinc in 2.00 g. (<i>A</i><sub>r</sub> = 65.4)",unit:"mol",ans:0.0306,tol:0.0003,
  explain:"<i>n</i>(Zn) = 2.00 g ÷ 65.4 g mol⁻¹ = 0.0306 mol.",
  generic:"<i>n</i> = mass ÷ molar mass = 2.00 ÷ 65.4."});
