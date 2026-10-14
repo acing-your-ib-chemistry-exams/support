@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Chemical History of Iron in Germany</title>
+<style>
+  :root {
+    --ink: #1c1c1e;
+    --paper: #faf7f0;
+    --panel: #fff;
+    --rule: #d8cfb8;
+    --accent: #8a3324;
+    --accent-2: #2e5339;
+    --gold: #a9792c;
+    --source: #f3ede0;
+    --fact: #eef3ee;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+  header.title-block {
+    text-align: center;
+    border-bottom: 3px double var(--gold);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  header.title-block h1 {
+    font-size: 2.1rem;
+    margin: 0 0 0.4rem;
+    color: var(--accent);
+    letter-spacing: 0.01em;
+  }
+  header.title-block .subtitle {
+    font-style: italic;
+    color: #555;
+    font-size: 1.05rem;
+  }
+  h2 {
+    color: var(--accent-2);
+    border-left: 6px solid var(--gold);
+    padding-left: 0.7rem;
+    margin-top: 3rem;
+    font-size: 1.4rem;
+  }
+  h3 {
+    color: var(--accent);
+    margin-top: 1.8rem;
+    font-size: 1.15rem;
+  }
+  p { margin: 0.9rem 0; }
+  .place { color: #555; font-size: 0.92em; }
+  figure { margin: 1.5rem 0; text-align: center; }
+  figcaption { font-size: 0.88rem; color: #555; font-style: italic; margin-top: 0.4rem; }
+  .fact, .source, .data {
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    margin: 1.6rem 0;
+    overflow: hidden;
+  }
+  .fact {
+    background: var(--fact);
+    border-left: 5px solid var(--accent-2);
+    padding: 0.9rem 1.2rem;
+  }
+  .fact-head { font-weight: bold; color: var(--accent-2); margin-bottom: 0.3rem; }
+  .source { background: var(--source); }
+  .source-head {
+    background: var(--gold);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  .source-body { padding: 0.9rem 1.2rem; }
+  .source-body .de { font-style: italic; }
+  .source-body .cite { display: block; margin-top: 0.5rem; font-size: 0.85rem; color: #666; }
+  details.tr { margin-top: 0.5rem; }
+  details.tr summary { cursor: pointer; color: var(--accent); font-size: 0.9rem; }
+  details.tr .en { margin-top: 0.4rem; }
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+  table.data-table th, table.data-table td {
+    border: 1px solid var(--rule);
+    padding: 0.45rem 0.7rem;
+    text-align: left;
+  }
+  table.data-table th { background: #efe6d2; }
+  table.data-table caption { caption-side: top; font-weight: bold; text-align: left; padding-bottom: 0.4rem; color: var(--accent-2); }
+  .rxn {
+    font-family: 'Cambria Math', Cambria, serif;
+    background: #fff;
+    border: 1px dashed var(--rule);
+    padding: 0.6rem 1rem;
+    margin: 0.8rem 0;
+    display: block;
+    text-align: center;
+  }
+  .gl { border-bottom: 1px dotted var(--accent); cursor: help; position: relative; }
+  .gl .tip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s;
+    position: absolute;
+    left: 0;
+    bottom: 1.4em;
+    width: 240px;
+    background: #222;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.3;
+    padding: 0.5rem 0.65rem;
+    border-radius: 5px;
+    z-index: 10;
+  }
+  .gl:hover .tip, .gl:focus .tip { visibility: visible; opacity: 1; }
+  #glossary table { width: 100%; border-collapse: collapse; }
+  #glossary th, #glossary td { border: 1px solid var(--rule); padding: 0.5rem 0.8rem; vertical-align: top; }
+  #glossary th { background: #efe6d2; text-align: left; }
+  .map-key { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1rem 0; }
+  .map-key span.region {
+    background: #efe6d2;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.9rem;
+  }
+  footer.sources {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.82rem;
+    color: #666;
+  }
+  footer.sources ol { padding-left: 1.3rem; }
+  footer.sources li { margin-bottom: 0.4rem; }
+  .skyline {
+    font-size: 0.85rem;
+    color: #555;
+    text-align: center;
+    margin: 0.3rem 0 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title-block">
+  <h1>A Chemical History of Iron in Germany</h1>
+  <div class="subtitle">From bog ore and the bloomery fire to the blast furnace at Völklingen — ore, process, and place</div>
+</header>
+
+<p>This reading grew out of a single moment: a train between Trier and Frankfurt slowing as it passed the dark skyline of a blast-furnace works at Völklingen, on the Saar. That building — six blast furnaces, a coking plant, chimneys taller than anything else for miles — is now a UNESCO World Heritage Site, preserved exactly as it stood on its last working day in 1986. It is worth asking what it actually took, chemically and geographically, to make a country capable of building something like it: where the ore came from, what reaction turns rock into metal, and why the process changed as dramatically as it did between the Iron Age and the twentieth century.</p>
+
+<p>This companion piece sits alongside the test-tube iron chemistry booklet: that booklet works at the scale of a boiling tube, with 0.2 M solutions and dropping pipettes; this one works at the scale of a blast furnace fed by rail wagons, but the same underlying chemistry — oxidation state, reduction, what a reducing agent does to an oxide — runs through both.</p>
+
+<h2>1. Where Germany's iron came from</h2>
+
+<p>Iron ore is not evenly scattered across Germany. Three regions did almost all of the historical work, each supplying a different kind of ore, and a fourth — the Saar-Lorraine border country — became decisive only after a political border moved across it in 1871.</p>
+
+<div class="map-key">
+  <span class="region">Siegerland (Rhenish Slate Mountains)</span>
+  <span class="region">Lahn-Dill region</span>
+  <span class="region">Saarland / Lorraine border</span>
+  <span class="region">Ruhr valley (coal, not ore)</span>
+</div>
+
+<h3>Siegerland: the oldest working ore body</h3>
+<p>The hill country around Siegen <span class="place">(North Rhine-Westphalia, roughly 90 km northeast of Frankfurt)</span> sits on a <span class="gl" tabindex="0">siderite<span class="tip">Iron(II) carbonate, FeCO₃ — an iron ore known in German as Spateisenstein ("spar ironstone"), distinct from the iron oxide ores (haematite, Fe₂O₃; limonite/brown ironstone) found elsewhere.</span></span> deposit that people have been working for roughly 2,500 years. The earliest confirmed iron smelting here dates to around 600 BCE, in the early Iron Age; Celtic miners from about 500 BCE dug the ore out through surface pits known as <em>Mollkauten</em>, and underground tunnelling (<em>Stollen</em>) took over from the 7th century CE as the easy surface ore ran out. By the 13th century shafts at sites like Altenberg near Müsen reached 20 metres down. A mining ordinance of 1559 (the <em>Nassau-Katzenellenbogische Bergordnung</em>) regulated and accelerated the industry further, and by 1853 around 660 separate mines were working the district at once.</p>
+
+<p>Siegerland ore reached its industrial peak around 1900, at 1.8 million tonnes a year with over 15,000 miners; output topped out at 2.62 million tonnes in 1913. In 1880 the Siegerland alone had supplied roughly 35% of all iron ore mined in the German Empire. It could not hold that position: richer ore from abroad, and new processes built around different raw materials, made the deep, narrow Siegerland veins progressively less competitive through the 20th century. The last mine closed in 1965, ending 2,500 years of continuous extraction; across its whole working life the district is estimated to have yielded around 175 million tonnes of ore from some 5,000 individual workings.</p>
+
+<h3>Lahn-Dill: iron for casting</h3>
+<p>Northwest of Siegerland, along the Lahn and Dill rivers <span class="place">(around Wetzlar, Hesse — about 60 km north of Frankfurt)</span>, a different geology produced <span class="gl" tabindex="0">red and brown ironstone<span class="tip">Haematite (Fe₂O₃, "red ironstone") and limonite/goethite (hydrated iron oxides, "brown ironstone") — oxide ores, rather than the carbonate ore of the Siegerland.</span></span> rather than siderite. These oxide ores produced an especially soft pig iron, well suited to thin-walled cast goods. Mining here is also documented from the La Tène period, with written records from Wetzlar from the 8th century CE, but its industrial peak came later and briefer than Siegerland's: output climbed sharply from 1875, reached over 2 million tonnes in 1917 — 21% of German iron ore production that year — and then fell away. The last ore mine, Falkenstein, closed on 31 August 1973; the last blast furnace in Wetzlar itself shut down on 31 October 1981, closing out 2,500 years of iron production in the district within a decade of Siegerland's own closure.</p>
+
+<h3>The Saar and the Lorraine border: ore by treaty, not geology</h3>
+<p>The third region did not become a major German iron district through what lay underfoot, but through what lay just across a border. The Jurassic sedimentary rock of Lorraine and southern Luxembourg carries a particular ore called <span class="gl" tabindex="0">minette<span class="tip">From French "la mine" ("little mine/little vein") — a low-grade (28–34% iron) but very extensive sedimentary iron ore of Jurassic age, found around the Briey basin of Lorraine and into Luxembourg and the Saar.</span></span>: low-grade (28–34% iron) but present in colossal quantity. It had one serious problem — high phosphorus content, which nineteenth-century steelmaking could not tolerate (Section 3) — and so it sat largely unexploited until the chemistry of steelmaking itself changed in the late 1870s. After 1871, when the Franco-Prussian War moved the border and placed Alsace-Lorraine inside the new German Empire, German firms gained direct access to part of this ore field for the first time, and once the Thomas process made minette usable (Section 3), Lorraine became one of the largest iron-ore districts on earth: production there passed 41 million tonnes a year by 1919, making it briefly the world's second-largest iron-producing region after the United States. The Saarland itself has no comparable ore of its own; its ironworks, including Völklingen, were built to process ore hauled in from just across the Lorraine border.</p>
+
+<div class="fact">
+  <div class="fact-head">For scale</div>
+  Siegerland (siderite) and Lahn-Dill (haematite/limonite) were small, old, and rich in iron content per tonne of rock; Lorraine/Saar minette was young in use, vast in quantity, and poor in iron content per tonne. Germany's 19th-century steel industry grew by shifting its weight from the first kind of ore to the second.
+</div>
+
+<h2>2. From bloomery to blast furnace: a chemistry upgrade, slowly made</h2>
+
+<p>Turning iron ore into usable metal is, underneath everything else, a single chemical idea: an iron oxide (or carbonate) is reduced to metallic iron by a reducing agent, and the non-iron rock is persuaded to melt and run off separately as slag. What changed between the Iron Age and the Industrial Revolution was not that basic idea but the <em>scale</em> and <em>temperature</em> at which it was carried out, and what happened to the carbon left behind in the metal afterwards.</p>
+
+<h3>The bloomery: iron that never melts</h3>
+<p>The earliest furnaces, including the ones that worked Siegerland ore from around 600 BCE, were <span class="gl" tabindex="0">bloomeries<span class="tip">A small shaft or pit furnace burning charcoal with ore, hot enough to reduce the ore to solid iron but not hot enough to melt it (iron's melting point, ~1,538°C, was far beyond what charcoal and natural draught could reach).</span></span>. Charcoal and ore were loaded together into a low clay shaft, and air (at first simply rising by natural draught, later pumped in by hand- or water-powered bellows) let the carbon burn and generate carbon monoxide, which reduced the ore to solid iron. The furnace was never hot enough to melt the iron itself, so the product was a spongy, half-solid lump called a <span class="gl" tabindex="0">bloom<span class="tip">The glowing, slag-contaminated mass of solid iron produced by a bloomery furnace — not yet usable metal; it still had to be hammered to drive out the trapped slag.</span></span>, riddled with trapped slag, which had to be reheated and hammered on an anvil to squeeze the slag out and consolidate the iron into usable <em>wrought iron</em> — iron with a very low carbon content and good ductility.</p>
+
+<h3>The Stückofen and the arrival of cast iron</h3>
+<p>Medieval smiths built taller furnace shafts to get more heat and a larger bloom per firing — the <span class="gl" tabindex="0">Stückofen<span class="tip">German: "piece furnace" — a tall (roughly 3 m) high bloomery furnace, an intermediate step between the small early bloomery and the true blast furnace.</span></span>, roughly three metres high, producing blooms large enough that they had to be drawn out through a front opening rather than lifted from the top. Push the shaft higher and the draught stronger still, and something qualitatively new starts to happen: the furnace interior gets hot enough, and stays in contact with carbon long enough, that the iron picks up enough dissolved carbon to lower its own melting point, and it comes out not as a solid spongy bloom but as a liquid that can be run off and cast into moulds — <em>cast iron</em>, usually 3–4.5% carbon by weight, hard and brittle rather than tough and malleable. This is the true blast furnace, and furnaces of this taller, hotter kind were working in the Siegerland and similar ore districts in the German lands by the 14th and 15th centuries, among the earliest true blast furnaces anywhere in Europe.</p>
+
+<p>Cast iron straight from a blast furnace is too brittle for most uses — it needs its carbon content cut back down. For most of the blast furnace's early history this was done in a <span class="gl" tabindex="0">finery forge<span class="tip">A forge in which liquid pig iron is remelted in an open hearth and the blast of air is used to oxidise out carbon and silicon, turning brittle cast iron back into malleable wrought iron or steel.</span></span>: the pig iron was remelted in an open hearth and the air blast itself oxidised the dissolved carbon (and silicon) out of the melt, leaving a bloom of wrought iron or, if carefully stopped partway, steel. This stayed the standard route from cast iron to usable metal into the 19th century, even as coal- and coke-fired alternatives (puddling, from the 1780s) began to replace it.</p>
+
+<h2>3. The chemistry inside a blast furnace</h2>
+
+<p>A modern blast furnace runs the same underlying reaction as a Celtic bloomery, but continuously, at far greater scale, and with the chemistry carefully staged by temperature zone from top to bottom.</p>
+
+<p>Coke (nearly pure carbon, made by driving the volatile compounds out of coal in an oxygen-starved coking oven) burns at the bottom of the furnace in a blast of hot air:</p>
+<span class="rxn">2 C + O₂ → 2 CO</span>
+<p>This both supplies heat and, by the <span class="gl" tabindex="0">Boudouard reaction<span class="tip">CO₂ + C → 2 CO. Above about 700°C this reaction runs strongly to the right, so any carbon dioxide formed lower in the furnace is converted back into the reducing gas carbon monoxide as it rises past unburned coke.</span></span>, keeps regenerating carbon monoxide as the gas rises back up through the furnace and meets fresh coke. Further up, where the ore itself is descending, that carbon monoxide does the actual reducing, in stages as the iron works its way down through successively lower oxidation states:</p>
+<span class="rxn">3 Fe₂O₃ + CO → 2 Fe₃O₄ + CO₂</span>
+<span class="rxn">Fe₃O₄ + CO → 3 FeO + CO₂</span>
+<span class="rxn">FeO + CO → Fe + CO₂</span>
+<p>Lower still, where the temperature is high enough, solid carbon itself takes over part of the final reduction directly — a strongly endothermic reaction that absorbs a large share of the furnace's heat:</p>
+<span class="rxn">FeO + C → Fe + CO</span>
+<p>Meanwhile limestone, charged into the furnace alongside the ore and coke, decomposes in the heat:</p>
+<span class="rxn">CaCO₃ → CaO + CO₂</span>
+<p>and the resulting calcium oxide combines with silica and other non-iron minerals in the ore to form a molten <span class="gl" tabindex="0">slag<span class="tip">A mixture of calcium oxide, silica, and aluminium oxide (roughly 48% CaO, 40% SiO₂, 12% Al₂O₃ in a well-run furnace) that melts at a lower temperature than any of its components alone and floats on top of the liquid iron, carrying off most of the ore's non-iron impurities.</span></span>, which floats on the denser liquid iron and is drawn off separately — the same principle, at industrial scale and continuous flow, as the slag a bloomery smith once hammered out of a cooling bloom by hand.</p>
+
+<div class="fact">
+  <div class="fact-head">One thing the blast furnace does not remove</div>
+  Everything above reduces iron oxide to iron and carries off silica and alumina as slag — but it does nothing about phosphorus compounds present in the ore. That gap in the chemistry, and what it meant for which ores could be used, is the subject of the next section.
+</div>
+
+<h2>4. The nineteenth century: coke, Bessemer, and the problem of phosphorus</h2>
+
+<p>Two separate changes, about thirty years apart, turned German ironmaking from a craft tradition into an industry capable of building something the size of Völklingen.</p>
+
+<h3>Coal replaces charcoal</h3>
+<p>Charcoal blast furnaces needed huge areas of managed forest to keep running, and by the early 19th century that supply was under real strain. The shift to coke — made from the abundant coal seams of the Ruhr valley <span class="place">(North Rhine-Westphalia, Germany's largest coalfield)</span> — untied ironmaking from forestry and tied it instead to a coalfield. By 1850 the Ruhr already had some 50 ironworks employing over 2,800 people; the region's advantages — coal on the spot, river and (soon) rail transport, a growing pool of industrial labour, and nearby markets — made it the natural home for the industry's next phase. Friedrich Krupp's steel foundry, founded in Essen in 1811, and August Thyssen's company, founded in 1867, both grew into major firms on this base; Krupp in particular became one of the largest companies in Europe by the time of Alfred Krupp's death in 1887 — the firm had grown from five employees under Friedrich Krupp to roughly 20,000.</p>
+
+<h3>Bessemer, and the ore it could not use</h3>
+<p>In 1856 Henry Bessemer patented a process that blew air directly through molten pig iron in a refractory-lined converter, burning out carbon and silicon in minutes rather than hours and making steel, for the first time, on an industrial scale rather than a craft one. It had one serious limitation: the converter's lining was made of an acidic material (silica-based), and an acidic lining cannot remove phosphorus from the melt — if anything, under acidic conditions phosphorus tends to stay in the iron, weakening the resulting steel (phosphorus makes steel brittle, especially in the cold — "cold-short"). This ruled the Bessemer process out for any ore with significant phosphorus content, which included most of the easily available ore in continental Europe, including the vast Lorraine minette deposit described in Section 1.</p>
+
+<h3>The Thomas process: changing the furnace lining, not the ore</h3>
+<p>The solution, patented in 1877 by the cousins Sidney Gilchrist Thomas and Percy Carlyle Gilchrist, was to reline the converter with a basic material — dolomite bonded with tar — instead of an acidic one. Under basic conditions, phosphorus in the melt reacts with lime in the lining and oxidises out into the slag rather than staying in the metal:</p>
+<div class="fact">
+  <div class="fact-head">Why the lining matters</div>
+  An acidic (silica) lining cannot neutralise the acidic phosphorus oxides formed when phosphorus burns, so they stay dissolved in the iron. A basic (dolomite/lime) lining reacts with them and locks them into the slag instead — the same acid–base logic that governs which hydroxides and carbonates precipitate out of solution in the booklet's own test-tube reactions, applied here to a furnace rather than a boiling tube.
+</div>
+<p>This single change in refractory chemistry — not a change to the ore at all — made the whole Lorraine/Saar minette field usable for the first time, and the phosphorus removed from the iron did not simply go to waste: the resulting slag, rich in calcium phosphate, was ground and sold as an agricultural fertiliser known as <em>Thomasmehl</em> ("Thomas meal"). The <span class="gl" tabindex="0">Gilchrist–Thomas process<span class="tip">Also called simply "the Thomas process" — a Bessemer converter relined with basic (dolomitic) refractory instead of acidic silica, allowing phosphorus to be removed from the iron into the slag.</span></span> is usually credited with driving the explosive growth of the Lorraine iron and steel industry from the late 1870s on, and it remained the standard German and French route to mass steel production until it was gradually displaced by oxygen-blown converters from the 1950s–60s onward.</p>
+
+<h2>5. Case study: the Völklinger Hütte</h2>
+
+<p>The works that prompted this reading is, in miniature, the whole story above: an ironworks built in exactly the right place and at exactly the right moment to exploit the Thomas process on Lorraine ore.</p>
+
+<div class="source">
+  <div class="source-head">A working chronology</div>
+  <div class="source-body">
+    <table class="data-table">
+      <tr><th>Year</th><th>Event</th></tr>
+      <tr><td>1873</td><td>Julius Buch founds an ironworks on the Saar at Völklingen; twelve puddling furnaces producing bloom iron and girders.</td></tr>
+      <tr><td>1878</td><td>Cheap imports and the lack of protective tariffs force the works to close; the company is liquidated.</td></tr>
+      <tr><td>1881</td><td>Carl Röchling buys the closed works for 270,000 marks.</td></tr>
+      <tr><td>1882–83</td><td>Röchling acquires ore fields across the border in Lorraine; the first blast furnace comes into blast in 1883.</td></tr>
+      <tr><td>1885–1893</td><td>Four further blast furnaces built.</td></tr>
+      <tr><td>1891</td><td>The Thomas process is introduced, making mass smelting of Lorraine minette ore practical at this site.</td></tr>
+      <tr><td>1897</td><td>A coking plant is built alongside the blast furnaces.</td></tr>
+      <tr><td>1900</td><td>Völklingen becomes the first large ironworks anywhere to use its own blast-furnace waste gas to drive the air-blowing engines — a major efficiency gain, later copied worldwide.</td></tr>
+      <tr><td>1910s</td><td>Now the German Empire's largest producer of steel girders, with conveyor and gas-cleaning systems that become an international model.</td></tr>
+      <tr><td>1917–18</td><td>A Siemens-Martin (open-hearth) steelworks is added for wartime production.</td></tr>
+      <tr><td>1965</td><td>Peak employment: around 17,000 workers.</td></tr>
+      <tr><td>1975–86</td><td>The global steel crisis of the 1970s–80s hits hard; the blast furnaces are shut down for good in 1986.</td></tr>
+      <tr><td>1994</td><td>Designated a UNESCO World Heritage Site — "the only surviving ironworks in the world from the heyday of iron and steel production."</td></tr>
+    </table>
+    <span class="cite">Dates and figures: voelklinger-huette.org (official chronology) and Wikipedia, "Völklingen Ironworks" (retrieved 2026).</span>
+  </div>
+</div>
+
+<p>What stands at Völklingen today, in other words, is not a generic old factory: it is a site-specific answer to the chemistry problem of Section 4, built because a particular border, a particular ore field, and a particular refractory innovation all lined up within the same few decades.</p>
+
+<h2>6. Where it all stood, at its height</h2>
+
+<p>Pulling the geography together: by the early twentieth century, German iron and steel production had sorted itself into a small number of specialised regions, each doing a different part of the job.</p>
+
+<table class="data-table">
+  <caption>Germany's iron and steel geography at its industrial height (c. 1900–1918)</caption>
+  <tr><th>Region</th><th>Role</th><th>Peak figures</th></tr>
+  <tr><td>Ruhr valley <span class="place">(North Rhine-Westphalia)</span></td><td>Coal and coke supply; home of Krupp, Thyssen and the great integrated steelworks; the industry's centre of gravity by weight of output.</td><td>German crude steel output: 1 million t (1885) → 10 million t (1905) → 19 million t (1918, WWI peak).</td></tr>
+  <tr><td>Siegerland <span class="place">(Rhenish Slate Mountains)</span></td><td>Oldest native ore source (siderite); supplied around a third of the Empire's iron ore as late as 1880, though in decline relative to newer sources.</td><td>2.62 million t ore (1913).</td></tr>
+  <tr><td>Lahn-Dill <span class="place">(around Wetzlar)</span></td><td>Oxide ore (haematite/limonite) for cast-iron goods; brief but intense boom.</td><td>Over 2 million t ore, 21% of German output (1917).</td></tr>
+  <tr><td>Saar / Lorraine border <span class="place">(Saarland, and Lorraine after 1871)</span></td><td>Thomas-process steel on imported minette ore; Röchling/Völklingen the leading example.</td><td>Lorraine ore field alone: 41 million t/yr by 1919 — briefly the world's second-largest iron-producing region.</td></tr>
+</table>
+
+<h2>7. The ore runs out; the chemistry moves on</h2>
+
+<p>Germany's own iron-ore mining did not fade gradually into the modern economy — it stopped, district by district, within a single generation. Siegerland's last mine closed in 1965. The Lahn-Dill field's last ore mine (Falkenstein) closed on 31 August 1973, and its last blast furnace, at Wetzlar, blew out for the last time on 31 October 1981. Völklingen's own blast furnaces went cold in 1986. By the end of the 1980s, after roughly 2,500 years of continuous domestic iron production in some of these districts, Germany was mining essentially none of its own ore, and its steel industry had become entirely dependent on imported ore — chiefly high-grade pellets shipped in from Brazil, Sweden, and elsewhere through North Sea ports.</p>
+
+<p>The chemistry has kept moving since. The coke blast furnace described in Section 3 is a large net emitter of carbon dioxide — both from burning coke for heat and from the carbon that does the actual reducing. German steelmakers, Thyssenkrupp among them, are now building plants at sites like Duisburg (in the old Ruhr heartland) to replace the blast furnace with <span class="gl" tabindex="0">direct reduction<span class="tip">Reducing iron ore to solid metallic iron below its melting point, using a reducing gas — increasingly hydrogen rather than carbon monoxide — instead of a coke-fired blast furnace.</span></span> using hydrogen gas instead of carbon as the reducing agent, aiming for a reaction that produces water rather than carbon dioxide as its by-product. It is, in its way, the same chemical question Celtic ironworkers in the Siegerland were already asking 2,600 years ago — what will take the oxygen off this ore? — with a different answer each time the available fuel and the acceptable waste product have changed.</p>
+
+<h2 id="glossary">Glossary</h2>
+<table>
+  <tr><th>Term</th><th>Meaning</th></tr>
+  <tr><td>Bloomery</td><td>An early, low-temperature furnace that reduces ore to a solid, spongy "bloom" of iron contaminated with slag, without ever melting the iron.</td></tr>
+  <tr><td>Blast furnace</td><td>A taller, hotter furnace in which iron absorbs enough carbon to melt and run off as liquid cast iron, rather than forming a solid bloom.</td></tr>
+  <tr><td>Siderite</td><td>Iron(II) carbonate, FeCO₃ — the Siegerland's characteristic ore, known in German as Spateisenstein.</td></tr>
+  <tr><td>Minette</td><td>A low-grade (28–34% Fe), high-phosphorus sedimentary iron ore found in Lorraine, Luxembourg and the Saar border region.</td></tr>
+  <tr><td>Boudouard reaction</td><td>CO₂ + C → 2 CO; regenerates the reducing gas CO from carbon dioxide and unburned coke inside the furnace.</td></tr>
+  <tr><td>Slag</td><td>The molten, non-metallic by-product of smelting (mainly calcium silicate and aluminosilicate), which floats on liquid iron and is drawn off separately.</td></tr>
+  <tr><td>Finery forge</td><td>A hearth in which an air blast oxidises carbon and silicon out of molten pig iron, converting it to wrought iron or steel.</td></tr>
+  <tr><td>Bessemer process</td><td>Blowing air through molten pig iron in an acid-lined converter to burn out carbon rapidly; cannot remove phosphorus.</td></tr>
+  <tr><td>Gilchrist–Thomas (Thomas) process</td><td>The Bessemer process run in a basic (dolomite-lined) converter, which does remove phosphorus — into the slag, as "Thomas meal" fertiliser.</td></tr>
+  <tr><td>Direct reduction</td><td>Reducing iron ore to solid metallic iron below its melting point using a gas (increasingly hydrogen) rather than a coke blast furnace.</td></tr>
+</table>
+
+<footer class="sources">
+  <p><strong>Sources consulted</strong></p>
+  <ol>
+    <li>Völklinger Hütte Weltkulturerbe, official chronology: <em>voelklinger-huette.org/en/weltkulturerbe/geschichte</em></li>
+    <li>Wikipedia, "Völklingen Ironworks"</li>
+    <li>Wikipedia, "Gilchrist–Thomas process" and "Sidney Gilchrist Thomas"</li>
+    <li>Wikipedia, "Minette (ore)"</li>
+    <li>Wikipedia (German), "Lahn-Dill-Gebiet"</li>
+    <li>Wikipedia (German), "Bergbau im Siegerland"</li>
+    <li>Wikipedia, "Wilnsdorf"</li>
+    <li>Wikipedia, "Finery forge"; Britannica, "Stückofen"</li>
+    <li>Wikipedia, "History of the steel industry (1850–1970)"</li>
+    <li>Wikipedia, "Krupp"; "Thyssen AG"</li>
+    <li>ispatguru.com, "Chemistry of the Ironmaking by Blast Furnace Process"</li>
+    <li>Thyssenkrupp Steel newsroom, on hydrogen-based direct reduction at Duisburg (tkH2Steel)</li>
+  </ol>
+  <p>Written as a standalone companion to the Grade 11 "Test-tube Iron Chemistry" booklet, at Jan's request, October 2026.</p>
+</footer>
+
+</div>
+</body>
+</html>
