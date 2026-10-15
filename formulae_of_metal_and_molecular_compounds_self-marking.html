@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formulae of metal and molecular compounds</title>
+<style>
+:root{--indent:88px;--ink:#111;--grey:#666;--line:#bbb;--tint:#f2f2f2}
+*{box-sizing:border-box}
+html{background:#fff}
+body{margin:0;background:#fff;color:var(--ink);font-family:Palatino,"Palatino Linotype","Book Antiqua","URW Palladio L",serif;font-size:17px;line-height:1.55;counter-reset:sec}
+.sheet{max-width:794px;margin:0 auto;padding:28px 32px 40px;background:#fff}
+.runhead{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:6px;font-size:14px}
+h1,h2,h3,.sans{font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif;font-weight:400}
+h1{font-size:30px;line-height:1.2;margin:30px 0 6px}
+.standard{margin:0 0 8px;font-style:italic}
+h2{counter-increment:sec;font-size:23px;line-height:1.25;margin:38px 0 10px}
+h2::before{content:counter(sec) "\00a0\00a0"}
+h3{font-size:18px;margin:26px 0 6px}
+section>*:not(h2):not(h3){margin-left:var(--indent)}
+p{margin-top:0;margin-bottom:.8em}
+ul,ol{padding-left:1.3em}
+li{margin-bottom:.3em}
+sub,sup{line-height:0}
+.box{border:1px solid var(--ink);padding:10px 14px;margin-top:12px;margin-bottom:14px;background:#fff}
+.box .boxhead{font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif;margin:0 0 4px;font-size:17px}
+.tool{border:1px solid var(--ink);padding:12px 14px;margin-top:12px;margin-bottom:14px;background:var(--tint)}
+button{font:inherit;font-size:16px;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:8px 14px;min-height:40px;cursor:pointer;border-radius:0;margin:3px 6px 3px 0}
+button:hover,button:focus-visible{background:var(--ink);color:#fff}
+button.on{background:var(--ink);color:#fff}
+button[disabled]{color:var(--grey);border-color:var(--grey);cursor:default;background:#fff}
+input[type=text],select,textarea{font:inherit;font-size:16px;padding:5px 8px;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:0;min-height:38px;max-width:100%}
+input.numin{width:9em}
+textarea{width:100%;min-height:150px;font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}
+th,td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:middle}
+th{font-weight:400;border-bottom:1px solid var(--ink);font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif}
+td.n,th.n{text-align:right;white-space:nowrap}
+svg{max-width:100%;height:auto;display:block;background:#fff}
+svg text{font-family:Palatino,"Palatino Linotype","Book Antiqua",serif}
+.figs{display:flex;flex-wrap:wrap;gap:12px}
+.figs>div{flex:1 1 260px;min-width:0}
+.term{border-bottom:1px dotted var(--ink);cursor:help;position:relative}
+.term::after{content:attr(data-def);position:absolute;left:0;top:1.6em;width:min(280px,80vw);background:var(--ink);color:#fff;font:14px/1.35 "Century Gothic","Avenir Next",Avenir,"Trebuchet MS",sans-serif;padding:7px 9px;display:none;z-index:20;text-align:left;font-weight:400;font-style:normal}
+.term.r::after{left:auto;right:0}
+.term:hover::after,.term:focus::after{display:block}
+.term:focus{outline:1px solid var(--ink);outline-offset:2px}
+dl.gloss dt{font-weight:700;margin-top:.7em}
+dl.gloss dd{margin:0}
+/* marking */
+.scorebar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--ink);padding:6px 0;margin-top:6px;font-size:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.q{border-top:1px solid var(--line);padding:10px 0 6px;margin-bottom:2px}
+.qtext{margin-bottom:.4em}
+.qnum{font-weight:700;margin-right:4px}
+.marks{color:var(--grey);font-size:14px;white-space:nowrap}
+.opt{display:flex;gap:8px;align-items:flex-start;margin:4px 0;cursor:pointer}
+.opt input{margin-top:.45em;width:18px;height:18px;flex:none}
+.qctl{display:flex;align-items:center;flex-wrap:wrap;margin-top:6px}
+.badge{margin-left:8px;font-size:14px;color:var(--grey)}
+.fb{margin:6px 0;padding:0 0 0 10px;font-size:16px;border-left:3px solid transparent;min-height:0}
+.fb.ok{border-left-color:var(--ink);background:var(--tint);padding:6px 10px}
+.fb.no{border-left:3px dashed var(--ink);padding:6px 10px}
+.fb.part{border-left:3px double var(--ink);padding:6px 10px}
+.fb.rev{border-left:3px dotted var(--ink);padding:6px 10px;background:var(--tint)}
+select.good{outline:2px solid var(--ink)}
+select.bad{outline:2px dashed var(--ink)}
+.mk{font-size:15px;margin-left:3px}
+.unit{margin-left:4px}
+.cloze{line-height:2.2}
+.mini{max-width:200px;display:inline-block;vertical-align:middle;border:1px solid var(--line);margin-right:8px}
+.row2{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0}
+input[type=range]{width:min(420px,100%);height:28px}
+@media (max-width:640px){
+ :root{--indent:16px}
+ .sheet{padding:16px 16px 32px}
+ h1{font-size:25px}
+}
+.sbbtn button{min-height:30px;padding:3px 10px;font-size:14px;margin:0 0 0 6px}
+.sbmsg{flex-basis:100%;font-size:14px;min-height:1.2em}
+#restore{border:1px solid var(--ink);padding:8px 12px;margin:10px 0;font-size:15px;background:var(--tint)}
+#printmeta{display:none}
+#r_summary table{max-width:520px}
+.cheat{border:1px solid var(--ink);margin:10px 0 14px;padding:0 14px;background:#fff}
+.cheat>summary{font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif;font-style:normal;cursor:pointer;padding:8px 0}
+.cheat[open]>summary{border-bottom:1px solid var(--line);margin-bottom:8px}
+.cheat ul,.cheat ol{margin:.3em 0 .6em}
+.cheat p{margin:.3em 0 .6em}
+.cheat table{font-size:14px}
+.cheat .eg{border-left:3px solid var(--ink);padding-left:10px;margin:.5em 0 .8em;font-size:16px}
+.refl{border:1px solid var(--ink);border-left:6px solid var(--ink);padding:10px 14px;margin:18px 0 14px;background:#fff}
+.refl .rtitle{margin:0 0 4px;font-size:17px}
+.refl .rprompt{margin:0 0 6px}
+.refl .rq{margin:6px 0 2px;font-size:15px}
+.scale{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.cbtn{flex:1 1 90px;margin:0;text-align:center;line-height:1.2;padding:6px 4px;min-height:48px}
+.cbtn small{font-size:12px;display:block}
+.refl textarea{width:100%;min-height:96px;font-size:16px;resize:vertical}
+.rlab{font-size:15px;display:block;margin-top:4px}
+.ratep,.reflprint{display:none}
+#r_conf table{max-width:520px}
+@page{size:A4;margin:14mm}
+@media print{
+ .noprint,.qctl,.sbbtn,.sbmsg,#restore,.tool button,.scale,.refl textarea,.rlab{display:none!important}
+ .ratep{display:block;margin:2px 0 6px;font-size:15px}
+ .reflprint{display:block;white-space:pre-wrap;border:1px solid var(--line);padding:6px 8px;min-height:3em;font-size:16px}
+ .refl,.cheat{break-inside:avoid}
+ .scorebar{position:static;border-bottom:1px solid var(--ink)}
+ #printmeta{display:block;margin:10px 0 0;font-size:16px;border:1px solid var(--ink);padding:6px 10px}
+ .q,.tool,.figs,.box,table{break-inside:avoid}
+ h2,h3{break-after:avoid}
+ .fb.ok,.fb.rev,.tool,.box{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ select,input[type=text]{border:1px solid #111}
+}
+
+.scen{background:var(--tint);border-left:6px solid var(--ink);padding:8px 12px;margin:6px 0 10px}
+.ptitle{font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif;font-weight:400;font-size:19px;margin:22px 0 4px}
+.prob{border-top:2px solid var(--ink);margin-top:18px;padding-top:2px}
+.step{border-top:1px solid var(--line);padding:10px 0 6px}
+.step.done{opacity:.95}
+.stext{margin-bottom:.4em}
+.snum{font-family:"Clear Gothic","Century Gothic","Avenir Next",Avenir,Futura,"Trebuchet MS",sans-serif;font-size:13px;border:1px solid var(--ink);padding:0 6px;margin-right:6px;white-space:nowrap}
+.mhint{color:var(--grey);font-size:15px}
+.hint{margin:4px 0;padding:4px 10px;border-left:3px solid var(--ink);font-size:16px}
+.hint.h2{background:var(--tint)}
+.hint.h3{background:var(--tint);border-left-style:double;border-left-width:6px}
+.flds{display:grid;gap:6px;grid-template-columns:minmax(0,1fr)}
+.fld{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flab{min-width:11em}
+input.good{outline:2px solid var(--ink)}input.bad{outline:2px dashed var(--ink)}
+.mstatus{margin:6px 0 10px;font-size:15px}
+.mstatus.m{font-weight:700}
+.pdone{border:1px solid var(--ink);padding:6px 12px;margin:10px 0}
+.pdone.clean{border-left:6px solid var(--ink);background:var(--tint)}
+.pdone.supported{border-left:6px double var(--ink)}
+.pdone.shown{border-left:6px dotted var(--ink)}
+.pdone p{margin:.3em 0}
+.opt span{flex:1 1 auto}
+h2.nn{counter-increment:none}h2.nn::before{content:none}
+@media (max-width:640px){#r_summary table,#r_conf table{font-size:13px}#r_summary td.n,#r_summary th.n,#r_conf td.n{white-space:normal}.flab{min-width:0;flex-basis:100%}}
+
+.fin,.tin{width:14em;max-width:100%;font-family:Palatino,"Palatino Linotype","Book Antiqua",serif;font-size:17px}
+.fprev{display:inline-block;min-width:5em;margin-left:12px;font-size:18px;color:var(--grey)}
+svg.mol{width:100%;max-width:560px;background:#fff;border:1px solid var(--line);touch-action:none;display:block;margin:6px 0;-webkit-user-select:none;user-select:none}
+.mtray{display:flex;flex-wrap:wrap;gap:4px 6px;margin:4px 0}.mtray button{margin:0}
+.ionpanel{position:fixed;right:12px;top:60px;z-index:40;max-height:78vh;overflow:auto;background:#fff;border:1px solid var(--ink);padding:10px 14px;box-shadow:0 2px 12px rgba(0,0,0,.28);max-width:min(94vw,560px);font-size:14px}
+.ionpanel table{font-size:14px;margin:4px 0}
+.ionpanel[hidden]{display:none}
+table.iontbl,table.angtbl{width:calc(100% - var(--indent))}
+.ionpanel table.angtbl{width:100%}
+.d3bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:6px 0}.d3bar button{margin:0}.d3rot input{vertical-align:middle;width:200px}.d3msg{min-height:1.4em}
+.angbox{margin:8px 0 10px}.angbox table.angtbl{width:100%;font-size:.85em}.angbox .boxhead{margin:0 0 4px}
+.ionpanel table.iontbl{width:100%}
+.snote{margin:-2px 0 6px;font-size:15px;color:var(--grey);font-style:italic}
+table.angtbl td,table.angtbl th,table.iontbl td,table.iontbl th,table.artbl td,table.artbl th,table.rules td,table.rules th{text-align:left;padding:3px 8px}
+table.artbl td,table.artbl th,table.rules td,table.rules th{text-align:center}
+table.artbl{max-width:420px}
+table.rules{max-width:420px}
+.setu .prob{border-top:1px solid var(--line);margin-top:10px;padding-top:0}
+.setu .ptitle{font-size:16px;margin:12px 0 2px}
+h3{margin:26px 0 6px;font-size:20px}
+@media print{.ionpanel{display:none!important}}
+@media (max-width:640px){.ionpanel{right:6px;left:6px;top:96px;max-width:none}table.iontbl{font-size:13px}.fin,.tin{width:100%}}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<div class="runhead"><span>Grade 9 Chemistry</span><span>Thursday, 15 October 2026</span></div>
+
+<h1>Formulae of metal and molecular compounds</h1>
+<p class="standard" style="margin-left:0">Section A: metal compounds. Section B: the molecular world.</p>
+
+<div class="scorebar" id="scorebar"><span id="sb_marks" role="status">Skills mastered: 0 of 11</span><span id="sb_done">Problems finished: 0</span><span class="sbbtn"><button type="button" id="ion_btn" aria-expanded="false">Tables</button><button type="button" id="sb_save">Save my progress</button><button type="button" id="sb_restore">Resume my progress</button><button type="button" id="sb_pdf">Save as .pdf</button></span><span class="sbmsg" id="sb_msg" aria-live="polite"></span></div>
+<div class="ionpanel noprint" id="ion_panel" hidden><p class="boxhead">Ion table</p><table class="iontbl small"><tr><th>Positive ion (metal)</th><th>Ion</th><th>Negative ion</th><th>Ion</th></tr><tr><td>lithium</td><td>Li<sup>+</sup></td><td>chloride</td><td>Cl<sup>−</sup></td></tr><tr><td>sodium</td><td>Na<sup>+</sup></td><td>bromide</td><td>Br<sup>−</sup></td></tr><tr><td>potassium</td><td>K<sup>+</sup></td><td>iodide</td><td>I<sup>−</sup></td></tr><tr><td>silver</td><td>Ag<sup>+</sup></td><td>hydroxide</td><td>OH<sup>−</sup></td></tr><tr><td>magnesium</td><td>Mg<sup>2+</sup></td><td>nitrate</td><td>NO<sub>3</sub><sup>−</sup></td></tr><tr><td>calcium</td><td>Ca<sup>2+</sup></td><td>oxide</td><td>O<sup>2−</sup></td></tr><tr><td>barium</td><td>Ba<sup>2+</sup></td><td>sulfide</td><td>S<sup>2−</sup></td></tr><tr><td>zinc</td><td>Zn<sup>2+</sup></td><td>sulfate</td><td>SO<sub>4</sub><sup>2−</sup></td></tr><tr><td>copper(II)</td><td>Cu<sup>2+</sup></td><td>carbonate</td><td>CO<sub>3</sub><sup>2−</sup></td></tr><tr><td>iron(II)</td><td>Fe<sup>2+</sup></td><td>phosphate</td><td>PO<sub>4</sub><sup>3−</sup></td></tr><tr><td>lead(II)</td><td>Pb<sup>2+</sup></td><td></td><td></td></tr><tr><td>iron(III)</td><td>Fe<sup>3+</sup></td><td></td><td></td></tr><tr><td>aluminium</td><td>Al<sup>3+</sup></td><td></td><td></td></tr></table><p class="boxhead" style="margin-top:10px">A<sub>r</sub> values</p><table class="artbl"><tr><th>H</th><th>C</th><th>N</th><th>O</th><th>Cl</th></tr><tr><td>1</td><td>12</td><td>14</td><td>16</td><td>35.5</td></tr></table><p class="boxhead" style="margin-top:10px">Bond angles for drawings</p><table class="angtbl small"><tr><th>Around one atom</th><th>Name of the shape</th><th>Examples</th><th>Real angle</th><th>Aim for in a flat drawing</th></tr><tr><td>Two bonds in a straight line</td><td><b>linear</b></td><td>C in CO<sub>2</sub>, HCN, C<sub>2</sub>H<sub>2</sub></td><td>180°</td><td>180°</td></tr><tr><td>Two bonds, bent</td><td><b>bent</b></td><td>O in H<sub>2</sub>O, H<sub>2</sub>O<sub>2</sub>, CH<sub>3</sub>OH</td><td>about 105°</td><td>about 105°</td></tr><tr><td>Three bonds, flat (one is a double bond)</td><td><b>trigonal planar</b></td><td>C in C<sub>2</sub>H<sub>4</sub>, CH<sub>2</sub>O</td><td>120°</td><td>120°</td></tr><tr><td>Three bonds, a pyramid</td><td><b>trigonal pyramidal</b></td><td>N in NH<sub>3</sub>, NCl<sub>3</sub>, N<sub>2</sub>H<sub>4</sub></td><td>about 107°</td><td>about 120° apart</td></tr><tr><td>Four bonds</td><td><b>tetrahedral</b></td><td>C in CH<sub>4</sub>, CH<sub>3</sub>Cl, C<sub>2</sub>H<sub>6</sub></td><td>109.5°</td><td>about 90° apart</td></tr></table><p class="boxhead" style="margin-top:10px">Molecular shapes</p><table class="angtbl small"><tr><th>Shape</th><th>Sketch</th><th>Atoms joined to the centre atom</th><th>Real angle</th><th>Examples</th></tr><tr><td><b>linear</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="10" y1="26" x2="70" y2="26" stroke="#000" stroke-width="2"/><circle cx="10" cy="26" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="70" cy="26" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="26" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>2 atoms in a straight line</td><td>180°</td><td>HCl, O<sub>2</sub>, N<sub>2</sub>, CO<sub>2</sub>, HCN, C<sub>2</sub>H<sub>2</sub></td></tr><tr><td><b>bent</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="40" y1="16" x2="14" y2="40" stroke="#000" stroke-width="2"/><line x1="40" y1="16" x2="66" y2="40" stroke="#000" stroke-width="2"/><circle cx="14" cy="40" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="66" cy="40" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="16" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>2 atoms, not in a straight line</td><td>about 105°</td><td>H<sub>2</sub>O, Cl<sub>2</sub>O, H<sub>2</sub>O<sub>2</sub> (at each O)</td></tr><tr><td><b>trigonal planar</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="40" y1="28" x2="40" y2="6" stroke="#000" stroke-width="2"/><line x1="40" y1="28" x2="14" y2="42" stroke="#000" stroke-width="2"/><line x1="40" y1="28" x2="66" y2="42" stroke="#000" stroke-width="2"/><circle cx="40" cy="6" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="14" cy="42" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="66" cy="42" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="28" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>3 atoms, all in one flat plane</td><td>120°</td><td>C<sub>2</sub>H<sub>4</sub>, CH<sub>2</sub>O</td></tr><tr><td><b>trigonal pyramidal</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="40" y1="14" x2="12" y2="34" stroke="#000" stroke-width="2"/><line x1="40" y1="14" x2="68" y2="34" stroke="#000" stroke-width="2"/><line x1="40" y1="14" x2="40" y2="46" stroke="#000" stroke-width="2"/><polygon points="12,34 68,34 40,46" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="2 2"/><circle cx="12" cy="34" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="68" cy="34" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="46" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="14" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>3 atoms, with the centre atom on top like the tip of a pyramid</td><td>about 107°</td><td>NH<sub>3</sub>, NCl<sub>3</sub></td></tr><tr><td><b>tetrahedral</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="40" y1="26" x2="40" y2="5" stroke="#000" stroke-width="2"/><line x1="40" y1="26" x2="10" y2="36" stroke="#000" stroke-width="2"/><polygon points="40,26 66,46 58,48" fill="#000"/><line x1="40" y1="26" x2="66" y2="34" stroke="#000" stroke-width="2" stroke-dasharray="3 2"/><circle cx="40" cy="5" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="10" cy="36" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="66" cy="46" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="68" cy="34" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="26" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>4 atoms</td><td>109.5°</td><td>CH<sub>4</sub>, CCl<sub>4</sub>, CH<sub>3</sub>Cl, C<sub>2</sub>H<sub>6</sub></td></tr></table></div>
+<div id="restore" hidden><span id="restore_txt"></span> <button type="button" id="restore_yes">Resume my progress</button><button type="button" id="restore_no">Start fresh</button></div>
+<div id="printmeta"></div>
+
+<section>
+<h2 class="nn">Learning objectives</h2>
+<p class="box" style="margin-left:var(--indent)"><b>Plan for about an hour.</b> Section A takes about 15 minutes and section B about 45 minutes. If you do not finish in the lesson, finish it at home and upload it.</p>
+<p>In this worksheet you show that you can:</p>
+<ul>
+<li>use the table of <span class="term" data-def="An atom or group of atoms with an electric charge. Metals form positive ions. Many non-metals and groups such as OH and SO4 form negative ions. (see the definitions at the end)">ions</span> to write the <span class="term" data-def="The symbols of the elements in a compound, with small numbers to show how many atoms (or ions) of each there are. (see the definitions at the end)">formula</span> of an <span class="term" data-def="A compound made of positive and negative ions, usually a metal joined to a non-metal. The total positive charge equals the total negative charge. (see the definitions at the end)">ionic compound</span> of a metal, with brackets where they are needed;</li>
+<li>name an ionic compound from its formula;</li>
+<li>build small molecules with a modelling kit and work out their formulae;</li>
+<li>write the formula of a <span class="term" data-def="A compound made of molecules, which are small groups of atoms joined by bonds. Molecular compounds are made only of non-metals. (see the definitions at the end)">molecular compound</span> from its name, and draw the molecule using the bonding rules for C, H, Cl, N and O;</li>
+<li>calculate the <span class="term" data-def="The mass of one mole of a substance, in g mol−1. Add up number of atoms × Ar for every element in the formula. It was once called the molecular mass. (see the definitions at the end)">molar mass</span> of a molecule from <span class="term" data-def="The mass of an atom of an element compared with other atoms. We use whole numbers, except chlorine (35.5). (see the definitions at the end)">A<sub>r</sub></span> values.</li></ul>
+<div data-r="r0"></div>
+<div class="box noprint">
+<p class="boxhead">How this worksheet works</p>
+<ol>
+<li>Answer one question at a time and press <b>Check</b>. If a question has several steps, the next step appears when you have finished the step before.</li>
+<li>If you are wrong, a <b>hint</b> appears. There are three levels: Hint 1 is a nudge, Hint 2 is more help, and Hint 3 almost gives the answer. After two hints, <b>Show answer</b> appears.</li>
+<li>Press <b>Tables</b> at the top of the page at any time to see the ion table and the A<sub>r</sub> values.</li>
+<li>When you can write and draw a set of questions right first time, you master that skill.</li>
+</ol>
+<p><b>Save my progress</b> keeps your answers in this browser and downloads a small progress file as a back-up. To carry on later, open this page again and press <b>Resume my progress</b> at the top of the page, or open the progress file here: <input type="file" id="load_file" accept=".json,application/json" aria-label="Open a saved progress file"></p>
+</div>
+</section>
+
+<section>
+<h2 class="nn">Section A: metal compounds (about 15 minutes)</h2>
+<p><span class="term" data-def="A compound made of positive and negative ions, usually a metal joined to a non-metal. The total positive charge equals the total negative charge. (see the definitions at the end)">Ionic compounds</span> of metals are made of positive metal ions and negative ions. You do not need to remember the charges: use the ion table. The table is also under the <b>Tables</b> button, which stays at the top of the page.</p>
+<table class="iontbl "><tr><th>Positive ion (metal)</th><th>Ion</th><th>Negative ion</th><th>Ion</th></tr><tr><td>lithium</td><td>Li<sup>+</sup></td><td>chloride</td><td>Cl<sup>−</sup></td></tr><tr><td>sodium</td><td>Na<sup>+</sup></td><td>bromide</td><td>Br<sup>−</sup></td></tr><tr><td>potassium</td><td>K<sup>+</sup></td><td>iodide</td><td>I<sup>−</sup></td></tr><tr><td>silver</td><td>Ag<sup>+</sup></td><td>hydroxide</td><td>OH<sup>−</sup></td></tr><tr><td>magnesium</td><td>Mg<sup>2+</sup></td><td>nitrate</td><td>NO<sub>3</sub><sup>−</sup></td></tr><tr><td>calcium</td><td>Ca<sup>2+</sup></td><td>oxide</td><td>O<sup>2−</sup></td></tr><tr><td>barium</td><td>Ba<sup>2+</sup></td><td>sulfide</td><td>S<sup>2−</sup></td></tr><tr><td>zinc</td><td>Zn<sup>2+</sup></td><td>sulfate</td><td>SO<sub>4</sub><sup>2−</sup></td></tr><tr><td>copper(II)</td><td>Cu<sup>2+</sup></td><td>carbonate</td><td>CO<sub>3</sub><sup>2−</sup></td></tr><tr><td>iron(II)</td><td>Fe<sup>2+</sup></td><td>phosphate</td><td>PO<sub>4</sub><sup>3−</sup></td></tr><tr><td>lead(II)</td><td>Pb<sup>2+</sup></td><td></td><td></td></tr><tr><td>iron(III)</td><td>Fe<sup>3+</sup></td><td></td><td></td></tr><tr><td>aluminium</td><td>Al<sup>3+</sup></td><td></td><td></td></tr></table>
+<details class="cheat" open><summary>Cheat sheet: formulae of ionic compounds</summary><ol><li>Find each ion in the ion table and note its <b>charge</b>.</li><li>Make the total positive charge equal the total negative charge. Use the fewest ions you can.</li><li>Write the metal first. Write the number of each ion as a small number after its symbol. Write nothing for 1.</li><li>If you need <b>two or more</b> of a group of atoms such as OH, NO<sub>3</sub>, SO<sub>4</sub>, CO<sub>3</sub> or PO<sub>4</sub>, put the group in <b>brackets</b> before the number: Ca(OH)<sub>2</sub>.</li><li>A Roman numeral in a name, as in iron(III), tells you which charge the metal ion has.</li><li>Do not write the charges in the formula.</li></ol><p class="eg">Example: aluminium sulfate. Al<sup>3+</sup> and SO<sub>4</sub><sup>2−</sup>. 2 × 3+ = 6+ and 3 × 2− = 6−, so 2 Al and 3 SO<sub>4</sub>: Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>.</p></details>
+<h3>A1 Ions to formula, step by step</h3>
+<div data-unit="a1"></div>
+<h3>A2 Write the formula</h3>
+<div class="setu" data-unit="a2"></div>
+<h3>A3 Name the compound</h3>
+<div class="setu" data-unit="a3"></div>
+<div data-r="r1"></div>
+</section>
+
+<section>
+<h2 class="nn">Section B: the molecular world</h2>
+<p><span class="term" data-def="A compound made of molecules, which are small groups of atoms joined by bonds. Molecular compounds are made only of non-metals. (see the definitions at the end)">Molecular compounds</span> are made of non-metals only. Their atoms are joined by <span class="term" data-def="A link between two atoms. In a drawing it is a line. A double bond is two lines and a triple bond is three lines. (see the definitions at the end)">bonds</span> into small molecules. You can build them with the modelling kits, work out their formulae and draw them. Use the rules below.</p>
+<details class="cheat" open><summary>Cheat sheet: the bonding rules</summary><table class="rules"><tr><th>Atom</th><th>C</th><th>H</th><th>Cl</th><th>N</th><th>O</th></tr><tr><td>Bonds</td><td>4</td><td>1</td><td>1</td><td>3</td><td>2</td></tr></table><ul><li>These rules hold most of the time. Use them to work out how many atoms join together, and to draw the molecule.</li><li>In a drawing, each line is one bond. Two lines are a <b>double bond</b> and three lines are a <b>triple bond</b>. A double bond uses 2 of each atom’s bonds.</li><li>Every atom must have its full number of bonds, and all the atoms must be joined into one molecule.</li><li>Prefixes in names: mono = 1, di = 2, tri = 3, tetra = 4. For example, carbon <b>tetra</b>chloride has 4 chlorine atoms.</li></ul></details>
+<details class="cheat" open><summary>Cheat sheet: bond angles for your drawings</summary><table class="angtbl "><tr><th>Around one atom</th><th>Name of the shape</th><th>Examples</th><th>Real angle</th><th>Aim for in a flat drawing</th></tr><tr><td>Two bonds in a straight line</td><td><b>linear</b></td><td>C in CO<sub>2</sub>, HCN, C<sub>2</sub>H<sub>2</sub></td><td>180°</td><td>180°</td></tr><tr><td>Two bonds, bent</td><td><b>bent</b></td><td>O in H<sub>2</sub>O, H<sub>2</sub>O<sub>2</sub>, CH<sub>3</sub>OH</td><td>about 105°</td><td>about 105°</td></tr><tr><td>Three bonds, flat (one is a double bond)</td><td><b>trigonal planar</b></td><td>C in C<sub>2</sub>H<sub>4</sub>, CH<sub>2</sub>O</td><td>120°</td><td>120°</td></tr><tr><td>Three bonds, a pyramid</td><td><b>trigonal pyramidal</b></td><td>N in NH<sub>3</sub>, NCl<sub>3</sub>, N<sub>2</sub>H<sub>4</sub></td><td>about 107°</td><td>about 120° apart</td></tr><tr><td>Four bonds</td><td><b>tetrahedral</b></td><td>C in CH<sub>4</sub>, CH<sub>3</sub>Cl, C<sub>2</sub>H<sub>6</sub></td><td>109.5°</td><td>about 90° apart</td></tr></table><p>The numbers on your drawing are the angles between the bonds at each atom. Aim for the angles in the last column for a flat drawing. Use the Real angle column in the 3D questions. Learn the names of the shapes in the second column. Angles within about 10° of them are accepted.</p><p>Why do the last two rows differ from the real angles? A flat page cannot show a pyramid or a four-bond shape in three dimensions, so we spread the bonds evenly round the atom instead.</p><p>Keep the atoms apart. If a bond passes through another atom, it turns red.</p></details>
+<details class="cheat" open><summary>Cheat sheet: molecular shapes and their names</summary><table class="angtbl "><tr><th>Shape</th><th>Sketch</th><th>Atoms joined to the centre atom</th><th>Real angle</th><th>Examples</th></tr><tr><td><b>linear</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="10" y1="26" x2="70" y2="26" stroke="#000" stroke-width="2"/><circle cx="10" cy="26" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="70" cy="26" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="26" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>2 atoms in a straight line</td><td>180°</td><td>HCl, O<sub>2</sub>, N<sub>2</sub>, CO<sub>2</sub>, HCN, C<sub>2</sub>H<sub>2</sub></td></tr><tr><td><b>bent</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="40" y1="16" x2="14" y2="40" stroke="#000" stroke-width="2"/><line x1="40" y1="16" x2="66" y2="40" stroke="#000" stroke-width="2"/><circle cx="14" cy="40" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="66" cy="40" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="16" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>2 atoms, not in a straight line</td><td>about 105°</td><td>H<sub>2</sub>O, Cl<sub>2</sub>O, H<sub>2</sub>O<sub>2</sub> (at each O)</td></tr><tr><td><b>trigonal planar</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="40" y1="28" x2="40" y2="6" stroke="#000" stroke-width="2"/><line x1="40" y1="28" x2="14" y2="42" stroke="#000" stroke-width="2"/><line x1="40" y1="28" x2="66" y2="42" stroke="#000" stroke-width="2"/><circle cx="40" cy="6" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="14" cy="42" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="66" cy="42" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="28" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>3 atoms, all in one flat plane</td><td>120°</td><td>C<sub>2</sub>H<sub>4</sub>, CH<sub>2</sub>O</td></tr><tr><td><b>trigonal pyramidal</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="40" y1="14" x2="12" y2="34" stroke="#000" stroke-width="2"/><line x1="40" y1="14" x2="68" y2="34" stroke="#000" stroke-width="2"/><line x1="40" y1="14" x2="40" y2="46" stroke="#000" stroke-width="2"/><polygon points="12,34 68,34 40,46" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="2 2"/><circle cx="12" cy="34" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="68" cy="34" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="46" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="14" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>3 atoms, with the centre atom on top like the tip of a pyramid</td><td>about 107°</td><td>NH<sub>3</sub>, NCl<sub>3</sub></td></tr><tr><td><b>tetrahedral</b></td><td><svg viewBox="0 0 80 52" width="72" height="47" role="img" aria-hidden="true" style="vertical-align:middle"><line x1="40" y1="26" x2="40" y2="5" stroke="#000" stroke-width="2"/><line x1="40" y1="26" x2="10" y2="36" stroke="#000" stroke-width="2"/><polygon points="40,26 66,46 58,48" fill="#000"/><line x1="40" y1="26" x2="66" y2="34" stroke="#000" stroke-width="2" stroke-dasharray="3 2"/><circle cx="40" cy="5" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="10" cy="36" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="66" cy="46" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="68" cy="34" r="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="40" cy="26" r="6" fill="#777" stroke="#000" stroke-width="1.5"/></svg></td><td>4 atoms</td><td>109.5°</td><td>CH<sub>4</sub>, CCl<sub>4</sub>, CH<sub>3</sub>Cl, C<sub>2</sub>H<sub>6</sub></td></tr></table><p>The shape names the arrangement of the atoms round one atom. A small atom in the sketch is joined to the grey centre atom. The solid wedge comes towards you and the dashed line goes away from you.</p><p>Nitrogen in NH<sub>3</sub> and oxygen in H<sub>2</sub>O have electrons that are not used in bonds. They push the bonds closer together, so the angles are a little smaller than 109.5°.</p><p>A molecule with more than one centre atom has a shape round each one. Ask about one atom at a time.</p></details>
+<h3>B1 Ionic or molecular?</h3>
+<div data-unit="b0"></div>
+<h3>B2 Build it and find the formula</h3>
+<p><b>Use your modelling kit.</b> Build each molecule, then write its formula. Every hole in every atom must be filled.</p>
+<div class="setu" data-unit="b1"></div>
+<h3>B3 Draw the molecule</h3>
+<p>Build the molecule with your kit first, then draw it here. The atoms are ready: tap one atom, then another, to join them with a bond. The small number on an atom shows how many more bonds it needs. The other numbers are the angles between the bonds. They turn green when they match the table of angles. Drag the atoms apart so that no bond passes through an atom.</p>
+<div class="setu" data-unit="b2"></div>
+<h3>B3b Draw it in 3D</h3>
+<p>A flat drawing cannot show the real shape of ammonia or methane. Here you model them in three dimensions. Use the <b>Real angle</b> column of the table of angles for the angle between the first two bonds. Then press the <b>3D</b> button to push the atoms into 3D space and add the rest.</p>
+<div class="setu" data-unit="b2c"></div>
+<h3>B4 Draw harder molecules</h3>
+<p>This time the atoms do not show how many bonds they still need, and the angle numbers do not change colour, so check each one against the rules and the table of angles yourself.</p>
+<div class="setu" data-unit="b2b"></div>
+<h3>B5 Names, formulae and drawings</h3>
+<p>Work out the formula from the name, then draw the molecule. This time you add the atoms yourself with the <b>+</b> buttons.</p>
+<div data-unit="b3"></div>
+<h3>B6 Molar mass</h3>
+<details class="cheat" open><summary>Cheat sheet: molar mass</summary><ol><li>Count the atoms of each element in the formula. No number means 1.</li><li>Multiply each count by the A<sub>r</sub> of that element.</li><li>Add the masses. The unit of molar mass is g mol<sup>−1</sup>.</li></ol><p class="eg">Example: CH<sub>4</sub>: 1 × 12 + 4 × 1 = 16 g mol<sup>−1</sup>.</p></details>
+<p style="font-size:15px">A<sub>r</sub> values for this section:</p>
+<table class="artbl"><tr><th>H</th><th>C</th><th>N</th><th>O</th><th>Cl</th></tr><tr><td>1</td><td>12</td><td>14</td><td>16</td><td>35.5</td></tr></table>
+<div class="setu" data-unit="b4"></div>
+<h3>B7 Put it all together</h3>
+<p>Name, formula, drawing and molar mass for one molecule at a time.</p>
+<div data-unit="b5"></div>
+</section>
+
+<section>
+<div data-r="rE"></div>
+</section>
+
+<section>
+<h2 class="nn">Underlying ideas: definitions to learn</h2>
+<dl class="gloss" id="glossary">
+<dt>Bond</dt>
+<dd>A link between two atoms. In a drawing it is a line. A double bond is two lines and a triple bond is three lines.</dd>
+<dt>Formula</dt>
+<dd>The symbols of the elements in a compound, with small numbers to show how many atoms (or ions) of each there are.</dd>
+<dt>Ion</dt>
+<dd>An atom or group of atoms with an electric charge. Metals form positive ions. Many non-metals and groups such as OH and SO<sub>4</sub> form negative ions.</dd>
+<dt>Ionic compound</dt>
+<dd>A compound made of positive and negative ions, usually a metal joined to a non-metal. The total positive charge equals the total negative charge.</dd>
+<dt>Molar mass, <i>M</i></dt>
+<dd>The mass of one mole of a substance, in g mol<sup>−1</sup>. Add up number of atoms × A<sub>r</sub> for every element in the formula. It was once called the molecular mass.</dd>
+<dt>Molecular compound</dt>
+<dd>A compound made of molecules, which are small groups of atoms joined by bonds. Molecular compounds are made only of non-metals.</dd>
+<dt>Relative atomic mass, <i>A</i><sub>r</sub></dt>
+<dd>The mass of an atom of an element compared with other atoms. We use whole numbers, except chlorine (35.5).</dd>
+
+</dl>
+</section>
+
+<section>
+<h2 class="nn">My submission on Canvas</h2>
+<p>When you have finished, hand in your work as a PDF.</p>
+<ol>
+<li>Type your name in the box below.</li>
+<li>Press <b>Save as .pdf</b>. In the window that opens, choose <b>Save as PDF</b> as the destination (on a Mac, use the PDF menu at the bottom left and choose Save as PDF) and save the file on your computer.</li>
+<li>Open today’s Assignment on Canvas, select <b>Upload File</b>, choose the PDF you saved, and submit it.</li>
+</ol>
+<p>Not finished yet? Press <b>Save my progress</b> and come back to this page later.</p>
+<div class="tool">
+<div class="row2"><label for="r_name">Name</label><input type="text" id="r_name" autocomplete="name"><button type="button" id="r_pdf" class="noprint">Save as .pdf</button><button type="button" id="r_save" class="noprint">Save my progress</button><button type="button" id="r_restore" class="noprint">Resume my progress</button></div>
+<div id="r_summary"></div>
+<div id="r_conf"></div>
+<p id="r_msg" class="noprint" style="margin:6px 0 0" aria-live="polite"></p>
+</div>
+</section>
+
+<footer style="margin-top:44px;padding-top:6px;border-top:1px solid #111;font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span>Science Department · Refined with AI</span><span>Grade 9 Chemistry · Formulae worksheet</span></footer>
+</div>
+
+<script>
+(function(){var b=document.getElementById("ion_btn"),p=document.getElementById("ion_panel");b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",p.hidden?"false":"true");});})();
+</script>
+<script>
+(function(){
+"use strict";
+var DATA={"units": [{"id": "a1", "short": "A1 Ions to formula (guided)", "part": "A", "mode": "seq", "problems": [{"title": "magnesium chloride", "scenario": "", "steps": [{"k": "sel", "prompt": "Use the ion table to find the two ions in <b>magnesium<\/b>. chloride", "tpl": "The magnesium ion is {0} and the chloride ion is {1}.", "blanks": [{"opts": ["Mg⁺", "Mg²⁺", "Mg³⁺"], "ans": 1, "whys": ["Look in the ion table again: the magnesium ion is Mg²⁺.", "", "Look in the ion table again: the magnesium ion is Mg²⁺."]}, {"opts": ["Cl⁻", "Cl²⁻", "Cl³⁻"], "ans": 0, "whys": ["", "Look in the ion table again: the chloride ion is Cl⁻.", "Look in the ion table again: the chloride ion is Cl⁻."]}], "hints": ["The ion table lists every ion with its charge.", "Find magnesium in the left half of the table and chloride in the right half.", "Magnesium has charge 2+ and chloride has charge 1−."], "explain": "Magnesium is Mg<sup>2+<\/sup> and chloride is Cl<sup>−<\/sup>."}, {"k": "fields", "prompt": "How many of each ion make the <b>total charge zero<\/b>?", "fields": [{"lab": "number of Mg<sup>2+<\/sup> ions", "ans": 1, "ansTxt": "1", "unit": "", "tol": 0.01}, {"lab": "number of Cl<sup>−<\/sup> ions", "ans": 2, "ansTxt": "2", "unit": "", "tol": 0.01}], "hints": ["Total positive charge = (number of positive ions) × (charge on each). The total negative charge is found the same way.", "Try small numbers until the positive total equals the negative total.", "Charges: 2+ and 1−. The smallest numbers that balance are 1 and 2."], "explain": "1 × 2+ = 2+ and 2 × 1− = 2−. These cancel."}, {"k": "formula", "prompt": "Write the formula of <b>magnesium chloride<\/b>. Do not write the charges.", "ans": "MgCl2", "mode": "ion", "traps": {"Mg2Cl": "Check the numbers. Your formula gives 2 × 2+ = 4+ and 1 × 1− = 1−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Magnesium is Mg<sup>2+<\/sup> (charge 2+). Chloride is Cl<sup>−<\/sup> (charge 1−). The total positive charge must equal the total negative charge.", "You need 1 × Mg<sup>2+<\/sup> (2+) and 2 × Cl<sup>−<\/sup> (2−)."], "explain": "Magnesium chloride: Mg<sup>2+<\/sup> and Cl<sup>−<\/sup>. 1 × 2+ = 2+ and 2 × 1− = 2−, so the formula is <b>MgCl<sub>2<\/sub><\/b>."}]}, {"title": "aluminium oxide", "scenario": "", "steps": [{"k": "sel", "prompt": "Use the ion table to find the two ions in <b>aluminium<\/b>. oxide", "tpl": "The aluminium ion is {0} and the oxide ion is {1}.", "blanks": [{"opts": ["Al⁺", "Al²⁺", "Al³⁺"], "ans": 2, "whys": ["Look in the ion table again: the aluminium ion is Al³⁺.", "Look in the ion table again: the aluminium ion is Al³⁺.", ""]}, {"opts": ["O⁻", "O²⁻", "O³⁻"], "ans": 1, "whys": ["Look in the ion table again: the oxide ion is O²⁻.", "", "Look in the ion table again: the oxide ion is O²⁻."]}], "hints": ["The ion table lists every ion with its charge.", "Find aluminium in the left half of the table and oxide in the right half.", "Aluminium has charge 3+ and oxide has charge 2−."], "explain": "Aluminium is Al<sup>3+<\/sup> and oxide is O<sup>2−<\/sup>."}, {"k": "fields", "prompt": "How many of each ion make the <b>total charge zero<\/b>?", "fields": [{"lab": "number of Al<sup>3+<\/sup> ions", "ans": 2, "ansTxt": "2", "unit": "", "tol": 0.01}, {"lab": "number of O<sup>2−<\/sup> ions", "ans": 3, "ansTxt": "3", "unit": "", "tol": 0.01}], "hints": ["Total positive charge = (number of positive ions) × (charge on each). The total negative charge is found the same way.", "Try small numbers until the positive total equals the negative total.", "Charges: 3+ and 2−. The smallest numbers that balance are 2 and 3."], "explain": "2 × 3+ = 6+ and 3 × 2− = 6−. These cancel."}, {"k": "formula", "prompt": "Write the formula of <b>aluminium oxide<\/b>. Do not write the charges.", "ans": "Al2O3", "mode": "ion", "traps": {"Al3O2": "Check the numbers. Your formula gives 3 × 3+ = 9+ and 2 × 2− = 4−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Aluminium is Al<sup>3+<\/sup> (charge 3+). Oxide is O<sup>2−<\/sup> (charge 2−). The total positive charge must equal the total negative charge.", "You need 2 × Al<sup>3+<\/sup> (6+) and 3 × O<sup>2−<\/sup> (6−)."], "explain": "Aluminium oxide: Al<sup>3+<\/sup> and O<sup>2−<\/sup>. 2 × 3+ = 6+ and 3 × 2− = 6−, so the formula is <b>Al<sub>2<\/sub>O<sub>3<\/sub><\/b>."}]}, {"title": "calcium hydroxide", "scenario": "", "steps": [{"k": "sel", "prompt": "Use the ion table to find the two ions in <b>calcium<\/b>. hydroxide", "tpl": "The calcium ion is {0} and the hydroxide ion is {1}.", "blanks": [{"opts": ["Ca⁺", "Ca²⁺", "Ca³⁺"], "ans": 1, "whys": ["Look in the ion table again: the calcium ion is Ca²⁺.", "", "Look in the ion table again: the calcium ion is Ca²⁺."]}, {"opts": ["OH⁻", "OH²⁻", "OH³⁻"], "ans": 0, "whys": ["", "Look in the ion table again: the hydroxide ion is OH⁻.", "Look in the ion table again: the hydroxide ion is OH⁻."]}], "hints": ["The ion table lists every ion with its charge.", "Find calcium in the left half of the table and hydroxide in the right half.", "Calcium has charge 2+ and hydroxide has charge 1−."], "explain": "Calcium is Ca<sup>2+<\/sup> and hydroxide is OH<sup>−<\/sup>."}, {"k": "fields", "prompt": "How many of each ion make the <b>total charge zero<\/b>?", "fields": [{"lab": "number of Ca<sup>2+<\/sup> ions", "ans": 1, "ansTxt": "1", "unit": "", "tol": 0.01}, {"lab": "number of OH<sup>−<\/sup> ions", "ans": 2, "ansTxt": "2", "unit": "", "tol": 0.01}], "hints": ["Total positive charge = (number of positive ions) × (charge on each). The total negative charge is found the same way.", "Try small numbers until the positive total equals the negative total.", "Charges: 2+ and 1−. The smallest numbers that balance are 1 and 2."], "explain": "1 × 2+ = 2+ and 2 × 1− = 2−. These cancel."}, {"k": "formula", "prompt": "Write the formula of <b>calcium hydroxide<\/b>. Do not write the charges.", "ans": "Ca(OH)2", "mode": "ion", "traps": {"CaOH2": "The 2 belongs to the whole OH group, so the group needs brackets: (OH)2.", "Ca2OH": "Check the numbers. Your formula gives 2 × 2+ = 4+ and 1 × 1− = 1−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Calcium is Ca<sup>2+<\/sup> (charge 2+). Hydroxide is OH<sup>−<\/sup> (charge 1−). The total positive charge must equal the total negative charge.", "You need 1 × Ca<sup>2+<\/sup> (2+) and 2 × OH<sup>−<\/sup> (2−). Put brackets round OH before the 2."], "explain": "Calcium hydroxide: Ca<sup>2+<\/sup> and OH<sup>−<\/sup>. 1 × 2+ = 2+ and 2 × 1− = 2−, so the formula is <b>Ca(OH)<sub>2<\/sub><\/b>."}]}, {"title": "aluminium nitrate", "scenario": "", "steps": [{"k": "sel", "prompt": "Use the ion table to find the two ions in <b>aluminium<\/b>. nitrate", "tpl": "The aluminium ion is {0} and the nitrate ion is {1}.", "blanks": [{"opts": ["Al⁺", "Al²⁺", "Al³⁺"], "ans": 2, "whys": ["Look in the ion table again: the aluminium ion is Al³⁺.", "Look in the ion table again: the aluminium ion is Al³⁺.", ""]}, {"opts": ["NO₃⁻", "NO₃²⁻", "NO₃³⁻"], "ans": 0, "whys": ["", "Look in the ion table again: the nitrate ion is NO₃⁻.", "Look in the ion table again: the nitrate ion is NO₃⁻."]}], "hints": ["The ion table lists every ion with its charge.", "Find aluminium in the left half of the table and nitrate in the right half.", "Aluminium has charge 3+ and nitrate has charge 1−."], "explain": "Aluminium is Al<sup>3+<\/sup> and nitrate is NO<sub>3<\/sub><sup>−<\/sup>."}, {"k": "fields", "prompt": "How many of each ion make the <b>total charge zero<\/b>?", "fields": [{"lab": "number of Al<sup>3+<\/sup> ions", "ans": 1, "ansTxt": "1", "unit": "", "tol": 0.01}, {"lab": "number of NO<sub>3<\/sub><sup>−<\/sup> ions", "ans": 3, "ansTxt": "3", "unit": "", "tol": 0.01}], "hints": ["Total positive charge = (number of positive ions) × (charge on each). The total negative charge is found the same way.", "Try small numbers until the positive total equals the negative total.", "Charges: 3+ and 1−. The smallest numbers that balance are 1 and 3."], "explain": "1 × 3+ = 3+ and 3 × 1− = 3−. These cancel."}, {"k": "formula", "prompt": "Write the formula of <b>aluminium nitrate<\/b>. Do not write the charges.", "ans": "Al(NO3)3", "mode": "ion", "traps": {"AlNO33": "The 3 belongs to the whole NO3 group, so the group needs brackets: (NO3)3.", "Al3NO3": "Check the numbers. Your formula gives 3 × 3+ = 9+ and 1 × 1− = 1−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Aluminium is Al<sup>3+<\/sup> (charge 3+). Nitrate is NO<sub>3<\/sub><sup>−<\/sup> (charge 1−). The total positive charge must equal the total negative charge.", "You need 1 × Al<sup>3+<\/sup> (3+) and 3 × NO<sub>3<\/sub><sup>−<\/sup> (3−). Put brackets round NO3 before the 3."], "explain": "Aluminium nitrate: Al<sup>3+<\/sup> and NO<sub>3<\/sub><sup>−<\/sup>. 1 × 3+ = 3+ and 3 × 1− = 3−, so the formula is <b>Al(NO<sub>3<\/sub>)<sub>3<\/sub><\/b>."}]}]}, {"id": "a2", "short": "A2 Write the formula", "part": "A", "mode": "set", "problems": [{"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>potassium oxide<\/b>.", "ans": "K2O", "mode": "ion", "traps": {"KO2": "Check the numbers. Your formula gives 1 × 1+ = 1+ and 2 × 2− = 4−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Potassium is K<sup>+<\/sup> (charge 1+). Oxide is O<sup>2−<\/sup> (charge 2−). The total positive charge must equal the total negative charge.", "You need 2 × K<sup>+<\/sup> (2+) and 1 × O<sup>2−<\/sup> (2−)."], "explain": "Potassium oxide: K<sup>+<\/sup> and O<sup>2−<\/sup>. 2 × 1+ = 2+ and 1 × 2− = 2−, so the formula is <b>K<sub>2<\/sub>O<\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>calcium hydroxide<\/b>.", "ans": "Ca(OH)2", "mode": "ion", "traps": {"CaOH2": "The 2 belongs to the whole OH group, so the group needs brackets: (OH)2.", "Ca2OH": "Check the numbers. Your formula gives 2 × 2+ = 4+ and 1 × 1− = 1−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Calcium is Ca<sup>2+<\/sup> (charge 2+). Hydroxide is OH<sup>−<\/sup> (charge 1−). The total positive charge must equal the total negative charge.", "You need 1 × Ca<sup>2+<\/sup> (2+) and 2 × OH<sup>−<\/sup> (2−). Put brackets round OH before the 2."], "explain": "Calcium hydroxide: Ca<sup>2+<\/sup> and OH<sup>−<\/sup>. 1 × 2+ = 2+ and 2 × 1− = 2−, so the formula is <b>Ca(OH)<sub>2<\/sub><\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>aluminium chloride<\/b>.", "ans": "AlCl3", "mode": "ion", "traps": {"Al3Cl": "Check the numbers. Your formula gives 3 × 3+ = 9+ and 1 × 1− = 1−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Aluminium is Al<sup>3+<\/sup> (charge 3+). Chloride is Cl<sup>−<\/sup> (charge 1−). The total positive charge must equal the total negative charge.", "You need 1 × Al<sup>3+<\/sup> (3+) and 3 × Cl<sup>−<\/sup> (3−)."], "explain": "Aluminium chloride: Al<sup>3+<\/sup> and Cl<sup>−<\/sup>. 1 × 3+ = 3+ and 3 × 1− = 3−, so the formula is <b>AlCl<sub>3<\/sub><\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>magnesium nitrate<\/b>.", "ans": "Mg(NO3)2", "mode": "ion", "traps": {"MgNO32": "The 2 belongs to the whole NO3 group, so the group needs brackets: (NO3)2.", "Mg2NO3": "Check the numbers. Your formula gives 2 × 2+ = 4+ and 1 × 1− = 1−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Magnesium is Mg<sup>2+<\/sup> (charge 2+). Nitrate is NO<sub>3<\/sub><sup>−<\/sup> (charge 1−). The total positive charge must equal the total negative charge.", "You need 1 × Mg<sup>2+<\/sup> (2+) and 2 × NO<sub>3<\/sub><sup>−<\/sup> (2−). Put brackets round NO3 before the 2."], "explain": "Magnesium nitrate: Mg<sup>2+<\/sup> and NO<sub>3<\/sub><sup>−<\/sup>. 1 × 2+ = 2+ and 2 × 1− = 2−, so the formula is <b>Mg(NO<sub>3<\/sub>)<sub>2<\/sub><\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>sodium carbonate<\/b>.", "ans": "Na2CO3", "mode": "ion", "traps": {"Na(CO3)2": "Check the numbers. Your formula gives 1 × 1+ = 1+ and 2 × 2− = 4−. The positive and negative charges must cancel exactly.", "Na2(CO3)": "Brackets are only needed when you have two or more of the group."}, "hints": ["Find both ions in the ion table and read off their charges.", "Sodium is Na<sup>+<\/sup> (charge 1+). Carbonate is CO<sub>3<\/sub><sup>2−<\/sup> (charge 2−). The total positive charge must equal the total negative charge.", "You need 2 × Na<sup>+<\/sup> (2+) and 1 × CO<sub>3<\/sub><sup>2−<\/sup> (2−)."], "explain": "Sodium carbonate: Na<sup>+<\/sup> and CO<sub>3<\/sub><sup>2−<\/sup>. 2 × 1+ = 2+ and 1 × 2− = 2−, so the formula is <b>Na<sub>2<\/sub>CO<sub>3<\/sub><\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>iron(III) oxide<\/b>.", "ans": "Fe2O3", "mode": "ion", "traps": {"Fe3O2": "Check the numbers. Your formula gives 3 × 3+ = 9+ and 2 × 2− = 4−. The positive and negative charges must cancel exactly.", "FeO": "That is the formula for iron(II) oxide. Check the Roman numeral in the name: it tells you which iron ion to use."}, "hints": ["Find both ions in the ion table and read off their charges.", "Iron(III) is Fe<sup>3+<\/sup> (charge 3+). Oxide is O<sup>2−<\/sup> (charge 2−). The total positive charge must equal the total negative charge.", "You need 2 × Fe<sup>3+<\/sup> (6+) and 3 × O<sup>2−<\/sup> (6−)."], "explain": "Iron(III) oxide: Fe<sup>3+<\/sup> and O<sup>2−<\/sup>. 2 × 3+ = 6+ and 3 × 2− = 6−, so the formula is <b>Fe<sub>2<\/sub>O<sub>3<\/sub><\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>copper(II) nitrate<\/b>.", "ans": "Cu(NO3)2", "mode": "ion", "traps": {"CuNO32": "The 2 belongs to the whole NO3 group, so the group needs brackets: (NO3)2.", "Cu2NO3": "Check the numbers. Your formula gives 2 × 2+ = 4+ and 1 × 1− = 1−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Copper(II) is Cu<sup>2+<\/sup> (charge 2+). Nitrate is NO<sub>3<\/sub><sup>−<\/sup> (charge 1−). The total positive charge must equal the total negative charge.", "You need 1 × Cu<sup>2+<\/sup> (2+) and 2 × NO<sub>3<\/sub><sup>−<\/sup> (2−). Put brackets round NO3 before the 2."], "explain": "Copper(II) nitrate: Cu<sup>2+<\/sup> and NO<sub>3<\/sub><sup>−<\/sup>. 1 × 2+ = 2+ and 2 × 1− = 2−, so the formula is <b>Cu(NO<sub>3<\/sub>)<sub>2<\/sub><\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>iron(II) sulfate<\/b>.", "ans": "FeSO4", "mode": "ion", "traps": {"Fe2(SO4)2": "Both numbers can be divided by 2. A formula shows the simplest ratio of ions.", "Fe(SO4)": "Brackets are only needed when you have two or more of the group.", "Fe2(SO4)3": "That is the formula for iron(III) sulfate. Check the Roman numeral in the name: it tells you which iron ion to use."}, "hints": ["Find both ions in the ion table and read off their charges.", "Iron(II) is Fe<sup>2+<\/sup> (charge 2+). Sulfate is SO<sub>4<\/sub><sup>2−<\/sup> (charge 2−). The total positive charge must equal the total negative charge.", "You need 1 × Fe<sup>2+<\/sup> (2+) and 1 × SO<sub>4<\/sub><sup>2−<\/sup> (2−)."], "explain": "Iron(II) sulfate: Fe<sup>2+<\/sup> and SO<sub>4<\/sub><sup>2−<\/sup>. 1 × 2+ = 2+ and 1 × 2− = 2−, so the formula is <b>FeSO<sub>4<\/sub><\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>aluminium sulfate<\/b>.", "ans": "Al2(SO4)3", "mode": "ion", "traps": {"Al2SO43": "The 3 belongs to the whole SO4 group, so the group needs brackets: (SO4)3.", "Al3(SO4)2": "Check the numbers. Your formula gives 3 × 3+ = 9+ and 2 × 2− = 4−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Aluminium is Al<sup>3+<\/sup> (charge 3+). Sulfate is SO<sub>4<\/sub><sup>2−<\/sup> (charge 2−). The total positive charge must equal the total negative charge.", "You need 2 × Al<sup>3+<\/sup> (6+) and 3 × SO<sub>4<\/sub><sup>2−<\/sup> (6−). Put brackets round SO4 before the 3."], "explain": "Aluminium sulfate: Al<sup>3+<\/sup> and SO<sub>4<\/sub><sup>2−<\/sup>. 2 × 3+ = 6+ and 3 × 2− = 6−, so the formula is <b>Al<sub>2<\/sub>(SO<sub>4<\/sub>)<sub>3<\/sub><\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Write the formula of <b>calcium phosphate<\/b>.", "ans": "Ca3(PO4)2", "mode": "ion", "traps": {"Ca3PO42": "The 2 belongs to the whole PO4 group, so the group needs brackets: (PO4)2.", "Ca2(PO4)3": "Check the numbers. Your formula gives 2 × 2+ = 4+ and 3 × 3− = 9−. The positive and negative charges must cancel exactly."}, "hints": ["Find both ions in the ion table and read off their charges.", "Calcium is Ca<sup>2+<\/sup> (charge 2+). Phosphate is PO<sub>4<\/sub><sup>3−<\/sup> (charge 3−). The total positive charge must equal the total negative charge.", "You need 3 × Ca<sup>2+<\/sup> (6+) and 2 × PO<sub>4<\/sub><sup>3−<\/sup> (6−). Put brackets round PO4 before the 2."], "explain": "Calcium phosphate: Ca<sup>2+<\/sup> and PO<sub>4<\/sub><sup>3−<\/sup>. 3 × 2+ = 6+ and 2 × 3− = 6−, so the formula is <b>Ca<sub>3<\/sub>(PO<sub>4<\/sub>)<sub>2<\/sub><\/b>."}]}]}, {"id": "a3", "short": "A3 Name the compound", "part": "A", "mode": "set", "problems": [{"title": "", "scenario": "", "steps": [{"k": "text", "prompt": "Name the compound with the formula <b>CuO<\/b>.", "ans": ["copper(II) oxide"], "traps": [["copper oxide", "Copper can form more than one ion, so the name needs a Roman numeral. CuO contains Cu²⁺: copper(II) oxide."]], "hints": ["Name the metal ion first, then the other ion.", "The metal comes from Cu<sup>2+<\/sup>. Read the formula to see how many of each ion there are, then use the ion table to decide which ions fit.", "The compound contains Cu<sup>2+<\/sup> and O<sup>2−<\/sup>."], "explain": "CuO contains Cu<sup>2+<\/sup> and O<sup>2−<\/sup>, so it is <b>copper(II) oxide<\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "text", "prompt": "Name the compound with the formula <b>FeCl<sub>3<\/sub><\/b>.", "ans": ["iron(III) chloride"], "traps": [["iron chloride", "Iron can form more than one ion, so the name needs a Roman numeral. In FeCl3 the iron is Fe³⁺ (3 chloride ions, each 1−): iron(III) chloride."]], "hints": ["Name the metal ion first, then the other ion.", "The metal comes from Fe<sup>3+<\/sup>. Read the formula to see how many of each ion there are, then use the ion table to decide which ions fit.", "The compound contains Fe<sup>3+<\/sup> and Cl<sup>−<\/sup>."], "explain": "FeCl<sub>3<\/sub> contains Fe<sup>3+<\/sup> and Cl<sup>−<\/sup>, so it is <b>iron(III) chloride<\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "text", "prompt": "Name the compound with the formula <b>Mg(NO<sub>3<\/sub>)<sub>2<\/sub><\/b>.", "ans": ["magnesium nitrate"], "traps": [], "hints": ["Name the metal ion first, then the other ion.", "The metal comes from Mg<sup>2+<\/sup>. Read the formula to see how many of each ion there are, then use the ion table to decide which ions fit.", "The compound contains Mg<sup>2+<\/sup> and NO<sub>3<\/sub><sup>−<\/sup>."], "explain": "Mg(NO<sub>3<\/sub>)<sub>2<\/sub> contains Mg<sup>2+<\/sup> and NO<sub>3<\/sub><sup>−<\/sup>, so it is <b>magnesium nitrate<\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "text", "prompt": "Name the compound with the formula <b>Al<sub>2<\/sub>O<sub>3<\/sub><\/b>.", "ans": ["aluminium oxide", "aluminum oxide"], "traps": [], "hints": ["Name the metal ion first, then the other ion.", "The metal comes from Al<sup>3+<\/sup>. Read the formula to see how many of each ion there are, then use the ion table to decide which ions fit.", "The compound contains Al<sup>3+<\/sup> and O<sup>2−<\/sup>."], "explain": "Al<sub>2<\/sub>O<sub>3<\/sub> contains Al<sup>3+<\/sup> and O<sup>2−<\/sup>, so it is <b>aluminium oxide<\/b>."}]}, {"title": "", "scenario": "", "steps": [{"k": "text", "prompt": "Name the compound with the formula <b>K<sub>2<\/sub>SO<sub>4<\/sub><\/b>.", "ans": ["potassium sulfate", "potassium sulphate"], "traps": [], "hints": ["Name the metal ion first, then the other ion.", "The metal comes from K<sup>+<\/sup>. Read the formula to see how many of each ion there are, then use the ion table to decide which ions fit.", "The compound contains K<sup>+<\/sup> and SO<sub>4<\/sub><sup>2−<\/sup>."], "explain": "K<sub>2<\/sub>SO<sub>4<\/sub> contains K<sup>+<\/sup> and SO<sub>4<\/sub><sup>2−<\/sup>, so it is <b>potassium sulfate<\/b>."}]}]}, {"id": "b0", "short": "B1 Ionic or molecular?", "part": "B", "mode": "seq", "problems": [{"title": "", "scenario": "", "steps": [{"k": "sel", "prompt": "Is each compound <b>ionic<\/b> or <b>molecular<\/b>?", "tpl": "sodium chloride is {0}<br>carbon dioxide is {1}<br>magnesium oxide is {2}<br>methane is {3}<br>ammonia is {4}<br>copper(II) sulfate is {5}<br>hydrogen chloride is {6}<br>calcium hydroxide is {7}", "blanks": [{"opts": ["ionic", "molecular"], "ans": 0, "whys": ["", "A metal joined to a non-metal makes an ionic compound."]}, {"opts": ["ionic", "molecular"], "ans": 1, "whys": ["Only non-metals are joined here, so it is made of molecules.", ""]}, {"opts": ["ionic", "molecular"], "ans": 0, "whys": ["", "A metal joined to a non-metal makes an ionic compound."]}, {"opts": ["ionic", "molecular"], "ans": 1, "whys": ["Only non-metals are joined here, so it is made of molecules.", ""]}, {"opts": ["ionic", "molecular"], "ans": 1, "whys": ["Only non-metals are joined here, so it is made of molecules.", ""]}, {"opts": ["ionic", "molecular"], "ans": 0, "whys": ["", "A metal joined to a non-metal makes an ionic compound."]}, {"opts": ["ionic", "molecular"], "ans": 1, "whys": ["Only non-metals are joined here, so it is made of molecules.", ""]}, {"opts": ["ionic", "molecular"], "ans": 0, "whys": ["", "A metal joined to a non-metal makes an ionic compound."]}], "hints": ["Sort by the elements inside. A metal joined to a non-metal gives an ionic compound.", "Compounds made only of non-metals are molecular.", "Metals in this list: sodium, magnesium, copper, calcium."], "explain": "Ionic: sodium chloride, magnesium oxide, copper(II) sulfate, calcium hydroxide (each contains a metal). Molecular: carbon dioxide, methane, ammonia, hydrogen chloride (non-metals only)."}]}]}, {"id": "b1", "short": "B2 Build it and find the formula", "part": "B", "mode": "set", "problems": [{"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>one carbon atom<\/b> and join hydrogen atoms to it until every hole in the carbon is used. Build it with your kit. What is the formula?", "ans": "CH4", "mode": "mol", "traps": {}, "hints": ["Count how many atoms join the central atom: every hole must be used.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "The answer has atoms of two kinds only, and the central atom is written first."], "explain": "Carbon has 4 bonds and each hydrogen has 1, so one carbon joins <b>4<\/b> hydrogens: CH<sub>4<\/sub>. This compound is methane."}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 4, "whys": ["Not linear. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not bent. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal planar. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal pyramidal. The angle here is 109.5°, and tetrahedral means 4 atoms.", ""]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the carbon atom: 4 atoms.", "the carbon atom: tetrahedral (109.5°)."], "explain": "The carbon atom is <b>tetrahedral<\/b>: 4 atoms, angle 109.5°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>one nitrogen atom<\/b> and join hydrogen atoms to it until every hole in the nitrogen is used. What is the formula?", "ans": "NH3", "mode": "mol", "traps": {}, "hints": ["Count how many atoms join the central atom: every hole must be used.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "The answer has atoms of two kinds only, and the central atom is written first."], "explain": "Nitrogen has 3 bonds, so it joins <b>3<\/b> hydrogens: NH<sub>3<\/sub>. This compound is ammonia."}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the nitrogen atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 3, "whys": ["Not linear. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "Not bent. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "Not trigonal planar. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "", "Not tetrahedral. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the nitrogen atom: 3 atoms, with the centre atom on top like the tip of a pyramid.", "the nitrogen atom: trigonal pyramidal (about 107°)."], "explain": "The nitrogen atom is <b>trigonal pyramidal<\/b>: 3 atoms, with the centre atom on top like the tip of a pyramid, angle about 107°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>one oxygen atom<\/b> and join hydrogen atoms to it until every hole in the oxygen is used. What is the formula?", "ans": "H2O", "mode": "mol", "traps": {}, "hints": ["Count how many atoms join the central atom: every hole must be used.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "The answer has atoms of two kinds only, and the central atom is written first."], "explain": "Oxygen has 2 bonds, so it joins <b>2<\/b> hydrogens: H<sub>2<\/sub>O. This compound is water."}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the oxygen atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 1, "whys": ["Not linear. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "", "Not trigonal planar. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not trigonal pyramidal. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not tetrahedral. The angle here is about 105°, and bent means 2 atoms, not in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the oxygen atom: 2 atoms, not in a straight line.", "the oxygen atom: bent (about 105°)."], "explain": "The oxygen atom is <b>bent<\/b>: 2 atoms, not in a straight line, angle about 105°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>one hydrogen atom<\/b> and one <b>chlorine atom<\/b>. Join them. Is every hole used? What is the formula?", "ans": "HCl", "mode": "mol", "traps": {}, "hints": ["Count how many atoms join the central atom: every hole must be used.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "The answer has atoms of two kinds only, and the central atom is written first."], "explain": "Hydrogen and chlorine each have 1 bond, so one of each joins: HCl. This compound is hydrogen chloride."}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of this molecule?", "tpl": "Shape of the molecule: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 0, "whys": ["", "Not bent. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal planar. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal pyramidal. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not tetrahedral. The angle here is 180°, and linear means 2 atoms in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the molecule: 2 atoms in a straight line.", "the molecule: linear (180°)."], "explain": "The molecule is <b>linear<\/b>: 2 atoms in a straight line, angle 180°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>one carbon atom<\/b> and join chlorine atoms to it until every hole in the carbon is used. What is the formula?", "ans": "CCl4", "mode": "mol", "traps": {}, "hints": ["Count how many atoms join the central atom: every hole must be used.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "The answer has atoms of two kinds only, and the central atom is written first."], "explain": "Carbon has 4 bonds and each chlorine has 1, so one carbon joins <b>4<\/b> chlorine atoms: CCl<sub>4<\/sub>. This compound is carbon tetrachloride."}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 4, "whys": ["Not linear. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not bent. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal planar. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal pyramidal. The angle here is 109.5°, and tetrahedral means 4 atoms.", ""]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the carbon atom: 4 atoms.", "the carbon atom: tetrahedral (109.5°)."], "explain": "The carbon atom is <b>tetrahedral<\/b>: 4 atoms, angle 109.5°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>two oxygen atoms<\/b> and join them so that every hole is used. What is the formula, and how many bonds join the two atoms?", "ans": "O2", "mode": "mol", "traps": {}, "hints": ["A molecule of an element has atoms of one kind only.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "Two atoms: the formula is the symbol with a 2."], "explain": "Two oxygen atoms joined by a double bond make an O<sub>2<\/sub> molecule."}, {"k": "num", "prompt": "How many bonds join the two oxygen atoms?", "ans": 2, "ansTxt": "2", "unit": "", "tol": 0.01, "hints": ["Each oxygen has 2 holes, and they can only join to each other.", "Use both holes of one oxygen on the other oxygen.", "The answer is 2."], "explain": "Each oxygen uses both bonds on the other oxygen: a <b>double bond<\/b>.", "traps": []}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of this molecule?", "tpl": "Shape of the molecule: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 0, "whys": ["", "Not bent. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal planar. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal pyramidal. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not tetrahedral. The angle here is 180°, and linear means 2 atoms in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the molecule: 2 atoms in a straight line.", "the molecule: linear (180°)."], "explain": "The molecule is <b>linear<\/b>: 2 atoms in a straight line, angle 180°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>two nitrogen atoms<\/b> and join them so that every hole is used. What is the formula, and how many bonds join the two atoms?", "ans": "N2", "mode": "mol", "traps": {}, "hints": ["A molecule of an element has atoms of one kind only.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "Two atoms: the formula is the symbol with a 2."], "explain": "Two nitrogen atoms joined by a triple bond make an N<sub>2<\/sub> molecule."}, {"k": "num", "prompt": "How many bonds join the two nitrogen atoms?", "ans": 3, "ansTxt": "3", "unit": "", "tol": 0.01, "hints": ["Each nitrogen has 3 holes, and they can only join to each other.", "Use all three holes of one nitrogen on the other nitrogen.", "The answer is 3."], "explain": "Each nitrogen uses all 3 bonds on the other nitrogen: a <b>triple bond<\/b>.", "traps": []}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of this molecule?", "tpl": "Shape of the molecule: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 0, "whys": ["", "Not bent. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal planar. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal pyramidal. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not tetrahedral. The angle here is 180°, and linear means 2 atoms in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the molecule: 2 atoms in a straight line.", "the molecule: linear (180°)."], "explain": "The molecule is <b>linear<\/b>: 2 atoms in a straight line, angle 180°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>one carbon atom<\/b> and <b>two oxygen atoms<\/b>. Put the carbon in the middle and join all the atoms so that every hole is used. What is the formula, and how many bonds join each oxygen to the carbon?", "ans": "CO2", "mode": "mol", "traps": {}, "hints": ["The formula has one carbon and some oxygen atoms.", "Carbon has 4 bonds and each oxygen has 2.", "Write the carbon first, then O with a 2."], "explain": "One carbon and two oxygen atoms with two double bonds: CO<sub>2<\/sub>, carbon dioxide."}, {"k": "num", "prompt": "How many bonds join each oxygen atom to the carbon?", "ans": 2, "ansTxt": "2", "unit": "", "tol": 0.01, "hints": ["Each oxygen has 2 holes and they can only join to the carbon.", "The carbon has 4 holes to share between 2 oxygen atoms.", "The answer is 2."], "explain": "Each oxygen uses both bonds on the carbon, so the carbon has 2 + 2 = 4 bonds: two <b>double bonds<\/b>.", "traps": []}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 0, "whys": ["", "Not bent. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal planar. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal pyramidal. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not tetrahedral. The angle here is 180°, and linear means 2 atoms in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the carbon atom: 2 atoms in a straight line.", "the carbon atom: linear (180°)."], "explain": "The carbon atom is <b>linear<\/b>: 2 atoms in a straight line, angle 180°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Take <b>two carbon atoms<\/b> and join them with a single bond. Fill every other hole with hydrogen. What is the formula, and how many hydrogen atoms join each carbon?", "ans": "C2H6", "mode": "mol", "traps": {}, "hints": ["Count the carbon atoms, then count all the hydrogen atoms.", "Each carbon has 4 bonds, 1 of which is the C–C bond.", "Each carbon joins 3 hydrogen atoms: 2 × 3 = 6."], "explain": "Two carbons with 3 hydrogens each: C<sub>2<\/sub>H<sub>6<\/sub>, ethane."}, {"k": "num", "prompt": "How many hydrogen atoms join each carbon atom?", "ans": 3, "ansTxt": "3", "unit": "", "tol": 0.01, "hints": ["Each carbon has 4 holes, and one is used on the other carbon.", "4 − 1 = 3 holes are left on each carbon.", "The answer is 3."], "explain": "Each carbon uses 1 bond on the other carbon, so 3 are left for hydrogen atoms.", "traps": []}, {"k": "sel", "prompt": "Look at the molecule on your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around each carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 4, "whys": ["Not linear. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not bent. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal planar. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal pyramidal. The angle here is 109.5°, and tetrahedral means 4 atoms.", ""]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "each carbon atom: 4 atoms.", "each carbon atom: tetrahedral (109.5°)."], "explain": "Each carbon atom is <b>tetrahedral<\/b>: 4 atoms, angle 109.5°."}]}]}, {"id": "b2", "short": "B3 Draw the molecule", "part": "B", "mode": "set", "problems": [{"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>hydrogen chloride<\/b>, HCl, with your kit (1 H, 1 Cl). Then draw it here by joining the atoms.", "badges": true, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "The small number on an atom shows how many more bonds it still needs. Keep going until none are left. Then drag the atoms until the angle numbers turn green, using the table of angles.", "The bonds you need are: H–Cl. There are no angles to check: each atom has only one bond, or the bonds are on a straight line."], "explain": "Every atom has its full number of bonds. The bonds are: H–Cl.", "sol": {"atoms": [["H", 245, 150], ["Cl", 325, 150]], "bonds": [[0, 1, 1]]}, "atoms": ["H", "Cl"]}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>water<\/b>, H<sub>2<\/sub>O, with your kit (1 O, 2 H). Then draw it here by joining the atoms.", "badges": true, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "The small number on an atom shows how many more bonds it still needs. Keep going until none are left. Then drag the atoms until the angle numbers turn green, using the table of angles.", "The bonds you need are: 2 × O–H. Angles to aim for: O atom: bent, about 105°."], "explain": "Every atom has its full number of bonds. The bonds are: 2 × O–H.", "sol": {"atoms": [["O", 280, 125], ["H", 224, 168], ["H", 336, 168]], "bonds": [[0, 1, 1], [0, 2, 1]]}, "atoms": ["O", "H", "H"]}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>ammonia<\/b>, NH<sub>3<\/sub>, with your kit (1 N, 3 H). Then draw it here by joining the atoms.", "badges": true, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "The small number on an atom shows how many more bonds it still needs. Keep going until none are left. Then drag the atoms until the angle numbers turn green, using the table of angles.", "The bonds you need are: 3 × N–H. Angles to aim for: N atom: spread about 120° apart."], "explain": "Every atom has its full number of bonds. The bonds are: 3 × N–H.", "sol": {"atoms": [["N", 280, 130], ["H", 280, 195], ["H", 224, 98], ["H", 336, 98]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1]]}, "atoms": ["N", "H", "H", "H"]}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>methane<\/b>, CH<sub>4<\/sub>, with your kit (1 C, 4 H). Then draw it here by joining the atoms.", "badges": true, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "The small number on an atom shows how many more bonds it still needs. Keep going until none are left. Then drag the atoms until the angle numbers turn green, using the table of angles.", "The bonds you need are: 4 × C–H. Angles to aim for: C atom: spread about 90° apart."], "explain": "Every atom has its full number of bonds. The bonds are: 4 × C–H.", "sol": {"atoms": [["C", 280, 150], ["H", 280, 80], ["H", 210, 150], ["H", 350, 150], ["H", 280, 220]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1]]}, "atoms": ["C", "H", "H", "H", "H"]}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>carbon dioxide<\/b>, CO<sub>2<\/sub>, with your kit (1 C, 2 O). Then draw it here by joining the atoms.", "badges": true, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "The small number on an atom shows how many more bonds it still needs. Keep going until none are left. Then drag the atoms until the angle numbers turn green, using the table of angles.", "The bonds you need are: 2 × C=O. Angles to aim for: C atom: in a straight line (180°)."], "explain": "Every atom has its full number of bonds. The bonds are: 2 × C=O.", "sol": {"atoms": [["C", 280, 150], ["O", 195, 150], ["O", 365, 150]], "bonds": [[0, 1, 2], [0, 2, 2]]}, "atoms": ["C", "O", "O"]}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>oxygen<\/b>, O<sub>2<\/sub>, with your kit (2 O). Then draw it here by joining the atoms.", "badges": true, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "The small number on an atom shows how many more bonds it still needs. Keep going until none are left. Then drag the atoms until the angle numbers turn green, using the table of angles.", "The bonds you need are: O=O. There are no angles to check: each atom has only one bond, or the bonds are on a straight line."], "explain": "Every atom has its full number of bonds. The bonds are: O=O.", "sol": {"atoms": [["O", 245, 150], ["O", 325, 150]], "bonds": [[0, 1, 2]]}, "atoms": ["O", "O"]}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>nitrogen<\/b>, N<sub>2<\/sub>, with your kit (2 N). Then draw it here by joining the atoms.", "badges": true, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "The small number on an atom shows how many more bonds it still needs. Keep going until none are left. Then drag the atoms until the angle numbers turn green, using the table of angles.", "The bonds you need are: N≡N. There are no angles to check: each atom has only one bond, or the bonds are on a straight line."], "explain": "Every atom has its full number of bonds. The bonds are: N≡N.", "sol": {"atoms": [["N", 245, 150], ["N", 325, 150]], "bonds": [[0, 1, 3]]}, "atoms": ["N", "N"]}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>ethane<\/b>, C<sub>2<\/sub>H<sub>6<\/sub>, with your kit (2 C, 6 H). Then draw it here by joining the atoms.", "badges": true, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "The small number on an atom shows how many more bonds it still needs. Keep going until none are left. Then drag the atoms until the angle numbers turn green, using the table of angles.", "The bonds you need are: C–C, 6 × C–H. Angles to aim for: C atom: spread about 90° apart."], "explain": "Every atom has its full number of bonds. The bonds are: C–C, 6 × C–H.", "sol": {"atoms": [["C", 215, 150], ["C", 315, 150], ["H", 215, 85], ["H", 215, 215], ["H", 150, 150], ["H", 315, 85], ["H", 315, 215], ["H", 380, 150]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1], [1, 5, 1], [1, 6, 1], [1, 7, 1]]}, "atoms": ["C", "C", "H", "H", "H", "H", "H", "H"]}]}]}, {"id": "b2c", "short": "B3b Draw it in 3D", "part": "B", "mode": "set", "problems": [{"title": "", "scenario": "", "steps": [{"k": "d3", "prompt": "Build <b>ammonia<\/b>, NH<sub>3<\/sub>, with your kit (1 N, 3 H). Now model it on the screen in <b>three dimensions<\/b>.", "note3": "Step 1: join two hydrogen atoms to the nitrogen atom, and drag them until the angle between the bonds is the real angle from the table. Tap one atom, then the other, to join them. Step 2: press the 3D button. The two atoms are pushed into three-dimensional space and dotted circles show where the other atoms go. Step 3: drag the remaining hydrogen atoms onto the dotted circles. Use the slider to turn the molecule round.", "centre": "N", "centreName": "nitrogen", "lig": "H", "ligName": "hydrogen", "n": 3, "ang": 107, "tol": 8, "hints": ["Find the row of the table of angles for 3 bonds round one atom. Use the <b>Real angle<\/b> column, not the last column.", "The real angle between two bonds is 107°. Join two hydrogen atoms to the nitrogen and drag them until the number turns green. Then press 3D.", "Press 3D. Then drag each remaining hydrogen atom onto a dotted circle."], "explain": "The real angle between the bonds is 107°. Two bonds lie in the plane of the page, and the other bond come out of it into three dimensions. The shape is trigonal pyramidal."}, {"k": "sel", "prompt": "Look at your 3D model. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the nitrogen atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 3, "whys": ["Not linear. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "Not bent. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "Not trigonal planar. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "", "Not tetrahedral. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the nitrogen atom: 3 atoms, with the centre atom on top like the tip of a pyramid.", "the nitrogen atom: trigonal pyramidal (about 107°)."], "explain": "The nitrogen atom is <b>trigonal pyramidal<\/b>: 3 atoms, with the centre atom on top like the tip of a pyramid, angle about 107°."}]}, {"title": "", "scenario": "", "steps": [{"k": "d3", "prompt": "Build <b>methane<\/b>, CH<sub>4<\/sub>, with your kit (1 C, 4 H). Now model it on the screen in <b>three dimensions<\/b>.", "note3": "Step 1: join two hydrogen atoms to the carbon atom, and drag them until the angle between the bonds is the real angle from the table. Tap one atom, then the other, to join them. Step 2: press the 3D button. The two atoms are pushed into three-dimensional space and dotted circles show where the other atoms go. Step 3: drag the remaining hydrogen atoms onto the dotted circles. Use the slider to turn the molecule round.", "centre": "C", "centreName": "carbon", "lig": "H", "ligName": "hydrogen", "n": 4, "ang": 109.5, "tol": 8, "hints": ["Find the row of the table of angles for 4 bonds round one atom. Use the <b>Real angle<\/b> column, not the last column.", "The real angle between two bonds is 109.5°. Join two hydrogen atoms to the carbon and drag them until the number turns green. Then press 3D.", "Press 3D. Then drag each remaining hydrogen atom onto a dotted circle."], "explain": "The real angle between the bonds is 109.5°. Two bonds lie in the plane of the page, and the other two bonds come out of it into three dimensions. The shape is tetrahedral."}, {"k": "sel", "prompt": "Look at your 3D model. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 4, "whys": ["Not linear. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not bent. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal planar. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal pyramidal. The angle here is 109.5°, and tetrahedral means 4 atoms.", ""]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the carbon atom: 4 atoms.", "the carbon atom: tetrahedral (109.5°)."], "explain": "The carbon atom is <b>tetrahedral<\/b>: 4 atoms, angle 109.5°."}]}]}, {"id": "b2b", "short": "B4 Draw harder molecules", "part": "B", "mode": "set", "problems": [{"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>ethene<\/b>, C<sub>2<\/sub>H<sub>4<\/sub>, with your kit (2 C, 4 H). Then draw it here by joining the atoms. The two carbon atoms need more than a single bond between them.", "badges": false, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: C=C, 4 × C–H. Angles to aim for: C atom: flat, about 120° apart."], "explain": "Every atom has its full number of bonds. The bonds are: C=C, 4 × C–H.", "sol": {"atoms": [["C", 240, 150], ["C", 320, 150], ["H", 208, 94], ["H", 208, 206], ["H", 352, 94], ["H", 352, 206]], "bonds": [[0, 1, 2], [0, 2, 1], [0, 3, 1], [1, 4, 1], [1, 5, 1]]}, "atoms": ["C", "C", "H", "H", "H", "H"]}, {"k": "sel", "prompt": "Use your drawing and your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around each carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 2, "whys": ["Not linear. The angle here is 120°, and trigonal planar means 3 atoms, all in one flat plane.", "Not bent. The angle here is 120°, and trigonal planar means 3 atoms, all in one flat plane.", "", "Not trigonal pyramidal. The angle here is 120°, and trigonal planar means 3 atoms, all in one flat plane.", "Not tetrahedral. The angle here is 120°, and trigonal planar means 3 atoms, all in one flat plane."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "each carbon atom: 3 atoms, all in one flat plane.", "each carbon atom: trigonal planar (120°)."], "explain": "Each carbon atom is <b>trigonal planar<\/b>: 3 atoms, all in one flat plane, angle 120°."}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>ethyne<\/b>, C<sub>2<\/sub>H<sub>2<\/sub>, with your kit (2 C, 2 H). Then draw it here by joining the atoms. The two carbon atoms need more than a double bond between them.", "badges": false, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: C≡C, 2 × C–H. Angles to aim for: C atom: in a straight line (180°)."], "explain": "Every atom has its full number of bonds. The bonds are: C≡C, 2 × C–H.", "sol": {"atoms": [["C", 235, 150], ["C", 325, 150], ["H", 160, 150], ["H", 400, 150]], "bonds": [[0, 1, 3], [0, 2, 1], [1, 3, 1]]}, "atoms": ["C", "C", "H", "H"]}, {"k": "sel", "prompt": "Use your drawing and your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around each carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 0, "whys": ["", "Not bent. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal planar. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal pyramidal. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not tetrahedral. The angle here is 180°, and linear means 2 atoms in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "each carbon atom: 2 atoms in a straight line.", "each carbon atom: linear (180°)."], "explain": "Each carbon atom is <b>linear<\/b>: 2 atoms in a straight line, angle 180°."}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>methanol<\/b>, CH<sub>3<\/sub>OH, with your kit (1 C, 1 O, 4 H). Then draw it here by joining the atoms.", "badges": false, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: C–O, 3 × C–H, O–H. Angles to aim for: C atom: spread about 90° apart; O atom: bent, about 105°."], "explain": "Every atom has its full number of bonds. The bonds are: C–O, 3 × C–H, O–H.", "sol": {"atoms": [["C", 235, 150], ["O", 320, 150], ["H", 235, 85], ["H", 235, 215], ["H", 170, 150], ["H", 337, 213]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1], [1, 5, 1]]}, "atoms": ["C", "O", "H", "H", "H", "H"]}, {"k": "sel", "prompt": "Use your drawing and your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the carbon atom: {0}<br>Shape around the oxygen atom: {1}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 4, "whys": ["Not linear. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not bent. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal planar. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal pyramidal. The angle here is 109.5°, and tetrahedral means 4 atoms.", ""]}, {"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 1, "whys": ["Not linear. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "", "Not trigonal planar. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not trigonal pyramidal. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not tetrahedral. The angle here is about 105°, and bent means 2 atoms, not in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the carbon atom: 4 atoms; the oxygen atom: 2 atoms, not in a straight line.", "the carbon atom: tetrahedral (109.5°); the oxygen atom: bent (about 105°)."], "explain": "The carbon atom is <b>tetrahedral<\/b>: 4 atoms, angle 109.5°. The oxygen atom is <b>bent<\/b>: 2 atoms, not in a straight line, angle about 105°."}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>hydrogen peroxide<\/b>, H<sub>2<\/sub>O<sub>2<\/sub>, with your kit (2 O, 2 H). Then draw it here by joining the atoms. The two oxygen atoms are joined to each other.", "badges": false, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: O–O, 2 × O–H. Angles to aim for: O atom: bent, about 105°."], "explain": "Every atom has its full number of bonds. The bonds are: O–O, 2 × O–H.", "sol": {"atoms": [["O", 235, 150], ["O", 325, 150], ["H", 218, 213], ["H", 342, 213]], "bonds": [[0, 1, 1], [0, 2, 1], [1, 3, 1]]}, "atoms": ["O", "O", "H", "H"]}, {"k": "sel", "prompt": "Use your drawing and your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around each oxygen atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 1, "whys": ["Not linear. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "", "Not trigonal planar. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not trigonal pyramidal. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not tetrahedral. The angle here is about 105°, and bent means 2 atoms, not in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "each oxygen atom: 2 atoms, not in a straight line.", "each oxygen atom: bent (about 105°)."], "explain": "Each oxygen atom is <b>bent<\/b>: 2 atoms, not in a straight line, angle about 105°."}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>methanal<\/b>, CH<sub>2<\/sub>O, with your kit (1 C, 1 O, 2 H). Then draw it here by joining the atoms. The oxygen is joined to the carbon only.", "badges": false, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: C=O, 2 × C–H. Angles to aim for: C atom: flat, about 120° apart."], "explain": "Every atom has its full number of bonds. The bonds are: C=O, 2 × C–H.", "sol": {"atoms": [["C", 280, 150], ["O", 280, 80], ["H", 219, 185], ["H", 341, 185]], "bonds": [[0, 1, 2], [0, 2, 1], [0, 3, 1]]}, "atoms": ["C", "O", "H", "H"]}, {"k": "sel", "prompt": "Use your drawing and your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 2, "whys": ["Not linear. The angle here is 120°, and trigonal planar means 3 atoms, all in one flat plane.", "Not bent. The angle here is 120°, and trigonal planar means 3 atoms, all in one flat plane.", "", "Not trigonal pyramidal. The angle here is 120°, and trigonal planar means 3 atoms, all in one flat plane.", "Not tetrahedral. The angle here is 120°, and trigonal planar means 3 atoms, all in one flat plane."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the carbon atom: 3 atoms, all in one flat plane.", "the carbon atom: trigonal planar (120°)."], "explain": "The carbon atom is <b>trigonal planar<\/b>: 3 atoms, all in one flat plane, angle 120°."}]}, {"title": "", "scenario": "", "steps": [{"k": "draw", "prompt": "Build <b>hydrogen cyanide<\/b>, HCN, with your kit (1 C, 1 H, 1 N). Then draw it here by joining the atoms. The hydrogen is joined to the carbon.", "badges": false, "tray": false, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: C–H, C≡N. Angles to aim for: C atom: in a straight line (180°)."], "explain": "Every atom has its full number of bonds. The bonds are: C–H, C≡N.", "sol": {"atoms": [["C", 280, 150], ["H", 200, 150], ["N", 360, 150]], "bonds": [[0, 1, 1], [0, 2, 3]]}, "atoms": ["C", "H", "N"]}, {"k": "sel", "prompt": "Use your drawing and your kit. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 0, "whys": ["", "Not bent. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal planar. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not trigonal pyramidal. The angle here is 180°, and linear means 2 atoms in a straight line.", "Not tetrahedral. The angle here is 180°, and linear means 2 atoms in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the carbon atom: 2 atoms in a straight line.", "the carbon atom: linear (180°)."], "explain": "The carbon atom is <b>linear<\/b>: 2 atoms in a straight line, angle 180°."}]}]}, {"id": "b3", "short": "B5 Names, formulae and drawings", "part": "B", "mode": "seq", "problems": [{"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "The prefix <b>tri<\/b> means 3. What is the formula of <b>nitrogen trichloride<\/b>?", "ans": "NCl3", "mode": "mol", "traps": {}, "hints": ["The name tells you the elements: nitrogen and chlorine. The prefix tells you how many chlorine atoms.", "Tri means 3, so there are 3 chlorine atoms. Nitrogen has 3 bonds and chlorine has 1, which agrees.", "One nitrogen and three chlorine atoms."], "explain": "<b>Tri<\/b>chloride means 3 chlorine atoms, so the formula is NCl<sub>3<\/sub>."}, {"k": "draw", "prompt": "Now draw nitrogen trichloride, NCl<sub>3<\/sub>. Add the atoms you need with the + buttons, then join them.", "badges": false, "tray": true, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: 3 × N–Cl. Angles to aim for: N atom: spread about 120° apart."], "explain": "Every atom has its full number of bonds. The bonds are: 3 × N–Cl.", "sol": {"atoms": [["N", 280, 125], ["Cl", 280, 205], ["Cl", 211, 85], ["Cl", 349, 85]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1]]}, "formula": {"N": 1, "Cl": 3}, "fAns": "NCl3"}, {"k": "sel", "prompt": "Use your drawing. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the nitrogen atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 3, "whys": ["Not linear. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "Not bent. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "Not trigonal planar. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid.", "", "Not tetrahedral. The angle here is about 107°, and trigonal pyramidal means 3 atoms, with the centre atom on top like the tip of a pyramid."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the nitrogen atom: 3 atoms, with the centre atom on top like the tip of a pyramid.", "the nitrogen atom: trigonal pyramidal (about 107°)."], "explain": "The nitrogen atom is <b>trigonal pyramidal<\/b>: 3 atoms, with the centre atom on top like the tip of a pyramid, angle about 107°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "The prefix <b>di<\/b> means 2. What is the formula of <b>dichlorine oxide<\/b>?", "ans": "Cl2O", "mode": "mol", "traps": {}, "hints": ["The name tells you the elements: chlorine and oxygen. The prefix tells you how many chlorine atoms.", "Di means 2, so there are 2 chlorine atoms and one oxygen atom. Oxygen has 2 bonds and each chlorine has 1, which agrees.", "Two chlorine atoms and one oxygen atom."], "explain": "<b>Di<\/b>chlorine means 2 chlorine atoms, so the formula is Cl<sub>2<\/sub>O."}, {"k": "draw", "prompt": "Now draw dichlorine oxide, Cl<sub>2<\/sub>O. Add the atoms you need with the + buttons, then join them.", "badges": false, "tray": true, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: 2 × O–Cl. Angles to aim for: O atom: bent, about 105°."], "explain": "Every atom has its full number of bonds. The bonds are: 2 × O–Cl.", "sol": {"atoms": [["O", 280, 120], ["Cl", 216, 169], ["Cl", 344, 169]], "bonds": [[0, 1, 1], [0, 2, 1]]}, "formula": {"Cl": 2, "O": 1}, "fAns": "Cl2O"}, {"k": "sel", "prompt": "Use your drawing. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the oxygen atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 1, "whys": ["Not linear. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "", "Not trigonal planar. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not trigonal pyramidal. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not tetrahedral. The angle here is about 105°, and bent means 2 atoms, not in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the oxygen atom: 2 atoms, not in a straight line.", "the oxygen atom: bent (about 105°)."], "explain": "The oxygen atom is <b>bent<\/b>: 2 atoms, not in a straight line, angle about 105°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Chloromethane is methane, CH<sub>4<\/sub>, with <b>one hydrogen atom replaced by a chlorine atom<\/b>. What is the formula of <b>chloromethane<\/b>?", "ans": "CH3Cl", "mode": "mol", "traps": {}, "hints": ["Start with the formula of methane, CH4.", "Take away one H and put one Cl in its place.", "One carbon, three hydrogen atoms and one chlorine atom."], "explain": "CH<sub>4<\/sub> becomes CH<sub>3<\/sub>Cl: three hydrogen atoms and one chlorine atom on the carbon."}, {"k": "draw", "prompt": "Now draw chloromethane, CH<sub>3<\/sub>Cl. Add the atoms you need with the + buttons, then join them.", "badges": false, "tray": true, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: C–Cl, 3 × C–H. Angles to aim for: C atom: spread about 90° apart."], "explain": "Every atom has its full number of bonds. The bonds are: C–Cl, 3 × C–H.", "sol": {"atoms": [["C", 270, 150], ["Cl", 355, 150], ["H", 270, 80], ["H", 200, 150], ["H", 270, 220]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1]]}, "formula": {"C": 1, "H": 3, "Cl": 1}, "fAns": "CH3Cl"}, {"k": "sel", "prompt": "Use your drawing. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around the carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 4, "whys": ["Not linear. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not bent. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal planar. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal pyramidal. The angle here is 109.5°, and tetrahedral means 4 atoms.", ""]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "the carbon atom: 4 atoms.", "the carbon atom: tetrahedral (109.5°)."], "explain": "The carbon atom is <b>tetrahedral<\/b>: 4 atoms, angle 109.5°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Propane has <b>three carbon atoms joined in a chain<\/b> by single bonds. Every other bond is to hydrogen. What is the formula of <b>propane<\/b>?", "ans": "C3H8", "mode": "mol", "traps": {}, "hints": ["Draw the three carbons in a row first. Count the bonds the carbons still need.", "The two end carbons each use 1 bond on the chain, and the middle carbon uses 2.", "End carbons: 3 hydrogens each. Middle carbon: 2 hydrogens. Total 8."], "explain": "Three carbons and 3 + 2 + 3 = 8 hydrogens: C<sub>3<\/sub>H<sub>8<\/sub>."}, {"k": "draw", "prompt": "Now draw propane, C<sub>3<\/sub>H<sub>8<\/sub>. Add the atoms you need with the + buttons, then join them.", "badges": false, "tray": true, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: 2 × C–C, 8 × C–H. Angles to aim for: C atom: spread about 90° apart."], "explain": "Every atom has its full number of bonds. The bonds are: 2 × C–C, 8 × C–H.", "sol": {"atoms": [["C", 170, 150], ["C", 260, 150], ["C", 350, 150], ["H", 170, 85], ["H", 170, 215], ["H", 105, 150], ["H", 260, 85], ["H", 260, 215], ["H", 350, 85], ["H", 350, 215], ["H", 415, 150]], "bonds": [[0, 1, 1], [1, 2, 1], [0, 3, 1], [0, 4, 1], [0, 5, 1], [1, 6, 1], [1, 7, 1], [2, 8, 1], [2, 9, 1], [2, 10, 1]]}, "formula": {"C": 3, "H": 8}, "fAns": "C3H8"}, {"k": "sel", "prompt": "Use your drawing. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around each carbon atom: {0}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 4, "whys": ["Not linear. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not bent. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal planar. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal pyramidal. The angle here is 109.5°, and tetrahedral means 4 atoms.", ""]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "each carbon atom: 4 atoms.", "each carbon atom: tetrahedral (109.5°)."], "explain": "Each carbon atom is <b>tetrahedral<\/b>: 4 atoms, angle 109.5°."}]}, {"title": "", "scenario": "", "steps": [{"k": "formula", "prompt": "Ethanol has <b>two carbon atoms joined by a single bond, and one oxygen atom<\/b>. The oxygen is joined to one carbon and to one hydrogen. Every other bond is to hydrogen. What is the formula of <b>ethanol<\/b>?", "ans": "C2H5OH", "mode": "mol", "traps": {}, "hints": ["Draw C–C–O first, then add the hydrogen atoms.", "Count the bonds each carbon still needs.", "Five hydrogens are on the carbons and one is on the oxygen: 6 hydrogens in all."], "explain": "Two carbons, six hydrogens and one oxygen. Chemists often write it C<sub>2<\/sub>H<sub>5<\/sub>OH to show the hydrogen on the oxygen."}, {"k": "draw", "prompt": "Now draw ethanol, C<sub>2<\/sub>H<sub>5<\/sub>OH. Add the atoms you need with the + buttons, then join them.", "badges": false, "tray": true, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: C–C, C–O, 5 × C–H, O–H. Angles to aim for: C atom: spread about 90° apart; O atom: bent, about 105°."], "explain": "Every atom has its full number of bonds. The bonds are: C–C, C–O, 5 × C–H, O–H.", "sol": {"atoms": [["C", 190, 150], ["C", 275, 150], ["O", 360, 150], ["H", 190, 85], ["H", 190, 215], ["H", 125, 150], ["H", 275, 85], ["H", 275, 215], ["H", 377, 213]], "bonds": [[0, 1, 1], [1, 2, 1], [0, 3, 1], [0, 4, 1], [0, 5, 1], [1, 6, 1], [1, 7, 1], [2, 8, 1]]}, "formula": {"C": 2, "H": 6, "O": 1}, "fAns": "C2H5OH", "need": {"O-H": 1}, "needMsg": "In ethanol the oxygen is joined to one carbon and to one hydrogen."}, {"k": "sel", "prompt": "Use your drawing. What is the <b>name of the shape<\/b> of the molecule, around the atom(s) named below?", "tpl": "Shape around each carbon atom: {0}<br>Shape around the oxygen atom: {1}", "blanks": [{"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 4, "whys": ["Not linear. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not bent. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal planar. The angle here is 109.5°, and tetrahedral means 4 atoms.", "Not trigonal pyramidal. The angle here is 109.5°, and tetrahedral means 4 atoms.", ""]}, {"opts": ["linear", "bent", "trigonal planar", "trigonal pyramidal", "tetrahedral"], "ans": 1, "whys": ["Not linear. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "", "Not trigonal planar. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not trigonal pyramidal. The angle here is about 105°, and bent means 2 atoms, not in a straight line.", "Not tetrahedral. The angle here is about 105°, and bent means 2 atoms, not in a straight line."]}], "hints": ["Use the table of molecular shapes. Count the atoms joined to the atom you are looking at, and look at the angles between its bonds.", "each carbon atom: 4 atoms; the oxygen atom: 2 atoms, not in a straight line.", "each carbon atom: tetrahedral (109.5°); the oxygen atom: bent (about 105°)."], "explain": "Each carbon atom is <b>tetrahedral<\/b>: 4 atoms, angle 109.5°. The oxygen atom is <b>bent<\/b>: 2 atoms, not in a straight line, angle about 105°."}]}]}, {"id": "b4", "short": "B6 Molar mass", "part": "B", "mode": "set", "problems": [{"title": "ammonia", "scenario": "", "steps": [{"k": "fields", "prompt": "Work out the mass of each element in one mole of <b>ammonia<\/b> (NH<sub>3<\/sub>): number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of N in one molecule", "ans": 14, "ansTxt": "14", "unit": "", "tol": 0.01}, {"lab": "mass of H in one molecule", "ans": 3, "ansTxt": "3", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element in the formula. No number after a symbol means 1 atom.", "Multiply the number of atoms by the A<sub>r<\/sub> from the table of A<sub>r<\/sub> values.", "N: 1 × 14 = 14; H: 3 × 1 = 3"], "explain": "N: 1 × 14 = 14; H: 3 × 1 = 3."}, {"k": "num", "prompt": "Add the masses to find the <b>molar mass<\/b> of NH<sub>3<\/sub>.", "ans": 17, "ansTxt": "17", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 17."], "explain": "14 + 3 = 17 g mol<sup>−1<\/sup>.", "traps": []}]}, {"title": "carbon dioxide", "scenario": "", "steps": [{"k": "fields", "prompt": "Work out the mass of each element in one mole of <b>carbon dioxide<\/b> (CO<sub>2<\/sub>): number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of C in one molecule", "ans": 12, "ansTxt": "12", "unit": "", "tol": 0.01}, {"lab": "mass of O in one molecule", "ans": 32, "ansTxt": "32", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element in the formula. No number after a symbol means 1 atom.", "Multiply the number of atoms by the A<sub>r<\/sub> from the table of A<sub>r<\/sub> values.", "C: 1 × 12 = 12; O: 2 × 16 = 32"], "explain": "C: 1 × 12 = 12; O: 2 × 16 = 32."}, {"k": "num", "prompt": "Add the masses to find the <b>molar mass<\/b> of CO<sub>2<\/sub>.", "ans": 44, "ansTxt": "44", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 44."], "explain": "12 + 32 = 44 g mol<sup>−1<\/sup>.", "traps": []}]}, {"title": "hydrogen chloride", "scenario": "", "steps": [{"k": "fields", "prompt": "Work out the mass of each element in one mole of <b>hydrogen chloride<\/b> (HCl): number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of H in one molecule", "ans": 1, "ansTxt": "1", "unit": "", "tol": 0.01}, {"lab": "mass of Cl in one molecule", "ans": 35.5, "ansTxt": "35.5", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element in the formula. No number after a symbol means 1 atom.", "Multiply the number of atoms by the A<sub>r<\/sub> from the table of A<sub>r<\/sub> values.", "H: 1 × 1 = 1; Cl: 1 × 35.5 = 35.5"], "explain": "H: 1 × 1 = 1; Cl: 1 × 35.5 = 35.5."}, {"k": "num", "prompt": "Add the masses to find the <b>molar mass<\/b> of HCl.", "ans": 36.5, "ansTxt": "36.5", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 36.5."], "explain": "1 + 35.5 = 36.5 g mol<sup>−1<\/sup>.", "traps": []}]}, {"title": "ethane", "scenario": "", "steps": [{"k": "fields", "prompt": "Work out the mass of each element in one mole of <b>ethane<\/b> (C<sub>2<\/sub>H<sub>6<\/sub>): number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of C in one molecule", "ans": 24, "ansTxt": "24", "unit": "", "tol": 0.01}, {"lab": "mass of H in one molecule", "ans": 6, "ansTxt": "6", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element in the formula. No number after a symbol means 1 atom.", "Multiply the number of atoms by the A<sub>r<\/sub> from the table of A<sub>r<\/sub> values.", "C: 2 × 12 = 24; H: 6 × 1 = 6"], "explain": "C: 2 × 12 = 24; H: 6 × 1 = 6."}, {"k": "num", "prompt": "Add the masses to find the <b>molar mass<\/b> of C<sub>2<\/sub>H<sub>6<\/sub>.", "ans": 30, "ansTxt": "30", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 30."], "explain": "24 + 6 = 30 g mol<sup>−1<\/sup>.", "traps": []}]}, {"title": "carbon tetrachloride", "scenario": "", "steps": [{"k": "fields", "prompt": "Work out the mass of each element in one mole of <b>carbon tetrachloride<\/b> (CCl<sub>4<\/sub>): number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of C in one molecule", "ans": 12, "ansTxt": "12", "unit": "", "tol": 0.01}, {"lab": "mass of Cl in one molecule", "ans": 142.0, "ansTxt": "142", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element in the formula. No number after a symbol means 1 atom.", "Multiply the number of atoms by the A<sub>r<\/sub> from the table of A<sub>r<\/sub> values.", "C: 1 × 12 = 12; Cl: 4 × 35.5 = 142"], "explain": "C: 1 × 12 = 12; Cl: 4 × 35.5 = 142."}, {"k": "num", "prompt": "Add the masses to find the <b>molar mass<\/b> of CCl<sub>4<\/sub>.", "ans": 154.0, "ansTxt": "154", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 154."], "explain": "12 + 142 = 154 g mol<sup>−1<\/sup>.", "traps": []}]}, {"title": "methanol", "scenario": "", "steps": [{"k": "fields", "prompt": "Work out the mass of each element in one mole of <b>methanol<\/b> (CH<sub>3<\/sub>OH): number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of C in one molecule", "ans": 12, "ansTxt": "12", "unit": "", "tol": 0.01}, {"lab": "mass of H in one molecule", "ans": 4, "ansTxt": "4", "unit": "", "tol": 0.01}, {"lab": "mass of O in one molecule", "ans": 16, "ansTxt": "16", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element in the formula. No number after a symbol means 1 atom.", "Multiply the number of atoms by the A<sub>r<\/sub> from the table of A<sub>r<\/sub> values.", "C: 1 × 12 = 12; H: 4 × 1 = 4; O: 1 × 16 = 16"], "explain": "C: 1 × 12 = 12; H: 4 × 1 = 4; O: 1 × 16 = 16."}, {"k": "num", "prompt": "Add the masses to find the <b>molar mass<\/b> of CH<sub>3<\/sub>OH.", "ans": 32, "ansTxt": "32", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 32."], "explain": "12 + 4 + 16 = 32 g mol<sup>−1<\/sup>.", "traps": []}]}]}, {"id": "b5", "short": "B7 Put it all together", "part": "B", "mode": "seq", "problems": [{"title": "trichloromethane", "scenario": "", "steps": [{"k": "formula", "prompt": "Trichloromethane is methane with <b>three hydrogen atoms replaced by chlorine atoms<\/b>. What is the formula of <b>trichloromethane<\/b>?", "ans": "CHCl3", "mode": "mol", "traps": {}, "hints": ["Use the clue to decide which atoms join the central atom.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "The formula is CHCl<sub>3<\/sub>."], "explain": "The formula is CHCl<sub>3<\/sub>."}, {"k": "draw", "prompt": "Draw trichloromethane, CHCl<sub>3<\/sub>. Add the atoms with the + buttons, then join them.", "badges": false, "tray": true, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: C–H, 3 × C–Cl. Angles to aim for: C atom: spread about 90° apart."], "explain": "Every atom has its full number of bonds. The bonds are: C–H, 3 × C–Cl.", "sol": {"atoms": [["C", 280, 150], ["H", 280, 80], ["Cl", 200, 150], ["Cl", 360, 150], ["Cl", 280, 225]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1]]}, "formula": {"C": 1, "H": 1, "Cl": 3}, "fAns": "CHCl3"}, {"k": "fields", "prompt": "Work out the mass of each element in one mole of CHCl<sub>3<\/sub>: number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of C", "ans": 12, "ansTxt": "12", "unit": "", "tol": 0.01}, {"lab": "mass of H", "ans": 1, "ansTxt": "1", "unit": "", "tol": 0.01}, {"lab": "mass of Cl", "ans": 106.5, "ansTxt": "106.5", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element, then multiply by A<sub>r<\/sub>.", "Use the table of A<sub>r<\/sub> values. Cl is 35.5.", "C: 1 × 12 = 12; H: 1 × 1 = 1; Cl: 3 × 35.5 = 106.5"], "explain": "C: 1 × 12 = 12; H: 1 × 1 = 1; Cl: 3 × 35.5 = 106.5."}, {"k": "num", "prompt": "Add the masses to find the molar mass of CHCl<sub>3<\/sub>.", "ans": 119.5, "ansTxt": "119.5", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 119.5."], "explain": "12 + 1 + 106.5 = 119.5 g mol<sup>−1<\/sup>.", "traps": []}]}, {"title": "dichloromethane", "scenario": "", "steps": [{"k": "formula", "prompt": "Dichloromethane is methane with <b>two hydrogen atoms replaced by chlorine atoms<\/b>. What is the formula of <b>dichloromethane<\/b>?", "ans": "CH2Cl2", "mode": "mol", "traps": {}, "hints": ["Use the clue to decide which atoms join the central atom.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "The formula is CH<sub>2<\/sub>Cl<sub>2<\/sub>."], "explain": "The formula is CH<sub>2<\/sub>Cl<sub>2<\/sub>."}, {"k": "draw", "prompt": "Draw dichloromethane, CH<sub>2<\/sub>Cl<sub>2<\/sub>. Add the atoms with the + buttons, then join them.", "badges": false, "tray": true, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: 2 × C–H, 2 × C–Cl. Angles to aim for: C atom: spread about 90° apart."], "explain": "Every atom has its full number of bonds. The bonds are: 2 × C–H, 2 × C–Cl.", "sol": {"atoms": [["C", 280, 150], ["H", 280, 80], ["H", 280, 220], ["Cl", 200, 150], ["Cl", 360, 150]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1]]}, "formula": {"C": 1, "H": 2, "Cl": 2}, "fAns": "CH2Cl2"}, {"k": "fields", "prompt": "Work out the mass of each element in one mole of CH<sub>2<\/sub>Cl<sub>2<\/sub>: number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of C", "ans": 12, "ansTxt": "12", "unit": "", "tol": 0.01}, {"lab": "mass of H", "ans": 2, "ansTxt": "2", "unit": "", "tol": 0.01}, {"lab": "mass of Cl", "ans": 71.0, "ansTxt": "71", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element, then multiply by A<sub>r<\/sub>.", "Use the table of A<sub>r<\/sub> values. Cl is 35.5.", "C: 1 × 12 = 12; H: 2 × 1 = 2; Cl: 2 × 35.5 = 71"], "explain": "C: 1 × 12 = 12; H: 2 × 1 = 2; Cl: 2 × 35.5 = 71."}, {"k": "num", "prompt": "Add the masses to find the molar mass of CH<sub>2<\/sub>Cl<sub>2<\/sub>.", "ans": 85.0, "ansTxt": "85", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 85."], "explain": "12 + 2 + 71 = 85 g mol<sup>−1<\/sup>.", "traps": []}]}, {"title": "hydrazine", "scenario": "", "steps": [{"k": "formula", "prompt": "Hydrazine has <b>two nitrogen atoms joined by a single bond<\/b>. Every other bond is to hydrogen. What is the formula of <b>hydrazine<\/b>?", "ans": "N2H4", "mode": "mol", "traps": {}, "hints": ["Use the clue to decide which atoms join the central atom.", "C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2.", "The formula is N<sub>2<\/sub>H<sub>4<\/sub>."], "explain": "The formula is N<sub>2<\/sub>H<sub>4<\/sub>."}, {"k": "draw", "prompt": "Draw hydrazine, N<sub>2<\/sub>H<sub>4<\/sub>. Add the atoms with the + buttons, then join them.", "badges": false, "tray": true, "hints": ["C has 4 bonds, H has 1, Cl has 1, N has 3 and O has 2. Start with the atom that has the most bonds.", "Check each atom against the rules, and make sure every atom is joined to the rest of the molecule. Then compare your angle numbers with the table of angles, and drag the atoms apart so no bond passes through an atom.", "The bonds you need are: N–N, 4 × N–H. Angles to aim for: N atom: spread about 120° apart."], "explain": "Every atom has its full number of bonds. The bonds are: N–N, 4 × N–H.", "sol": {"atoms": [["N", 240, 150], ["N", 320, 150], ["H", 208, 94], ["H", 208, 206], ["H", 352, 94], ["H", 352, 206]], "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [1, 4, 1], [1, 5, 1]]}, "formula": {"N": 2, "H": 4}, "fAns": "N2H4"}, {"k": "fields", "prompt": "Work out the mass of each element in one mole of N<sub>2<\/sub>H<sub>4<\/sub>: number of atoms × A<sub>r<\/sub>.", "fields": [{"lab": "mass of N", "ans": 28, "ansTxt": "28", "unit": "", "tol": 0.01}, {"lab": "mass of H", "ans": 4, "ansTxt": "4", "unit": "", "tol": 0.01}], "hints": ["Count the atoms of each element, then multiply by A<sub>r<\/sub>.", "Use the table of A<sub>r<\/sub> values. Cl is 35.5.", "N: 2 × 14 = 28; H: 4 × 1 = 4"], "explain": "N: 2 × 14 = 28; H: 4 × 1 = 4."}, {"k": "num", "prompt": "Add the masses to find the molar mass of N<sub>2<\/sub>H<sub>4<\/sub>.", "ans": 32, "ansTxt": "32", "unit": "g mol⁻¹", "tol": 0.01, "hints": ["Add the numbers from the last step.", "Molar mass = sum of (number of atoms × A<sub>r<\/sub>).", "The answer is 32."], "explain": "28 + 4 = 32 g mol<sup>−1<\/sup>.", "traps": []}]}]}], "key": "formulae-metal-molecular-v1", "showAfter": 2, "secureAfter": 1, "hintBtn": true, "angTable": "<table class=\"angtbl small\"><tr><th>Around one atom<\/th><th>Name of the shape<\/th><th>Examples<\/th><th>Real angle<\/th><th>Aim for in a flat drawing<\/th><\/tr><tr><td>Two bonds in a straight line<\/td><td><b>linear<\/b><\/td><td>C in CO<sub>2<\/sub>, HCN, C<sub>2<\/sub>H<sub>2<\/sub><\/td><td>180°<\/td><td>180°<\/td><\/tr><tr><td>Two bonds, bent<\/td><td><b>bent<\/b><\/td><td>O in H<sub>2<\/sub>O, H<sub>2<\/sub>O<sub>2<\/sub>, CH<sub>3<\/sub>OH<\/td><td>about 105°<\/td><td>about 105°<\/td><\/tr><tr><td>Three bonds, flat (one is a double bond)<\/td><td><b>trigonal planar<\/b><\/td><td>C in C<sub>2<\/sub>H<sub>4<\/sub>, CH<sub>2<\/sub>O<\/td><td>120°<\/td><td>120°<\/td><\/tr><tr><td>Three bonds, a pyramid<\/td><td><b>trigonal pyramidal<\/b><\/td><td>N in NH<sub>3<\/sub>, NCl<sub>3<\/sub>, N<sub>2<\/sub>H<sub>4<\/sub><\/td><td>about 107°<\/td><td>about 120° apart<\/td><\/tr><tr><td>Four bonds<\/td><td><b>tetrahedral<\/b><\/td><td>C in CH<sub>4<\/sub>, CH<sub>3<\/sub>Cl, C<sub>2<\/sub>H<sub>6<\/sub><\/td><td>109.5°<\/td><td>about 90° apart<\/td><\/tr><\/table>", "title": "Formulae of metal and molecular compounds"};
+var KEY=DATA.key,pending=false;
+var nameEl=document.getElementById("r_name");
+var CONF=["","Lost","Unsure","Getting there","Confident","Could teach it"];
+function el(tag,attrs,html){var e=document.createElement(tag);if(attrs){for(var k in attrs){e.setAttribute(k,attrs[k]);}}if(html!=null){e.innerHTML=html;}return e;}
+function parseNum(s){s=String(s).trim().replace(/−/g,"-").replace(",",".").replace(/\s/g,"");if(s===""||isNaN(Number(s))){return null;}return Number(s);}
+function near(v,a,tol){return Math.abs(v-a)<=tol;}
+var SVGNS="http://www.w3.org/2000/svg";
+function normF(s){return String(s).replace(/[₀-₉]/g,function(c){return String(c.charCodeAt(0)-8320);}).replace(/\s+/g,"");}
+function fmtF(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/(\d+)/g,"<sub>$1</sub>");}
+function cntF(s){var p=0,bad=false;
+  function nm(){var m=/^\d+/.exec(s.slice(p));if(m){p+=m[0].length;return +m[0];}return 1;}
+  function grp(){var o={},m,n,k;while(p<s.length){var ch=s.charAt(p);
+    if(ch==="("){p++;var inner=grp();if(s.charAt(p)!==")"){bad=true;return o;}p++;n=nm();for(k in inner){o[k]=(o[k]||0)+inner[k]*n;}}
+    else if(ch===")"){return o;}
+    else{m=/^[A-Z][a-z]?/.exec(s.slice(p));if(!m){bad=true;return o;}p+=m[0].length;n=nm();o[m[0]]=(o[m[0]]||0)+n;}}
+    return o;}
+  var r=grp();if(bad||p<s.length){return null;}return r;}
+function sameC(a,b){if(!a||!b){return false;}var k;for(k in a){if(a[k]!==b[k]){return false;}}for(k in b){if(a[k]!==b[k]){return false;}}return true;}
+function plainTxt(h){return h.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();}
+
+/* tool-tips */
+Array.prototype.forEach.call(document.querySelectorAll(".term"),function(t){
+  t.setAttribute("tabindex","0");
+  function place(){t.classList.remove("r");var r=t.getBoundingClientRect();if(r.left+290>window.innerWidth){t.classList.add("r");}}
+  t.addEventListener("mouseenter",place);t.addEventListener("focus",place);
+});
+
+/* ---------- engine ---------- */
+var UN={},saveTimer=null;
+function schedSave(){clearTimeout(saveTimer);saveTimer=setTimeout(function(){autosave();},400);}
+
+function gateMsg(P,sp,v){
+  var g=P.steps[sp.gate].val;if(g===""||g===null||g===undefined){return "";}
+  var opts=P.def.steps[sp.gate].options,said=plainTxt(opts[+g]);
+  if(v>1.0000001&&+g!==0){return "Your answer is more than one mole, but you chose “"+said+"”. Check which way round you divided: moles = mass ÷ molar mass.";}
+  if(v<0.9999999&&+g!==1){return "Your answer is less than one mole, but you chose “"+said+"”. Check which way round you divided: moles = mass ÷ molar mass.";}
+  if(Math.abs(v-1)<=0.0000001&&+g!==2){return "Your answer is exactly one mole, but you chose “"+said+"”.";}
+  return "";
+}
+function trapMsg(sp,v){
+  var m="";
+  (sp.traps||[]).some(function(t){if(near(v,t.v,Math.abs(t.v)*0.004+1e-9)){m=t.msg;return true;}return false;});
+  return m;
+}
+
+function buildStep(U,P,si,sp){
+  var S={sp:sp,w:0,res:null,val:"",box:el("div",{"class":"step"})};
+  S.box.appendChild(el("p",{"class":"stext"},"<span class=\"snum\">Step "+(si+1)+"</span> "+sp.prompt));
+  if(sp.note){S.box.appendChild(el("p",{"class":"snote"},sp.note));}
+  var body=el("div",{"class":"sbody"}),api;
+  if(sp.k==="num"){
+    var inp=el("input",{type:"text",inputmode:"decimal",autocomplete:"off","class":"numin","aria-label":"Your answer"});
+    body.appendChild(inp);if(sp.unit){body.appendChild(el("span",{"class":"unit"}," "+sp.unit));}
+    api={
+      check:function(){var v=parseNum(inp.value);if(v===null){return{valid:false,msg:"Type a number only, with no units."};}
+        if(near(v,sp.ans,sp.tol)){return{valid:true,ok:true};}
+        var m=trapMsg(sp,v);if(!m&&sp.gate!=null){m=gateMsg(P,sp,v);}
+        return{valid:true,ok:false,msg:m};},
+      get:function(){return inp.value;},set:function(v){inp.value=v||"";},
+      lock:function(){inp.disabled=true;},fill:function(){inp.value=sp.ansTxt;}
+    };
+  }else if(sp.k==="mc"){
+    var name="o"+Math.random().toString(36).slice(2,8),radios=[];
+    sp.options.forEach(function(o,i){
+      var l=el("label",{"class":"opt"},"<input type=\"radio\" name=\""+name+"\" value=\""+i+"\"> <span>"+o+"</span>");
+      body.appendChild(l);radios.push(l.querySelector("input"));
+    });
+    api={
+      check:function(){var c=null;radios.forEach(function(r,i){if(r.checked){c=i;}});
+        if(c===null){return{valid:false,msg:"Choose an answer first."};}
+        return c===sp.correct?{valid:true,ok:true}:{valid:true,ok:false,msg:(sp.whys&&sp.whys[c])||""};},
+      get:function(){var c="";radios.forEach(function(r,i){if(r.checked){c=String(i);}});return c;},
+      set:function(v){radios.forEach(function(r,i){r.checked=(String(i)===String(v));});},
+      lock:function(){radios.forEach(function(r){r.disabled=true;});},fill:function(){radios[sp.correct].checked=true;}
+    };
+  }else if(sp.k==="sel"){
+    var sels=[],t=el("p",{"class":"cloze"});
+    t.innerHTML=sp.tpl.replace(/\{(\d+)\}/g,function(m,i){return "<select data-i=\""+i+"\"></select>";});
+    body.appendChild(t);
+    sp.blanks.forEach(function(bl,i){var s=t.querySelector("select[data-i=\""+i+"\"]");s.appendChild(el("option",{value:""},"choose"));bl.opts.forEach(function(o,j){s.appendChild(el("option",{value:String(j)},o));});s.setAttribute("aria-label","Blank "+(i+1));sels.push(s);});
+    api={
+      check:function(){
+        if(sels.some(function(s){return s.value==="";})){return{valid:false,msg:"Choose an answer in every box."};}
+        var bad=[],msg="";
+        sels.forEach(function(s,i){var ok=(+s.value===sp.blanks[i].ans);s.className=ok?"good":"bad";if(!ok){bad.push(i+1);if(!msg&&sp.blanks[i].whys&&sp.blanks[i].whys[+s.value]){msg=sp.blanks[i].whys[+s.value];}}});
+        if(!bad.length){return{valid:true,ok:true};}
+        return{valid:true,ok:false,msg:(msg?msg+" ":"")+"Look again at choice"+(bad.length>1?"s ":" ")+bad.join(", ")+"."};
+      },
+      get:function(){return sels.map(function(s){return s.value;});},
+      set:function(v){sels.forEach(function(s,i){s.value=(v&&v[i]!=null)?v[i]:"";});},
+      lock:function(){sels.forEach(function(s){s.disabled=true;});},
+      fill:function(){sels.forEach(function(s,i){s.value=String(sp.blanks[i].ans);s.className="good";});}
+    };
+  }else if(sp.k==="diag"){
+    var W=560,H=270,top=26,bot=44,YMIN=-130,YMAX=130,sid="dg"+Math.random().toString(36).slice(2,7);
+    var svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("class","fig");svg.setAttribute("role","img");svg.setAttribute("aria-label","Enthalpy level diagram you are building");svg.style.maxWidth="560px";body.appendChild(svg);
+    var ctl=el("div",null,"<div class=\"row2\"><label>Products level <input type=\"range\" data-k=\"v\" min=\"-100\" max=\"100\" step=\"10\" value=\"0\"></label><output data-o=\"v\"></output></div><p class=\"cloze\" style=\"margin:4px 0\">The sign of Δ<i>H</i> is <select data-k=\"s\"><option value=\"\">choose</option><option value=\"0\">negative</option><option value=\"1\">positive</option></select>.</p>");
+    body.appendChild(ctl);
+    var rv=ctl.querySelector("[data-k=v]"),ss=ctl.querySelector("[data-k=s]"),ov=ctl.querySelector("[data-o=v]");
+    function Y(v){return top+(YMAX-v)/(YMAX-YMIN)*(H-top-bot);}
+    function draw(){
+      var v=+rv.value,y0=Y(0),y1=Y(v),o;
+      ov.textContent=v===0?"level with the reactants":(Math.abs(v)+" kJ "+(v<0?"below":"above")+" the reactants");
+      svg.setAttribute("viewBox","0 0 "+W+" "+H);
+      o="<defs><marker id=\""+sid+"\" markerWidth=\"8\" markerHeight=\"8\" refX=\"4\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 z\" fill=\"#111\"/></marker></defs>";
+      o+="<line x1=\"22\" y1=\""+(H-bot+16)+"\" x2=\"22\" y2=\""+(top-14)+"\" stroke=\"#111\" marker-end=\"url(#"+sid+")\"/>";
+      o+="<text transform=\"translate(12 "+((top+H-bot)/2)+") rotate(-90)\" font-size=\"15\" text-anchor=\"middle\">Enthalpy</text>";
+      o+="<line x1=\"70\" y1=\""+y0+"\" x2=\"190\" y2=\""+y0+"\" stroke=\"#111\" stroke-width=\"4\"/><text x=\"130\" y=\""+(y0+22)+"\" font-size=\"15\" text-anchor=\"middle\">Reactants</text>";
+      o+="<line x1=\"330\" y1=\""+y1+"\" x2=\"450\" y2=\""+y1+"\" stroke=\"#111\" stroke-width=\"4\"/><text x=\"390\" y=\""+(y1+22)+"\" font-size=\"15\" text-anchor=\"middle\">Products</text>";
+      if(Math.abs(y1-y0)>4){
+        o+="<line x1=\"190\" y1=\""+y0+"\" x2=\"490\" y2=\""+y0+"\" stroke=\"#666\" stroke-dasharray=\"3 3\"/>";
+        o+="<line x1=\"490\" y1=\""+y0+"\" x2=\"490\" y2=\""+(y1+(y1>y0?-3:3))+"\" stroke=\"#111\" stroke-width=\"2\" marker-end=\"url(#"+sid+")\"/>";
+        o+="<text x=\"500\" y=\""+((y0+y1)/2+5)+"\" font-size=\"16\">Δ<tspan font-style=\"italic\">H</tspan></text>";
+      }
+      svg.innerHTML=o;
+    }
+    rv.addEventListener("input",draw);draw();
+    api={
+      check:function(){
+        var v=+rv.value;
+        if(v===0&&ss.value===""){return{valid:false,msg:"Move the products slider and choose the sign of ΔH."};}
+        var dirOk=(v!==0)&&((v<0)===(sp.kind===0)),lvOk=(sp.target!=null)?(v===sp.target):dirOk,signOk=(ss.value!==""&&+ss.value===sp.kind),msgs=[];
+        if(v===0){msgs.push("The products are still level with the reactants. Move the slider.");}
+        else if(!dirOk){msgs.push(sp.kind===0?"An exothermic change releases energy, so the products are lower than the reactants.":"An endothermic change absorbs energy, so the products are higher than the reactants.");}
+        else if(!lvOk){msgs.push("The direction is right, but the products should be "+Math.abs(sp.target)+" kJ "+(sp.target<0?"below":"above")+" the reactants.");}
+        if(ss.value===""){msgs.push("Choose the sign of ΔH.");}
+        else if(!signOk){msgs.push("Check the sign: a "+(sp.kind===0?"drop is negative (exothermic).":"rise is positive (endothermic)."));}
+        return(lvOk&&signOk)?{valid:true,ok:true}:{valid:true,ok:false,msg:msgs.join(" ")};
+      },
+      get:function(){return [rv.value,ss.value];},
+      set:function(x){rv.value=(x&&x[0]!=null&&x[0]!=="")?x[0]:"0";ss.value=(x&&x[1])||"";draw();},
+      lock:function(){rv.disabled=true;ss.disabled=true;},
+      fill:function(){rv.value=String(sp.ansV);ss.value=String(sp.kind);draw();}
+    };
+  }else if(sp.k==="formula"){
+    var fin=el("input",{type:"text",autocomplete:"off",autocapitalize:"off",autocorrect:"off",spellcheck:"false","class":"numin fin","aria-label":"Your formula"});
+    var fpv=el("span",{"class":"fprev","aria-hidden":"true"});
+    body.appendChild(fin);body.appendChild(fpv);
+    fin.addEventListener("input",function(){fpv.innerHTML=fmtF(normF(fin.value));});
+    api={
+      check:function(){
+        var v=normF(fin.value);
+        if(v===""){return{valid:false,msg:"Type the formula first."};}
+        if(/[+−⁺⁻^\-]/.test(v)){return{valid:true,ok:false,msg:"A formula does not show the charges. Use the charges to work out the numbers, then leave them out."};}
+        var a=cntF(v),b=cntF(sp.ans);
+        if(v===sp.ans){return{valid:true,ok:true};}
+        if(sp.mode==="mol"&&a&&sameC(a,b)){return{valid:true,ok:true};}
+        var m=(sp.traps&&sp.traps[v])||"";
+        if(!m){
+          if(a===null){m=/[()]/.test(v)?"Check your brackets: every opening bracket needs a closing bracket.":"Check the symbols: each one starts with a capital letter and has at most one small letter.";}
+          else if(v.toLowerCase()===sp.ans.toLowerCase()){m="Check the capital letters: each symbol starts with a capital, like Na, Cl or Co.";}
+          else if(sameC(a,b)&&sp.mode!=="mol"){m="You have the right atoms, but check the brackets and the order: write the metal first, and put brackets round a group of atoms such as OH or NO3 when you need more than one of that group.";}
+          else if(sp.mode!=="mol"){m="Check that the total positive charge equals the total negative charge, using the ions in the table.";}
+          else{m="Count the atoms again: check how many atoms of each element join together.";}
+        }
+        return{valid:true,ok:false,msg:m};
+      },
+      get:function(){return fin.value;},set:function(v){fin.value=v||"";fpv.innerHTML=fmtF(normF(fin.value));},
+      lock:function(){fin.disabled=true;},fill:function(){fin.value=sp.ans;fpv.innerHTML=fmtF(normF(fin.value));}
+    };
+  }else if(sp.k==="text"){
+    var tin=el("input",{type:"text",autocomplete:"off",autocapitalize:"off",spellcheck:"false","class":"numin tin","aria-label":"Your answer"});
+    body.appendChild(tin);
+    var nT=function(x){return String(x).toLowerCase().replace(/[\s\-]/g,"");};
+    api={
+      check:function(){var v=nT(tin.value);if(!v){return{valid:false,msg:"Type the name first."};}
+        if(sp.ans.some(function(x){return nT(x)===v;})){return{valid:true,ok:true};}
+        var m="";(sp.traps||[]).some(function(t){if(nT(t[0])===v){m=t[1];return true;}return false;});
+        return{valid:true,ok:false,msg:m};},
+      get:function(){return tin.value;},set:function(v){tin.value=v||"";},
+      lock:function(){tin.disabled=true;},fill:function(){tin.value=sp.ans[0];}
+    };
+  }else if(sp.k==="draw"){
+    var VAL={C:4,H:1,Cl:1,N:3,O:2},COL={C:"#6e6e6e",H:"#ffffff",O:"#d6453d",N:"#3f6fc0",Cl:"#3aa05a"},TXC={C:"#fff",H:"#111",O:"#fff",N:"#fff",Cl:"#fff"},RAD={C:20,N:20,O:20,Cl:23,H:14},NAMES={C:"carbon",H:"hydrogen",O:"oxygen",N:"nitrogen",Cl:"chlorine"};
+    var DW=560,DH=300,atoms=[],bonds={},selA=-1,locked=false,badges=sp.badges!==false,drag=null;
+    var svg=document.createElementNS(SVGNS,"svg");svg.setAttribute("class","mol");svg.setAttribute("viewBox","0 0 "+DW+" "+DH);svg.setAttribute("role","img");svg.setAttribute("aria-label","Molecule drawing area");
+    body.appendChild(el("p",{"class":"snote noprint"},"Tap two atoms to join them. Tap the same two again for a double bond, again for a triple bond, and once more to remove it. Drag the atoms apart so that no bond passes through an atom. The numbers are the angles between the bonds"+(badges?" and turn green when they match the table of angles.":". Compare them with the table of angles.")));
+    if(DATA.angTable){var ab=el("div",{"class":"angbox"});ab.innerHTML="<p class=\"boxhead\">Table of angles: use it to place your atoms</p>"+DATA.angTable;body.appendChild(ab);}
+    body.appendChild(svg);
+    var tray=null;
+    function bk(i,j){return i<j?i+"-"+j:j+"-"+i;}
+    function valOf(i){var t=0,k,ij;for(k in bonds){ij=k.split("-");if(+ij[0]===i||+ij[1]===i){t+=bonds[k];}}return t;}
+    function slot(k,n){var m=n||12,ang=(180+k*360/m)*Math.PI/180;return{x:DW/2+210*Math.cos(ang),y:DH/2+105*Math.sin(ang)};}
+    function addAtom(e,n){if(atoms.length>=14){return;}var p=slot(atoms.length,n);atoms.push({e:e,x:p.x,y:p.y});}
+    function describe(c){return Object.keys(c).map(function(k){return c[k]+" "+k;}).join(", ");}
+    var ANGR={linear:[170,180],bent:[95,115],planar:[110,130],pyramid:[110,130],four:[80,100]};
+    var ANGT={linear:"in a straight line (180°)",bent:"bent, about 105°",planar:"flat, about 120° apart",pyramid:"spread about 120° apart",four:"spread about 90° apart"};
+    function nbrs(i){var out=[],k,ij;for(k in bonds){ij=k.split("-");if(+ij[0]===i){out.push({j:+ij[1],o:bonds[k]});}else if(+ij[1]===i){out.push({j:+ij[0],o:bonds[k]});}}return out;}
+    function angInfo(i){
+      var nb=nbrs(i),n=nb.length;if(n<2){return null;}
+      var a=atoms[i],sum=0,dirs=[],t;
+      nb.forEach(function(q){sum+=q.o;dirs.push(Math.atan2(atoms[q.j].y-a.y,atoms[q.j].x-a.x)*180/Math.PI);});
+      dirs.sort(function(x,y){return x-y;});
+      var gaps=[],mids=[];
+      for(t=0;t<n;t++){var d0=dirs[t],d1=(t+1<n)?dirs[t+1]:dirs[0]+360;gaps.push(d1-d0);mids.push((d0+d1)/2);}
+      var kind=n===2?(sum>=4?"linear":"bent"):(n===3?(sum>=4?"planar":"pyramid"):"four"),show=[];
+      if(n===2){var m=gaps[0]<=gaps[1]?0:1;show=[{g:gaps[m],mid:mids[m]}];}else{for(t=0;t<n;t++){show.push({g:gaps[t],mid:mids[t]});}}
+      var rg=ANGR[kind];show.forEach(function(x){x.ok=(x.g>=rg[0]-1e-9&&x.g<=rg[1]+1e-9);});
+      return{kind:kind,show:show,ok:show.every(function(x){return x.ok;})};
+    }
+    function geom(){
+      var g={through:{},close:false,angles:[]},i,j,k,ij;
+      for(i=0;i<atoms.length;i++){for(j=i+1;j<atoms.length;j++){var dx=atoms[i].x-atoms[j].x,dy=atoms[i].y-atoms[j].y;if(Math.sqrt(dx*dx+dy*dy)<RAD[atoms[i].e]+RAD[atoms[j].e]+(bonds[bk(i,j)]?16:6)){g.close=true;}}}
+      for(k in bonds){ij=k.split("-");(function(ia,ib,key){var A=atoms[ia],B=atoms[ib];if(!A||!B){return;}
+        atoms.forEach(function(C,c){if(c===ia||c===ib){return;}var vx=B.x-A.x,vy=B.y-A.y,L2=vx*vx+vy*vy||1,t=((C.x-A.x)*vx+(C.y-A.y)*vy)/L2;
+          if(t>0&&t<1){var px=A.x+t*vx,py=A.y+t*vy;if(Math.sqrt(Math.pow(C.x-px,2)+Math.pow(C.y-py,2))<RAD[C.e]+4){g.through[key]=true;}}});})(+ij[0],+ij[1],k);}
+      atoms.forEach(function(a,i2){var inf=angInfo(i2);if(inf){g.angles.push({i:i2,info:inf});}});
+      return g;
+    }
+    function draw(){
+      var o="",k,gi=geom();
+      for(k in bonds){var ij=k.split("-"),a=atoms[+ij[0]],b=atoms[+ij[1]];if(!a||!b){continue;}var ord=bonds[k],dx=b.x-a.x,dy=b.y-a.y,L=Math.sqrt(dx*dx+dy*dy)||1,px=-dy/L,py=dx/L,offs=ord===1?[0]:(ord===2?[-3.5,3.5]:[-6,0,6]),col=gi.through[k]?"#b3261e":"#111";
+        offs.forEach(function(d){o+="<line x1=\""+(a.x+px*d).toFixed(1)+"\" y1=\""+(a.y+py*d).toFixed(1)+"\" x2=\""+(b.x+px*d).toFixed(1)+"\" y2=\""+(b.y+py*d).toFixed(1)+"\" stroke=\""+col+"\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>";});}
+      atoms.forEach(function(at,i){
+        var r=RAD[at.e],rem=VAL[at.e]-valOf(i);
+        o+="<g data-i=\""+i+"\" style=\"cursor:"+(locked?"default":"pointer")+"\"><circle cx=\""+at.x+"\" cy=\""+at.y+"\" r=\""+(r+14)+"\" fill=\"transparent\"/>";
+        if(i===selA){o+="<circle cx=\""+at.x+"\" cy=\""+at.y+"\" r=\""+(r+6)+"\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\" stroke-dasharray=\"4 3\"/>";}
+        o+="<circle cx=\""+at.x+"\" cy=\""+at.y+"\" r=\""+r+"\" fill=\""+COL[at.e]+"\" stroke=\"#111\" stroke-width=\"1.8\"/><text x=\""+at.x+"\" y=\""+(at.y+6.5)+"\" text-anchor=\"middle\" font-size=\""+(at.e==="Cl"?17:19)+"\" font-weight=\"700\" fill=\""+TXC[at.e]+"\" font-family=\"Helvetica Neue,Helvetica,Arial,sans-serif\">"+at.e+"</text>";
+        if(badges&&rem!==0){var bx=at.x+r*0.85,by=at.y-r*0.85;o+="<circle cx=\""+bx.toFixed(1)+"\" cy=\""+by.toFixed(1)+"\" r=\"9\" fill=\""+(rem>0?"#fff":"#b3261e")+"\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\""+bx.toFixed(1)+"\" y=\""+(by+4.5).toFixed(1)+"\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" fill=\""+(rem>0?"#111":"#fff")+"\" font-family=\"Helvetica Neue,Helvetica,Arial,sans-serif\">"+(rem>0?rem:"!")+"</text>";}
+        o+="</g>";});
+      gi.angles.forEach(function(q){var a=atoms[q.i],r=RAD[a.e]+25;q.info.show.forEach(function(x){var ang=x.mid*Math.PI/180,tx=a.x+r*Math.cos(ang),ty=a.y+r*Math.sin(ang)+4.5,col=badges?(x.ok?"#1b6e2d":"#b3261e"):"#111";
+        o+="<text x=\""+tx.toFixed(1)+"\" y=\""+ty.toFixed(1)+"\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"700\" fill=\""+col+"\" stroke=\"#fff\" stroke-width=\"3.5\" paint-order=\"stroke\" pointer-events=\"none\" font-family=\"Helvetica Neue,Helvetica,Arial,sans-serif\">"+Math.round(x.g)+"°</text>";});});
+      svg.innerHTML=o;
+    }
+    function fit(){
+      if(!atoms.length){return;}
+      var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;atoms.forEach(function(a){x0=Math.min(x0,a.x);x1=Math.max(x1,a.x);y0=Math.min(y0,a.y);y1=Math.max(y1,a.y);});
+      var w=Math.max(240,x1-x0+110),h=Math.max(130,y1-y0+110),cx=(x0+x1)/2,cy=(y0+y1)/2;
+      svg.setAttribute("viewBox",(cx-w/2).toFixed(0)+" "+(cy-h/2).toFixed(0)+" "+w.toFixed(0)+" "+h.toFixed(0));svg.style.maxWidth=Math.min(560,Math.round(w))+"px";
+    }
+    function pt(ev){var r=svg.getBoundingClientRect();return{x:(ev.clientX-r.left)*DW/r.width,y:(ev.clientY-r.top)*DH/r.height};}
+    function tap(i){
+      if(selA<0){selA=i;}else if(selA===i){selA=-1;}
+      else{var key=bk(selA,i),n=((bonds[key]||0)+1)%4;if(n===0){delete bonds[key];}else{bonds[key]=n;}selA=-1;}
+      draw();schedSave();
+    }
+    svg.addEventListener("pointerdown",function(ev){
+      if(locked){return;}var t=ev.target.closest?ev.target.closest("[data-i]"):null;if(!t){return;}
+      drag={i:+t.getAttribute("data-i"),sx:ev.clientX,sy:ev.clientY,moved:false};
+      try{svg.setPointerCapture(ev.pointerId);}catch(e){}ev.preventDefault();
+    });
+    svg.addEventListener("pointermove",function(ev){
+      if(!drag){return;}
+      if(!drag.moved&&Math.sqrt(Math.pow(ev.clientX-drag.sx,2)+Math.pow(ev.clientY-drag.sy,2))<7){return;}
+      drag.moved=true;var p=pt(ev);atoms[drag.i].x=Math.max(24,Math.min(DW-24,p.x));atoms[drag.i].y=Math.max(24,Math.min(DH-24,p.y));draw();
+    });
+    function endDrag(){if(!drag){return;}var d=drag;drag=null;if(!d.moved){tap(d.i);}else{schedSave();}}
+    svg.addEventListener("pointerup",endDrag);
+    svg.addEventListener("pointercancel",function(){drag=null;});
+    var tb=el("div",{"class":"noprint mtray"});
+    if(sp.tray){
+      ["C","H","N","O","Cl"].forEach(function(e){var b=el("button",{type:"button","class":"addat"},"+ "+e);b.addEventListener("click",function(){if(locked){return;}addAtom(e);draw();schedSave();});tb.appendChild(b);});
+      var rm=el("button",{type:"button"},"Remove selected atom");rm.addEventListener("click",function(){
+        if(locked||selA<0){return;}var nb={},k2,ij2,a2,b2;atoms.splice(selA,1);
+        for(k2 in bonds){ij2=k2.split("-");a2=+ij2[0];b2=+ij2[1];if(a2===selA||b2===selA){continue;}if(a2>selA){a2--;}if(b2>selA){b2--;}nb[bk(a2,b2)]=bonds[k2];}
+        bonds=nb;selA=-1;draw();schedSave();});
+      tb.appendChild(rm);
+    }
+    var clr=el("button",{type:"button"},sp.tray?"Clear everything":"Clear the bonds");
+    clr.addEventListener("click",function(){if(locked){return;}bonds={};selA=-1;if(sp.tray){atoms=[];}draw();schedSave();});
+    tb.appendChild(clr);body.appendChild(tb);tray=tb;
+    if(sp.atoms){sp.atoms.forEach(function(e){addAtom(e,sp.atoms.length);});}
+    draw();
+    api={
+      check:function(){
+        if(!atoms.length){return{valid:false,msg:"Add the atoms first, using the + buttons."};}
+        if(!Object.keys(bonds).length){return{valid:false,msg:"Join the atoms with bonds first."};}
+        var msgs=[],seen={},k3,ij3;
+        if(sp.tray&&sp.formula){var have={};atoms.forEach(function(a){have[a.e]=(have[a.e]||0)+1;});if(!sameC(have,sp.formula)){msgs.push("The formula "+sp.fAns+" needs "+describe(sp.formula)+" atoms, but you have "+describe(have)+".");}}
+        atoms.forEach(function(a,i){var v=valOf(i);if(v!==VAL[a.e]){var key=a.e+v;if(!seen[key]){seen[key]=1;msgs.push((/^[aeiou]/.test(NAMES[a.e])?"An ":"A ")+NAMES[a.e]+" atom has "+v+" bond"+(v===1?"":"s")+" but needs "+VAL[a.e]+".");}}});
+        var vis={0:true},q=[0],adj={};
+        for(k3 in bonds){ij3=k3.split("-");(adj[ij3[0]]=adj[ij3[0]]||[]).push(+ij3[1]);(adj[ij3[1]]=adj[ij3[1]]||[]).push(+ij3[0]);}
+        while(q.length){var c=q.pop();(adj[c]||[]).forEach(function(n2){if(!vis[n2]){vis[n2]=true;q.push(n2);}});}
+        if(Object.keys(vis).length<atoms.length){msgs.push("Some atoms are not joined to the rest of the molecule.");}
+        if(sp.need){Object.keys(sp.need).forEach(function(pair){var pp=pair.split("-"),cnt=0;for(var kk in bonds){var jj=kk.split("-"),e1=atoms[+jj[0]].e,e2=atoms[+jj[1]].e;if((e1===pp[0]&&e2===pp[1])||(e1===pp[1]&&e2===pp[0])){cnt++;}}if(cnt<sp.need[pair]){msgs.push(sp.needMsg||"Check which atoms are joined to which.");}});}
+        if(!msgs.length){var gi=geom();
+          if(Object.keys(gi.through).length){msgs.push("A bond is passing through an atom (shown in red). Move the atoms apart so that every bond is a clear line between two atoms.");}
+          if(gi.close){msgs.push("Some atoms are too close together. Drag them apart so that every bond line can be seen.");}
+          var seenA={};gi.angles.forEach(function(q){var at=atoms[q.i],key=at.e+q.info.kind;if(q.info.ok||seenA[key]){return;}seenA[key]=1;
+            msgs.push("The "+nbrs(q.i).length+" bonds on "+(/^[aeiou]/i.test(NAMES[at.e])?"an ":"a ")+NAMES[at.e]+" atom should be drawn "+ANGT[q.info.kind]+". Your angle"+(q.info.show.length>1?"s are ":" is ")+q.info.show.map(function(x){return Math.round(x.g)+"°";}).join(", ")+". Use the table of angles.");});
+        }
+        return msgs.length?{valid:true,ok:false,msg:msgs.slice(0,3).join(" ")}:{valid:true,ok:true};
+      },
+      get:function(){return{a:atoms.map(function(a){return[a.e,Math.round(a.x),Math.round(a.y)];}),b:Object.keys(bonds).map(function(k4){var ij4=k4.split("-");return[+ij4[0],+ij4[1],bonds[k4]];})};},
+      set:function(v){if(v&&v.a){atoms=v.a.map(function(a){return{e:a[0],x:a[1],y:a[2]};});bonds={};v.b.forEach(function(b){bonds[bk(b[0],b[1])]=b[2];});selA=-1;}draw();},
+      lock:function(){locked=true;selA=-1;tray.hidden=true;fit();draw();},
+      fill:function(){if(sp.sol){atoms=sp.sol.atoms.map(function(a){return{e:a[0],x:a[1],y:a[2]};});bonds={};sp.sol.bonds.forEach(function(b){bonds[bk(b[0],b[1])]=b[2];});selA=-1;if(locked){fit();}draw();}}
+    };
+  }else if(sp.k==="d3"){
+    var C3={C:"#6e6e6e",H:"#ffffff",N:"#3f6fc0"},T3={C:"#fff",H:"#111",N:"#fff"},R3={C:21,N:21,H:15};
+    var W3=560,H3=300,CX=280,CY=132,L3=88,HALF=sp.ang/2*Math.PI/180,NL=sp.n;
+    var ph="flat",rot=0,lock3=false,sel3=-1,bset={},lig=[],plane=[-1,-1],slotFill=[],drag3=null,msg3="",i3;
+    var PL=[[-Math.sin(HALF),Math.cos(HALF),0],[Math.sin(HALF),Math.cos(HALF),0]],yy=Math.cos(sp.ang*Math.PI/180)/Math.cos(HALF),zz=Math.sqrt(1-yy*yy);
+    var SL=NL===4?[[0,yy,zz],[0,yy,-zz]]:[[0,yy,zz]];
+    var svg3=document.createElementNS(SVGNS,"svg");svg3.setAttribute("class","mol");svg3.setAttribute("viewBox","0 0 "+W3+" "+H3);svg3.setAttribute("role","img");svg3.setAttribute("aria-label","Three-dimensional molecule drawing area");
+    body.appendChild(el("p",{"class":"snote noprint"},sp.note3));
+    if(DATA.angTable){var ab3=el("div",{"class":"angbox"});ab3.innerHTML="<p class=\"boxhead\">Table of angles: use the Real angle column</p>"+DATA.angTable;body.appendChild(ab3);}
+    body.appendChild(svg3);
+    var msgEl=el("p",{"class":"snote noprint d3msg","aria-live":"polite"},"");body.appendChild(msgEl);
+    var bar=el("div",{"class":"noprint d3bar"}),b3d=el("button",{type:"button"},"3D"),bRst=el("button",{type:"button"},"Start again"),
+        rl=el("label",{"class":"d3rot"},"Turn the molecule "),rng=el("input",{type:"range",min:"0",max:"360",value:"30","aria-label":"Turn the molecule"});
+    rl.appendChild(rng);bar.appendChild(b3d);bar.appendChild(rl);bar.appendChild(bRst);body.appendChild(bar);rl.style.display="none";
+    function reset3(){
+      ph="flat";rot=0;sel3=-1;bset={};plane=[-1,-1];slotFill=SL.map(function(){return -1;});msg3="";lig=[];
+      for(i3=0;i3<NL;i3++){var a=(180+i3*360/NL+20)*Math.PI/180;lig.push({x:CX+215*Math.cos(a),y:CY+105*Math.sin(a)});}
+      rl.style.display="none";rng.value="30";b3d.disabled=false;
+    }
+    function pj(v){var c=Math.cos(rot),s=Math.sin(rot),x=v[0]*c+v[2]*s,z=-v[0]*s+v[2]*c,f=1+z*0.16;return{x:CX+x*L3*f,y:CY+v[1]*L3*f,z:z,f:f};}
+    function trayPos(k){return{x:70+k*52,y:H3-30};}
+    function ligPos(i){
+      if(ph==="flat"){return{x:lig[i].x,y:lig[i].y,z:0,f:1};}
+      if(i===plane[0]){return pj(PL[0]);}if(i===plane[1]){return pj(PL[1]);}
+      var k=slotFill.indexOf(i);if(k>=0){return pj(SL[k]);}
+      return{x:lig[i].x,y:lig[i].y,z:0,f:1,tray:true};
+    }
+    function S3(tag,at){var e=document.createElementNS(SVGNS,tag),k;for(k in at){e.setAttribute(k,at[k]);}svg3.appendChild(e);return e;}
+    function atom3(e,x,y,r,id,sel){
+      var g=S3("circle",{cx:x,cy:y,r:r,fill:C3[e],stroke:sel?"#0b57d0":"#111","stroke-width":sel?4:2});if(id!=null){g.setAttribute("data-i",id);g.style.cursor="grab";}
+      S3("circle",{cx:x-r*0.32,cy:y-r*0.34,r:r*0.34,fill:"#fff","fill-opacity":e==="H"?"0":"0.28","pointer-events":"none"});
+      var t=S3("text",{x:x,y:y+5,"text-anchor":"middle","font-size":Math.round(r*0.85),"font-weight":"bold",fill:T3[e],"pointer-events":"none","font-family":"Helvetica,Arial,sans-serif"});t.textContent=e;
+    }
+    function draw3(){
+      while(svg3.firstChild){svg3.removeChild(svg3.firstChild);}
+      S3("rect",{x:0,y:0,width:W3,height:H3,fill:"#fff"});
+      var i,k,p,c=pj([0,0,0]);
+      if(ph==="d3"){
+        var cs=[[-1.35,-1.0,0],[1.35,-1.0,0],[1.35,0.95,0],[-1.35,0.95,0]].map(pj);
+        S3("polygon",{points:cs.map(function(q){return q.x.toFixed(1)+","+q.y.toFixed(1);}).join(" "),fill:"#f1f1f1",stroke:"#999","stroke-width":1.5,"stroke-dasharray":"5 4"});
+        var lb=S3("text",{x:cs[3].x+6,y:cs[3].y-6,"font-size":12,fill:"#666","font-style":"italic","font-family":"Palatino,Georgia,serif"});lb.textContent="plane of the page";
+      }
+      var items=[{z:0,t:"c"}];
+      if(ph==="flat"){
+        Object.keys(bset).forEach(function(k){S3("line",{x1:CX,y1:CY,x2:lig[k].x,y2:lig[k].y,stroke:"#111","stroke-width":4,"stroke-linecap":"round"});});
+        var bs=Object.keys(bset).map(Number);
+        if(bs.length===2){
+          var v1=[lig[bs[0]].x-CX,lig[bs[0]].y-CY],v2=[lig[bs[1]].x-CX,lig[bs[1]].y-CY],g=Math.acos(Math.max(-1,Math.min(1,(v1[0]*v2[0]+v1[1]*v2[1])/(Math.hypot(v1[0],v1[1])*Math.hypot(v2[0],v2[1])))))*180/Math.PI;
+          var mx=v1[0]/Math.hypot(v1[0],v1[1])+v2[0]/Math.hypot(v2[0],v2[1]),my=v1[1]/Math.hypot(v1[0],v1[1])+v2[1]/Math.hypot(v2[0],v2[1]),ml=Math.hypot(mx,my)||1;
+          var ok=Math.abs(g-sp.ang)<=sp.tol;
+          var tx=S3("text",{x:CX+mx/ml*48,y:CY+my/ml*48+5,"text-anchor":"middle","font-size":16,"font-weight":"bold",fill:ok?"#1b6e2d":"#b3261e","font-family":"Helvetica,Arial,sans-serif"});tx.textContent=Math.round(g)+"°";
+        }
+        atom3(sp.centre,CX,CY,R3[sp.centre]+3,0,sel3===-2);
+        lig.forEach(function(l,i){atom3(sp.lig,l.x,l.y,R3[sp.lig],i+1,sel3===i);});
+      }else{
+        for(i=0;i<NL;i++){p=ligPos(i);if(!p.tray){items.push({z:p.z,t:"a",i:i,p:p});}}
+        SL.forEach(function(v,k){if(slotFill[k]<0){var q=pj(v);items.push({z:q.z,t:"g",p:q});}});
+        items.sort(function(a,b){return a.z-b.z;});
+        items.forEach(function(it){
+          if(it.t==="c"){atom3(sp.centre,c.x,c.y,R3[sp.centre]+3,null,false);}
+          else if(it.t==="g"){S3("line",{x1:c.x,y1:c.y,x2:it.p.x,y2:it.p.y,stroke:"#888","stroke-width":2,"stroke-dasharray":"4 4"});S3("circle",{cx:it.p.x,cy:it.p.y,r:19*it.p.f,fill:"#fff","fill-opacity":0.6,stroke:"#555","stroke-width":2,"stroke-dasharray":"4 3"});}
+          else{S3("line",{x1:c.x,y1:c.y,x2:it.p.x,y2:it.p.y,stroke:"#111","stroke-width":(4.2*it.p.f).toFixed(1),"stroke-linecap":"round"});atom3(sp.lig,it.p.x,it.p.y,R3[sp.lig]*it.p.f,null,false);}
+        });
+        var tr=[];for(i=0;i<NL;i++){if(i!==plane[0]&&i!==plane[1]&&slotFill.indexOf(i)<0){tr.push(i);}}
+        if(tr.length){var tl=S3("text",{x:20,y:H3-50,"font-size":13,fill:"#444","font-family":"Palatino,Georgia,serif"});tl.textContent="Atoms still to place (drag them onto the dotted circles):";}
+        tr.forEach(function(i,k){var q=lig[i].t?{x:lig[i].x,y:lig[i].y}:trayPos(k);if(!lig[i].t){lig[i].x=q.x;lig[i].y=q.y;}atom3(sp.lig,q.x,q.y,R3[sp.lig]+2,i+1,false);});
+      }
+      msgEl.textContent=msg3;
+    }
+    function ptr3(ev){var m=svg3.getScreenCTM().inverse(),p=svg3.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(m);}
+    function tap3(id){
+      if(ph!=="flat"){return;}
+      if(id===0){
+        if(sel3>=0){var i0=sel3;sel3=-1;tap3Join(i0);return;}
+        sel3=(sel3===-2)?-1:-2;msg3=(sel3===-2)?"Now tap a "+sp.ligName+" atom to join it.":"";draw3();return;
+      }
+      var i=id-1;
+      if(sel3===-2){sel3=-1;tap3Join(i);return;}
+      sel3=(sel3===i)?-1:i;msg3=(sel3>=0)?"Now tap the "+sp.centreName+" atom to join them.":"";draw3();
+    }
+    svg3.addEventListener("pointerdown",function(ev){
+      if(lock3){return;}var t=ev.target.closest?ev.target.closest("[data-i]"):null;if(!t){return;}
+      drag3={id:+t.getAttribute("data-i"),sx:ev.clientX,sy:ev.clientY,moved:false};
+      try{svg3.setPointerCapture(ev.pointerId);}catch(e){}ev.preventDefault();
+    });
+    svg3.addEventListener("pointermove",function(ev){
+      if(!drag3){return;}
+      if(!drag3.moved&&Math.hypot(ev.clientX-drag3.sx,ev.clientY-drag3.sy)<7){return;}
+      drag3.moved=true;if(drag3.id===0){return;}var p=ptr3(ev),l=lig[drag3.id-1];
+      if(ph==="flat"&&sel3===drag3.id-1){}
+      l.x=Math.max(24,Math.min(W3-24,p.x));l.y=Math.max(24,Math.min(H3-24,p.y));l.t=true;draw3();
+    });
+    function end3(){
+      if(!drag3){return;}var d=drag3;drag3=null;
+      if(!d.moved){tap3(d.id);return;}
+      if(ph==="d3"&&d.id>0){
+        var l=lig[d.id-1],best=-1,bd=40;
+        SL.forEach(function(v,k2){if(slotFill[k2]<0){var q=pj(v),dd=Math.hypot(q.x-l.x,q.y-l.y);if(dd<bd){bd=dd;best=k2;}}});
+        if(best>=0){slotFill[best]=d.id-1;msg3="";}else{msg3="Drop the atom on a dotted circle.";}
+        delete l.t;
+      }
+      draw3();schedSave();
+    }
+    function tap3Join(i){
+      sel3=-1;
+      if(bset[i]){delete bset[i];msg3="";}else if(Object.keys(bset).length>=2){msg3="Only two bonds in this first view. The other atoms come into 3D space after you press 3D.";}else{bset[i]=1;msg3="";}
+      draw3();schedSave();
+    }
+    svg3.addEventListener("pointerup",end3);svg3.addEventListener("pointercancel",function(){drag3=null;});
+    function go3d(){
+      var bs=Object.keys(bset).map(Number);
+      if(bs.length!==2){msg3="First join two "+sp.ligName+" atoms to the "+sp.centreName+" atom. Tap the "+sp.centreName+", then tap a "+sp.ligName+" atom.";draw3();return;}
+      var v1=[lig[bs[0]].x-CX,lig[bs[0]].y-CY],v2=[lig[bs[1]].x-CX,lig[bs[1]].y-CY],g=Math.acos(Math.max(-1,Math.min(1,(v1[0]*v2[0]+v1[1]*v2[1])/(Math.hypot(v1[0],v1[1])*Math.hypot(v2[0],v2[1])))))*180/Math.PI;
+      if(Math.abs(g-sp.ang)>sp.tol){msg3="The angle between the two bonds is "+Math.round(g)+"°. Look in the table of angles for the real angle ("+sp.ang+"°) and drag the atoms until the number matches.";draw3();return;}
+      bs.sort(function(a,b){return lig[a].x-lig[b].x;});plane=[bs[0],bs[1]];ph="d3";sel3=-1;bset={};msg3="";
+      lig.forEach(function(l){delete l.t;});
+      rl.style.display="";b3d.disabled=true;var t0=null;rot=0;
+      function step(ts){if(t0===null){t0=ts;}var u=Math.min(1,(ts-t0)/700);rot=u*30*Math.PI/180;rng.value=String(Math.round(rot*180/Math.PI));draw3();if(u<1){requestAnimationFrame(step);}else{schedSave();}}
+      requestAnimationFrame(step);
+    }
+    b3d.addEventListener("click",function(){if(lock3||ph!=="flat"){return;}go3d();});
+    bRst.addEventListener("click",function(){if(lock3){return;}reset3();draw3();schedSave();});
+    rng.addEventListener("input",function(){rot=(+rng.value)*Math.PI/180;draw3();schedSave();});
+    reset3();draw3();
+    api={
+      check:function(){
+        if(ph==="flat"){return{valid:false,msg:"Join two "+sp.ligName+" atoms to the "+sp.centreName+" atom at the correct angle, then press the 3D button."};}
+        if(slotFill.some(function(x){return x<0;})){return{valid:false,msg:"Drag the remaining "+sp.ligName+" atoms onto the dotted circles."};}
+        return{valid:true,ok:true};
+      },
+      get:function(){return{ph:ph,rot:Math.round(rot*180/Math.PI),bs:Object.keys(bset).map(Number),lp:lig.map(function(l){return[Math.round(l.x),Math.round(l.y)];}),pl:plane,sf:slotFill.slice()};},
+      set:function(v){
+        reset3();
+        if(v&&v.ph){ph=v.ph;rot=(v.rot||0)*Math.PI/180;bset={};(v.bs||[]).forEach(function(i){bset[i]=1;});plane=v.pl||[-1,-1];slotFill=(v.sf||slotFill).slice();(v.lp||[]).forEach(function(p,i){if(lig[i]){lig[i].x=p[0];lig[i].y=p[1];}});
+          if(ph==="d3"){rl.style.display="";b3d.disabled=true;rng.value=String(v.rot||0);}}
+        draw3();
+      },
+      lock:function(){lock3=true;b3d.disabled=true;bRst.disabled=true;},
+      fill:function(){reset3();ph="d3";plane=[0,1];slotFill=SL.map(function(v,k){return k+2;});rot=30*Math.PI/180;rl.style.display="";rng.value="30";b3d.disabled=true;draw3();}
+    };
+  }else{ /* fields */
+    var ins=[];
+    var tbl=el("div",{"class":"flds"});
+    sp.fields.forEach(function(f,i){
+      var row=el("label",{"class":"fld"},"<span class=\"flab\">"+f.lab+"</span> ");
+      var x=el("input",{type:"text",inputmode:"decimal",autocomplete:"off","class":"numin","aria-label":plainTxt(f.lab)});
+      row.appendChild(x);if(f.unit){row.appendChild(el("span",{"class":"unit"}," "+f.unit));}
+      tbl.appendChild(row);ins.push(x);
+    });
+    body.appendChild(tbl);
+    api={
+      check:function(){
+        var vals=ins.map(function(x){return parseNum(x.value);});
+        if(vals.some(function(v){return v===null;})){return{valid:false,msg:"Fill in every box with a number."};}
+        var bad=[];
+        vals.forEach(function(v,i){var ok=near(v,sp.fields[i].ans,sp.fields[i].tol);ins[i].className="numin "+(ok?"good":"bad");if(!ok){bad.push(plainTxt(sp.fields[i].lab));}});
+        if(!bad.length){return{valid:true,ok:true};}
+        return{valid:true,ok:false,msg:"Look again at: "+bad.join(", ")+"."};
+      },
+      get:function(){return ins.map(function(x){return x.value;});},
+      set:function(v){ins.forEach(function(x,i){x.value=(v&&v[i])||"";});},
+      lock:function(){ins.forEach(function(x){x.disabled=true;});},
+      fill:function(){ins.forEach(function(x,i){x.value=sp.fields[i].ansTxt;x.className="numin good";});}
+    };
+  }
+  S.api=api;S.box.appendChild(body);S.box.addEventListener("input",schedSave);
+  var ctl=el("div",{"class":"qctl"}),bC=el("button",{type:"button"},"Check"),bH=el("button",{type:"button"},"Need a hint?"),bS=el("button",{type:"button"},"Show answer");
+  bS.hidden=true;ctl.appendChild(bC);if(DATA.hintBtn){ctl.appendChild(bH);}ctl.appendChild(bS);S.box.appendChild(ctl);
+  var hb=el("div",{"class":"hints","aria-live":"polite"}),fb=el("div",{"class":"fb","aria-live":"polite"});
+  S.box.appendChild(hb);S.box.appendChild(fb);
+  S.showHints=function(){
+    var n=Math.min(S.w,3),h="";
+    for(var i=0;i<n;i++){h+="<p class=\"hint h"+(i+1)+"\"><b>Hint "+(i+1)+" of 3.</b> "+sp.hints[i]+"</p>";}
+    hb.innerHTML=h;
+    bS.hidden=(S.w<DATA.showAfter)||!!S.res;
+  };
+  S.finish=function(kind){
+    S.res=kind;api.lock();bC.disabled=true;bH.disabled=true;bS.hidden=true;
+    if(kind==="ok"){fb.className="fb ok";fb.innerHTML="✓ Correct. "+sp.explain;}
+    else{api.fill();fb.className="fb rev";fb.innerHTML="Answer. "+sp.explain;}
+    S.box.classList.add("done");
+  };
+  bC.addEventListener("click",function(){
+    if(S.res){return;}
+    var r=api.check();
+    if(!r.valid){fb.className="fb no";fb.textContent=r.msg;return;}
+    S.val=api.get();
+    if(r.ok){S.finish("ok");}
+    else{S.w++;S.showHints();fb.className="fb no";fb.innerHTML="✗ Not yet. "+(r.msg||"");}
+    refreshProblem(U,P);refreshSummary();schedSave();
+  });
+  bH.addEventListener("click",function(){
+    if(S.res||S.w>=3){return;}
+    S.w++;S.showHints();if(S.w>=3){bH.disabled=true;}refreshProblem(U,P);refreshSummary();schedSave();
+  });
+  bS.addEventListener("click",function(){
+    if(S.res){return;}
+    S.val=api.get();S.finish("shown");refreshProblem(U,P);refreshSummary();schedSave();
+  });
+  S.apply=function(st){
+    S.w=st.w||0;api.set(st.val);S.val=api.get();
+    if(S.w){S.showHints();}
+    if(st.res){S.finish(st.res);}
+    else if(S.w){fb.className="fb no";fb.textContent="✗ Not yet. Use the hints and try again.";}
+  };
+  return S;
+}
+
+function outcomeOf(P){
+  var shown=false,clean=true;
+  P.steps.forEach(function(S){if(S.res==="shown"){shown=true;}if(S.w>0||S.res!=="ok"){clean=false;}});
+  return shown?"shown":(clean?"clean":"supported");
+}
+function unitStatus(U){
+  var clean=0,sup=0,tried=0,n=U.u.problems.length;
+  U.probs.forEach(function(P){if(P.done){tried++;if(P.outcome==="clean"){clean++;}else if(P.outcome==="supported"){sup++;}}});
+  var s="Not started",act=U.probs.some(function(P){return P.steps.some(function(S){return S.w>0||S.res;});});
+  if(U.u.mode==="set"){
+    if(tried===n){s=(clean>=Math.ceil(n*0.8))?"Mastered":"Secure with support";}else if(act){s="In progress";}
+  }else{
+    if(clean>0){s="Mastered";}else if(sup>=DATA.secureAfter){s="Secure with support";}else if(act){s="In progress";}
+  }
+  return{s:s,clean:clean,sup:sup,tried:tried,n:n};
+}
+function refreshProblem(U,P){
+  var f=-1,i;
+  for(i=0;i<P.steps.length;i++){if(!P.steps[i].res){f=i;break;}}
+  P.steps.forEach(function(S,j){S.box.hidden=(f!==-1&&j>f);});
+  if(f===-1&&!P.done){finishProblem(U,P);}
+}
+function finishProblem(U,P){
+  P.done=true;P.outcome=outcomeOf(P);
+  if(U.u.mode==="set"){return;}
+  var st=unitStatus(U),msg,cls="pdone";
+  if(P.outcome==="clean"){msg="✓ <b>Every step right first time.</b> "+(st.clean===1?"You have mastered this skill.":"Another clean run: this skill is secure.");}
+  else if(P.outcome==="supported"){msg="Problem finished with the help of hints. Try a new problem with different numbers: it is your chance to get every step right first time.";}
+  else{msg="Problem finished, with some answers shown. Study the answers above, then try a new problem with different numbers.";}
+  var last=U.probs.length>=U.u.problems.length;
+  P.ban=el("div",{"class":cls+" "+P.outcome},"<p>"+msg+"</p>");
+  var row=el("div",{"class":"qctl noprint"});
+  if(!last&&P===U.probs[U.probs.length-1]){
+    var b=el("button",{type:"button"},st.clean>0?"Practise another problem":"Try a new problem");
+    b.addEventListener("click",function(){b.remove();startProblem(U);refreshSummary();schedSave();});
+    row.appendChild(b);
+  }else if(last&&P===U.probs[U.probs.length-1]&&st.clean===0){
+    P.ban.appendChild(el("p",null,"You have used every problem in this set. Ask your teacher for more practice, and look back at the method box above."));
+  }
+  P.ban.appendChild(row);P.box.appendChild(P.ban);
+}
+function startProblem(U,saved){
+  var idx=U.probs.length,pd=U.u.problems[idx];
+  if(!pd){return null;}
+  var P={idx:idx,def:pd,steps:[],done:false,outcome:null,box:el("div",{"class":"prob"})};
+  P.box.appendChild(el("h4",{"class":"ptitle"},(U.u.mode==="set"?"Question "+(idx+1):"Problem "+(idx+1)+" of "+U.u.problems.length)+(pd.title?": "+pd.title:"")));
+  if(pd.scenario){P.box.appendChild(el("div",{"class":"scen"},pd.scenario));}
+  if(U.u.cheat){P.box.appendChild(el("div",{"class":"noprint"},U.u.cheat));}
+  U.pbox.appendChild(P.box);U.probs.push(P);
+  pd.steps.forEach(function(sp,si){var S=buildStep(U,P,si,sp);P.steps.push(S);P.box.appendChild(S.box);});
+  if(saved){saved.steps.forEach(function(st,i){if(P.steps[i]){P.steps[i].apply(st);}});}
+  refreshProblem(U,P);
+  return P;
+}
+
+DATA.units.forEach(function(u){
+  var host=document.querySelector("[data-unit=\""+u.id+"\"]");if(!host){return;}
+  var U={u:u,host:host,probs:[],pbox:el("div",{"class":"probs"}),status:el("p",{"class":"mstatus"})};
+  host.appendChild(U.status);host.appendChild(U.pbox);UN[u.id]=U;
+  if(u.mode==="set"){u.problems.forEach(function(){startProblem(U);});}else{startProblem(U);}
+});
+
+/* ---------- reflections ---------- */
+var RF=[
+ {id:"r0",label:"Start",title:"Reflection: before you start",prompt:"Write a sentence or two: what do you already know about writing formulae for compounds, and how do you think atoms join together in a molecule?"},
+ {id:"r1",label:"After section A",title:"Reflection: metal compounds",prompt:"How do you decide how many of each ion you need? Which compound was the hardest to write, and why? What will you check first next time?"},
+ {id:"rE",label:"End",title:"Reflection: looking back",prompt:"Which rule helps you most when you draw a molecule? Which compound or drawing was the hardest? What would you like to practise again?"}
+];
+var refl={};
+function grow(ta){ta.style.height="auto";ta.style.height=Math.max(96,ta.scrollHeight+4)+"px";}
+function setConf(id,v){
+  var r=refl[id];r.c=v;
+  Array.prototype.forEach.call(r.box.querySelectorAll(".cbtn"),function(b){var on=(+b.getAttribute("data-v")===v);b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");});
+  r.rate.textContent=v?("Confidence: "+v+" of 5 ("+CONF[v]+")"):"Confidence: not rated";
+}
+function setText(id,txt){var r=refl[id];r.t=txt;r.ta.value=txt;r.pr.textContent=txt||"(nothing written)";grow(r.ta);}
+RF.forEach(function(rf){
+  var host=document.querySelector("[data-r=\""+rf.id+"\"]");if(!host){return;}
+  var box=el("div",{"class":"refl"});
+  var btns="";for(var i=1;i<=5;i++){btns+="<button type=\"button\" class=\"cbtn\" data-v=\""+i+"\" aria-pressed=\"false\"><b>"+i+"</b><small>"+CONF[i]+"</small></button>";}
+  box.innerHTML="<p class=\"rtitle sans\">"+rf.title+"</p><p class=\"rprompt\">"+rf.prompt+"</p><p class=\"rq\">How confident are you now? 1 is lost, 5 is could teach it.</p><div class=\"scale\" role=\"group\" aria-label=\"Confidence from 1 to 5\">"+btns+"</div><p class=\"ratep\"></p><label class=\"rlab\" for=\"ta-"+rf.id+"\">Write in your own words</label><textarea id=\"ta-"+rf.id+"\" rows=\"4\"></textarea><div class=\"reflprint\"></div>";
+  host.appendChild(box);
+  refl[rf.id]={c:0,t:"",rf:rf,box:box,ta:box.querySelector("textarea"),pr:box.querySelector(".reflprint"),rate:box.querySelector(".ratep")};
+  setConf(rf.id,0);setText(rf.id,"");
+  Array.prototype.forEach.call(box.querySelectorAll(".cbtn"),function(b){b.addEventListener("click",function(){setConf(rf.id,+b.getAttribute("data-v"));refreshSummary();schedSave();});});
+  refl[rf.id].ta.addEventListener("input",function(){var r=refl[rf.id];r.t=r.ta.value;r.pr.textContent=r.t||"(nothing written)";grow(r.ta);refreshSummary();schedSave();});
+});
+
+/* ---------- summary, progress, pdf ---------- */
+function refreshSummary(){
+  var mastered=0,tried=0,agg={core:0,stretch:0},h="<table><tr><th>Skill</th><th>Part</th><th>Status</th><th class=\"n\">Done</th><th class=\"n\">Clean</th></tr>";
+  DATA.units.forEach(function(u){
+    var U=UN[u.id];if(!U){return;}
+    var s=unitStatus(U);
+    if(s.s==="Mastered"){mastered++;}if(u.aim&&(s.s==="Mastered"||s.s==="Secure with support")){agg[u.aim]++;}tried+=s.tried;
+    U.status.innerHTML="<b>Skill status:</b> "+(s.s==="Mastered"?"● ":(s.s==="Not started"?"○ ":"◐ "))+s.s+" <span class=\"mhint\">("+(U.u.mode==="set"?(s.clean+" of "+s.n+" right first time; mastered at "+Math.ceil(s.n*0.8)+" or more"):"mastered by one problem with every step right first time")+")</span>";
+    U.status.className="mstatus "+(s.s==="Mastered"?"m":"");
+    h+="<tr><td>"+u.short+"</td><td>"+(u.part||"")+"</td><td>"+s.s+"</td><td class=\"n\">"+s.tried+"</td><td class=\"n\">"+s.clean+"</td></tr>";
+  });
+  h+="</table>";
+  document.getElementById("r_summary").innerHTML=h;
+  document.getElementById("sb_marks").textContent=DATA.aims?("Core skills secure: "+agg.core+" of "+DATA.aims.core+" · Stretch: "+agg.stretch+" of "+DATA.aims.stretch):("Skills mastered: "+mastered+" of "+DATA.units.length);
+  document.getElementById("sb_done").textContent="Problems finished: "+tried;
+  var ch="<table><tr><th>Confidence over time</th><th class=\"n\">Rating</th></tr>",written=0;
+  RF.forEach(function(rf){var r=refl[rf.id];if(!r){return;}if(r.c||r.t.trim()){written++;}
+    var sq="";for(var k=1;k<=5;k++){sq+=(k<=r.c?"■":"□");}
+    ch+="<tr><td>"+rf.label+"</td><td class=\"n\">"+(r.c?sq+" "+r.c+" / 5":"not rated")+"</td></tr>";});
+  ch+="</table><p style=\"margin:4px 0 0;font-size:15px\">Reflections written: "+written+" of "+RF.length+"</p>";
+  document.getElementById("r_conf").innerHTML=ch;
+  var nm=nameEl.value.trim()||"(name not entered)";
+  document.getElementById("printmeta").innerHTML="<b>Name:</b> "+nm.replace(/</g,"&lt;")+" &nbsp; <b>Date:</b> "+new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"})+" &nbsp; <b>Skills mastered:</b> "+mastered+" of "+DATA.units.length;
+}
+function say(m){document.getElementById("sb_msg").textContent=m;document.getElementById("r_msg").textContent=m;}
+nameEl.addEventListener("input",refreshSummary);
+function snapshot(){
+  var o={v:1,name:nameEl.value,t:new Date().toISOString(),units:{},refl:{}};
+  RF.forEach(function(rf){var r=refl[rf.id];if(r){o.refl[rf.id]={c:r.c,t:r.t};}});
+  DATA.units.forEach(function(u){var U=UN[u.id];o.units[u.id]=U.probs.map(function(P){return{steps:P.steps.map(function(S){return{w:S.w,res:S.res,val:(S.res?S.val:S.api.get())};})};});});
+  return o;
+}
+function applySnap(o){
+  if(!o||o.v!==1||!o.units){throw new Error("not a progress file");}
+  nameEl.value=o.name||"";
+  if(o.refl){RF.forEach(function(rf){var x=o.refl[rf.id];if(x&&refl[rf.id]){setConf(rf.id,x.c||0);setText(rf.id,x.t||"");}});}
+  DATA.units.forEach(function(u){
+    var U=UN[u.id],saved=o.units[u.id];if(!saved||!saved.length){return;}
+    U.pbox.innerHTML="";U.probs=[];
+    saved.forEach(function(sp){startProblem(U,sp);});
+  });
+  refreshSummary();
+}
+function lsSave(){try{localStorage.setItem(KEY,JSON.stringify(snapshot()));return true;}catch(e){return false;}}
+function autosave(){if(!pending){lsSave();}}
+function slug(s){return (s||"student").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"student";}
+function saveProgress(){
+  pending=false;document.getElementById("restore").hidden=true;
+  var snap=snapshot(),ok=lsSave(),dl=false;
+  try{
+    var blob=new Blob([JSON.stringify(snap)],{type:"application/json"}),a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);a.download="progress_"+slug(nameEl.value)+".json";document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},800);dl=true;
+  }catch(e){dl=false;}
+  say(ok&&dl?"Progress saved in this browser and downloaded as a file.":(ok?"Progress saved in this browser. The file download was blocked here.":(dl?"Progress downloaded as a file. This browser would not keep a copy, so keep the file.":"Progress could not be saved here. Save as .pdf to keep a record of your work.")));
+}
+function hasWork(o){
+  return !!(o&&o.units&&(Object.keys(o.units).some(function(k){return o.units[k].some(function(p){return p.steps.some(function(s){return s.w>0||s.res;});});})||(o.refl&&Object.keys(o.refl).some(function(k){return o.refl[k].c>0||(o.refl[k].t||"").trim();}))));
+}
+function restoreProgress(){
+  var raw=null;try{raw=localStorage.getItem(KEY);}catch(e){raw=null;}
+  var o=null;if(raw){try{o=JSON.parse(raw);}catch(e){o=null;}}
+  if(hasWork(o)){try{applySnap(o);pending=false;document.getElementById("restore").hidden=true;say("Progress restored from this browser.");return;}catch(e){}}
+  say("No saved work was found in this browser. Choose your progress file.");
+  document.getElementById("load_file").click();
+}
+function doPdf(){
+  var nm=nameEl.value.trim();
+  if(!nm){say("Type your name in the box under “My submission on Canvas”, then press Save as .pdf again.");nameEl.scrollIntoView({block:"center"});nameEl.focus();return;}
+  refreshSummary();say("");
+  var old=document.title;document.title=DATA.title+" - "+nm;
+  var back=function(){document.title=old;window.removeEventListener("afterprint",back);};
+  window.addEventListener("afterprint",back);
+  window.print();
+}
+window.addEventListener("beforeprint",refreshSummary);
+["sb_save","r_save"].forEach(function(id){document.getElementById(id).addEventListener("click",saveProgress);});
+["sb_restore","r_restore"].forEach(function(id){document.getElementById(id).addEventListener("click",restoreProgress);});
+["sb_pdf","r_pdf"].forEach(function(id){document.getElementById(id).addEventListener("click",doPdf);});
+document.getElementById("load_file").addEventListener("change",function(e){
+  var f=e.target.files[0];if(!f){return;}
+  var r=new FileReader();
+  r.onload=function(){try{applySnap(JSON.parse(r.result));pending=false;document.getElementById("restore").hidden=true;say("Progress file opened.");}catch(err){say("That file is not a progress file from this page.");}};
+  r.readAsText(f);
+});
+(function(){
+  var raw=null;try{raw=localStorage.getItem(KEY);}catch(e){raw=null;}
+  if(!raw){return;}
+  var o;try{o=JSON.parse(raw);}catch(e){return;}
+  if(!hasWork(o)){return;}
+  pending=true;
+  var when="";try{when=new Date(o.t).toLocaleString("en-GB",{weekday:"long",day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"});}catch(e){}
+  document.getElementById("restore_txt").textContent="Saved work found"+(o.name?" for "+o.name:"")+(when?" ("+when+")":"")+".";
+  document.getElementById("restore").hidden=false;
+  document.getElementById("restore_yes").addEventListener("click",function(){try{applySnap(o);}catch(e){say("The saved work could not be restored.");}pending=false;document.getElementById("restore").hidden=true;say("Saved work restored.");});
+  document.getElementById("restore_no").addEventListener("click",function(){try{localStorage.removeItem(KEY);}catch(e){}pending=false;document.getElementById("restore").hidden=true;});
+})();
+refreshSummary();
+window.__practice={UN:UN,DATA:DATA,applySnap:applySnap,snapshot:snapshot};
+})();
+
+</script>
+</body>
+</html>
