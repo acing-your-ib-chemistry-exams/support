@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 9 Chemistry: Iron chemistry practice test</title>
+<style>
+:root{--ink:#111;--mid:#555;--rule:#bbb;--paper:#fff;--page:#efefef}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:Palatino,"Palatino Linotype","Book Antiqua","URW Palladio L",serif;font-size:17px;line-height:1.5}
+.gothic,h1,h2,h3{font-family:"Clear Gothic","ClearGothic","Avenir Next","Gill Sans","Helvetica Neue",Arial,sans-serif;font-weight:400}
+.ui{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 16px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px}
+.sheet{max-width:794px;margin:24px auto;background:var(--paper);padding:34px 40px 28px;box-shadow:0 0 0 1px #ccc}
+.runhead{display:flex;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:4px;font-size:14px;margin-bottom:18px}
+h1.title{font-size:27px;margin:6px 0 14px;line-height:1.2}
+.ind{margin-left:88px}
+h2.sec{display:grid;grid-template-columns:88px 1fr auto;align-items:baseline;font-size:21px;margin:34px 0 8px;border-bottom:1px solid var(--rule);padding-bottom:3px}
+h2.sec .smk{font-size:15px;color:var(--mid)}
+h2.grp{font-size:24px;margin:44px 0 6px;border-top:2px solid var(--ink);padding-top:10px}
+h3.sub{font-size:19px;margin:22px 0 4px 88px}
+.namerow{margin-top:0}
+.how{margin:10px 0 18px 88px;border:1px solid var(--ink);padding:8px 12px;font-size:15px}
+.part{margin:16px 0 16px 88px;padding-bottom:12px;border-bottom:1px dotted var(--rule)}
+.q{display:flex;justify-content:space-between;gap:16px}
+.q .txt{flex:1}
+.q .mk{white-space:nowrap;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;font-weight:700}
+.lab{margin-right:4px}
+.eq{text-align:center;white-space:nowrap;margin:10px 0;overflow-x:auto;font-size:clamp(12.5px,2.5vw,17px)}
+.eq.long{font-size:clamp(11px,2.1vw,14px)}
+.lines{margin:8px 0;text-align:center}
+table.t{border-collapse:collapse;margin:10px auto;font-size:15px}
+table.t td,table.t th{border:1px solid var(--ink);padding:3px 9px;text-align:center;font-weight:400}
+table.t th{font-family:"Clear Gothic","Avenir Next","Gill Sans",Arial,sans-serif}
+.cap{text-align:center;font-size:14px;margin:2px 0 10px}
+.fld{font:inherit;font-size:.95em;border:0;border-bottom:1.5px solid var(--ink);background:#f6f6f6;padding:1px 3px;text-align:center;max-width:100%}
+input.fld{width:3.8em}
+input.fld.w{width:9em}
+select.fld{text-align:left;border-radius:0}
+textarea.ta{display:block;width:100%;margin:8px 0 0;font:inherit;font-size:15px;border:1px solid var(--ink);padding:6px;resize:vertical}
+.fld.ok{outline:2px solid var(--ink);background:#ececec}
+.fld.no{outline:2px dashed var(--ink)}
+label.mc{margin:0 10px;white-space:nowrap}
+.btn{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;border:1px solid var(--ink);background:#fff;padding:3px 11px;cursor:pointer;margin:6px 6px 0 0;color:var(--ink)}
+.btn:hover{background:var(--ink);color:#fff}
+.btn:disabled{opacity:.4;cursor:default;background:#fff;color:var(--ink)}
+.pal .btn{padding:1px 8px;margin:4px 3px 0 0;font-size:14px}
+.fb{margin-top:8px;padding:7px 10px;border-left:4px solid var(--ink);background:#f3f3f3;font-size:15px}
+.fb.hint{border-left-style:dashed}
+.fb.model{border-left-style:double;border-left-width:6px}
+.fb ol{margin:4px 0 0 18px;padding:0}
+.pt{display:flex;gap:8px;cursor:pointer;margin:3px 0;font-size:15px}
+.pt .bx{width:1.3em;height:1.3em;border:1.5px solid var(--ink);text-align:center;line-height:1.1em;flex:none;background:#fff}
+.small{font-size:13px;color:var(--mid);margin-top:4px}
+.tip{border-bottom:1px dotted var(--ink);cursor:help;position:relative}
+.tip:hover::after,.tip:focus::after{content:attr(data-tip);position:absolute;left:0;top:1.7em;z-index:30;width:250px;background:#111;color:#fff;padding:6px 9px;font:13px/1.35 "Helvetica Neue",Arial,sans-serif;white-space:normal}
+details.cheat{margin:8px 0 8px 88px;border:1px solid var(--ink);padding:6px 12px;font-size:15px}
+details.cheat summary{cursor:pointer;font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px}
+.box{margin:10px 0 10px 88px;border:1px solid var(--ink);padding:6px 12px;font-size:15px}
+.box ul{margin:4px 0 4px 18px;padding:0}
+svg.enth{width:100%;max-width:330px;display:block;margin:8px auto;font-family:"Helvetica Neue",Arial,sans-serif}
+svg.fig{width:100%;max-width:560px;display:block;margin:8px auto;font-family:"Helvetica Neue",Arial,sans-serif}
+.foot{margin-top:34px;border-top:1px solid var(--ink);padding-top:5px;font-size:14px;display:flex;justify-content:space-between}
+.foot b{font-family:"Helvetica Neue",Arial,sans-serif}
+dl.gl{margin:8px 0 0 88px;font-size:15px}
+dl.gl dt{font-weight:700;margin-top:6px}
+dl.gl dd{margin:0}
+#summary{margin:24px 0 0 88px;border:2px solid var(--ink);padding:10px 14px}
+@media(max-width:720px){.sheet{padding:18px 14px;margin:0}.ind,.part,.how,.box,details.cheat,h3.sub,dl.gl,#summary{margin-left:0}h2.sec{grid-template-columns:34px 1fr auto}}
+@media print{.bar,.btn,.pal{display:none}body{background:#fff}.sheet{box-shadow:none;margin:0}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div><strong>Mark: <span id="tot">0</span> / <span id="max">0</span></strong> &nbsp;·&nbsp; Hints used: <span id="hu">0</span></div>
+  <div><button class="btn" data-act="checkall">Check all</button><button class="btn" data-act="resetall">Reset all</button></div>
+</div>
+
+<div class="sheet">
+  <div class="runhead"><span>Grade 9 Chemistry</span><span>Tuesday 20 October 2026</span></div>
+  <h1 class="title">Iron chemistry: precipitates, displacement and energy changes</h1>
+  <p class="ind namerow">Student Name: <input class="fld w" id="stname" autocomplete="off"> &nbsp;&nbsp; Mark: <span id="tot2">0</span> / <span id="max2">0</span></p>
+
+  <div class="how"><b>How this practice test works.</b> Answer a part, then press <b>Check</b>. Press <b>Hint</b> for one small step at a time (hints are counted, not penalised). For written answers, the ticks show the mark points found in your answer: click a tick to change it if your wording earns the mark. <b>Show answer</b> gives the model answer and scores 0 for that part; press <b>Reset</b> to try the part again. Underlined words have a tool-tip: hover or tap, and find them all in the glossary at the end.</div>
+
+  <h2 class="grp">Part A &nbsp;Iron chemistry</h2>
+  <h3 class="sub">Learning objectives</h3>
+  <p class="ind">In Part A you show that you can:</p>
+  <ol class="ind">
+    <li>write the formulae of iron(II) and iron(III) compounds by balancing the charges on their ions;</li>
+    <li>recognise the colours of the precipitates iron(II) hydroxide, iron(II) carbonate and iron(III) hydroxide;</li>
+    <li>complete a full equation, with state symbols, for a [[precipitation reaction]];</li>
+    <li>identify the [[spectator ion|spectator ions]] and write the [[ionic equation]];</li>
+    <li>explain why green iron(II) hydroxide turns orange-brown in air, and use precipitates to tell iron(II) ions from iron(III) ions;</li>
+    <li>calculate the mass of a precipitate from the volume and concentration of a solution;</li>
+    <li>explain the [[displacement]] of copper by an iron nail in copper(II) sulfate solution, and write its ionic equation.</li>
+  </ol>
+
+  <h3 class="sub">Phenomenon</h3>
+  <p class="ind" id="phen1"></p>
+  <svg class="fig" viewBox="0 0 560 235" role="img" aria-label="Three test tubes with precipitates at the bottom">
+    <defs>
+      <pattern id="hA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#111" stroke-width="1.6"/></pattern>
+      <pattern id="hB" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.3" fill="#111"/></pattern>
+      <pattern id="hC" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0,0 L6,6 M6,0 L0,6" stroke="#111" stroke-width="1"/></pattern>
+    </defs>
+    <g id="tubes"></g>
+    <g font-size="12" text-anchor="middle" fill="#111">
+      <text x="65" y="172">A: iron(II) ions</text><text x="65" y="187">with hydroxide ions</text><text x="65" y="202">green precipitate</text>
+      <text x="280" y="172">B: iron(III) ions</text><text x="280" y="187">with hydroxide ions</text><text x="280" y="202">orange-brown precipitate</text>
+      <text x="495" y="172">C: iron(II) ions</text><text x="495" y="187">with carbonate ions</text><text x="495" y="202">green-grey precipitate</text>
+    </g>
+  </svg>
+  <p class="cap">Figure 1: the three precipitation reactions (patterns stand for colours)</p>
+
+  <div class="box"><b>Facts you need</b>
+    <ul>
+      <li>All sodium compounds are soluble: they stay dissolved, (aq).</li>
+      <li>Iron(II) and iron(III) sulfates, chlorides and nitrates are soluble: (aq).</li>
+      <li>Iron hydroxides and iron(II) carbonate are insoluble: they are the precipitates, (s).</li>
+    </ul>
+  </div>
+  <table class="t" id="tab1"></table>
+  <p class="cap">Table 1: ions and their charges</p>
+
+  <details class="cheat"><summary>Cheat sheet: an ionic equation in four small steps</summary>
+    <ol>
+      <li>Write the full equation with state symbols.</li>
+      <li>Split every (aq) ionic compound into its ions. Keep the (s) precipitate in one piece.</li>
+      <li>Cross out the ions that are identical on both sides: these are the spectator ions.</li>
+      <li>Write what is left. Check that the atoms balance <i>and</i> that the total charge is the same on both sides.</li>
+    </ol>
+    <p>Worked example with different substances:</p>
+    <div class="eq">Mg<sup>2+</sup>(aq) + 2OH<sup>&minus;</sup>(aq) &rarr; Mg(OH)<sub>2</sub>(s)</div>
+  </details>
+
+  <div id="questions"></div>
+
+  <div id="summary"></div>
+
+  <h2 class="sec"><span></span><span>Glossary</span><span></span></h2>
+  <dl class="gl" id="gloss"></dl>
+
+  <div class="foot"><span>Science Department · Refined with AI</span><b>Grade 9 Chemistry</b></div>
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+const SUB={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+const SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
+const plain=s=>s.replace(/[₀-₉]/g,c=>SUB[c]).replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,c=>SUP[c]).replace(/[−–]/g,'-').replace(/\^/g,'');
+const norm=s=>plain(s).replace(/\s+/g,'').replace(/→|⟶|⇒|=>|-{1,2}>/g,'->');
+const parseEq=s=>{const n=norm(s);const sd=n.split('->');if(sd.length!==2)return null;return sd.map(x=>x.split(/(?<=\))\+/).filter(Boolean).sort().join('|'));};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+
+const GL={
+ 'precipitate':'An insoluble solid that forms when solutions are mixed. It clouds the liquid or sinks to the bottom.',
+ 'precipitation reaction':'A reaction in which two solutions are mixed and an insoluble solid (a precipitate) forms.',
+ 'aqueous':'Dissolved in water. The state symbol is (aq).',
+ 'state symbol':'(s) solid, (l) liquid, (g) gas, (aq) dissolved in water.',
+ 'ion':'An atom or group of atoms with an electric charge, for example Fe²⁺ or OH⁻.',
+ 'spectator ion':'An ion that is in the mixture but does not change during the reaction. It is the same on both sides of the equation.',
+ 'ionic equation':'An equation that shows only the ions (and solids, liquids or gases) that take part in the reaction. Spectator ions are left out.',
+ 'insoluble':'Does not dissolve in water.',
+ 'soluble':'Dissolves in water.',
+ 'excess':'More than is needed to react with everything else, so some is left over.',
+ 'oxidised':'Here: an iron(II) ion loses an electron and becomes an iron(III) ion. Oxygen from the air takes the electron.',
+ 'concentration':'The amount of dissolved substance in a given volume of solution, in mol dm⁻³.',
+ 'molar mass':'The mass of one mole of a substance, in g mol⁻¹. For atoms it is the same number as the atomic mass, Ar.',
+ 'balanced':'The same number of each type of atom, and the same total charge, on both sides of the equation.',
+ 'displacement':'A more reactive metal takes the place of a less reactive metal in a solution of its compound.',
+ 'reactive':'A more reactive metal loses electrons to form ions more easily.',
+ 'system':'The reacting chemicals being studied: the reactants and the products they make.',
+ 'surroundings':'Everything around the system: the air, the container, the solution or the test tube.',
+ 'exothermic':'A reaction that transfers energy from the system to the surroundings. The surroundings get warmer and ΔH is negative.',
+ 'endothermic':'A reaction that takes in energy from the surroundings. The surroundings get cooler and ΔH is positive.',
+ 'activation energy':'The minimum energy needed to start a reaction.',
+ 'enthalpy change':'ΔH: the energy transferred in a reaction as written. Negative for exothermic, positive for endothermic.',
+ 'bond enthalpy':'The energy needed to break one mole of a particular bond. The same energy is released when that bond forms.',
+ 'conserved':'The total stays the same: energy is not created or destroyed, only transferred.'
+};
+function tipify(h){return h.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,(m,t,d)=>`<span class="tip" tabindex="0" data-tip="${esc(GL[t.toLowerCase()]||'')}">${d||t}</span>`);}
+
+/* enthalpy level diagram (model answers) */
+let svgN=0;
+function enth(exo,ea){
+  const id='ar'+(++svgN),ry=exo?70:140,py=exo?140:70;
+  const path=ea?`M40,${ry} H100 C135,${ry} 135,25 170,25 C205,25 205,${py} 240,${py} H310`:`M40,${ry} H100 C170,${ry} 170,${py} 240,${py} H310`;
+  const lab=exo?'ΔH negative':'ΔH positive';
+  return `<svg viewBox="0 0 360 205" class="enth" role="img" aria-label="Enthalpy level diagram">
+  <defs><marker id="${id}" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#111"/></marker></defs>
+  <line x1="30" y1="10" x2="30" y2="182" stroke="#111"/><line x1="30" y1="182" x2="350" y2="182" stroke="#111"/>
+  <text x="10" y="100" transform="rotate(-90 10 100)" font-size="11" text-anchor="middle">Enthalpy</text>
+  <text x="190" y="199" font-size="11" text-anchor="middle">Progress of reaction</text>
+  <path d="${path}" fill="none" stroke="#111" stroke-width="2"/>
+  <line x1="100" y1="${ry}" x2="285" y2="${ry}" stroke="#111" stroke-dasharray="3 3"/>
+  <line x1="285" y1="${ry}" x2="285" y2="${py+(exo?-3:3)}" stroke="#111" stroke-width="1.6" marker-end="url(#${id})"/>
+  <text x="292" y="${(ry+py)/2+4}" font-size="11">${lab}</text>
+  <text x="40" y="${ry-6}" font-size="11">Reactants</text>
+  <text x="248" y="${py+(exo?15:-6)}" font-size="11">Products</text>
+  ${ea?`<line x1="170" y1="25" x2="60" y2="25" stroke="#111" stroke-dasharray="3 3"/><line x1="60" y1="${ry}" x2="60" y2="28" stroke="#111" stroke-width="1.6" marker-end="url(#${id})"/><text x="64" y="18" font-size="11">Activation energy</text>`:''}
+  </svg>`;
+}
+
+/* ---------- field constructors ---------- */
+const S=(opts,ans,x)=>Object.assign({t:'sel',opts,ans,mk:1},x||{});
+const T=(ans,fb,x)=>Object.assign({t:'text',ans:[].concat(ans),fb,mk:1},x||{});
+const N=(ans,x)=>Object.assign({t:'num',ans:[].concat(ans),mk:1},x||{});
+const formFb=(good,msg)=>v=>norm(v).toLowerCase()===norm(good).toLowerCase()?'Check the capital letters.':msg;
+const ST4=['s','l','g','aq'];
+
+const D_UPDOWN=['up, with a positive sign','up, with a negative sign','down, with a positive sign','down, with a negative sign'];
+
+/* ---------- content ---------- */
+const GROUPS={
+ 5.5:`<h2 class="grp">Part B &nbsp;Energy changes in reactions</h2>
+  <p class="ind small">These questions come from the last test. Drawing is replaced by choosing the correct description of the diagram.</p>
+  <h3 class="sub">Learning objectives</h3>
+  <p class="ind">In Part B you show that you can:</p>
+  <ol class="ind">
+   <li>identify the [[system]] and the [[surroundings]] in a reaction, and show the direction of energy transfer between them;</li>
+   <li>link the temperature change of the surroundings to the type of reaction and to the sign of ΔH;</li>
+   <li>describe an enthalpy level diagram, including ΔH and the [[activation energy]];</li>
+   <li>explain what activation energy is, and why a reaction that releases energy, such as burning paper, still needs a flame to start it;</li>
+   <li>calculate ΔH from [[bond enthalpy|bond enthalpies]];</li>
+   <li>explain why the total energy of the system and surroundings is [[conserved]].</li>
+  </ol>
+  <h3 class="sub">Phenomenon</h3>
+  <p class="ind">A student passes an electric current through slightly acidic water and collects the hydrogen gas made at the negative electrode in a test tube. She holds a burning splint at the mouth of the tube and hears a squeaky pop. The hydrogen combines with oxygen from the air to make steam (water vapour). The reaction is [[exothermic]].</p>
+  <div class="eq">2H<sub>2</sub>(g) + O<sub>2</sub>(g) &rarr; 2H<sub>2</sub>O(g)</div>`
+};
+
+const SECTIONS=[
+{n:1,title:'Ions and formulae',marks:8,intro:'Use Table 1. In a formula the positive and negative charges must cancel, so the total charge is zero.',parts:[
+ {id:'1a',lab:'(a)',topic:'formulae from charges',q:'Write the formula of iron(II) hydroxide.',body:'<div class="eq">iron(II) hydroxide: {f}</div>',
+  fields:{f:T('Fe(OH)2',formFb('Fe(OH)2','Balance the charges: Fe²⁺ is 2+ and each OH⁻ is 1−. OH is a group of atoms, so it goes in brackets when you need more than one.'),{w:1})},
+  hints:['Fe²⁺ has a charge of 2+, and each OH⁻ has a charge of 1−. How many OH⁻ do you need so the charges cancel?','You need two OH⁻. OH is a group of atoms, so it goes in brackets: Fe(OH) with a small 2 after the bracket. Plain numbers are fine: Fe(OH)2.'],
+  model:'Fe(OH)<sub>2</sub>'},
+ {id:'1b',lab:'(b)',topic:'formulae from charges',q:'Write the formula of iron(III) hydroxide.',body:'<div class="eq">iron(III) hydroxide: {f}</div>',
+  fields:{f:T('Fe(OH)3',formFb('Fe(OH)3','Fe³⁺ is 3+ and each OH⁻ is 1−. Work out how many OH⁻ cancel 3+, and put OH in brackets.'))},
+  hints:['Fe³⁺ has a charge of 3+. Each OH⁻ is 1−.','Three OH⁻ cancel 3+. Write Fe(OH) with a small 3 after the bracket.'],
+  model:'Fe(OH)<sub>3</sub>'},
+ {id:'1c',lab:'(c)',topic:'formulae from charges',q:'Write the formula of iron(II) carbonate.',body:'<div class="eq">iron(II) carbonate: {f}</div>',
+  fields:{f:T(['FeCO3','Fe(CO3)'],formFb('FeCO3','Fe²⁺ is 2+ and CO₃²⁻ is 2−. One of each cancels, so no numbers and no brackets are needed.'))},
+  hints:['Look up the carbonate ion in Table 1: write its formula and its charge.','Fe²⁺ (2+) and CO₃²⁻ (2−) cancel one to one.'],
+  model:'FeCO<sub>3</sub>'},
+ {id:'1d',lab:'(d)',topic:'charge balance',q:'Explain, in terms of charge, why iron(III) hydroxide has three hydroxide ions for every one iron(III) ion.',marksNote:2,
+  points:[
+   {m:1,text:'The iron(III) ion has a charge of 3+.',re:/(3\s*\+)|(\+\s*3)|(three|3)\s*(plus|positive|\+)|charge\s*(of|is|on)?\s*(\+)?(3|three)/i},
+   {m:1,text:'Each hydroxide ion is 1−, so three are needed to cancel the charge (total charge zero).',re:/cancel|balanc|neutral|zero|overall|total charge/i}],
+  hints:['Write the charge on one iron(III) ion, then the charge on one hydroxide ion.','3+ must be cancelled by 1− charges. How many do you need?'],
+  model:'The iron(III) ion has a charge of 3+. Each hydroxide ion has a charge of 1−. Three hydroxide ions (3 × 1− = 3−) cancel the 3+, so the total charge of the compound is zero.'},
+ {id:'1e',lab:'(e)',topic:'precipitate colours',q:'Choose the colour of each precipitate. Use the Phenomenon and Figure 1.',
+  body:'<table class="t"><tr><td>iron(II) hydroxide</td><td>{a}</td></tr><tr><td>iron(II) carbonate</td><td>{b}</td></tr><tr><td>iron(III) hydroxide</td><td>{c}</td></tr></table>',
+  fields:{a:S(['','white','blue','orange-brown','green','green-grey'],'green',{fb:'Iron(II) hydroxide is the green precipitate in test tube A.'}),
+          b:S(['','green-grey','white','blue','green','orange-brown'],'green-grey',{fb:'Iron(II) carbonate is the green-grey precipitate in test tube C.'}),
+          c:S(['','blue','orange-brown','white','green-grey','green'],'orange-brown',{fb:'Iron(III) hydroxide is the orange-brown precipitate in test tube B, the colour of rust.'})},
+  hints:['Iron(III) hydroxide is the colour of rust.','Both iron(II) precipitates are green: one is greyer. Check Figure 1.'],
+  model:'iron(II) hydroxide: green; iron(II) carbonate: green-grey; iron(III) hydroxide: orange-brown.'}
+]},
+{n:2,title:'Precipitation of iron(II) hydroxide',marks:9,intro:'',parts:[
+ {id:'2a',lab:'(a)',topic:'word equations',q:'Sodium hydroxide solution (CARE: CORROSIVE!) is added to iron(II) sulfate solution. Complete the word equation.',
+  body:'<div class="eq">iron(II) sulfate + sodium hydroxide &rarr; {a} + {b}</div>',
+  fields:{a:S(['','iron(III) hydroxide','iron(II) oxide','iron(II) hydroxide'],'iron(II) hydroxide',{fb:'The iron stays iron(II) and pairs with the hydroxide ion.'}),
+          b:S(['','sodium carbonate','sodium sulfate','sodium sulfide'],'sodium sulfate',{fb:'The sodium ion pairs with the sulfate ion.'})},
+  hints:['Swap partners: the iron(II) ion pairs with the hydroxide ion, and the sodium ion pairs with the sulfate ion.','The charge on iron does not change in this reaction: it stays iron(II).'],
+  model:'iron(II) sulfate + sodium hydroxide → iron(II) hydroxide + sodium sulfate'},
+ {id:'2b',lab:'(b)',topic:'full equations',q:'Complete the full equation. Write the number in front of NaOH and the state symbols.',
+  body:'<div class="eq">FeSO<sub>4</sub>(aq) + {c} NaOH(aq) &rarr; Fe(OH)<sub>2</sub>({s1}) + Na<sub>2</sub>SO<sub>4</sub>({s2})</div>',
+  fields:{c:N(2,{w:'2.6em',fb:'Count the OH on the right: Fe(OH)₂ has two, so the left needs two NaOH. Then check the sodium: 2 on each side.'}),
+          s1:S(['',...ST4],'s',{keep:1,fb:'The precipitate is the solid: (s).'}),
+          s2:S(['',...ST4],'aq',{keep:1,fb:'Sodium sulfate stays dissolved: (aq).'})},
+  hints:['Count the OH on the right: Fe(OH)₂ has two. The left needs two OH as well.','The precipitate is the solid, (s). Sodium sulfate stays in the solution, (aq).'],
+  model:'FeSO₄(aq) + 2NaOH(aq) → Fe(OH)₂(s) + Na₂SO₄(aq)'},
+ {id:'2ci',lab:'(c)(i)',topic:'spectator ions',q:'The full equation, written as ions, is below. Tick the two [[spectator ion|spectator ions]].',
+  body:'<div class="eq long">Fe<sup>2+</sup>(aq) + SO<sub>4</sub><sup>2&minus;</sup>(aq) + 2Na<sup>+</sup>(aq) + 2OH<sup>&minus;</sup>(aq) &rarr; Fe(OH)<sub>2</sub>(s) + 2Na<sup>+</sup>(aq) + SO<sub>4</sub><sup>2&minus;</sup>(aq)</div><div class="lines">{sp}</div>',
+  fields:{sp:{t:'multi',opts:['Fe²⁺','SO₄²⁻','Na⁺','OH⁻'],ans:['SO₄²⁻','Na⁺'],mk:1,fb:'A spectator ion is the same on both sides. Fe²⁺ and OH⁻ change: they join to make the solid.'}},
+  hints:['A spectator ion is on the left and on the right, unchanged. Cross them out.','Look for one positive ion and one negative ion that are on both sides.'],
+  model:'SO₄²⁻ and Na⁺'},
+ {id:'2cii',lab:'(c)(ii)',topic:'ionic equations',q:'Write the ionic equation by leaving out the spectator ions.',
+  body:'<div class="eq">Fe<sup>2+</sup>(aq) + {c} OH<sup>&minus;</sup>(aq) &rarr; Fe(OH)<sub>2</sub>({s})</div>',
+  fields:{c:N(2,{w:'2.6em',fb:'Check the charge: Fe²⁺ (2+) needs two OH⁻ (2−) to make Fe(OH)₂, which has no charge.'}),
+          s:S(['',...ST4],'s',{keep:1,fb:'The precipitate is a solid.'})},
+  hints:['Cross out the spectator ions from the full ionic equation. What is left on the left side? Count the OH⁻.','Check: the charge on the left is 2+ and 2 × 1− = 0. The right side has no charge: both sides are zero.'],
+  model:'Fe²⁺(aq) + 2OH⁻(aq) → Fe(OH)₂(s)'},
+ {id:'2d',lab:'(d)',topic:'spectator ions',q:'State what is meant by a spectator ion.',
+  points:[{m:1,text:'An ion that does not take part in the reaction: it is unchanged, the same on both sides.',re:/not\s+(take|part|involved|react|change)|n't\s*(take|react|change|involved)|do(es)?\s*not\s*(take|react|change|become)|unchanged|same\s+(on|in)\s+both|stay(s)?\s+the\s+same|remain(s)?\s+(unchanged|the\s+same|dissolved|in\s+solution)|just\s+watch/i}],
+  hints:['Look at what happens to Na⁺ and SO₄²⁻ from the left side to the right side of the full ionic equation.'],
+  model:'A spectator ion is in the mixture but does not take part in the reaction: it is unchanged and is the same on both sides of the equation.'}
+]},
+{n:3,title:'Iron(II) carbonate and iron(III) hydroxide',marks:12,intro:'',parts:[
+ {id:'3a',lab:'(a)',topic:'ionic equations',q:'Sodium carbonate solution (our simplest source of carbonate ions) is added to iron(II) sulfate solution. A precipitate of iron(II) carbonate forms. Complete the ionic equation.',
+  body:'<div class="eq">Fe<sup>2+</sup>(aq) + {i} &rarr; {p}({s})</div>',
+  fields:{i:S(['','CO₃⁻(aq)','CO₂(aq)','CO₃²⁻(aq)','2CO₃²⁻(aq)'],'CO₃²⁻(aq)',{keep:1,fb:'Copy the carbonate ion from Table 1 exactly: formula and charge. One is enough: 2+ and 2− cancel.'}),
+          p:S(['','Fe₂CO₃','FeCO₃','Fe(CO₃)₂','FeC₃O'],'FeCO₃',{keep:1,fb:'Fe²⁺ and CO₃²⁻ cancel one to one: FeCO₃.'}),
+          s:S(['',...ST4],'s',{keep:1,fb:'The precipitate is a solid.'})},
+  hints:['The carbonate ion is in Table 1: write its formula and its charge.','Fe²⁺ (2+) and CO₃²⁻ (2−) cancel one to one.'],
+  model:'Fe²⁺(aq) + CO₃²⁻(aq) → FeCO₃(s)'},
+ {id:'3b',lab:'(b)',topic:'ionic equations',q:'Sodium hydroxide solution (CARE: CORROSIVE!) is added to iron(III) chloride solution. Complete the ionic equation for the precipitate and state its colour.',
+  body:'<div class="eq">Fe<sup>3+</sup>(aq) + {c} OH<sup>&minus;</sup>(aq) &rarr; Fe(OH)<sub>3</sub>({s})</div><div class="lines">Colour of the precipitate: {col}</div>',
+  fields:{c:N(3,{w:'2.6em',fb:'Fe³⁺ is 3+, so three OH⁻ (3−) are needed.'}),
+          s:S(['',...ST4],'s',{keep:1,fb:'The precipitate is a solid.'}),
+          col:S(['','white','green','orange-brown','blue'],'orange-brown',{fb:'Iron(III) hydroxide is orange-brown.'})},
+  hints:['Fe³⁺ has a charge of 3+. Each OH⁻ is 1−.','Three OH⁻ are needed. The colour is the one of rust.'],
+  model:'Fe³⁺(aq) + 3OH⁻(aq) → Fe(OH)₃(s); the precipitate is orange-brown.'},
+ {id:'3c',lab:'(c)',topic:'spectator ions',q:'The same ionic equation is obtained when sodium hydroxide solution (CARE: CORROSIVE!) is added to iron(III) nitrate solution instead of iron(III) chloride solution. Explain why.',
+  points:[
+   {m:1,text:'Chloride, nitrate and sodium ions are spectator ions: they do not take part.',re:/spectator|unchanged|(not|n't|don'?t|doesn'?t)\s*(take|react|involved|change)|aren'?t\s*involved/i},
+   {m:1,text:'Only the iron(III) ions and the hydroxide ions react to form the precipitate.',re:/(fe\s*3\s*\+|iron\s*\(?\s*iii).*(oh|hydroxide)|(oh|hydroxide).*(fe\s*3\s*\+|iron\s*\(?\s*iii)|same\s+ions|only\s+(the\s+)?(iron|fe)/is}],
+  hints:['Compare the two solutions: which ions are different, and which ions are the same?','Which ions join to make the solid, and does the solid change?'],
+  model:'The chloride ions, nitrate ions and sodium ions are spectator ions: they do not take part. Only Fe³⁺ and OH⁻ react to form Fe(OH)₃, so the ionic equation is the same.'},
+ {id:'3d',lab:'(d)',topic:'moles and mass',q:'25.0 cm³ of iron(II) sulfate solution, concentration 0.20 mol dm⁻³, is added to an excess of sodium hydroxide solution (CARE: CORROSIVE!). Calculate the mass of iron(II) hydroxide formed. Use Table 2. Work in four small steps.',
+  body:`<table class="t"><tr><th>Fe</th><th>O</th><th>H</th></tr><tr><td>56</td><td>16</td><td>1</td></tr></table><p class="cap">Table 2: molar mass (atomic mass, Ar), in g mol⁻¹</p>
+  <p>Think carefully before calculating. Are you given more than one mole, or less than one mole just looking at the numbers given? {tick}</p>
+  <p><b>Step 1</b> Moles of Fe²⁺ in the solution (volume in cm³):</p>
+  <div class="eq">n = concentration × volume ÷ 1000</div>
+  <div class="eq">n = {a} × {b} ÷ 1000 = {n1} mol</div>
+  <p><b>Step 2</b> From the equation, Fe²⁺(aq) + 2OH⁻(aq) → Fe(OH)₂(s), 1 mol of Fe²⁺ makes 1 mol of Fe(OH)₂:</p>
+  <div class="eq">n(Fe(OH)₂) = {n2} mol</div>
+  <p><b>Step 3</b> Molar mass of Fe(OH)₂:</p>
+  <div class="eq">M = Ar(Fe) + 2 × (Ar(O) + Ar(H))</div>
+  <div class="eq">M = {m1} + 2 × ({m2} + {m3}) = {M} g mol⁻¹</div>
+  <p><b>Step 4</b> Mass of precipitate:</p>
+  <div class="eq">m = n × M</div>
+  <div class="eq">m = {x} × {y} = {m} g</div>`,
+  fields:{tick:{t:'multi',opts:['more than one mole','less than one mole'],ans:['less than one mole'],mk:0,fb:'Estimate first: 0.20 × 25 ÷ 1000 is much smaller than 1, so less than one mole.'},
+   a:N(0.20,{mk:0,fb:'Concentration goes here: 0.20.'}),b:N(25.0,{mk:0,fb:'Volume in cm³: 25.0.'}),
+   n1:N(0.005,{fb:'0.20 × 25.0 = 5.0, then ÷ 1000 = 0.0050.'}),
+   n2:N([0.005,nm=>nm.n1],{fb:'The ratio is 1 : 1, so the moles of Fe(OH)₂ equal the moles of Fe²⁺.'}),
+   m1:N(56,{mk:0}),m2:N(16,{mk:0}),m3:N(1,{mk:0}),
+   M:N(90,{fb:'16 + 1 = 17, times 2 = 34, plus 56 = 90.'}),
+   x:N([0.005,nm=>nm.n2],{mk:0}),y:N([90,nm=>nm.M],{mk:0}),
+   m:N([0.45,nm=>nm.n2*nm.M],{fb:'Multiply the moles by the molar mass: 0.0050 × 90 = 0.45.'})},
+  hints:['Four small steps: moles of Fe²⁺, moles of Fe(OH)₂, molar mass of Fe(OH)₂, then mass.','Step 1: 0.20 × 25.0 = 5.0, then ÷ 1000.','Step 2: the equation shows 1 Fe²⁺ making 1 Fe(OH)₂, so the number of moles is the same.','Step 4: m = n × M: multiply the moles by the molar mass.'],
+  model:'n = 0.20 × 25.0 ÷ 1000 = 0.0050 mol; n(Fe(OH)₂) = 0.0050 mol; M = 56 + 2 × (16 + 1) = 90 g mol⁻¹; m = 0.0050 × 90 = 0.45 g.'}
+]},
+{n:4,title:'Extending the model',marks:8,intro:'',parts:[
+ {id:'4a',lab:'(a)',topic:'oxidation of iron(II)',q:'Leave the green iron(II) hydroxide precipitate open to the air: the surface slowly turns orange-brown. Explain this colour change in terms of iron ions and oxygen.',
+  points:[
+   {m:1,text:'Iron(II) hydroxide reacts with oxygen from the air (the iron(II) is [[oxidised]]).',re:/oxygen|oxidi[sz]|\bair\b|o2/i},
+   {m:1,text:'Iron(III) ions / iron(III) hydroxide form, which is orange-brown.',re:/iron\s*\(?\s*iii|fe\s*3|fe\(oh\)3|3\s*\+/i}],
+  hints:['What does air contain that reacts with iron(II) compounds?','Iron(II) ions (Fe²⁺) change into iron(III) ions (Fe³⁺). Which precipitate is orange-brown?'],
+  model:'Iron(II) hydroxide reacts with oxygen from the air: the iron(II) ions are oxidised to iron(III) ions, so orange-brown iron(III) hydroxide forms.<div class="eq">4Fe(OH)₂(s) + O₂(g) + 2H₂O(l) → 4Fe(OH)₃(s)</div>'},
+ {id:'4b',lab:'(b)',topic:'identifying iron ions',q:'Sodium hydroxide solution (CARE: CORROSIVE!) is added to solution X. An orange-brown precipitate forms. Name the iron ion in X and write the ionic equation, with state symbols.',
+  body:'<div class="lines">Iron ion in X: {ion}</div><div class="eq">{eq}</div>',
+  fields:{ion:S(['','iron(II) ion, Fe²⁺','iron(III) ion, Fe³⁺'],'iron(III) ion, Fe³⁺',{fb:'Orange-brown is the colour of iron(III) hydroxide.'}),
+          eq:{t:'eq',left:['Fe3+(aq)','3OH-(aq)'],right:['Fe(OH)3(s)'],mk:2,show:'Fe³⁺(aq) + 3OH⁻(aq) → Fe(OH)₃(s)'}},
+  hints:['Write the equation with an arrow →. Plain typing works: Fe3+(aq) + 3OH-(aq) → … Put a state symbol after every species.','Use the same pattern as question 3(b).'],
+  model:'Iron(III) ion, Fe³⁺. Fe³⁺(aq) + 3OH⁻(aq) → Fe(OH)₃(s)'},
+ {id:'4c',lab:'(c)',topic:'iron(III) with carbonate ions',q:'Sodium carbonate solution is added to yellow-brown iron(III) chloride solution. The mixture fizzes and an orange-brown precipitate forms. This part is challenging: use the hints. Name the gas and the precipitate.',
+  body:'<div class="lines">Gas: {g} &nbsp;&nbsp; Precipitate: {p}</div>',
+  fields:{g:S(['','hydrogen','oxygen','steam','carbon dioxide'],'carbon dioxide',{fb:'Carbonate ions give off carbon dioxide when they meet an acid.'}),
+          p:S(['','iron(III) carbonate','iron(II) hydroxide','iron(III) hydroxide','sodium chloride'],'iron(III) hydroxide',{fb:'It is the orange-brown precipitate from question 3(b): iron(III) hydroxide.'})},
+  hints:['Fizzing means a gas. Carbonate ions give off a gas when they meet an acid, and iron(III) solutions are slightly acidic.','The orange-brown precipitate is the one you made with hydroxide ions in 3(b). Water in the solution supplies the hydroxide ions.'],
+  model:'Gas: carbon dioxide. Precipitate: iron(III) hydroxide. Iron(III) solutions are acidic, so the carbonate ions react to make carbon dioxide, and iron(III) hydroxide precipitates. Iron(III) carbonate does not form in water.<div class="eq">2Fe³⁺(aq) + 3CO₃²⁻(aq) + 3H₂O(l) → 2Fe(OH)₃(s) + 3CO₂(g)</div>'},
+ {id:'4d',lab:'(d)',topic:'identifying iron ions',q:'Another solution gives a green precipitate with sodium hydroxide solution (CARE: CORROSIVE!). The surface of the precipitate turns brown in air. Which iron ion does the solution contain?',
+  body:'<div class="lines">{ion}</div>',
+  fields:{ion:S(['','iron(III) ion, Fe³⁺','iron(II) ion, Fe²⁺'],'iron(II) ion, Fe²⁺',{fb:'A green precipitate that turns brown in air is iron(II) hydroxide.'})},
+  hints:['Which iron hydroxide is green? Which is orange-brown?'],
+  model:'Iron(II) ion, Fe²⁺.'}
+]},
+{n:5,title:'Displacement: an iron nail in copper(II) sulfate solution',marks:10,
+ intro:'A clean iron nail is placed in blue copper(II) sulfate solution. After a few minutes the nail is coated with a pink-brown solid and the blue colour of the solution fades to pale green. Copper(II) sulfate solution contains Cu²⁺(aq) and SO₄²⁻(aq) ions.',parts:[
+ {id:'5a',lab:'(a)',topic:'displacement',q:'Complete the word equation.',
+  body:'<div class="eq">iron + copper(II) sulfate &rarr; {a} + {b}</div>',
+  fields:{a:S(['','copper','copper oxide','iron'],'copper',{fb:'The pink-brown coating on the nail is copper.'}),
+          b:S(['','iron(III) sulfate','iron(II) sulfate','iron sulfide'],'iron(II) sulfate',{fb:'Iron forms Fe²⁺ here: the solution is pale green, the colour of iron(II).'})},
+  hints:['The pink-brown solid is a metal. Which one?','Iron forms iron(II) ions in this reaction.'],
+  model:'iron + copper(II) sulfate → copper + iron(II) sulfate'},
+ {id:'5b',lab:'(b)',topic:'full equations',q:'Complete the state symbols in the full equation.',
+  body:'<div class="eq">Fe({s1}) + CuSO<sub>4</sub>({s2}) &rarr; Cu({s3}) + FeSO<sub>4</sub>({s4})</div>',
+  fields:{s1:S(['',...ST4],'s',{keep:1,mk:0}),s2:S(['',...ST4],'aq',{keep:1,mk:0}),
+          s3:S(['',...ST4],'s',{keep:1,fb:'The copper that coats the nail is a solid.'}),s4:S(['',...ST4],'aq',{keep:1,fb:'Iron(II) sulfate stays dissolved.'})},
+  hints:['The nail is solid. Copper(II) sulfate is dissolved. What is the pink-brown coating?','Iron(II) sulfate makes the solution pale green: it is dissolved.'],
+  model:'Fe(s) + CuSO₄(aq) → Cu(s) + FeSO₄(aq)'},
+ {id:'5c',lab:'(c)',topic:'spectator ions',q:'State the spectator ion in this reaction.',
+  body:'<div class="lines">{a}</div>',
+  fields:{a:S(['','Cu²⁺','Fe²⁺','SO₄²⁻'],'SO₄²⁻',{fb:'The sulfate ion is on both sides, unchanged. Cu²⁺ and Fe²⁺ change.'})},
+  hints:['Write the full ionic equation: Fe + Cu²⁺ + SO₄²⁻ → Fe²⁺ + SO₄²⁻ + Cu. Which ion is on both sides?'],
+  model:'SO₄²⁻ (sulfate ions)'},
+ {id:'5d',lab:'(d)',topic:'ionic equations',q:'Write the ionic equation, with state symbols.',
+  body:'<div class="eq">{eq}</div>',
+  fields:{eq:{t:'eq',left:['Fe(s)','Cu2+(aq)'],right:['Fe2+(aq)','Cu(s)'],mk:2,show:'Fe(s) + Cu²⁺(aq) → Fe²⁺(aq) + Cu(s)'}},
+  hints:['Leave out the spectator ion. What does iron become? What does Cu²⁺ become?','Check the charge: the left has 2+ and the right has 2+.'],
+  model:'Fe(s) + Cu²⁺(aq) → Fe²⁺(aq) + Cu(s)'},
+ {id:'5e',lab:'(e)',topic:'displacement',q:'Explain why the blue colour of the solution fades and the solution turns pale green.',
+  points:[
+   {m:1,text:'The blue copper(II) ions are used up: they change into copper atoms (solid copper).',re:/cu\s*2|copper.*(used|removed|deposit|solid|atoms|coat|displac)|blue.*(ions|used|gone|removed)/i},
+   {m:1,text:'Iron(II) ions, which are pale green, form in the solution.',re:/iron\s*\(?\s*ii\)?|fe\s*2|green/i}],
+  hints:['The blue colour belongs to the copper(II) ions, Cu²⁺. What happens to them?','Which new ions enter the solution, and what colour are they?'],
+  model:'The blue Cu²⁺ ions are used up as they change into solid copper on the nail. Fe²⁺ ions, which are pale green, form in the solution.'},
+ {id:'5f',lab:'(f)',topic:'reactivity',q:'Choose the correct conclusion about iron and copper.',
+  body:'<div class="lines">{a}</div>',
+  fields:{a:S(['','Copper is more reactive than iron.','Iron is more reactive than copper.','Iron and copper are equally reactive.'],'Iron is more reactive than copper.',{fb:'Iron displaces copper from its solution, so iron is the more reactive metal.'})},
+  hints:['The more reactive metal displaces the less reactive metal from its compound. Which metal ended up as a solid coating?'],
+  model:'Iron is more reactive than copper: it displaces copper from the solution.'}
+]},
+{n:6,title:'System and surroundings',marks:8,group:5.5,intro:'',parts:[
+ {id:'6a',lab:'(a)',topic:'system and surroundings',q:'Say what the [[system]] and what the [[surroundings]] are when hydrogen burns in air.',
+  body:'<div class="lines">System: {a}</div><div class="lines">Surroundings: {b}</div>',
+  fields:{a:S(['','the air and the test tube around the reaction','the burning splint only','the hydrogen and oxygen that react (and the steam they make)'],'the hydrogen and oxygen that react (and the steam they make)',{fb:'The system is the chemicals that react.'}),
+          b:S(['','the electrodes only','the hydrogen and oxygen that react','the air and the test tube around the reaction'],'the air and the test tube around the reaction',{fb:'The surroundings are everything around the reacting chemicals.'})},
+  hints:['The system is what is reacting. The surroundings are everything else around it.'],
+  model:'System: the hydrogen and oxygen that react (and the steam they make). Surroundings: the air and the test tube around the reaction.'},
+ {id:'6b',lab:'(b)',topic:'energy transfer',q:'Choose the direction of energy transfer as the hydrogen burns.',
+  body:'<div class="lines">Energy is transferred {a}</div>',
+  fields:{a:S(['','from the surroundings to the system','from the system to the surroundings','in neither direction'],'from the system to the surroundings',{fb:'The reaction is exothermic: it gives energy out to the surroundings.'})},
+  hints:['Exothermic: energy goes out of the reacting chemicals.'],
+  model:'From the system to the surroundings.'},
+ {id:'6c',lab:'(c)',topic:'energy transfer',q:'Choose the correct word in each pair. When hydrogen burns:',
+  body:'<div class="lines">the energy of the system {a}, and the energy of the surroundings {b}.</div>',
+  fields:{a:S(['','increases','decreases'],'decreases',{keep:1,fb:'The system gives energy out, so its energy decreases.'}),
+          b:S(['','increases','decreases'],'increases',{keep:1,fb:'The surroundings receive the energy, so their energy increases.'})},
+  hints:['Energy leaves the system and enters the surroundings.'],
+  model:'The energy of the system decreases and the energy of the surroundings increases.'},
+ {id:'6d',lab:'(d)',topic:'temperature change',q:'State what happens to the temperature of the surroundings.',
+  body:'<div class="lines">The temperature of the surroundings {a}.</div>',
+  fields:{a:S(['','stays the same','falls','rises'],'rises',{fb:'The surroundings receive energy, so they get warmer.'})},
+  hints:['The surroundings gain energy.'],model:'It rises.'},
+ {id:'6e',lab:'(e)',topic:'sign of ΔH',q:'State the sign of ΔH for this reaction. Give your reason, linking it to your answer to (d).',
+  body:'<div class="lines">The sign of ΔH is {a}</div>',
+  fields:{a:S(['','positive','negative'],'negative',{fb:'Exothermic reactions have a negative ΔH.'})},
+  points:[{m:1,text:'The temperature of the surroundings rises, so energy is released: the reaction is exothermic.',re:/rise|increas|goes up|hotter|warm|exothermic|releas|given out|gives out|out of the system/i}],
+  hints:['Temperature rise → exothermic → ΔH is negative.','Write one sentence that links the temperature rise to the sign.'],
+  model:'Negative. The temperature of the surroundings rises, so energy is released to the surroundings: the reaction is exothermic.'}
+]},
+{n:7,title:'Activation energy and enthalpy level diagrams',marks:9,
+ intro:'Before the burning splint reaches the tube, the hydrogen is already mixed with oxygen from the air, and nothing happens.',parts:[
+ {id:'7a',lab:'(a)',topic:'activation energy',q:'State what is meant by [[activation energy]].',
+  points:[{m:1,text:'The minimum energy needed to start a reaction.',re:/minimum|least|smallest|energy\s*(needed|required|to\s*start|to\s*begin)|needed\s*to\s*(start|begin)/i}],
+  hints:['It is a minimum amount of energy. What does the energy let the reaction do?'],
+  model:'The minimum energy needed to start a reaction.'},
+ {id:'7b',lab:'(b)',topic:'activation energy',q:'Describe the job of the burning splint, using the idea of activation energy.',
+  points:[{m:1,text:'The splint supplies the activation energy (heat) so the reaction starts.',re:/(provid|suppl|giv|heat|energy).*(activation|start|begin|ignit)|(activation|start|begin).*(energy|heat)/is}],
+  hints:['What does the flame give to the hydrogen and oxygen?'],
+  model:'The burning splint supplies the activation energy, so the hydrogen and oxygen can start to react.'},
+ {id:'7c',lab:'(c)',topic:'enthalpy diagrams',q:'The enthalpy level diagram for the burning of hydrogen should show the following. Choose the correct description for each.',
+  body:`<div class="lines">Reactants: {a}</div><div class="lines">Curve: {b}</div><div class="lines">Activation energy is measured {c}</div><div class="lines">ΔH is an arrow pointing {d}</div>`,
+  fields:{a:S(['','lower on the enthalpy axis than the products','higher on the enthalpy axis than the products'],'higher on the enthalpy axis than the products',{fb:'Exothermic: the system loses energy, so the products are lower than the reactants.'}),
+          b:S(['','the curve rises straight from reactants to products','the curve rises to a peak above the reactants before falling','the curve falls straight from reactants to products with no peak'],'the curve rises to a peak above the reactants before falling',{fb:'Energy is needed first to start the reaction, so the curve has a hump.'}),
+          c:S(['','from the products up to the top of the hump','from the reactants down to the products','from the reactants up to the top of the hump'],'from the reactants up to the top of the hump',{fb:'Activation energy is the climb from the reactants to the top of the hump.'}),
+          d:S(['',...D_UPDOWN],'down, with a negative sign',{fb:'Exothermic: ΔH goes from reactants down to products and is negative.'})},
+  hints:['Exothermic: the products end lower than the reactants.','Activation energy is the climb to the top of the hump; ΔH is the overall change from reactants to products.'],
+  model:'Reactants higher than products; a hump between them; activation energy from the reactants up to the top of the hump; ΔH an arrow pointing down, labelled negative.'+enth(true,true)},
+ {id:'7d',lab:'(d)',topic:'activation energy',q:'A sheet of paper burns in air and releases energy, yet a sheet of paper lying on a desk does not catch fire by itself. Use activation energy and ΔH to explain why paper has to be lit, and why it keeps burning once it has been lit.',
+  points:[
+   {m:1,text:'Burning is exothermic: ΔH is negative and energy is released.',re:/exothermic|releas|gives?\s*out|given\s*out|negative|ΔH|delta/i},
+   {m:1,text:'At room temperature the particles do not have the activation energy, so a flame is needed to start it.',re:/activation|start|spark|flame|ignit|light|heat/i},
+   {m:1,text:'Once burning, the energy released supplies the activation energy for the rest of the paper, so it keeps burning.',re:/keeps?\s*(going|burning)|continu|enough\s*energy|suppl|provid|releas.*(activation|more\s*paper|next|rest)|self/i}],
+  hints:['Is burning paper exothermic or endothermic? What does that say about ΔH?','Why does a flame help at the start? Where does the energy come from afterwards?'],
+  model:'Burning paper is exothermic (ΔH negative), but at room temperature the particles do not have the activation energy, so the reaction needs a flame to start. Once it is burning, the energy released supplies the activation energy for the rest of the paper, so it keeps burning.'}
+]},
+{n:8,title:'Bond enthalpies',marks:12,
+ intro:'The balanced equation for the combustion is 2H₂(g) + O₂(g) → 2H₂O(g). Use the data in Table 3.',parts:[
+ {id:'8a',lab:'(a)',topic:'bond enthalpy table',q:'Complete the table of energy changes.',
+  body:`<table class="t"><tr><th>Bond</th><th>Bond enthalpy (kJ mol⁻¹)</th></tr><tr><td>H–H</td><td>436</td></tr><tr><td>O=O</td><td>498</td></tr><tr><td>O–H</td><td>463</td></tr></table><p class="cap">Table 3: bond enthalpies</p>
+  <table class="t"><tr><th>Bond</th><th>Number of bonds</th><th>Energy (kJ)</th></tr>
+  <tr><td colspan="3"><i>Bonds broken (energy absorbed)</i></td></tr>
+  <tr><td>H–H</td><td>{n1}</td><td>{e1}</td></tr>
+  <tr><td>O=O</td><td>{n2}</td><td>{e2}</td></tr>
+  <tr><td>Total energy absorbed</td><td></td><td>{tot}</td></tr>
+  <tr><td colspan="3"><i>Bonds formed (energy released)</i></td></tr>
+  <tr><td>O–H</td><td>{n3}</td><td>{e3}</td></tr></table><p class="cap">Table 4: energy changes for 2H₂(g) + O₂(g) → 2H₂O(g)</p>`,
+  fields:{n1:N(2,{mk:0,fb:'2H₂ has two H–H bonds.'}),e1:N(872,{fb:'2 × 436 = 872.'}),n2:N(1,{mk:0,fb:'One O₂ has one O=O bond.'}),e2:N(498,{mk:0}),
+          tot:N([1370,nm=>nm.e1+nm.e2],{fb:'872 + 498 = 1370.'}),n3:N(4,{mk:0,fb:'2H₂O has 2 × 2 = 4 O–H bonds.'}),e3:N([1852,nm=>nm.n3*463],{fb:'4 × 463 = 1852.'})},
+  hints:['Count the bonds in the equation: how many H–H, O=O and O–H are there?','Energy = number of bonds × bond enthalpy.'],
+  model:'H–H: 2 bonds, 872 kJ. O=O: 1 bond, 498 kJ. Total absorbed: 1370 kJ. O–H: 4 bonds, 1852 kJ.'},
+ {id:'8b',lab:'(b)',topic:'ΔH from bond enthalpies',q:'Calculate ΔH for the reaction as written: energy absorbed − energy released. Give the sign and the unit.',
+  body:`<div class="eq">ΔH = energy absorbed − energy released</div><div class="eq">ΔH = {a} − {b} = {v} {u}</div>`,
+  fields:{a:N(1370,{mk:0}),b:N(1852,{mk:0}),v:N([-482,nm=>nm.a-nm.b],{fb:'1370 − 1852 = −482. The sign is negative because more energy is released than absorbed.'}),
+          u:S(['','J','kJ mol⁻¹','°C','kJ'],['kJ','kJ mol⁻¹'],{keep:1,fb:'Energy is in kJ.'})},
+  hints:['Write the formula, then the numbers, then calculate: 1370 − 1852.','Energy released is bigger, so the answer is negative.'],
+  model:'ΔH = 1370 − 1852 = −482 kJ'},
+ {id:'8c',lab:'(c)',topic:'bond strength and ΔH',q:'In Table 3 the O=O bond (498 kJ mol⁻¹) is stronger than the O–H bond (463 kJ mol⁻¹), yet the reaction is exothermic. Explain.',
+  points:[
+   {m:1,text:'Four O–H bonds form, so more bonds are formed than broken.',re:/(four|4)|more\s*(o-?h\s*)?bonds|number\s*of\s*bonds/i},
+   {m:1,text:'The total energy released forming bonds (1852 kJ) is greater than the total energy absorbed breaking bonds (1370 kJ).',re:/(releas|given\s*out|gives?\s*out).*(more|greater|larger|bigger|higher)|(more|greater|larger|bigger).*(releas|given\s*out)|1852.*1370|total/i}],
+  hints:['Compare the totals, not single bonds.','How many O–H bonds form compared with the number of O=O bonds that break?'],
+  model:'Four O–H bonds form, so the total energy released when bonds form (1852 kJ) is greater than the total energy absorbed when bonds break (1370 kJ). The reaction is exothermic even though one O=O bond is stronger than one O–H bond.'},
+ {id:'8d',lab:'(d)',topic:'conservation of energy',q:'Explain why the total energy of the system and the surroundings is unchanged ([[conserved]]) during the reaction.',
+  points:[
+   {m:1,text:'Energy is not created or destroyed.',re:/not\s*(be\s*)?(created|destroyed|made|lost)|can'?t\s*be\s*(created|destroyed)|conserv|neither\s*created/i},
+   {m:1,text:'The energy lost by the system is gained by the surroundings: it is only transferred.',re:/transfer|(lost|loses|decreas).*(gain|increas)|(gain|increas).*(lost|loses|decreas)|same\s*(amount|energy)/i}],
+  hints:['What can happen to energy: can it be made or destroyed?','Where does the energy that leaves the system go?'],
+  model:'Energy cannot be created or destroyed. The energy lost by the system is gained by the surroundings: energy is only transferred, so the total is unchanged.'},
+ {id:'8e',lab:'(e)',topic:'enthalpy diagrams',q:'Steam can be split back into hydrogen and oxygen: 2H₂O(g) → 2H₂(g) + O₂(g). Choose the correct description of its enthalpy level diagram (no activation energy is needed) and state the value of ΔH.',
+  body:`<div class="lines">Reactants (2H₂O): {a}</div><div class="lines">ΔH is an arrow pointing {b}</div><div class="eq">ΔH = {v} kJ</div>`,
+  fields:{a:S(['','higher on the enthalpy axis than the products','lower on the enthalpy axis than the products'],'lower on the enthalpy axis than the products',{fb:'The reverse of an exothermic reaction is endothermic: the products are higher.'}),
+          b:S(['',...D_UPDOWN],'up, with a positive sign',{fb:'ΔH goes up from reactants to products and is positive.'}),
+          v:N(482,{fb:'The reverse reaction has the same size of ΔH with the opposite sign: +482.'})},
+  hints:['The forward reaction has ΔH = −482 kJ. What happens to the sign when you reverse it?'],
+  model:'Reactants lower than products; ΔH an arrow pointing up, labelled positive; ΔH = +482 kJ.'+enth(false,false)}
+]},
+{n:9,title:'Extending the model',marks:8,
+ intro:'A student adds vinegar to baking soda in a cup. The temperature of the mixture falls from 25 °C to 20 °C.',parts:[
+ {id:'9a',lab:'(a)',topic:'endothermic and ΔH',q:'State whether the reaction is exothermic or endothermic, and give the sign of ΔH.',
+  body:'<div class="lines">The reaction is {a}, and ΔH is {b}.</div>',
+  fields:{a:S(['','exothermic','endothermic'],'endothermic',{keep:1,fb:'The temperature falls: the surroundings lose energy, so the reaction is endothermic.'}),
+          b:S(['','negative','positive'],'positive',{keep:1,fb:'Temperature fall → endothermic → ΔH positive.'})},
+  hints:['Temperature rise → exothermic → ΔH negative. Temperature fall → ?'],
+  model:'Endothermic; ΔH is positive.'},
+ {id:'9b',lab:'(b)',topic:'enthalpy diagrams',q:'Choose the correct description of the enthalpy level diagram for this reaction.',
+  body:`<div class="lines">Reactants: {a}</div><div class="lines">Activation energy is measured {b}</div><div class="lines">ΔH is an arrow pointing {c}</div>`,
+  fields:{a:S(['','higher on the enthalpy axis than the products','lower on the enthalpy axis than the products'],'lower on the enthalpy axis than the products',{fb:'Endothermic: the system gains energy, so the products are higher.'}),
+          b:S(['','from the products up to the top of the hump','from the reactants up to the top of the hump','from the reactants down to the products'],'from the reactants up to the top of the hump',{fb:'Activation energy is the climb from the reactants to the top of the hump.'}),
+          c:S(['',...D_UPDOWN],'up, with a positive sign',{fb:'Endothermic: ΔH points up and is positive.'})},
+  hints:['Endothermic: the products end higher than the reactants.'],
+  model:'Reactants lower than products; activation energy from the reactants up to the top of the hump; ΔH an arrow pointing up, labelled positive.'+enth(false,true)},
+ {id:'9c',lab:'(c)',topic:'bonds and energy transfer',q:'Explain the fall in temperature in terms of the bonds broken and the bonds formed. Include the direction of energy transfer between the system and the surroundings.',
+  points:[
+   {m:1,text:'The energy absorbed breaking bonds is greater than the energy released forming bonds.',re:/(absorb|break|broken|taken\s*in).*(more|greater|larger|bigger)|(more|greater|larger|bigger).*(absorb|break|broken|taken\s*in)|releas.*(less|smaller|fewer)/i},
+   {m:1,text:'Energy is transferred from the surroundings to the system.',re:/from\s*the\s*surroundings\s*(in)?to\s*the\s*system|surroundings.*(lose|loses|give|gives|transfer).*system|system.*(gain|take|absorb).*surroundings/i},
+   {m:1,text:'So the surroundings lose energy and the temperature falls.',re:/surroundings.*(cool|lose|fall|colder|decreas)|temperature.*(fall|drop|decreas)|cooler|colder/i}],
+  hints:['Compare the energy absorbed breaking bonds with the energy released forming bonds.','Which way does the net energy move, and what does that do to the surroundings?'],
+  model:'More energy is absorbed breaking bonds than is released forming bonds. Energy is transferred from the surroundings to the system, so the surroundings lose energy and their temperature falls.'}
+]}
+];
+
+/* ---------- state ---------- */
+const ALL=[];SECTIONS.forEach(s=>s.parts.forEach(p=>{p.sec=s.n;ALL.push(p)}));
+const BY={};ALL.forEach(p=>BY[p.id]=p);
+const pm=p=>Object.values(p.fields||{}).reduce((a,f)=>a+f.mk,0)+(p.points||[]).reduce((a,x)=>a+x.m,0);
+let ST={};
+
+/* ---------- rendering ---------- */
+const fid=(p,k)=>`f-${p.id}-${k}`;
+function fieldHTML(p,k,f){
+  const id=fid(p,k);
+  if(f.t==='sel')return `<select class="fld" id="${id}" data-f="${k}">${f.opts.map(o=>`<option value="${esc(o)}">${o||'choose…'}</option>`).join('')}</select>`;
+  if(f.t==='multi')return f.opts.map(o=>`<label class="mc"><input type="checkbox" data-f="${k}" value="${esc(o)}"> ${o}</label>`).join('');
+  if(f.t==='eq')return `<span><input class="fld" id="${id}" data-f="${k}" autocomplete="off" spellcheck="false" style="width:30em" placeholder="type the equation"><br><span class="pal">${['→','²','³','⁺','⁻','₂','₃','₄'].map(c=>`<button class="btn" type="button" data-act="ins" data-t="${id}" data-c="${c}">${c}</button>`).join('')}</span></span>`;
+  const w=f.w===1?' w':'';
+  return `<input class="fld${w}" id="${id}" data-f="${k}" autocomplete="off" spellcheck="false" ${f.t==='num'?'inputmode="decimal"':''} ${f.w&&f.w!==1?`style="width:${f.w}"`:''}>`;
+}
+function partHTML(p){
+  let body=(p.body||'').replace(/\{(\w+)\}/g,(m,k)=>fieldHTML(p,k,p.fields[k]));
+  if(p.points)body+=`<textarea class="ta" id="ta-${p.id}" rows="3" placeholder="Write your answer here"></textarea>`;
+  return `<div class="part" id="part-${p.id}"><div class="q"><div class="txt"><span class="lab">${p.lab}</span> ${tipify(p.q)}</div><div class="mk">[${pm(p)}]</div></div>
+  <div class="body">${tipify(body)}</div>
+  <div class="ctl"><button class="btn" data-act="check" data-p="${p.id}">Check</button><button class="btn" data-act="hint" data-p="${p.id}" id="hb-${p.id}">Hint</button><button class="btn" data-act="show" data-p="${p.id}">Show answer</button><button class="btn" data-act="reset" data-p="${p.id}">Reset</button></div>
+  <div id="out-${p.id}"></div></div>`;
+}
+function render(){
+  let h='';
+  SECTIONS.forEach(s=>{
+    if(s.group)h+=GROUPS[s.group];
+    h+=`<h2 class="sec"><span>${s.n}</span><span>${s.title}</span><span class="smk">[${s.parts.reduce((a,p)=>a+pm(p),0)} marks]</span></h2>`;
+    if(s.intro)h+=`<p class="ind">${tipify(s.intro)}</p>`;
+    s.parts.forEach(p=>h+=partHTML(p));
+  });
+  document.getElementById('questions').innerHTML=h;
+  ST={};ALL.forEach(p=>ST[p.id]={got:0,fm:0,hints:0,rev:false,att:false,res:false,lines:[],tk:null});
+  update();
+}
+
+/* ---------- checking ---------- */
+function readF(p,k,f){
+  if(f.t==='multi')return [...document.querySelectorAll(`#part-${p.id} input[data-f="${k}"]:checked`)].map(x=>x.value);
+  const el=document.getElementById(fid(p,k));return el?el.value.trim():'';
+}
+function evalField(f,v,nums){
+  if(f.t==='text'){const ok=f.ans.map(norm).includes(norm(v));return{m:ok?f.mk:0,ok,note:ok?'':(typeof f.fb==='function'?f.fb(v):f.fb)}}
+  if(f.t==='num'){
+    const x=parseFloat(String(v).replace(/[−–]/g,'-').replace(',','.'));let ok=false,ecf=false;
+    if(!isNaN(x))for(const a of f.ans){const t=typeof a==='function'?a(nums):a;if(typeof t==='number'&&!isNaN(t)&&Math.abs(x-t)<=Math.abs(t)*0.01+1e-9){ok=true;ecf=typeof a==='function';break}}
+    return{m:ok?f.mk:0,ok,ecf,note:ok?'':f.fb}}
+  if(f.t==='sel'){const ok=[].concat(f.ans).includes(v);return{m:ok?f.mk:0,ok,note:ok?'':f.fb}}
+  if(f.t==='multi'){const ok=v.length===f.ans.length&&f.ans.every(a=>v.includes(a));return{m:ok?f.mk:0,ok,note:ok?'':f.fb}}
+  if(f.t==='eq'){
+    const e=parseEq(v);if(!e)return{m:0,ok:false,note:'Write the equation with an arrow →.'};
+    const L=f.left.slice().sort().join('|'),R=f.right.slice().sort().join('|');
+    const m=(e[0]===L?1:0)+(e[1]===R?1:0);const bits=[];
+    if(e[0]!==L)bits.push('Check the reactants: the species, the number in front, and the state symbols.');
+    if(e[1]!==R)bits.push('Check the product: the formula and the state symbol.');
+    return{m,ok:m===2,note:bits.join(' ')}}
+}
+function numsOf(p,vals){const n={};for(const k in p.fields)if(p.fields[k].t==='num'){const x=parseFloat(String(vals[k]).replace(/[−–]/g,'-').replace(',','.'));n[k]=x}return n}
+function check(id){
+  const p=BY[id],st=ST[id];
+  if(st.rev){st.lines=['The answer is showing, so this part scores 0. Press Reset to try it again.'];st.res=true;paint(id);return}
+  const vals={};let empty=true;
+  for(const k in p.fields){const v=readF(p,k,p.fields[k]);vals[k]=v;if(Array.isArray(v)?v.length:v!=='')empty=false}
+  let ta='';if(p.points){ta=document.getElementById('ta-'+id).value;if(ta.trim())empty=false}
+  if(empty){st.res=true;st.got=0;st.fm=0;st.lines=['Write or choose an answer first.'];st.tk=null;paint(id);update();return}
+  const nums=numsOf(p,vals);let fm=0;const lines=[];
+  for(const k in p.fields){
+    const f=p.fields[k],r=evalField(f,vals[k],nums);fm+=r.m;
+    const el=document.getElementById(fid(p,k));
+    if(el){el.classList.toggle('ok',r.ok);el.classList.toggle('no',!r.ok)}
+    if(!r.ok)lines.push('✗ '+(r.note||'Not yet.'));
+    else if(r.ecf)lines.push('✓ Marked as correct from your earlier answer (error carried forward).');
+  }
+  st.fm=fm;st.lines=lines;st.att=true;st.res=true;
+  if(p.points){const t=plain(ta);st.tk=p.points.map(pt=>pt.re.test(t))}
+  recalc(p);
+  if(st.got===pm(p)&&!lines.length)st.lines=['✓ Full marks for this part.'];
+  paint(id);update();
+}
+function recalc(p){const st=ST[p.id];st.got=st.fm+(p.points?p.points.reduce((a,pt,i)=>a+(st.tk&&st.tk[i]?pt.m:0),0):0)}
+function ptsHTML(p,st){
+  if(!st.tk)return '';
+  return `<div style="margin-top:6px"><b>Mark points</b>${p.points.map((pt,i)=>`<div class="pt" data-act="tick" data-p="${p.id}" data-i="${i}"><span class="bx">${st.tk[i]?'✓':''}</span><span>${tipify(pt.text)} [${pt.m}]</span></div>`).join('')}<div class="small">Ticks come from keywords in your answer. Click a tick to change it.</div></div>`;
+}
+function paint(id){
+  const p=BY[id],st=ST[id];let h='';
+  if(st.hints)h+=`<div class="fb hint"><b>Hint${st.hints>1?'s':''}</b><ol>${p.hints.slice(0,st.hints).map(x=>`<li>${tipify(x)}</li>`).join('')}</ol></div>`;
+  if(st.res)h+=`<div class="fb"><b>${st.got} / ${pm(p)}</b>${st.lines.map(l=>`<div>${l}</div>`).join('')}${p.points&&!st.rev?ptsHTML(p,st):''}</div>`;
+  if(st.rev)h+=`<div class="fb model"><b>Model answer</b><div>${tipify(p.model)}</div></div>`;
+  document.getElementById('out-'+id).innerHTML=h;
+  const hb=document.getElementById('hb-'+id);hb.disabled=st.hints>=p.hints.length;
+}
+function reveal(id){
+  const p=BY[id],st=ST[id];
+  for(const k in p.fields){
+    const f=p.fields[k],el=document.getElementById(fid(p,k));
+    if(f.t==='multi'){document.querySelectorAll(`#part-${id} input[data-f="${k}"]`).forEach(c=>c.checked=f.ans.includes(c.value));continue}
+    if(!el)continue;el.classList.remove('ok','no');
+    if(f.t==='sel')el.value=[].concat(f.ans)[0];
+    else if(f.t==='text')el.value=f.ans[0];
+    else if(f.t==='num')el.value=String(f.ans.find(a=>typeof a==='number'));
+    else if(f.t==='eq')el.value=f.show;
+  }
+  st.rev=true;st.att=true;st.got=0;st.fm=0;st.res=true;st.lines=['Answer shown: 0 marks for this part. Press Reset to try it again.'];st.tk=null;
+  paint(id);update();
+}
+function resetPart(id){
+  const p=BY[id];
+  document.querySelectorAll(`#part-${id} input.fld, #part-${id} select.fld`).forEach(e=>{e.value='';e.classList.remove('ok','no')});
+  document.querySelectorAll(`#part-${id} input[type=checkbox]`).forEach(c=>c.checked=false);
+  const ta=document.getElementById('ta-'+id);if(ta)ta.value='';
+  ST[id]={got:0,fm:0,hints:ST[id].hints,rev:false,att:false,res:false,lines:[],tk:null};
+  paint(id);update();
+}
+function update(){
+  let tot=0,max=0,hu=0;const low=[],none=[];
+  ALL.forEach(p=>{const st=ST[p.id];tot+=st.got;max+=pm(p);hu+=st.hints;
+    const label=`${p.sec}${p.lab}`;
+    if(!st.att)none.push(label);else if(st.got<pm(p))low.push(`${label} (${p.topic})`)});
+  ['tot','tot2'].forEach(i=>document.getElementById(i).textContent=Math.round(tot*10)/10);
+  ['max','max2'].forEach(i=>document.getElementById(i).textContent=max);
+  document.getElementById('hu').textContent=hu;
+  document.getElementById('summary').innerHTML=`<b>Your mark: ${Math.round(tot*10)/10} / ${max} (${max?Math.round(100*tot/max):0}%)</b>
+   ${low.length?`<div>Revisit: ${low.join('; ')}.</div>`:''}${none.length&&none.length<ALL.length?`<div class="small">Not yet attempted: ${none.join(', ')}.</div>`:''}`;
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const a=b.dataset.act,id=b.dataset.p;
+  if(a==='check')check(id);
+  else if(a==='hint'){const st=ST[id];if(st.hints<BY[id].hints.length){st.hints++;paint(id);update()}}
+  else if(a==='show')reveal(id);
+  else if(a==='reset')resetPart(id);
+  else if(a==='tick'){const st=ST[id],i=+b.dataset.i;if(st.tk&&!st.rev){st.tk[i]=!st.tk[i];recalc(BY[id]);paint(id);update()}}
+  else if(a==='checkall')ALL.forEach(p=>{if(!ST[p.id].rev){const any=[...document.querySelectorAll(`#part-${p.id} input.fld, #part-${p.id} select.fld, #part-${p.id} textarea`)].some(x=>x.value.trim())||document.querySelector(`#part-${p.id} input[type=checkbox]:checked`);if(any)check(p.id)}});
+  else if(a==='resetall'){if(confirm('Clear all your answers?'))render()}
+  else if(a==='ins'){const el=document.getElementById(b.dataset.t),c=b.dataset.c,s=el.selectionStart??el.value.length,t=el.selectionEnd??s;el.value=el.value.slice(0,s)+c+el.value.slice(t);el.focus();el.setSelectionRange(s+1,s+1)}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input.fld')){const part=e.target.closest('.part');if(part)check(part.id.slice(5))}});
+
+/* ---------- static bits ---------- */
+document.getElementById('phen1').innerHTML=tipify(`A student pours pale green iron(II) sulfate solution into a test tube and adds sodium hydroxide solution (CARE: CORROSIVE!). A green solid appears at once and sinks: it is a [[precipitate]]. When the test tube is left open to the air, the surface of the solid slowly turns orange-brown. Adding sodium hydroxide solution (CARE: CORROSIVE!) to yellow-brown iron(III) chloride solution gives an orange-brown precipitate straight away. Adding sodium carbonate solution to iron(II) sulfate solution gives a green-grey precipitate. Our simplest source of hydroxide ions is sodium hydroxide solution, and our simplest source of carbonate ions is sodium carbonate solution.`);
+document.getElementById('tab1').innerHTML='<tr>'+['sodium','iron(II)','iron(III)','hydroxide','carbonate','sulfate','chloride','nitrate'].map(x=>`<th>${x}</th>`).join('')+'</tr><tr>'+['Na⁺','Fe²⁺','Fe³⁺','OH⁻','CO₃²⁻','SO₄²⁻','Cl⁻','NO₃⁻'].map(x=>`<td>${x}</td>`).join('')+'</tr>';
+(function(){
+  const g=document.getElementById('tubes');let h='';
+  [[65,'hA'],[280,'hB'],[495,'hC']].forEach(([cx,pat])=>{
+    h+=`<path d="M${cx-24},15 V120 a24,24 0 0 0 48,0 V15" fill="none" stroke="#111" stroke-width="2"/>`;
+    h+=`<path d="M${cx-22},55 V120 a22,22 0 0 0 44,0 V55 Z" fill="#ececec"/>`;
+    h+=`<path d="M${cx-22},108 V120 a22,22 0 0 0 44,0 V108 Z" fill="url(#${pat})" stroke="#111" stroke-width="1"/>`;
+  });
+  g.innerHTML=h;
+})();
+document.getElementById('gloss').innerHTML=Object.keys(GL).sort().map(k=>`<dt>${k}</dt><dd>${GL[k]}</dd>`).join('');
+render();
+</script>
+</body>
+</html>
