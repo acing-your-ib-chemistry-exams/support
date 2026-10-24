@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 9 Chemistry: moles, gases, formulae and energy changes revision test</title>
+<style>
+:root{--ink:#000;--soft:#555;--rule:#000;--tint:#f2f2f2;--tint2:#e6e6e6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--ink);font:17px/1.5 "Palatino Linotype",Palatino,"TeX Gyre Pagella","Book Antiqua",Georgia,serif}
+.sans,h1,h2,h3,button,.qn,.qm,.runhead,.foot,label.k,.bar,th,.tabs a{font-family:"Clear Gothic","Helvetica Neue",Helvetica,Arial,sans-serif}
+.runhead{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 16px;font-size:13px}
+.runhead .score{font-weight:700;white-space:nowrap}
+.runhead button{font-size:13px;padding:3px 10px;margin-left:8px}
+main{max-width:800px;margin:0 auto;padding:16px 16px 40px}
+h1{font-weight:400;font-size:30px;line-height:1.2;margin:18px 0 6px}
+h2{font-weight:400;font-size:23px;margin:38px 0 6px;padding-top:8px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+h2 .tot{font-size:14px}
+h3{font-weight:400;font-size:17px;margin:14px 0 4px}
+p{margin:8px 0}
+.intro{margin:6px 0 14px}
+.box{border:1px solid var(--rule);padding:10px 16px;margin:14px 0}
+.box h3{margin-top:0;font-weight:700}
+ul.nav{columns:2;margin:8px 0 0 18px;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px}
+.q{border:1px solid var(--rule);padding:12px 16px 14px;margin:18px 0;background:#fff}
+.q.practice{border-style:dashed;background:#fafafa;margin-left:14px}
+.q.done{border-width:2px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:4px}
+.qn{font-weight:700}
+.qt{font-size:15px;margin-left:8px;font-weight:400}
+.qm{white-space:nowrap}
+.qtext p:first-child{margin-top:2px}
+.fm{text-align:center;white-space:nowrap;overflow-x:auto;font-weight:700;margin:8px 0;font-size:17px}
+.fm.n{font-weight:400}
+.fields{margin:8px 0}
+.frow{text-align:center;white-space:nowrap;margin:8px 0;overflow-x:auto}
+.frow label.k{font-size:14px;margin-right:6px;white-space:normal;display:inline-block;max-width:60%;vertical-align:middle;text-align:right}
+.frow.wide{text-align:left;white-space:normal}
+input[type=text],select,textarea{font:inherit;font-size:16px;border:1px solid #000;border-radius:0;padding:4px 7px;background:#fff;color:#000}
+input.num{width:8.5em;text-align:center}
+input.txt{width:13em;text-align:center}
+select{max-width:100%}
+textarea{width:100%;min-height:7.5em;resize:vertical;line-height:1.4}
+.unit{margin-left:6px}
+.mark{display:inline-block;min-width:1.4em;font-weight:700;margin-left:6px}
+.ok input,.ok select{border-width:3px}
+.bad input,.bad select{border-style:dashed;border-width:2px}
+.fmsg{font-size:14px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;white-space:normal;display:block;margin:2px auto 0;max-width:34em;text-align:center}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+button{font-size:14px;padding:5px 12px;border:1px solid #000;background:#fff;color:#000;cursor:pointer;border-radius:0}
+button:hover,button:focus{background:var(--tint2)}
+button.main{background:#000;color:#fff}
+button.main:hover,button.main:focus{background:#333}
+button[hidden]{display:none}
+.panel{border:1px solid #000;background:var(--tint);padding:8px 14px;margin:8px 0;font-size:16px}
+.panel h4{margin:0 0 4px;font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif}
+.panel.hint{background:#fff;border-style:dashed}
+.hintl{margin:4px 0}
+.fb{margin:8px 0 2px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px}
+.fb b{font-weight:700}
+.worked{border-left:4px solid #000;padding:2px 12px;margin:10px 0;background:#fff}
+.worked h4{margin:2px 0;font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif}
+.ideas{margin:8px 0;padding:0;list-style:none;font-size:15px}
+.ideas li{margin:4px 0}
+.ideas label{cursor:pointer}
+.model{border:1px solid #000;padding:6px 12px;margin:8px 0;background:#fff;font-size:16px}
+.bank{border:1px solid #000;padding:5px 10px;margin:8px 0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;text-align:center}
+.bank span{display:inline-block;border:1px solid #888;padding:0 8px;margin:2px 3px}
+table{border-collapse:collapse;margin:8px auto;font-size:15px}
+th,td{border:1px solid #000;padding:3px 9px;text-align:center}
+th{background:var(--tint2);font-weight:700;font-size:14px}
+td.l{text-align:left}
+.tip{border-bottom:1px dotted #000;cursor:help;position:relative}
+.tip:hover::after,.tip:focus::after,.tip.on::after{content:attr(data-tip);position:absolute;left:0;top:1.5em;z-index:30;width:17em;max-width:80vw;background:#fff;border:1px solid #000;padding:5px 8px;font:14px/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;white-space:normal;box-shadow:3px 3px 0 #000}
+#ref{position:fixed;inset:0;background:#fff;z-index:50;overflow:auto;padding:16px}
+#ref[hidden]{display:none}
+#ref .in{max-width:800px;margin:0 auto}
+.close{position:sticky;top:0;float:right}
+.summary td,.summary th{padding:4px 12px}
+.foot{border-top:1px solid #000;margin-top:40px;padding-top:6px;font-size:12px}
+dl.gl dt{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;font-size:14px;margin-top:8px}
+dl.gl dd{margin:0 0 0 14px}
+.legend{font-size:14px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+@media(max-width:560px){ul.nav{columns:1}.frow label.k{max-width:100%;display:block;text-align:center;margin-bottom:3px}.fm{font-size:16px}}
+
+
+.key{border:1px solid currentColor;border-radius:6px;padding:.4em .9em;margin:.7em 0;font-size:.95em}.key p{margin:.2em 0}.key ul{margin:.2em 0 .2em 1.1em;padding:0}
+
+.vt{border-collapse:collapse;margin:.6em auto}.vt th,.vt td{border:1px solid currentColor;padding:.25em .7em;text-align:center}.vt th.rl{text-align:left;font-weight:normal}
+
+.grid td.gcell{vertical-align:top;white-space:nowrap}.grid input.num{width:6em}.grid select{max-width:11em;font-size:13px}.grid .mark{margin-left:3px}.grid .fmsg{font-size:12px;max-width:12em;white-space:normal;text-align:left}.grid th{vertical-align:middle}.grid th.rl{max-width:15em;font-size:14px}
+
+.ptools{text-align:center;margin:10px 0}.pbtn{margin:0 4px}
+@page{size:A4;margin:16mm}
+@media print{.runhead,.tools,.ptools,#savepanel,#ref,button,.panel,.fmsg{display:none!important}
+ body{font-size:11pt}.q{break-inside:avoid;page-break-inside:avoid}h2{break-after:avoid}
+ .worked{display:block}.worked[hidden]{display:none}textarea{border:1px solid #000}}
+
+.meta{border-left:3px solid currentColor;padding:4px 10px;margin:8px 0;font-size:14px}.meta select{font-size:14px;max-width:100%}.meta textarea{width:100%;font-size:14px;box-sizing:border-box}.meta .why{display:flex;flex-direction:column;gap:2px}.meta .why label{display:block}
+
+</style>
+</head>
+<body>
+<div class="runhead"><span>Grade 9 Chemistry</span><span><span class="score" id="score"></span><button id="refbtn" type="button">Reference sheet</button></span></div>
+<main>
+<h1>Moles, gases, formulae and energy changes: revision test</h1>
+<p class="sans" style="font-size:14px;margin-top:0">Review and revision at home before the test on Tuesday 27 October 2026</p>
+<div id="gate" class="box">
+<h3>Before you start</h3>
+<p class="sans" style="font-size:15px">Type your <b>first name</b> and choose your <b>chemistry set</b>. You will be given a three-digit code. Keep it: it is your code in all your saved work.</p>
+<p class="sans" style="text-align:center"><label>First name <input type="text" id="stname" autocomplete="given-name" maxlength="30" style="width:12em"></label> &nbsp; <label>Set <select id="stset"></select></label> &nbsp; <button type="button" id="stgo" class="main">Start</button></p>
+<p class="sans" id="gatemsg" style="font-size:14px;text-align:center" role="status"></p>
+<p class="sans" style="font-size:14px;text-align:center">Already started? <button type="button" class="pbtn" data-act="load">Retrieve progress</button></p>
+</div>
+<div id="savepanel" class="box" hidden>
+<div id="saveblock" hidden><h3>Save progress</h3><p class="sans" style="font-size:14px">Keep the file or the code. When you come back, press <b>Retrieve progress</b> and give it back.</p><textarea id="savecode" readonly rows="3" style="width:100%;font-size:12px"></textarea><p><button type="button" id="copycode">Copy the code</button> <button type="button" id="saveclose">Close</button></p></div>
+<div id="loadblock" hidden><h3>Retrieve progress</h3><p class="sans" style="font-size:14px">Choose the file you saved: <input type="file" id="loadfile" accept=".txt,text/plain"></p><p class="sans" style="font-size:14px">Or paste the code here:</p><textarea id="loadcode" rows="3" style="width:100%;font-size:12px"></textarea><p><button type="button" id="loadgo" class="main">Load</button> <button type="button" id="loadclose">Close</button></p></div>
+<p class="sans" id="savemsg" style="font-size:14px" role="status"></p>
+</div>
+<div id="testbody" hidden>
+<p class="sans" id="who" style="font-size:15px;margin:4px 0"></p>
+<div class="ptools sans" id="ptools"><button type="button" class="pbtn" data-act="save">Save progress</button> <button type="button" class="pbtn" data-act="load">Retrieve progress</button> <button type="button" class="pbtn" data-act="pdf">Save as a .pdf file</button></div>
+<div class="box">
+<h3>How this test works</h3>
+<ul style="margin:6px 0 6px 18px;padding:0">
+<li>Every question has a <b>cheat sheet</b>, up to three <b>hints</b>, and a <b>worked answer</b> that appears after you check.</li>
+<li>Press <b>Check</b> as often as you like. A ✓ means correct. A ✗ means not yet.</li>
+<li><b>More practice</b> gives you a new question of the same kind, with its own cheat sheet and hints. It does not change your score.</li>
+<li>Type numbers only. The unit is next to the box. A full stop or a comma is fine for decimals.</li>
+<li>Type formulae with the numbers on the line, for example <b>Ca(OH)2</b>. Capital letters matter. Use round brackets.</li>
+<li>For explanations, write full sentences. The test looks for the key ideas and shows you a model answer. Tick any idea you included in different words.</li>
+<li>The <b>Reference sheet</b> button (top right) opens the atomic masses, the table of ions and all the formulae. Move the pointer over a dotted word to see what it means. The glossary is at the end.</li>
+<li><b>Save progress</b> keeps your answers in a file. <b>Retrieve progress</b> brings them back, so you can stop and carry on later. <b>Save as a .pdf file</b> opens the print window: choose <b>Save as PDF</b> as the printer.</li>
+<li>The extension section has more challenging questions and is marked separately.</li>
+</ul>
+</div>
+<p class="sans" style="font-size:14px;margin-bottom:2px">Sections</p>
+<ul class="nav" id="nav"></ul>
+<div id="sections"></div>
+<h2><span>Your results</span></h2>
+<table class="summary"><thead><tr><th class="l">Section</th><th>Marks</th><th>Out of</th><th>Hints used</th><th>Checks</th></tr></thead><tbody id="sumbody"></tbody></table>
+<div class="ptools sans"><button type="button" class="pbtn" data-act="save">Save progress</button> <button type="button" class="pbtn" data-act="load">Retrieve progress</button> <button type="button" class="pbtn" data-act="pdf">Save as a .pdf file</button></div>
+<p style="text-align:center"><button id="copy" type="button" class="main">Copy my results</button> <span id="copied" class="legend"></span></p>
+<h2><span>Glossary</span></h2>
+<dl class="gl" id="gl"></dl>
+</div>
+<div class="foot">Science Department · Refined with AI</div>
+</main>
+<div id="ref" hidden><div class="in"><button id="refclose" type="button" class="close main">Close</button><h2 style="border-top:0"><span>Reference sheet</span></h2><div id="refbody"></div></div></div>
+<script>
+/* ===== reference data and chemistry helpers ===== */
+const AR={H:1,C:12,N:14,O:16,Na:23,Mg:24,Al:27,P:31,S:32,Cl:35.5,K:39,Ca:40,Fe:56,Cu:64,Zn:65};
+const AR_ORDER=['H','C','N','O','Na','Mg','Al','P','S','Cl','K','Ca','Fe','Cu','Zn'];
+
+function parseF(s){
+  let i=0;
+  const num=(d)=>{let m=/^\d+/.exec(s.slice(i));if(m){i+=m[0].length;return +m[0];}return d===undefined?1:d;};
+  function grp(){
+    const c={};
+    while(i<s.length){
+      const ch=s[i];
+      if(ch==='('){i++;const g=grp();i++;const n=num();for(const k in g)c[k]=(c[k]||0)+g[k]*n;}
+      else if(ch===')')break;
+      else if(/[A-Z]/.test(ch)){let e=ch;i++;if(i<s.length&&/[a-z]/.test(s[i])){e+=s[i];i++;}const n=num();c[e]=(c[e]||0)+n;}
+      else if(ch==='·'||ch==='.'){i++;const m=num();const g=grp();for(const k in g)c[k]=(c[k]||0)+g[k]*m;break;}
+      else i++;
+    }
+    return c;
+  }
+  return grp();
+}
+function Mr(f){const c=parseF(f);let t=0;for(const e in c){if(AR[e]===undefined)throw new Error('Unknown element '+e+' in '+f);t+=AR[e]*c[e];}return Math.round(t*1000)/1000;}
+function atoms(f){const c=parseF(f);let t=0;for(const e in c)t+=c[e];return t;}
+function nice(x,dp){if(dp!==undefined)return (+x).toFixed(dp);return String(+(+x).toPrecision(10));}
+/* subscript-format a chemical formula for display */
+function F(f){return f.replace(/([A-Za-z\)])(\d+)/g,'$1<sub>$2</sub>');}
+function ionHTML(f,c){return F(f)+'<sup>'+(Math.abs(c)>1?Math.abs(c):'')+(c>0?'+':'−')+'</sup>';}
+
+/* ions */
+const CAT=[
+ {f:'Na',c:1,n:'sodium'},{f:'K',c:1,n:'potassium'},{f:'NH4',c:1,n:'ammonium',poly:1},
+ {f:'Mg',c:2,n:'magnesium'},{f:'Ca',c:2,n:'calcium'},{f:'Zn',c:2,n:'zinc'},
+ {f:'Cu',c:2,n:'copper(II)'},{f:'Fe',c:2,n:'iron(II)'},{f:'Fe',c:3,n:'iron(III)'},{f:'Al',c:3,n:'aluminium'}];
+const AN=[
+ {f:'Cl',c:1,n:'chloride'},{f:'OH',c:1,n:'hydroxide',poly:1},{f:'NO3',c:1,n:'nitrate',poly:1},
+ {f:'O',c:2,n:'oxide'},{f:'S',c:2,n:'sulphide'},{f:'SO4',c:2,n:'sulphate',poly:1},
+ {f:'CO3',c:2,n:'carbonate',poly:1},{f:'PO4',c:3,n:'phosphate',poly:1}];
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+function mk(cat,an){
+  const g=gcd(cat.c,an.c),nc=an.c/g,na=cat.c/g;
+  const part=(ion,n)=>n===1?ion.f:(ion.poly?'('+ion.f+')'+n:ion.f+n);
+  return {f:part(cat,nc)+part(an,na),name:cat.n+' '+an.n,cat,an,nc,na,
+          brackets:(cat.poly&&nc>1)||(an.poly&&na>1)};
+}
+const COMBOS=[];for(const c of CAT)for(const a of AN)COMBOS.push(mk(c,a));
+const BR=COMBOS.filter(x=>x.brackets);
+const NB=COMBOS.filter(x=>!x.brackets&&x.nc+x.na>=2);
+const TM=COMBOS.filter(x=>/copper|iron|zinc/.test(x.cat.n));
+function find(cn,an,cc){return COMBOS.find(x=>x.cat.n===cn&&x.an.n===an&&(cc===undefined||x.cat.c===cc));}
+
+/* molecules */
+const MOLS={CH4:'methane',NH3:'ammonia',H2O:'water',CO2:'carbon dioxide',N2:'nitrogen',O2:'oxygen',C2H5OH:'ethanol',
+  C2H6:'ethane',HCl:'hydrogen chloride',SO2:'sulphur dioxide',C3H8:'propane',H2SO4:'sulphuric acid',H2:'hydrogen'};
+
+/* glossary (tool-tips) */
+const GLOSS={
+ 'exothermic':'A reaction that gives out energy to the surroundings. The temperature of the surroundings rises. ΔH is negative.',
+ 'endothermic':'A reaction that takes in energy from the surroundings. The temperature of the surroundings falls. ΔH is positive.',
+ 'enthalpy change':'The energy transferred in a reaction, written ΔH. Its units are kJ mol⁻¹.',
+ 'system':'The reacting chemicals that we are studying.',
+ 'surroundings':'Everything else: the water, the cup or flask, the thermometer and the air.',
+ 'molar mass':'The mass of one mole of a substance, in g mol⁻¹. Add the atomic masses (Ar) of all the atoms in the formula.',
+ 'mole':'A fixed number of particles, the same for every substance. The amount of a substance, n, is measured in mol.',
+ 'r.t.p.':'Room temperature and pressure: 1 atm pressure and 25 °C. At r.t.p. one mole of any gas has a volume of 24000 cm³.',
+ 'covalent':'A bond in which atoms share electrons. Found between non-metal atoms.',
+ 'ionic':'A compound of ions, usually a metal with a non-metal. Held together by the attraction between positive and negative ions.',
+ 'empirical formula':'The simplest whole-number ratio of the atoms of each element in a compound.',
+ 'molecular formula':'The actual number of atoms of each element in one molecule.',
+ 'limiting reactant':'The reactant that is used up first. It decides how much product forms.',
+ 'excess':'More of a reactant than is needed. Some is left over when the reaction finishes.',
+ 'compressible':'Can be squashed into a smaller volume. Gases are compressible; liquids and solids hardly are.',
+ 'fluid':'Something that can flow. Liquids and gases are fluids.',
+ 'polyatomic ion':'An ion made of several atoms joined together, such as OH⁻, NO₃⁻, SO₄²⁻ or NH₄⁺. Use brackets around it when you need more than one.',
+ 'cation':'A positive ion, usually formed by a metal.',
+ 'anion':'A negative ion, usually formed by a non-metal or a group of non-metals.',
+ 'hydrated':'A crystal that contains water of crystallisation, written after a dot, such as CuSO₄·5H₂O.',
+ 'gas syringe':'A syringe with a sliding plunger that collects a gas and shows its volume in cm³.',
+ 'ratio':'A comparison of amounts. For example, 2 : 3.',
+ 'concentration':'The amount of solute in a volume of solution, here in mol dm⁻³.',
+ 'pressure':'The push of the gas particles on the walls of the container.'
+};
+
+/* shapes and bond angles look-up table */
+const SHAPE_TABLE=[['CH4','methane','tetrahedral','109.5°'],['NH3','ammonia','pyramid','107°'],['H2O','water','bent','104.5°'],['CO2','carbon dioxide','straight line (linear)','180°']];
+function shapeTable(){
+  return '<table><tr><th>Molecule</th><th>Formula</th><th>Shape</th><th>Bond angle</th></tr>'
+   +SHAPE_TABLE.map(r=>`<tr><td class="l">${r[1]}</td><td>${F(r[0])}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')+'</table>';
+}
+
+/* ===== engine: registry, checking, rendering, scoring ===== */
+let SEED=Math.floor(Math.random()*2147483647);
+function seedFor(id){let h=SEED>>>0;for(let i=0;i<id.length;i++)h=(Math.imul(h^id.charCodeAt(i),16777619)+0x9e3779b9)>>>0;return h;}
+function RNG(det,seed){
+  let s=seed;
+  const rnd=seed===undefined?Math.random:function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const r={det,
+    pick(a){return det?a[0]:a[Math.floor(rnd()*a.length)];},
+    int(a,b){return det?a:a+Math.floor(rnd()*(b-a+1));},
+    shuffle(a){const b=a.slice();if(det)return b;for(let i=b.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;},
+    sample(a,n){return det?a.slice(0,n):r.shuffle(a).slice(0,n);}
+  };return r;
+}
+const SECS=[],QS=[],SC={},LOG=[];
+const SETS=['01A (F-day test)','02A (B-Day test)','04A (B-Day test)','05A (E-day test)'];
+const STU={name:'',set:'',code:''};
+const CONF=['Not at all confident','A little confident','Fairly confident','Very confident'];
+const WHY=['I did not know what to do first','I could not find the molar mass or the number I needed','I got stuck dividing or using the calculator','I did not understand the words','I made a careless slip','I got stuck on the formula or the brackets','I did not get stuck'];
+function stuCode(name,set){let h=7;const s=(name.trim().toLowerCase()+'|'+set.slice(0,3));for(let i=0;i<s.length;i++)h=(Math.imul(h,31)+s.charCodeAt(i))>>>0;return String(100+(h%900));}
+function fileStem(){const n=STU.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]/g,'')||'student';return (STU.set.slice(0,3)||'set')+'_'+n+'_'+(STU.code||'000');}
+function startTest(name,set){
+  name=(name||'').trim();if(!name||!set)return false;
+  STU.name=name;STU.set=set;STU.code=stuCode(name,set);
+  document.getElementById('who').innerHTML='<b>'+esc(name)+'</b> · Set '+esc(set)+' · Your code: <b>'+STU.code+'</b>';
+  document.getElementById('gate').hidden=true;document.getElementById('testbody').hidden=false;
+  window.scrollTo(0,0);return true;
+}
+function sec(id,title,intro,ext){SECS.push({id,title,intro:intro||'',ext:!!ext});}
+function def(id,secId,x){
+  const e={id,sec:secId,gen:null,list:[],i:0};
+  if(typeof x==='function'){e.gen=x;e.spec=x(RNG(false,seedFor(id)));e.last=e.spec.html;}
+  else{e.spec=x;e.list=x.practice||[];}
+  QS.push(e);return e;
+}
+/* ---- field constructors ---- */
+const num=(label,ans,unit,o)=>Object.assign({k:'num',label,ans,unit:unit||''},o||{});
+const txt=(label,ans,o)=>Object.assign({k:'txt',label,ans:[].concat(ans),mode:'formula'},o||{});
+const sel=(label,opts,ans,o)=>Object.assign({k:'sel',label,opts,ans},o||{});
+const cz=(n,ans)=>({k:'cloze',n,ans:[].concat(ans)});
+const think=(kind)=>sel(kind==='vol'
+  ?'Think carefully before calculating. Is the volume you are given more than 24000 cm³, or less than 24000 cm³?'
+  :kind==='mass'?'Think carefully before calculating. Compare the mass you are given with the molar mass you just found. Are you given more than one mole, or less than one mole?'
+  :'Think carefully before calculating. Are you given more than one mole, or less than one mole just looking at the numbers given?',
+  kind==='vol'?['more than 24000 cm³','less than 24000 cm³','exactly 24000 cm³']:['more than one mole','less than one mole','exactly one mole'],'',{w:0,think:1});
+/* ---- value checking ---- */
+const SUBS='₀₁₂₃₄₅₆₇₈₉';
+function normF(s){return s.replace(/[\s_{}\^]/g,'').replace(/[₀-₉]/g,c=>String(SUBS.indexOf(c))).replace(/\[/g,'(').replace(/\]/g,')').replace(/\.|·/g,'·');}
+function normW(s){return s.toLowerCase().replace(/sulfate/g,'sulphate').replace(/sulfide/g,'sulphide').replace(/aluminum/g,'aluminium').replace(/[^a-z0-9()]+/g,' ').trim();}
+function pnum(s){s=s.trim().replace(/[−–]/g,'-').replace(',','.').replace(/\s+/g,'');if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s))return NaN;return parseFloat(s);}
+function evalField(f,val){
+  val=String(val===undefined?'':val);
+  if(f.k==='num'){
+    const x=pnum(val);
+    if(isNaN(x))return {ok:false,msg:val.trim()===''?'Nothing entered yet.':'Type the number only. The unit is shown beside the box.'};
+    const tol=f.tol===undefined?0.01:f.tol,A=f.ans,ab=f.abs||0;
+    const near=(a,b)=>Math.abs(a-b)<=Math.max(ab,tol*Math.abs(b));
+    if(f.signed){
+      if(near(Math.abs(x),Math.abs(A))){
+        if(Math.sign(x)===Math.sign(A))return {ok:true};
+        return {ok:false,msg:f.signMsg||'The size is right. Check the sign: temperature rise → exothermic → ΔH negative; temperature fall → endothermic → ΔH positive.'};
+      }
+    }else if(near(x,A))return {ok:true};
+    const xv=f.signed?Math.abs(x):x;
+    for(const w of f.wrong||[])if(near(xv,w.v))return {ok:false,msg:w.msg};
+    return {ok:false};
+  }
+  if(f.k==='txt'){
+    if(val.trim()==='')return {ok:false,msg:'Nothing entered yet.'};
+    if(f.mode==='word'){const v=normW(val);return f.ans.some(a=>normW(a)===v)?{ok:true}:{ok:false};}
+    if(f.mode==='emp'){
+      let c;try{c=parseF(normF(val));}catch(e){return {ok:false};}
+      const keys=Object.keys(f.counts);
+      const same=Object.keys(c).length===keys.length&&keys.every(k=>c[k]===f.counts[k]);
+      if(same)return {ok:true};
+      const m=c[keys[0]]/f.counts[keys[0]];
+      if(m>1&&Object.keys(c).length===keys.length&&keys.every(k=>c[k]===f.counts[k]*m))return {ok:false,msg:'That is a multiple of the answer. Divide to get the simplest whole-number ratio.'};
+      return {ok:false};
+    }
+    const v=normF(val);
+    if(f.ans.some(a=>normF(a)===v))return {ok:true};
+    const a0=normF(f.ans[0]);
+    if(a0.indexOf('(')>=0&&v===a0.replace(/[()]/g,''))return {ok:false,msg:'Check the brackets: a group of atoms that is repeated needs brackets round it.'};
+    if(v.toLowerCase()===a0.toLowerCase())return {ok:false,msg:'Check your capital letters: the first letter of a symbol is a capital, the second is small.'};
+    return {ok:false};
+  }
+  if(f.k==='sel'||f.k==='cloze'){
+    if(val==='')return {ok:false,msg:'Choose an answer.'};
+    const A=[].concat(f.ans).map(a=>String(a).toLowerCase());
+    return A.indexOf(val.toLowerCase())>=0?{ok:true}:{ok:false,msg:f.msg};
+  }
+  return {ok:false};
+}
+function plain(h){const d=document.createElement('div');d.innerHTML=h;return d.textContent.replace(/\s+/g,' ').trim();}
+function ideaHit(idea,text){return idea.g.every(grp=>grp.some(a=>new RegExp(a,'i').test(text)));}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+function sortBank(b){return b.slice().sort((x,y)=>String(x).localeCompare(String(y),'en',{numeric:true}));}
+/* ---- card ---- */
+function buildCard(spec,label,o){
+  o=o||{};
+  const el=document.createElement('article');
+  el.className='q'+(o.practice?' practice':'');
+  const fields=spec.fields||[],ideas=spec.ideas||null;
+  const marks=ideas?(spec.need||ideas.length):fields.reduce((s,f)=>s+(f.w===undefined?1:f.w),0);
+  const hints=spec.hints||[];
+  let attempts=0,shown=0,got=0,checked=false,cheatOpened=false,workedOpened=false;
+  /* body with inline cloze selects */
+  const bank=spec.bank?sortBank(spec.bank):null;
+  const selOpts=bank?'<option value="">…</option>'+bank.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join(''):'';
+  let body=spec.html||'';
+  body=body.replace(/\[\[(\d+)\]\]/g,(m,n)=>{
+    const i=fields.findIndex(f=>f.k==='cloze'&&f.n===+n);
+    return `<span class="cz" data-r="${i}"><select data-i="${i}" aria-label="blank ${+n+1}">${selOpts}</select><span class="mark"></span></span>`;});
+  let fh='';
+  const cellH=(i)=>{const f=fields[i];
+    const ctl=f.k==='num'?`<input class="num" type="text" inputmode="decimal" autocomplete="off" data-i="${i}">${f.unit?'<span class="unit">'+f.unit+'</span>':''}`:`<select data-i="${i}"><option value="">choose…</option>${f.opts.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')}</select>`;
+    return ctl+'<span class="mark"></span><span class="fmsg"></span>';};
+  if(spec.grid){
+    const g=spec.grid,nc=g.cols.length;
+    fh+='<table class="vt grid"><tr><th></th>'+g.cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'
+      +g.rows.map(r=>'<tr><th class="rl">'+r.label+'</th>'+(r.idx.length===1&&nc>1?`<td class="gcell" colspan="${nc}" data-r="${r.idx[0]}">${cellH(r.idx[0])}</td>`:r.idx.map(i=>`<td class="gcell" data-r="${i}">${cellH(i)}</td>`).join(''))+'</tr>').join('')+'</table>';
+  }
+  fields.forEach((f,i)=>{
+    if(f.k==='cloze'||(spec.grid&&spec.grid.rows.some(r=>r.idx.indexOf(i)>=0)))return;
+    if(f.k==='num')fh+=`<div class="frow" data-r="${i}"><label class="k">${f.label}</label><input class="num" type="text" inputmode="decimal" autocomplete="off" data-i="${i}"><span class="unit">${f.unit}</span><span class="mark"></span><span class="fmsg"></span></div>`;
+    else if(f.k==='txt')fh+=`<div class="frow" data-r="${i}"><label class="k">${f.label}</label><input class="txt" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-i="${i}"><span class="mark"></span><span class="fmsg"></span></div>`;
+    else if(f.k==='sel')fh+=`<div class="frow${f.think?' wide':''}" data-r="${i}"><label class="k">${f.label}</label> <select data-i="${i}"><option value="">choose…</option>${f.opts.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')}</select><span class="mark"></span><span class="fmsg"></span></div>`;
+  });
+  if(ideas)fh+=`<div class="frow wide"><textarea data-t="1" placeholder="Write your explanation here, in full sentences." aria-label="your explanation"></textarea></div><div class="ideas-wrap"></div>`;
+  const bankHtml=bank?`<div class="bank">Word bank: ${bank.map(w=>`<span>${esc(w)}</span>`).join('')}</div>`:'';
+  const hasMeta=!!spec.title;
+  const confOpts='<option value="">choose…</option>'+CONF.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  const metaPre=hasMeta?`<div class="meta pre sans"><label>Before you try it: how confident do you feel about this question? <select data-m="pre">${confOpts}</select></label></div>`:'';
+  const metaPost=hasMeta?`<div class="meta post sans" hidden><p style="margin:2px 0"><b>Reflect</b> (not marked)</p><p style="margin:4px 0"><label>Now, how confident do you feel? <select data-m="post">${confOpts}</select></label></p><p style="margin:4px 0 2px">What made any part challenging? Tick any that fit:</p><div class="why">${WHY.map((w,k)=>`<label><input type="checkbox" data-m="why" data-k="${k}"> ${esc(w)}</label>`).join('')}</div><p style="margin:6px 0 2px"><label for="n${Math.random().toString(36).slice(2,8)}">In your own words: how do you feel about this question? Where did you get stuck, and why? What helped?</label></p><textarea data-m="note" rows="2" placeholder="Write a sentence or two. You can leave this empty."></textarea></div>`:'';
+  el.innerHTML=`<div class="qhead"><span><span class="qn">${label}</span><span class="qt">${spec.title||''}</span></span><span class="qm">${marks?marks+(marks===1?' mark':' marks'):'practice'}</span></div>
+   <div class="qtext">${body}</div>${bankHtml}${metaPre}<div class="fields">${fh}</div>
+   <div class="tools"><button data-a="cheat">Cheat sheet</button><button data-a="hint"${hints.length?'':' hidden'}>Hint</button>${spec.scaffold?'<button data-a="scaf">Word fill help</button>':''}<button class="main" data-a="check">Check</button><button data-a="worked" hidden>Worked answer</button><button data-a="more"${(o.noMore)?' hidden':''}>${o.practice?'Another one':'More practice'}</button></div>
+   <div class="panel cheat" hidden><h4>Cheat sheet</h4>${spec.cheat||''}</div><div class="panel hint" hidden></div><div class="scaf"></div>
+   <div class="fb" role="status" aria-live="polite"></div>${metaPost}<div class="worked" hidden><h4>Worked answer</h4>${spec.worked||''}</div><div class="prac"></div>`;
+  const $=s=>el.querySelector(s);
+  const get=i=>el.querySelector(`[data-i="${i}"]`);
+  function result(){
+    el.classList.toggle('done',marks>0&&got===marks);
+    const fb=$('.fb');
+    fb.innerHTML=`<b>${got} / ${marks}</b> ${got===marks?'Full marks.':'Not yet full marks. Look at the ✗ items, use the cheat sheet or a hint, then check again.'}`;
+    if(!o.practice){SC[o.id]=Object.assign(SC[o.id]||{},{got:Math.max(got,(SC[o.id]||{}).got||0),marks,att:attempts,hints:shown,sec:o.sec});updateTop();}
+  }
+  function check(){check0();const pm=$('.meta.post');if(pm)pm.hidden=false;logCheck();}
+  function logCheck(){
+    const fl=fields.map((f,i)=>{const inp=get(i),row=el.querySelector(`[data-r="${i}"]`);return {l:f.k==='cloze'?'blank '+(f.n+1):plain(f.label||'').slice(0,90),g:inp?inp.value:'',ok:row?row.classList.contains('ok'):false};});
+    const ta=el.querySelector('[data-t]');
+    LOG.push({ts:new Date().toISOString(),id:(o.entry&&o.entry.id)||o.id||label,prac:!!o.practice,label,title:plain(spec.title||''),q:plain(spec.html||'').slice(0,320),att:attempts,hints:shown,cheat:cheatOpened,worked:workedOpened,got,marks,f:fl,t:ta?ta.value.slice(0,600):undefined,ideas:ideas?[...el.querySelectorAll('.ideas-wrap input[type=checkbox]')].map(c=>c.checked?1:0):undefined,m:readMeta(el)});
+    if(LOG.length>800)LOG.splice(0,LOG.length-800);
+  }
+  function check0(){
+    attempts++;checked=true;got=0;
+    fields.forEach((f,i)=>{
+      const inp=get(i),r=evalField(f,inp.value),w=f.w===undefined?1:f.w;
+      const row=el.querySelector(`[data-r="${i}"]`);
+      row.classList.toggle('ok',r.ok);row.classList.toggle('bad',!r.ok);
+      row.querySelector('.mark').textContent=r.ok?'✓':'✗';
+      const m=row.querySelector('.fmsg');if(m)m.textContent=r.ok?'':(r.msg||'');
+      if(r.ok)got+=w;
+    });
+    if(ideas){
+      const t=el.querySelector('[data-t]').value.toLowerCase();
+      const wrap=$('.ideas-wrap');
+      wrap.innerHTML='<p class="legend">Ideas I looked for in your answer. A tick means I found it. If you included an idea in different words, tick it yourself.</p><ul class="ideas">'+ideas.map((d,k)=>`<li><label><input type="checkbox" data-k="${k}"${ideaHit(d,t)?' checked':''}> ${d.t}</label></li>`).join('')+'</ul>'+(spec.need&&spec.need<ideas.length?`<p class="legend">You need ${spec.need} of these.</p>`:'')+`<div class="model"><b>Model answer.</b> ${spec.model}</div>`+(spec.extended?`<div class="model"><b>Extended.</b> ${spec.extended}</div>`:'');
+      const tally=()=>{const n=wrap.querySelectorAll('input:checked').length;got=Math.min(n,marks);result();};
+      wrap.querySelectorAll('input').forEach(c=>c.addEventListener('change',tally));
+      tally();$('[data-a=worked]').hidden=!spec.worked;return;
+    }
+    $('[data-a=worked]').hidden=false;
+    result();
+  }
+  function practiceNext(){
+    const e=o.entry;let s;
+    if(e.gen){for(let k=0;k<12;k++){s=e.gen(RNG(false));if(s.html!==e.last)break;}e.last=s.html;}
+    else{if(!e.list.length)return null;s=e.list[e.i%e.list.length];e.i++;}
+    return s;
+  }
+  el.addEventListener('click',ev=>{
+    const b=ev.target.closest('button[data-a]');
+    if(b&&b.closest('.q')!==el)return;
+    if(b){
+      const a=b.dataset.a;
+      if(a==='check')check();
+      else if(a==='cheat'){const p=$('.cheat');p.hidden=!p.hidden;if(!p.hidden)cheatOpened=true;}
+      else if(a==='worked'){const p=$('.worked');p.hidden=!p.hidden;if(!p.hidden)workedOpened=true;}
+      else if(a==='hint'){
+        const p=$('.hint');if(shown<hints.length){shown++;}
+        p.hidden=false;p.innerHTML='<h4>Hints</h4>'+hints.slice(0,shown).map((h,i)=>`<div class="hintl"><b>${i+1}.</b> ${h}</div>`).join('')+(shown>=hints.length?'<div class="hintl"><i>No more hints. Try the worked answer after a check.</i></div>':'');
+        b.textContent=shown>=hints.length?'Hints used':`Hint (${shown}/${hints.length})`;
+        if(!o.practice){SC[o.id]=Object.assign(SC[o.id]||{marks,sec:o.sec,got:0,att:0},{hints:shown});updateTop();}
+      }
+      else if(a==='scaf'){
+        const s=$('.scaf');
+        if(s.firstChild){s.innerHTML='';return;}
+        s.appendChild(buildCard(spec.scaffold,'Word fill',{practice:true,noMore:true,entry:o.entry}));
+        tipify(s);
+      }
+      else if(a==='more'){
+        const s=practiceNext();if(!s){$('.prac').innerHTML='<p class="legend">No more practice questions of this type.</p>';return;}
+        if(o.practice){
+          const nc=buildCard(s,label+' practice',{practice:true,entry:o.entry});el.replaceWith(nc);tipify(nc);
+        }else{
+          const holder=$('.prac');holder.innerHTML='';
+          const nc=buildCard(s,label+' practice',{practice:true,entry:o.entry});holder.appendChild(nc);tipify(nc);
+          b.textContent='Another one';
+        }
+      }
+      return;
+    }
+  });
+  let metaEntry=null;
+  el.addEventListener('change',ev=>{
+    if(!ev.target.closest('[data-m]')||ev.target.closest('.q')!==el)return;
+    const m=readMeta(el);
+    if(!metaEntry||LOG.indexOf(metaEntry)<0){metaEntry={ts:new Date().toISOString(),id:(o.entry&&o.entry.id)||o.id||label,prac:!!o.practice,label,title:plain(spec.title||''),q:plain(spec.html||'').slice(0,320),reflect:1,att:attempts,got,marks};LOG.push(metaEntry);}
+    metaEntry.m=m;metaEntry.att=attempts;metaEntry.got=got;metaEntry.ts=new Date().toISOString();
+  });
+  el.addEventListener('keydown',ev=>{if(ev.key==='Enter'&&ev.target.matches('input[type=text]')){ev.preventDefault();check();}});
+  el._api={spec,marks,
+    fill(){
+      fields.forEach((f,i)=>{
+        const inp=get(i);
+        if(f.k==='num')inp.value=String(f.ans);
+        else if(f.k==='txt')inp.value=f.mode==='emp'?f.display:f.ans[0];
+        else inp.value=[].concat(f.ans)[0];
+      });
+      if(ideas)el.querySelector('[data-t]').value=plain(spec.model);
+    },
+    check,get got(){return got;},get marks(){return marks;}};
+  el._restore=(a,s)=>{attempts=a;shown=s;};
+  return el;
+}
+/* ---- tool-tips ---- */
+const TERMS=Object.keys(GLOSS).sort((a,b)=>b.length-a.length);
+function tipify(root){
+  root.querySelectorAll('.qtext,.intro').forEach(box=>{
+    for(const t of TERMS){
+      const re=new RegExp('(^|[^A-Za-z0-9])('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:s)?)(?![A-Za-z0-9])','i');
+      const w=document.createTreeWalker(box,NodeFilter.SHOW_TEXT,{acceptNode(n){const p=n.parentElement;return(!p||p.closest('select,option,textarea,button,.tip,.fm'))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT;}});
+      let n;
+      while((n=w.nextNode())){
+        const m=re.exec(n.nodeValue);if(!m)continue;
+        const idx=m.index+m[1].length,after=n.splitText(idx),rest=after.splitText(m[2].length);
+        const sp=document.createElement('span');sp.className='tip';sp.tabIndex=0;sp.dataset.tip=GLOSS[t];sp.textContent=m[2];
+        after.replaceWith(sp);
+        sp.addEventListener('click',()=>sp.classList.toggle('on'));
+        break;
+      }
+    }
+  });
+}
+/* ---- top bar and summary ---- */
+function totals(){
+  let m=0,g=0,xm=0,xg=0;
+  QS.forEach(e=>{const sc=SC[e.id]||{};const mk=cardMarks(e);const ex=SECS.find(s=>s.id===e.sec).ext;
+    if(ex){xm+=mk;xg+=sc.got||0;}else{m+=mk;g+=sc.got||0;}});
+  return {m,g,xm,xg};
+}
+function cardMarks(e){const s=e.spec;return s.ideas?(s.need||s.ideas.length):(s.fields||[]).reduce((t,f)=>t+(f.w===undefined?1:f.w),0);}
+function updateTop(){
+  const t=totals();
+  const el=document.getElementById('score');if(!el)return;
+  el.textContent=`Score ${t.g} / ${t.m}   Extension ${t.xg} / ${t.xm}`;
+  const body=document.getElementById('sumbody');if(!body)return;
+  body.innerHTML=SECS.map(s=>{
+    const es=QS.filter(e=>e.sec===s.id);let m=0,g=0,h=0,a=0;
+    es.forEach(e=>{const sc=SC[e.id]||{};m+=cardMarks(e);g+=sc.got||0;h+=sc.hints||0;a+=sc.att||0;});
+    return `<tr><td class="l">${s.id==='X'?'Extension':s.id+' '+s.title}</td><td>${g}</td><td>${m}</td><td>${h}</td><td>${a}</td></tr>`;}).join('')
+    +`<tr><th class="l">Main test</th><th>${t.g}</th><th>${t.m}</th><th></th><th></th></tr><tr><th class="l">Extension</th><th>${t.xg}</th><th>${t.xm}</th><th></th><th></th></tr>`;
+}
+function resultsText(){
+  const t=totals();let s='Grade 9 Chemistry revision test\n'+(STU.name?'Name: '+STU.name+'\nSet: '+STU.set+'\nCode: '+STU.code+'\n':'');
+  SECS.forEach(sc=>{let m=0,g=0,h=0;QS.filter(e=>e.sec===sc.id).forEach(e=>{const c=SC[e.id]||{};m+=cardMarks(e);g+=c.got||0;h+=c.hints||0;});
+    s+=(sc.id==='X'?'Extension':sc.id+' '+sc.title)+': '+g+' / '+m+' (hints used '+h+')\n';});
+  return s+`Main test: ${t.g} / ${t.m}\nExtension: ${t.xg} / ${t.xm}`;
+}
+/* ---- reference sheet ---- */
+function refHTML(){
+  const cat=CAT.map(c=>`<tr><td>${c.n} ion</td><td>${ionHTML(c.f,c.c)}</td></tr>`).join('');
+  const an=AN.map(c=>`<tr><td>${c.n} ion</td><td>${ionHTML(c.f,-c.c)}</td></tr>`).join('');
+  return `<h3>Molar mass (atomic mass, A<sub>r</sub>) in g mol<sup>−1</sup></h3>
+  <p class="legend">The element symbol is in the top row. Its molar mass is directly beneath it.</p>
+  <table><tr>${AR_ORDER.map(e=>`<th>${e}</th>`).join('')}</tr><tr>${AR_ORDER.map(e=>`<td>${AR[e]}</td>`).join('')}</tr></table>
+  <h3>Table of ions</h3>
+  <p class="legend">Compound names use ion names. The Roman number is the charge of the metal ion, so iron(III) is Fe<sup>3+</sup>. Groups of atoms (polyatomic ions) go in brackets when you need more than one: <b>OH, NO<sub>3</sub>, SO<sub>4</sub>, CO<sub>3</sub>, PO<sub>4</sub>, NH<sub>4</sub></b>.</p>
+  <table style="display:inline-table;margin:8px 14px;vertical-align:top"><tr><th colspan="2">Positive ions (cations)</th></tr>${cat}</table>
+  <table style="display:inline-table;margin:8px 14px;vertical-align:top"><tr><th colspan="2">Negative ions (anions)</th></tr>${an}</table>
+  <h3>Shapes and bond angles</h3>${shapeTable()}
+  <h3>Formulae</h3>
+  <div class="fm"><i>n</i> = <i>m</i> ÷ <i>M</i></div><div class="fm"><i>m</i> = <i>n</i> × <i>M</i></div>
+  <div class="fm"><i>V</i> = <i>n</i> × 24000</div><div class="fm"><i>n</i> = <i>V</i> ÷ 24000</div>
+  <div class="fm"><i>n</i> = concentration × volume ÷ 1000</div>
+  <div class="fm"><i>q</i> = <i>v</i> × 4.2 × Δ<i>t</i></div><div class="fm">Δ<i>H</i> = <i>q</i> ÷ <i>n</i></div>
+  <p class="legend"><i>n</i> in mol, <i>m</i> in g, <i>M</i> in g mol<sup>−1</sup>, <i>V</i> in cm<sup>3</sup>, concentration in mol dm<sup>−3</sup>, volume in cm<sup>3</sup>. For <i>q</i>: <i>q</i> in J, <i>v</i> is the volume of water in cm<sup>3</sup> (the total volume if two solutions are mixed), Δ<i>t</i> in °C. Divide J by 1000 to get kJ. Δ<i>H</i> in kJ mol<sup>−1</sup>. Temperature rise: exothermic, Δ<i>H</i> negative. Temperature fall: endothermic, Δ<i>H</i> positive.</p>
+  <h3>Gases</h3>
+  <p>Gases are fluids. They are compressible, so a gas has both pressure and volume. At r.t.p. (1 atm pressure and 25 °C) the volume of one mole of any gas is 24000 cm<sup>3</sup>.</p>`;
+}
+/* ---- page assembly ---- */
+const own=(el,sel)=>[...el.querySelectorAll(sel)].filter(x=>x.closest('.q')===el);
+function readMeta(el){const g=s=>{const x=own(el,s)[0];return x?x.value:''};
+  return {pre:g('[data-m=pre]'),post:g('[data-m=post]'),why:own(el,'[data-m=why]').filter(c=>c.checked).map(c=>+c.dataset.k),note:g('[data-m=note]').slice(0,600)};}
+function writeMeta(el,m){if(!m)return;const s=(q,v)=>{const x=own(el,q)[0];if(x)x.value=v||'';};s('[data-m=pre]',m.pre);s('[data-m=post]',m.post);s('[data-m=note]',m.note);
+  own(el,'[data-m=why]').forEach(c=>{c.checked=(m.why||[]).indexOf(+c.dataset.k)>=0;});
+  if(m.post||m.note||(m.why&&m.why.length)){const pm=own(el,'.meta.post')[0];if(pm)pm.hidden=false;}}
+function buildAll(){
+  const main=document.getElementById('sections'),nav=document.getElementById('nav');
+  main.innerHTML='';nav.innerHTML='';
+  SECS.forEach(s=>{
+    const es=QS.filter(e=>e.sec===s.id);
+    const tot=es.reduce((t,e)=>t+cardMarks(e),0);
+    const h=document.createElement('section');h.id='s'+s.id;
+    h.innerHTML=`<h2><span>${s.id==='X'?'Extension':s.id+' '+s.title}</span><span class="tot sans">${tot} marks${s.ext?', marked separately':''}</span></h2><div class="intro">${s.intro}</div>`;
+    es.forEach(e=>{const lab=e.id;const c=buildCard(e.spec,lab,{id:e.id,sec:e.sec,entry:e});h.appendChild(c);e.el=c;});
+    main.appendChild(h);
+    nav.innerHTML+=`<li><a href="#s${s.id}">${s.id==='X'?'Extension':s.id+' '+s.title}</a></li>`;
+  });
+  tipify(main);
+}
+/* ---- save / retrieve progress ---- */
+function collectProgress(){
+  const cards={};
+  QS.forEach(e=>{if(!e.el)return;const v={};own(e.el,'[data-i]').forEach(x=>{v[x.getAttribute('data-i')]=x.value;});
+    const ta=own(e.el,'[data-t]')[0];const ck=own(e.el,'.ideas-wrap input[type=checkbox]').map(c=>c.checked?1:0);
+    cards[e.id]={v,t:ta?ta.value:'',ck,m:readMeta(e.el)};});
+  return {app:'g9-revision',ver:2,stu:{set:STU.set,code:STU.code},seed:SEED,saved:new Date().toISOString(),sc:SC,cards,log:LOG};
+}
+function encodeProgress(){return 'G9PROG1:'+btoa(unescape(encodeURIComponent(JSON.stringify(collectProgress()))));}
+function applyProgress(code){
+  let d;
+  try{d=JSON.parse(decodeURIComponent(escape(atob(code.trim().replace(/^G9PROG1:/,'')))));}catch(x){return 'That does not look like a saved progress code. Choose the file you saved, or paste the whole code.';}
+  if(!d||d.app!=='g9-revision')return 'That does not look like a saved progress code.';
+  SEED=d.seed;
+  QS.forEach(e=>{if(e.gen){e.spec=e.gen(RNG(false,seedFor(e.id)));e.last=e.spec.html;}});
+  buildAll();
+  QS.forEach(e=>{const c=d.cards[e.id];if(!c||!e.el)return;
+    const used=Object.keys(c.v).some(k=>c.v[k]!==''&&c.v[k]!==undefined)||c.t;
+    Object.keys(c.v).forEach(k=>{const x=e.el.querySelector(`[data-i="${k}"]`);if(x)x.value=c.v[k];});
+    const ta=e.el.querySelector('[data-t]');if(ta)ta.value=c.t||'';
+    writeMeta(e.el,c.m);
+    const s=d.sc[e.id];
+    if(used&&s&&s.att){const b=e.el.querySelector('[data-a=check]');if(b)b.click();
+      const ws=e.el.querySelectorAll('.ideas-wrap input[type=checkbox]');(c.ck||[]).forEach((on,k)=>{if(ws[k]&&ws[k].checked!==!!on){ws[k].checked=!!on;ws[k].dispatchEvent(new Event('change'));}});
+      e.el._restore(s.att,s.hints||0);}
+  });
+  if(d.stu&&d.stu.set){const ss=document.getElementById('stset');if(ss&&!STU.set)ss.value=SETS.find(x=>x.slice(0,3)===d.stu.set.slice(0,3))||'';}
+  Object.keys(SC).forEach(k=>delete SC[k]);Object.assign(SC,d.sc);LOG.length=0;(d.log||[]).forEach(x=>LOG.push(x));updateTop();
+  return STU.name?'':'NEEDNAME';
+}
+function init(){
+  document.getElementById('refbody').innerHTML=refHTML();
+  buildAll();
+  document.getElementById('stset').innerHTML='<option value="">choose your set…</option>'+SETS.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
+  const go=()=>{const n=document.getElementById('stname').value,s=document.getElementById('stset').value,m=document.getElementById('gatemsg');if(!n.trim()){m.textContent='Type your first name.';return;}if(!s){m.textContent='Choose your chemistry set.';return;}startTest(n,s);};
+  document.getElementById('stgo').onclick=go;document.getElementById('stname').addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+  document.getElementById('gl').innerHTML=Object.keys(GLOSS).sort().map(t=>`<dt>${t}</dt><dd>${GLOSS[t]}</dd>`).join('');
+  tipify(document.body);
+  initProgressUI();
+  document.getElementById('refbtn').onclick=()=>{document.getElementById('ref').hidden=false;};
+  document.getElementById('refclose').onclick=()=>{document.getElementById('ref').hidden=true;};
+  document.getElementById('copy').onclick=()=>{
+    const t=resultsText();
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).catch(()=>fallback(t));else fallback(t);
+    document.getElementById('copied').textContent='Copied. Paste it into Canvas or an email.';
+  };
+  function fallback(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}a.remove();}
+  updateTop();
+}
+
+function initProgressUI(){
+  const panel=document.getElementById('savepanel'),box=document.getElementById('savecode'),msg=document.getElementById('savemsg'),file=document.getElementById('loadfile');
+  const show=(t)=>{msg.textContent=t||'';};
+  function openPanel(mode){panel.hidden=false;document.getElementById('saveblock').hidden=mode!=='save';document.getElementById('loadblock').hidden=mode!=='load';show('');}
+  document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',()=>{
+    const a=b.getAttribute('data-act');
+    if(a==='save'){
+      const code=encodeProgress();box.value=code;openPanel('save');
+      try{const blob=new Blob([code],{type:'text/plain'}),u=URL.createObjectURL(blob),l=document.createElement('a');l.href=u;l.download=fileStem()+'.txt';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);
+        show('Your progress is saved in the file '+fileStem()+'.txt (check your Downloads folder). The code below is a back-up: copy it into a note if the file did not download.');}
+      catch(x){show('Copy the code below and keep it in a note. You can paste it back in later.');}
+    }
+    else if(a==='load')openPanel('load');
+    else if(a==='pdf'){panel.hidden=true;window.print();}
+  }));
+  document.getElementById('copycode').onclick=()=>{box.select();try{document.execCommand('copy');show('Code copied.');}catch(x){show('Select the code and copy it yourself.');}};
+  document.getElementById('loadgo').onclick=()=>{
+    const code=document.getElementById('loadcode').value;
+    if(!code.trim()){show('Choose your saved file, or paste your code first.');return;}
+    const err=applyProgress(code);show(err==='NEEDNAME'?'Your progress is loaded. Now type your first name above and press Start.':(err||'Your progress is back. Scroll down to carry on.'));if(!err)document.getElementById('loadcode').value='';
+  };
+  file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById('loadcode').value=String(r.result);const err=applyProgress(String(r.result));show(err==='NEEDNAME'?'Your progress is loaded. Now type your first name above and press Start.':(err||'Your progress is back. Scroll down to carry on.'));};r.readAsText(f);});
+  document.getElementById('saveclose').onclick=document.getElementById('loadclose').onclick=()=>{panel.hidden=true;};
+}
+
+/* ===== shared helpers and cheat-sheet blocks ===== */
+const fm=(h,n)=>`<div class="fm${n?' n':''}">${h}</div>`;
+const GM='g mol<sup>−1</sup>',CM3='cm<sup>3</sup>',KJM='kJ mol<sup>−1</sup>',MD='mol dm<sup>−3</sup>';
+const NAOH='sodium hydroxide solution (CARE: CORROSIVE!)';
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const I=s=>`<i>${s}</i>`;
+function cnt(f){const c=parseF(f);return Object.keys(c).map(e=>e+' '+c[e]).join(' + ');}
+function mmWork(f){const c=parseF(f);return F(f)+': '+Object.keys(c).map(e=>`${e} ${c[e]} × ${AR[e]}`).join(' + ')+' = '+nice(Mr(f))+' '+GM;}
+function dflt(s,ch,hs){s.cheat=s.cheat||ch;s.hints=s.hints||hs||['Read the cheat sheet first.','Work one step at a time. Write the formula, then the numbers, then calculate.'];return s;}
+const ATMASS='<p>Molar mass (atomic mass, A<sub>r</sub>) in '+GM+'. Symbol on top, molar mass beneath.</p><table><tr>'+AR_ORDER.map(e=>`<th>${e}</th>`).join('')+'</tr><tr>'+AR_ORDER.map(e=>`<td>${AR[e]}</td>`).join('')+'</tr></table>';
+const LETTERS='<div class="key"><p><b>What the letters mean</b></p><ul><li>'+I('m')+' = the <b>mass</b> in grams (g). It is given in the question.</li><li>'+I('M')+' = the <b>molar mass</b> in g mol<sup>−1</sup>. Look it up in the table: it is the number under the symbol of the element.</li><li>'+I('n')+' = the number of <b>moles</b> (mol). This is the answer you work out.</li></ul>'+fm('number of moles = mass ÷ molar mass')+fm(I('n')+' = '+I('m')+' ÷ '+I('M'))+'</div>';
+const CH={
+ atoms:'<p>A formula tells you the atoms in one molecule or one unit of the compound.</p><ul><li>A small number after a symbol: that many atoms of that element. H<sub>2</sub> is 2 atoms of H.</li><li>No number: one atom. In CO<sub>2</sub> there is 1 C and 2 O.</li><li>Add all the numbers: CO<sub>2</sub> has 1 + 2 = 3 atoms.</li></ul>',
+ gas:'<p>Gases are <b>fluids</b>. They are <b>compressible</b>: they can be squashed, so a gas has both <b>pressure</b> and <b>volume</b>.</p><p>r.t.p. = room temperature and pressure = 1 atm pressure and 25 °C.</p>'+fm('1 mol of any gas at r.t.p. = 24000 '+CM3),
+ moles:fm(I('n')+' = '+I('m')+' ÷ '+I('M'))+fm(I('m')+' = '+I('n')+' × '+I('M'))+'<p>'+I('n')+' in mol, '+I('m')+' in g, '+I('M')+' in '+GM+'.</p><p>Find '+I('M')+' by adding the A<sub>r</sub> of every atom in the formula. Atoms inside brackets are multiplied by the number after the bracket: Ca(OH)<sub>2</sub> has 1 Ca, 2 O and 2 H.</p>'+ATMASS,
+ gasvol:fm(I('V')+' = '+I('n')+' × 24000')+fm(I('n')+' = '+I('V')+' ÷ 24000')+'<p>'+I('V')+' in '+CM3+', '+I('n')+' in mol. This works at r.t.p. only.</p><p>Half a mole = 12000 '+CM3+'. Two moles = 48000 '+CM3+'.</p>',
+ ions:'<p>Use the table of ions (Reference sheet). Method:</p><ol><li>Write each ion with its charge.</li><li>Find how many of each ion make the charges add up to zero.</li><li>Write the cation first. Put <b>brackets</b> round a polyatomic ion if you need more than one.</li></ol><p>Example: Ca<sup>2+</sup> and OH<sup>−</sup>. One Ca<sup>2+</sup> needs two OH<sup>−</sup>. Formula: Ca(OH)<sub>2</sub>.</p>',
+ cal:fm(I('v')+' = total volume of the mixture ('+CM3+')')+fm(I('q')+' = '+I('v')+' × 4.2 × Δ'+I('t'))+fm(I('n')+' = concentration × volume ÷ 1000')+fm('Δ'+I('H')+' = '+I('q')+' ÷ '+I('n'))+'<p>'+I('q')+' in J. Divide by 1000 to get kJ before you find Δ'+I('H')+'. Δ'+I('t')+' is a positive size: no signs on '+I('q')+' or Δ'+I('t')+'. The sign goes on Δ'+I('H')+' at the end.</p><p><b>Temperature rise → exothermic → Δ'+I('H')+' negative.<br>Temperature fall → endothermic → Δ'+I('H')+' positive.</b></p>',
+ emp:LETTERS+'<p>Do the same calculation for each element. A small letter after the symbol says which element: <i>n</i><sub>Fe</sub> means the moles of iron atoms, <i>m</i><sub>Fe</sub> the mass of iron and <i>M</i><sub>Fe</sub> the molar mass of iron.</p>'+fm(I('n')+'<sub>Fe</sub> = '+I('m')+'<sub>Fe</sub> ÷ '+I('M')+'<sub>Fe</sub>')+'<ol><li>Write the mass of each element.</li><li>Divide each mass by its molar mass: this gives the <b>moles</b> of atoms.</li><li>Divide every answer by the <b>smallest</b>.</li><li>If you get a half (1.5), multiply all by 2. If you get a third, multiply all by 3.</li><li>Write the whole-number ratio as the formula.</li></ol>'+fm(I('n')+' = '+I('m')+' ÷ '+I('M'))+ATMASS
+};
+
+/* wide pools so that examples change on every page load and every press of More practice */
+const NLIST=[0.05,0.1,0.2,0.25,0.4,0.5,0.75,1.5,2,2.5,3,4];
+const SIMPLE=['CO2','NaOH','H2O','MgO','CaCO3','HCl','Na2CO3','H2SO4','NH3','CH4','CuO','ZnO','NaCl','KOH','Fe2O3','Al2O3','SO2','O2','N2'];
+const GAS=[['oxygen','O2'],['nitrogen','N2'],['methane','CH4'],['carbon dioxide','CO2'],['hydrogen','H2'],['ammonia','NH3']];
+const GASF=GAS.map(g=>g[1]);
+function pickFN(r,forms,ns){
+  for(let k=0;k<80;k++){
+    const f=r.pick(forms),n=r.pick(ns),m=+(n*Mr(f)).toPrecision(10);
+    if(Math.abs(m*100-Math.round(m*100))<1e-6)return [f,n,m];
+  }
+  const f=forms[0],n=ns[0];return [f,n,+(n*Mr(f)).toPrecision(10)];
+}
+
+/* ===== Section 1: gases, molecules and bonding ===== */
+sec('1','Gases, molecules and bonding',
+ '<p>Gases are <b>fluids</b>. They are <b>compressible</b>, so a gas has both <b>pressure</b> and volume. At r.t.p. we know the volume of one mole of any gas: 24000 '+CM3+'.</p>');
+
+def('1.1','1',dflt({
+ title:'Gases as fluids (word fill)',
+ html:'<p>Complete the passage using the word bank.</p><p>Gases are [[0]]: they can flow. A gas is [[1]], so it can be squashed into a smaller volume. Because a gas can be squashed, it has a volume and also a [[2]] (the push of its particles on the walls of the container). If the pressure goes up, the volume of a gas goes [[3]]. At r.t.p. the pressure is [[4]] atm, the temperature is [[5]] °C, and the volume of one mole of any gas is [[6]] '+CM3+'.</p>',
+ bank:['fluids','solids','compressible','incompressible','pressure','down','up','1','25','100','12000','24000'],
+ fields:[cz(0,'fluids'),cz(1,'compressible'),cz(2,'pressure'),cz(3,'down'),cz(4,'1'),cz(5,'25'),cz(6,'24000')],
+ cheat:CH.gas,
+ hints:['Liquids and gases can both flow. What word do we use for things that flow?','If you can squash (compress) something, it is…','Look at the cheat sheet for the r.t.p. numbers. Remember: one mole of any gas takes up 24000 '+CM3+'.'],
+ worked:'<p>Gases are <b>fluids</b>: they can flow. A gas is <b>compressible</b>, so it can be squashed into a smaller volume. It has a volume and also a <b>pressure</b>. If the pressure goes up, the volume goes <b>down</b>. At r.t.p. the pressure is <b>1</b> atm, the temperature is <b>25</b> °C and one mole of any gas has a volume of <b>24000</b> '+CM3+'.</p>',
+ practice:[
+  dflt({title:'Gases as fluids (word fill)',html:'<p>A gas syringe holds 60 '+CM3+' of gas. A student pushes the plunger in. The volume of the gas goes [[0]] and the pressure goes [[1]]. This is possible because gases are [[2]].</p>',bank:['down','up','compressible','incompressible','the same'],fields:[cz(0,'down'),cz(1,'up'),cz(2,'compressible')],worked:'<p>Pushing the plunger in squashes the gas: the volume goes <b>down</b> and the pressure goes <b>up</b>. This is possible because gases are <b>compressible</b>.</p>'},CH.gas),
+  dflt({title:'Gases as fluids (word fill)',html:'<p>At r.t.p. one mole of oxygen has a volume of [[0]] '+CM3+'. One mole of methane has a volume of [[1]] '+CM3+'. So half a mole of any gas has a volume of [[2]] '+CM3+'.</p>',bank:['6000','12000','24000','48000'],fields:[cz(0,'24000'),cz(1,'24000'),cz(2,'12000')],worked:'<p>One mole of any gas at r.t.p. is <b>24000</b> '+CM3+'. Half a mole is 24000 ÷ 2 = <b>12000</b> '+CM3+'.</p>'},CH.gas)
+ ]},CH.gas));
+
+def('1.2','1',r=>{
+ const L=r.sample(['CH4','NH3','H2O','CO2','N2','C2H5OH','O2','C2H6','HCl','SO2','C3H8','H2SO4'],6);
+ return dflt({
+  title:'Counting atoms in a molecule',
+  html:'<p>Write the total number of atoms in one molecule of each substance.</p>',
+  fields:L.map(f=>num(cap(MOLS[f])+', '+F(f),atoms(f),'atoms')),
+  cheat:CH.atoms,
+  hints:['A small number after a symbol tells you how many atoms of that element. No number means one atom.','Add up the numbers for every element. Write 1 for a symbol with no number.','In a formula like C<sub>2</sub>H<sub>5</sub>OH, count every symbol: the H in C<sub>2</sub>H<sub>5</sub> and the H in OH are both hydrogen atoms.'],
+  worked:'<p>'+L.map(f=>F(f)+': '+cnt(f)+' = <b>'+atoms(f)+'</b>').join('<br>')+'</p>'});
+});
+
+const SHAPECH='<p>Look-up table: shapes and bond angles.</p>'+shapeTable();
+def('1.3','1',{
+ title:'Bond angles in molecules',
+ html:'<p>Use the look-up table in the cheat sheet (it is also on the Reference sheet) to choose the bond angle in each molecule. Each angle is used once.</p>',
+ fields:[['CH4','109.5°'],['NH3','107°'],['H2O','104.5°'],['CO2','180°']].map(([f,a])=>sel(cap(MOLS[f])+', '+F(f),['180°','109.5°','107°','104.5°'],a)),
+ cheat:SHAPECH,
+ hints:['Open the cheat sheet and find the molecule in the look-up table.','Read across to the Bond angle column.','Each angle is used once, so cross off the angles you have used.'],
+ worked:'<p>CO<sub>2</sub> is a straight line: <b>180°</b>. CH<sub>4</sub>: <b>109.5°</b>. NH<sub>3</sub>: <b>107°</b>. H<sub>2</sub>O: <b>104.5°</b>.</p>',
+ practice:[
+  dflt({title:'Shapes of molecules',html:'<p>Use the look-up table to choose the shape of each molecule.</p>',fields:[['CH4','tetrahedral'],['NH3','pyramid'],['H2O','bent'],['CO2','straight line']].map(([f,a])=>sel(cap(MOLS[f])+', '+F(f),['straight line','bent','pyramid','tetrahedral'],a)),worked:'<p>CH<sub>4</sub> is <b>tetrahedral</b>, NH<sub>3</sub> is a <b>pyramid</b>, H<sub>2</sub>O is <b>bent</b>, CO<sub>2</sub> is a <b>straight line</b>.</p>'},SHAPECH),
+  dflt({title:'Which molecule?',html:'<p>Use the look-up table to choose the molecule that has each bond angle.</p>',fields:[['180°','CO2'],['109.5°','CH4'],['104.5°','H2O']].map(([a,f])=>sel('Bond angle '+a,['CH4','NH3','H2O','CO2'],f)),worked:'<p>180°: <b>CO<sub>2</sub></b>. 109.5°: <b>CH<sub>4</sub></b>. 104.5°: <b>H<sub>2</sub>O</b>.</p>'},SHAPECH)
+ ]});
+
+def('1.4','1',r=>{
+ const COV=['CH4','H2O','CO2','NH3','SO2','HCl','N2','C2H5OH'];
+ const ION=[['NaCl','sodium chloride'],['MgO','magnesium oxide'],['CaCl2','calcium chloride'],['K2O','potassium oxide'],['ZnO','zinc oxide'],['Fe2O3','iron(III) oxide'],['Al2O3','aluminium oxide'],['CuO','copper(II) oxide']];
+ const c=r.sample(COV,2),i=r.sample(ION,2);
+ const L=r.shuffle([[c[0],MOLS[c[0]],'covalent'],[i[0][0],i[0][1],'ionic'],[c[1],MOLS[c[1]],'covalent'],[i[1][0],i[1][1],'ionic']]);
+ return dflt({
+  title:'Covalent or ionic?',
+  html:'<p>Choose the type of bonding in each substance.</p>',
+  fields:L.map(([f,n,a])=>sel(cap(n)+', '+F(f),['covalent','ionic'],a)),
+  cheat:'<ul><li>A compound of a <b>metal</b> with a non-metal has <b>ionic</b> bonds. It is made of ions.</li><li>A compound of <b>non-metals only</b> has <b>covalent</b> bonds. The atoms are joined in molecules.</li></ul><p>Metals in this course: Na, K, Mg, Ca, Al, Zn, Fe, Cu.</p>',
+  hints:['Look at the first element in the formula. Is it a metal?','Metal + non-metal: ionic. Non-metals only: covalent.'],
+  worked:'<p>'+L.map(([f,n,a])=>F(f)+': <b>'+a+'</b> ('+(a==='ionic'?'contains a metal':'non-metals only')+')').join('<br>')+'</p>'});
+});
+
+def('1.5','1',{
+ title:'Explain: one molar volume for every gas',
+ html:'<p>At r.t.p. one mole of oxygen, one mole of hydrogen and one mole of carbon dioxide all have a volume of 24000 '+CM3+', even though their molecules have very different masses. <b>Explain why all gases have the same molar volume.</b></p>',
+ ideas:[
+  {t:'One mole of any gas contains the same number of particles.',g:[['same number','equal number','same amount','avogadro','number of'],['particle','molecule','atom','mole']]},
+  {t:'The particles in a gas are very far apart, so most of the volume is empty space.',g:[['far apart','spread','empty space','gaps','space between','distance','spaced','apart']]},
+  {t:'The size or mass of each particle makes almost no difference to the volume.',g:[['size','mass','heavy','heavier','big','small','type','kind'],['not|n\'t|no |little|hardly|almost|same|doesn']]},
+  {t:'The temperature and pressure are the same (r.t.p.).',g:[['same temperature','same pressure','r\\.t\\.p','rtp','25','1 atm','conditions','temperature and pressure']]}],
+ model:'One mole of any gas contains the same number of particles. In a gas the particles are very far apart, so most of the volume is empty space and the size or mass of each particle makes almost no difference. So at the same temperature and pressure (r.t.p.) one mole of any gas takes up the same volume, 24000 '+CM3+'.',
+ cheat:'<h4 style="margin:6px 0">How to answer questions that ask you why a mole of any gas occupies the same volume (at r.t.p.)</h4><p>This idea is known as <b>Avogadro\'s Law</b>. Put these four ideas in your answer, in your own words:</p><ol><li>One mole of any gas contains the <b>same number of particles</b>.</li><li>The particles in a gas are <b>very far apart</b>, so most of the volume is empty space.</li><li>The <b>size or mass</b> of each particle makes almost no difference to the volume.</li><li>The <b>temperature and pressure are the same</b> (r.t.p.), so one mole of any gas takes up 24000 '+CM3+'.</li></ol>'+CH.gas,
+ extended:'The number of molecules in one mole of any gas has been calculated. It is a very large number, written in scientific form as 6 × 10<sup>23</sup>. You will learn about exponents in your Maths courses next year. In short, it means 6 with 23 zeros after it. It is a number so large that it is beyond comprehension. Our calculators can handle it, so we save it in the calculator\'s memory and just get on and use it in our calculations. It is called the <b>Avogadro Number</b>.',
+ hints:['Think about how many particles there are in one mole of any substance.','In a gas the particles are spread out. Is most of the volume particles, or empty space?','Does the volume depend on what the gas is, or on the temperature, the pressure and how many particles there are?'],
+ scaffold:dflt({title:'',html:'<p>One mole of any gas contains the same [[0]] of particles. In a gas the particles are very far [[1]], so the [[2]] of each particle does not change the volume. At the same temperature and [[3]] one mole of any gas takes up 24000 '+CM3+' at r.t.p.</p>',bank:['number','apart','together','size','colour','pressure','volume'],fields:[cz(0,'number'),cz(1,'apart'),cz(2,['size','mass']),cz(3,'pressure')]},CH.gas),
+ worked:'<p>Equal numbers of particles, very far apart, so the particle size or mass hardly matters. Same temperature and pressure, so the same volume.</p>',
+ practice:[
+  {title:'Explain: equal volumes',html:'<p>One mole of hydrogen, H<sub>2</sub>, and one mole of carbon dioxide, CO<sub>2</sub>, both have a volume of 24000 '+CM3+' at r.t.p. Carbon dioxide molecules are much heavier than hydrogen molecules. <b>Explain why the volumes are the same.</b></p>',
+   ideas:[{t:'One mole of each gas has the same number of particles.',g:[['same number','equal number','same amount','6\\.0','avogadro'],['particle','molecule','atom','mole']]},{t:'The particles are far apart, so the empty space decides the volume.',g:[['far apart','spread','empty space','gaps','space between','apart']]},{t:'The mass or size of a particle makes almost no difference.',g:[['size','mass','heavy','heavier','big','small'],['not|n\'t|no |little|hardly|almost|same|doesn']]}],
+   model:'One mole of each gas has the same number of particles. They are very far apart, so the volume is mostly empty space, and the heavier mass or bigger size of a carbon dioxide molecule makes almost no difference to the volume.',cheat:CH.gas,hints:['How many particles are in one mole of each gas?','Are the gas particles touching, or far apart?']},
+  {title:'Explain: one gram or one mole?',html:'<p>A student says: "1 g of any gas has the same volume at r.t.p." <b>Explain why the student is wrong.</b></p>',
+   ideas:[{t:'It is one mole, not one gram, that has the same volume.',g:[['mole'],['not|instead|rather|only|n\'t|isn']]},{t:'Different gases have different molar masses, so 1 g is a different number of moles.',g:[['molar mass','different mass','heavier','lighter','mr','different gases']]},{t:'A different number of moles (particles) takes up a different volume.',g:[['different number','fewer','more moles','different moles','different amount','more particles','fewer particles']]}],
+   model:'It is one mole of a gas, not one gram, that has a volume of 24000 '+CM3+'. Different gases have different molar masses, so 1 g is a different number of moles of each gas, and a different number of particles takes up a different volume.',cheat:CH.gasvol+CH.moles,hints:['Compare 1 g of hydrogen (molar mass 2) with 1 g of oxygen (molar mass 32). Which has more moles?','Volume depends on the number of moles.']}
+ ]});
+
+/* ===== Section 2: ions and formulae with brackets ===== */
+sec('2','Ions and writing formulae',
+ '<p>A formula is built from <b>ions</b>. The charges must add up to zero. When you need more than one <b>polyatomic ion</b> (OH, NO<sub>3</sub>, SO<sub>4</sub>, CO<sub>3</sub>, PO<sub>4</sub>, NH<sub>4</sub>) you put it in <b>brackets</b>. Open the <b>Reference sheet</b> for the table of ions.</p>');
+
+const CHG=['1+','2+','3+','1−','2−','3−'];
+const nm=x=>x.name==='sodium hydroxide'?x.name+' (CARE: CORROSIVE!)':x.name;
+const chg=(c,sign)=>Math.abs(c)+(sign>0?'+':'−');
+
+def('2.1','2',r=>{
+ const L=r.det?[CAT[3],AN[5],CAT[9],AN[2]]:[].concat(r.sample(CAT,2),r.sample(AN,2));
+ const items=L.map(x=>CAT.indexOf(x)>=0?{n:x.n+' ion',a:chg(x.c,1),f:ionHTML(x.f,x.c)}:{n:x.n+' ion',a:chg(x.c,-1),f:ionHTML(x.f,-x.c)});
+ return dflt({
+  title:'Charges on ions',
+  html:'<p>Use the table of ions on the Reference sheet. Choose the charge on each ion.</p>',
+  fields:items.map(x=>sel(cap(x.n),CHG,x.a)),
+  cheat:'<p>Metal ions are positive. Non-metal ions and groups such as OH, NO<sub>3</sub> and SO<sub>4</sub> are negative.</p><p>Examples: Na<sup>+</sup>, Mg<sup>2+</sup>, Al<sup>3+</sup>, Cl<sup>−</sup>, O<sup>2−</sup>, SO<sub>4</sub><sup>2−</sup>.</p>',
+  hints:['Open the Reference sheet and find the ion in the table.','Positive ions (cations) are in the left table, negative ions (anions) in the right table.'],
+  worked:'<p>'+items.map(x=>cap(x.n)+': '+x.f+' → <b>'+x.a+'</b>').join('<br>')+'</p>'});
+});
+
+def('2.2','2',r=>{
+ const L=r.det?[find('calcium','hydroxide'),find('magnesium','nitrate'),find('aluminium','sulphate'),find('ammonium','sulphate'),find('sodium','sulphate')]
+   :r.shuffle([].concat(r.sample(BR,4),r.sample(NB,1)));
+ return dflt({
+  title:'Writing formulae with brackets',
+  html:'<p>Write the formula of each compound. Type the numbers on the line, for example <b>Ca(OH)2</b>. Use round brackets when they are needed.</p>',
+  fields:L.map(x=>txt(cap(nm(x))+' =',x.f,{})),
+  cheat:CH.ions,
+  hints:['Step 1: write each ion with its charge from the table of ions.','Step 2: find how many of each ion you need so the charges cancel. For Ca<sup>2+</sup> and OH<sup>−</sup>, two OH<sup>−</sup> cancel one Ca<sup>2+</sup>.','Step 3: if you need more than one polyatomic ion, put brackets round it, then the number: Ca(OH)2. If you need only one, no brackets.'],
+  worked:'<p>'+L.map(x=>cap(nm(x))+': '+ionHTML(x.cat.f,x.cat.c)+' and '+ionHTML(x.an.f,-x.an.c)+' → '+x.nc+' × '+F(x.cat.f)+' and '+x.na+' × '+F(x.an.f)+' → <b>'+F(x.f)+'</b>').join('<br>')+'</p>'});
+});
+
+def('2.3','2',r=>{
+ const base=[['Ca(OH)2','H'],['Mg(NO3)2','O'],['Al2(SO4)3','O'],['(NH4)2SO4','H'],['Fe2(SO4)3','S']];
+ let L=base;
+ if(!r.det){const pool=BR.map(x=>x.f);L=r.sample(pool,5).map(f=>{const els=Object.keys(parseF(f));return [f,r.pick(els.slice().reverse())];});}
+ const names={H:'hydrogen',O:'oxygen',S:'sulphur',N:'nitrogen',C:'carbon',P:'phosphorus',Cl:'chlorine',Ca:'calcium',Mg:'magnesium',Al:'aluminium',Fe:'iron',Cu:'copper',Zn:'zinc',Na:'sodium',K:'potassium'};
+ return dflt({
+  title:'Counting atoms when there are brackets',
+  html:'<p>How many atoms of the named element are in one unit of each formula?</p>',
+  fields:L.map(([f,e])=>num('Atoms of '+names[e]+' in '+F(f),parseF(f)[e],'atoms')),
+  cheat:'<p>The number after a bracket multiplies <b>every</b> atom inside the bracket.</p><p>Example: Mg(NO<sub>3</sub>)<sub>2</sub>. Inside the bracket: 1 N and 3 O. The 2 doubles them: 2 N and 6 O. Add the 1 Mg outside.</p>',
+  hints:['Find the bracket. What number comes after it?','Multiply the number of atoms of your element inside the bracket by that number.','If the element is also outside the bracket, add those atoms.'],
+  worked:'<p>'+L.map(([f,e])=>F(f)+': '+cnt(f)+' → '+e+' = <b>'+parseF(f)[e]+'</b>').join('<br>')+'</p>'});
+});
+
+def('2.4','2',{
+ title:'Why brackets? (word fill)',
+ html:'<p>Complete the passage using the word bank.</p><p>The formula of calcium hydroxide is Ca(OH)<sub>2</sub>. The ion OH<sup>−</sup> has a charge of [[0]]. The calcium ion has a charge of [[1]]. So we need [[2]] hydroxide ions to balance one calcium ion. The brackets show that the small 2 multiplies [[3]] the atoms in the group. We write brackets only when we need [[4]] than one polyatomic ion.</p>',
+ bank:['1−','2−','1+','2+','one','two','three','all','some','more','fewer'],
+ fields:[cz(0,'1−'),cz(1,'2+'),cz(2,'two'),cz(3,'all'),cz(4,'more')],
+ cheat:CH.ions,
+ hints:['Look at the table of ions for the charges on OH and on Ca.','The charges must add up to zero: 2+ needs 2 × 1−.','The small number after a bracket multiplies everything inside it.'],
+ worked:'<p>OH<sup>−</sup> has a charge of <b>1−</b>. Ca<sup>2+</sup> has a charge of <b>2+</b>. So we need <b>two</b> hydroxide ions to balance one calcium ion. The 2 multiplies <b>all</b> the atoms in the group. We use brackets only when we need <b>more</b> than one polyatomic ion.</p>',
+ practice:[dflt({title:'Why brackets? (word fill)',html:'<p>Aluminium sulphate is Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>. The aluminium ion is Al<sup>3+</sup> and the sulphate ion is SO<sub>4</sub><sup>[[0]]</sup>. To balance the charges we need [[1]] aluminium ions and [[2]] sulphate ions. The brackets are needed because we have [[3]] than one sulphate ion. The 3 gives 3 sulphur atoms and [[4]] oxygen atoms.</p>',bank:['2−','3−','one','two','three','more','fewer','9','12'],fields:[cz(0,'2−'),cz(1,'two'),cz(2,'three'),cz(3,'more'),cz(4,'12')],worked:'<p>SO<sub>4</sub><sup><b>2−</b></sup>. Total positive charge 2 × 3+ = 6+ so we need <b>three</b> sulphate ions (3 × 2− = 6−) and <b>two</b> aluminium ions. <b>More</b> than one sulphate, so brackets. 3 × 4 = <b>12</b> oxygen atoms.</p>'},CH.ions)]});
+
+def('2.5','2',{
+ title:'Explain: brackets in formulae',
+ html:'<p>Sodium sulphate is Na<sub>2</sub>SO<sub>4</sub> but aluminium sulphate is Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>. <b>Explain why aluminium sulphate needs brackets in its formula and sodium sulphate does not.</b></p>',
+ ideas:[
+  {t:'Brackets show that the number applies to the whole group of atoms (the polyatomic ion).',g:[['group','whole','ion','everything','all the atoms','all of','unit','together','sulphate']]},
+  {t:'Aluminium sulphate needs more than one sulphate ion to balance the charges.',g:[['more than one','three','3','two','several','multiple'],['charge','balance','cancel','add up']]},
+  {t:'Sodium sulphate has only one sulphate ion, so brackets are not needed.',g:[['only one','one sulphate','single','1 sulphate','just one'],['no bracket','not need','don\'t need','do not need','without','not needed','unnecessary','no need','doesn\'t need','does not need']]}],
+ model:'The brackets show that the 3 multiplies the whole sulphate group, SO<sub>4</sub>. Aluminium (Al<sup>3+</sup>) needs three sulphate ions (SO<sub>4</sub><sup>2−</sup>) to balance the charges, and when we need more than one polyatomic ion we put it in brackets. Sodium sulphate has only one sulphate ion, so no brackets are needed.',
+ cheat:CH.ions,
+ hints:['Count how many sulphate ions each compound needs to balance the charges.','What would Al2SO43 mean if there were no brackets?','Write one sentence about aluminium sulphate and one sentence about sodium sulphate.'],
+ scaffold:dflt({title:'',html:'<p>Brackets show that the number after them applies to the [[0]] group of atoms. Aluminium sulphate needs [[1]] sulphate ions to balance the charges, so the sulphate is in brackets. Sodium sulphate has [[2]] sulphate ion, so brackets are not needed.</p>',bank:['whole','first','three','one','only one','two'],fields:[cz(0,'whole'),cz(1,'three'),cz(2,'only one')]},CH.ions),
+ worked:'<p>Al<sup>3+</sup> and SO<sub>4</sub><sup>2−</sup>: 2 × 3+ = 6+ and 3 × 2− = 6−, so Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>. Na<sup>+</sup> and SO<sub>4</sub><sup>2−</sup>: 2 × 1+ and 1 × 2−, so Na<sub>2</sub>SO<sub>4</sub>.</p>',
+ practice:[{title:'Explain: brackets in formulae',html:'<p>Magnesium hydroxide is Mg(OH)<sub>2</sub> but sodium hydroxide (CARE: CORROSIVE!) is NaOH. <b>Explain why the formula of magnesium hydroxide needs brackets and the formula of sodium hydroxide (CARE: CORROSIVE!) does not.</b></p>',
+  ideas:[{t:'Brackets show that the 2 applies to both atoms in the OH group.',g:[['group','whole','both','everything','all the atoms','oh','ion']]},{t:'Mg²⁺ needs two OH⁻ ions to balance the charges.',g:[['two','2','more than one'],['charge','balance','cancel','add up']]},{t:'Na⁺ needs only one OH⁻, so no brackets are needed.',g:[['only one','one oh','single','just one','1'],['no bracket','not need','don\'t need','do not need','without','not needed','no need']]}],
+  model:'Mg<sup>2+</sup> needs two OH<sup>−</sup> ions to balance the charges, and the brackets show that the 2 applies to the whole OH group. Na<sup>+</sup> needs only one OH<sup>−</sup>, so no brackets are needed.',cheat:CH.ions,hints:['How many OH⁻ ions does Mg²⁺ need?','How many OH⁻ ions does Na⁺ need?']}]});
+
+def('2.6','2',r=>{
+ const L=r.det?[find('iron(III)','hydroxide'),find('copper(II)','nitrate'),find('iron(II)','carbonate'),find('iron(III)','sulphate')]:r.sample(TM,4);
+ return dflt({
+  title:'Names with Roman numbers',
+  html:'<p>The Roman number in a name is the charge on the metal ion: iron(III) is Fe<sup>3+</sup>. Write the formula of each compound.</p>',
+  fields:L.map(x=>txt(cap(x.name)+' =',x.f)),
+  cheat:CH.ions+'<p>Roman numbers: (II) = 2+ and (III) = 3+. So copper(II) is Cu<sup>2+</sup> and iron(III) is Fe<sup>3+</sup>.</p>',
+  hints:['Write the metal ion first. The Roman number is its charge.','Now write the negative ion from the table of ions.','Find how many of each you need so the charges cancel. Use brackets if you need more than one polyatomic ion.'],
+  worked:'<p>'+L.map(x=>cap(x.name)+': '+ionHTML(x.cat.f,x.cat.c)+' and '+ionHTML(x.an.f,-x.an.c)+' → <b>'+F(x.f)+'</b>').join('<br>')+'</p>'});
+});
+
+def('2.7','2',r=>{
+ const L=r.det?[find('aluminium','sulphate'),find('calcium','hydroxide'),find('ammonium','carbonate'),find('zinc','nitrate')]:r.sample(BR,4);
+ return dflt({
+  title:'Naming from a formula',
+  html:'<p>Write the name of each compound. Use lower-case letters, for example <b>sodium chloride</b>. Include the Roman number for iron and copper.</p>',
+  fields:L.map(x=>txt(F(x.f)+' =',[x.name],{mode:'word'})),
+  cheat:'<p>Name the positive ion first, then the negative ion.</p><ul><li>OH hydroxide, NO<sub>3</sub> nitrate, SO<sub>4</sub> sulphate, CO<sub>3</sub> carbonate, PO<sub>4</sub> phosphate, NH<sub>4</sub> ammonium.</li><li>Brackets tell you the group is a polyatomic ion.</li></ul>',
+  hints:['Look at the group inside the bracket. Find it in the table of ions.','The first part of the formula is the metal or ammonium. Name it.'],
+  worked:'<p>'+L.map(x=>F(x.f)+' = <b>'+x.name+'</b>').join('<br>')+'</p>'});
+});
+
+/* ===== Section 3: molar mass and moles ===== */
+sec('3','Molar mass and moles',
+ '<p>The <b>molar mass</b>, <i>M</i>, of a substance is the mass of one <b>mole</b> in g mol<sup>−1</sup>. You add the A<sub>r</sub> values of all the atoms, and atoms inside brackets are multiplied by the number after the bracket.</p>');
+
+const MM_ALL=['CaCO3','NaOH','H2O','CO2','MgO','HCl','Ca(OH)2','Mg(NO3)2','Al2(SO4)3','(NH4)2SO4','Fe2(SO4)3','Zn(OH)2','Al(OH)3','Cu(NO3)2','Na2CO3','H2SO4'];
+
+def('3.1','3',r=>{
+ const L=r.det?['CaCO3','Ca(OH)2','Mg(NO3)2','Al2(SO4)3','(NH4)2SO4']:r.sample(MM_ALL,5);
+ return dflt({
+  title:'Molar mass, including brackets',
+  html:'<p>Calculate the molar mass of each compound.</p>',
+  fields:L.map(f=>num('Molar mass of '+F(f)+' =',Mr(f),GM)),
+  cheat:CH.moles,
+  hints:['List every atom in the formula and how many there are. Remember that the number after a bracket multiplies every atom inside it.','Multiply the number of atoms by the A<sub>r</sub> for each element, then add.','Check Ca(OH)2: Ca 1 × 40 + O 2 × 16 + H 2 × 1 = 74.'],
+  worked:'<p>'+L.map(f=>mmWork(f)).join('<br>')+'</p>'});
+});
+
+function molesGen(forms){
+ return r=>{
+  const [f,n,m]=pickFN(r,forms,NLIST),M=Mr(f);
+  const ths=think('mass');ths.ans=m<M?'less than one mole':(m>M?'more than one mole':'exactly one mole');
+  return dflt({
+   title:'Moles from a mass',
+   html:'<p>Calculate the number of moles in <b>'+nice(m)+' g</b> of '+F(f)+'.</p>'+fm(I('n')+' = '+I('m')+' ÷ '+I('M')),
+   fields:[num('Molar mass, '+I('M')+' =',M,GM),ths,num('Moles, '+I('n')+' =',n,'mol',{abs:1e-9})],
+   cheat:CH.moles,
+   hints:['Work out '+I('M')+' first, by adding the A<sub>r</sub> values.','Now compare: is the mass you are given bigger or smaller than the molar mass? That tells you whether the answer is more or less than one mole.','Write the formula, then the numbers, then calculate: '+I('n')+' = '+nice(m)+' ÷ '+nice(M)+'.'],
+   worked:'<p>'+mmWork(f)+'</p><div class="fm n">'+I('n')+' = '+I('m')+' ÷ '+I('M')+' = '+nice(m)+' ÷ '+nice(M)+' = <b>'+nice(n)+' mol</b></div>'});
+ };
+}
+const MG=molesGen;
+def('3.2','3',MG(SIMPLE));
+def('3.3','3',r=>{
+ const [f,n,m]=pickFN(r,SIMPLE,NLIST),M=Mr(f);
+ const ths=think();ths.ans=n<1?'less than one mole':(n>1?'more than one mole':'exactly one mole');
+ return dflt({
+  title:'Mass from moles',
+  html:'<p>Calculate the mass of <b>'+nice(n)+' mol</b> of '+F(f)+'.</p>'+fm(I('m')+' = '+I('n')+' × '+I('M')),
+  fields:[ths,num('Molar mass, '+I('M')+' =',M,GM),num('Mass, '+I('m')+' =',m,'g',{abs:1e-9})],
+  cheat:CH.moles,
+  hints:['Is the number of moles more or less than one? So will the mass be more or less than the molar mass?','Work out '+I('M')+' first.','Write the formula, then the numbers, then calculate: '+I('m')+' = '+nice(n)+' × '+nice(M)+'.'],
+  worked:'<p>'+mmWork(f)+'</p><div class="fm n">'+I('m')+' = '+I('n')+' × '+I('M')+' = '+nice(n)+' × '+nice(M)+' = <b>'+nice(m)+' g</b></div>'});
+});
+def('3.4','3',MG(BR.map(x=>x.f)));
+
+/* ===== Section 4: gas volumes at r.t.p. ===== */
+sec('4','Volumes of gases at r.t.p.',
+ '<p>At r.t.p. (1 atm pressure and 25 °C) one mole of any gas has a volume of 24000 '+CM3+'. Gases are <b>fluids</b> and <b>compressible</b>, so their volume changes with pressure and temperature. That is why we need the r.t.p. conditions.</p>');
+
+def('4.1','4',r=>{
+ const [nm,f]=r.pick(GAS),n=r.pick(NLIST);
+ const t=think();t.ans=n<1?'less than one mole':(n>1?'more than one mole':'exactly one mole');
+ return dflt({
+  title:'Volume of a gas from moles',
+  html:'<p>Calculate the volume of <b>'+nice(n)+' mol</b> of '+nm+', '+F(f)+', at r.t.p.</p>'+fm(I('V')+' = '+I('n')+' × 24000'),
+  fields:[t,num('Volume, '+I('V')+' =',n*24000,CM3,{abs:1e-6})],
+  cheat:CH.gasvol,
+  hints:['Is the number of moles more or less than one? So is the volume more or less than 24000 '+CM3+'?','Write the formula, then put the numbers in: '+I('V')+' = '+nice(n)+' × 24000.'],
+  worked:'<div class="fm n">'+I('V')+' = '+I('n')+' × 24000 = '+nice(n)+' × 24000 = <b>'+nice(n*24000)+' '+CM3+'</b></div>'});
+});
+
+def('4.2','4',r=>{
+ const [nm,f]=r.pick(GAS),V=Math.round(r.pick(NLIST)*24000);
+ const t=think('vol');t.ans=V<24000?'less than 24000 cm³':(V>24000?'more than 24000 cm³':'exactly 24000 cm³');
+ return dflt({
+  title:'Moles of a gas from its volume',
+  html:'<p>A gas syringe contains <b>'+V+' '+CM3+'</b> of '+nm+', '+F(f)+', at r.t.p. Calculate the number of moles.</p>'+fm(I('n')+' = '+I('V')+' ÷ 24000'),
+  fields:[t,num('Moles, '+I('n')+' =',V/24000,'mol',{abs:1e-9})],
+  cheat:CH.gasvol,
+  hints:['Is the volume bigger or smaller than 24000 '+CM3+'? So are there more or less than 1 mol?','Write the formula, then put the numbers in: '+I('n')+' = '+V+' ÷ 24000.'],
+  worked:'<div class="fm n">'+I('n')+' = '+I('V')+' ÷ 24000 = '+V+' ÷ 24000 = <b>'+nice(V/24000)+' mol</b></div>'});
+});
+
+def('4.3','4',r=>{
+ const [f,n]=pickFN(r,GASF,NLIST);
+ const M=Mr(f),m=+(n*M).toPrecision(10);
+ return dflt({
+  title:'Mass of a gas to its volume',
+  html:'<p>Calculate the volume of <b>'+nice(m)+' g</b> of '+MOLS[f]+', '+F(f)+', at r.t.p. There are three steps.</p><p>Step A. Molar mass.</p>'+fm(I('M')+' from the A<sub>r</sub> values','n')+'<p>Step B. Moles.</p>'+fm(I('n')+' = '+I('m')+' ÷ '+I('M'))+'<p>Step C. Volume.</p>'+fm(I('V')+' = '+I('n')+' × 24000'),
+  fields:[num('A. Molar mass, '+I('M')+' =',M,GM),num('B. Moles, '+I('n')+' =',n,'mol',{abs:1e-9}),num('C. Volume, '+I('V')+' =',n*24000,CM3,{abs:1e-6})],
+  cheat:CH.moles+CH.gasvol,
+  hints:['Step A: add the A<sub>r</sub> values of all the atoms in '+F(f)+'.','Step B: '+I('n')+' = '+nice(m)+' ÷ '+nice(M)+'. Is your answer more or less than 1 mol?','Step C: multiply your moles by 24000.'],
+  worked:'<p>A. '+mmWork(f)+'</p><div class="fm n">B. '+I('n')+' = '+nice(m)+' ÷ '+nice(M)+' = '+nice(n)+' mol</div><div class="fm n">C. '+I('V')+' = '+nice(n)+' × 24000 = <b>'+nice(n*24000)+' '+CM3+'</b></div>'});
+});
+
+def('4.4','4',r=>{
+ const f=r.pick(GASF),V=Math.round(r.pick(NLIST)*24000);
+ const n=V/24000,M=Mr(f),m=+(n*M).toPrecision(10);
+ return dflt({
+  title:'Volume of a gas to its mass',
+  html:'<p>A gas syringe contains <b>'+V+' '+CM3+'</b> of '+MOLS[f]+', '+F(f)+', at r.t.p. Calculate its mass. There are three steps.</p><p>Step A. Moles.</p>'+fm(I('n')+' = '+I('V')+' ÷ 24000')+'<p>Step B. Molar mass.</p><p>Step C. Mass.</p>'+fm(I('m')+' = '+I('n')+' × '+I('M')),
+  fields:[num('A. Moles, '+I('n')+' =',n,'mol',{abs:1e-9}),num('B. Molar mass, '+I('M')+' =',M,GM),num('C. Mass, '+I('m')+' =',m,'g',{abs:1e-9})],
+  cheat:CH.moles+CH.gasvol,
+  hints:['Step A: divide the volume by 24000.','Step B: add the A<sub>r</sub> values for '+F(f)+'.','Step C: multiply the moles by the molar mass.'],
+  worked:'<div class="fm n">A. '+I('n')+' = '+V+' ÷ 24000 = '+nice(n)+' mol</div><p>B. '+mmWork(f)+'</p><div class="fm n">C. '+I('m')+' = '+nice(n)+' × '+nice(M)+' = <b>'+nice(m)+' g</b></div>'});
+});
+
+def('4.5','4',{
+ title:'Explain: squashing a gas',
+ html:'<p>A student collects exactly 1 mol of hydrogen at r.t.p. in a large gas bag. It has a volume of 24000 '+CM3+'. The student then squeezes the bag so the gas is under a higher pressure. <b>Explain what happens to the volume and why the volume is no longer 24000 '+CM3+'.</b></p>',
+ need:3,
+ ideas:[
+  {t:'Gases are compressible, so the volume gets smaller when the pressure goes up.',g:[['volume'],['smaller','less','decrease','reduce','go down','goes down','drop','compress','squash','squeez']]},
+  {t:'There is still 1 mole of hydrogen: the number of particles has not changed.',g:[['same number','same amount','still 1','still one','same mole','same mass','no change','not change','unchanged','still the same'],['mole','particle','molecule','hydrogen','gas','mass']]},
+  {t:'The particles are far apart, so they can be pushed closer together.',g:[['far apart','gaps','empty space','space between','closer','spread','apart']]},
+  {t:'The value 24000 '+CM3+' is only true at r.t.p. (1 atm and 25 °C).',g:[['only','r\\.t\\.p','rtp','1 atm','25','conditions','temperature and pressure','different pressure','pressure has changed','not at']]}],
+ model:'The gas is compressible and its particles are far apart, so when the pressure goes up the particles are pushed closer together and the volume goes down. There is still 1 mole of hydrogen (the same number of particles), but 24000 '+CM3+' is the volume of one mole only at r.t.p. (1 atm and 25 °C). At a higher pressure the volume of one mole is smaller.',
+ cheat:CH.gas,
+ hints:['What happens to a gas when you squash it: does the volume go up or down?','Has the number of moles of hydrogen changed?','At which conditions is the volume of one mole 24000 '+CM3+'?'],
+ scaffold:dflt({title:'',html:'<p>Gases are [[0]], so the volume goes [[1]] when the pressure goes up. The number of moles of hydrogen is the [[2]]. The value 24000 '+CM3+' is only true at [[3]] (1 atm and 25 °C).</p>',bank:['compressible','down','up','same','different','r.t.p.','fluids'],fields:[cz(0,'compressible'),cz(1,'down'),cz(2,'same'),cz(3,'r.t.p.')]},CH.gas),
+ worked:'<p>Higher pressure compresses the gas: smaller volume. Still one mole, but 24000 '+CM3+' belongs to r.t.p. only.</p>',
+ practice:[{title:'Explain: heating a gas',html:'<p>A gas syringe contains 60 '+CM3+' of air at 25 °C and 1 atm. It is warmed in a water bath so that the temperature rises, but the pressure stays the same. <b>Explain what you expect to see and why one mole of air is no longer 24000 '+CM3+'.</b></p>',need:2,
+  ideas:[{t:'The volume of the gas goes up (the plunger moves out).',g:[['volume','plunger','syringe'],['up','increase','bigger','larger','expand','more']]},{t:'The particles move faster and push further apart.',g:[['faster','more energy','speed','move more','further','apart']]},{t:'24000 '+CM3+' is only true at r.t.p. (25 °C), so at another temperature one mole has a different volume.',g:[['only','r\\.t\\.p','rtp','25','conditions','different temperature','temperature has changed','not at']]}],
+  model:'The air expands, so the plunger moves out and the volume goes up, because the particles move faster and push further apart. 24000 '+CM3+' is the volume of one mole only at r.t.p. (25 °C), so at a higher temperature one mole has a bigger volume.',cheat:CH.gas,hints:['Does a gas expand or shrink when it is heated?','At which temperature is one mole 24000 '+CM3+'?']}]});
+
+/* ===== Section 5: magnesium and dilute sulphuric acid ===== */
+sec('5','Magnesium and dilute sulphuric acid',
+ '<p>In class we added magnesium to an excess of dilute sulphuric acid in a conical flask with a side arm and collected the hydrogen in a <b>gas syringe</b>. The equation is:</p>'+fm('Mg + H<sub>2</sub>SO<sub>4</sub> → MgSO<sub>4</sub> + H<sub>2</sub>')+'<p>One mole of magnesium produces one mole of hydrogen gas.</p>');
+
+const MGCH=fm('Mg + H<sub>2</sub>SO<sub>4</sub> → MgSO<sub>4</sub> + H<sub>2</sub>')+'<p><b>1 mol Mg → 1 mol H<sub>2</sub></b> (a 1 : 1 ratio).</p>'+fm(I('n')+' = '+I('m')+' ÷ '+I('M'))+fm(I('V')+' = '+I('n')+' × 24000')+'<p>A<sub>r</sub> of Mg = 24.</p>';
+
+def('5.1','5',r=>{
+ const x=r.det?0.02:r.pick([0.02,0.1,0.25,2,0.005,1.5]);
+ return dflt({
+  title:'Using the equation',
+  html:'<p>Use the equation to find the moles of hydrogen gas formed.</p>',
+  fields:[num('From 1 mol of Mg: moles of H<sub>2</sub> =',1,'mol',{abs:1e-9}),num('From 0.5 mol of Mg: moles of H<sub>2</sub> =',0.5,'mol',{abs:1e-9}),num('From '+nice(x)+' mol of Mg: moles of H<sub>2</sub> =',x,'mol',{abs:1e-9})],
+  cheat:MGCH,
+  hints:['Look at the numbers in front of Mg and H<sub>2</sub> in the equation. There are no numbers, so each is 1.','The ratio is 1 : 1, so the moles of H<sub>2</sub> equal the moles of Mg.'],
+  worked:'<p>The ratio Mg : H<sub>2</sub> is 1 : 1, so the moles of hydrogen are the same as the moles of magnesium: <b>1 mol</b>, <b>0.5 mol</b> and <b>'+nice(x)+' mol</b>.</p>'});
+});
+
+def('5.2','5',r=>{
+ const m=+(r.int(1,12)*0.012).toFixed(3);
+ const n=m/24;
+ return dflt({
+  title:'Magnesium mass to hydrogen volume',
+  html:'<p>A student reacts <b>'+nice(m)+' g</b> of magnesium with an excess of dilute sulphuric acid. Calculate the volume of hydrogen gas collected at r.t.p.</p><p>Step A. Moles of magnesium.</p>'+fm(I('n')+' = '+I('m')+' ÷ '+I('M'))+'<p>Step B. Moles of hydrogen: use the equation.</p><p>Step C. Volume of hydrogen.</p>'+fm(I('V')+' = '+I('n')+' × 24000'),
+  fields:[num('A. Moles of Mg =',n,'mol',{abs:1e-9}),num('B. Moles of H<sub>2</sub> =',n,'mol',{abs:1e-9}),num('C. Volume of H<sub>2</sub> =',n*24000,CM3,{abs:1e-6})],
+  cheat:MGCH,
+  hints:['Step A: '+I('n')+' = '+nice(m)+' ÷ 24. Is the answer more or less than one mole?','Step B: the ratio is 1 : 1, so write the same number again.','Step C: multiply the moles of hydrogen by 24000.'],
+  worked:'<div class="fm n">A. '+I('n')+' = '+nice(m)+' ÷ 24 = '+nice(n)+' mol</div><p>B. 1 : 1 ratio, so moles of H<sub>2</sub> = <b>'+nice(n)+' mol</b></p><div class="fm n">C. '+I('V')+' = '+nice(n)+' × 24000 = <b>'+nice(n*24000)+' '+CM3+'</b></div>'});
+});
+
+def('5.3','5',r=>{
+ const V=r.int(1,12)*12;
+ const n=V/24000,m=n*24;
+ return dflt({
+  title:'Hydrogen volume to magnesium mass',
+  html:'<p>The gas syringe collected <b>'+V+' '+CM3+'</b> of hydrogen at r.t.p. Calculate the mass of magnesium that reacted.</p><p>Step A. Moles of hydrogen.</p>'+fm(I('n')+' = '+I('V')+' ÷ 24000')+'<p>Step B. Moles of magnesium: use the equation.</p><p>Step C. Mass of magnesium.</p>'+fm(I('m')+' = '+I('n')+' × '+I('M')),
+  fields:[num('A. Moles of H<sub>2</sub> =',n,'mol',{abs:1e-9}),num('B. Moles of Mg =',n,'mol',{abs:1e-9}),num('C. Mass of Mg =',m,'g',{abs:1e-9})],
+  cheat:MGCH,
+  hints:['Step A: divide the volume by 24000.','Step B: the ratio is 1 : 1.','Step C: multiply the moles of magnesium by its molar mass, 24.'],
+  worked:'<div class="fm n">A. '+I('n')+' = '+V+' ÷ 24000 = '+nice(n)+' mol</div><p>B. 1 : 1 ratio, so moles of Mg = <b>'+nice(n)+' mol</b></p><div class="fm n">C. '+I('m')+' = '+nice(n)+' × 24 = <b>'+nice(m)+' g</b></div>'});
+});
+
+def('5.4','5',{
+ title:'Explain: less gas than predicted',
+ html:'<p>A student predicted 120 '+CM3+' of hydrogen but the gas syringe showed only 105 '+CM3+'. <b>Suggest one reason for the smaller volume.</b></p>',
+ need:1,
+ ideas:[
+  {t:'Some hydrogen escaped or leaked (for example before the bung went in, or at a joint).',g:[['escap','leak','lost','got out','loss','gap','not sealed','not airtight','not tight','bung']]},
+  {t:'Some hydrogen dissolved in the acid.',g:[['dissolv']]},
+  {t:'The magnesium was impure or coated with magnesium oxide, so less magnesium reacted.',g:[['impure','oxide','oxidised','coating','not all','didn\'t all','less magnesium','tarnish','not pure','dirty']]}],
+ model:'Some hydrogen gas escaped before the bung was fitted, or leaked from a joint, so less reached the gas syringe. (Other reasons: some hydrogen dissolved in the acid, or the magnesium ribbon was coated with magnesium oxide so less magnesium reacted.)',
+ cheat:'<p>Think about the apparatus: flask, bung, side arm, tube, gas syringe.</p><p>Where could a gas get out? What could make the magnesium react less than its full mass?</p>',
+ hints:['Think about the moment the acid touches the magnesium and the moment the bung goes in.','Think about the joints between the flask, the tube and the gas syringe.'],
+ scaffold:dflt({title:'',html:'<p>Some of the hydrogen [[0]] before the [[1]] was fitted, so less gas reached the gas [[2]].</p>',bank:['escaped','dissolved','bung','acid','syringe','magnesium'],fields:[cz(0,['escaped','dissolved']),cz(1,'bung'),cz(2,'syringe')]},'<p>Think about the apparatus: flask, bung, tube, gas syringe.</p>'),
+ worked:'<p>Any one sensible reason about gas escaping, hydrogen dissolving, or impure magnesium.</p>',
+ practice:[{title:'Explain: less gas than predicted',html:'<p>A student predicted 48 '+CM3+' of hydrogen but the gas syringe plunger stopped at 40 '+CM3+'. <b>Suggest one reason.</b></p>',need:1,
+  ideas:[{t:'Some hydrogen escaped or leaked.',g:[['escap','leak','lost','got out','loss','gap','not sealed','bung']]},{t:'The plunger was sticking (friction), so it did not move out fully.',g:[['stick','stuck','friction','plunger']]},{t:'The magnesium was impure or coated with oxide.',g:[['impure','oxide','coating','not all','less magnesium','tarnish','not pure']]}],
+  model:'Hydrogen escaped or leaked before it reached the syringe. (Or the plunger was sticking, or the magnesium was impure.)',cheat:'<p>Think about the apparatus and the reaction.</p>',hints:['Where could gas get out of the apparatus?']}]});
+
+def('5.5','5',{
+ title:'Excess acid (word fill)',
+ html:'<p>Complete the passage using the word bank.</p><p>We add an [[0]] of dilute sulphuric acid, so all the [[1]] reacts. The volume of hydrogen then depends only on the mass of [[2]] we use.</p>',
+ bank:['excess','shortage','magnesium','acid','hydrogen'],
+ fields:[cz(0,'excess'),cz(1,'magnesium'),cz(2,'magnesium')],
+ cheat:'<p><b>Excess</b> = more than is needed, so some is left over.</p><p>The reactant that is not in excess is used up first. It is the <b>limiting reactant</b>. It decides how much product forms.</p>',
+ hints:['If there is more acid than is needed, which reactant is used up first?','The reactant that is all used up decides how much hydrogen forms.'],
+ worked:'<p>We add an <b>excess</b> of acid, so all the <b>magnesium</b> reacts. The volume of hydrogen depends only on the mass of <b>magnesium</b>.</p>',
+ practice:[dflt({title:'Excess and limiting (word fill)',html:'<p>The reactant that is used up first is the [[0]] reactant. The reactant that has some left over at the end is in [[1]].</p>',bank:['limiting','excess','strong','spare'],fields:[cz(0,'limiting'),cz(1,'excess')],worked:'<p>The <b>limiting</b> reactant is used up first. The other reactant is in <b>excess</b>.</p>'},'<p><b>Excess</b> = more than needed. <b>Limiting</b> = used up first.</p>')]});
+
+/* ===== Section 6: energy changes (calorimetry) ===== */
+sec('6','Energy changes: system, surroundings and ΔH',
+ '<p>In a polystyrene cup the reacting chemicals are the <b>system</b>. The water, the cup and the air are the <b>surroundings</b>. We measure the temperature change of the surroundings. Use <i>q</i> = <i>v</i> × 4.2 × Δ<i>t</i> with the <b>total volume</b>, change J to kJ, then divide by moles to get Δ<i>H</i>. The sign goes on Δ<i>H</i> only at the end.</p>');
+
+def('6.1','6',dflt({
+ title:'System and surroundings (word fill)',
+ html:'<p>Complete the passage using the word bank.</p><p>In a reaction, the [[0]] is the reacting chemicals. Everything else, such as the water, the cup, the thermometer and the air, is the [[1]]. In an <b>exothermic</b> reaction energy moves from the [[2]] to the [[3]], so the thermometer shows a temperature that [[4]]. In an <b>endothermic</b> reaction energy moves from the [[5]] into the [[6]], so the temperature [[7]].</p>',
+ bank:['system','surroundings','rises','falls','exothermic','endothermic'],
+ fields:[cz(0,'system'),cz(1,'surroundings'),cz(2,'system'),cz(3,'surroundings'),cz(4,'rises'),cz(5,'surroundings'),cz(6,'system'),cz(7,'falls')],
+ cheat:'<p><b>System</b> = the reacting chemicals.<br><b>Surroundings</b> = everything else (water, cup, thermometer, air).</p><table><tr><th></th><th>Exothermic</th><th>Endothermic</th></tr><tr><td class="l">Energy moves</td><td>system → surroundings</td><td>surroundings → system</td></tr><tr><td class="l">Temperature</td><td>rises</td><td>falls</td></tr><tr><td class="l">Δ<i>H</i></td><td>negative</td><td>positive</td></tr></table>',
+ hints:['The reacting chemicals are the system. What do we call everything else?','In an exothermic reaction energy goes out of the system. Where does it go?','In an endothermic reaction the energy comes in from the surroundings, so the surroundings lose energy. What happens to their temperature?'],
+ worked:'<p>The <b>system</b> is the reacting chemicals. Everything else is the <b>surroundings</b>. Exothermic: energy moves from the <b>system</b> to the <b>surroundings</b>, so the temperature <b>rises</b>. Endothermic: energy moves from the <b>surroundings</b> into the <b>system</b>, so the temperature <b>falls</b>.</p>',
+ practice:[dflt({title:'System and surroundings (word fill)',html:'<p>A hand-warmer pack gets hot when it is activated. The chemicals inside are the [[0]]. The hand that warms up is part of the [[1]]. Energy moves from the [[2]] to the [[3]], so the reaction is [[4]].</p>',bank:['system','surroundings','exothermic','endothermic'],fields:[cz(0,'system'),cz(1,'surroundings'),cz(2,'system'),cz(3,'surroundings'),cz(4,'exothermic')],worked:'<p>The chemicals are the <b>system</b>, the hand is part of the <b>surroundings</b>. Energy goes from the <b>system</b> to the <b>surroundings</b>: <b>exothermic</b>.</p>'},'<p>System = reacting chemicals. Surroundings = everything else. Hot to the touch = energy given out.</p>'),
+  dflt({title:'System and surroundings (word fill)',html:'<p>A cold pack gets cold when it is squeezed. Energy moves from the [[0]] into the [[1]], so the temperature of the surroundings [[2]] and Δ<i>H</i> is [[3]].</p>',bank:['surroundings','system','falls','rises','positive','negative'],fields:[cz(0,'surroundings'),cz(1,'system'),cz(2,'falls'),cz(3,'positive')],worked:'<p>Energy moves from the <b>surroundings</b> into the <b>system</b>, so the surroundings <b>fall</b> in temperature and Δ<i>H</i> is <b>positive</b> (endothermic).</p>'},'<p>Temperature fall → endothermic → Δ<i>H</i> positive.</p>')]},
+ '<p></p>'));
+
+def('6.2','6',{
+ title:'Explain: system and surroundings',
+ html:'<p>In an experiment, <b>hydrochloric acid</b> is mixed with <b>'+NAOH+'</b> in a polystyrene cup. The thermometer shows a temperature rise. <b>Explain what we mean by the system and the surroundings in this experiment, and how energy moves.</b></p>',
+ ideas:[
+  {t:'The system is the reacting chemicals (the acid and alkali that react).',g:[['system'],['chemical','reactant','react','particle','substance','acid','alkali','mixture']]},
+  {t:'The surroundings are everything else: the water, the cup, the thermometer, the air.',g:[['surroundings'],['else','rest','outside','around','water','cup','thermometer','air','room','beaker']]},
+  {t:'Energy moves from the system to the surroundings, so the temperature rises.',g:[['energy','heat'],['from the system','system to','out of','given out','released','transferred','flows out','moves out','to the surroundings','into the surroundings','gives out','goes out']]}],
+ model:'The system is the reacting chemicals (the acid and the alkali). The surroundings are everything else: the water, the cup, the thermometer and the air. The reaction is exothermic, so energy moves from the system to the surroundings and the temperature of the surroundings rises.',
+ cheat:'<p><b>System</b> = the reacting chemicals.<br><b>Surroundings</b> = everything else.</p><p>Exothermic: energy moves from system to surroundings and the temperature rises.</p>',
+ hints:['Which part is reacting? Which part is not reacting but gets hot?','Which way does the energy go in an exothermic reaction?'],
+ scaffold:dflt({title:'',html:'<p>The [[0]] is the reacting chemicals. The [[1]] are everything else, such as the water, the cup and the air. Energy moves from the [[2]] to the [[3]], so the temperature [[4]].</p>',bank:['system','surroundings','rises','falls'],fields:[cz(0,'system'),cz(1,'surroundings'),cz(2,'system'),cz(3,'surroundings'),cz(4,'rises')]},'<p>System = chemicals. Surroundings = everything else.</p>'),
+ worked:'<p>System: the reacting chemicals. Surroundings: water, cup, thermometer, air. Energy moves system → surroundings.</p>',
+ practice:[{title:'Explain: system and surroundings',html:'<p>Ammonium nitrate dissolves in water in a polystyrene cup and the temperature falls. <b>Explain what the system and the surroundings are and how energy moves.</b></p>',
+  ideas:[{t:'The system is the ammonium nitrate (the chemicals that react or dissolve).',g:[['system'],['chemical','ammonium','nitrate','solid','solute','substance']]},{t:'The surroundings are the water, the cup, the thermometer and the air.',g:[['surroundings'],['water','cup','thermometer','air','everything else','rest']]},{t:'Energy moves from the surroundings into the system, so the temperature falls.',g:[['energy','heat'],['from the surroundings','surroundings to','into the system','taken in','takes in','absorbed','absorbs','to the system']]}],
+  model:'The system is the ammonium nitrate. The surroundings are the water, the cup, the thermometer and the air. Energy moves from the surroundings into the system, so the temperature of the water falls: the change is endothermic.',cheat:'<p>Temperature fall → energy moves from surroundings into the system → endothermic.</p>',hints:['Which way does the energy go when the temperature falls?']}]});
+
+def('6.3','6',r=>{
+ const pool=[[0.5,25,'hydrochloric acid'],[1.0,50,'sodium chloride solution'],[2.0,25,'sulphuric acid'],[0.1,100,'copper(II) sulphate solution'],[0.25,40,'zinc sulphate solution'],[1.5,20,'hydrochloric acid']];
+ const [c,v,nm]=r.det?pool[0]:r.pick(pool.map(x=>[x]))[0];
+ const n=c*v/1000;
+ return dflt({
+  title:'Moles of a solution',
+  html:'<p>Calculate the number of moles of solute in <b>'+v+' '+CM3+'</b> of <b>'+nice(c)+' '+MD+'</b> '+nm+'.</p>'+fm(I('n')+' = concentration × volume ÷ 1000'),
+  fields:[num('Moles, '+I('n')+' =',n,'mol',{abs:1e-9,wrong:[{v:c*v,msg:'Do not forget to divide by 1000.'}]})],
+  cheat:CH.cal,
+  hints:['Concentration is in '+MD+' and volume is in '+CM3+'. Use the formula exactly as it is written.','Write the numbers in: '+I('n')+' = '+nice(c)+' × '+v+' ÷ 1000.'],
+  worked:'<div class="fm n">'+I('n')+' = concentration × volume ÷ 1000 = '+nice(c)+' × '+v+' ÷ 1000 = <b>'+nice(n)+' mol</b></div>'});
+});
+
+def('6.4','6',r=>{
+ const P=[['The temperature of the mixture rises from 19.0 °C to 25.0 °C.','exothermic','negative'],['The temperature of the mixture falls from 22.0 °C to 16.5 °C.','endothermic','positive'],['The reaction gives out energy to the surroundings.','exothermic','negative'],['The reaction takes in energy from the surroundings.','endothermic','positive'],['A hand-warmer pack gets hotter when it is activated.','exothermic','negative'],['A cold pack gets colder when it is squeezed.','endothermic','positive'],['The surroundings get hotter.','exothermic','negative'],['The surroundings get colder.','endothermic','positive']];
+ const L=r.det?[P[0],P[1],P[2],P[3]]:r.sample(P,4);
+ const fields=[];L.forEach((p,k)=>{fields.push(sel((k+1)+'. '+p[0]+' <b>Type:</b>',['exothermic','endothermic'],p[1],{}));fields.push(sel('<b>Δ<i>H</i> is:</b>',['negative','positive'],p[2],{}));});
+ return dflt({
+  title:'Exothermic, endothermic and the sign of ΔH',
+  html:'<p>For each observation choose the type of reaction and the sign of Δ<i>H</i>.</p>',
+  fields,
+  cheat:'<p><b>Temperature rise → exothermic → Δ<i>H</i> negative.<br>Temperature fall → endothermic → Δ<i>H</i> positive.</b></p><p>Energy given out to the surroundings = exothermic. Energy taken in from the surroundings = endothermic.</p>',
+  hints:['Does the temperature of the surroundings go up or down? Or does the energy go out or in?','Rise or gives out: exothermic. Fall or takes in: endothermic.','Exothermic means Δ<i>H</i> is negative. Endothermic means Δ<i>H</i> is positive.'],
+  worked:'<p>'+L.map((p,k)=>(k+1)+'. <b>'+p[1]+'</b>, Δ<i>H</i> <b>'+p[2]+'</b>').join('<br>')+'</p>'});
+});
+
+function makeCal(dirFixed){
+ return r=>{
+  const dir=dirFixed||r.pick(['rise','fall']);
+  let V1,c,V2,dt,T0,desc,lim;
+  if(r.det){
+   if(dir==='rise'){V1=25;c=1.0;V2=25;dt=6.5;T0=20.0;}else{V1=25;c=2.0;V2=25;dt=6.0;T0=21.0;}
+  }else if(dir==='rise'){
+   V1=r.pick([25,50]);c=r.pick([0.5,1.0,2.0]);V2=V1;dt=r.pick({0.5:[3.0,3.5],1:[6.0,6.5,7.0],2:[12.0,13.0,14.0]}[c]);T0=r.pick([19.0,20.0,21.0,22.0]);
+  }else{
+   V1=r.pick([25,50]);c=r.pick([1.0,2.0]);V2=V1;dt=r.pick([4.0,5.0,6.0,7.0,8.0]);T0=r.pick([20.0,21.0,22.0,23.0]);
+  }
+  const T1=dir==='rise'?T0+dt:T0-dt;
+  const Vt=V1+V2,qJ=Vt*4.2*dt,qkJ=qJ/1000,n=c*V1/1000,dH=(dir==='rise'?-1:1)*qkJ/n;
+  const f1=x=>x.toFixed(1);
+  desc=dir==='rise'
+   ?'<p><b>'+V1+' '+CM3+'</b> of <b>'+nice(c)+' '+MD+'</b> hydrochloric acid is mixed with <b>'+V2+' '+CM3+'</b> of an excess of '+NAOH+' in a polystyrene cup. The temperature rises from <b>'+f1(T0)+' °C</b> to <b>'+f1(T1)+' °C</b>. Treat the mixture as water. The acid is the limiting reactant.</p>'
+   :'<p><b>'+V1+' '+CM3+'</b> of <b>'+nice(c)+' '+MD+'</b> solution A is mixed with <b>'+V2+' '+CM3+'</b> of an excess of solution B in a polystyrene cup. The temperature falls from <b>'+f1(T0)+' °C</b> to <b>'+f1(T1)+' °C</b>. Treat the mixture as water. Solution A is the limiting reactant.</p>';
+  const lm=dir==='rise'?'acid':'solution A';
+  return dflt({
+   title:dir==='rise'?'Calculating ΔH (temperature rise)':'Calculating ΔH (temperature fall)',
+   html:desc+'<p>Work through the steps. '+I('q')+' and Δ'+I('t')+' have no signs. Put the sign on Δ'+I('H')+' at the end.</p>'+fm(I('q')+' = '+I('v')+' × 4.2 × Δ'+I('t'))+fm('Δ'+I('H')+' = '+I('q')+' ÷ '+I('n')),
+   fields:[
+    num('Step 1. Total volume of the mixture, '+I('v')+' =',Vt,CM3,{wrong:[{v:V1,msg:'Use the TOTAL volume of the mixture: '+lm+' plus the other solution.'}]}),
+    num('Step 2. Temperature change, Δ'+I('t')+' =',dt,'°C',{abs:1e-9,wrong:[{v:T1,msg:'Δ'+I('t')+' is the size of the change: higher temperature minus lower temperature.'}]}),
+    num('Step 3. Energy transferred, '+I('q')+' =',qJ,'J',{wrong:[{v:V1*4.2*dt,msg:'Use the total volume for '+I('v')+'.'}]}),
+    num('Step 4. '+I('q')+' in kJ =',qkJ,'kJ',{abs:1e-9,wrong:[{v:qJ,msg:'That is still in J. Divide by 1000 to get kJ.'}]}),
+    num('Step 5. Moles of '+lm+', '+I('n')+' =',n,'mol',{abs:1e-9,wrong:[{v:c*Vt/1000,msg:'Use the volume of the limiting '+lm+' only, not the total volume.'}]}),
+    num('Step 6. Δ'+I('H')+' with its sign =',dH,KJM,{signed:1,wrong:[{v:qJ/n,msg:'Use '+I('q')+' in kJ, not J.'}]})],
+   cheat:CH.cal,
+   hints:['Step 1: add the two volumes. Step 2: take the smaller temperature from the larger.','Step 3: '+I('q')+' = '+Vt+' × 4.2 × '+nice(dt)+'. Step 4: divide your answer by 1000.','Step 5: '+I('n')+' = '+nice(c)+' × '+V1+' ÷ 1000. Step 6: '+I('q')+' ÷ '+I('n')+', then the sign. '+(dir==='rise'?'Temperature rise: exothermic: negative.':'Temperature fall: endothermic: positive.')],
+   worked:'<p>Step 1. '+I('v')+' = '+V1+' + '+V2+' = <b>'+Vt+' '+CM3+'</b></p><p>Step 2. Δ'+I('t')+' = '+f1(Math.max(T0,T1))+' − '+f1(Math.min(T0,T1))+' = <b>'+nice(dt)+' °C</b></p><div class="fm n">Step 3. '+I('q')+' = '+I('v')+' × 4.2 × Δ'+I('t')+' = '+Vt+' × 4.2 × '+nice(dt)+' = <b>'+nice(qJ)+' J</b></div><p>Step 4. '+nice(qJ)+' ÷ 1000 = <b>'+nice(qkJ)+' kJ</b></p><div class="fm n">Step 5. '+I('n')+' = '+nice(c)+' × '+V1+' ÷ 1000 = <b>'+nice(n)+' mol</b></div><div class="fm n">Step 6. Δ'+I('H')+' = '+I('q')+' ÷ '+I('n')+' = '+nice(qkJ)+' ÷ '+nice(n)+' = '+(+Math.abs(dH).toPrecision(4))+'</div><p>Temperature '+dir+': '+(dir==='rise'?'exothermic, so <b>Δ'+I('H')+' = −':'endothermic, so <b>Δ'+I('H')+' = +')+(+Math.abs(dH).toPrecision(3))+' '+KJM+'</b>.</p>'});
+ };
+}
+def('6.5','6',makeCal('rise'));
+def('6.6','6',makeCal('fall'));
+
+def('6.7','6',{
+ title:'Explain: why exothermic ΔH is negative',
+ html:'<p><b>Explain why an exothermic reaction is given a negative sign for Δ<i>H</i>.</b> Use the words <b>system</b> and <b>surroundings</b>.</p>',
+ ideas:[
+  {t:'Energy is given out by the system to the surroundings.',g:[['energy','heat'],['given out','given off','released','lost','loses','leaves','leaving','transferred','flows out','goes out','moves out','out of','gives out','gives off','exits']]},
+  {t:'The temperature of the surroundings rises.',g:[['hotter','warmer','heats up','gets? hot','gets? warm','warms','temperature.{0,25}(rise|increase|up|higher|go)','(rise|increase|goes up|higher).{0,25}temperature','thermometer.{0,25}(rise|up|increase)','rise in temperature']]},
+  {t:'The system has less energy (enthalpy) after the reaction, so Δ<i>H</i> is a negative number.',g:[['negative','minus','below zero','less than zero','\\-'],['system','chemicals','reactants','products','enthalpy','energy','decrease','lower','less','drops','down','loses','lost']]}],
+ model:'In an exothermic reaction energy is given out by the system (the reacting chemicals) to the surroundings, so the temperature of the surroundings rises. The system ends up with less energy than it started with. Δ<i>H</i> is the energy change of the system, so it is a negative number.',
+ cheat:CH.cal+'<p>Δ<i>H</i> is the energy change <b>of the system</b>. If the system loses energy, the change is negative.</p>',
+ hints:['Which way does the energy go in an exothermic reaction: into the system or out of it?','Think of your bank account: if money goes out, is the change positive or negative?','Δ<i>H</i> describes the energy change of the system. Does the system have more or less energy afterwards?'],
+ scaffold:dflt({title:'',html:'<p>In an exothermic reaction energy is [[0]] by the system to the surroundings, so the temperature of the surroundings [[1]]. The system has [[2]] energy than before, so Δ<i>H</i> is [[3]].</p>',bank:['given out','taken in','rises','falls','less','more','negative','positive'],fields:[cz(0,'given out'),cz(1,'rises'),cz(2,'less'),cz(3,'negative')]},CH.cal),
+ worked:'<p>System loses energy to the surroundings → surroundings get hotter → the energy change of the system is negative.</p>',
+ practice:[{title:'Explain: why endothermic ΔH is positive',html:'<p><b>Explain why an endothermic reaction is given a positive sign for Δ<i>H</i>.</b> Use the words <b>system</b> and <b>surroundings</b>.</p>',
+  ideas:[{t:'Energy is taken in by the system from the surroundings.',g:[['energy','heat'],['taken in','takes in','absorb','from the surroundings','into the system','gains','gained','flows in','goes in','moves in']]},{t:'The temperature of the surroundings falls.',g:[['temperature','thermometer','colder','cooler','cold'],['fall','decrease','drops','goes down','lower','falls','down']]},{t:'The system has more energy afterwards, so Δ<i>H</i> is a positive number.',g:[['positive','plus','above zero','more than zero','greater than zero'],['system','chemicals','enthalpy','energy','increase','higher','more','gains','gained']]}],
+  model:'In an endothermic reaction energy is taken in by the system from the surroundings, so the temperature of the surroundings falls. The system ends up with more energy than it started with, so Δ<i>H</i>, the energy change of the system, is positive.',cheat:CH.cal,hints:['Which way does energy go in an endothermic reaction?','Does the system gain or lose energy?']}]});
+
+def('6.8','6',{
+ title:'Explain: the units of ΔH',
+ html:'<p>The units of Δ<i>H</i> are kJ mol<sup>−1</sup>. <b>Explain what the units mean and where they come from</b>, using the formula Δ<i>H</i> = <i>q</i> ÷ <i>n</i>.</p>',
+ ideas:[
+  {t:'kJ (kilojoules) is a unit of energy: it is the energy transferred, q.',g:[['kj','kilojoule','energy','q']]},
+  {t:'mol⁻¹ means "per mole": the energy change for each mole.',g:[['per mole','each mole','one mole','1 mole','1 mol','every mole','mol-1','mol⁻¹','mol\\^-1','a mole','per mol']]},
+  {t:'The unit comes from dividing: Δ<i>H</i> = <i>q</i> (kJ) ÷ <i>n</i> (mol) gives kJ per mol.',g:[['divid','÷','/','over','per'],['kj','q','energy'],['mol','n','moles']]}],
+ model:'The unit kJ mol<sup>−1</sup> is read as kilojoules per mole. The kJ is the energy transferred, <i>q</i>, and the mol<sup>−1</sup> means for each mole of the reacting chemical. It comes from the formula Δ<i>H</i> = <i>q</i> ÷ <i>n</i>: <i>q</i> in kJ divided by <i>n</i> in mol gives kJ per mol, kJ mol<sup>−1</sup>.',
+ cheat:CH.cal+'<p>Units: <i>q</i> is in kJ. <i>n</i> is in mol. Dividing kJ by mol gives kJ per mol, written kJ mol<sup>−1</sup>.</p>',
+ hints:['What is the unit of q (after you change J to kJ)? What is the unit of n?','"Per" means "divided by". What do you get when you divide kJ by mol?','What does "per mole" tell you about how much of the reacting chemical the energy refers to?'],
+ scaffold:dflt({title:'',html:'<p>Δ<i>H</i> = <i>q</i> ÷ <i>n</i>. The energy <i>q</i> is in [[0]] and the moles <i>n</i> are in [[1]]. So the unit is [[2]] divided by [[3]], which we read as kilojoules [[4]] mole.</p>',bank:['kJ','J','mol','g','per','times'],fields:[cz(0,'kJ'),cz(1,'mol'),cz(2,'kJ'),cz(3,'mol'),cz(4,'per')]},CH.cal),
+ worked:'<p>kJ ÷ mol = kJ per mol = kJ mol<sup>−1</sup>: the energy change for each mole of the limiting reactant.</p>',
+ practice:[{title:'Explain: units of concentration',html:'<p>The units of concentration are mol dm<sup>−3</sup>. <b>Explain what the units mean.</b></p>',
+  ideas:[{t:'mol is the amount of the dissolved substance (moles of solute).',g:[['mol','mole'],['solute','dissolved','substance','chemical','amount']]},{t:'dm⁻³ means "per dm³": per cubic decimetre (litre) of solution.',g:[['per','in each','every','dm','litre','liter','1000']]}],
+  model:'mol dm<sup>−3</sup> means moles per dm<sup>3</sup>: the number of moles of dissolved substance in each dm<sup>3</sup> (1000 '+CM3+') of solution.',cheat:'<p>1 dm³ = 1000 cm³.</p>',hints:['What does "per" mean?']}]});
+
+def('6.9','6',{
+ title:'Choose the unit',
+ html:'<p>Choose the correct unit for Δ<i>H</i>.</p>',
+ fields:[sel('The unit of Δ<i>H</i> is',['kJ','kJ mol⁻¹','J','mol kJ⁻¹','J cm⁻³'],'kJ mol⁻¹')],
+ cheat:CH.cal,
+ hints:['Δ<i>H</i> = <i>q</i> ÷ <i>n</i>. Energy divided by moles.','q is in kJ and n is in mol, so Δ<i>H</i> is in kJ divided by mol.'],
+ worked:'<p>Δ<i>H</i> is in <b>kJ mol<sup>−1</sup></b> (kJ divided by mol).</p>',
+ practice:[dflt({title:'Choose the unit',html:'<p>Choose the unit for each quantity.</p>',fields:[sel('Energy transferred, <i>q</i>, before dividing by 1000',['J','kJ','mol','g'],'J'),sel('Amount of substance, <i>n</i>',['mol','g','kJ','cm³'],'mol'),sel('Concentration',['mol dm⁻³','mol','g mol⁻¹','cm³'],'mol dm⁻³'),sel('Molar mass, <i>M</i>',['g mol⁻¹','mol','kJ mol⁻¹','g'],'g mol⁻¹')],worked:'<p><i>q</i>: <b>J</b>. <i>n</i>: <b>mol</b>. Concentration: <b>mol dm⁻³</b>. <i>M</i>: <b>g mol⁻¹</b>.</p>'},'<p>Check the Reference sheet for the units of each formula.</p>')]});
+
+/* ===== Section 7: empirical formulae ===== */
+sec('7','Empirical formulae',
+ '<p>The <b>empirical formula</b> is the simplest whole-number <b>ratio</b> of atoms in a compound. You find it from masses: divide each mass by its molar mass to get moles, divide by the smallest number, and if you get 1.5 or 1.33, multiply to reach whole numbers.</p>');
+
+const ELN={Na:'sodium',Mg:'magnesium',Ca:'calcium',Zn:'zinc',Cu:'copper',Fe:'iron',Al:'aluminium',O:'oxygen',Cl:'chlorine',S:'sulphur',K:'potassium',C:'carbon',N:'nitrogen',H:'hydrogen'};
+const r3=x=>Math.round(x*1000)/1000;
+function rowsOf(f,u){const c=parseF(f);return Object.keys(c).map(e=>({e,cnt:c[e],m:r3(u*c[e]*AR[e]),n:u*c[e]}));}
+function empField(f){return txt('Empirical formula =',[f],{mode:'emp',counts:parseF(f),display:f});}
+function empTable(rows,mcol){
+ /* vertical layout: one column per element, the steps run down the page */
+ const mn=Math.min.apply(null,rows.map(x=>x.n));
+ const row=(lab,fn)=>'<tr><th class="rl">'+lab+'</th>'+rows.map(x=>'<td>'+fn(x)+'</td>').join('')+'</tr>';
+ return '<table class="vt"><tr><th></th>'+rows.map(x=>'<th>'+x.e+'</th>').join('')+'</tr>'
+  +row(mcol||'Mass (g)',x=>nice(x.m))
+  +row('Molar mass, '+I('M')+' ('+GM+')',x=>AR[x.e])
+  +row('Moles, '+I('n')+' = '+I('m')+' ÷ '+I('M')+' (mol)',x=>nice(+x.n.toPrecision(3)))
+  +row('Divide by the smallest ('+nice(+mn.toPrecision(3))+')',x=>nice(+(x.n/mn).toPrecision(3)))
+  +row('Whole-number ratio',x=>x.cnt)+'</table>';
+}
+/* vertical grid: one column per element, the steps run down the page */
+function stepFields(rows,o){
+ o=o||{};const fields=[],grid={cols:rows.map(x=>'<b>'+x.e+'</b><br><small>'+ELN[x.e]+'</small>'),rows:[]};
+ const mn=Math.min.apply(null,rows.map(x=>x.n));
+ const add=(label,list)=>{const idx=[];list.forEach(f=>{fields.push(f);idx.push(fields.length-1+(o.offset||0));});grid.rows.push({label,idx});};
+ if(!o.noMass)add((o.massLabel||'Mass in the question, '+I('m'))+' (g)',rows.map(x=>num('',x.m,'',{abs:o.massAbs||1e-6})));
+ add('Molar mass, '+I('M')+' ('+GM+'), from the table',rows.map(x=>num('',AR[x.e],'',{abs:1e-9})));
+ add('Think: is the mass more or less than the molar mass? So will your answer be more or less than 1 mole?',rows.map(x=>{
+  const lt=x.m<AR[x.e],eq=x.m===AR[x.e];
+  return sel('',['more than 1 mole','less than 1 mole','exactly 1 mole'],eq?'exactly 1 mole':(lt?'less than 1 mole':'more than 1 mole'),{w:0,msg:'Compare the two numbers above. A mass smaller than the molar mass is less than one mole. A mass bigger than the molar mass is more than one mole.'});}));
+ add('Moles of atoms, '+I('n')+' = '+I('m')+' ÷ '+I('M')+' (mol)',rows.map(x=>num('',x.n,'',{tol:o.tol})));
+ add('Reflect: does your answer match your prediction?',rows.map(x=>sel('',['less than 1, as predicted: makes sense','more than 1, as predicted: makes sense','does not match: check my calculator'],x.n<1?'less than 1, as predicted: makes sense':'more than 1, as predicted: makes sense',{w:0,msg:x.n<1?'The mass is smaller than the molar mass, so the answer must be less than 1. Use the calculator again: enter the smaller number (the mass) first, press ÷, then enter the bigger number (the molar mass), then =.':'The mass is bigger than the molar mass, so the answer must be more than 1. Use the calculator again: enter the mass first, press ÷, then the molar mass, then =.'})));
+ add('The smallest number of moles',[num('',mn,'',{tol:o.tol})]);
+ add(I('n')+' ÷ smallest',rows.map(x=>num('',x.n/mn,'',{tol:o.tol||0.01})));
+ add('Whole-number ratio',rows.map(x=>num('',x.cnt,'',{abs:1e-9})));
+ return {fields,grid};
+}
+const GENTLE=['Start with the first element. Find its mass in the question and write it in the box.','Look in the table of molar masses for the same element. Its molar mass is the number under its symbol.','Divide the mass by the molar mass. That gives the moles of atoms of that element. Repeat for the next element.','Pick the smallest number of moles. Divide every number of moles by it.'];
+const EMPW='<p>If the ratio after dividing by the smallest is 1 : 1.5, multiply both by 2 to get 2 : 3. If it is 1 : 1.33, multiply both by 3 to get 3 : 4.</p>';
+
+def('7.1','7',dflt({
+ title:'The empirical formula (word fill)',
+ html:'<p>Complete the passage using the word bank.</p><p>The empirical formula shows the [[0]] whole-number [[1]] of atoms of each element in a compound. We work it out from masses found by [[2]]. We divide each mass by its [[3]] mass to get the [[4]], then divide every answer by the [[5]] number.</p>',
+ bank:['simplest','ratio','experiment','molar','moles','smallest','largest','theory','mass'],
+ fields:[cz(0,'simplest'),cz(1,'ratio'),cz(2,'experiment'),cz(3,'molar'),cz(4,'moles'),cz(5,'smallest')],
+ cheat:CH.emp,
+ hints:['"Empirical" means found by experiment. The formula is the ... possible whole-number ratio.','Mass ÷ molar mass gives moles.','Dividing by the smallest number makes the smallest value 1.'],
+ worked:'<p>The empirical formula shows the <b>simplest</b> whole-number <b>ratio</b> of atoms. It is worked out from masses found by <b>experiment</b>. Divide each mass by its <b>molar</b> mass to get the <b>moles</b>, then divide every answer by the <b>smallest</b> number.</p>',
+ practice:[dflt({title:'The empirical formula (word fill)',html:'<p>A compound has the molecular formula C<sub>2</sub>H<sub>6</sub>. Its empirical formula is [[0]] because the ratio 2 : 6 can be [[1]] by 2 to 1 : 3. The empirical formula shows the [[2]] ratio, but the molecular formula shows the actual number of atoms.</p>',bank:['CH3','C2H6','divided','multiplied','simplest','largest'],fields:[cz(0,'CH3'),cz(1,'divided'),cz(2,'simplest')],worked:'<p>2 : 6 divided by 2 is 1 : 3, so the empirical formula is <b>CH<sub>3</sub></b>.</p>'},CH.emp)]},CH.emp));
+
+def('7.2','7',r=>{
+ const ab=r.det?[1,3]:r.pick([[1,2],[1,3],[2,3],[3,1],[2,1],[3,2],[1,1],[3,4],[2,5]]);
+ const u=r.det?0.05:r.pick([0.05,0.1,0.2,0.25,0.5]);
+ const A=r3(ab[0]*u),B=r3(ab[1]*u);
+ return dflt({
+  title:'Ratio from moles',
+  html:'<p>A compound contains <b>'+nice(A)+' mol</b> of atoms of element X and <b>'+nice(B)+' mol</b> of atoms of element Y. Write the simplest whole-number ratio.</p>',
+  fields:[num('X in the ratio =',ab[0],'',{abs:1e-9}),num('Y in the ratio =',ab[1],'',{abs:1e-9})],
+  cheat:CH.emp,
+  hints:['Divide both numbers by the smaller one.','If you get a number like 1.5, multiply both by 2.'],
+  worked:'<p>Divide by the smaller number ('+nice(Math.min(A,B))+'): X = '+nice(+(A/Math.min(A,B)).toPrecision(4))+', Y = '+nice(+(B/Math.min(A,B)).toPrecision(4))+'. Whole numbers: <b>X : Y = '+ab[0]+' : '+ab[1]+'</b>.</p>'});
+});
+
+function empGen(pool,detF,detU,title,mark){
+ return r=>{
+  const f=r.det?detF:r.pick(pool),u=r.det?detU:r.pick([0.05,0.1,0.2,0.25]);
+  const rows=rowsOf(f,u),A=rows[0],B=rows[1],SF=stepFields(rows);
+  const txtM='<p>A compound contains <b>'+nice(A.m)+' g</b> of '+ELN[A.e]+' and <b>'+nice(B.m)+' g</b> of '+ELN[B.e]+'. Find its empirical formula.</p>';
+  return dflt({
+   title,
+   html:txtM+LETTERS,
+   fields:SF.fields.concat([empField(f)]),grid:SF.grid,
+   cheat:CH.emp+EMPW,
+   hints:GENTLE.concat(['If you do not get whole numbers, multiply both by 2 (for a half) or 3 (for a third).']),
+   worked:empTable(rows)+'<p>Empirical formula: <b>'+F(f)+'</b></p>'});
+ };
+}
+def('7.3','7',empGen(['Na2O','MgO','CaO','ZnO','CuO','MgCl2','CaCl2','FeCl3','AlCl3','Na2S'],'CaCl2',0.1,'Empirical formula from masses'));
+def('7.4','7',empGen(['Fe2O3','Al2O3','Fe3O4','Al2S3'],'Fe2O3',0.1,'Empirical formula: half and third ratios'));
+
+def('7.5','7',r=>{
+ const f=r.det?'Fe2O3':r.pick(['MgO','Fe2O3','Al2O3','CuO','Na2O','CaCl2','MgCl2','ZnO','Fe3O4','K2O']);
+ const c=parseF(f),els=Object.keys(c),M=Mr(f);
+ const P=els.map(e=>Math.round(1000*c[e]*AR[e]/M)/10);
+ const n=els.map((e,i)=>P[i]/AR[e]);
+ const mn=Math.min.apply(null,n);
+ const rows=els.map((e,i)=>({e,m:P[i],n:n[i],cnt:c[e]})),SF=stepFields(rows,{tol:0.02,massAbs:0.05,massLabel:'Mass in 100 g of the compound, '+I('m')});
+ return dflt({
+  title:'Empirical formula from percentage composition',
+  html:'<p><b>Something new, but easy: percentages.</b> A percentage means "out of 100". So when we are given percentages, we simply say: <b>"Let\'s take 100 g of the compound."</b> Then the percentages turn straight into masses in grams. 40% of 100 g is 40 g.</p><p>A compound contains <b>'+nice(P[0],1)+'%</b> '+ELN[els[0]]+' and <b>'+nice(P[1],1)+'%</b> '+ELN[els[1]]+' by mass. Find its empirical formula.</p><table class="vt"><tr><th></th>'+els.map(e=>'<th>'+e+'</th>').join('')+'</tr><tr><th class="rl">Percentage by mass</th>'+P.map(x=>'<td>'+nice(x,1)+' %</td>').join('')+'</tr><tr><th class="rl">Mass in 100 g of the compound</th>'+P.map(x=>'<td>'+nice(x,1)+' g</td>').join('')+'</tr></table><p>From here, the method is the same as in 7.3 and 7.4.</p>'+LETTERS,
+  fields:SF.fields.concat([empField(f)]),grid:SF.grid,
+  cheat:CH.emp+EMPW+'<p>Percentages: say <b>"Let\'s take 100 g of the compound"</b>. A percentage by mass is then the same as grams in 100 g. 40% means 40 g. After that, the method is exactly the same.</p>',
+  hints:['Say: "Let\'s take 100 g of the compound." A percentage by mass is then the same as grams: the mass of each element is the percentage, in grams.'].concat(GENTLE,['Your answers may be slightly different from whole numbers because the percentages are rounded. If you get about 1.5, multiply by 2. If about 1.33, multiply by 3.']),
+  worked:empTable(rows,'Mass in 100 g')+'<p>Empirical formula: <b>'+F(f)+'</b></p>'});
+});
+
+def('7.6','7',r=>{
+ const f=r.det?'MgO':r.pick(['MgO','CuO','ZnO','Al2O3','Fe2O3','CaO','Na2O']);
+ const u=r.det?0.1:r.pick([0.05,0.1,0.2]);
+ const rows=rowsOf(f,u),A=rows[0],B=rows[1];
+ const mo=r3(A.m+B.m),SF=stepFields(rows,{noMass:1,offset:1});
+ return dflt({
+  title:'Finding oxygen by difference',
+  html:'<p>A student heats <b>'+nice(A.m)+' g</b> of '+ELN[A.e]+' in a crucible with a lid until it has all changed into its oxide. The oxide has a mass of <b>'+nice(mo)+' g</b>. Find the empirical formula of the oxide.</p><p>The mass of oxygen is found by subtracting.</p>'+fm('mass of oxygen = mass of oxide − mass of '+ELN[A.e])+LETTERS,
+  fields:[num('Mass of oxygen =',B.m,'g',{abs:1e-6})].concat(SF.fields,[empField(f)]),grid:SF.grid,
+  cheat:CH.emp+EMPW+'<p>The extra mass is oxygen from the air: mass of oxide − mass of metal.</p>',
+  hints:['Subtract: '+nice(mo)+' − '+nice(A.m)+'. The mass of '+ELN[A.e]+' is '+nice(A.m)+' g.'].concat(GENTLE.slice(1),['If you get a half or a third, multiply by 2 or 3.']),
+  worked:'<p>Mass of oxygen = '+nice(mo)+' − '+nice(A.m)+' = <b>'+nice(B.m)+' g</b></p>'+empTable(rows)+'<p>Empirical formula: <b>'+F(f)+'</b></p>'});
+});
+
+def('7.7','7',r=>{
+ const f=r.det?'Na2SO4':r.pick(['CaCO3','MgCO3','Na2CO3','Na2SO4','KNO3','CaSO4']);
+ const u=r.det?0.05:r.pick([0.05,0.1,0.2]);
+ const rows=rowsOf(f,u),SF=stepFields(rows);
+ return dflt({
+  title:'Empirical formula with three elements',
+  html:'<p>A compound contains '+rows.map((x,i)=>(i===rows.length-1?'and ':'')+'<b>'+nice(x.m)+' g</b> of '+ELN[x.e]).join(rows.length>2?', ':' ')+'. Find its empirical formula.</p>'+LETTERS,
+  fields:SF.fields.concat([empField(f)]),grid:SF.grid,
+  cheat:CH.emp+EMPW,
+  hints:GENTLE.concat(['Write the whole-number ratio as the formula. The order of the elements does not matter for the mark.']),
+  worked:empTable(rows)+'<p>Empirical formula: <b>'+F(f)+'</b></p>'});
+});
+
+def('7.8','7',{
+ title:'Explain: empirical formula',
+ html:'<p>A student finds that a compound contains 0.4 mol of carbon atoms and 0.8 mol of hydrogen atoms and writes "C<sub>0.4</sub>H<sub>0.8</sub>". <b>Explain what is wrong and what an empirical formula is.</b></p>',
+ ideas:[
+  {t:'An empirical formula is the simplest ratio of atoms.',g:[['simplest','smallest','lowest'],['ratio']]},
+  {t:'The numbers must be whole numbers (here divide by 0.4 to get CH₂).',g:[['whole number','integer','no decimal','not decimal','not a decimal','no fraction','whole','ch2','ch<sub>2','1 : 2','1:2','divide']]},
+  {t:'It is worked out from experimental masses or moles (empirical means found by experiment).',g:[['experiment','measure','mass','data','result','observ','moles']]}],
+ model:'An empirical formula is the simplest whole-number ratio of atoms in a compound, found from experimental masses or moles. The ratio 0.4 : 0.8 must be divided by the smallest number (0.4) to give 1 : 2, so the empirical formula is CH<sub>2</sub>.',
+ cheat:CH.emp,
+ hints:['Which number do you divide by to make the smallest one equal to 1?','Are 0.4 and 0.8 whole numbers?'],
+ scaffold:dflt({title:'',html:'<p>An empirical formula is the [[0]] whole-number [[1]] of atoms. We divide by the [[2]] number, so 0.4 : 0.8 becomes 1 : [[3]] and the formula is CH<sub>2</sub>.</p>',bank:['simplest','ratio','smallest','largest','2','4'],fields:[cz(0,'simplest'),cz(1,'ratio'),cz(2,'smallest'),cz(3,'2')]},CH.emp),
+ worked:'<p>0.4 ÷ 0.4 = 1 and 0.8 ÷ 0.4 = 2, so the ratio is 1 : 2 and the empirical formula is <b>CH<sub>2</sub></b>.</p>',
+ practice:[{title:'Explain: empirical formula',html:'<p>A compound has the molecular formula C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>. A student says its empirical formula is also C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>. <b>Explain why the student is wrong.</b></p>',
+  ideas:[{t:'The empirical formula is the simplest ratio.',g:[['simplest','smallest','lowest'],['ratio']]},{t:'6 : 12 : 6 can be divided by 6 to give 1 : 2 : 1.',g:[['divid','÷','simplif','cancel'],['6','1 : 2 : 1','1:2:1','ch2o','ch<sub>2']]},{t:'The empirical formula is CH₂O.',g:[['ch2o','ch<sub>2</sub>o','ch₂o']]}],
+  model:'The empirical formula is the simplest whole-number ratio of atoms. The ratio 6 : 12 : 6 can be divided by 6 to give 1 : 2 : 1, so the empirical formula is CH<sub>2</sub>O.',cheat:CH.emp,hints:['Can all three numbers be divided by the same number?']}]});
+
+/* ===== Extension section ===== */
+sec('X','Extension',
+ '<p>These questions are more challenging. Each has a cheat sheet, hints and a worked answer, and each can be repeated with new numbers using <b>More practice</b>. Take your time and write down each step.</p>',true);
+
+def('X1','X',r=>{
+ const S=r.det?['CuSO4',5,'copper(II) sulphate']:r.pick([['CuSO4',5,'copper(II) sulphate'],['MgSO4',7,'magnesium sulphate'],['CaSO4',2,'calcium sulphate'],['Na2CO3',10,'sodium carbonate'],['FeSO4',7,'iron(II) sulphate']].map(x=>[x]))[0];
+ const [f,x,nm]=S,u=r.det?0.01:r.pick([0.01,0.02,0.05]);
+ const M=Mr(f),mA=r3(u*M),mW=r3(u*x*18),mH=r3(mA+mW);
+ return dflt({
+  title:'Water of crystallisation',
+  html:'<p>A sample of hydrated '+nm+', '+F(f)+'·'+I('x')+'H<sub>2</sub>O, has a mass of <b>'+nice(mH)+' g</b>. It is heated until all the water has gone. The anhydrous solid, '+F(f)+', has a mass of <b>'+nice(mA)+' g</b>. Find the value of '+I('x')+'.</p>'+fm(I('x')+' = moles of water ÷ moles of '+F(f)),
+  fields:[num('Mass of water lost =',mW,'g',{abs:1e-6}),num('Moles of water, H<sub>2</sub>O =',u*x,'mol',{abs:1e-9}),num('Moles of '+F(f)+' =',u,'mol',{abs:1e-9}),num('x =',x,'',{abs:1e-9})],
+  cheat:'<p>Hydrated = contains water of crystallisation, shown after a dot.</p><ol><li>Mass of water = mass before heating − mass after heating.</li><li>Moles = mass ÷ molar mass for the water (<i>M</i> = 18) and for the anhydrous solid.</li><li>Divide the moles of water by the moles of solid. The answer is the whole number '+I('x')+'.</li></ol>'+ATMASS,
+  hints:['Subtract the two masses to find the mass of water.','Work out the molar mass of '+F(f)+' and of H<sub>2</sub>O (2 × 1 + 16 = 18).','Divide the moles of water by the moles of '+F(f)+'.'],
+  worked:'<p>Mass of water = '+nice(mH)+' − '+nice(mA)+' = <b>'+nice(mW)+' g</b></p><p>Moles of H<sub>2</sub>O = '+nice(mW)+' ÷ 18 = <b>'+nice(u*x)+' mol</b></p><p>Moles of '+F(f)+' = '+nice(mA)+' ÷ '+nice(M)+' = <b>'+nice(u)+' mol</b></p><p>'+I('x')+' = '+nice(u*x)+' ÷ '+nice(u)+' = <b>'+x+'</b></p>'});
+});
+
+def('X2','X',r=>{
+ const P=r.det?['CH2',56]:r.pick([['CH2',56],['CH',78],['CH2O',180],['HO',34],['NO2',92],['CH3',30],['C2H5',58]].map(x=>[x]))[0];
+ const [e,M]=P,Me=Mr(e),k=M/Me,c=parseF(e),mf=Object.keys(c).map(el=>el+(c[el]*k>1?c[el]*k:'')).join('');
+ const mc={};for(const el in c)mc[el]=c[el]*k;
+ return dflt({
+  title:'Empirical formula to molecular formula',
+  html:'<p>A compound has the empirical formula <b>'+F(e)+'</b> and a molar mass of <b>'+M+' '+GM+'</b>. Find its molecular formula.</p>',
+  fields:[num('Molar mass of the empirical formula '+F(e)+' =',Me,GM),num('Number of empirical units in one molecule =',k,'',{abs:1e-9}),txt('Molecular formula =',[mf],{mode:'emp',counts:mc,display:mf})],
+  cheat:'<ol><li>Work out the molar mass of the empirical formula.</li><li>Divide the real molar mass by it. This is a whole number, <i>k</i>.</li><li>Multiply every number in the empirical formula by <i>k</i>.</li></ol>'+ATMASS,
+  hints:['Add the A<sub>r</sub> values for the empirical formula '+F(e)+'.','Divide '+M+' by your answer.','Multiply the number of atoms of each element by that number.'],
+  worked:'<p>M('+F(e)+') = <b>'+nice(Me)+'</b>. '+M+' ÷ '+nice(Me)+' = <b>'+nice(k)+'</b>. Multiply every number by '+nice(k)+': <b>'+F(mf)+'</b>.</p>'});
+});
+
+def('X3','X',r=>{
+ let V1,c1,V2,c2,dt;
+ if(r.det){V1=25;c1=1.0;V2=30;c2=1.0;dt=6.0;}
+ else{do{V1=r.pick([25,30,40]);V2=r.pick([25,30,40]);c1=r.pick([0.5,1.0,2.0]);c2=r.pick([0.5,1.0,2.0]);}while(c1*V1===c2*V2);dt=r.pick([3.0,4.0,5.0,6.0,7.0]);}
+ const n1=c1*V1/1000,n2=c2*V2/1000,lim=n1<n2?'the acid':'the alkali',nl=Math.min(n1,n2),Vt=V1+V2,qkJ=Vt*4.2*dt/1000,dH=-qkJ/nl;
+ return dflt({
+  title:'Limiting reactant in a calorimetry experiment',
+  html:'<p><b>'+V1+' '+CM3+'</b> of <b>'+nice(c1)+' '+MD+'</b> hydrochloric acid is mixed with <b>'+V2+' '+CM3+'</b> of <b>'+nice(c2)+' '+MD+'</b> '+NAOH+' in a polystyrene cup. The temperature rises by <b>'+nice(dt)+' °C</b>. Treat the mixture as water.</p>'+fm('HCl + NaOH → NaCl + H<sub>2</sub>O')+'<p>The reactants are in a 1 : 1 ratio. Decide which reactant is limiting, then find Δ'+I('H')+'.</p>',
+  fields:[num('Moles of acid =',n1,'mol',{abs:1e-9}),num('Moles of alkali =',n2,'mol',{abs:1e-9}),sel('The limiting reactant is',['the acid','the alkali'],lim),num(I('q')+' in kJ =',qkJ,'kJ',{abs:1e-9,wrong:[{v:qkJ*1000,msg:'Divide by 1000 to get kJ.'}]}),num('Δ'+I('H')+' with its sign =',dH,KJM,{signed:1,wrong:[{v:qkJ/Math.max(n1,n2),msg:'Divide by the moles of the LIMITING reactant (the smaller number of moles).'}]})],
+  cheat:CH.cal+'<p>The limiting reactant is the one with the <b>fewer moles</b> (1 : 1 ratio). Use its moles for '+I('n')+'. Use the total volume for '+I('q')+'.</p>',
+  hints:['Use '+I('n')+' = concentration × volume ÷ 1000 for each solution.','The smaller number of moles is the limiting reactant.','Use the total volume ('+Vt+' '+CM3+') for '+I('q')+' and the moles of the limiting reactant for Δ'+I('H')+'. Temperature rise: negative.'],
+  worked:'<p>Acid: '+nice(c1)+' × '+V1+' ÷ 1000 = <b>'+nice(n1)+' mol</b>. Alkali: '+nice(c2)+' × '+V2+' ÷ 1000 = <b>'+nice(n2)+' mol</b>. Limiting: <b>'+lim+'</b>.</p><div class="fm n">'+I('q')+' = '+Vt+' × 4.2 × '+nice(dt)+' = '+nice(Vt*4.2*dt)+' J = <b>'+nice(qkJ)+' kJ</b></div><div class="fm n">Δ'+I('H')+' = '+nice(qkJ)+' ÷ '+nice(nl)+' = '+(+Math.abs(dH).toPrecision(4))+'</div><p>Temperature rise: exothermic, so <b>Δ'+I('H')+' = −'+(+Math.abs(dH).toPrecision(3))+' '+KJM+'</b>.</p>'});
+});
+
+def('X4','X',r=>{
+ const m=r.det?5.0:r.pick([5.0,10.0,2.5,1.0,20.0]),c=r.det?1.0:r.pick([1.0,2.0]);
+ const n=m/100,nH=2*n,V=n*24000,vH=nH*1000/c;
+ return dflt({
+  title:'A ratio that is not 1 : 1',
+  html:'<p>Calcium carbonate reacts with hydrochloric acid:</p>'+fm('CaCO<sub>3</sub> + 2HCl → CaCl<sub>2</sub> + H<sub>2</sub>O + CO<sub>2</sub>')+'<p><b>'+nice(m)+' g</b> of calcium carbonate reacts completely with <b>'+nice(c)+' '+MD+'</b> hydrochloric acid. Find the volume of carbon dioxide at r.t.p. and the minimum volume of acid needed.</p>',
+  fields:[num('Moles of CaCO<sub>3</sub> =',n,'mol',{abs:1e-9}),num('Moles of CO<sub>2</sub> =',n,'mol',{abs:1e-9}),num('Volume of CO<sub>2</sub> =',V,CM3,{abs:1e-6}),num('Moles of HCl needed =',nH,'mol',{abs:1e-9,wrong:[{v:n,msg:'Look at the 2 in front of HCl in the equation: 2 mol HCl for every 1 mol CaCO<sub>3</sub>.'}]}),num('Minimum volume of acid =',vH,CM3,{abs:1e-6})],
+  cheat:fm('CaCO<sub>3</sub> + 2HCl → CaCl<sub>2</sub> + H<sub>2</sub>O + CO<sub>2</sub>')+'<p>Ratio CaCO<sub>3</sub> : CO<sub>2</sub> = 1 : 1. Ratio CaCO<sub>3</sub> : HCl = 1 : 2.</p>'+fm(I('V')+' = '+I('n')+' × 24000')+fm(I('v')+' = '+I('n')+' × 1000 ÷ concentration')+'<p>M(CaCO<sub>3</sub>) = 100.</p>',
+  hints:['Moles of CaCO<sub>3</sub> = '+nice(m)+' ÷ 100.','CO<sub>2</sub>: 1 : 1 with CaCO<sub>3</sub>. HCl: 2 mol for each 1 mol of CaCO<sub>3</sub>.','Rearrange '+I('n')+' = concentration × volume ÷ 1000 to get volume = '+I('n')+' × 1000 ÷ concentration.'],
+  worked:'<p>'+I('n')+'(CaCO<sub>3</sub>) = '+nice(m)+' ÷ 100 = <b>'+nice(n)+' mol</b>; CO<sub>2</sub> 1 : 1 = <b>'+nice(n)+' mol</b>; '+I('V')+' = '+nice(n)+' × 24000 = <b>'+nice(V)+' '+CM3+'</b>. HCl: 2 × '+nice(n)+' = <b>'+nice(nH)+' mol</b>; volume = '+nice(nH)+' × 1000 ÷ '+nice(c)+' = <b>'+nice(vH)+' '+CM3+'</b>.</p>'});
+});
+
+def('X5','X',r=>{
+ const m=r.det?0.12:r.pick([0.12,0.048,0.24,0.096,0.036]),c=r.det?0.5:r.pick([0.5,1.0,2.0]);
+ const n=m/24,v=n*1000/c;
+ return dflt({
+  title:'How much acid is needed?',
+  html:'<p>What is the minimum volume of <b>'+nice(c)+' '+MD+'</b> sulphuric acid needed to react completely with <b>'+nice(m)+' g</b> of magnesium?</p>'+fm('Mg + H<sub>2</sub>SO<sub>4</sub> → MgSO<sub>4</sub> + H<sub>2</sub>')+fm(I('v')+' = '+I('n')+' × 1000 ÷ concentration'),
+  fields:[num('Moles of Mg =',n,'mol',{abs:1e-9}),num('Moles of H<sub>2</sub>SO<sub>4</sub> =',n,'mol',{abs:1e-9}),num('Volume of acid =',v,CM3,{abs:1e-6})],
+  cheat:MGCH+fm(I('n')+' = concentration × volume ÷ 1000')+fm(I('v')+' = '+I('n')+' × 1000 ÷ concentration'),
+  hints:['Moles of Mg = '+nice(m)+' ÷ 24.','The equation shows a 1 : 1 ratio of Mg to H<sub>2</sub>SO<sub>4</sub>.','Rearrange the formula: '+I('v')+' = '+I('n')+' × 1000 ÷ concentration.'],
+  worked:'<p>'+I('n')+'(Mg) = '+nice(m)+' ÷ 24 = <b>'+nice(n)+' mol</b>; 1 : 1, so <b>'+nice(n)+' mol</b> H<sub>2</sub>SO<sub>4</sub>; '+I('v')+' = '+nice(n)+' × 1000 ÷ '+nice(c)+' = <b>'+nice(v)+' '+CM3+'</b>.</p>'});
+});
+
+def('X6','X',r=>{
+ const x=r.det?find('iron(III)','sulphate'):r.pick(BR.map(y=>y).filter(y=>y.an.poly&&y.na>1||y.cat.poly&&y.nc>1).map(y=>[y]))[0];
+ const u=r.det?0.05:r.pick([0.05,0.1,0.2]);
+ const M=Mr(x.f),m=r3(u*M);
+ const polyIsAn=x.an.poly&&x.na>1;
+ const pn=polyIsAn?x.an.n:x.cat.n,pc=polyIsAn?x.na:x.nc,oc=polyIsAn?x.nc:x.na,on=polyIsAn?x.cat.n:x.an.n;
+ return dflt({
+  title:'Moles of ions in a bracket formula',
+  html:'<p>A sample of '+x.name+', '+F(x.f)+', has a mass of <b>'+nice(m)+' g</b>. Find the moles of the compound and the moles of each ion.</p>',
+  fields:[num('Molar mass of '+F(x.f)+' =',M,GM),num('Moles of '+F(x.f)+' =',u,'mol',{abs:1e-9}),num('Moles of '+pn+' ions =',u*pc,'mol',{abs:1e-9}),num('Moles of '+on+' ions =',u*oc,'mol',{abs:1e-9})],
+  cheat:CH.moles+'<p>One unit of '+F(x.f)+' contains '+x.nc+' '+x.cat.n+' ion'+(x.nc>1?'s':'')+' and '+x.na+' '+x.an.n+' ion'+(x.na>1?'s':'')+'. Moles of an ion = moles of compound × the number of that ion in the formula.</p>',
+  hints:['Work out the molar mass first. Remember to multiply everything in the bracket.','Moles of compound = mass ÷ molar mass.','Look at the formula: how many of each ion are in one unit?'],
+  worked:'<p>'+mmWork(x.f)+'</p><p>'+I('n')+' = '+nice(m)+' ÷ '+nice(M)+' = <b>'+nice(u)+' mol</b>. Each unit has '+pc+' '+pn+' ion'+(pc>1?'s':'')+': <b>'+nice(u*pc)+' mol</b>; and '+oc+' '+on+' ion'+(oc>1?'s':'')+': <b>'+nice(u*oc)+' mol</b>.</p>'});
+});
+
+def('X7','X',{
+ title:'Explain: molar volume and temperature',
+ html:'<p>A student does the magnesium and sulphuric acid experiment in a hot laboratory at 35 °C and collects more hydrogen than the 24000 '+CM3+' per mole calculation predicts. <b>Explain why, and why we quote r.t.p. when we give a molar volume.</b></p>',
+ need:3,
+ ideas:[
+  {t:'Gases expand when heated, so one mole takes up more volume at a higher temperature.',g:[['expand','bigger','larger','increase','more space','greater','up'],['volume','gas','mole','heat','temperature']]},
+  {t:'The particles move faster and push further apart.',g:[['faster','more energy','speed','kinetic','harder','further apart','move more']]},
+  {t:'The pressure also changes the volume of a gas, so pressure must be stated too.',g:[['pressure']]},
+  {t:'24000 '+CM3+' is true only at r.t.p., the stated conditions.',g:[['only','r\\.t\\.p','rtp','defined','fixed','standard','conditions','25']]}],
+ model:'A gas expands when it is heated: the particles move faster and push further apart, so one mole takes up more than 24000 '+CM3+' at 35 °C. The pressure also changes the volume of a gas. So a molar volume is only a fixed number at stated conditions, and 24000 '+CM3+' is the value at r.t.p.',
+ cheat:CH.gas,
+ hints:['What happens to a gas when it is heated at constant pressure?','Which other quantity besides temperature changes the volume of a gas?','At which conditions is the 24000 '+CM3+' value correct?'],
+ scaffold:dflt({title:'',html:'<p>When a gas is [[0]] its particles move [[1]] and push further apart, so the volume goes [[2]]. The volume also depends on the [[3]]. The value of 24000 '+CM3+' is only true at r.t.p.</p>',bank:['heated','cooled','faster','slower','up','down','pressure','colour'],fields:[cz(0,'heated'),cz(1,'faster'),cz(2,'up'),cz(3,'pressure')]},CH.gas),
+ worked:'<p>Higher temperature → bigger volume for one mole. A molar volume needs stated conditions (r.t.p.).</p>',
+ practice:[{title:'Explain: molar volume and pressure',html:'<p>A student collects 1 mol of a gas at r.t.p. and then moves the apparatus to the top of a high mountain, where the air pressure is lower. <b>Explain what happens to the volume of the 1 mol of gas.</b></p>',need:2,
+  ideas:[{t:'The volume of the gas goes up.',g:[['volume'],['up','increase','bigger','larger','expand','more']]},{t:'There is less pressure pushing on the gas, so it expands (gases are compressible).',g:[['less pressure','lower pressure','pressure is lower','pressure decrease','pressure drops','pressure goes down','compressible','expand']]},{t:'The number of moles is the same, but 24000 '+CM3+' is only for r.t.p.',g:[['same','still 1','still one'],['mole','particle','gas']]}],
+  model:'With less pressure on it the gas expands, so the volume goes up. There is still 1 mole of gas, but 24000 '+CM3+' is the volume of one mole only at r.t.p.',cheat:CH.gas,hints:['Does a gas expand or shrink when the pressure on it is lower?']}]});
+
+def('X8','X',{
+ title:'Explain: compressing gases and liquids',
+ html:'<p>A bicycle pump can squash the air in it into a much smaller volume, but nobody can squash water in the same way. <b>Explain this difference, in terms of particles.</b></p>',
+ ideas:[
+  {t:'The particles in a gas are far apart, with a lot of empty space between them.',g:[['far apart','gaps','empty space','space between','spread','apart']]},
+  {t:'Pushing on a gas moves the particles closer together, so the volume goes down.',g:[['closer','pushed together','squashed together','move together','compress','squash','smaller volume','volume']]},
+  {t:'The particles in a liquid are already touching, so they cannot be pushed closer.',g:[['touching','close together','closely packed','no gaps','no space','already close','packed','close']]}],
+ model:'The particles of a gas are far apart with a lot of empty space between them, so pushing on the gas moves them closer together and the volume goes down: gases are compressible. The particles in a liquid are already touching each other, so there is no empty space to remove and water cannot be squashed.',
+ cheat:CH.gas+'<p>Compare the spacing of particles in a gas and in a liquid.</p>',
+ hints:['Describe how far apart the particles are in a gas.','What happens to those gaps when you push on the gas?','Now compare with the particles in a liquid.'],
+ scaffold:dflt({title:'',html:'<p>In a gas the particles are far [[0]] with lots of empty space, so pushing makes them move [[1]] together. In a liquid the particles are already [[2]] so they cannot be pushed closer.</p>',bank:['apart','closer','touching','far','together','away'],fields:[cz(0,'apart'),cz(1,'closer'),cz(2,'touching')]},CH.gas),
+ worked:'<p>Gas: big gaps, so it compresses. Liquid: no gaps to remove.</p>',
+ practice:[{title:'Explain: why a gas has pressure',html:'<p>A gas in a sealed syringe pushes on the plunger. <b>Explain, in terms of particles, why a gas has pressure.</b></p>',
+  ideas:[{t:'The particles move around all the time.',g:[['move','moving','motion','fast','random']]},{t:'They collide with the walls of the container (and the plunger).',g:[['collid','hit','bounce','strike','crash']]},{t:'Many collisions each second give a push on the walls: this push is the pressure.',g:[['push','force','pressure','each second','many']]}],
+  model:'The particles of a gas move around all the time and collide with the walls of the container. Many collisions every second give a push on the walls, and that push is the pressure.',cheat:CH.gas,hints:['What do the moving particles do when they reach the wall?']}]});
+
+def('X9','X',r=>{
+ const V=r.det?90:r.pick([90,84,66,114,102,78]);
+ const n=V/24000,m=n*24;
+ return dflt({
+  title:'Reverse a class experiment',
+  html:'<p>In an experiment a gas syringe collected <b>'+V+' '+CM3+'</b> of hydrogen at r.t.p. from magnesium and an excess of dilute sulphuric acid. What mass of magnesium reacted? Give your answer in g.</p>'+fm('Mg + H<sub>2</sub>SO<sub>4</sub> → MgSO<sub>4</sub> + H<sub>2</sub>'),
+  fields:[num('Moles of H<sub>2</sub> =',n,'mol',{abs:1e-9}),num('Moles of Mg =',n,'mol',{abs:1e-9}),num('Mass of Mg =',m,'g',{abs:1e-9})],
+  cheat:MGCH,
+  hints:['Moles of hydrogen = volume ÷ 24000.','The ratio is 1 : 1.','Mass = moles × 24.'],
+  worked:'<p>'+I('n')+'(H<sub>2</sub>) = '+V+' ÷ 24000 = <b>'+nice(n)+' mol</b>; 1 : 1, so <b>'+nice(n)+' mol</b> Mg; '+I('m')+' = '+nice(n)+' × 24 = <b>'+nice(m)+' g</b>.</p>'});
+});
+
+def('X10','X',r=>{
+ const V=r.det?50:r.pick([25,50]),dt=r.det?26.0:r.pick([24.0,25.0,26.0,27.0]);
+ const qJ=V*4.2*dt,qkJ=qJ/1000,n=0.5*V/1000,dH=-qkJ/n;
+ return dflt({
+  title:'Displacement reaction',
+  html:'<p><b>'+V+' '+CM3+'</b> of <b>0.50 '+MD+'</b> copper(II) sulphate solution reacts with an excess of zinc powder in a polystyrene cup. The temperature rises by <b>'+nice(dt)+' °C</b>. The copper(II) sulphate is the limiting reactant. Treat the solution as water and ignore the volume of the zinc. Find Δ'+I('H')+' in '+KJM+'.</p>'+fm('Zn + CuSO<sub>4</sub> → ZnSO<sub>4</sub> + Cu'),
+  fields:[num(I('q')+' in kJ =',qkJ,'kJ',{abs:1e-9,wrong:[{v:qJ,msg:'Divide by 1000 to get kJ.'}]}),num('Moles of CuSO<sub>4</sub> =',n,'mol',{abs:1e-9}),num('Δ'+I('H')+' with its sign =',dH,KJM,{signed:1})],
+  cheat:CH.cal+'<p>Only one solution here, so '+I('v')+' is its volume.</p>',
+  hints:['Use '+I('v')+' = '+V+' '+CM3+' and Δ'+I('t')+' = '+nice(dt)+' °C in '+I('q')+' = '+I('v')+' × 4.2 × Δ'+I('t')+'. Then divide by 1000.','Moles = 0.50 × '+V+' ÷ 1000.','Temperature rise, so the sign is negative.'],
+  worked:'<div class="fm n">'+I('q')+' = '+V+' × 4.2 × '+nice(dt)+' = '+nice(qJ)+' J = <b>'+nice(qkJ)+' kJ</b></div><div class="fm n">'+I('n')+' = 0.50 × '+V+' ÷ 1000 = <b>'+nice(n)+' mol</b></div><div class="fm n">Δ'+I('H')+' = '+nice(qkJ)+' ÷ '+nice(n)+' = '+(+Math.abs(dH).toPrecision(4))+'</div><p>Temperature rise: exothermic, so <b>Δ'+I('H')+' = −'+(+Math.abs(dH).toPrecision(3))+' '+KJM+'</b>.</p>'});
+});
+
+def('X11','X',{
+ title:'Explain: which volume goes where',
+ html:'<p>When we find Δ<i>H</i> from a mixing experiment, we use the <b>total volume</b> of the mixture to find <i>q</i> but only the volume of the <b>limiting solution</b> to find <i>n</i>. <b>Explain why.</b></p>',
+ ideas:[
+  {t:'The energy heats all the liquid in the cup, so q depends on the total volume (mass) of the mixture.',g:[['total','all','whole','both','mixture','together'],['heat','energy','temperature','warm','water','mass']]},
+  {t:'Only the limiting reactant is used up, so the moles of reaction depend on it.',g:[['limiting','used up','all react','fully react','runs out','run out','completely react']]},
+  {t:'The excess reactant does not all react, so it must not be counted in n.',g:[['excess','extra','left over','left-over','not react','unreacted','spare','more than']]}],
+ model:'The energy given out heats all the liquid in the cup, so <i>q</i> depends on the total volume (and so the total mass) of the mixture. The reaction stops when the limiting reactant is used up, so the moles that react depend only on the limiting reactant. The excess reactant is not all used up, so it is not counted in <i>n</i>.',
+ cheat:CH.cal,
+ hints:['What gets hot: only one solution, or the whole mixture?','Which reactant decides how much reaction happens?'],
+ scaffold:dflt({title:'',html:'<p>The energy heats the [[0]] volume of liquid, so we use that for <i>q</i>. The reaction stops when the [[1]] reactant is used up, so <i>n</i> comes from that reactant. The [[2]] reactant is left over.</p>',bank:['total','limiting','excess','smallest','first'],fields:[cz(0,'total'),cz(1,'limiting'),cz(2,'excess')]},CH.cal),
+ worked:'<p><i>q</i> uses the total volume; <i>n</i> uses the limiting reactant.</p>',
+ practice:[{title:'Explain: why Δt has no sign',html:'<p>We write Δ<i>t</i> and <i>q</i> without signs and put the sign on Δ<i>H</i> only at the end. <b>Explain why the sign belongs on Δ<i>H</i>.</b></p>',
+  ideas:[{t:'Δ<i>t</i> and <i>q</i> are sizes (they measure how much).',g:[['size','amount','how much','magnitude','positive','number']]},{t:'The sign of Δ<i>H</i> shows the direction of energy flow: out of the system (negative) or into it (positive).',g:[['direction','out of','into','in or out','flow','exo','endo','gives out','takes in']]},{t:'Δ<i>H</i> describes the energy change of the system.',g:[['system'],['energy','change','enthalpy']]}],
+  model:'Δ<i>t</i> and <i>q</i> are sizes: they tell us how much. The sign of Δ<i>H</i> tells us the direction of the energy flow, out of the system (negative, exothermic) or into it (positive, endothermic), because Δ<i>H</i> is the energy change of the system.',cheat:CH.cal,hints:['What does a negative sign tell you about the direction of the energy?']}]});
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
