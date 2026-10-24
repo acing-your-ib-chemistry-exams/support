@@ -380,6 +380,38 @@
     box-sizing:border-box;color:var(--ink);resize:vertical;
   }
   .cert-reflection textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .topic-check-label{
+    display:block;font-size:13px;color:var(--ink-soft);margin-bottom:10px;line-height:1.4;
+  }
+  .topic-extra-label{
+    display:block;font-size:12.5px;color:var(--ink-soft);margin-top:14px;margin-bottom:6px;
+  }
+  .topic-group-heading{
+    font-family:'Architects Daughter',cursive;font-size:14px;color:var(--accent);
+    margin:14px 0 6px;letter-spacing:0.3px;
+  }
+  .topic-group-heading:first-child{margin-top:0;}
+  .topic-row{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    gap:8px;padding:7px 0;border-bottom:1px dashed #d8d2c4;
+  }
+  .topic-row:last-child{border-bottom:none;}
+  .topic-label{flex:1 1 180px;font-size:13.5px;color:var(--ink);text-align:left;}
+  .topic-btns{display:flex;gap:6px;flex-wrap:wrap;}
+  .topic-btn{
+    font-family:'Architects Daughter',cursive;font-size:11.5px;
+    padding:5px 10px;border-radius:7px 10px 6px 11px / 9px 6px 11px 7px;
+    border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;
+    letter-spacing:0.2px;
+  }
+  .topic-btn:hover{filter:brightness(0.97);}
+  .topic-btn.status-secure.active{background:#2f9e5c;border-color:#1f6b3d;color:#fff;}
+  .topic-btn.status-nearly.active{background:#d99a2b;border-color:#96641a;color:#fff;}
+  .topic-btn.status-practice.active{background:#c0392b;border-color:#7e2117;color:#fff;}
+  .topic-check-tip{
+    display:block;margin-top:10px;font-size:11.5px;color:var(--ink-soft);text-align:left;
+  }
+  #phase1Overlay .card{max-width:620px;}
   .cert-download-btn{
     font-family:'Architects Daughter',cursive;
     background:#2f9e5c;
@@ -574,8 +606,11 @@
     <div class="final-score" id="phase1Score">0</div>
     <p id="phase1Summary"></p>
     <div class="cert-reflection">
-      <label for="reflectionInput">A quick reflection for your certificate: how do you feel you are doing in the course overall, based on your Check-Ins? Which topics do you feel you have mastered?</label>
-      <textarea id="reflectionInput" rows="4" placeholder="Write a sentence or two..."></textarea>
+      <label class="topic-check-label">Quick self-check for your certificate: rate yourself on each topic, based on your Check-Ins.</label>
+      <div id="topicChecklist"></div>
+      <span class="topic-check-tip">Rating every topic gives you the most useful certificate.</span>
+      <label for="reflectionInput" class="topic-extra-label">Anything else to add (optional):</label>
+      <textarea id="reflectionInput" rows="2" maxlength="220" placeholder="Optional extra comment (max 220 characters)..."></textarea>
     </div>
     <button id="certBtnPhase1" type="button" class="cert-download-btn">Download My Certificate (PDF)</button>
     <button id="continueBtn" type="button">Continue to the Rest of the Table (optional)</button>
@@ -590,7 +625,7 @@
     <p id="finalTime"></p>
     <div class="cert-reflection">
       <label for="reflection2Input">A further short reflection, now you've finished the whole table (optional):</label>
-      <textarea id="reflection2Input" rows="3" placeholder="Anything to add? (optional)"></textarea>
+      <textarea id="reflection2Input" rows="3" maxlength="220" placeholder="Anything to add? (max 220 characters, optional)"></textarea>
     </div>
     <button id="certBtn" type="button" class="cert-download-btn">Download My Updated Certificate (PDF)</button>
     <button id="restartBtn">Play Again</button>
@@ -773,6 +808,23 @@
   // BOTH reflections even though #reflectionInput itself is only visible
   // during the Part-1 checkpoint overlay.
   let mainReflectionText = '';
+  // Topics the Part-1 checkpoint asks the student to self-rate, spanning the
+  // course as a whole (not just this game's own periodic-table content) —
+  // Secure / Nearly there / Need more practice, per topic.
+  const TOPIC_LIST = [
+    { id:'pt-groups',    group:'Periodic Table',  label:'Finding elements by Period and Group' },
+    { id:'pt-metals',    group:'Periodic Table',  label:'Metals, non-metals and metalloids' },
+    { id:'pt-transition',group:'Periodic Table',  label:'Transition metals, lanthanides and actinides' },
+    { id:'pt-symbols',   group:'Periodic Table',  label:'Element symbols and atomic number' },
+    { id:'th-system',    group:'Thermochemistry', label:'System and surroundings' },
+    { id:'th-diagrams',  group:'Thermochemistry', label:'Enthalpy level diagrams and reading a scale' },
+    { id:'th-molarmass', group:'Thermochemistry', label:'Molar mass and moles' },
+    { id:'th-empirical', group:'Thermochemistry', label:'Empirical formulae' },
+    { id:'th-energy',    group:'Thermochemistry', label:'Energy, q and \u2206H', pdfLabel:'Energy, q and delta H' },
+    { id:'th-sign',      group:'Thermochemistry', label:'Getting the sign of \u2206H correct', pdfLabel:'Getting the sign of delta H correct' }
+  ];
+  const STATUS_LABELS = { secure:'Secure', nearly:'Nearly there', practice:'Need more practice' };
+  let topicRatings = {}; // topic id -> 'secure' | 'nearly' | 'practice'
 
   function rowForPeriod(p){
     if(p <= 7) return p + 1;
@@ -799,6 +851,7 @@
   const guideTextEl = document.getElementById('guideText');
   const startOverlay = document.getElementById('startOverlay');
   const phase1Overlay = document.getElementById('phase1Overlay');
+  const topicChecklistEl = document.getElementById('topicChecklist');
   const endOverlay = document.getElementById('endOverlay');
   const finalScoreEl = document.getElementById('finalScore');
   const finalTimeEl = document.getElementById('finalTime');
@@ -1517,11 +1570,14 @@
     const doc = new jsPDFCtor({ orientation: 'landscape', unit: 'mm', format: 'a4' });
     const W = 297, H = 210;
     const data = computeCertificateData();
+    // mainReflection is now just the OPTIONAL "anything else" comment next to
+    // the topic self-check (not a required free-text reflection any more) —
+    // an empty string here means "say nothing", not "say the word None".
     const mainReflection = (stage === 'phase1')
-      ? ((reflectionInput && reflectionInput.value.trim()) || 'No reflection provided.')
-      : (mainReflectionText || 'No reflection provided.');
+      ? ((reflectionInput && reflectionInput.value.trim()) || '')
+      : (mainReflectionText || '');
     const followUpReflection = (stage === 'phase2')
-      ? ((reflection2Input && reflection2Input.value.trim()) || 'No further reflection provided.')
+      ? ((reflection2Input && reflection2Input.value.trim()) || '')
       : '';
 
     doc.setDrawColor(154,97,0);
@@ -1581,36 +1637,124 @@
       lines.forEach(function(line){ doc.text(line, 24, y); y += 6; });
     }
 
-    y += 6;
+    y += 5;
     doc.setFont('helvetica','bold');
     doc.setFontSize(12);
     doc.setTextColor(30,60,110);
-    doc.text('Student reflection \u2014 how I feel I am doing overall:', 24, y);
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(11);
-    doc.setTextColor(60,60,60);
-    y += 7;
-    const mainReflectionLines = doc.splitTextToSize(mainReflection, W-48);
-    mainReflectionLines.forEach(function(line){ doc.text(line, 24, y); y += 6; });
+    doc.text('Topic self-check:', 24, y);
+    y += 5;
 
-    if(stage === 'phase2'){
-      y += 5;
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(12);
-      doc.setTextColor(30,60,110);
-      doc.text('Follow-up reflection \u2014 after finishing the whole table:', 24, y);
+    const ratingCounts = { secure:0, nearly:0, practice:0, unrated:0 };
+    TOPIC_LIST.forEach(function(t){
+      const r = topicRatings[t.id];
+      if(r) ratingCounts[r]++; else ratingCounts.unrated++;
+    });
+    doc.setFont('helvetica','italic');
+    doc.setFontSize(9.5);
+    doc.setTextColor(90,90,90);
+    let summaryText = ratingCounts.secure+' secure   \u00b7   '+ratingCounts.nearly+' nearly there   \u00b7   '+ratingCounts.practice+' need more practice';
+    if(ratingCounts.unrated > 0) summaryText += '   \u00b7   '+ratingCounts.unrated+' not yet rated';
+    doc.text(summaryText, 24, y);
+    y += 6;
+
+    function statusColorFor(status){
+      if(status === 'secure') return [47,158,92];
+      if(status === 'nearly') return [173,120,10];
+      if(status === 'practice') return [192,57,43];
+      return [150,150,150];
+    }
+    function statusWordFor(status){ return status ? STATUS_LABELS[status] : 'Not yet rated'; }
+
+    const colLeftX = 24, colRightX = 158, rowStep = 4.5;
+    const topicTableTopY = y;
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9.5);
+    doc.setTextColor(60,50,20);
+    doc.text('Periodic Table', colLeftX, y);
+    doc.text('Thermochemistry', colRightX, y);
+    let colYLeft = y + 5.4, colYRight = y + 5.4;
+    TOPIC_LIST.forEach(function(t){
+      const isLeft = (t.group === 'Periodic Table');
+      const x = isLeft ? colLeftX : colRightX;
+      const rowY = isLeft ? colYLeft : colYRight;
       doc.setFont('helvetica','normal');
-      doc.setFontSize(11);
+      doc.setFontSize(8.3);
       doc.setTextColor(60,60,60);
-      y += 7;
-      const followUpLines = doc.splitTextToSize(followUpReflection, W-48);
-      followUpLines.forEach(function(line){ doc.text(line, 24, y); y += 6; });
+      const printLabel = t.pdfLabel || t.label;
+      doc.text(printLabel, x, rowY);
+      const labelWidth = doc.getTextWidth(printLabel);
+      const status = topicRatings[t.id];
+      const rgb = statusColorFor(status);
+      doc.setFont('helvetica','bold');
+      doc.setTextColor(rgb[0], rgb[1], rgb[2]);
+      doc.text(statusWordFor(status), x + labelWidth + 3, rowY);
+      if(isLeft) colYLeft += rowStep; else colYRight += rowStep;
+    });
+    y = Math.max(colYLeft, colYRight) + 0.5;
+
+    if(mainReflection){
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(10.5);
+      doc.setTextColor(30,60,110);
+      doc.text('Anything else:', 24, y);
+      y += 5;
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10);
+      doc.setTextColor(60,60,60);
+      // Capped to 2 printed lines (the textarea itself is maxlength-capped
+      // too) so a long comment can never collide with the footer below it,
+      // even when every topic row on the self-check is showing.
+      let mainReflectionLines = doc.splitTextToSize(mainReflection, W-48);
+      if(mainReflectionLines.length > 2){
+        mainReflectionLines = mainReflectionLines.slice(0, 2);
+        mainReflectionLines[1] = mainReflectionLines[1].replace(/\s*$/, '') + '\u2026';
+      }
+      mainReflectionLines.forEach(function(line){ doc.text(line, 24, y); y += 4.8; });
     }
 
-    doc.setFont('helvetica','italic');
-    doc.setFontSize(10);
-    doc.setTextColor(120,120,120);
-    doc.text('Science Department \u00b7 Refined with AI', W/2, H-14, { align:'center' });
+    function drawFooter(){
+      doc.setFont('helvetica','italic');
+      doc.setFontSize(10);
+      doc.setTextColor(120,120,120);
+      doc.text('Science Department \u00b7 Refined with AI', W/2, H-14, { align:'center' });
+    }
+
+    // The follow-up reflection (Part 2 only) always lands lowest on the page,
+    // right where "Elements to keep practising" + a full topic table + the
+    // "Anything else" comment can already fill page 1 to the brim. Rather
+    // than keep shaving millimetres off everything above it, give it a
+    // second page of its own whenever the student actually wrote one — that
+    // scales to any amount of topics/comments without ever colliding with
+    // the footer.
+    if(stage === 'phase2' && followUpReflection){
+      drawFooter();
+      doc.addPage();
+      doc.setDrawColor(154,97,0);
+      doc.setLineWidth(1.2);
+      doc.rect(8, 8, W-16, H-16);
+      doc.setLineWidth(0.4);
+      doc.rect(11, 11, W-22, H-22);
+
+      let y2 = 34;
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(15);
+      doc.setTextColor(30,60,110);
+      doc.text('Follow-up reflection', W/2, y2, { align:'center' });
+      y2 += 8;
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11.5);
+      doc.setTextColor(90,70,30);
+      doc.text('After finishing the whole table \u2014 '+studentName, W/2, y2, { align:'center' });
+      y2 += 16;
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(12);
+      doc.setTextColor(60,60,60);
+      const followUpLines = doc.splitTextToSize(followUpReflection, W-64);
+      followUpLines.forEach(function(line){ doc.text(line, 32, y2); y2 += 7; });
+    }
+
+    drawFooter();
 
     const safeName = (studentName || 'student').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'student';
     const filenameTag = (stage === 'phase2') ? 'updated-' : '';
@@ -1649,6 +1793,7 @@
     phase1Overlay.hidden = true;
     endOverlay.hidden = true;
     mainReflectionText = '';
+    resetTopicChecklist();
     gameRunning = false;
 
     bgTextEl.textContent = 'GOOD LUCK!';
@@ -1788,8 +1933,49 @@
     }
   });
 
+  // Builds the Part-1 checkpoint's topic self-check once, grouping rows under
+  // a heading per TOPIC_LIST group and wiring each Secure/Nearly
+  // there/Need more practice button to set topicRatings[id] and highlight
+  // whichever button is currently chosen for that topic.
+  function buildTopicChecklist(){
+    if(!topicChecklistEl) return;
+    let html = '';
+    let lastGroup = null;
+    TOPIC_LIST.forEach(function(t){
+      if(t.group !== lastGroup){
+        html += '<div class="topic-group-heading">'+t.group+'</div>';
+        lastGroup = t.group;
+      }
+      html += '<div class="topic-row" data-topic-row="'+t.id+'">'
+            +   '<div class="topic-label">'+t.label+'</div>'
+            +   '<div class="topic-btns">'
+            +     '<button type="button" class="topic-btn status-secure" data-topic="'+t.id+'" data-status="secure">Secure</button>'
+            +     '<button type="button" class="topic-btn status-nearly" data-topic="'+t.id+'" data-status="nearly">Nearly there</button>'
+            +     '<button type="button" class="topic-btn status-practice" data-topic="'+t.id+'" data-status="practice">Need more practice</button>'
+            +   '</div>'
+            + '</div>';
+    });
+    topicChecklistEl.innerHTML = html;
+    topicChecklistEl.querySelectorAll('.topic-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const topicId = btn.getAttribute('data-topic');
+        topicRatings[topicId] = btn.getAttribute('data-status');
+        topicChecklistEl.querySelectorAll('.topic-btn[data-topic="'+topicId+'"]').forEach(function(b){
+          b.classList.toggle('active', b === btn);
+        });
+      });
+    });
+  }
+
+  function resetTopicChecklist(){
+    topicRatings = {};
+    if(!topicChecklistEl) return;
+    topicChecklistEl.querySelectorAll('.topic-btn.active').forEach(function(b){ b.classList.remove('active'); });
+  }
+
   // Build the table once immediately so it's visible behind the start overlay
   buildTable();
+  buildTopicChecklist();
 })();
 </script>
   <div class="ai-credit-line">Science Department · Refined with AI</div>
