@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reflective Chemist's Version — Periodic Table Tetris</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#1e1e1e;
+    --ink-soft:#495057;
+    --accent:#7048e8;
+    --accent-soft:#e5dbff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background-color:#ffffff;
+    background-image: radial-gradient(circle, #d8dee9 1.4px, transparent 1.4px);
+    background-size: 22px 22px;
+    font-family:'Kalam','Comic Sans MS',cursive;
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:14px 16px 40px;}
+
+  header{
+    text-align:center;
+    padding:6px 0 10px;
+    border-bottom:2.5px solid var(--ink);
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:'Architects Daughter',cursive;
+    font-size:clamp(20px,4vw,34px);
+    margin:4px 0;
+    color:var(--ink);
+    letter-spacing:0.5px;
+    display:inline-block;
+    transform:rotate(-0.6deg);
+  }
+  .subtitle{font-size:14px;color:var(--ink-soft);letter-spacing:.3px;}
+
+  .hud{
+    display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;
+    margin-top:8px;font-size:14px;font-weight:600;
+  }
+  .hud div{
+    background:#fff;
+    border:2.2px solid var(--ink);
+    border-radius: 9px 14px 8px 16px / 13px 8px 15px 9px;
+    padding:4px 12px;
+    box-shadow: 2.5px 2.5px 0 rgba(30,30,30,.9);
+  }
+  .hud span{color:var(--accent);font-weight:800;}
+  .badge{
+    display:inline-block;margin-left:6px;background:var(--accent);color:#fff;
+    border:1.5px solid var(--ink);
+    border-radius:6px;padding:1px 6px;font-size:11px;font-weight:800;
+    vertical-align:middle;
+  }
+
+  .support-bar{
+    display:flex;flex-wrap:wrap;gap:10px 20px;justify-content:center;align-items:center;
+    margin:10px auto 4px;padding:8px 14px;max-width:640px;
+    background:#fff;border:2.2px solid var(--ink);
+    border-radius: 16px 10px 18px 9px / 10px 16px 9px 18px;
+    box-shadow: 3px 3px 0 rgba(30,30,30,.9);
+  }
+  .switch-row{
+    display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);cursor:pointer;
+  }
+  .switch-row input{width:16px;height:16px;cursor:pointer;accent-color:var(--accent);}
+  .switch-row .mult{
+    font-weight:800;color:#fff;background:var(--accent);
+    border:1.5px solid var(--ink);border-radius:6px;padding:0 5px;font-size:11px;
+  }
+  .switch-row.disabled{opacity:.45;cursor:not-allowed;}
+  .switch-row.disabled input{cursor:not-allowed;}
+  .current-mult{
+    font-size:13px;font-weight:700;color:var(--accent);
+    padding-left:10px;border-left:2px dashed var(--ink);
+  }
+
+  .banner{
+    height:30px;text-align:center;font-weight:700;font-size:15px;
+    line-height:30px;border-radius: 8px 14px 7px 15px / 12px 7px 15px 8px;
+    margin:8px auto;max-width:520px;
+    border:2px solid transparent;
+    opacity:0;transition:opacity .25s ease;
+  }
+  .banner.show{opacity:1;}
+  .banner.good{background:#b2f2bb;color:#0b4a1f;border-color:var(--ink);}
+  .banner.bad{background:#ffc9c9;color:#5c0b0b;border-color:var(--ink);}
+
+  .current-guide{
+    text-align:center;font-size:15px;margin:2px 0 10px;color:var(--ink-soft);
+  }
+  .current-guide b{color:var(--accent);font-family:'Architects Daughter',cursive;}
+  .current-guide .sym-inline{
+    font-weight:700;
+    color:var(--accent);
+  }
+  .current-guide kbd{
+    background:#fff;border:1.5px solid var(--ink);border-radius: 5px 8px 4px 9px;
+    padding:0 5px;font-family:monospace;font-size:13px;
+  }
+
+  .game-area{
+    position:relative;
+    padding-top:200px;
+    overflow:visible;
+    display:flex;
+    justify-content:center;
+  }
+  .bg-text{
+    position:absolute;
+    top:38%;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(-6deg);
+    font-family:'Architects Daughter',cursive;
+    font-weight:900;
+    font-size:clamp(28px,9vw,84px);
+    color:var(--accent);
+    opacity:.14;
+    white-space:nowrap;
+    pointer-events:none;
+    letter-spacing:4px;
+    z-index:0;
+    user-select:none;
+  }
+
+  .table-grid{
+    position:relative;
+    z-index:1;
+    display:grid;
+    /* column 1 and column 20: a narrow period-number gutter down each side,
+       for when a block enters from the side and the player must find the
+       right ROW instead of the right column. Columns 2-19 are the 18
+       ordinary groups. */
+    grid-template-columns:26px repeat(18,1fr) 26px;
+    /* row 1: roman-numeral header · rows 2-8: Periods 1-7 · row 9: a small gap
+       (like the break before the f-block on a real periodic table) · row 10:
+       the Lanthanide row · row 11: the Actinide row · row 12: the
+       group-number footer */
+    grid-template-rows:20px repeat(7,44px) 14px 44px 44px 20px;
+    gap:4px;
+    width:min(96vw,920px);
+  }
+
+  .group-label,
+  .roman-label,
+  .period-label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .roman-label{ font-style:italic; }
+  .period-label{ font-size:11px; }
+
+  .cell{
+    position:relative;
+    border-radius: 7px 10px 6px 11px / 9px 6px 11px 7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Architects Daughter',cursive;
+    font-style:normal;
+    font-weight:700;
+    font-size:22px;
+    line-height:1;
+    color:var(--ink);
+    background:transparent;
+  }
+  .cell::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    background-color:inherit;
+    border:2.2px solid var(--ink);
+    filter:url(#sketchy);
+  }
+  .cell > span{ position:relative; z-index:1; }
+  .target-cell{
+    background:#fff;
+    color:#adb5bd;
+    font-size:22px;
+  }
+  .target-cell::before{
+    border-style:dashed;
+    border-color:#adb5bd;
+  }
+  .target-cell.filled{
+    color:var(--ink);
+    animation:pop .4s ease;
+  }
+  .target-cell.filled::before{
+    border-style:solid;
+    border-color:var(--ink);
+  }
+  /* "Remove all scaffolding! The expert level!" mode: every box that hasn't
+     been solved yet is fully hidden — not even an outline shows — leaving a
+     completely blank sheet apart from elements already placed correctly.
+     visibility (not display) is used so the grid keeps its layout and
+     column/row measurements stay correct even while a cell is invisible. */
+  .target-cell.hidden-cell{
+    visibility:hidden;
+  }
+  @keyframes pop{
+    0%{transform:scale(0.5);}
+    60%{transform:scale(1.15);}
+    100%{transform:scale(1);}
+  }
+  .target-cell.ghost{
+    color:var(--accent);
+    font-style:normal;
+    animation:ghostPulse 1.4s ease-in-out infinite;
+  }
+  .target-cell.ghost::before{
+    border-color:var(--accent);
+  }
+  @keyframes ghostPulse{
+    0%,100%{opacity:.55;}
+    50%{opacity:1;}
+  }
+  .hint-banner{
+    text-align:center;font-size:13px;color:var(--accent);font-weight:700;
+    /* Space for this banner is reserved at all times (even while hidden) so
+       it never shunts the table grid down when a wrong guess first triggers
+       it — only opacity animates, layout stays put. */
+    min-height:1.3em;
+    line-height:1.3;
+    margin:2px 0 8px;
+    visibility:hidden;
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+  .hint-banner.show{visibility:visible;opacity:1;}
+
+  .cat-alkali{background:#ffd8a8; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+  .cat-alkaline{background:#ffec99; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+  .cat-rare{background:#fcc2d7; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+  .cat-transition{background:#a5d8ff; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+  .cat-posttrans{background:#b2f2bb; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+  .cat-metalloid{background:#99e9f2; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+  .cat-nonmetal{background:#b197fc; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+  .cat-halogen{background:#ffc9c9; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+  .cat-noble{background:#eebefa; background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);}
+
+  /* No-colour (hardcore) mode: strip category colours from every cell and the falling block */
+  .table-grid.no-color .cat-alkali,
+  .table-grid.no-color .cat-alkaline,
+  .table-grid.no-color .cat-rare,
+  .table-grid.no-color .cat-transition,
+  .table-grid.no-color .cat-posttrans,
+  .table-grid.no-color .cat-metalloid,
+  .table-grid.no-color .cat-nonmetal,
+  .table-grid.no-color .cat-halogen,
+  .table-grid.no-color .cat-noble{
+    background:#f1f3f5 !important;
+    background-image:none !important;
+    color:#343a40 !important;
+  }
+  .table-grid.no-color .target-cell.filled::before{
+    border-color:#343a40 !important;
+  }
+
+  .falling-block{
+    position:absolute;
+    z-index:5;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    /* Whichever axis is the player-steered one (snapping between discrete
+       positions) gets an eased transition for a smooth slide; whichever
+       axis is the one travelling automatically (continuous per-frame
+       motion) must NOT have a transition, or it fights the animation loop.
+       Set as an inline style per spawn — see spawnNext(). */
+  }
+  .falling-block::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius: 12px 18px 10px 20px / 16px 10px 20px 12px;
+    border:2.6px solid var(--ink);
+    background-color:inherit;
+    background-image: repeating-linear-gradient(45deg, rgba(30,30,30,.13) 0 1.5px, transparent 1.5px 7px);
+    box-shadow: 3px 3px 0 rgba(30,30,30,.55);
+    filter:url(#sketchy);
+  }
+  .falling-block .symbol{
+    position:relative;
+    z-index:1;
+    font-family:'Architects Daughter',cursive;
+    font-style:normal;
+    font-weight:900;
+    font-size:20px;
+    line-height:1;
+    color:var(--ink);
+  }
+  .falling-block.wrongflash{animation:flashred .35s ease;}
+  @keyframes flashred{
+    0%,100%{filter:none;}
+    50%{filter:brightness(0.6) saturate(2);}
+  }
+
+  .instructions{
+    text-align:center;font-size:13px;color:var(--ink-soft);margin-top:14px;
+    line-height:1.6;
+  }
+  .instructions kbd{
+    background:#fff;border:1.5px solid var(--ink);border-radius: 5px 8px 4px 9px;
+    padding:1px 6px;font-family:monospace;
+  }
+
+  .overlay{
+    position:fixed;inset:0;background:rgba(30,30,30,.5);
+    display:flex;align-items:center;justify-content:center;z-index:20;
+    padding:20px;
+  }
+  .overlay[hidden]{display:none;}
+  .card{
+    background:#fff;border:2.6px solid var(--ink);
+    border-radius: 20px 14px 22px 12px / 14px 20px 12px 22px;
+    padding:28px 32px;max-width:460px;text-align:center;
+    box-shadow: 6px 6px 0 rgba(30,30,30,.85);
+    max-height:calc(100vh - 40px);
+    overflow-y:auto;
+  }
+  .card h2{font-family:'Architects Daughter',cursive;color:var(--accent);margin-top:0;}
+  .card p{font-size:14px;line-height:1.6;color:var(--ink-soft);}
+  .card button{
+    font-family:'Architects Daughter',cursive;
+    background:var(--accent);
+    border:2.2px solid var(--ink);color:#fff;font-weight:700;
+    padding:10px 26px;border-radius: 10px 16px 9px 17px / 14px 9px 17px 10px;
+    cursor:pointer;font-size:15px;
+    box-shadow: 3px 3px 0 rgba(30,30,30,.85);
+    letter-spacing:0.5px;margin-top:10px;
+  }
+  .card button:hover{filter:brightness(1.08);}
+  .next-btn{
+    font-family:'Architects Daughter',cursive;
+    background:#d43b3b;
+    border:2.2px solid var(--ink);color:#fff;font-weight:700;
+    padding:10px 26px;border-radius: 10px 16px 9px 17px / 14px 9px 17px 10px;
+    cursor:pointer;font-size:15px;
+    box-shadow: 3px 3px 0 rgba(30,30,30,.85);
+    letter-spacing:0.5px;margin-top:14px;
+    display:inline-block;text-decoration:none;
+  }
+  .next-btn:hover{filter:brightness(1.08);}
+  .name-label{
+    display:block;text-align:left;font-size:13px;color:var(--ink-soft);
+    margin-top:14px;margin-bottom:4px;
+  }
+  .name-input{
+    width:100%;font-family:'Kalam','Comic Sans MS',cursive;font-size:15px;
+    padding:8px 10px;border:2.2px solid var(--ink);border-radius: 8px 12px 7px 13px / 11px 7px 13px 8px;
+    box-sizing:border-box;color:var(--ink);
+  }
+  .name-input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .cert-reflection{
+    text-align:left;margin-top:16px;
+  }
+  .cert-reflection label{
+    display:block;font-size:13px;color:var(--ink-soft);margin-bottom:6px;line-height:1.4;
+  }
+  .cert-reflection textarea{
+    width:100%;font-family:'Kalam','Comic Sans MS',cursive;font-size:14px;
+    padding:8px 10px;border:2.2px solid var(--ink);border-radius: 8px 12px 7px 13px / 11px 7px 13px 8px;
+    box-sizing:border-box;color:var(--ink);resize:vertical;
+  }
+  .cert-reflection textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .cert-download-btn{
+    font-family:'Architects Daughter',cursive;
+    background:#2f9e5c;
+    border:2.2px solid var(--ink);color:#fff;font-weight:700;
+    padding:10px 26px;border-radius: 10px 16px 9px 17px / 14px 9px 17px 10px;
+    cursor:pointer;font-size:15px;
+    box-shadow: 3px 3px 0 rgba(30,30,30,.85);
+    letter-spacing:0.5px;margin-top:14px;
+    display:block;margin-left:auto;margin-right:auto;
+  }
+  .cert-download-btn:hover{filter:brightness(1.08);}
+  .back-link{
+    display:block;margin-top:12px;font-family:'Architects Daughter',cursive;
+    font-size:13px;color:var(--ink-soft);text-decoration:underline;cursor:pointer;
+  }
+  .back-link:hover{color:var(--ink);}
+  .final-score{font-size:32px;color:var(--accent);font-weight:800;margin:6px 0;font-family:'Architects Daughter',cursive;}
+
+  /* --- touch controls (iPad / touchscreen support) --- */
+  .touch-controls-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    margin:18px auto 6px;
+    max-width:520px;
+    position:sticky;
+    bottom:10px;
+    z-index:15;
+  }
+  .touch-controls-up{
+    display:flex;
+    justify-content:center;
+    width:100%;
+  }
+  .touch-controls{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    align-items:stretch;
+    width:100%;
+  }
+  .tbtn{
+    flex:1;
+    font-family:'Architects Daughter',cursive;
+    font-size:22px;
+    font-weight:700;
+    color:var(--ink);
+    background:rgba(255,255,255,.96);
+    -webkit-backdrop-filter:blur(6px);
+    backdrop-filter:blur(6px);
+    border:2.4px solid var(--ink);
+    border-radius: 12px 18px 10px 20px / 16px 10px 20px 12px;
+    box-shadow: 3px 3px 0 rgba(30,30,30,.85);
+    padding:12px 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:1px;
+    line-height:1;
+    cursor:pointer;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  .tbtn span{ font-size:10px; letter-spacing:1.5px; color:var(--ink-soft); font-family:'Kalam','Comic Sans MS',cursive; margin-top:3px; }
+  .tbtn:active, .tbtn.pressed{
+    background:var(--accent-soft);
+    box-shadow: 1px 1px 0 rgba(30,30,30,.85);
+    transform:translate(2px,2px);
+  }
+  .tbtn-drop{ color:var(--accent); border-color:var(--accent); flex:1.3; }
+  .tbtn-up{ flex:none; width:96px; }
+  .tbtn-dim{ opacity:.4; }
+</style>
+<style>
+  .ai-credit-line{
+    text-align:center;
+    font-size:12px;
+    color:#8a8a8a;
+    margin:22px 0 4px;
+    letter-spacing:.4px;
+  }
+  .corner-credit{
+    text-align:right;
+    margin:6px 0 16px;
+    font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+    font-size:11px;
+    line-height:1.3;
+    color:#888;
+  }
+  .corner-initials{font-weight:700;}
+  .corner-about{color:#888;text-decoration:underline;}
+  .corner-about:hover{color:#555;}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+  <filter id="sketchy" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+  </filter>
+</svg>
+
+<div class="wrap">
+  <header>
+    <h1>Reflective Chemist's Version</h1>
+    <div class="subtitle">The same two-part Full Monty challenge — plus a certificate of achievement, and a moment to reflect, at the end</div>
+    <div class="hud">
+      <div>Score: <span id="score">0</span><span id="multiplierBadge" class="badge" hidden>×1</span></div>
+      <div>Element Timer: <span id="elTimer">0.0s</span></div>
+      <div>Total Time: <span id="totalTimer">00:00</span></div>
+      <div>Remaining: <span id="remaining">57</span> <span id="phaseLabel" class="badge">Part 1 of 2</span></div>
+    </div>
+    <div class="support-bar">
+      <label class="switch-row" id="noColorRow">
+        <input type="checkbox" id="noColorToggle">
+        Hide colours <span class="mult">×2</span>
+      </label>
+      <label class="switch-row" id="noGhostRow">
+        <input type="checkbox" id="noGhostToggle">
+        Hide ghost hints <span class="mult">×3</span>
+      </label>
+      <label class="switch-row">
+        <input type="checkbox" id="comboToggle">
+        No colours &amp; no help hints <span class="mult">×4</span>
+      </label>
+      <label class="switch-row" id="removeAllRow">
+        <input type="checkbox" id="removeAllToggle">
+        Remove all scaffolding! The expert level! <span class="mult">×6</span>
+      </label>
+      <label class="switch-row">
+        <input type="checkbox" id="sideEntryToggle">
+        Enter from the sides too <span class="mult">×2</span>
+      </label>
+      <div class="current-mult">Score multiplier: <span id="multiplierValue">×1</span></div>
+    </div>
+  </header>
+
+  <div class="banner" id="banner"></div>
+  <div class="hint-banner" id="hintBanner">Here's where everything goes — take a look!</div>
+  <div class="current-guide" id="guideText">Guide the block into place.</div>
+
+  <div class="game-area" id="gameArea">
+    <div class="bg-text" id="bgText">THE FULL MONTY</div>
+    <div class="table-grid" id="tableGrid"></div>
+  </div>
+
+  <div class="instructions">
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> move the block &nbsp;•&nbsp; <kbd>&darr;</kbd> drop instantly &nbsp;•&nbsp; <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> work too &nbsp;•&nbsp;
+    This game comes in two parts. Part 1: just the 57 elements this course requires, in completely random order and from
+    anywhere on the table — the other elements are filled in already, just for reference, with only the dashed grey boxes to place.
+    Once those 57 are done, you'll get your certificate and reflection — then <b>Part 2 is entirely optional</b>: carry on if you
+    like, and every one of those reference elements goes blank too, until the complete 118-element table is finished, with a short
+    further reflection at the end if you choose to. Faster + correct = more points, in either part!
+    Tick <b>"Enter from the sides too"</b> and some elements will approach from the left or right instead of the top —
+    when that happens, use <kbd>&uarr;</kbd> <kbd>W</kbd> <kbd>&darr;</kbd> (or the <b>UP</b> button on touch devices) to find the right Period, using the Period numbers down each
+    side of the table, then send it in with whichever arrow key matches the direction it's already travelling.
+  </div>
+
+  <div class="touch-controls-wrap">
+    <div class="touch-controls-up">
+      <button type="button" class="tbtn tbtn-up tbtn-dim" id="btnUp" aria-label="Move block up — only needed when it's entering from the side">&uarr;<span>UP</span></button>
+    </div>
+    <div class="touch-controls" id="touchControls">
+      <button type="button" class="tbtn" id="btnLeft" aria-label="Move block left">&larr;<span>LEFT</span></button>
+      <button type="button" class="tbtn tbtn-drop" id="btnDrop" aria-label="Drop block into place">&darr;<span>DROP</span></button>
+      <button type="button" class="tbtn" id="btnRight" aria-label="Move block right">&rarr;<span>RIGHT</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="startOverlay">
+  <div class="card">
+    <h2>Reflective Chemist's Version</h2>
+    <p>Part 1 is the "High Street Version" — just the elements we encounter in the course that you
+    therefore need to know. No back alleys and back streets, tunnels or subway system.</p>
+    <p>But once those 57 are done, Part 2 begins: every other element on the table reveals itself as a blank box
+    too, and you carry straight on until the whole 118-element table is complete. The Full Monty!</p>
+    <p>When you finish, you'll get a personal certificate — and a chance to reflect on how the course is going.</p>
+    <label class="name-label" for="studentNameInput">Your name (for your certificate):</label>
+    <input type="text" id="studentNameInput" class="name-input" placeholder="e.g. Alex Müller" autocomplete="name">
+    <button id="startBtn">Start Game</button>
+  </div>
+</div>
+
+<div class="overlay" id="phase1Overlay" hidden>
+  <div class="card">
+    <h2>Part 1 Complete!</h2>
+    <div class="final-score" id="phase1Score">0</div>
+    <p id="phase1Summary"></p>
+    <div class="cert-reflection">
+      <label for="reflectionInput">A quick reflection for your certificate: how do you feel you are doing in the course overall, based on your Check-Ins? Which topics do you feel you have mastered?</label>
+      <textarea id="reflectionInput" rows="4" placeholder="Write a sentence or two..."></textarea>
+    </div>
+    <button id="certBtnPhase1" type="button" class="cert-download-btn">Download My Certificate (PDF)</button>
+    <button id="continueBtn" type="button">Continue to the Rest of the Table (optional)</button>
+    <a class="back-link" id="phase1RestartLink">Not now — play again from the start</a>
+  </div>
+</div>
+
+<div class="overlay" id="endOverlay" hidden>
+  <div class="card">
+    <h2>You've Done the Full Monty!</h2>
+    <div class="final-score" id="finalScore">0</div>
+    <p id="finalTime"></p>
+    <div class="cert-reflection">
+      <label for="reflection2Input">A further short reflection, now you've finished the whole table (optional):</label>
+      <textarea id="reflection2Input" rows="3" placeholder="Anything to add? (optional)"></textarea>
+    </div>
+    <button id="certBtn" type="button" class="cert-download-btn">Download My Updated Certificate (PDF)</button>
+    <button id="restartBtn">Play Again</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const COLS = 18;
+  const EXTRA_LIFT = 100; // raises the spawn point ~2 row-heights higher for more reaction time
+  const ROMAN_LABELS = ['I','II','3','4','5','6','7','8','9','10','11','12','III','IV','V','VI','VII','0']; // historical group numbering, shown above the table
+
+  // Every other element on the periodic table is shown too — filled in and
+  // coloured from the start — since seeing where it sits can only help build
+  // up the class's wider knowledge, even though it's not part of this test.
+  // These are NOT part of the game: they never fall, are never quizzed, and
+  // stay visible even in "Remove all scaffolding!" mode. The dashed grey
+  // boxes with a plain atomic number are the only ones you actually have to
+  // fill in — those are the required set below.
+  // Phase 2 of the Full Monty: every element OUTSIDE the 57 required ones. Shown
+  // pre-filled and coloured throughout Part 1 (exactly like the plain Heinz-57 version),
+  // then wiped blank the moment Part 1 is finished, becoming real, fallable targets
+  // for Part 2 — see revealPhase2()/startPhase2().
+  const phase2Targets = [
+    {p:5, g:3, s:'Y', z:39, name:'Yttrium', cat:'transition'},
+    {p:5, g:4, s:'Zr', z:40, name:'Zirconium', cat:'transition'},
+    {p:5, g:5, s:'Nb', z:41, name:'Niobium', cat:'transition'},
+    {p:5, g:6, s:'Mo', z:42, name:'Molybdenum', cat:'transition'},
+    {p:5, g:7, s:'Tc', z:43, name:'Technetium', cat:'transition'},
+    {p:5, g:8, s:'Ru', z:44, name:'Ruthenium', cat:'transition'},
+    {p:5, g:9, s:'Rh', z:45, name:'Rhodium', cat:'transition'},
+    {p:5, g:13, s:'In', z:49, name:'Indium', cat:'posttrans'},
+    {p:5, g:15, s:'Sb', z:51, name:'Antimony', cat:'metalloid'},
+    {p:5, g:16, s:'Te', z:52, name:'Tellurium', cat:'metalloid'},
+    {p:6, g:3, s:'La', z:57, name:'Lanthanum', cat:'rare'},
+    {p:6, g:4, s:'Hf', z:72, name:'Hafnium', cat:'transition'},
+    {p:6, g:5, s:'Ta', z:73, name:'Tantalum', cat:'transition'},
+    {p:6, g:6, s:'W', z:74, name:'Tungsten', cat:'transition'},
+    {p:6, g:7, s:'Re', z:75, name:'Rhenium', cat:'transition'},
+    {p:6, g:8, s:'Os', z:76, name:'Osmium', cat:'transition'},
+    {p:6, g:9, s:'Ir', z:77, name:'Iridium', cat:'transition'},
+    {p:6, g:13, s:'Tl', z:81, name:'Thallium', cat:'posttrans'},
+    {p:6, g:15, s:'Bi', z:83, name:'Bismuth', cat:'posttrans'},
+    {p:6, g:16, s:'Po', z:84, name:'Polonium', cat:'metalloid'},
+    {p:6, g:17, s:'At', z:85, name:'Astatine', cat:'halogen'},
+    {p:7, g:3, s:'Ac', z:89, name:'Actinium', cat:'rare'},
+    {p:7, g:4, s:'Rf', z:104, name:'Rutherfordium', cat:'transition'},
+    {p:7, g:5, s:'Db', z:105, name:'Dubnium', cat:'transition'},
+    {p:7, g:6, s:'Sg', z:106, name:'Seaborgium', cat:'transition'},
+    {p:7, g:7, s:'Bh', z:107, name:'Bohrium', cat:'transition'},
+    {p:7, g:8, s:'Hs', z:108, name:'Hassium', cat:'transition'},
+    {p:7, g:9, s:'Mt', z:109, name:'Meitnerium', cat:'transition'},
+    {p:7, g:11, s:'Rg', z:111, name:'Roentgenium', cat:'transition'},
+    {p:7, g:12, s:'Cn', z:112, name:'Copernicium', cat:'transition'},
+    {p:7, g:13, s:'Nh', z:113, name:'Nihonium', cat:'posttrans'},
+    {p:7, g:14, s:'Fl', z:114, name:'Flerovium', cat:'posttrans'},
+    {p:7, g:15, s:'Mc', z:115, name:'Moscovium', cat:'posttrans'},
+    {p:7, g:16, s:'Lv', z:116, name:'Livermorium', cat:'posttrans'},
+    {p:7, g:17, s:'Ts', z:117, name:'Tennessine', cat:'halogen'},
+    {p:7, g:18, s:'Og', z:118, name:'Oganesson', cat:'noble'},
+    // Lanthanide series (Ce-Lu), shown in its own row below Period 7 —
+    // column = (Z-57)+3, matching where La sits in the main table above it.
+    {p:8, g:4, s:'Ce', z:58, name:'Cerium', cat:'rare'},
+    {p:8, g:5, s:'Pr', z:59, name:'Praseodymium', cat:'rare'},
+    {p:8, g:6, s:'Nd', z:60, name:'Neodymium', cat:'rare'},
+    {p:8, g:7, s:'Pm', z:61, name:'Promethium', cat:'rare'},
+    {p:8, g:8, s:'Sm', z:62, name:'Samarium', cat:'rare'},
+    {p:8, g:9, s:'Eu', z:63, name:'Europium', cat:'rare'},
+    {p:8, g:10, s:'Gd', z:64, name:'Gadolinium', cat:'rare'},
+    {p:8, g:11, s:'Tb', z:65, name:'Terbium', cat:'rare'},
+    {p:8, g:12, s:'Dy', z:66, name:'Dysprosium', cat:'rare'},
+    {p:8, g:13, s:'Ho', z:67, name:'Holmium', cat:'rare'},
+    {p:8, g:14, s:'Er', z:68, name:'Erbium', cat:'rare'},
+    {p:8, g:15, s:'Tm', z:69, name:'Thulium', cat:'rare'},
+    {p:8, g:16, s:'Yb', z:70, name:'Ytterbium', cat:'rare'},
+    {p:8, g:17, s:'Lu', z:71, name:'Lutetium', cat:'rare'},
+    // Actinide series (Th, Pa, Np, Cm-Lr) — U, Pu and Am are missing from
+    // here because they're part of the required set, so they appear as
+    // target-cells in this same row instead. Column = (Z-89)+3.
+    {p:9, g:4, s:'Th', z:90, name:'Thorium', cat:'rare'},
+    {p:9, g:5, s:'Pa', z:91, name:'Protactinium', cat:'rare'},
+    {p:9, g:7, s:'Np', z:93, name:'Neptunium', cat:'rare'},
+    {p:9, g:10, s:'Cm', z:96, name:'Curium', cat:'rare'},
+    {p:9, g:11, s:'Bk', z:97, name:'Berkelium', cat:'rare'},
+    {p:9, g:12, s:'Cf', z:98, name:'Californium', cat:'rare'},
+    {p:9, g:13, s:'Es', z:99, name:'Einsteinium', cat:'rare'},
+    {p:9, g:14, s:'Fm', z:100, name:'Fermium', cat:'rare'},
+    {p:9, g:15, s:'Md', z:101, name:'Mendelevium', cat:'rare'},
+    {p:9, g:16, s:'No', z:102, name:'Nobelium', cat:'rare'},
+    {p:9, g:17, s:'Lr', z:103, name:'Lawrencium', cat:'rare'}
+  ];
+
+  // Just the elements set for this course — a deliberately non-contiguous
+  // subset of the full table, in NO fixed order (spawnNext() draws from a
+  // single shuffled queue covering the whole set at once). Almost all of
+  // them sit on the main table (Periods 1-7); Uranium, Plutonium and
+  // Americium are actinides, so they're given their own row (p:9, the same
+  // row the Actinide-series context elements above sit in), positioned the
+  // way they'd sit on a full periodic table (column = (Z-89)+3).
+  // Phase 1 of the Full Monty: the same 57-element required set as the plain Heinz-57 version.
+  const phase1Targets = [
+    {p:1, g:1, s:'H', z:1, name:'Hydrogen', cat:'nonmetal'},
+    {p:1, g:18, s:'He', z:2, name:'Helium', cat:'noble'},
+    {p:2, g:1, s:'Li', z:3, name:'Lithium', cat:'alkali'},
+    {p:2, g:2, s:'Be', z:4, name:'Beryllium', cat:'alkaline'},
+    {p:2, g:13, s:'B', z:5, name:'Boron', cat:'metalloid'},
+    {p:2, g:14, s:'C', z:6, name:'Carbon', cat:'nonmetal'},
+    {p:2, g:15, s:'N', z:7, name:'Nitrogen', cat:'nonmetal'},
+    {p:2, g:16, s:'O', z:8, name:'Oxygen', cat:'nonmetal'},
+    {p:2, g:17, s:'F', z:9, name:'Fluorine', cat:'halogen'},
+    {p:2, g:18, s:'Ne', z:10, name:'Neon', cat:'noble'},
+    {p:3, g:1, s:'Na', z:11, name:'Sodium', cat:'alkali'},
+    {p:3, g:2, s:'Mg', z:12, name:'Magnesium', cat:'alkaline'},
+    {p:3, g:13, s:'Al', z:13, name:'Aluminium', cat:'posttrans'},
+    {p:3, g:14, s:'Si', z:14, name:'Silicon', cat:'metalloid'},
+    {p:3, g:15, s:'P', z:15, name:'Phosphorus', cat:'nonmetal'},
+    {p:3, g:16, s:'S', z:16, name:'Sulfur', cat:'nonmetal'},
+    {p:3, g:17, s:'Cl', z:17, name:'Chlorine', cat:'halogen'},
+    {p:3, g:18, s:'Ar', z:18, name:'Argon', cat:'noble'},
+    {p:4, g:1, s:'K', z:19, name:'Potassium', cat:'alkali'},
+    {p:4, g:2, s:'Ca', z:20, name:'Calcium', cat:'alkaline'},
+    {p:4, g:3, s:'Sc', z:21, name:'Scandium', cat:'transition'},
+    {p:4, g:4, s:'Ti', z:22, name:'Titanium', cat:'transition'},
+    {p:4, g:5, s:'V', z:23, name:'Vanadium', cat:'transition'},
+    {p:4, g:6, s:'Cr', z:24, name:'Chromium', cat:'transition'},
+    {p:4, g:7, s:'Mn', z:25, name:'Manganese', cat:'transition'},
+    {p:4, g:8, s:'Fe', z:26, name:'Iron', cat:'transition'},
+    {p:4, g:9, s:'Co', z:27, name:'Cobalt', cat:'transition'},
+    {p:4, g:10, s:'Ni', z:28, name:'Nickel', cat:'transition'},
+    {p:4, g:11, s:'Cu', z:29, name:'Copper', cat:'transition'},
+    {p:4, g:12, s:'Zn', z:30, name:'Zinc', cat:'transition'},
+    {p:4, g:13, s:'Ga', z:31, name:'Gallium', cat:'posttrans'},
+    {p:4, g:14, s:'Ge', z:32, name:'Germanium', cat:'metalloid'},
+    {p:4, g:15, s:'As', z:33, name:'Arsenic', cat:'metalloid'},
+    {p:4, g:16, s:'Se', z:34, name:'Selenium', cat:'nonmetal'},
+    {p:4, g:17, s:'Br', z:35, name:'Bromine', cat:'halogen'},
+    {p:4, g:18, s:'Kr', z:36, name:'Krypton', cat:'noble'},
+    {p:5, g:1, s:'Rb', z:37, name:'Rubidium', cat:'alkali'},
+    {p:5, g:2, s:'Sr', z:38, name:'Strontium', cat:'alkaline'},
+    {p:5, g:10, s:'Pd', z:46, name:'Palladium', cat:'transition'},
+    {p:5, g:11, s:'Ag', z:47, name:'Silver', cat:'transition'},
+    {p:5, g:12, s:'Cd', z:48, name:'Cadmium', cat:'transition'},
+    {p:5, g:14, s:'Sn', z:50, name:'Tin', cat:'posttrans'},
+    {p:5, g:17, s:'I', z:53, name:'Iodine', cat:'halogen'},
+    {p:5, g:18, s:'Xe', z:54, name:'Xenon', cat:'noble'},
+    {p:6, g:1, s:'Cs', z:55, name:'Caesium', cat:'alkali'},
+    {p:6, g:2, s:'Ba', z:56, name:'Barium', cat:'alkaline'},
+    {p:6, g:10, s:'Pt', z:78, name:'Platinum', cat:'transition'},
+    {p:6, g:11, s:'Au', z:79, name:'Gold', cat:'transition'},
+    {p:6, g:12, s:'Hg', z:80, name:'Mercury', cat:'transition'},
+    {p:6, g:14, s:'Pb', z:82, name:'Lead', cat:'posttrans'},
+    {p:6, g:18, s:'Rn', z:86, name:'Radon', cat:'noble'},
+    {p:7, g:1, s:'Fr', z:87, name:'Francium', cat:'alkali'},
+    {p:7, g:2, s:'Ra', z:88, name:'Radium', cat:'alkaline'},
+    {p:7, g:10, s:'Ds', z:110, name:'Darmstadtium', cat:'transition'},
+    {p:9, g:6, s:'U', z:92, name:'Uranium', cat:'rare'},
+    {p:9, g:8, s:'Pu', z:94, name:'Plutonium', cat:'rare'},
+    {p:9, g:9, s:'Am', z:95, name:'Americium', cat:'rare'}
+  ];
+
+  // Periods 1-7 sit at row = period+1 (row 1 is the roman-numeral header
+  // above the table). Row 9 is a small gap (like the break before the
+  // f-block on a real periodic table); the Lanthanide row (p:8) and Actinide
+  // row (p:9) sit at rows 10 and 11.
+  // `allTargets` always points at whichever phase's target list is currently live —
+  // every ghost-hint, scoring and "remaining" helper below reads this one binding,
+  // so startPhase2() only has to repoint it (plus reset solvedCount/queue) and the
+  // whole engine carries on working unmodified for Part 2.
+  let allTargets = phase1Targets;
+  let phase = 1;
+  let studentName = 'Chemistry Student';
+  // Keyed by element symbol — only the 57 Part-1 (required) elements get an
+  // entry; counts every wrong landing on that element before it's eventually
+  // solved (the player keeps retrying the SAME element on a miss — see land()
+  // below — so this total really is "how many goes it took").
+  let elementStats = {};
+  // Captured from #reflectionInput the moment the player clicks "Continue"
+  // on the Part-1 checkpoint, so the Phase-2 (updated) certificate can show
+  // BOTH reflections even though #reflectionInput itself is only visible
+  // during the Part-1 checkpoint overlay.
+  let mainReflectionText = '';
+
+  function rowForPeriod(p){
+    if(p <= 7) return p + 1;
+    if(p === 8) return 10;
+    return 11; // p === 9
+  }
+
+  const tableGrid = document.getElementById('tableGrid');
+  const bgTextEl = document.getElementById('bgText');
+  const scoreEl = document.getElementById('score');
+  const elTimerEl = document.getElementById('elTimer');
+  const totalTimerEl = document.getElementById('totalTimer');
+  const remainingEl = document.getElementById('remaining');
+  const studentNameInput = document.getElementById('studentNameInput');
+  const reflectionInput = document.getElementById('reflectionInput');
+  const certBtn = document.getElementById('certBtn');
+  const certBtnPhase1 = document.getElementById('certBtnPhase1');
+  const continueBtn = document.getElementById('continueBtn');
+  const phase1RestartLink = document.getElementById('phase1RestartLink');
+  const reflection2Input = document.getElementById('reflection2Input');
+  const phaseLabelEl = document.getElementById('phaseLabel');
+  const bannerEl = document.getElementById('banner');
+  const hintBannerEl = document.getElementById('hintBanner');
+  const guideTextEl = document.getElementById('guideText');
+  const startOverlay = document.getElementById('startOverlay');
+  const phase1Overlay = document.getElementById('phase1Overlay');
+  const endOverlay = document.getElementById('endOverlay');
+  const finalScoreEl = document.getElementById('finalScore');
+  const finalTimeEl = document.getElementById('finalTime');
+  const phase1ScoreEl = document.getElementById('phase1Score');
+  const phase1SummaryEl = document.getElementById('phase1Summary');
+  const noColorToggle = document.getElementById('noColorToggle');
+  const noGhostToggle = document.getElementById('noGhostToggle');
+  const comboToggle = document.getElementById('comboToggle');
+  const removeAllToggle = document.getElementById('removeAllToggle');
+  const sideEntryToggle = document.getElementById('sideEntryToggle');
+  const noColorRow = document.getElementById('noColorRow');
+  const noGhostRow = document.getElementById('noGhostRow');
+  const multiplierBadge = document.getElementById('multiplierBadge');
+  const multiplierValueEl = document.getElementById('multiplierValue');
+  const btnLeft = document.getElementById('btnLeft');
+  const btnRight = document.getElementById('btnRight');
+  const btnDrop = document.getElementById('btnDrop');
+  const btnUp = document.getElementById('btnUp');
+
+  let fallingBlockEl = null;
+  let score = 0;
+  let noColorEnabled = false;
+  let noGhostEnabled = false;
+  let comboEnabled = false;
+  let removeAllEnabled = false;
+  let sideEntryEnabled = false;
+  let queue = [];
+  let current = null;
+  let currentCol = 9;
+  let currentRow = 4; // only meaningful for a side-entering block
+  let fallingTop = -80;
+  let fallingLeft = 0;
+  let targetTop = 0;
+  let targetLeft = 0;
+  let spawnTime = 0;
+  let gameStart = 0;
+  let gameRunning = false;
+  let fallSpeed = 45;   // base difficulty speed, scales with solvedCount
+  let travelSpeed = 45; // actual px/s used this spawn (side-entry travels faster, to cover the extra distance in a similar time)
+  let solvedCount = 0;
+  let bannerTimeout = null;
+  let rafId = null;
+  let hintActive = false;
+  let hintTimer = null;
+  let hintPauseStart = 0;
+  let flashTimer = null;
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  // Students can mix and match these supports at any time, even mid-game.
+  // Hiding colours doubles points; hiding ghost hints triples them; ticking
+  // both individual boxes stacks to x6. The combo box is a flat x4 shortcut.
+  // "Remove all scaffolding! The expert level!" hides every unsolved box on
+  // the whole table (a blank sheet), strips all colour, AND removes the
+  // ghost hints — a flat x6, stacking with the other switches.
+  function colorsHidden(){ return comboEnabled || noColorEnabled || removeAllEnabled; }
+  function hintsHidden(){ return comboEnabled || noGhostEnabled || removeAllEnabled; }
+
+  function computeMultiplier(){
+    const toggles = comboEnabled ? 4 : (1 * (noColorEnabled?2:1) * (noGhostEnabled?3:1));
+    const removeAllFactor = removeAllEnabled ? 6 : 1;
+    const sideFactor = sideEntryEnabled ? 2 : 1;
+    return toggles * removeAllFactor * sideFactor;
+  }
+
+  function updateMultiplierDisplay(){
+    const m = computeMultiplier();
+    multiplierValueEl.textContent = '×'+m;
+    multiplierBadge.textContent = '×'+m;
+    multiplierBadge.hidden = (m===1);
+  }
+
+  function applyNoColorClass(){
+    tableGrid.classList.toggle('no-color', colorsHidden());
+  }
+
+  function clearVisibleGhostLetters(){
+    hintBannerEl.classList.remove('show');
+    allTargets.forEach(t=>{
+      const cell = getTargetCell(t.p, t.g);
+      if(cell && !cell.classList.contains('filled')){
+        cell.classList.remove('ghost');
+        cell.innerHTML = '<span>'+t.z+'</span>';
+      }
+    });
+  }
+
+  noColorToggle.addEventListener('change', function(){
+    if(comboEnabled || removeAllEnabled) return;
+    noColorEnabled = this.checked;
+    applyNoColorClass();
+    updateMultiplierDisplay();
+  });
+
+  noGhostToggle.addEventListener('change', function(){
+    if(comboEnabled || removeAllEnabled) return;
+    noGhostEnabled = this.checked;
+    updateMultiplierDisplay();
+    if(noGhostEnabled) clearVisibleGhostLetters();
+  });
+
+  comboToggle.addEventListener('change', function(){
+    comboEnabled = this.checked;
+    if(comboEnabled){
+      noColorEnabled = false;
+      noGhostEnabled = false;
+      noColorToggle.checked = false;
+      noGhostToggle.checked = false;
+      noColorToggle.disabled = true;
+      noGhostToggle.disabled = true;
+      noColorRow.classList.add('disabled');
+      noGhostRow.classList.add('disabled');
+      clearVisibleGhostLetters();
+    } else {
+      // Only re-enable "Hide colours"/"Hide ghost hints" if the expert-level
+      // switch isn't also holding them disabled/redundant.
+      if(!removeAllEnabled){
+        noColorToggle.disabled = false;
+        noColorRow.classList.remove('disabled');
+        noGhostToggle.disabled = false;
+        noGhostRow.classList.remove('disabled');
+      }
+    }
+    applyNoColorClass();
+    updateMultiplierDisplay();
+  });
+
+  // "Remove all scaffolding! The expert level!" — hides every unsolved box
+  // on the ENTIRE table (a true blank sheet, not just upcoming periods),
+  // strips all category colour, AND removes the ghost-letter hints entirely
+  // (like "Hide colours" and "Hide ghost hints" above, both of which become
+  // redundant and are disabled while this is on). Stacks with the combo switch.
+  removeAllToggle.addEventListener('change', function(){
+    removeAllEnabled = this.checked;
+    if(removeAllEnabled){
+      noColorEnabled = false;
+      noGhostEnabled = false;
+      noColorToggle.checked = false;
+      noGhostToggle.checked = false;
+      noColorToggle.disabled = true;
+      noGhostToggle.disabled = true;
+      noColorRow.classList.add('disabled');
+      noGhostRow.classList.add('disabled');
+      clearVisibleGhostLetters();
+    } else if(!comboEnabled){
+      noColorToggle.disabled = false;
+      noGhostToggle.disabled = false;
+      noColorRow.classList.remove('disabled');
+      noGhostRow.classList.remove('disabled');
+    }
+    applyNoColorClass();
+    updateHiddenCells();
+    updateMultiplierDisplay();
+  });
+
+  // "Enter from the sides too" — an independent axis from the others: some
+  // elements (a random mix, weighted toward the familiar top-drop) will
+  // instead travel in from the left or right edge, already in the right
+  // COLUMN, and the player must find the right ROW with Up/Down before it
+  // reaches its target. Off by default so the game behaves exactly as
+  // before unless a student switches it on.
+  sideEntryToggle.addEventListener('change', function(){
+    sideEntryEnabled = this.checked;
+    updateMultiplierDisplay();
+  });
+
+  function pickEntryMode(){
+    if(!sideEntryEnabled) return 'top';
+    const r = Math.random();
+    if(r < 0.6) return 'top';
+    return (r < 0.8) ? 'left' : 'right';
+  }
+
+  // Columns 1 and COLS+2 (20) are the period-number gutters down each side;
+  // the 18 ordinary groups now sit at grid columns 2..19 — one more than
+  // their group number.
+  function gridColForGroup(g){ return g + 1; }
+
+  function buildTable(){
+    tableGrid.innerHTML = '';
+
+    // Part 1 targets: every box starts colourless with just its atomic number
+    // showing — there's no "active row" to colour-code here, since any box
+    // could be called on next. Colour and symbol only appear once solved.
+    phase1Targets.forEach(el=>{
+      const div = document.createElement('div');
+      div.className = 'cell target-cell';
+      div.dataset.period = el.p;
+      div.dataset.group = el.g;
+      div.style.gridColumn = gridColForGroup(el.g);
+      div.style.gridRow = rowForPeriod(el.p);
+      div.innerHTML = '<span>'+el.z+'</span>';
+      tableGrid.appendChild(div);
+    });
+
+    // Part 2 targets: shown pre-filled and coloured throughout Part 1 (just like
+    // the "for reference only" elements in the plain Heinz-57 version) — but
+    // they're real .target-cells underneath, so revealPhase2() can strip the
+    // 'filled' state straight back off them once Part 1 is complete.
+    phase2Targets.forEach(el=>{
+      const div = document.createElement('div');
+      div.className = 'cell target-cell filled cat-'+el.cat;
+      div.dataset.period = el.p;
+      div.dataset.group = el.g;
+      div.style.gridColumn = gridColForGroup(el.g);
+      div.style.gridRow = rowForPeriod(el.p);
+      div.innerHTML = '<span>'+el.s+'</span>';
+      tableGrid.appendChild(div);
+    });
+
+    for(let g=1; g<=COLS; g++){
+      const label = document.createElement('div');
+      label.className = 'group-label';
+      label.dataset.group = g;
+      label.style.gridColumn = gridColForGroup(g);
+      label.style.gridRow = 12;
+      label.textContent = g;
+      tableGrid.appendChild(label);
+    }
+
+    // Historical (pre-1985) group numbering shown above the table, mixing
+    // Roman numerals for the main groups with plain numbers for groups 3-12,
+    // which never settled on a single clean Roman-numeral label.
+    for(let g=1; g<=COLS; g++){
+      const romanLabel = document.createElement('div');
+      romanLabel.className = 'roman-label';
+      romanLabel.dataset.group = g;
+      romanLabel.style.gridColumn = gridColForGroup(g);
+      romanLabel.style.gridRow = 1;
+      romanLabel.textContent = ROMAN_LABELS[g-1];
+      tableGrid.appendChild(romanLabel);
+    }
+
+    // Period-number labels down BOTH edges (grid column 1 and COLS+2) — the
+    // "which row?" question a side-entering block poses needs a visible
+    // answer, exactly as the group numbers above answer "which column?" for
+    // a normal top-drop. Periods 1-7 get their ordinary number; the
+    // Lanthanide row (never a target) is left blank; the Actinide row —
+    // which DOES hold targets (U, Pu, Am) — is marked "Ac" rather than a
+    // period number, since it isn't really "period 8/9", it's the f-block
+    // extension sitting below Period 7.
+    const PERIOD_LABEL_TEXT = {1:'1',2:'2',3:'3',4:'4',5:'5',6:'6',7:'7',8:'',9:'Ac'};
+    [1,2,3,4,5,6,7,8,9].forEach(function(p){
+      [1, COLS+2].forEach(function(col){
+        const label = document.createElement('div');
+        label.className = 'period-label';
+        label.dataset.period = p;
+        label.style.gridColumn = col;
+        label.style.gridRow = rowForPeriod(p);
+        label.textContent = PERIOD_LABEL_TEXT[p];
+        tableGrid.appendChild(label);
+      });
+    });
+
+    fallingBlockEl = document.createElement('div');
+    fallingBlockEl.className = 'falling-block';
+    fallingBlockEl.innerHTML =
+      '<div class="symbol" id="blockSymbol">?</div>';
+    tableGrid.appendChild(fallingBlockEl);
+
+    updateHiddenCells();
+  }
+
+  // A target-cell is uniquely identified by BOTH its period and its group,
+  // since e.g. group 1 has a target box in Period 1, Period 2 and Period 3 alike.
+  function getTargetCell(period, group){
+    return tableGrid.querySelector('.target-cell[data-period="'+period+'"][data-group="'+group+'"]');
+  }
+
+  // "Remove all scaffolding! The expert level!": every box that hasn't been
+  // solved yet is hidden completely, wherever it is on the table. Boxes
+  // already solved stay visible as a record of progress.
+  function updateHiddenCells(){
+    tableGrid.querySelectorAll('.target-cell').forEach(cell=>{
+      const isFilled = cell.classList.contains('filled');
+      cell.classList.toggle('hidden-cell', removeAllEnabled && !isFilled);
+    });
+  }
+
+  // Group-label cells exist for every one of the 18 columns, even columns
+  // that have no target box in a given row. Using them (instead of
+  // target-cell) lets the block move across the full board rather than
+  // only the columns that happen to have a target in the current row.
+  function getColumnAnchor(group){
+    return tableGrid.querySelector('.group-label[data-group="'+group+'"]');
+  }
+
+  // Period-label cells exist for every period 1-9, even period 8 (the
+  // Lanthanide row), which never holds a target-cell of its own. Using them
+  // (instead of target-cell) lets a side-entering block be steered to ANY
+  // row, not just rows that happen to hold a target in the current column.
+  function getRowAnchor(period){
+    return tableGrid.querySelector('.period-label[data-period="'+period+'"]');
+  }
+
+  // The block's landing row (for a top-drop) is dictated entirely by which
+  // element is currently falling, so this looks up the row for whichever
+  // period is asked for — current.p while it's falling, or a target's own
+  // p when resetting after a wrong guess.
+  function getRowTopForPeriod(period){
+    const el = getRowAnchor(period);
+    return el ? el.offsetTop : 0;
+  }
+
+  function sizeBlock(){
+    if(!current) return;
+    const cell = tableGrid.querySelector('.target-cell[data-period="'+current.p+'"]');
+    if(!cell) return;
+    const w = cell.offsetWidth, h = cell.offsetHeight;
+    fallingBlockEl.style.width = (w+6)+'px';
+    fallingBlockEl.style.height = (h+6)+'px';
+  }
+
+  // Pixel X for a given GROUP (column) — used both to snap a top-drop block
+  // to currentCol, and to compute the fixed target X a side-entering block
+  // travels toward (its column is correct automatically).
+  function blockLeftForColumn(col){
+    const cell = getColumnAnchor(col);
+    if(!cell) return 0;
+    return cell.offsetLeft - 3 + (cell.offsetWidth - (fallingBlockEl.offsetWidth||50))/2;
+  }
+  // Pixel Y for a given PERIOD (row) — the mirror image of the above: used
+  // both to snap a side-entering block to currentRow, and to compute the
+  // fixed target Y a top-drop block falls toward.
+  function blockTopForRow(row){
+    const el = getRowAnchor(row);
+    if(!el) return 0;
+    return el.offsetTop - 3 + (el.offsetHeight - (fallingBlockEl.offsetHeight||50))/2;
+  }
+
+  function positionBlockX(){
+    fallingBlockEl.style.left = blockLeftForColumn(currentCol)+'px';
+  }
+  function positionBlockY(){
+    fallingBlockEl.style.top = blockTopForRow(currentRow)+'px';
+  }
+
+  function updateScore(){
+    scoreEl.textContent = score;
+  }
+  function updateRemaining(){
+    remainingEl.textContent = allTargets.length - solvedCount;
+  }
+
+  function showBanner(msg, good){
+    bannerEl.textContent = msg;
+    bannerEl.className = 'banner show ' + (good?'good':'bad');
+    if(bannerTimeout) clearTimeout(bannerTimeout);
+    bannerTimeout = setTimeout(()=>{ bannerEl.className='banner'; }, 1600);
+  }
+
+  function updateTouchLabels(){
+    if(!btnLeft || !btnRight || !btnDrop || !current) return;
+    if(current.entryMode === 'top'){
+      btnLeft.innerHTML = '&larr;<span>LEFT</span>';
+      btnRight.innerHTML = '&rarr;<span>RIGHT</span>';
+      btnDrop.innerHTML = '&darr;<span>DROP</span>';
+      if(btnUp) btnUp.classList.add('tbtn-dim');
+    } else {
+      btnLeft.innerHTML = '&uarr;<span>UP</span>';
+      btnRight.innerHTML = '&darr;<span>DOWN</span>';
+      btnDrop.innerHTML = (current.entryMode === 'left' ? '&rarr;' : '&larr;') + '<span>GO</span>';
+      if(btnUp) btnUp.classList.remove('tbtn-dim');
+    }
+  }
+
+  function spawnNext(){
+    if(queue.length===0){
+      if(phase === 1){
+        showPhase1Checkpoint();
+        return;
+      }
+      endGame();
+      return;
+    }
+    current = queue.shift();
+    current.entryMode = pickEntryMode();
+    spawnTime = performance.now();
+    // Ramps up over the first ~22 correct placements, then plateaus — with
+    // 90 elements to get through, an ever-increasing speed would become
+    // unplayable long before the end, unlike the shorter single-period games.
+    fallSpeed = 42 + Math.min(solvedCount, 22)*2.2;
+    // A side-entering block has much further to travel (the table's full
+    // width, plus run-up on both sides) than a top-drop has to fall, so it
+    // travels faster to land in a comparable time.
+    travelSpeed = (current.entryMode === 'top') ? fallSpeed : fallSpeed * 2.4;
+    // Whichever axis the player steers (discrete snapping) gets the eased
+    // CSS transition; whichever axis travels automatically every frame must
+    // NOT have one, or the per-frame updates fight the transition.
+    fallingBlockEl.style.transition = (current.entryMode === 'top') ? 'left .12s ease' : 'top .12s ease';
+
+    document.getElementById('blockSymbol').textContent = current.s;
+    fallingBlockEl.className = 'falling-block cat-'+current.cat;
+    bgTextEl.textContent = current.name.toUpperCase();
+
+    sizeBlock();
+
+    if(current.entryMode === 'top'){
+      currentCol = Math.ceil(COLS/2);
+      positionBlockX();
+      targetTop = getRowTopForPeriod(current.p);
+      fallingTop = -(fallingBlockEl.offsetHeight || 50) - 30 - EXTRA_LIFT;
+      fallingBlockEl.style.top = fallingTop+'px';
+      guideTextEl.innerHTML = 'Guide <b>'+current.name+'</b> (<span class="sym-inline">'+current.s+'</span>) into its correct box — it could be anywhere on the table!';
+    } else {
+      currentRow = 4;
+      positionBlockY();
+      targetLeft = blockLeftForColumn(current.g);
+      const runUp = 60 + EXTRA_LIFT;
+      fallingLeft = (current.entryMode === 'left')
+        ? -(fallingBlockEl.offsetWidth || 50) - runUp
+        : (tableGrid.offsetWidth || 920) + runUp;
+      fallingBlockEl.style.left = fallingLeft+'px';
+      const dirWord = (current.entryMode === 'left') ? 'the left' : 'the right';
+      guideTextEl.innerHTML = 'Guide <b>'+current.name+'</b> (<span class="sym-inline">'+current.s+'</span>) into its correct box — it\'s entering from '+dirWord+' this time, so steer <kbd>&uarr;</kbd><kbd>&darr;</kbd> to find its Period!';
+    }
+
+    updateTouchLabels();
+    updateRemaining();
+  }
+
+  function moveCol(delta){
+    if(!current || !gameRunning || hintActive || current.entryMode !== 'top') return;
+    currentCol = Math.min(COLS, Math.max(1, currentCol+delta));
+    positionBlockX();
+  }
+
+  function moveRow(delta){
+    if(!current || !gameRunning || hintActive || current.entryMode === 'top') return;
+    currentRow = Math.min(9, Math.max(1, currentRow+delta));
+    positionBlockY();
+  }
+
+  // The "commit" action — instantly completes the block's travel along its
+  // automatic axis (straight down for a top-drop, straight across to the
+  // target column for a side-entry) and checks the result.
+  function commitBlock(){
+    if(!current || !gameRunning || hintActive) return;
+    if(current.entryMode === 'top'){
+      fallingTop = targetTop;
+      fallingBlockEl.style.top = fallingTop+'px';
+    } else {
+      fallingLeft = targetLeft;
+      fallingBlockEl.style.left = fallingLeft+'px';
+    }
+    land();
+  }
+
+  // onPrimaryMinus/onPrimaryPlus back the LEFT/RIGHT touch buttons, whose
+  // meaning swaps with entry mode: column-steering (top-drop) or
+  // row-steering (side-entry) — see updateTouchLabels().
+  function onPrimaryMinus(){
+    if(!current) return;
+    if(current.entryMode === 'top') moveCol(-1); else moveRow(-1);
+  }
+  function onPrimaryPlus(){
+    if(!current) return;
+    if(current.entryMode === 'top') moveCol(1); else moveRow(1);
+  }
+
+  function fillTargetCell(target){
+    const cell = getTargetCell(target.p, target.g);
+    cell.classList.add('filled','cat-'+target.cat);
+    cell.classList.remove('hidden-cell');
+    cell.innerHTML = '<span>'+target.s+'</span>';
+  }
+
+  function showGhostHints(duration, message, onDone){
+    hintActive = true;
+    hintPauseStart = performance.now();
+    hintBannerEl.textContent = message || "Here's where everything goes — take a look!";
+    hintBannerEl.classList.add('show');
+    allTargets.forEach(t=>{
+      const cell = getTargetCell(t.p, t.g);
+      if(cell && !cell.classList.contains('filled')){
+        cell.classList.add('ghost');
+        cell.innerHTML = '<span>'+t.s+'</span>';
+      }
+    });
+    if(hintTimer) clearTimeout(hintTimer);
+    hintTimer = setTimeout(function(){
+      hideGhostHints();
+      if(onDone) onDone();
+    }, duration);
+  }
+
+  // Wipes every Part-2 box back to a blank, dashed target-cell — the same
+  // state Part-1 boxes start in — undoing the permanent "filled, for
+  // reference only" look they've had on screen throughout Part 1.
+  function revealPhase2(){
+    phase2Targets.forEach(function(t){
+      const cell = getTargetCell(t.p, t.g);
+      if(!cell) return;
+      cell.classList.remove('filled');
+      cell.classList.remove('cat-'+t.cat);
+      cell.innerHTML = '<span>'+t.z+'</span>';
+    });
+    updateHiddenCells();
+  }
+
+  // Part 1 complete — blank out the rest of the table and carry straight on
+  // into Part 2 with the same engine (scoring, side-entry, hints and all),
+  // now playing for the other 61 elements instead of the required 57.
+  // Pauses the game the instant all 57 required elements are placed, so the
+  // player can write their main reflection and grab a certificate before
+  // deciding whether to carry on into the (entirely optional) rest of the
+  // table.
+  function showPhase1Checkpoint(){
+    gameRunning = false;
+    if(rafId) cancelAnimationFrame(rafId);
+    const data = computeCertificateData();
+    phase1ScoreEl.textContent = score;
+    phase1SummaryEl.textContent = 'All '+data.totalRequired+' required elements placed \u2014 '+data.masteredCount+' mastered first time.';
+    bgTextEl.textContent = 'PART 1 COMPLETE!';
+    phase1Overlay.hidden = false;
+  }
+
+  function startPhase2(){
+    phase1Overlay.hidden = true;
+    phase = 2;
+    revealPhase2();
+    allTargets = phase2Targets;
+    solvedCount = 0;
+    queue = shuffle(phase2Targets);
+    updateRemaining();
+    if(phaseLabelEl) phaseLabelEl.textContent = 'Part 2 of 2';
+    bgTextEl.textContent = 'PART TWO!';
+    showBanner('Carrying on \u2014 now the rest of the table!', true);
+
+    // The game was genuinely paused at the Part-1 checkpoint, so resume the
+    // clock/animation loop here rather than assuming it's still running.
+    gameRunning = true;
+    lastTs = null;
+    rafId = requestAnimationFrame(loop);
+
+    if(hintsHidden()){
+      guideTextEl.innerHTML = 'Part 2: the rest of the table. Get ready...';
+      spawnNext();
+    } else {
+      guideTextEl.innerHTML = "Part 2 unlocked \u2014 take a look at the newly-blanked boxes...";
+      showGhostHints(4000, "Part 2! Here's the layout \u2014 study it! (4s)", spawnNext);
+    }
+  }
+
+  function hideGhostHints(){
+    hintBannerEl.classList.remove('show');
+    allTargets.forEach(t=>{
+      const cell = getTargetCell(t.p, t.g);
+      if(cell && !cell.classList.contains('filled')){
+        cell.classList.remove('ghost');
+        cell.innerHTML = '<span>'+t.z+'</span>';
+      }
+    });
+    if(hintActive){
+      // don't let the studied-in-peace hint time count against the player's element timer/score
+      spawnTime += (performance.now() - hintPauseStart);
+    }
+    hintActive = false;
+  }
+
+  // Briefly reveals the correct symbols after a wrong guess, WITHOUT pausing
+  // the falling block or the timer — purely a visual learning aid.
+  function flashAnswers(duration, message){
+    hintBannerEl.textContent = message || "Here's where everything goes!";
+    hintBannerEl.classList.add('show');
+    allTargets.forEach(t=>{
+      const cell = getTargetCell(t.p, t.g);
+      if(cell && !cell.classList.contains('filled')){
+        cell.classList.add('ghost');
+        cell.innerHTML = '<span>'+t.s+'</span>';
+      }
+    });
+    if(flashTimer) clearTimeout(flashTimer);
+    flashTimer = setTimeout(function(){
+      hintBannerEl.classList.remove('show');
+      allTargets.forEach(t=>{
+        const cell = getTargetCell(t.p, t.g);
+        if(cell && !cell.classList.contains('filled')){
+          cell.classList.remove('ghost');
+          cell.innerHTML = '<span>'+t.z+'</span>';
+        }
+      });
+    }, duration);
+  }
+
+  function land(){
+    if(!current) return;
+    const target = current;
+    const correct = (target.entryMode === 'top')
+      ? (currentCol === target.g)
+      : (currentRow === target.p);
+    const elapsed = (performance.now()-spawnTime)/1000;
+
+    const multiplier = computeMultiplier();
+
+    if(correct){
+      const pts = Math.round(Math.max(15, Math.round(150 - elapsed*12)) * multiplier);
+      score += pts;
+      solvedCount++;
+      showBanner('Correct! '+target.s+' ('+target.name+')  +'+pts+' pts', true);
+      fillTargetCell(target);
+      current = null;
+      updateScore();
+      updateRemaining();
+      setTimeout(spawnNext, 650);
+    } else {
+      const penalty = Math.round(20 * multiplier);
+      score = Math.max(0, score-penalty);
+      if(elementStats[target.s]) elementStats[target.s].wrong++;
+      fallingBlockEl.classList.add('wrongflash');
+      setTimeout(()=>fallingBlockEl.classList.remove('wrongflash'), 350);
+      showBanner('Not quite! '+target.name+' belongs elsewhere.  -'+penalty+' pts', false);
+      updateScore();
+      if(target.entryMode === 'top'){
+        currentCol = Math.ceil(COLS/2);
+        positionBlockX();
+        targetTop = getRowTopForPeriod(target.p);
+        fallingTop = -(fallingBlockEl.offsetHeight || 50) - 30 - EXTRA_LIFT;
+        fallingBlockEl.style.top = fallingTop+'px';
+      } else {
+        currentRow = 4;
+        positionBlockY();
+        targetLeft = blockLeftForColumn(target.g);
+        const runUp = 60 + EXTRA_LIFT;
+        fallingLeft = (target.entryMode === 'left')
+          ? -(fallingBlockEl.offsetWidth || 50) - runUp
+          : (tableGrid.offsetWidth || 920) + runUp;
+        fallingBlockEl.style.left = fallingLeft+'px';
+      }
+      if(!hintsHidden()){
+        flashAnswers(5000, "Not quite — here's the correct layout! (5s)");
+      }
+    }
+  }
+
+  function formatTime(ms){
+    const totalSec = Math.floor(ms/1000);
+    const m = Math.floor(totalSec/60);
+    const s = totalSec%60;
+    return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+
+  let lastTs = null;
+  function loop(ts){
+    if(!gameRunning) return;
+    if(lastTs===null) lastTs = ts;
+    const dt = (ts-lastTs)/1000;
+    lastTs = ts;
+
+    if(current && !hintActive){
+      if(current.entryMode === 'top'){
+        fallingTop += travelSpeed*dt;
+        fallingBlockEl.style.top = fallingTop+'px';
+        if(fallingTop >= targetTop) land();
+      } else if(current.entryMode === 'left'){
+        fallingLeft += travelSpeed*dt;
+        fallingBlockEl.style.left = fallingLeft+'px';
+        if(fallingLeft >= targetLeft) land();
+      } else { // 'right'
+        fallingLeft -= travelSpeed*dt;
+        fallingBlockEl.style.left = fallingLeft+'px';
+        if(fallingLeft <= targetLeft) land();
+      }
+      elTimerEl.textContent = ((performance.now()-spawnTime)/1000).toFixed(1)+'s';
+    }
+    totalTimerEl.textContent = formatTime(performance.now()-gameStart);
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function endGame(){
+    gameRunning = false;
+    if(rafId) cancelAnimationFrame(rafId);
+    finalScoreEl.textContent = score;
+    finalTimeEl.textContent = 'Total time: '+formatTime(performance.now()-gameStart);
+    bgTextEl.textContent = 'THE FULL MONTY!';
+    endOverlay.hidden = false;
+  }
+
+  // Mastery is judged purely on the 57 required (Part 1) elements — solved
+  // first time with zero wrong landings counts as mastered; two or more
+  // wrong landings before it was finally solved goes on the "keep
+  // practising" list. One single slip lands in neither list (not quite
+  // flawless, but not a real struggle either).
+  function computeCertificateData(){
+    const mastered = [];
+    const focus = [];
+    phase1Targets.forEach(function(t){
+      const stat = elementStats[t.s] || { wrong: 0 };
+      if(stat.wrong === 0) mastered.push(t);
+      else if(stat.wrong >= 2) focus.push({ el: t, wrong: stat.wrong });
+    });
+    focus.sort(function(a,b){ return b.wrong - a.wrong; });
+    return {
+      masteredCount: mastered.length,
+      totalRequired: phase1Targets.length,
+      focusList: focus,
+      completedFullTable: (phase === 2)
+    };
+  }
+
+  // stage is 'phase1' (checkpoint certificate, Part 2 not yet attempted) or
+  // 'phase2' (updated certificate, after finishing the whole table).
+  function generateCertificate(stage){
+    if(!window.jspdf){
+      alert('The certificate tool did not load — check your internet connection and try again.');
+      return;
+    }
+    const jsPDFCtor = window.jspdf.jsPDF;
+    const doc = new jsPDFCtor({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const W = 297, H = 210;
+    const data = computeCertificateData();
+    const mainReflection = (stage === 'phase1')
+      ? ((reflectionInput && reflectionInput.value.trim()) || 'No reflection provided.')
+      : (mainReflectionText || 'No reflection provided.');
+    const followUpReflection = (stage === 'phase2')
+      ? ((reflection2Input && reflection2Input.value.trim()) || 'No further reflection provided.')
+      : '';
+
+    doc.setDrawColor(154,97,0);
+    doc.setLineWidth(1.2);
+    doc.rect(8, 8, W-16, H-16);
+    doc.setLineWidth(0.4);
+    doc.rect(11, 11, W-22, H-22);
+
+    doc.setFont('times','bold');
+    doc.setFontSize(30);
+    doc.setTextColor(74,47,0);
+    doc.text('Certificate of Achievement', W/2, 32, { align:'center' });
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(13);
+    doc.setTextColor(90,70,30);
+    doc.text('Periodic Table Tetris \u2014 Reflective Chemist\'s Version', W/2, 41, { align:'center' });
+
+    doc.setFont('times','italic');
+    doc.setFontSize(14);
+    doc.setTextColor(60,60,60);
+    doc.text('This certifies that', W/2, 56, { align:'center' });
+
+    doc.setFont('times','bolditalic');
+    doc.setFontSize(26);
+    doc.setTextColor(30,30,30);
+    doc.text(studentName, W/2, 69, { align:'center' });
+
+    doc.setFont('times','normal');
+    doc.setFontSize(13);
+    doc.setTextColor(60,60,60);
+    doc.text('has achieved mastery of '+data.masteredCount+' of the '+data.totalRequired+' required elements', W/2, 82, { align:'center' });
+    if(stage === 'phase2' && data.completedFullTable){
+      doc.text('and went on to complete the entire 118-element periodic table \u2014 the Full Monty!', W/2, 89, { align:'center' });
+    }
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(11);
+    doc.setTextColor(90,90,90);
+    doc.text('Score so far: '+score+'   \u2022   Date: '+new Date().toLocaleDateString(), W/2, 99, { align:'center' });
+
+    let y = 114;
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12);
+    doc.setTextColor(140,40,40);
+    doc.text('Elements to keep practising:', 24, y);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(11);
+    doc.setTextColor(60,60,60);
+    y += 7;
+    if(data.focusList.length === 0){
+      doc.text('None \u2014 every required element was solved first time. Well done!', 24, y);
+      y += 7;
+    } else {
+      const listText = data.focusList.map(function(f){ return f.el.s+' ('+f.el.name+')'; }).join(',  ');
+      const lines = doc.splitTextToSize(listText, W-48);
+      lines.forEach(function(line){ doc.text(line, 24, y); y += 6; });
+    }
+
+    y += 6;
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12);
+    doc.setTextColor(30,60,110);
+    doc.text('Student reflection \u2014 how I feel I am doing overall:', 24, y);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(11);
+    doc.setTextColor(60,60,60);
+    y += 7;
+    const mainReflectionLines = doc.splitTextToSize(mainReflection, W-48);
+    mainReflectionLines.forEach(function(line){ doc.text(line, 24, y); y += 6; });
+
+    if(stage === 'phase2'){
+      y += 5;
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(12);
+      doc.setTextColor(30,60,110);
+      doc.text('Follow-up reflection \u2014 after finishing the whole table:', 24, y);
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11);
+      doc.setTextColor(60,60,60);
+      y += 7;
+      const followUpLines = doc.splitTextToSize(followUpReflection, W-48);
+      followUpLines.forEach(function(line){ doc.text(line, 24, y); y += 6; });
+    }
+
+    doc.setFont('helvetica','italic');
+    doc.setFontSize(10);
+    doc.setTextColor(120,120,120);
+    doc.text('Science Department \u00b7 Refined with AI', W/2, H-14, { align:'center' });
+
+    const safeName = (studentName || 'student').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'student';
+    const filenameTag = (stage === 'phase2') ? 'updated-' : '';
+    doc.save('reflective-chemist-certificate-'+filenameTag+safeName+'.pdf');
+  }
+
+  function startGame(){
+    score = 0;
+    solvedCount = 0;
+    current = null;
+    phase = 1;
+    allTargets = phase1Targets;
+    if(phaseLabelEl) phaseLabelEl.textContent = 'Part 1 of 2';
+    studentName = (studentNameInput && studentNameInput.value.trim()) || 'Chemistry Student';
+    elementStats = {};
+    phase1Targets.forEach(function(t){ elementStats[t.s] = { wrong: 0 }; });
+    lastTs = null;
+    hintActive = false;
+    if(hintTimer){ clearTimeout(hintTimer); hintTimer = null; }
+    if(flashTimer){ clearTimeout(flashTimer); flashTimer = null; }
+    hintBannerEl.classList.remove('show');
+
+    comboEnabled = comboToggle.checked;
+    noColorEnabled = noColorToggle.checked;
+    noGhostEnabled = noGhostToggle.checked;
+    removeAllEnabled = removeAllToggle.checked;
+    sideEntryEnabled = sideEntryToggle.checked;
+    applyNoColorClass();
+    updateMultiplierDisplay();
+
+    buildTable();
+    queue = shuffle(phase1Targets); // Part 1 first — the 57 required elements, shuffled
+    updateScore();
+    updateRemaining();
+    startOverlay.hidden = true;
+    phase1Overlay.hidden = true;
+    endOverlay.hidden = true;
+    mainReflectionText = '';
+    gameRunning = false;
+
+    bgTextEl.textContent = 'GOOD LUCK!';
+    elTimerEl.textContent = '0.0s';
+    totalTimerEl.textContent = '00:00';
+
+    if(hintsHidden()){
+      // Hints are off entirely — skip the preview and drop straight in.
+      guideTextEl.innerHTML = 'Get ready...';
+      gameStart = performance.now();
+      gameRunning = true;
+      spawnNext();
+      rafId = requestAnimationFrame(loop);
+    } else {
+      guideTextEl.innerHTML = 'Study the board — the full 90-element layout is shown for 5 seconds...';
+      showGhostHints(5000, "Here's the full layout — study it! (5s)", function(){
+        gameStart = performance.now();
+        gameRunning = true;
+        spawnNext();
+        rafId = requestAnimationFrame(loop);
+      });
+    }
+  }
+
+  document.getElementById('startBtn').addEventListener('click', startGame);
+  document.getElementById('restartBtn').addEventListener('click', startGame);
+  if(certBtnPhase1) certBtnPhase1.addEventListener('click', function(){ generateCertificate('phase1'); });
+  if(certBtn) certBtn.addEventListener('click', function(){ generateCertificate('phase2'); });
+  if(continueBtn) continueBtn.addEventListener('click', function(){
+    mainReflectionText = (reflectionInput && reflectionInput.value.trim()) || '';
+    startPhase2();
+  });
+  if(phase1RestartLink) phase1RestartLink.addEventListener('click', function(){ startGame(); });
+
+  // Key bindings swap meaning with the falling block's entry mode:
+  // top-drop uses Left/Right to steer the column and Down to commit;
+  // side-entry uses Up/Down to steer the row, and whichever arrow matches
+  // the block's own direction of travel to commit (Right for a block
+  // entering from the left, Left for one entering from the right) — so the
+  // "commit" key always points the way the block is already heading.
+  window.addEventListener('keydown', function(e){
+    if(!gameRunning || !current) return;
+    if(current.entryMode === 'top'){
+      if(e.key==='ArrowLeft' || e.key==='a' || e.key==='A'){ moveCol(-1); e.preventDefault(); }
+      else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){ moveCol(1); e.preventDefault(); }
+      else if(e.key==='ArrowDown' || e.key==='s' || e.key==='S'){ commitBlock(); e.preventDefault(); }
+    } else {
+      if(e.key==='ArrowUp' || e.key==='w' || e.key==='W'){ moveRow(-1); e.preventDefault(); }
+      else if(e.key==='ArrowDown'){ moveRow(1); e.preventDefault(); }
+      else if(current.entryMode==='left' && (e.key==='ArrowRight' || e.key==='d' || e.key==='D')){ commitBlock(); e.preventDefault(); }
+      else if(current.entryMode==='right' && (e.key==='ArrowLeft' || e.key==='a' || e.key==='A')){ commitBlock(); e.preventDefault(); }
+    }
+  });
+
+  // --- touch controls (iPad / touchscreen support) ---
+  // Arrow-key controls above rely on a hardware keyboard, which iPads and
+  // other touchscreens don't have. These on-screen buttons call generic
+  // onPrimaryMinus()/onPrimaryPlus()/commitBlock() functions that are aware
+  // of the current entry mode themselves, using Pointer Events so touch,
+  // mouse and trackpad all work identically. Press-and-hold repeats the
+  // move (like OS key-repeat); a quick tap moves once. Labels are updated
+  // per spawn by updateTouchLabels().
+  (function(){
+    if(!btnLeft || !btnRight || !btnDrop || !btnUp) return;
+
+    var repeatDelay = null;
+    var repeatTimer = null;
+    var safetyStop = null;
+    var activeBtn = null;
+
+    // Bug fix: if pointerup/pointerleave ever failed to fire on the pressed
+    // button (seen intermittently with mouse/trackpad — the OS delivers the
+    // release to a different element, or none), the repeat interval below
+    // used to keep firing forever, silently fighting the keyboard until the
+    // block was dragged to column 1 or 18. stopAll() is now reachable from
+    // several independent listeners (not just the one button that started
+    // it), plus a hard 4s cap, so a repeat can never outlive its keypress.
+    function stopAll(){
+      if(activeBtn) activeBtn.classList.remove('pressed');
+      activeBtn = null;
+      clearTimeout(repeatDelay);
+      clearInterval(repeatTimer);
+      clearTimeout(safetyStop);
+      repeatDelay = null;
+      repeatTimer = null;
+      safetyStop = null;
+    }
+
+    function pressStart(action, btn){
+      return function(ev){
+        ev.preventDefault();
+        stopAll();
+        if(ev.pointerId !== undefined && btn.setPointerCapture){
+          try { btn.setPointerCapture(ev.pointerId); } catch(e){}
+        }
+        activeBtn = btn;
+        btn.classList.add('pressed');
+        action();
+        repeatDelay = setTimeout(function(){
+          repeatTimer = setInterval(action, 130);
+        }, 350);
+        safetyStop = setTimeout(stopAll, 4000);
+      };
+    }
+    function wire(btn, action){
+      btn.addEventListener('pointerdown', pressStart(action, btn));
+      btn.addEventListener('pointerup', stopAll);
+      btn.addEventListener('pointerleave', stopAll);
+      btn.addEventListener('pointercancel', stopAll);
+      btn.addEventListener('lostpointercapture', stopAll);
+      btn.addEventListener('contextmenu', function(ev){ ev.preventDefault(); });
+    }
+
+    // Fail-safes: catch a release anywhere on the page (or the window losing
+    // focus entirely) even if the originating button never reports it.
+    window.addEventListener('pointerup', stopAll);
+    window.addEventListener('pointercancel', stopAll);
+    window.addEventListener('blur', stopAll);
+    document.addEventListener('visibilitychange', function(){ if(document.hidden) stopAll(); });
+
+    wire(btnLeft, onPrimaryMinus);
+    wire(btnRight, onPrimaryPlus);
+    wire(btnDrop, commitBlock);
+    wire(btnUp, function(){ moveRow(-1); });
+  })();
+
+
+  window.addEventListener('resize', function(){
+    if(!current) return;
+    sizeBlock();
+    if(current.entryMode === 'top'){
+      positionBlockX();
+      targetTop = getRowTopForPeriod(current.p);
+    } else {
+      positionBlockY();
+      targetLeft = blockLeftForColumn(current.g);
+    }
+  });
+
+  // Build the table once immediately so it's visible behind the start overlay
+  buildTable();
+})();
+</script>
+  <div class="ai-credit-line">Science Department · Refined with AI</div>
+
+</body>
+</html>
