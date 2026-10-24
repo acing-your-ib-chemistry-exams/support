@@ -83,7 +83,36 @@
   a.card.card-rose .card-title{
     color:#8a4a5c;
   }
-  a.card.card-blue-tint{
+  a.card.card-spotlight{
+    background:linear-gradient(135deg, #ffe08a, #f5a623);
+    border:2.5px solid #8a5a00;
+    box-shadow:0 6px 16px rgba(154,97,0,.4);
+  }
+  a.card.card-spotlight:hover{
+    background:linear-gradient(135deg, #ffe9ab, #ffb53d);
+    border-color:#5c3b00;
+    box-shadow:0 10px 22px rgba(154,97,0,.5);
+  }
+  a.card.card-spotlight .card-title{
+    color:#4a2f00;
+  }
+  a.card.card-spotlight .card-desc{
+    color:#5c3d00;
+  }
+  a.card.card-spotlight .card-title::before{
+    content:'\2605  ';
+  }
+  a.card.card-green-tint{
+    background:#eaf7ee;
+    border-color:#4caf7d;
+  }
+  a.card.card-green-tint:hover{
+    border-color:#2f8a5c;
+  }
+  a.card.card-green-tint .card-title{
+    color:#276b48;
+  }
+    a.card.card-blue-tint{
     background:#eef3fb;
     border-color:#6f93c2;
   }
@@ -172,6 +201,14 @@
     <a class="card card-rose" href="heinz-57-varieties-version.html">
       <div class="card-title">Heinz-57 Version</div>
       <div class="card-desc">The "High Street Version" — just the 57 elements this course requires (including U, Pu and Am, in their own small Period below Period 7), shuffled together and dropped in random order. Every other element is shown for reference but never quizzed.</div>
+    </a>
+    <a class="card card-spotlight" href="heinz-57-the-full-monty.html">
+      <div class="card-title">Heinz-57: The Full Monty</div>
+      <div class="card-desc">Part 1: the 57 required elements, exactly as in the Heinz-57 Version. Part 2: once those are done, the rest of the table goes blank too — finish all 118.</div>
+    </a>
+    <a class="card card-green-tint" href="python-118-the-full-monty.html">
+      <div class="card-title">Python-118: The Full Monty</div>
+      <div class="card-desc">All 118 elements, in any order, with no reference layout at all — nothing pre-filled. For the experts.</div>
     </a>
   </div>
 
