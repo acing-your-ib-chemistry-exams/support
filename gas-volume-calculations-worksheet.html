@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gas Volume Calculations</title>
+<style>
+  :root{
+    --ink:#2a2a28;
+    --paper:#fdfcf9;
+    --accent:#7a4a00;
+    --accent-light:#f3e6d0;
+    --line:#cfc6b4;
+    --secure:#2f9e5c;
+    --nearly:#ad780a;
+    --practice:#c0392b;
+    --unrated:#8a8578;
+    --box-bg:#faf7ef;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9df;
+      --paper:#1c1a16;
+      --accent:#e2b464;
+      --accent-light:#3a2d14;
+      --line:#4a4538;
+      --box-bg:#242019;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9df;
+    --paper:#1c1a16;
+    --accent:#e2b464;
+    --accent-light:#3a2d14;
+    --line:#4a4538;
+    --box-bg:#242019;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Georgia,"Palatino Linotype",Palatino,serif;
+    line-height:1.5;
+    font-size:16px;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:24px 18px 60px;}
+  h1{
+    font-family:"Trebuchet MS",Verdana,Arial,sans-serif;
+    font-size:1.9rem;
+    margin:0 0 4px;
+    color:var(--accent);
+  }
+  h2{
+    font-family:"Trebuchet MS",Verdana,Arial,sans-serif;
+    font-size:1.25rem;
+    margin:34px 0 10px;
+    padding-bottom:4px;
+    border-bottom:2px solid var(--line);
+    color:var(--ink);
+  }
+  h3{
+    font-family:"Trebuchet MS",Verdana,Arial,sans-serif;
+    font-size:1.05rem;
+    margin:18px 0 8px;
+  }
+  .subtitle{color:var(--accent);opacity:.85;font-size:1rem;margin:0 0 20px;}
+  .intro{margin:0 0 18px;}
+  .toolbar{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    background:var(--box-bg);border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;margin:0 0 22px;
+  }
+  .toolbar label{font-size:.92rem;font-family:"Trebuchet MS",Verdana,Arial,sans-serif;}
+  .toolbar input[type=text]{
+    font-family:inherit;font-size:.95rem;padding:5px 8px;border:1px solid var(--line);
+    border-radius:6px;background:var(--paper);color:var(--ink);width:180px;
+  }
+  button{
+    font-family:"Trebuchet MS",Verdana,Arial,sans-serif;
+    font-size:.92rem;
+    border:1px solid var(--accent);
+    background:var(--accent-light);
+    color:var(--ink);
+    padding:7px 13px;
+    border-radius:7px;
+    cursor:pointer;
+  }
+  button.primary{background:var(--accent);color:var(--paper);border-color:var(--accent);}
+  button:hover{filter:brightness(1.06);}
+  button:active{transform:translateY(1px);}
+  .cheatsheet{
+    background:var(--box-bg);
+    border:1px solid var(--accent);
+    border-radius:12px;
+    padding:18px 20px;
+    margin:0 0 24px;
+  }
+  .cheatsheet h2{border:none;margin-top:0;}
+  .eqn{
+    text-align:center;
+    font-family:"Cambria Math",Cambria,Georgia,serif;
+    font-size:1.25rem;
+    font-weight:bold;
+    white-space:nowrap;
+    margin:10px auto;
+    display:block;
+  }
+  .eqn .frac{display:inline-block;vertical-align:middle;}
+  .note{font-size:.92rem;color:var(--ink);opacity:.85;}
+  .worked{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 18px;
+    margin:0 0 18px;
+    background:var(--paper);
+  }
+  .worked .q{font-weight:bold;margin-bottom:8px;}
+  .worked .step{margin:4px 0;}
+  .think{
+    background:var(--accent-light);
+    border-left:4px solid var(--accent);
+    padding:10px 14px;
+    border-radius:0 8px 8px 0;
+    margin:16px 0 18px;
+    font-size:.96rem;
+  }
+  table.molartable{border-collapse:collapse;margin:10px auto;}
+  table.molartable td{border:1px solid var(--line);padding:5px 10px;text-align:center;}
+  .qgrid{display:flex;flex-direction:column;gap:10px;}
+  .qrow{
+    display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+    border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--box-bg);
+  }
+  .qrow .qnum{font-weight:bold;min-width:24px;}
+  .qrow .qtext{flex:1 1 260px;}
+  .qrow input[type=text]{
+    width:110px;font-family:inherit;font-size:.95rem;padding:5px 7px;
+    border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);
+  }
+  .qrow .unit{font-size:.85rem;opacity:.8;}
+  .qrow .fb{min-width:26px;text-align:center;font-weight:bold;}
+  .fb.correct{color:var(--secure);}
+  .fb.wrong{color:var(--practice);}
+  .reveal{
+    font-size:.88rem;border:none;background:none;color:var(--accent);
+    text-decoration:underline;cursor:pointer;padding:0;
+  }
+  .worked-reveal{
+    display:none;margin-top:6px;padding:8px 10px;background:var(--paper);
+    border:1px dashed var(--line);border-radius:7px;font-size:.9rem;
+  }
+  .worked-reveal.shown{display:block;}
+  .mastery-row{
+    display:flex;flex-wrap:wrap;gap:16px;align-items:center;
+    margin:14px 0 6px;font-family:"Trebuchet MS",Verdana,Arial,sans-serif;font-size:.95rem;
+  }
+  .badge{
+    display:inline-block;padding:4px 11px;border-radius:999px;font-weight:bold;font-size:.85rem;
+    color:#fff;
+  }
+  .badge.secure{background:var(--secure);}
+  .badge.nearly{background:var(--nearly);}
+  .badge.practice{background:var(--practice);}
+  .badge.unrated{background:var(--unrated);}
+  .controls-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+  .glossary dt{font-weight:bold;margin-top:8px;}
+  .glossary dd{margin:0 0 6px;}
+  .tooltip{border-bottom:1px dotted var(--accent);cursor:help;}
+  footer{
+    margin-top:46px;text-align:center;font-size:.85rem;font-style:italic;opacity:.75;
+  }
+  #extraArea{display:flex;flex-direction:column;gap:10px;}
+  @media print{
+    .toolbar, .controls-row, .reveal, button, #fileInput, .think{display:none !important;}
+    body{font-size:12.5px;}
+    .wrap{max-width:100%;padding:0 6mm;}
+    .worked-reveal{display:block !important;}
+    .cheatsheet, .worked, .qrow{break-inside:avoid;}
+    a{color:inherit;text-decoration:none;}
+  }
+  @page{size:A4;margin:14mm;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Gas Volume Calculations</h1>
+  <p class="subtitle">Moles &harr; volume of a gas at room temperature and pressure (RTP)</p>
+
+  <p class="intro">This worksheet covers the two calculations in Edexcel's <em>Moles, Formulae and
+  Equations</em> workbook, Exercises 4c and 4d: finding the volume of a given number of moles of
+  gas, and finding the number of moles in a given volume of gas. Work through the cheat sheet and
+  worked examples first, then try the practice questions &mdash; each one marks itself as soon as
+  you type an answer.</p>
+
+  <div class="toolbar">
+    <label for="studentNameInput">Your name (optional, for your saved file):</label>
+    <input type="text" id="studentNameInput" placeholder="e.g. Alex M&uuml;ller" autocomplete="name">
+    <button id="saveProgressBtn" type="button">Save progress</button>
+    <button id="retrieveProgressBtn" type="button">Retrieve progress</button>
+    <input type="file" id="fileInput" accept="application/json" style="display:none;">
+    <button id="savePdfBtn" type="button">Save as a .pdf file</button>
+  </div>
+
+  <div class="cheatsheet">
+    <h2>Cheat sheet: the key idea</h2>
+    <p><span class="tooltip" title="Equal volumes of any gas, at the same temperature and pressure, contain equal numbers of moles.">Avogadro's Law</span>
+    tells us that it does not matter which gas you have &mdash; at room temperature and pressure
+    (RTP), <strong>one mole of any gas occupies the same volume</strong>: 24&nbsp;000&nbsp;cm&sup3;
+    (24&nbsp;dm&sup3;). That single fact is all you need for both directions of this calculation.</p>
+
+    <span class="eqn">V = n &times; 24 000</span>
+    <span class="eqn">n = V &divide; 24 000</span>
+    <p class="note" style="text-align:center;">(V in cm&sup3;, n in mol &mdash; if a question gives
+    the volume in dm&sup3; instead, use 24 in place of 24&nbsp;000.)</p>
+
+    <p class="note">Notice both equations use the <em>same</em> 24&nbsp;000 &mdash; one is just the
+    other turned round. If you can do one, you can do the other.</p>
+  </div>
+
+  <h2>Worked example 1: moles &rarr; volume</h2>
+  <div class="worked">
+    <p class="q">Calculate the volume, in cm&sup3;, occupied by 0.1 moles of NH&#8323; at RTP.</p>
+    <p class="step">We are given an amount in moles, so we are finding a volume &mdash; use
+    V = n &times; 24 000.</p>
+    <span class="eqn">V = n &times; 24 000</span>
+    <span class="eqn">V = 0.1 &times; 24 000</span>
+    <span class="eqn">V = 2400 cm&sup3;</span>
+  </div>
+
+  <h2>Worked example 2: volume &rarr; moles</h2>
+  <div class="worked">
+    <p class="q">Calculate the number of moles in 500&nbsp;cm&sup3; of NH&#8323; at RTP.</p>
+    <p class="step">We are given a volume, so we are finding an amount in moles &mdash; use
+    n = V &divide; 24 000.</p>
+    <span class="eqn">n = V &divide; 24 000</span>
+    <span class="eqn">n = 500 &divide; 24 000</span>
+    <span class="eqn">n = 0.0208 mol</span>
+  </div>
+
+  <div class="think">
+    Think carefully before calculating. Has the question given you an <strong>amount in
+    moles</strong> (so you are finding a volume), or a <strong>volume</strong> (so you are finding
+    an amount in moles)? Decide which direction you're going before you pick up the calculator.
+  </div>
+
+  <h2>Practice Set A &mdash; find the volume (Exercise 4c)</h2>
+  <p class="note">In each case, calculate the volume of the number of moles of gas stated. Give
+  your answer in cm&sup3;.</p>
+  <div class="qgrid" id="setA"></div>
+  <div class="mastery-row">
+    <span>Set A mastery:</span><span class="badge unrated" id="masteryA">Not yet attempted</span>
+    <span id="scoreA" class="note"></span>
+  </div>
+
+  <h2>Practice Set B &mdash; find the moles (Exercise 4d)</h2>
+  <p class="note">In each case, calculate the number of moles of gas in the volume stated. Give
+  your answer in mol.</p>
+  <div class="qgrid" id="setB"></div>
+  <div class="mastery-row">
+    <span>Set B mastery:</span><span class="badge unrated" id="masteryB">Not yet attempted</span>
+    <span id="scoreB" class="note"></span>
+  </div>
+
+  <h2>Extra practice &mdash; fresh questions</h2>
+  <p class="note">Once Sets A and B are feeling secure, generate some new ones &mdash; every
+  question here uses a different gas and a different number, never the same example twice.</p>
+  <div class="controls-row">
+    <button id="genBtn" class="primary" type="button">Generate 6 new questions</button>
+    <button id="clearExtraBtn" type="button">Clear extra questions</button>
+  </div>
+  <div class="qgrid" id="extraArea"></div>
+  <div class="mastery-row">
+    <span>Extra practice mastery:</span><span class="badge unrated" id="masteryExtra">Not yet attempted</span>
+    <span id="scoreExtra" class="note"></span>
+  </div>
+
+  <h2>Overall mastery</h2>
+  <div class="mastery-row">
+    <span>Across everything attempted:</span><span class="badge unrated" id="masteryOverall">Not yet attempted</span>
+    <span id="scoreOverall" class="note"></span>
+  </div>
+
+  <h2>Glossary</h2>
+  <dl class="glossary">
+    <dt>Mole (mol)</dt>
+    <dd>The chemist's "counting unit" for atoms, molecules or ions &mdash; one mole is
+    6.02&nbsp;&times;&nbsp;10&sup2;&sup3; particles.</dd>
+    <dt>RTP (room temperature and pressure)</dt>
+    <dd>The standard conditions these calculations assume: about 20&nbsp;&deg;C and normal
+    atmospheric pressure.</dd>
+    <dt>Avogadro's Law</dt>
+    <dd>Equal volumes of any gas, at the same temperature and pressure, contain equal numbers of
+    moles &mdash; so the gas's identity never changes the 24&nbsp;000&nbsp;cm&sup3; figure.</dd>
+    <dt>Molar gas volume</dt>
+    <dd>The volume occupied by one mole of any gas under stated conditions &mdash; 24&nbsp;000&nbsp;cm&sup3;
+    (24&nbsp;dm&sup3;) at RTP.</dd>
+  </dl>
+
+  <footer>Science Department &middot; Refined with AI</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---- Source data: Exercises 4c and 4d, Edexcel "Moles, Formulae and
+  // Equations" student workbook (8CH01/9CH01), reproduced exactly as given
+  // there. Expected answers are always computed from these raw numbers at
+  // check-time (never hand-typed), so there is no risk of a transcription
+  // slip in the key.
+  const SET_A = [ // moles -> volume (cm3)
+    [1, 'CO₂'], [0.1, 'NH₃'], [0.5, 'C₂H₄'], [2, 'SO₂'],
+    [0.12, 'SO₃'], [3.4, 'HBr'], [0.11, 'Cl₂'], [0.0040, 'CH₄'],
+    [10, 'H₂'], [0.45, 'O₂'], [0.0056, 'C₂H₆'], [0.0090, 'C₃H₈'],
+    [0.040, 'C₂H₂'], [0.123, 'NO'], [0.0023, 'HCl'], [8.0, 'HBr'],
+    [0.000010, 'HI'], [6.0, 'NO₂'], [0.0076, 'F₂'], [3.0, 'N₂']
+  ];
+  const SET_B = [ // volume (cm3) -> moles
+    [200, 'CO₂'], [500, 'NH₃'], [1000, 'C₂H₄'], [2000, 'SO₂'],
+    [234, 'SO₃'], [226, 'HBr'], [256, 'Cl₂'], [200, 'CH₄'],
+    [2000, 'H₂'], [2400, 'O₂'], [700, 'C₂H₆'], [5600, 'C₃H₈'],
+    [2200, 'C₂H₂'], [210, 'NO'], [800, 'HCl'], [80, 'HBr'],
+    [2, 'HI'], [20000, 'NO₂'], [420, 'F₂'], [900, 'N₂']
+  ];
+  const GASES = ['CO₂','NH₃','C₂H₄','SO₂','SO₃','HBr','Cl₂','CH₄',
+    'H₂','O₂','C₂H₆','C₃H₈','C₂H₂','NO','HCl','NO₂','F₂','N₂','CO','HI'];
+
+  function fmt(n){
+    // Friendly display of a number: integers plain, otherwise up to 4
+    // significant-looking decimal places with trailing zeros trimmed.
+    if(Math.abs(n - Math.round(n)) < 1e-9) return String(Math.round(n));
+    let s = n.toPrecision(4);
+    if(s.indexOf('e') === -1 && s.indexOf('.') !== -1){
+      s = s.replace(/0+$/, '').replace(/\.$/, '');
+    }
+    return s;
+  }
+
+  function withinTolerance(given, expected){
+    if(!isFinite(given)) return false;
+    const tol = Math.max(Math.abs(expected) * 0.02, 1e-6);
+    return Math.abs(given - expected) <= tol;
+  }
+
+  function buildSet(containerId, data, direction, prefix){
+    const container = document.getElementById(containerId);
+    data.forEach(function(item, i){
+      const [given, gas] = item;
+      const row = document.createElement('div');
+      row.className = 'qrow';
+      row.dataset.index = i;
+      const qText = (direction === 'AtoV')
+        ? (fmt(given) + ' mol of ' + gas)
+        : (fmt(given) + ' cm³ of ' + gas);
+      const unit = (direction === 'AtoV') ? 'cm³' : 'mol';
+      row.innerHTML =
+        '<span class="qnum">' + (i+1) + '</span>' +
+        '<span class="qtext">' + qText + '</span>' +
+        '<input type="text" inputmode="decimal" class="ans" placeholder="answer">' +
+        '<span class="unit">' + unit + '</span>' +
+        '<span class="fb"></span>' +
+        '<button type="button" class="reveal">show working</button>';
+      container.appendChild(row);
+      const workedDiv = document.createElement('div');
+      workedDiv.className = 'worked-reveal';
+      const expected = (direction === 'AtoV') ? given * 24000 : given / 24000;
+      if(direction === 'AtoV'){
+        workedDiv.innerHTML =
+          '<span class="eqn" style="font-size:1rem;">V = n &times; 24 000</span>' +
+          '<span class="eqn" style="font-size:1rem;">V = ' + fmt(given) + ' &times; 24 000</span>' +
+          '<span class="eqn" style="font-size:1rem;">V = ' + fmt(expected) + ' cm³</span>';
+      } else {
+        workedDiv.innerHTML =
+          '<span class="eqn" style="font-size:1rem;">n = V &divide; 24 000</span>' +
+          '<span class="eqn" style="font-size:1rem;">n = ' + fmt(given) + ' &divide; 24 000</span>' +
+          '<span class="eqn" style="font-size:1rem;">n = ' + fmt(expected) + ' mol</span>';
+      }
+      row.appendChild(workedDiv);
+      row.querySelector('.reveal').addEventListener('click', function(){
+        workedDiv.classList.toggle('shown');
+      });
+      const input = row.querySelector('.ans');
+      const fb = row.querySelector('.fb');
+      input.addEventListener('input', function(){
+        checkAnswer(input, fb, expected, prefix, i);
+      });
+    });
+  }
+
+  // state: { A: {i: true/false}, B: {...}, extra: {i: true/false} }
+  const state = { A: {}, B: {}, extra: {} };
+  const extraExpected = {}; // i -> expected value, for restoring saved progress
+  // Every generated extra question (gas + direction + number), keyed by
+  // index, so "Save progress" can record exactly which ones were made and
+  // "Retrieve progress" can rebuild the same set rather than blank rows.
+  const extraQuestionLog = {};
+
+  function checkAnswer(input, fb, expected, prefix, i){
+    const raw = input.value.trim();
+    if(raw === ''){
+      fb.textContent = '';
+      fb.className = 'fb';
+      delete state[prefix][i];
+      updateMastery();
+      return;
+    }
+    const given = parseFloat(raw);
+    const ok = withinTolerance(given, expected);
+    fb.textContent = ok ? '✓' : '✗';
+    fb.className = 'fb ' + (ok ? 'correct' : 'wrong');
+    state[prefix][i] = ok;
+    updateMastery();
+  }
+
+  function masteryFor(obj){
+    const vals = Object.values(obj);
+    if(vals.length === 0) return { label: 'Not yet attempted', cls: 'unrated', pct: null };
+    const correct = vals.filter(Boolean).length;
+    const pct = correct / vals.length;
+    if(pct >= 0.9) return { label: 'Secure', cls: 'secure', pct: pct };
+    if(pct >= 0.6) return { label: 'Nearly there', cls: 'nearly', pct: pct };
+    return { label: 'Need more practice', cls: 'practice', pct: pct };
+  }
+
+  function applyBadge(badgeEl, scoreEl, obj, total){
+    const m = masteryFor(obj);
+    badgeEl.textContent = m.label;
+    badgeEl.className = 'badge ' + m.cls;
+    const answered = Object.keys(obj).length;
+    const correct = Object.values(obj).filter(Boolean).length;
+    scoreEl.textContent = answered ? (correct + ' / ' + answered + ' correct so far' + (total ? ' (of ' + total + ' questions)' : '')) : '';
+  }
+
+  function updateMastery(){
+    applyBadge(document.getElementById('masteryA'), document.getElementById('scoreA'), state.A, SET_A.length);
+    applyBadge(document.getElementById('masteryB'), document.getElementById('scoreB'), state.B, SET_B.length);
+    applyBadge(document.getElementById('masteryExtra'), document.getElementById('scoreExtra'), state.extra, Object.keys(extraExpected).length);
+    const overall = Object.assign({}, state.A, {});
+    let idx = 0;
+    const combined = {};
+    Object.keys(state.A).forEach(function(k){ combined['a'+k] = state.A[k]; });
+    Object.keys(state.B).forEach(function(k){ combined['b'+k] = state.B[k]; });
+    Object.keys(state.extra).forEach(function(k){ combined['e'+k] = state.extra[k]; });
+    applyBadge(document.getElementById('masteryOverall'), document.getElementById('scoreOverall'), combined, null);
+  }
+
+  buildSet('setA', SET_A, 'AtoV', 'A');
+  buildSet('setB', SET_B, 'VtoA', 'B');
+
+  // ---- Extra practice: freshly generated questions, different numbers and
+  // gases each time, never the same worked example twice in a row.
+  let extraCounter = 0;
+  function randomQuestion(){
+    const gas = GASES[Math.floor(Math.random() * GASES.length)];
+    const direction = Math.random() < 0.5 ? 'AtoV' : 'VtoA';
+    let given;
+    if(direction === 'AtoV'){
+      // a "nice" mole amount, sometimes small, sometimes large
+      const choices = [0.01, 0.02, 0.05, 0.1, 0.2, 0.25, 0.3, 0.5, 0.75, 1, 1.5, 2, 2.5, 4, 5, 8, 0.004, 0.012, 0.0085];
+      given = choices[Math.floor(Math.random() * choices.length)];
+    } else {
+      const choices = [50, 100, 150, 240, 300, 480, 600, 960, 1200, 2400, 3600, 4800, 7200, 12000, 24000, 36000, 60000];
+      given = choices[Math.floor(Math.random() * choices.length)];
+    }
+    return { gas: gas, direction: direction, given: given };
+  }
+
+  function addExtraQuestion(q, savedIndex){
+    const i = (savedIndex !== undefined) ? savedIndex : extraCounter++;
+    extraCounter = Math.max(extraCounter, i + 1);
+    const expected = (q.direction === 'AtoV') ? q.given * 24000 : q.given / 24000;
+    extraExpected[i] = expected;
+    extraQuestionLog[i] = { gas: q.gas, direction: q.direction, given: q.given };
+    const container = document.getElementById('extraArea');
+    const row = document.createElement('div');
+    row.className = 'qrow';
+    row.dataset.index = i;
+    const qText = (q.direction === 'AtoV')
+      ? (fmt(q.given) + ' mol of ' + q.gas)
+      : (fmt(q.given) + ' cm³ of ' + q.gas);
+    const unit = (q.direction === 'AtoV') ? 'cm³' : 'mol';
+    row.innerHTML =
+      '<span class="qnum">' + (i+1) + '</span>' +
+      '<span class="qtext">' + qText + '</span>' +
+      '<input type="text" inputmode="decimal" class="ans" placeholder="answer">' +
+      '<span class="unit">' + unit + '</span>' +
+      '<span class="fb"></span>' +
+      '<button type="button" class="reveal">show working</button>';
+    container.appendChild(row);
+    const workedDiv = document.createElement('div');
+    workedDiv.className = 'worked-reveal';
+    if(q.direction === 'AtoV'){
+      workedDiv.innerHTML =
+        '<span class="eqn" style="font-size:1rem;">V = n &times; 24 000</span>' +
+        '<span class="eqn" style="font-size:1rem;">V = ' + fmt(q.given) + ' &times; 24 000</span>' +
+        '<span class="eqn" style="font-size:1rem;">V = ' + fmt(expected) + ' cm³</span>';
+    } else {
+      workedDiv.innerHTML =
+        '<span class="eqn" style="font-size:1rem;">n = V &divide; 24 000</span>' +
+        '<span class="eqn" style="font-size:1rem;">n = ' + fmt(q.given) + ' &divide; 24 000</span>' +
+        '<span class="eqn" style="font-size:1rem;">n = ' + fmt(expected) + ' mol</span>';
+    }
+    row.appendChild(workedDiv);
+    row.querySelector('.reveal').addEventListener('click', function(){
+      workedDiv.classList.toggle('shown');
+    });
+    const input = row.querySelector('.ans');
+    const fb = row.querySelector('.fb');
+    input.addEventListener('input', function(){
+      checkAnswer(input, fb, expected, 'extra', i);
+    });
+    return { row: row, input: input };
+  }
+
+  document.getElementById('genBtn').addEventListener('click', function(){
+    for(let k = 0; k < 6; k++){
+      addExtraQuestion(randomQuestion());
+    }
+  });
+  document.getElementById('clearExtraBtn').addEventListener('click', function(){
+    document.getElementById('extraArea').innerHTML = '';
+    Object.keys(state.extra).forEach(function(k){ delete state.extra[k]; });
+    Object.keys(extraExpected).forEach(function(k){ delete extraExpected[k]; });
+    Object.keys(extraQuestionLog).forEach(function(k){ delete extraQuestionLog[k]; });
+    extraCounter = 0;
+    updateMastery();
+  });
+
+  updateMastery();
+
+  // ---- Save / retrieve progress (a downloaded JSON file, not browser
+  // storage, so progress survives moving between machines or just closing
+  // the tab).
+  function collectAnswers(containerId){
+    const out = {};
+    document.querySelectorAll('#' + containerId + ' .qrow').forEach(function(row){
+      const idx = row.dataset.index;
+      const val = row.querySelector('.ans').value;
+      if(val !== '') out[idx] = val;
+    });
+    return out;
+  }
+
+  document.getElementById('saveProgressBtn').addEventListener('click', function(){
+    const name = (document.getElementById('studentNameInput').value || '').trim();
+    const payload = {
+      type: 'gas-volume-calculations-progress',
+      savedAt: new Date().toISOString(),
+      studentName: name,
+      answersA: collectAnswers('setA'),
+      answersB: collectAnswers('setB'),
+      answersExtra: collectAnswers('extraArea'),
+      extraQuestionData: Object.keys(extraQuestionLog)
+        .sort(function(a,b){ return parseInt(a,10) - parseInt(b,10); })
+        .map(function(k){ return extraQuestionLog[k]; })
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const safeName = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    a.href = url;
+    a.download = 'gas-volume-progress' + (safeName ? '-' + safeName : '') + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('retrieveProgressBtn').addEventListener('click', function(){
+    document.getElementById('fileInput').click();
+  });
+  document.getElementById('fileInput').addEventListener('change', function(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      try{
+        const data = JSON.parse(ev.target.result);
+        if(data.studentName) document.getElementById('studentNameInput').value = data.studentName;
+        restoreAnswers('setA', data.answersA || {}, 'A');
+        restoreAnswers('setB', data.answersB || {}, 'B');
+        if(data.extraQuestionData && data.extraQuestionData.length){
+          document.getElementById('extraArea').innerHTML = '';
+          Object.keys(state.extra).forEach(function(k){ delete state.extra[k]; });
+          Object.keys(extraExpected).forEach(function(k){ delete extraExpected[k]; });
+          Object.keys(extraQuestionLog).forEach(function(k){ delete extraQuestionLog[k]; });
+          extraCounter = 0;
+          data.extraQuestionData.forEach(function(q){ addExtraQuestion(q); });
+          restoreAnswers('extraArea', data.answersExtra || {}, 'extra');
+        }
+        updateMastery();
+        alert('Progress loaded' + (data.studentName ? ' for ' + data.studentName : '') + '.');
+      } catch(err){
+        alert('That file could not be read as a saved-progress file.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  function restoreAnswers(containerId, answers, prefix){
+    document.querySelectorAll('#' + containerId + ' .qrow').forEach(function(row){
+      const idx = row.dataset.index;
+      if(answers[idx] !== undefined){
+        const input = row.querySelector('.ans');
+        input.value = answers[idx];
+        input.dispatchEvent(new Event('input'));
+      }
+    });
+  }
+
+  // ---- Save as a .pdf file: use the browser's own print-to-PDF, with a
+  // dedicated print stylesheet (defined above) that hides the controls and
+  // shows every worked answer, so the saved PDF is a clean, A4-safe record
+  // of the work done.
+  document.getElementById('savePdfBtn').addEventListener('click', function(){
+    document.querySelectorAll('.worked-reveal').forEach(function(el){ el.classList.add('shown'); });
+    window.print();
+  });
+
+})();
+</script>
+</body>
+</html>
