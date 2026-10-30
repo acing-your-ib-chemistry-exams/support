@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 10 Industrial Chemistry: redox processes practice test</title>
+<style>
+:root{--ink:#000;--soft:#555;--rule:#000;--tint:#f2f2f2;--tint2:#e6e6e6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--ink);font:17px/1.5 "Palatino Linotype",Palatino,"TeX Gyre Pagella","Book Antiqua",Georgia,serif}
+.sans,h1,h2,h3,button,.qn,.qm,.runhead,.foot,label.k,.bar,th,.tabs a{font-family:"Clear Gothic","Helvetica Neue",Helvetica,Arial,sans-serif}
+.runhead{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 16px;font-size:13px}
+.runhead .score{font-weight:700;white-space:nowrap}
+.runhead button{font-size:13px;padding:3px 10px;margin-left:8px}
+main{max-width:800px;margin:0 auto;padding:16px 16px 40px}
+h1{font-weight:400;font-size:30px;line-height:1.2;margin:18px 0 6px}
+h2{font-weight:400;font-size:23px;margin:38px 0 6px;padding-top:8px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+h2 .tot{font-size:14px}
+h3{font-weight:400;font-size:17px;margin:14px 0 4px}
+p{margin:8px 0}
+.intro{margin:6px 0 14px}
+.box{border:1px solid var(--rule);padding:10px 16px;margin:14px 0}
+.box h3{margin-top:0;font-weight:700}
+ul.nav{columns:2;margin:8px 0 0 18px;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px}
+.q{border:1px solid var(--rule);padding:12px 16px 14px;margin:18px 0;background:#fff}
+.q.practice{border-style:dashed;background:#fafafa;margin-left:14px}
+.q.done{border-width:2px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:4px}
+.qn{font-weight:700}
+.qt{font-size:15px;margin-left:8px;font-weight:400}
+.qm{white-space:nowrap}
+.qtext p:first-child{margin-top:2px}
+.fm{text-align:center;white-space:nowrap;overflow-x:auto;font-weight:700;margin:8px 0;font-size:17px}
+.fm.n{font-weight:400}
+.fields{margin:8px 0}
+.frow{text-align:center;white-space:nowrap;margin:8px 0;overflow-x:auto}
+.frow label.k{font-size:14px;margin-right:6px;white-space:normal;display:inline-block;max-width:60%;vertical-align:middle;text-align:right}
+.frow.wide{text-align:left;white-space:normal}
+input[type=text],select,textarea{font:inherit;font-size:16px;border:1px solid #000;border-radius:0;padding:4px 7px;background:#fff;color:#000}
+input.num{width:8.5em;text-align:center}
+input.txt{width:13em;text-align:center}
+select{max-width:100%}
+textarea{width:100%;min-height:7.5em;resize:vertical;line-height:1.4}
+.unit{margin-left:6px}
+.mark{display:inline-block;min-width:1.4em;font-weight:700;margin-left:6px}
+.ok input,.ok select{border-width:3px}
+.bad input,.bad select{border-style:dashed;border-width:2px}
+.fmsg{font-size:14px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;white-space:normal;display:block;margin:2px auto 0;max-width:34em;text-align:center}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+button{font-size:14px;padding:5px 12px;border:1px solid #000;background:#fff;color:#000;cursor:pointer;border-radius:0}
+button:hover,button:focus{background:var(--tint2)}
+button.main{background:#000;color:#fff}
+button.main:hover,button.main:focus{background:#333}
+button[hidden]{display:none}
+.panel{border:1px solid #000;background:var(--tint);padding:8px 14px;margin:8px 0;font-size:16px}
+.panel h4{margin:0 0 4px;font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif}
+.panel.hint{background:#fff;border-style:dashed}
+.hintl{margin:4px 0}
+.fb{margin:8px 0 2px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px}
+.fb b{font-weight:700}
+.worked{border-left:4px solid #000;padding:2px 12px;margin:10px 0;background:#fff}
+.worked h4{margin:2px 0;font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif}
+.ideas{margin:8px 0;padding:0;list-style:none;font-size:15px}
+.ideas li{margin:4px 0}
+.ideas label{cursor:pointer}
+.model{border:1px solid #000;padding:6px 12px;margin:8px 0;background:#fff;font-size:16px}
+.bank{border:1px solid #000;padding:5px 10px;margin:8px 0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;text-align:center}
+.bank span{display:inline-block;border:1px solid #888;padding:0 8px;margin:2px 3px}
+table{border-collapse:collapse;margin:8px auto;font-size:15px}
+th,td{border:1px solid #000;padding:3px 9px;text-align:center}
+th{background:var(--tint2);font-weight:700;font-size:14px}
+td.l{text-align:left}
+.tip{border-bottom:1px dotted #000;cursor:help;position:relative}
+.tip:hover::after,.tip:focus::after,.tip.on::after{content:attr(data-tip);position:absolute;left:0;top:1.5em;z-index:30;width:17em;max-width:80vw;background:#fff;border:1px solid #000;padding:5px 8px;font:14px/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;white-space:normal;box-shadow:3px 3px 0 #000}
+#ref{position:fixed;inset:0;background:#fff;z-index:50;overflow:auto;padding:16px}
+#ref[hidden]{display:none}
+#ref .in{max-width:800px;margin:0 auto}
+.close{position:sticky;top:0;float:right}
+.summary td,.summary th{padding:4px 12px}
+.foot{border-top:1px solid #000;margin-top:40px;padding-top:6px;font-size:12px}
+dl.gl dt{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;font-size:14px;margin-top:8px}
+dl.gl dd{margin:0 0 0 14px}
+.legend{font-size:14px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+@media(max-width:560px){ul.nav{columns:1}.frow label.k{max-width:100%;display:block;text-align:center;margin-bottom:3px}.fm{font-size:16px}}
+
+
+.key{border:1px solid currentColor;border-radius:6px;padding:.4em .9em;margin:.7em 0;font-size:.95em}.key p{margin:.2em 0}.key ul{margin:.2em 0 .2em 1.1em;padding:0}
+
+.vt{border-collapse:collapse;margin:.6em auto}.vt th,.vt td{border:1px solid currentColor;padding:.25em .7em;text-align:center}.vt th.rl{text-align:left;font-weight:normal}
+
+.grid td.gcell{vertical-align:top;white-space:nowrap}.grid input.num{width:6em}.grid select{max-width:11em;font-size:13px}.grid .mark{margin-left:3px}.grid .fmsg{font-size:12px;max-width:12em;white-space:normal;text-align:left}.grid th{vertical-align:middle}.grid th.rl{max-width:15em;font-size:14px}
+
+.ptools{text-align:center;margin:10px 0}.pbtn{margin:0 4px}
+@page{size:A4;margin:16mm}
+@media print{.runhead,.tools,.ptools,#savepanel,#ref,button,.panel,.fmsg{display:none!important}
+ body{font-size:11pt}.q{break-inside:avoid;page-break-inside:avoid}h2{break-after:avoid}
+ .worked{display:block}.worked[hidden]{display:none}textarea{border:1px solid #000}}
+
+.meta{border-left:3px solid currentColor;padding:4px 10px;margin:8px 0;font-size:14px}.meta select{font-size:14px;max-width:100%}.meta textarea{width:100%;font-size:14px;box-sizing:border-box}.meta .why{display:flex;flex-direction:column;gap:2px}.meta .why label{display:block}
+
+/* bond enthalpy additions */
+pre.sf{font-family:"DejaVu Sans Mono",Consolas,Menlo,monospace;font-size:15px;line-height:1.15;margin:8px 0;padding:8px 12px;background:#fff;border:1px solid #bbb;border-radius:6px;overflow-x:auto;white-space:pre;text-align:left}
+pre.sf.one{display:inline-block}
+.dg{margin:10px 0;padding:6px 8px;border:1px solid #bbb;border-radius:6px;background:#fff}
+.dgsvg svg{width:100%;height:auto;max-width:680px;display:block;margin:0 auto}
+.dgcap{margin-top:4px}
+th.gh{background:#eef2f7;text-align:left;font-weight:700;padding:5px 8px}
+table.bt{border-collapse:collapse;margin:6px 0}table.bt th,table.bt td{border:1px solid #999;padding:2px 10px;text-align:center}
+@media print{.dg{break-inside:avoid}}
+
+input.txt.eq{width:30em;max-width:100%}
+.fblist{list-style:none;margin:6px 0;padding:0}
+li.fb{border-left:6px solid #999;padding:6px 10px;margin:6px 0;background:#fff}
+li.fb.good{border-left-color:#2e7d32}li.fb.mid{border-left-color:#b8860b}li.fb.low{border-left-color:#b23a3a}li.fb.nostart{border-left-color:#bbb;color:#555}
+
+</style>
+</head>
+<body>
+<div class="runhead"><span>Grade 10 Industrial Chemistry</span><span><span class="score" id="score"></span><button id="refbtn" type="button">Reference sheet</button></span></div>
+<main>
+<h1>Redox processes: practice test</h1>
+<p class="sans" style="font-size:14px;margin-top:0">Oxidation states, oxidised and reduced, half-equations and balanced redox equations. About 70 minutes for the main test, including the manganate(VII) and iron(II) question (section 3), which can be finished for homework.</p>
+<div id="gate" class="box">
+<h3>Before you start</h3>
+<p class="sans" style="font-size:15px">Type your <b>first name</b> and choose your <b>chemistry set</b>. You will be given a three-digit code. Keep it: it is your code in all your saved work.</p>
+<p class="sans" style="text-align:center"><label>First name <input type="text" id="stname" autocomplete="given-name" maxlength="30" style="width:12em"></label> &nbsp; <label>Set <select id="stset"></select></label> &nbsp; <button type="button" id="stgo" class="main">Start</button></p>
+<p class="sans" id="gatemsg" style="font-size:14px;text-align:center" role="status"></p>
+<p class="sans" style="font-size:14px;text-align:center">Already started? <button type="button" class="pbtn" data-act="load">Retrieve progress</button></p>
+</div>
+<div id="savepanel" class="box" hidden>
+<div id="saveblock" hidden><h3>Save progress</h3><p class="sans" style="font-size:14px">Keep the file or the code. When you come back, press <b>Retrieve progress</b> and give it back.</p><textarea id="savecode" readonly rows="3" style="width:100%;font-size:12px"></textarea><p><button type="button" id="copycode">Copy the code</button> <button type="button" id="saveclose">Close</button></p></div>
+<div id="loadblock" hidden><h3>Retrieve progress</h3><p class="sans" style="font-size:14px">Choose the file you saved: <input type="file" id="loadfile" accept=".txt,text/plain"></p><p class="sans" style="font-size:14px">Or paste the code here:</p><textarea id="loadcode" rows="3" style="width:100%;font-size:12px"></textarea><p><button type="button" id="loadgo" class="main">Load</button> <button type="button" id="loadclose">Close</button></p></div>
+<p class="sans" id="savemsg" style="font-size:14px" role="status"></p>
+</div>
+<div id="testbody" hidden>
+<p class="sans" id="who" style="font-size:15px;margin:4px 0"></p>
+<div class="ptools sans" id="ptools"><button type="button" class="pbtn" data-act="save">Save progress</button> <button type="button" class="pbtn" data-act="load">Retrieve progress</button> <button type="button" class="pbtn" data-act="pdf">Save as a .pdf file</button></div>
+<div class="box">
+<h3>How this practice test works</h3>
+<ul style="margin:6px 0 6px 18px;padding:0">
+<li>The main test takes about <b>70 minutes</b>. The time for each section is at the top of the section. The extension (including harder reacting-solution calculations) and <b>More practice</b> are extra.</li>
+<li>Every question has a <b>cheat sheet</b>, up to three <b>hints</b>, and a <b>worked answer</b> that appears after you check.</li>
+<li>Press <b>Check</b> as often as you like. A ✓ means correct. A ✗ means not yet.</li>
+<li><b>More practice</b> gives you a new question of the same kind, with its own cheat sheet and hints. It does not change your score. Use it until you can get full marks first time without a hint.</li>
+<li>Write oxidation states with their sign: <b>+3</b>, <b>-2</b>, <b>0</b>.</li>
+<li>Type equations on one line, for example <b>Ca -> Ca2+ + 2e-</b>. Write a charge after the symbol (2+ or 2-) and electrons as e-. State symbols are optional. The order of the terms on one side does not matter. A multiple of the half-equation is accepted.</li>
+<li>Questions marked <b>Working</b> show you the steps. They score marks, so write them even when you are not sure of the final answer.</li>
+<li>The <b>Reference sheet</b> button (top right) opens the oxidation state rules, the steps for half-equations and the table of names. Move the pointer over a dotted word to see what it means. The glossary is at the end.</li>
+<li><b>Save progress</b> keeps your answers in a file. <b>Retrieve progress</b> brings them back, so you can stop and carry on later. <b>Save as a .pdf file</b> opens the print window: choose <b>Save as PDF</b> as the printer.</li>
+<li>At the end, the <b>Feedback</b> panel tells you which sections are secure and what to do next.</li>
+</ul>
+</div>
+<div class="box"><h3>Before you start</h3><p class="sans" style="font-size:15px;margin:4px 0">In a few words: what do you already know about oxidation, reduction and oxidation states?</p><textarea id="rstart" rows="3" style="width:100%" aria-label="what I know before"></textarea></div>
+<p class="sans" style="font-size:14px;margin-bottom:2px">Sections</p>
+<ul class="nav" id="nav"></ul>
+<div id="sections"></div>
+<h2><span>Your results</span></h2>
+<div id="feedback" class="box fbbox" aria-live="polite"></div>
+<table class="summary"><thead><tr><th class="l">Section</th><th>Marks</th><th>Out of</th><th>Hints used</th><th>Checks</th></tr></thead><tbody id="sumbody"></tbody></table>
+<div class="box"><h3>Looking back</h3><p class="sans" style="font-size:15px;margin:4px 0">In a few words: what is the one thing about redox that you now understand better, and what would you still like to practise?</p><textarea id="rend" rows="3" style="width:100%" aria-label="what I learned"></textarea></div>
+<div class="ptools sans"><button type="button" class="pbtn" data-act="save">Save progress</button> <button type="button" class="pbtn" data-act="load">Retrieve progress</button> <button type="button" class="pbtn" data-act="pdf">Save as a .pdf file</button></div>
+<p style="text-align:center"><button id="copy" type="button" class="main">Copy my results</button> <span id="copied" class="legend"></span></p>
+<h2><span>Glossary</span></h2>
+<dl class="gl" id="gl"></dl>
+</div>
+<div class="foot">Science Department · Refined with AI</div>
+</main>
+<div id="ref" hidden><div class="in"><button id="refclose" type="button" class="close main">Close</button><h2 style="border-top:0"><span>Reference sheet</span></h2><div id="refbody"></div></div></div>
+<script>
+/* ===== redox data and helpers ===== */
+const MINUS='−';
+const sup=t=>'<sup>'+t+'</sup>';
+function F(f){return f.replace(/([A-Za-z\)])(\d+)/g,'$1<sub>$2</sub>');}
+function nice(x){return String(+(+x).toPrecision(10));}
+const KJ='kJ';
+const I=s=>`<i>${s}</i>`;
+const fm=(h,n)=>`<div class="fm${n?' n':''}">${h}</div>`;
+const signed=x=>(x>0?'+':(x<0?MINUS:''))+Math.abs(x);
+const ROM=['0','I','II','III','IV','V','VI','VII','VIII'];
+const roman=n=>ROM[n];
+const SUBD='₀₁₂₃₄₅₆₇₈₉',SUPD='⁰¹²³⁴⁵⁶⁷⁸⁹';
+
+/* ---- species: {f, q, st, el} ---- */
+function chg(q){return q===0?'':(Math.abs(q)>1?Math.abs(q):'')+(q>0?'+':'-');}
+function chgH(q){return q===0?'':sup((Math.abs(q)>1?Math.abs(q):'')+(q>0?'+':MINUS));}
+const canon=s=>s.el?'e-':s.f+chg(s.q);
+const spH=s=>s.el?'e'+sup(MINUS):F(s.f)+chgH(s.q)+(s.st?'('+s.st+')':'');
+const uni=s=>s.f.replace(/\d/g,d=>SUBD[d])+(s.q?(Math.abs(s.q)>1?String(Math.abs(s.q)).replace(/\d/g,d=>SUPD[d]):'')+(s.q>0?'⁺':'⁻'):'');
+const termH=t=>(t[0]>1?t[0]:'')+spH(t[1]);
+const sideH=a=>a.map(termH).join(' + ');
+const eqH=(e)=>sideH(e.l)+' → '+sideH(e.r);
+const termA=t=>(t[0]>1?t[0]:'')+canon(t[1]);
+const sideA=a=>a.map(termA).join(' + ');
+const eqA=e=>sideA(e.l)+' -> '+sideA(e.r);
+/* parse "Zn(s) + 2H{+}(aq) -> Zn{2+}(aq) + H2(g)" */
+function parseTerm(t){
+  t=t.trim();
+  let m=/^(\d*)e-$/.exec(t);if(m)return [m[1]?+m[1]:1,{f:'e',q:-1,el:1}];
+  m=/^(\d*)([A-Za-z0-9()]+?)(?:\{(\d*)([+-])\})?(?:\((s|l|g|aq)\))?$/.exec(t);
+  if(!m)throw new Error('Bad term '+t);
+  const q=m[4]?(m[3]?+m[3]:1)*(m[4]==='+'?1:-1):0;
+  return [m[1]?+m[1]:1,{f:m[2],q,st:m[5]||''}];
+}
+const parseSide=s=>s.split(' + ').map(parseTerm);
+function H(s){const [l,r]=s.split(' -> ');return {l:parseSide(l),r:parseSide(r)};}
+function parseF(f){let i=0;function grp(){const m={};while(i<f.length){const c=f[i];
+  if(c==='('){i++;const g=grp();let n='';while(/\d/.test(f[i]||''))n+=f[i++];const k=n?+n:1;for(const e in g)m[e]=(m[e]||0)+g[e]*k;}
+  else if(c===')'){i++;return m;}
+  else{let e=c;i++;while(/[a-z]/.test(f[i]||''))e+=f[i++];let n='';while(/\d/.test(f[i]||''))n+=f[i++];m[e]=(m[e]||0)+(n?+n:1);}}return m;}return grp();}
+function totals_(a){const at={};let ch=0;a.forEach(([c,s])=>{ch+=c*s.q;if(!s.el){const p=parseF(s.f);for(const e in p)at[e]=(at[e]||0)+c*p[e];}});return {at,ch};}
+function isBal(e){const L=totals_(e.l),R=totals_(e.r);if(L.ch!==R.ch)return false;const ks=Object.keys(Object.assign({},L.at,R.at));return ks.every(k=>(L.at[k]||0)===(R.at[k]||0));}
+function electrons(e){const a=e.l.concat(e.r).find(t=>t[1].el);return a?a[0]:0;}
+function mult(e,k){return {l:e.l.map(t=>[t[0]*k,t[1]]),r:e.r.map(t=>[t[0]*k,t[1]])};}
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+/* add two half-equations: returns {kOx,kRed,eq} */
+function combine(ox,red){
+  const a=electrons(ox),b=electrons(red),L=a*b/gcd(a,b),kO=L/a,kR=L/b;
+  const o=mult(ox,kO),r=mult(red,kR);
+  const agg=(arr)=>{const m=new Map();arr.forEach(([c,s])=>{const k=canon(s);if(!m.has(k))m.set(k,[0,s]);m.get(k)[0]+=c;});return m;};
+  const l=agg(o.l.concat(r.l)),rt=agg(o.r.concat(r.r));
+  const outL=[],outR=[];
+  const keys=new Set([...l.keys(),...rt.keys()]);
+  keys.forEach(k=>{
+    if(k==='e-')return;
+    const a1=l.has(k)?l.get(k)[0]:0,b1=rt.has(k)?rt.get(k)[0]:0,s=(l.has(k)?l.get(k):rt.get(k))[1];
+    if(a1>b1)outL.push([a1-b1,s]);else if(b1>a1)outR.push([b1-a1,s]);
+  });
+  const rank=t=>(canon(t[1])==='H+'?2:(canon(t[1])==='H2O'?3:1));
+  outL.sort((x,y)=>rank(x)-rank(y));outR.sort((x,y)=>rank(x)-rank(y));
+  const eq={l:outL,r:outR};
+  if(!isBal(eq))throw new Error('Combined equation not balanced: '+eqA(eq));
+  return {kOx:kO,kRed:kR,eq,ne:L};
+}
+
+/* ---- checking a typed equation ---- */
+function normEq(s){
+  s=String(s).replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,c=>SUPD.indexOf(c)).replace(/[₀-₉]/g,c=>SUBD.indexOf(c)).replace(/⁺/g,'+').replace(/⁻/g,'-').replace(/[−–—]/g,'-');
+  s=s.replace(/\s*(-{1,3}>|=>|→|⟶|⇒|=)\s*/g,'>');
+  s=s.replace(/\((aq|s|l|g)\)/gi,'').replace(/[\s\^{}]/g,'');
+  s=s.replace(/e−|e–/g,'e-');
+  return s;
+}
+function termAlts(t){
+  const s=t[1];if(s.el)return ['e-','e'];
+  const a=[canon(s)];
+  if(Math.abs(s.q)>1)a.push(s.f+(s.q>0?'+':'-')+Math.abs(s.q));
+  return a;
+}
+function matchSide(str,rem){
+  if(str==='')return rem.length===0;
+  for(let i=0;i<rem.length;i++){
+    const [c,sp]=rem[i],alts=termAlts([c,sp]);
+    for(const pre of (c===1?['','1']:[String(c)])){
+      for(const alt of alts){
+        const tok=pre+alt;
+        if(str.startsWith(tok)){
+          const rest=str.slice(tok.length),others=rem.filter((_,k)=>k!==i);
+          if(rest===''){if(others.length===0)return true;}
+          else if(rest[0]==='+'){if(matchSide(rest.slice(1),others))return true;}
+        }
+      }
+    }
+  }
+  return false;
+}
+function eqMatches(str,e){
+  const parts=str.split('>');if(parts.length!==2)return false;
+  return matchSide(parts[0],e.l)&&matchSide(parts[1],e.r);
+}
+function checkEq(val,f){
+  if(String(val).trim()==='')return {ok:false,msg:'Nothing entered yet.'};
+  const s=normEq(val);
+  if(s.split('>').length!==2)return {ok:false,msg:'Put an arrow in the equation: type -> between the two sides.'};
+  const e=f.eq;
+  for(let k=1;k<=4;k++)if(eqMatches(s,k===1?e:mult(e,k)))return {ok:true};
+  const sw={l:e.r,r:e.l};
+  if(eqMatches(s,sw))return {ok:false,msg:'This is the equation the wrong way round. Check which side the electrons are on.'};
+  return {ok:false,msg:f.msg||'Not yet. Check the atoms first, then the charge, then the electrons.'};
+}
+function normN(s){return String(s).toLowerCase().replace(/sulfate/g,'sulphate').replace(/sulfuric/g,'sulphuric').replace(/\s*\(\s*/g,'(').replace(/\s*\)\s*/g,')').replace(/\s+/g,' ').trim();}
+const eq=(label,e,o)=>Object.assign({k:'txt',mode:'eq',label,ans:[eqA(e)],eq:e},o||{});
+const name=(label,ans,o)=>Object.assign({k:'txt',mode:'name',label,ans:[].concat(ans)},o||{});
+
+/* ---- glossary ---- */
+const GLOSS={
+ 'oxidation state':'The charge an atom would have if every bond were ionic. It is written with the sign first: +2, −1, 0. The oxidation states of all the atoms in a compound add up to the charge on the species.',
+ 'oxidation number':'The Roman numeral in a name, such as the (III) in iron(III) oxide. It is the oxidation state written as a Roman numeral, in brackets.',
+ 'redox':'A reaction in which oxidation and reduction happen together.',
+ 'oxidation':'Loss of electrons. The oxidation state goes up.',
+ 'reduction':'Gain of electrons. The oxidation state goes down.',
+ 'oxidised':'Has lost electrons. Its oxidation state has gone up.',
+ 'reduced':'Has gained electrons. Its oxidation state has gone down.',
+ 'oxidising agent':'The reactant that accepts electrons. It is reduced, and it makes the other reactant oxidised. Also called the oxidant.',
+ 'reducing agent':'The reactant that supplies electrons. It is oxidised, and it makes the other reactant reduced. Also called the reductant.',
+ 'half-equation':'An equation for only the oxidation or only the reduction, with electrons shown. Atoms and charge must balance.',
+ 'electron':'A negatively charged particle, e⁻. Electrons are lost in oxidation and gained in reduction.',
+ 'acidified':'Made acidic by adding H⁺ ions. In acid solution you can use H⁺ and H₂O to balance a half-equation.',
+ 'spectator ion':'An ion that is in the solution but does not change in the reaction.',
+ 'IUPAC':'The international organisation that agrees the systematic names of chemical compounds.',
+ 'ion':'An atom or group of atoms with an electric charge.',
+ 'disproportionation':'A reaction in which the same element is both oxidised and reduced.'
+};
+const AR_ORDER=[],AR={};
+
+/* ===== pools: oxidation states, redox reactions, half-equations, names ===== */
+/* oxidation-state species: formula, charge, [[element,state,count]...], element to work out */
+const OS=[
+ ['NH4',1,[['N',-3,1],['H',1,4]],'N'],['CuCl2',0,[['Cu',2,1],['Cl',-1,2]],'Cu'],['H2O',0,[['H',1,2],['O',-2,1]],'O'],
+ ['SO2',0,[['S',4,1],['O',-2,2]],'S'],['Fe2O3',0,[['Fe',3,2],['O',-2,3]],'Fe'],['NO3',-1,[['N',5,1],['O',-2,3]],'N'],
+ ['MnO2',0,[['Mn',4,1],['O',-2,2]],'Mn'],['PO4',-3,[['P',5,1],['O',-2,4]],'P'],['K2Cr2O7',0,[['K',1,2],['Cr',6,2],['O',-2,7]],'Cr'],
+ ['MnO4',-1,[['Mn',7,1],['O',-2,4]],'Mn'],
+ ['NH3',0,[['N',-3,1],['H',1,3]],'N'],['CH4',0,[['C',-4,1],['H',1,4]],'C'],['CO2',0,[['C',4,1],['O',-2,2]],'C'],
+ ['CO3',-2,[['C',4,1],['O',-2,3]],'C'],['H2O2',0,[['H',1,2],['O',-1,2]],'O'],['SO3',0,[['S',6,1],['O',-2,3]],'S'],
+ ['SO3',-2,[['S',4,1],['O',-2,3]],'S'],['SO4',-2,[['S',6,1],['O',-2,4]],'S'],['H2SO4',0,[['H',1,2],['S',6,1],['O',-2,4]],'S'],
+ ['HNO3',0,[['H',1,1],['N',5,1],['O',-2,3]],'N'],['HNO2',0,[['H',1,1],['N',3,1],['O',-2,2]],'N'],['NO',0,[['N',2,1],['O',-2,1]],'N'],
+ ['NO2',0,[['N',4,1],['O',-2,2]],'N'],['N2O',0,[['N',1,2],['O',-2,1]],'N'],['Cr2O3',0,[['Cr',3,2],['O',-2,3]],'Cr'],
+ ['CrO3',0,[['Cr',6,1],['O',-2,3]],'Cr'],['CrCl3',0,[['Cr',3,1],['Cl',-1,3]],'Cr'],['CrO4',-2,[['Cr',6,1],['O',-2,4]],'Cr'],
+ ['Cr2O7',-2,[['Cr',6,2],['O',-2,7]],'Cr'],['KMnO4',0,[['K',1,1],['Mn',7,1],['O',-2,4]],'Mn'],['MnCl2',0,[['Mn',2,1],['Cl',-1,2]],'Mn'],
+ ['FeO',0,[['Fe',2,1],['O',-2,1]],'Fe'],['FeCl3',0,[['Fe',3,1],['Cl',-1,3]],'Fe'],['V2O5',0,[['V',5,2],['O',-2,5]],'V'],
+ ['TiCl4',0,[['Ti',4,1],['Cl',-1,4]],'Ti'],['Ni(OH)2',0,[['Ni',2,1],['O',-2,2],['H',1,2]],'Ni'],['CuO',0,[['Cu',2,1],['O',-2,1]],'Cu'],
+ ['Cu2O',0,[['Cu',1,2],['O',-2,1]],'Cu'],['ClO3',-1,[['Cl',5,1],['O',-2,3]],'Cl'],['OCl',-1,[['O',-2,1],['Cl',1,1]],'Cl'],
+ ['IO3',-1,[['I',5,1],['O',-2,3]],'I'],['PbO2',0,[['Pb',4,1],['O',-2,2]],'Pb'],['SnCl4',0,[['Sn',4,1],['Cl',-1,4]],'Sn'],
+ ['H2S',0,[['H',1,2],['S',-2,1]],'S'],['Fe(OH)3',0,[['Fe',3,1],['O',-2,3],['H',1,3]],'Fe']
+].map(a=>({f:a[0],q:a[1],els:a[2],unk:a[3]}));
+const osByKey=(f,q)=>OS.find(s=>s.f===f&&s.q===q);
+OS.forEach(s=>{let t=0;s.els.forEach(e=>t+=e[1]*e[2]);if(t!==s.q)throw new Error('Oxidation states do not add up in '+s.f+' '+s.q);
+  const p=parseF(s.f);s.els.forEach(e=>{if(p[e[0]]!==e[2])throw new Error('Count mismatch '+s.f+' '+e[0]);});});
+const osH=s=>F(s.f)+chgH(s.q);
+const osU=s=>s.f.replace(/\d/g,d=>SUBD[d])+(s.q?(Math.abs(s.q)>1?String(Math.abs(s.q)).replace(/\d/g,d=>SUPD[d]):'')+(s.q>0?'⁺':'⁻'):'');
+function osSum(s){
+  const u=s.els.find(e=>e[0]===s.unk),rest=s.els.filter(e=>e[0]!==s.unk);
+  const known=rest.map(e=>e[2]+' × ('+signed(e[1])+')').join(' + ');
+  return (u[2]>1?u[2]:'')+I('x')+(known?' + '+known:'')+' = '+signed(s.q).replace('+0','0').replace('0','0');
+}
+/* ---- reactions for "oxidised or reduced?" ---- */
+function R(str,ox,red){const e=H(str);return {e,ox,red};}
+/* ox / red = [species canon, element, from, to] */
+const RX2=[
+ R('Sn{2+}(aq) + 2Fe{3+}(aq) -> Sn{4+}(aq) + 2Fe{2+}(aq)',['Sn2+','Sn',2,4],['Fe3+','Fe',3,2]),
+ R('Cl2(aq) + 2NaBr(aq) -> Br2(aq) + 2NaCl(aq)',['NaBr','Br',-1,0],['Cl2','Cl',0,-1]),
+ R('2FeCl2(aq) + Cl2(aq) -> 2FeCl3(aq)',['FeCl2','Fe',2,3],['Cl2','Cl',0,-1]),
+ R('2H2O(l) + 2F2(g) -> 4HF(aq) + O2(g)',['H2O','O',-2,0],['F2','F',0,-1]),
+ R('I2(aq) + SO3{2-}(aq) + H2O(l) -> 2I{-}(aq) + SO4{2-}(aq) + 2H{+}(aq)',['SO32-','S',4,6],['I2','I',0,-1]),
+ R('Zn(s) + CuSO4(aq) -> ZnSO4(aq) + Cu(s)',['Zn','Zn',0,2],['CuSO4','Cu',2,0]),
+ R('Mg(s) + 2HCl(aq) -> MgCl2(aq) + H2(g)',['Mg','Mg',0,2],['HCl','H',1,0]),
+ R('2Na(s) + Cl2(g) -> 2NaCl(s)',['Na','Na',0,1],['Cl2','Cl',0,-1]),
+ R('Fe(s) + CuCl2(aq) -> FeCl2(aq) + Cu(s)',['Fe','Fe',0,2],['CuCl2','Cu',2,0]),
+ R('Cl2(aq) + 2KI(aq) -> 2KCl(aq) + I2(aq)',['KI','I',-1,0],['Cl2','Cl',0,-1]),
+ R('2Mg(s) + O2(g) -> 2MgO(s)',['Mg','Mg',0,2],['O2','O',0,-2]),
+ R('H2(g) + Cl2(g) -> 2HCl(g)',['H2','H',0,1],['Cl2','Cl',0,-1]),
+ R('CuO(s) + H2(g) -> Cu(s) + H2O(l)',['H2','H',0,1],['CuO','Cu',2,0]),
+ R('Fe2O3(s) + 3CO(g) -> 2Fe(s) + 3CO2(g)',['CO','C',2,4],['Fe2O3','Fe',3,0]),
+ R('Br2(aq) + 2KI(aq) -> 2KBr(aq) + I2(aq)',['KI','I',-1,0],['Br2','Br',0,-1])
+];
+RX2.forEach(r=>{if(!isBal(r.e))throw new Error('Unbalanced RX2 '+eqA(r.e));
+  const names=r.e.l.map(t=>canon(t[1]));if(names.indexOf(r.ox[0])<0||names.indexOf(r.red[0])<0)throw new Error('RX2 species '+r.ox[0]+' '+r.red[0]);});
+const RX2B=[0,1,2,3,4];   /* the five from the book */
+/* ---- ionic half-equations (no H+ or H2O needed) ---- */
+function IH(ox,red){const o=H(ox),r=H(red);if(!isBal(o)||!isBal(r))throw new Error('Half unbalanced '+ox+' | '+red);const c=combine(o,r);return {ox:o,red:r,full:c.eq,kOx:c.kOx,kRed:c.kRed};}
+const IONIC=[
+ IH('Ca(s) -> Ca{2+}(aq) + 2e-','2H{+}(aq) + 2e- -> H2(g)'),
+ IH('Fe{2+}(aq) -> Fe{3+}(aq) + e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)'),
+ IH('Sn{2+}(aq) -> Sn{4+}(aq) + 2e-','Fe{3+}(aq) + e- -> Fe{2+}(aq)'),
+ IH('2Br{-}(aq) -> Br2(aq) + 2e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)'),
+ IH('Mg(s) -> Mg{2+}(aq) + 2e-','Cu{2+}(aq) + 2e- -> Cu(s)'),
+ IH('Zn(s) -> Zn{2+}(aq) + 2e-','Ag{+}(aq) + e- -> Ag(s)'),
+ IH('Fe(s) -> Fe{2+}(aq) + 2e-','Cu{2+}(aq) + 2e- -> Cu(s)'),
+ IH('Al(s) -> Al{3+}(aq) + 3e-','Cu{2+}(aq) + 2e- -> Cu(s)'),
+ IH('2I{-}(aq) -> I2(aq) + 2e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)'),
+ IH('2I{-}(aq) -> I2(aq) + 2e-','Br2(aq) + 2e- -> 2Br{-}(aq)'),
+ IH('2I{-}(aq) -> I2(aq) + 2e-','2Fe{3+}(aq) + 2e- -> 2Fe{2+}(aq)'),
+ IH('Mg(s) -> Mg{2+}(aq) + 2e-','2H{+}(aq) + 2e- -> H2(g)'),
+ IH('Na(s) -> Na{+}(aq) + e-','Cl2(g) + 2e- -> 2Cl{-}(aq)'),
+ IH('Cu(s) -> Cu{2+}(aq) + 2e-','Ag{+}(aq) + e- -> Ag(s)'),
+ IH('Sn{2+}(aq) -> Sn{4+}(aq) + 2e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)'),
+ IH('Zn(s) -> Zn{2+}(aq) + 2e-','Cu{2+}(aq) + 2e- -> Cu(s)')
+];
+/* ---- equations in acid solution ---- */
+function AC(skel,ox,red,states){const sk=H(skel),o=H(ox),r=H(red);if(!isBal(o)||!isBal(r))throw new Error('Acid half unbalanced '+ox+' | '+red);
+  const c=combine(o,r);
+  const refs=sk.l.map(t=>canon(t[1]));
+  if(refs.indexOf(canon(o.l[0][1]))<0||refs.indexOf(canon(r.l[0][1]))<0)throw new Error('Skeleton mismatch '+skel);
+  return {sk,ox:o,red:r,full:c.eq,kOx:c.kOx,kRed:c.kRed,ne:c.ne,st:states};}
+const ACID=[
+ AC('Zn(s) + SO4{2-}(aq) -> Zn{2+}(aq) + SO2(g)','Zn(s) -> Zn{2+}(aq) + 2e-','SO4{2-}(aq) + 4H{+}(aq) + 2e- -> SO2(g) + 2H2O(l)',['Zn',0,2,'S',6,4]),
+ AC('I{-}(aq) + HSO4{-}(aq) -> I2(aq) + SO2(g)','2I{-}(aq) -> I2(aq) + 2e-','HSO4{-}(aq) + 3H{+}(aq) + 2e- -> SO2(g) + 2H2O(l)',['I',-1,0,'S',6,4]),
+ AC('NO3{-}(aq) + Zn(s) -> NH4{+}(aq) + Zn{2+}(aq)','Zn(s) -> Zn{2+}(aq) + 2e-','NO3{-}(aq) + 10H{+}(aq) + 8e- -> NH4{+}(aq) + 3H2O(l)',['Zn',0,2,'N',5,-3]),
+ AC('I2(aq) + OCl{-}(aq) -> IO3{-}(aq) + Cl{-}(aq)','I2(aq) + 6H2O(l) -> 2IO3{-}(aq) + 12H{+}(aq) + 10e-','OCl{-}(aq) + 2H{+}(aq) + 2e- -> Cl{-}(aq) + H2O(l)',['I',0,5,'Cl',1,-1]),
+ AC('MnO4{-}(aq) + H2SO3(aq) -> SO4{2-}(aq) + Mn{2+}(aq)','H2SO3(aq) + H2O(l) -> SO4{2-}(aq) + 4H{+}(aq) + 2e-','MnO4{-}(aq) + 8H{+}(aq) + 5e- -> Mn{2+}(aq) + 4H2O(l)',['S',4,6,'Mn',7,2]),
+ AC('Fe{2+}(aq) + MnO4{-}(aq) -> Fe{3+}(aq) + Mn{2+}(aq)','Fe{2+}(aq) -> Fe{3+}(aq) + e-','MnO4{-}(aq) + 8H{+}(aq) + 5e- -> Mn{2+}(aq) + 4H2O(l)',['Fe',2,3,'Mn',7,2]),
+ AC('Fe{2+}(aq) + Cr2O7{2-}(aq) -> Fe{3+}(aq) + Cr{3+}(aq)','Fe{2+}(aq) -> Fe{3+}(aq) + e-','Cr2O7{2-}(aq) + 14H{+}(aq) + 6e- -> 2Cr{3+}(aq) + 7H2O(l)',['Fe',2,3,'Cr',6,3]),
+ AC('I{-}(aq) + H2O2(aq) -> I2(aq) + H2O(l)','2I{-}(aq) -> I2(aq) + 2e-','H2O2(aq) + 2H{+}(aq) + 2e- -> 2H2O(l)',['I',-1,0,'O',-1,-2]),
+ AC('Cu(s) + NO3{-}(aq) -> Cu{2+}(aq) + NO(g)','Cu(s) -> Cu{2+}(aq) + 2e-','NO3{-}(aq) + 4H{+}(aq) + 3e- -> NO(g) + 2H2O(l)',['Cu',0,2,'N',5,2]),
+ AC('SO3{2-}(aq) + MnO4{-}(aq) -> SO4{2-}(aq) + Mn{2+}(aq)','SO3{2-}(aq) + H2O(l) -> SO4{2-}(aq) + 2H{+}(aq) + 2e-','MnO4{-}(aq) + 8H{+}(aq) + 5e- -> Mn{2+}(aq) + 4H2O(l)',['S',4,6,'Mn',7,2]),
+ AC('H2S(g) + Cr2O7{2-}(aq) -> S(s) + Cr{3+}(aq)','H2S(g) -> S(s) + 2H{+}(aq) + 2e-','Cr2O7{2-}(aq) + 14H{+}(aq) + 6e- -> 2Cr{3+}(aq) + 7H2O(l)',['S',-2,0,'Cr',6,3]),
+ AC('SO2(g) + Cl2(aq) -> SO4{2-}(aq) + Cl{-}(aq)','SO2(g) + 2H2O(l) -> SO4{2-}(aq) + 4H{+}(aq) + 2e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)',['S',4,6,'Cl',0,-1]),
+ AC('Zn(s) + NO3{-}(aq) -> Zn{2+}(aq) + NO(g)','Zn(s) -> Zn{2+}(aq) + 2e-','NO3{-}(aq) + 4H{+}(aq) + 3e- -> NO(g) + 2H2O(l)',['Zn',0,2,'N',5,2])
+];
+/* ---- equations that are or are not redox ---- */
+const RDX=[
+ ['Zn(s) + 2HCl(aq) → ZnCl<sub>2</sub>(aq) + H<sub>2</sub>(g)','Zn goes 0 → +2 and H goes +1 → 0.'],
+ ['Mg(s) + CuSO<sub>4</sub>(aq) → MgSO<sub>4</sub>(aq) + Cu(s)','Mg goes 0 → +2 and Cu goes +2 → 0.'],
+ ['2Na(s) + Cl<sub>2</sub>(g) → 2NaCl(s)','Na goes 0 → +1 and Cl goes 0 → −1.'],
+ ['Cl<sub>2</sub>(aq) + 2KBr(aq) → 2KCl(aq) + Br<sub>2</sub>(aq)','Br goes −1 → 0 and Cl goes 0 → −1.'],
+ ['CuO(s) + H<sub>2</sub>(g) → Cu(s) + H<sub>2</sub>O(l)','Cu goes +2 → 0 and H goes 0 → +1.'],
+ ['CH<sub>4</sub>(g) + 2O<sub>2</sub>(g) → CO<sub>2</sub>(g) + 2H<sub>2</sub>O(l)','C goes −4 → +4 and O goes 0 → −2.'],
+ ['2H<sub>2</sub>O<sub>2</sub>(aq) → 2H<sub>2</sub>O(l) + O<sub>2</sub>(g)','O goes −1 → −2 and −1 → 0 (the same element is oxidised and reduced).']
+];
+const NRX=[
+ ['NaOH(aq) + HNO<sub>3</sub>(aq) → NaNO<sub>3</sub>(aq) + H<sub>2</sub>O(l)'],['CuO(s) + 2HCl(aq) → CuCl<sub>2</sub>(aq) + H<sub>2</sub>O(l)'],
+ ['MgCO<sub>3</sub>(s) + 2HNO<sub>3</sub>(aq) → Mg(NO<sub>3</sub>)<sub>2</sub>(aq) + H<sub>2</sub>O(l) + CO<sub>2</sub>(g)'],
+ ['AgNO<sub>3</sub>(aq) + NaCl(aq) → AgCl(s) + NaNO<sub>3</sub>(aq)'],['CaCO<sub>3</sub>(s) + 2HCl(aq) → CaCl<sub>2</sub>(aq) + H<sub>2</sub>O(l) + CO<sub>2</sub>(g)'],
+ ['BaCl<sub>2</sub>(aq) + Na<sub>2</sub>SO<sub>4</sub>(aq) → BaSO<sub>4</sub>(s) + 2NaCl(aq)'],['NH<sub>3</sub>(g) + HCl(g) → NH<sub>4</sub>Cl(s)'],
+ ['Ca(OH)<sub>2</sub>(aq) + 2HCl(aq) → CaCl<sub>2</sub>(aq) + 2H<sub>2</sub>O(l)'],['Na<sub>2</sub>CO<sub>3</sub>(aq) + H<sub>2</sub>SO<sub>4</sub>(aq) → Na<sub>2</sub>SO<sub>4</sub>(aq) + H<sub>2</sub>O(l) + CO<sub>2</sub>(g)']
+];
+/* ---- "the oxidation state of X is the same in all except" ---- */
+const FAM=[
+ {el:'Cr',same:[['CrCl3',3],['Cr2O3',3],['Cr2(CO3)3',3],['Cr2(SO4)3',3],['Cr(OH)3',3]],odd:[['CrO3',6],['K2Cr2O7',6],['K2CrO4',6],['CrO',2]]},
+ {el:'Mn',same:[['KMnO4',7],['Mn2O7',7],['NaMnO4',7]],odd:[['MnO2',4],['MnCl2',2],['MnSO4',2],['K2MnO4',6]]},
+ {el:'Mn',same:[['MnCl2',2],['MnSO4',2],['MnO',2],['Mn(OH)2',2]],odd:[['MnO2',4],['KMnO4',7],['Mn2O3',3]]},
+ {el:'S',same:[['SO2',4],['Na2SO3',4],['H2SO3',4],['SOCl2',4]],odd:[['SO3',6],['H2SO4',6],['H2S',-2],['Na2SO4',6]]},
+ {el:'S',same:[['SO3',6],['H2SO4',6],['Na2SO4',6],['SF6',6]],odd:[['SO2',4],['H2S',-2],['Na2SO3',4],['Na2S',-2]]},
+ {el:'N',same:[['HNO3',5],['KNO3',5],['N2O5',5],['NaNO3',5]],odd:[['NO2',4],['HNO2',3],['NO',2],['NH3',-3],['N2O',1]]},
+ {el:'N',same:[['HNO2',3],['NaNO2',3],['N2O3',3],['NF3',3]],odd:[['HNO3',5],['NO2',4],['NH4Cl',-3],['NO',2]]},
+ {el:'Fe',same:[['Fe2O3',3],['FeCl3',3],['Fe(OH)3',3],['Fe2(SO4)3',3]],odd:[['FeO',2],['FeCl2',2],['FeSO4',2]]},
+ {el:'Fe',same:[['FeO',2],['FeCl2',2],['FeSO4',2],['Fe(OH)2',2]],odd:[['Fe2O3',3],['FeCl3',3],['Fe(OH)3',3]]},
+ {el:'Cu',same:[['CuO',2],['CuCl2',2],['CuSO4',2],['Cu(OH)2',2]],odd:[['Cu2O',1],['CuCl',1],['Cu',0]]},
+ {el:'Cl',same:[['HCl',-1],['NaCl',-1],['CaCl2',-1],['AlCl3',-1]],odd:[['NaClO',1],['KClO3',5],['Cl2',0],['HClO4',7]]},
+ {el:'C',same:[['CO2',4],['Na2CO3',4],['CaCO3',4],['CCl4',4]],odd:[['CO',2],['CH4',-4],['C',0],['C2H6',-3]]}
+];
+/* checks on the families: each compound's state for the element is recomputed from known rules where possible */
+/* ---- naming ---- */
+const NAMES=[
+ {f:'Cr2O3',el:'Cr',n:3,name:['chromium(III) oxide']},{f:'CuCl',el:'Cu',n:1,name:['copper(I) chloride']},
+ {f:'PbO2',el:'Pb',n:4,name:['lead(IV) oxide']},{f:'FeO',el:'Fe',n:2,name:['iron(II) oxide']},{f:'Fe2O3',el:'Fe',n:3,name:['iron(III) oxide']},
+ {f:'Cu2O',el:'Cu',n:1,name:['copper(I) oxide']},{f:'CuO',el:'Cu',n:2,name:['copper(II) oxide']},{f:'MnO2',el:'Mn',n:4,name:['manganese(IV) oxide']},
+ {f:'V2O5',el:'V',n:5,name:['vanadium(V) oxide']},{f:'Ni(OH)2',el:'Ni',n:2,name:['nickel(II) hydroxide']},{f:'TiCl4',el:'Ti',n:4,name:['titanium(IV) chloride']},
+ {f:'FeCl3',el:'Fe',n:3,name:['iron(III) chloride']},{f:'SnCl2',el:'Sn',n:2,name:['tin(II) chloride']},{f:'SnCl4',el:'Sn',n:4,name:['tin(IV) chloride']},
+ {f:'CrCl3',el:'Cr',n:3,name:['chromium(III) chloride']},{f:'MnCl2',el:'Mn',n:2,name:['manganese(II) chloride']},{f:'PbO',el:'Pb',n:2,name:['lead(II) oxide']},
+ {f:'Cu(OH)2',el:'Cu',n:2,name:['copper(II) hydroxide']},{f:'CuSO4',el:'Cu',n:2,name:['copper(II) sulphate']},{f:'Fe(OH)3',el:'Fe',n:3,name:['iron(III) hydroxide']}
+];
+const ACIDS=[
+ {f:'HNO3',el:'N',n:5,name:['nitric(V) acid','nitric acid(V)']},{f:'HNO2',el:'N',n:3,name:['nitric(III) acid','nitric acid(III)']},
+ {f:'HClO3',el:'Cl',n:5,name:['chloric(V) acid','chloric acid(V)']},{f:'HClO',el:'Cl',n:1,name:['chloric(I) acid','chloric acid(I)']},
+ {f:'HClO4',el:'Cl',n:7,name:['chloric(VII) acid','chloric acid(VII)']},{f:'H2SO4',el:'S',n:6,name:['sulphuric(VI) acid','sulphuric acid(VI)']},
+ {f:'H2SO3',el:'S',n:4,name:['sulphuric(IV) acid','sulphuric acid(IV)']},{f:'H3PO4',el:'P',n:5,name:['phosphoric(V) acid','phosphoric acid(V)']}
+];
+/* check the names against the oxidation numbers */
+NAMES.concat(ACIDS).forEach(x=>{const want='('+roman(x.n)+')';if(x.name[0].indexOf(want)<0)throw new Error('Name/number mismatch '+x.f);});
+
+/* ---- reference sheet and cheat blocks ---- */
+const NAMETAB='<table class="bt"><tr><th>Formula</th><th>Oxidation state</th><th>Name</th><th>Formula</th><th>Oxidation state</th><th>Name</th></tr>'
+ +'<tr><td>FeO</td><td>Fe +2</td><td>iron(II) oxide</td><td>MnO<sub>4</sub><sup>−</sup></td><td>Mn +7</td><td>manganate(VII) ion</td></tr>'
+ +'<tr><td>Fe<sub>2</sub>O<sub>3</sub></td><td>Fe +3</td><td>iron(III) oxide</td><td>K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub></td><td>Cr +6</td><td>potassium dichromate(VI)</td></tr>'
+ +'<tr><td>Cu<sub>2</sub>O</td><td>Cu +1</td><td>copper(I) oxide</td><td>Cr<sub>2</sub>O<sub>3</sub></td><td>Cr +3</td><td>chromium(III) oxide</td></tr>'
+ +'<tr><td>CuO</td><td>Cu +2</td><td>copper(II) oxide</td><td>NO</td><td>N +2</td><td>nitrogen(II) oxide</td></tr>'
+ +'<tr><td>MnO<sub>2</sub></td><td>Mn +4</td><td>manganese(IV) oxide</td><td>NO<sub>2</sub></td><td>N +4</td><td>nitrogen(IV) oxide</td></tr></table>';
+const RULES='<ol><li>An <b>element on its own</b> (Zn, Cl<sub>2</sub>, O<sub>2</sub>) is <b>0</b>.</li><li>A <b>simple ion</b> has an oxidation state equal to its charge: Fe<sup>3+</sup> is +3, Cl<sup>−</sup> is −1.</li>'
+ +'<li><b>Group 1</b> metals are +1. <b>Group 2</b> metals are +2. <b>Fluorine</b> is −1.</li><li><b>Hydrogen</b> is +1 (except in metal hydrides).</li><li><b>Oxygen</b> is −2 (except in peroxides such as H<sub>2</sub>O<sub>2</sub>, where it is −1).</li>'
+ +'<li><b>Chlorine, bromine, iodine</b> are −1 when joined to a metal or to hydrogen.</li><li>The oxidation states of all the atoms <b>add up to the charge</b> on the species: 0 for a compound, the ion charge for an ion.</li></ol>';
+const OXRED='<p><b>Oxidation is loss of electrons. Reduction is gain of electrons.</b> (OIL RIG: Oxidation Is Loss, Reduction Is Gain.)</p>'
+ +'<table class="bt"><tr><th></th><th>Electrons</th><th>Oxidation state</th><th>The reactant is</th></tr><tr><td>Oxidation</td><td>lost</td><td>goes <b>up</b></td><td>oxidised: it is the <b>reducing agent</b></td></tr><tr><td>Reduction</td><td>gained</td><td>goes <b>down</b></td><td>reduced: it is the <b>oxidising agent</b></td></tr></table>';
+const HALFSTEPS='<ol><li>Write the <b>oxidation states</b> and decide what is oxidised and what is reduced.</li><li>Write a <b>half-equation</b> for each, and balance in this order:<ul><li>(a) atoms other than H and O;</li><li>(b) <b>O</b>: add <b>H<sub>2</sub>O</b>;</li><li>(c) <b>H</b>: add <b>H<sup>+</sup></b>;</li><li>(d) <b>charge</b>: add <b>electrons</b> to the more positive side;</li><li>(e) check atoms and charge.</li></ul></li><li><b>Equalise the electrons</b> by multiplying each half-equation.</li><li><b>Add</b> the half-equations and cancel what is the same on both sides, including the electrons (and any H<sup>+</sup> or H<sub>2</sub>O on both sides).</li></ol>';
+const TYPING='<p class="legend">How to type an equation: <b>Ca -> Ca2+ + 2e-</b>. Write a charge after the symbol (2+ or 2-). Write electrons as e-. State symbols are optional. Capital letters matter.</p>';
+function REF(){
+  return '<h3>Oxidation state rules</h3>'+RULES+'<h3>Oxidation and reduction</h3>'+OXRED+'<h3>Balancing half-equations</h3>'+HALFSTEPS+TYPING+'<h3>Names with oxidation numbers</h3>'+NAMETAB;
+}
+/* ---- feedback ---- */
+const FB={
+ '1':{skill:'finding oxidation states',do:'Learn the seven rules on the cheat sheet. Work out the element you do not know with an equation: number of atoms × x + the known states = the charge.'},
+ '2':{skill:'deciding what is oxidised and what is reduced',do:'Write the oxidation state under every element in the equation. The element whose state goes up is oxidised. The element whose state goes down is reduced. Learn OIL RIG.'},
+ '4':{skill:'oxidising and reducing agents',do:'The reducing agent is the reactant that is oxidised. The oxidising agent is the reactant that is reduced. Each agent is named after what it does to the other reactant.'},
+ '5':{skill:'writing half-equations',do:'Write only the species that change. Balance the atoms, then add electrons to the more positive side. Oxidation: electrons on the right. Reduction: electrons on the left. Check the charge on both sides.'},
+ '6':{skill:'balancing redox equations in acid',do:'Follow the order every time: atoms, O with H₂O, H with H⁺, charge with e⁻. Then multiply so the electrons match and add the two half-equations.'},
+ '7':{skill:'spotting redox reactions and comparing oxidation states',do:'In a redox equation at least one element changes oxidation state. Write the states under each element in every equation and look for a change.'},
+ '8':{skill:'naming compounds with oxidation numbers',do:'Work out the oxidation state of the element with more than one common state, write it in Roman numerals in brackets straight after the name, with no space.'},
+ '3':{skill:'calculations with manganate(VII) and iron(II) solutions',do:'Follow the four steps every time: moles of the solution you know (concentration × volume ÷ 1000), then the ratio from the equation (Fe²⁺ : MnO₄⁻ is 5 : 1), then moles of the unknown, then concentration = moles × 1000 ÷ volume of the unknown solution.'},
+ 'Y':{skill:'harder calculations with reacting solutions',do:'Write the balanced equation ratio first. Then work in this order: moles of the solution you know, moles of the unknown from the ratio, scale up for the whole sample if it was diluted, then concentration or mass. Use the hints one step at a time.'},
+ 'X':{skill:'the extension equations',do:'The method is the same as in section 6. Take it one step at a time and use the hints.'}
+};
+const WHYADV=[
+ 'You ticked that you did not know the oxidation state rules. Keep the rules sheet open and say each rule aloud as you use it.',
+ 'You ticked slips when adding up oxidation states. Write the equation (number of atoms × x + the other states = the charge) and then solve it.',
+ 'You ticked mixing up oxidised and reduced. Use OIL RIG, and check whether the oxidation state went up (oxidised) or down (reduced).',
+ 'You ticked not knowing where the electrons go. Electrons are on the right in oxidation (lost) and on the left in reduction (gained).',
+ 'You ticked balancing O and H. Do the oxygen first with H₂O, then the hydrogen with H⁺, and only then the charge.',
+ 'You ticked balancing the charge. Add up the charges on the left, then on the right, and add electrons to the more positive side.',
+ 'You ticked combining the half-equations. First make the electrons equal (multiply), then add, then cross out what appears on both sides.',
+ 'You ticked not understanding the words. Hover over the dotted words to read the glossary, and read the cheat sheet before the question.'
+];
+function feedbackHTML(){
+  const rows=[];let any=false;
+  SECS.forEach(s=>{
+    const es=QS.filter(e=>e.sec===s.id);let m=0,g=0,h=0,a=0,tried=0;
+    es.forEach(e=>{const c=SC[e.id]||{};if(c.att){tried++;m+=cardMarks(e);}g+=c.got||0;h+=c.hints||0;a+=c.att||0;});
+    if(!es.length)return;
+    const f=FB[s.id]||{skill:s.title,do:''};const part=tried<es.length?' You have tried '+tried+' of the '+es.length+' questions in this section.':'';
+    let cls,msg;
+    if(!a){cls='nostart';msg='Not started yet.';}
+    else{any=true;const p=g/m;
+      if(p>=0.9){cls='good';msg='<b>Secure.</b> You have '+g+' of '+m+' marks for '+f.skill+'.'+(h>0?' You used '+h+' hint'+(h>1?'s':'')+'. Press <b>More practice</b> and try a new question with no hints.':' Press <b>More practice</b> once to check that it is secure with new numbers.')+part;}
+      else if(p>=0.7){cls='mid';msg='<b>Nearly there.</b> '+g+' of '+m+' marks for '+f.skill+'. '+f.do+part;}
+      else{cls='low';msg='<b>Needs more work.</b> '+g+' of '+m+' marks for '+f.skill+'. '+f.do+' Read the cheat sheet, open the hints one at a time, then try <b>More practice</b> until you get full marks first time.'+part;}
+    }
+    rows.push('<li class="fb '+cls+'"><b>'+(s.ext?s.title:s.id+' '+s.title)+'</b><br>'+msg+'</li>');
+  });
+  if(!any)return '<p class="legend">Your feedback appears here as you work through the sections.</p>';
+  const cnt={};LOG.forEach(x=>{if(x.m&&x.m.why)x.m.why.forEach(k=>{cnt[k]=(cnt[k]||0)+1;});});
+  const top=Object.keys(cnt).map(Number).filter(k=>k<WHYADV.length&&cnt[k]>0).sort((a,b)=>cnt[b]-cnt[a]).slice(0,2);
+  const t=totals();
+  return '<h3>Feedback</h3><p>Main test: <b>'+t.g+' / '+t.m+'</b>'+(t.xm?' &nbsp; Extension: <b>'+t.xg+' / '+t.xm+'</b>':'')+'</p><ul class="fblist">'+rows.join('')+'</ul>'
+    +(top.length?'<h4>What you told us made it challenging</h4><ul>'+top.map(k=>'<li>'+WHYADV[k]+'</li>').join('')+'</ul>':'')
+    +'<p class="legend">Mastery means full marks on a <b>More practice</b> question without opening a hint. Do that once in every section.</p>';
+}
+
+/* ===== engine: registry, checking, rendering, scoring ===== */
+let SEED=Math.floor(Math.random()*2147483647);
+function seedFor(id){let h=SEED>>>0;for(let i=0;i<id.length;i++)h=(Math.imul(h^id.charCodeAt(i),16777619)+0x9e3779b9)>>>0;return h;}
+function RNG(det,seed){
+  let s=seed;
+  const rnd=seed===undefined?Math.random:function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const r={det,seeded:seed!==undefined,
+    pick(a){return det?a[0]:a[Math.floor(rnd()*a.length)];},
+    int(a,b){return det?a:a+Math.floor(rnd()*(b-a+1));},
+    shuffle(a){const b=a.slice();if(det)return b;for(let i=b.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;},
+    sample(a,n){return det?a.slice(0,n):r.shuffle(a).slice(0,n);}
+  };return r;
+}
+const SECS=[],QS=[],SC={},LOG=[];
+const SETS=['G10 Industrial Chem','01A (F-day test)','02A (B-Day test)','04A (B-Day test)','05A (E-day test)'];
+const STU={name:'',set:'',code:''};
+const CONF=['Not at all confident','A little confident','Fairly confident','Very confident'];
+const WHY=['I did not know the rules for oxidation states','I made a slip adding up the oxidation states','I mixed up oxidised and reduced','I did not know where the electrons go','I could not balance O and H (with H₂O and H⁺)','I did not balance the charge','I could not combine the half-equations','I did not understand the words','I made a careless slip','I did not get stuck'];
+function stuCode(name,set){let h=7;const s=(name.trim().toLowerCase()+'|'+set.slice(0,3));for(let i=0;i<s.length;i++)h=(Math.imul(h,31)+s.charCodeAt(i))>>>0;return String(100+(h%900));}
+function fileStem(){const n=STU.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]/g,'')||'student';return (STU.set.slice(0,3)||'set')+'_'+n+'_'+(STU.code||'000');}
+function startTest(name,set){
+  name=(name||'').trim();if(!name||!set)return false;
+  STU.name=name;STU.set=set;STU.code=stuCode(name,set);
+  document.getElementById('who').innerHTML='<b>'+esc(name)+'</b> · Set '+esc(set)+' · Your code: <b>'+STU.code+'</b>';
+  document.getElementById('gate').hidden=true;document.getElementById('testbody').hidden=false;
+  window.scrollTo(0,0);return true;
+}
+function sec(id,title,intro,ext){SECS.push({id,title,intro:intro||'',ext:!!ext});}
+function def(id,secId,x){
+  const e={id,sec:secId,gen:null,list:[],i:0};
+  if(typeof x==='function'){e.gen=x;e.spec=x(RNG(false,seedFor(id)));e.last=e.spec.html;}
+  else{e.spec=x;e.list=x.practice||[];}
+  QS.push(e);return e;
+}
+/* ---- field constructors ---- */
+const num=(label,ans,unit,o)=>Object.assign({k:'num',label,ans,unit:unit||''},o||{});
+const txt=(label,ans,o)=>Object.assign({k:'txt',label,ans:[].concat(ans),mode:'formula'},o||{});
+const sel=(label,opts,ans,o)=>Object.assign({k:'sel',label,opts,ans},o||{});
+const cz=(n,ans)=>({k:'cloze',n,ans:[].concat(ans)});
+const think=(kind)=>sel(kind==='vol'
+  ?'Think carefully before calculating. Is the volume you are given more than 24000 cm³, or less than 24000 cm³?'
+  :kind==='mass'?'Think carefully before calculating. Compare the mass you are given with the molar mass you just found. Are you given more than one mole, or less than one mole?'
+  :'Think carefully before calculating. Are you given more than one mole, or less than one mole just looking at the numbers given?',
+  kind==='vol'?['more than 24000 cm³','less than 24000 cm³','exactly 24000 cm³']:['more than one mole','less than one mole','exactly one mole'],'',{w:0,think:1});
+/* ---- value checking ---- */
+const SUBS='₀₁₂₃₄₅₆₇₈₉';
+function normF(s){return s.replace(/[\s_{}\^]/g,'').replace(/[₀-₉]/g,c=>String(SUBS.indexOf(c))).replace(/\[/g,'(').replace(/\]/g,')').replace(/\.|·/g,'·');}
+function normW(s){return s.toLowerCase().replace(/sulfate/g,'sulphate').replace(/sulfide/g,'sulphide').replace(/aluminum/g,'aluminium').replace(/[^a-z0-9()]+/g,' ').trim();}
+function pnum(s){s=s.trim().replace(/[−–]/g,'-').replace(',','.').replace(/\s+/g,'');if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s))return NaN;return parseFloat(s);}
+function evalField(f,val){
+  val=String(val===undefined?'':val);
+  if(f.k==='num'){
+    const x=pnum(val);
+    if(isNaN(x))return {ok:false,msg:val.trim()===''?'Nothing entered yet.':'Type the number only. The unit is shown beside the box.'};
+    const tol=f.tol===undefined?0.01:f.tol,A=f.ans,ab=f.abs||0;
+    const near=(a,b)=>Math.abs(a-b)<=Math.max(ab,tol*Math.abs(b));
+    if(f.signed){
+      if(near(Math.abs(x),Math.abs(A))){
+        if(Math.sign(x)===Math.sign(A))return {ok:true};
+        return {ok:false,msg:f.signMsg||'The size is right. Check the sign: temperature rise → exothermic → ΔH negative; temperature fall → endothermic → ΔH positive.'};
+      }
+    }else if(near(x,A))return {ok:true};
+    const xv=f.signed?Math.abs(x):x;
+    for(const w of f.wrong||[])if(near(xv,w.v))return {ok:false,msg:w.msg};
+    return {ok:false};
+  }
+  if(f.k==='txt'){
+    if(val.trim()==='')return {ok:false,msg:'Nothing entered yet.'};
+    if(f.mode==='eq'){const r=checkEq(val,f);return r;}
+    if(f.mode==='name'){const v=normN(val);return f.ans.some(a=>normN(a)===v)?{ok:true}:{ok:false,msg:f.msg};}
+    if(f.mode==='word'){const v=normW(val);return f.ans.some(a=>normW(a)===v)?{ok:true}:{ok:false};}
+    if(f.mode==='emp'){
+      let c;try{c=parseF(normF(val));}catch(e){return {ok:false};}
+      const keys=Object.keys(f.counts);
+      const same=Object.keys(c).length===keys.length&&keys.every(k=>c[k]===f.counts[k]);
+      if(same)return {ok:true};
+      const m=c[keys[0]]/f.counts[keys[0]];
+      if(m>1&&Object.keys(c).length===keys.length&&keys.every(k=>c[k]===f.counts[k]*m))return {ok:false,msg:'That is a multiple of the answer. Divide to get the simplest whole-number ratio.'};
+      return {ok:false};
+    }
+    const v=normF(val);
+    if(f.ans.some(a=>normF(a)===v))return {ok:true};
+    const a0=normF(f.ans[0]);
+    if(a0.indexOf('(')>=0&&v===a0.replace(/[()]/g,''))return {ok:false,msg:'Check the brackets: a group of atoms that is repeated needs brackets round it.'};
+    if(v.toLowerCase()===a0.toLowerCase())return {ok:false,msg:'Check your capital letters: the first letter of a symbol is a capital, the second is small.'};
+    return {ok:false};
+  }
+  if(f.k==='sel'||f.k==='cloze'){
+    if(val==='')return {ok:false,msg:'Choose an answer.'};
+    const A=[].concat(f.ans).map(a=>String(a).toLowerCase());
+    return A.indexOf(val.toLowerCase())>=0?{ok:true}:{ok:false,msg:f.msg};
+  }
+  return {ok:false};
+}
+function plain(h){const d=document.createElement('div');d.innerHTML=h;return d.textContent.replace(/\s+/g,' ').trim();}
+function ideaHit(idea,text){return idea.g.every(grp=>grp.some(a=>new RegExp(a,'i').test(text)));}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+function sortBank(b){return b.slice().sort((x,y)=>String(x).localeCompare(String(y),'en',{numeric:true}));}
+/* ---- card ---- */
+function buildCard(spec,label,o){
+  o=o||{};
+  const el=document.createElement('article');
+  el.className='q'+(o.practice?' practice':'');
+  const fields=spec.fields||[],ideas=spec.ideas||null;
+  const marks=ideas?(spec.need||ideas.length):fields.reduce((s,f)=>s+(f.w===undefined?1:f.w),0);
+  const hints=spec.hints||[];
+  let attempts=0,shown=0,got=0,checked=false,cheatOpened=false,workedOpened=false;
+  /* body with inline cloze selects */
+  const bank=spec.bank?sortBank(spec.bank):null;
+  const selOpts=bank?'<option value="">…</option>'+bank.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join(''):'';
+  let body=spec.html||'';
+  body=body.replace(/\[\[(\d+)\]\]/g,(m,n)=>{
+    const i=fields.findIndex(f=>f.k==='cloze'&&f.n===+n);
+    return `<span class="cz" data-r="${i}"><select data-i="${i}" aria-label="blank ${+n+1}">${selOpts}</select><span class="mark"></span></span>`;});
+  let fh='';
+  const cellH=(i)=>{const f=fields[i];
+    const ctl=f.k==='num'?`<input class="num" type="text" inputmode="decimal" autocomplete="off" data-i="${i}">${f.unit?'<span class="unit">'+f.unit+'</span>':''}`:`<select data-i="${i}"><option value="">choose…</option>${f.opts.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')}</select>`;
+    return ctl+'<span class="mark"></span><span class="fmsg"></span>';};
+  if(spec.grid){
+    const g=spec.grid,nc=g.cols.length;
+    fh+='<table class="vt grid"><tr><th></th>'+g.cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'
+      +g.rows.map(r=>r.head?'<tr><th class="gh" colspan="'+(nc+1)+'">'+r.label+'</th></tr>':'<tr><th class="rl">'+r.label+'</th>'+(r.idx.length===1&&nc>1?`<td class="gcell" colspan="${nc}" data-r="${r.idx[0]}">${cellH(r.idx[0])}</td>`:r.idx.map(i=>`<td class="gcell" data-r="${i}">${cellH(i)}</td>`).join(''))+'</tr>').join('')+'</table>';
+  }
+  fields.forEach((f,i)=>{
+    if(f.k==='cloze'||(spec.grid&&spec.grid.rows.some(r=>r.idx&&r.idx.indexOf(i)>=0)))return;
+    if(f.k==='num')fh+=`<div class="frow" data-r="${i}"><label class="k">${f.label}</label><input class="num" type="text" inputmode="decimal" autocomplete="off" data-i="${i}"><span class="unit">${f.unit}</span><span class="mark"></span><span class="fmsg"></span></div>`;
+    else if(f.k==='txt')fh+=`<div class="frow" data-r="${i}"><label class="k">${f.label}</label><input class="txt${f.mode==='eq'?' eq':''}" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-i="${i}"><span class="mark"></span><span class="fmsg"></span></div>`;
+    else if(f.k==='sel')fh+=`<div class="frow${f.think?' wide':''}" data-r="${i}"><label class="k">${f.label}</label> <select data-i="${i}"><option value="">choose…</option>${f.opts.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')}</select><span class="mark"></span><span class="fmsg"></span></div>`;
+  });
+  if(ideas)fh+=`<div class="frow wide"><textarea data-t="1" placeholder="Write your explanation here, in full sentences." aria-label="your explanation"></textarea></div><div class="ideas-wrap"></div>`;
+  const bankHtml=bank?`<div class="bank">Word bank: ${bank.map(w=>`<span>${esc(w)}</span>`).join('')}</div>`:'';
+  const hasMeta=!!spec.title;
+  const confOpts='<option value="">choose…</option>'+CONF.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  const metaPre=hasMeta?`<div class="meta pre sans"><label>Before you try it: how confident do you feel about this question? <select data-m="pre">${confOpts}</select></label></div>`:'';
+  const metaPost=hasMeta?`<div class="meta post sans" hidden><p style="margin:2px 0"><b>Reflect</b></p><p style="margin:4px 0"><label>Now, how confident do you feel? <select data-m="post">${confOpts}</select></label></p><p style="margin:4px 0 2px">What made any part challenging? Tick any that fit:</p><div class="why">${WHY.map((w,k)=>`<label><input type="checkbox" data-m="why" data-k="${k}"> ${esc(w)}</label>`).join('')}</div><p style="margin:6px 0 2px"><label for="n${Math.random().toString(36).slice(2,8)}">In your own words: how do you feel about this question? Where did you get stuck, and why? What helped?</label></p><textarea data-m="note" rows="2" placeholder="Write a sentence or two. You can leave this empty."></textarea></div>`:'';
+  el.innerHTML=`<div class="qhead"><span><span class="qn">${label}</span><span class="qt">${spec.title||''}</span></span><span class="qm">${marks?marks+(marks===1?' mark':' marks'):'practice'}</span></div>
+   <div class="qtext">${body}</div>${spec.diag?'<div class="dg"><div class="dgsvg"></div><div class="dgcap legend"></div></div>':''}${bankHtml}${metaPre}<div class="fields">${fh}</div>
+   <div class="tools"><button data-a="cheat">Cheat sheet</button><button data-a="hint"${hints.length?'':' hidden'}>Hint</button>${spec.scaffold?'<button data-a="scaf">Word fill help</button>':''}<button class="main" data-a="check">Check</button><button data-a="worked" hidden>Worked answer</button><button data-a="more"${(o.noMore)?' hidden':''}>${o.practice?'Another one':'More practice'}</button></div>
+   <div class="panel cheat" hidden><h4>Cheat sheet</h4>${spec.cheat||''}</div><div class="panel hint" hidden></div><div class="scaf"></div>
+   <div class="fb" role="status" aria-live="polite"></div>${metaPost}<div class="worked" hidden><h4>Worked answer</h4>${spec.worked||''}</div><div class="prac"></div>`;
+  const $=s=>el.querySelector(s);
+  const drawDiag=(m)=>{if(!spec.diag)return;const w=$('.dgsvg');if(!w)return;w.innerHTML=energyDiagram(spec.diag,m);$('.dgcap').innerHTML=(m==='full')?diagCaption(spec.diag,true):(spec.diag.note||diagCaption(spec.diag,false));};
+  drawDiag(spec.diag&&spec.diag.show==='given'?'given':'skeleton');
+  const get=i=>el.querySelector(`[data-i="${i}"]`);
+  function result(){
+    el.classList.toggle('done',marks>0&&got===marks);
+    const fb=$('.fb');
+    fb.innerHTML=`<b>${got} / ${marks}</b> ${got===marks?'Full marks.':'Not yet full marks. Look at the ✗ items, use the cheat sheet or a hint, then check again.'}`;
+    if(spec.diag&&got===marks)drawDiag('full');
+    if(!o.practice){SC[o.id]=Object.assign(SC[o.id]||{},{got:Math.max(got,(SC[o.id]||{}).got||0),marks,att:attempts,hints:shown,sec:o.sec});updateTop();}
+  }
+  function check(){check0();const pm=$('.meta.post');if(pm)pm.hidden=false;logCheck();}
+  function logCheck(){
+    const fl=fields.map((f,i)=>{const inp=get(i),row=el.querySelector(`[data-r="${i}"]`);return {l:f.k==='cloze'?'blank '+(f.n+1):plain(f.label||'').slice(0,90),g:inp?inp.value:'',ok:row?row.classList.contains('ok'):false};});
+    const ta=el.querySelector('[data-t]');
+    LOG.push({ts:new Date().toISOString(),id:(o.entry&&o.entry.id)||o.id||label,prac:!!o.practice,label,title:plain(spec.title||''),q:plain(spec.html||'').slice(0,320),att:attempts,hints:shown,cheat:cheatOpened,worked:workedOpened,got,marks,f:fl,t:ta?ta.value.slice(0,600):undefined,ideas:ideas?[...el.querySelectorAll('.ideas-wrap input[type=checkbox]')].map(c=>c.checked?1:0):undefined,m:readMeta(el)});
+    if(LOG.length>800)LOG.splice(0,LOG.length-800);
+  }
+  function check0(){
+    attempts++;checked=true;got=0;
+    fields.forEach((f,i)=>{
+      const inp=get(i),r=evalField(f,inp.value),w=f.w===undefined?1:f.w;
+      const row=el.querySelector(`[data-r="${i}"]`);
+      row.classList.toggle('ok',r.ok);row.classList.toggle('bad',!r.ok);
+      row.querySelector('.mark').textContent=r.ok?'✓':'✗';
+      const m=row.querySelector('.fmsg');if(m)m.textContent=r.ok?'':(r.msg||'');
+      if(r.ok)got+=w;
+    });
+    if(ideas){
+      const t=el.querySelector('[data-t]').value.toLowerCase();
+      const wrap=$('.ideas-wrap');
+      wrap.innerHTML='<p class="legend">Ideas I looked for in your answer. A tick means I found it. If you included an idea in different words, tick it yourself.</p><ul class="ideas">'+ideas.map((d,k)=>`<li><label><input type="checkbox" data-k="${k}"${ideaHit(d,t)?' checked':''}> ${d.t}</label></li>`).join('')+'</ul>'+(spec.need&&spec.need<ideas.length?`<p class="legend">You need ${spec.need} of these.</p>`:'')+`<div class="model"><b>Model answer.</b> ${spec.model}</div>`+(spec.extended?`<div class="model"><b>Extended.</b> ${spec.extended}</div>`:'');
+      const tally=()=>{const n=wrap.querySelectorAll('input:checked').length;got=Math.min(n,marks);result();};
+      wrap.querySelectorAll('input').forEach(c=>c.addEventListener('change',tally));
+      tally();$('[data-a=worked]').hidden=!spec.worked;return;
+    }
+    $('[data-a=worked]').hidden=false;
+    result();
+  }
+  function practiceNext(){
+    const e=o.entry;let s;
+    if(e.gen){for(let k=0;k<12;k++){s=e.gen(RNG(false));if(s.html!==e.last)break;}e.last=s.html;}
+    else{if(!e.list.length)return null;s=e.list[e.i%e.list.length];e.i++;}
+    return s;
+  }
+  el.addEventListener('click',ev=>{
+    const b=ev.target.closest('button[data-a]');
+    if(b&&b.closest('.q')!==el)return;
+    if(b){
+      const a=b.dataset.a;
+      if(a==='check')check();
+      else if(a==='cheat'){const p=$('.cheat');p.hidden=!p.hidden;if(!p.hidden)cheatOpened=true;}
+      else if(a==='worked'){const p=$('.worked');p.hidden=!p.hidden;if(!p.hidden){workedOpened=true;drawDiag('full');}}
+      else if(a==='hint'){
+        const p=$('.hint');if(shown<hints.length){shown++;}
+        p.hidden=false;p.innerHTML='<h4>Hints</h4>'+hints.slice(0,shown).map((h,i)=>`<div class="hintl"><b>${i+1}.</b> ${h}</div>`).join('')+(shown>=hints.length?'<div class="hintl"><i>No more hints. Try the worked answer after a check.</i></div>':'');
+        b.textContent=shown>=hints.length?'Hints used':`Hint (${shown}/${hints.length})`;
+        if(!o.practice){SC[o.id]=Object.assign(SC[o.id]||{marks,sec:o.sec,got:0,att:0},{hints:shown});updateTop();}
+      }
+      else if(a==='scaf'){
+        const s=$('.scaf');
+        if(s.firstChild){s.innerHTML='';return;}
+        s.appendChild(buildCard(spec.scaffold,'Word fill',{practice:true,noMore:true,entry:o.entry}));
+        tipify(s);
+      }
+      else if(a==='more'){
+        const s=practiceNext();if(!s){$('.prac').innerHTML='<p class="legend">No more practice questions of this type.</p>';return;}
+        if(o.practice){
+          const nc=buildCard(s,label+' practice',{practice:true,entry:o.entry});el.replaceWith(nc);tipify(nc);
+        }else{
+          const holder=$('.prac');holder.innerHTML='';
+          const nc=buildCard(s,label+' practice',{practice:true,entry:o.entry});holder.appendChild(nc);tipify(nc);
+          b.textContent='Another one';
+        }
+      }
+      return;
+    }
+  });
+  let metaEntry=null;
+  el.addEventListener('change',ev=>{
+    if(!ev.target.closest('[data-m]')||ev.target.closest('.q')!==el)return;
+    const m=readMeta(el);
+    if(!metaEntry||LOG.indexOf(metaEntry)<0){metaEntry={ts:new Date().toISOString(),id:(o.entry&&o.entry.id)||o.id||label,prac:!!o.practice,label,title:plain(spec.title||''),q:plain(spec.html||'').slice(0,320),reflect:1,att:attempts,got,marks};LOG.push(metaEntry);}
+    metaEntry.m=m;metaEntry.att=attempts;metaEntry.got=got;metaEntry.ts=new Date().toISOString();
+  });
+  el.addEventListener('keydown',ev=>{if(ev.key==='Enter'&&ev.target.matches('input[type=text]')){ev.preventDefault();check();}});
+  el._api={spec,marks,
+    fill(){
+      fields.forEach((f,i)=>{
+        const inp=get(i);
+        if(f.k==='num')inp.value=String(f.ans);
+        else if(f.k==='txt')inp.value=f.mode==='emp'?f.display:f.ans[0];
+        else inp.value=[].concat(f.ans)[0];
+      });
+      if(ideas)el.querySelector('[data-t]').value=plain(spec.model);
+    },
+    check,get got(){return got;},get marks(){return marks;}};
+  el._restore=(a,s)=>{attempts=a;shown=s;};
+  return el;
+}
+/* ---- tool-tips ---- */
+const TERMS=Object.keys(GLOSS).sort((a,b)=>b.length-a.length);
+function tipify(root){
+  root.querySelectorAll('.qtext,.intro').forEach(box=>{
+    for(const t of TERMS){
+      const re=new RegExp('(^|[^A-Za-z0-9])('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:s)?)(?![A-Za-z0-9])','i');
+      const w=document.createTreeWalker(box,NodeFilter.SHOW_TEXT,{acceptNode(n){const p=n.parentElement;return(!p||p.closest('select,option,textarea,button,.tip,.fm'))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT;}});
+      let n;
+      while((n=w.nextNode())){
+        const m=re.exec(n.nodeValue);if(!m)continue;
+        const idx=m.index+m[1].length,after=n.splitText(idx),rest=after.splitText(m[2].length);
+        const sp=document.createElement('span');sp.className='tip';sp.tabIndex=0;sp.dataset.tip=GLOSS[t];sp.textContent=m[2];
+        after.replaceWith(sp);
+        sp.addEventListener('click',()=>sp.classList.toggle('on'));
+        break;
+      }
+    }
+  });
+}
+/* ---- top bar and summary ---- */
+function totals(){
+  let m=0,g=0,xm=0,xg=0;
+  QS.forEach(e=>{const sc=SC[e.id]||{};const mk=cardMarks(e);const ex=SECS.find(s=>s.id===e.sec).ext;
+    if(ex){xm+=mk;xg+=sc.got||0;}else{m+=mk;g+=sc.got||0;}});
+  return {m,g,xm,xg};
+}
+function cardMarks(e){const s=e.spec;return s.ideas?(s.need||s.ideas.length):(s.fields||[]).reduce((t,f)=>t+(f.w===undefined?1:f.w),0);}
+function updateTop(){
+  const t=totals();try{const fb=document.getElementById('feedback');if(fb)fb.innerHTML=feedbackHTML();}catch(e){}
+  const el=document.getElementById('score');if(!el)return;
+  el.textContent=`Score ${t.g} / ${t.m}   Extension ${t.xg} / ${t.xm}`;
+  const body=document.getElementById('sumbody');if(!body)return;
+  body.innerHTML=SECS.map(s=>{
+    const es=QS.filter(e=>e.sec===s.id);let m=0,g=0,h=0,a=0;
+    es.forEach(e=>{const sc=SC[e.id]||{};m+=cardMarks(e);g+=sc.got||0;h+=sc.hints||0;a+=sc.att||0;});
+    return `<tr><td class="l">${s.ext?s.title:s.id+' '+s.title}</td><td>${g}</td><td>${m}</td><td>${h}</td><td>${a}</td></tr>`;}).join('')
+    +`<tr><th class="l">Main test</th><th>${t.g}</th><th>${t.m}</th><th></th><th></th></tr><tr><th class="l">Extension</th><th>${t.xg}</th><th>${t.xm}</th><th></th><th></th></tr>`;
+}
+function resultsText(){
+  const t=totals();let s='Grade 10 Industrial Chemistry: redox processes practice test\n'+(STU.name?'Name: '+STU.name+'\nSet: '+STU.set+'\nCode: '+STU.code+'\n':'');
+  SECS.forEach(sc=>{let m=0,g=0,h=0;QS.filter(e=>e.sec===sc.id).forEach(e=>{const c=SC[e.id]||{};m+=cardMarks(e);g+=c.got||0;h+=c.hints||0;});
+    s+=(sc.ext?sc.title:sc.id+' '+sc.title)+': '+g+' / '+m+' (hints used '+h+')\n';});
+  return s+`Main test: ${t.g} / ${t.m}\nExtension: ${t.xg} / ${t.xm}`;
+}
+/* ---- reference sheet ---- */
+function refHTML(){return REF();}
+/* ---- page assembly ---- */
+const own=(el,sel)=>[...el.querySelectorAll(sel)].filter(x=>x.closest('.q')===el);
+function readMeta(el){const g=s=>{const x=own(el,s)[0];return x?x.value:''};
+  return {pre:g('[data-m=pre]'),post:g('[data-m=post]'),why:own(el,'[data-m=why]').filter(c=>c.checked).map(c=>+c.dataset.k),note:g('[data-m=note]').slice(0,600)};}
+function writeMeta(el,m){if(!m)return;const s=(q,v)=>{const x=own(el,q)[0];if(x)x.value=v||'';};s('[data-m=pre]',m.pre);s('[data-m=post]',m.post);s('[data-m=note]',m.note);
+  own(el,'[data-m=why]').forEach(c=>{c.checked=(m.why||[]).indexOf(+c.dataset.k)>=0;});
+  if(m.post||m.note||(m.why&&m.why.length)){const pm=own(el,'.meta.post')[0];if(pm)pm.hidden=false;}}
+function buildAll(){
+  const main=document.getElementById('sections'),nav=document.getElementById('nav');
+  main.innerHTML='';nav.innerHTML='';
+  SECS.forEach(s=>{
+    const es=QS.filter(e=>e.sec===s.id);
+    const tot=es.reduce((t,e)=>t+cardMarks(e),0);
+    const h=document.createElement('section');h.id='s'+s.id;
+    h.innerHTML=`<h2><span>${s.ext?s.title:s.id+' '+s.title}</span><span class="tot sans">${tot} marks${s.ext?', marked separately':''}</span></h2><div class="intro">${s.intro}</div>`;
+    es.forEach(e=>{const lab=e.id;const c=buildCard(e.spec,lab,{id:e.id,sec:e.sec,entry:e});h.appendChild(c);e.el=c;});
+    main.appendChild(h);
+    nav.innerHTML+=`<li><a href="#s${s.id}">${s.ext?s.title:s.id+' '+s.title}</a></li>`;
+  });
+  tipify(main);
+}
+/* ---- save / retrieve progress ---- */
+function collectProgress(){
+  const cards={};
+  QS.forEach(e=>{if(!e.el)return;const v={};own(e.el,'[data-i]').forEach(x=>{v[x.getAttribute('data-i')]=x.value;});
+    const ta=own(e.el,'[data-t]')[0];const ck=own(e.el,'.ideas-wrap input[type=checkbox]').map(c=>c.checked?1:0);
+    cards[e.id]={v,t:ta?ta.value:'',ck,m:readMeta(e.el)};});
+  const refl={start:(document.getElementById('rstart')||{}).value||'',end:(document.getElementById('rend')||{}).value||''};
+  return {app:'g10-redox',ver:2,refl,stu:{set:STU.set,code:STU.code},seed:SEED,saved:new Date().toISOString(),sc:SC,cards,log:LOG};
+}
+function encodeProgress(){return 'G10REDOX1:'+btoa(unescape(encodeURIComponent(JSON.stringify(collectProgress()))));}
+function applyProgress(code){
+  let d;
+  try{d=JSON.parse(decodeURIComponent(escape(atob(code.trim().replace(/^G10REDOX1:/,'')))));}catch(x){return 'That does not look like a saved progress code. Choose the file you saved, or paste the whole code.';}
+  if(!d||d.app!=='g10-redox')return 'That does not look like a saved progress code.';
+  SEED=d.seed;
+  QS.forEach(e=>{if(e.gen){e.spec=e.gen(RNG(false,seedFor(e.id)));e.last=e.spec.html;}});
+  buildAll();
+  QS.forEach(e=>{const c=d.cards[e.id];if(!c||!e.el)return;
+    const used=Object.keys(c.v).some(k=>c.v[k]!==''&&c.v[k]!==undefined)||c.t;
+    Object.keys(c.v).forEach(k=>{const x=e.el.querySelector(`[data-i="${k}"]`);if(x)x.value=c.v[k];});
+    const ta=e.el.querySelector('[data-t]');if(ta)ta.value=c.t||'';
+    writeMeta(e.el,c.m);
+    const s=d.sc[e.id];
+    if(used&&s&&s.att){const b=e.el.querySelector('[data-a=check]');if(b)b.click();
+      const ws=e.el.querySelectorAll('.ideas-wrap input[type=checkbox]');(c.ck||[]).forEach((on,k)=>{if(ws[k]&&ws[k].checked!==!!on){ws[k].checked=!!on;ws[k].dispatchEvent(new Event('change'));}});
+      e.el._restore(s.att,s.hints||0);}
+  });
+  if(d.stu&&d.stu.set){const ss=document.getElementById('stset');if(ss&&!STU.set)ss.value=SETS.find(x=>x.slice(0,3)===d.stu.set.slice(0,3))||'';}
+  if(d.refl){const a=document.getElementById('rstart'),b=document.getElementById('rend');if(a)a.value=d.refl.start||'';if(b)b.value=d.refl.end||'';}
+  Object.keys(SC).forEach(k=>delete SC[k]);Object.assign(SC,d.sc);LOG.length=0;(d.log||[]).forEach(x=>LOG.push(x));updateTop();
+  return STU.name?'':'NEEDNAME';
+}
+function init(){
+  document.getElementById('refbody').innerHTML=refHTML();
+  buildAll();
+  document.getElementById('stset').innerHTML='<option value="">choose your set…</option>'+SETS.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
+  const go=()=>{const n=document.getElementById('stname').value,s=document.getElementById('stset').value,m=document.getElementById('gatemsg');if(!n.trim()){m.textContent='Type your first name.';return;}if(!s){m.textContent='Choose your chemistry set.';return;}startTest(n,s);};
+  document.getElementById('stgo').onclick=go;document.getElementById('stname').addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+  document.getElementById('gl').innerHTML=Object.keys(GLOSS).sort().map(t=>`<dt>${t}</dt><dd>${GLOSS[t]}</dd>`).join('');
+  tipify(document.body);
+  initProgressUI();
+  document.getElementById('refbtn').onclick=()=>{document.getElementById('ref').hidden=false;};
+  document.getElementById('refclose').onclick=()=>{document.getElementById('ref').hidden=true;};
+  document.getElementById('copy').onclick=()=>{
+    const t=resultsText();
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).catch(()=>fallback(t));else fallback(t);
+    document.getElementById('copied').textContent='Copied. Paste it into Canvas or an email.';
+  };
+  function fallback(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}a.remove();}
+  updateTop();
+}
+
+function initProgressUI(){
+  const panel=document.getElementById('savepanel'),box=document.getElementById('savecode'),msg=document.getElementById('savemsg'),file=document.getElementById('loadfile');
+  const show=(t)=>{msg.textContent=t||'';};
+  function openPanel(mode){panel.hidden=false;document.getElementById('saveblock').hidden=mode!=='save';document.getElementById('loadblock').hidden=mode!=='load';show('');}
+  document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',()=>{
+    const a=b.getAttribute('data-act');
+    if(a==='save'){
+      const code=encodeProgress();box.value=code;openPanel('save');
+      try{const blob=new Blob([code],{type:'text/plain'}),u=URL.createObjectURL(blob),l=document.createElement('a');l.href=u;l.download='redox_'+fileStem()+'.txt';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);
+        show('Your progress is saved in the file redox_'+fileStem()+'.txt (check your Downloads folder). The code below is a back-up: copy it into a note if the file did not download.');}
+      catch(x){show('Copy the code below and keep it in a note. You can paste it back in later.');}
+    }
+    else if(a==='load')openPanel('load');
+    else if(a==='pdf'){panel.hidden=true;window.print();}
+  }));
+  document.getElementById('copycode').onclick=()=>{box.select();try{document.execCommand('copy');show('Code copied.');}catch(x){show('Select the code and copy it yourself.');}};
+  document.getElementById('loadgo').onclick=()=>{
+    const code=document.getElementById('loadcode').value;
+    if(!code.trim()){show('Choose your saved file, or paste your code first.');return;}
+    const err=applyProgress(code);show(err==='NEEDNAME'?'Your progress is loaded. Now type your first name above and press Start.':(err||'Your progress is back. Scroll down to carry on.'));if(!err)document.getElementById('loadcode').value='';
+  };
+  file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById('loadcode').value=String(r.result);const err=applyProgress(String(r.result));show(err==='NEEDNAME'?'Your progress is loaded. Now type your first name above and press Start.':(err||'Your progress is back. Scroll down to carry on.'));};r.readAsText(f);});
+  document.getElementById('saveclose').onclick=document.getElementById('loadclose').onclick=()=>{panel.hidden=true;};
+}
+
+/* ===== shared builders ===== */
+function dflt(s,ch,hs){s.cheat=s.cheat||ch;s.hints=s.hints||hs||['Read the cheat sheet first.','Work one step at a time.'];return s;}
+const SIGNMSG='The size is right. Check the sign: write + or − before the number.';
+const sgn=(label,ans,o)=>num(label,ans,'',Object.assign({signed:true,tol:0,signMsg:SIGNMSG},o||{}));
+const CH_OS=RULES+'<p><b>Example: SO<sub>2</sub>.</b> Oxygen is −2, so two O atoms give 2 × (−2) = −4. The compound is neutral, so S + (−4) = 0 and S = <b>+4</b>.</p>'+fm('(number of atoms) × '+I('x')+' + the other oxidation states = the charge')+'<p>Write the sign every time: +4, −2, 0.</p>';
+const CH_OXRED=OXRED+'<p>To decide: write the oxidation state under <b>every</b> element in the equation. Find the elements whose state changes. Up = oxidised. Down = reduced.</p>';
+const CH_HALF=HALFSTEPS+'<p><b>Example: Zn + Cu<sup>2+</sup> → Zn<sup>2+</sup> + Cu.</b></p>'+fm('Zn → Zn<sup>2+</sup> + 2e<sup>−</sup> &nbsp; (oxidation: electrons are lost)')+fm('Cu<sup>2+</sup> + 2e<sup>−</sup> → Cu &nbsp; (reduction: electrons are gained)')+TYPING;
+const CH_ACID=HALFSTEPS+'<p><b>Example: Cu + NO<sub>3</sub><sup>−</sup> → Cu<sup>2+</sup> + NO in acid.</b></p>'+fm('Cu → Cu<sup>2+</sup> + 2e<sup>−</sup>')+fm('NO<sub>3</sub><sup>−</sup> + 4H<sup>+</sup> + 3e<sup>−</sup> → NO + 2H<sub>2</sub>O')+'<p>Multiply the first by 3 and the second by 2 (6 electrons each), then add:</p>'+fm('3Cu + 2NO<sub>3</sub><sup>−</sup> + 8H<sup>+</sup> → 3Cu<sup>2+</sup> + 2NO + 4H<sub>2</sub>O')+TYPING;
+const CH_NAME='<p>Name = name of the element + the <b>oxidation number</b> in Roman numerals, in brackets, with <b>no space</b>: copper(II) oxide.</p><table class="bt"><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr><tr><td>I</td><td>II</td><td>III</td><td>IV</td><td>V</td><td>VI</td><td>VII</td></tr></table><ol><li>Work out the oxidation state of the element that can have more than one (O is −2, Cl is −1, H is +1).</li><li>Write its Roman numeral in brackets after the name.</li><li>Add the name of the other part: oxide, chloride, hydroxide.</li><li>Acids: the number goes after the first part: nitric(V) acid.</li></ol>'+NAMETAB;
+/* a list of species cards for oxidation states */
+function osCard(list,o){
+  o=o||{};
+  const fields=[];
+  list.forEach(s=>s.els.forEach(e=>fields.push(sgn(osH(s)+': oxidation state of <b>'+e[0]+'</b> =',e[1]))));
+  const first=list[0];
+  return dflt({title:o.title||'Oxidation states',
+   html:'<p>Assign oxidation states to every element in each of these species. Write the sign.</p>'+list.map(s=>fm('<b>'+osH(s)+'</b>')).join(''),
+   fields,cheat:CH_OS,
+   hints:['Use the rules on the cheat sheet. Start with the atoms you know: oxygen is −2, hydrogen is +1, a Group 1 metal is +1, chlorine joined to a metal is −1.',
+     'Write an equation for the unknown element. For '+osH(first)+': '+osSum(first)+'. Solve it for '+I('x')+'.'+(list[1]?' For '+osH(list[1])+': '+osSum(list[1])+'.':''),
+     list.slice(2).map(s=>osH(s)+': '+osSum(s)).join('<br>')||'Check that all the oxidation states add up to the charge on the species.'],
+   worked:list.map(s=>'<p><b>'+osH(s)+'</b>: '+osSum(s)+', so '+s.els.map(e=>e[0]+' is <b>'+signed(e[1])+'</b>').join(', ')+'.</p>').join('')});
+}
+const rname=t=>uni(t[1]);
+function reactantOpts(e){return e.l.map(t=>uni(t[1]));}
+function findSp(e,c){return e.l.find(t=>canon(t[1])===c)[1];}
+
+/* ===== Section 1: oxidation states ===== */
+sec('1','Oxidation states',
+ '<p><b>About 8 minutes.</b> The oxidation state is the charge an atom would have if all its bonds were ionic. Use the rules on the cheat sheet. Write the sign every time.</p>');
+const O=(f,q)=>osByKey(f,q);
+const POOL1=OS.filter(s=>s.els.length<=3);
+const HARD1=[O('K2Cr2O7',0),O('MnO4',-1),O('Cr2O7',-2),O('KMnO4',0),O('H2SO4',0),O('HNO3',0),O('IO3',-1),O('ClO3',-1),O('Fe(OH)3',0),O('Ni(OH)2',0),O('V2O5',0)];
+def('1.1','1',r=>osCard(r.seeded?[O('NH4',1),O('CuCl2',0),O('H2O',0),O('SO2',0)]:r.sample(POOL1,4),{title:'Assign oxidation states (a to d)'}));
+def('1.2','1',r=>osCard(r.seeded?[O('Fe2O3',0),O('NO3',-1),O('MnO2',0),O('PO4',-3)]:r.sample(POOL1,4),{title:'Assign oxidation states (e to h)'}));
+def('1.3','1',r=>osCard(r.seeded?[O('K2Cr2O7',0),O('MnO4',-1)]:r.sample(HARD1,2),{title:'Assign oxidation states (i and j)'}));
+
+/* ===== Section 2: oxidised or reduced ===== */
+sec('2','Which species is oxidised and which is reduced?',
+ '<p><b>About 6 minutes.</b> Write the oxidation state of every element. The species containing the element whose state goes <b>up</b> is oxidised. The species containing the element whose state goes <b>down</b> is reduced.</p>');
+function oxredCard(rx,o){
+  o=o||{};
+  const e=rx.e,so=findSp(e,rx.ox[0]),sr=findSp(e,rx.red[0]),opts=reactantOpts(e);
+  return dflt({title:o.title||'Oxidised or reduced?',
+   html:'<p>Use oxidation states to decide which species is oxidised and which is reduced.</p>'+fm(eqH(e)),
+   fields:[sgn('Working. Oxidation state of <b>'+rx.ox[1]+'</b> that is oxidised, on the left =',rx.ox[2],{}),sgn('Oxidation state of the same element on the right =',rx.ox[3],{}),
+     sgn('Working. Oxidation state of <b>'+rx.red[1]+'</b> that is reduced, on the left =',rx.red[2],{}),sgn('Oxidation state of the same element on the right =',rx.red[3],{}),
+     sel('The species that is <b>oxidised</b> is',opts,uni(so)),sel('The species that is <b>reduced</b> is',opts,uni(sr))],
+   cheat:CH_OXRED,
+   hints:['Write the oxidation state of every element under the equation, on both sides. Elements on their own are 0.',
+     'Two elements change their oxidation state: <b>'+rx.ox[1]+'</b> and <b>'+rx.red[1]+'</b>. Compare the left and the right.',
+     rx.ox[1]+' goes from '+signed(rx.ox[2])+' to '+signed(rx.ox[3])+': the state goes up, so it is oxidised. '+rx.red[1]+' goes from '+signed(rx.red[2])+' to '+signed(rx.red[3])+': the state goes down, so it is reduced.'],
+   worked:'<p><b>'+rx.ox[1]+'</b> goes from '+signed(rx.ox[2])+' to '+signed(rx.ox[3])+' (up): <b>'+uni(so)+' is oxidised</b>.</p><p><b>'+rx.red[1]+'</b> goes from '+signed(rx.red[2])+' to '+signed(rx.red[3])+' (down): <b>'+uni(sr)+' is reduced</b>.</p>'});
+}
+[0,1,2,3,4].forEach(i=>def('2.'+(i+1),'2',r=>oxredCard(r.seeded?RX2[i]:r.pick(RX2),{title:'Reaction ('+'abcde'[i]+')'})));
+
+/* ===== Section 3: titration, manganate(VII) and iron(II) ===== */
+sec('3','Reacting manganate(VII) and iron(II) solutions',
+ '<p><b>About 8 minutes.</b> Fully guided. If you run out of time in class, finish this one for homework. The equation is given. Follow the four steps.</p>');
+const fc=c=>c.toFixed(3).replace(/0$/,'');
+function titCard(p){
+  const nFe=p.cFe*p.vFe/1000,nMn=nFe/5,cMn=nMn*1000/p.vMn;
+  const E=eqH(ACID[5].full);
+  const f4=x=>nice(+x.toPrecision(6));
+  const vS=p.vStart.toFixed(1),vE=(p.vStart-p.vMn).toFixed(1),vF=p.vFe.toFixed(1),vM=p.vMn.toFixed(1),cF=fc(p.cFe);
+  return dflt({title:'Finding the concentration of potassium manganate(VII)',
+   html:'<p>'+vF+' cm<sup>3</sup> of iron(II) sulphate solution, concentration <b>'+cF+' mol dm<sup>−3</sup></b>, is poured into a clean conical flask. An excess of 1.0 mol dm<sup>−3</sup> sulphuric acid is added to the flask.</p>'
+     +'<p>A measuring cylinder holds potassium manganate(VII) solution. It reads <b>'+vS+' cm<sup>3</sup></b> at the start. Drops are added to the flask, and counted, until a lasting tinge of pink is seen. The measuring cylinder now reads <b>'+vE+' cm<sup>3</sup></b>. The balanced ionic equation is:</p>'+fm(E)
+     +'<p class="legend">Purple MnO<sub>4</sub><sup>−</sup> turns almost colourless as it reacts with Fe<sup>2+</sup>.</p>',
+   fields:[
+     sel('Step 1. Why does a lasting tinge of pink show that the reaction is finished?',['all the Fe²⁺ has reacted, so the next drop of MnO₄⁻ is not used up','all the MnO₄⁻ has reacted with the acid','the Fe³⁺ ions are pink'],'all the Fe²⁺ has reacted, so the next drop of MnO₄⁻ is not used up',{think:1}),
+     num('Step 2. Volume of MnO<sub>4</sub><sup>−</sup> used = start reading − end reading =',p.vMn,'cm<sup>3</sup>',{tol:0.001,abs:1e-9}),
+     num('Step 3. Moles of Fe<sup>2+</sup> = concentration × volume ÷ 1000 =',nFe,'mol',{tol:0.001,abs:1e-12}),
+     sel('Reflect. Is your answer less than one mole (sensible for a small volume of a dilute solution)?',['yes, less than one mole','no, more than one mole: I will check my calculator'],'yes, less than one mole',{w:0,think:1}),
+     num('Step 4. Working. If 5 mol of Fe<sup>2+</sup> reacted, the moles of MnO<sub>4</sub><sup>−</sup> needed would be',1,'mol',{tol:0}),
+     num('Working. If 10 mol of Fe<sup>2+</sup> reacted, the moles of MnO<sub>4</sub><sup>−</sup> needed would be',2,'mol',{tol:0}),
+     sel('In the equation, the ratio Fe<sup>2+</sup> : MnO<sub>4</sub><sup>−</sup> is 5 : 1. So the moles of MnO<sub>4</sub><sup>−</sup> are',['five times smaller than the moles of Fe²⁺','five times bigger than the moles of Fe²⁺','the same as the moles of Fe²⁺'],'five times smaller than the moles of Fe²⁺',{think:1}),
+     num('Moles of MnO<sub>4</sub><sup>−</sup> = moles of Fe<sup>2+</sup> ÷ 5 =',nMn,'mol',{tol:0.001,abs:1e-12}),
+     sel('Step 5. In the formula for concentration, <i>V</i> is the volume of',['the potassium manganate(VII) solution used: '+vM+' cm³','the iron(II) sulphate solution: '+vF+' cm³','both solutions added together: '+(p.vMn+p.vFe).toFixed(1)+' cm³'],'the potassium manganate(VII) solution used: '+vM+' cm³',{think:1}),
+     num('Concentration of MnO<sub>4</sub><sup>−</sup> = moles of MnO<sub>4</sub><sup>−</sup> × 1000 ÷ volume of MnO<sub>4</sub><sup>−</sup> =',cMn,'mol dm<sup>−3</sup>',{tol:0.001,abs:1e-12})],
+   cheat:'<p>Equation (Fe<sup>2+</sup> and MnO<sub>4</sub><sup>−</sup> react in the ratio <b>5 : 1</b>):</p>'+fm(E)
+     +'<p><b>Step 2: the volume used.</b> The volume of manganate(VII) used is the start reading minus the end reading. Check it against the volume you counted drops for.</p>'+fm('volume used = start reading − end reading')
+     +'<p><b>Step 3: moles of Fe<sup>2+</sup></b></p>'+fm('moles of Fe<sup>2+</sup> = concentration of Fe<sup>2+</sup> × volume ÷ 1000')+'<p>Volume in cm<sup>3</sup>, concentration in mol dm<sup>−3</sup>.</p>'
+     +'<p><b>Step 4: the ratio.</b> 5 Fe<sup>2+</sup> react with 1 MnO<sub>4</sub><sup>−</sup>. So there are 5 times as many moles of Fe<sup>2+</sup> as of MnO<sub>4</sub><sup>−</sup>. Divide by 5:</p>'+fm('moles of MnO<sub>4</sub><sup>−</sup> = moles of Fe<sup>2+</sup> ÷ 5')
+     +'<p><b>Step 5: the concentration of the unknown solution.</b></p>'+fm('concentration = moles of MnO<sub>4</sub><sup>−</sup> × 1000 ÷ volume of MnO<sub>4</sub><sup>−</sup>')+'<p>Use the volume of the solution you are finding the concentration of: the manganate(VII) solution you added.</p>',
+   hints:['Step 2: take the end reading away from the start reading: '+vS+' − '+vE+'.',
+     'Step 3: put the numbers into the formula: '+cF+' × '+vF+' = '+f4(p.cFe*p.vFe)+', then divide by 1000.',
+     'Step 4: the equation has 5Fe<sup>2+</sup> and 1MnO<sub>4</sub><sup>−</sup>. For every 5 Fe<sup>2+</sup> only 1 MnO<sub>4</sub><sup>−</sup> is needed, so divide the moles of Fe<sup>2+</sup> by 5.',
+     'Step 5: moles of MnO<sub>4</sub><sup>−</sup> = '+f4(nMn)+' mol and the volume is '+vM+' cm<sup>3</sup>. Multiply by 1000, then divide by '+vM+'.'],
+   worked:'<p><b>Step 1.</b> When all the Fe<sup>2+</sup> has reacted, the next drop of MnO<sub>4</sub><sup>−</sup> has nothing to react with, so it stays pink.</p>'
+     +fm('<b>Step 2.</b> volume used = '+vS+' − '+vE+' = '+vM+' cm<sup>3</sup>',1)
+     +fm('<b>Step 3.</b> moles of Fe<sup>2+</sup> = '+cF+' × '+vF+' ÷ 1000 = '+f4(nFe)+' mol',1)
+     +fm('<b>Step 4.</b> moles of MnO<sub>4</sub><sup>−</sup> = '+f4(nFe)+' ÷ 5 = '+f4(nMn)+' mol',1)
+     +fm('<b>Step 5.</b> concentration = '+f4(nMn)+' × 1000 ÷ '+vM+' = <b>'+f4(cMn)+' mol dm<sup>−3</sup></b>',1)});
+}
+def('3.1','3',r=>{
+ if(r.seeded)return titCard({cFe:0.10,vFe:25.0,vMn:20.5,vStart:25.0});
+ for(let k=0;k<200;k++){
+  const cFe=r.pick([0.05,0.10,0.15,0.20,0.25]),vFe=r.pick([10,20,25]),cMn=r.pick([0.010,0.020,0.025,0.040,0.050]);
+  const v=cFe*vFe/(5*cMn);
+  if(v>=8&&v<=35&&Math.abs(v*10-Math.round(v*10))<1e-9){const vMn=Math.round(v*10)/10;return titCard({cFe,vFe,vMn,vStart:Math.ceil((vMn+0.1)/5)*5});};
+ }
+ return titCard({cFe:0.10,vFe:25.0,vMn:20.5,vStart:25.0});});
+
+/* ===== Section 3: oxidising and reducing agents ===== */
+sec('4','Oxidising and reducing agents',
+ '<p><b>About 4 minutes.</b> In every redox reaction one reactant supplies electrons and another accepts them. The reactant that accepts electrons is the <b>oxidising agent</b>. The reactant that supplies electrons is the <b>reducing agent</b>.</p>');
+def('4.1','4',{
+ title:'Agents (word fill)',
+ html:'<p>Complete the passage using the word bank.</p><p>The oxidising agent [[0]] electrons and is itself [[1]]. The reducing agent [[2]] electrons and is itself [[3]]. A reducing agent makes another species [[4]]. In the equation Zn + Cu<sup>2+</sup> → Zn<sup>2+</sup> + Cu, the oxidising agent is [[5]].</p>',
+ bank:['accepts','supplies','oxidised','reduced','Zn','Cu<sup>2+</sup>'].map(x=>x.replace(/<sup>2\+<\/sup>/,'²⁺')),
+ fields:[cz(0,'accepts'),cz(1,'reduced'),cz(2,'supplies'),cz(3,'oxidised'),cz(4,'reduced'),cz(5,'Cu²⁺')],
+ cheat:CH_OXRED+'<p>The agent is named for what it <b>does to the other reactant</b>. The oxidising agent oxidises the other reactant, so the oxidising agent itself is <b>reduced</b>.</p>',
+ hints:['Think of the reducing agent as the electron supplier. When it gives electrons away it loses them, so it is oxidised.','The reducing agent makes another species gain electrons, which is reduction.'],
+ worked:'<p>The oxidising agent <b>accepts</b> electrons and is itself <b>reduced</b>. The reducing agent <b>supplies</b> electrons and is itself <b>oxidised</b>. A reducing agent makes another species <b>reduced</b>. In the equation the Cu²⁺ ions gain electrons, so the oxidising agent is <b>Cu²⁺</b>.</p>'});
+function agentCard(rx,o){
+  const e=rx.e,so=findSp(e,rx.ox[0]),sr=findSp(e,rx.red[0]),opts=reactantOpts(e);
+  return dflt({title:o.title,
+   html:'<p>Name the oxidising agent and the reducing agent in this reaction.</p>'+fm(eqH(e)),
+   fields:[sel('The <b>oxidising agent</b> is',opts,uni(sr)),sel('The <b>reducing agent</b> is',opts,uni(so))],
+   cheat:CH_OXRED,
+   hints:['First decide which species is oxidised and which is reduced: use the oxidation states.','The oxidising agent is the species that is <b>reduced</b>. The reducing agent is the species that is <b>oxidised</b>.'],
+   worked:'<p>'+rx.ox[1]+' goes from '+signed(rx.ox[2])+' to '+signed(rx.ox[3])+', so '+uni(so)+' is oxidised: it is the <b>reducing agent</b>.</p><p>'+rx.red[1]+' goes from '+signed(rx.red[2])+' to '+signed(rx.red[3])+', so '+uni(sr)+' is reduced: it is the <b>oxidising agent</b>.</p>'});
+}
+def('4.2','4',r=>agentCard(r.seeded?RX2[0]:r.pick(RX2),{title:'Agents in a reaction (1)'}));
+def('4.3','4',r=>agentCard(r.seeded?RX2[3]:r.pick(RX2),{title:'Agents in a reaction (2)'}));
+
+/* ===== Section 4: half-equations ===== */
+sec('5','Half-equations',
+ '<p><b>About 9 minutes.</b> A half-equation shows only the oxidation or only the reduction, with the electrons. <b>Oxidation: the electrons are on the right (lost). Reduction: the electrons are on the left (gained).</b> Atoms and charge must balance. '+TYPING.replace('<p class="legend">','<span class="legend">').replace('</p>','</span>')+'</p>');
+const BOOK3=['Ca(s) + 2H{+}(aq) -> Ca{2+}(aq) + H2(g)','2Fe{2+}(aq) + Cl2(aq) -> 2Fe{3+}(aq) + 2Cl{-}(aq)','Sn{2+}(aq) + 2Fe{3+}(aq) -> Sn{4+}(aq) + 2Fe{2+}(aq)','Cl2(aq) + 2Br{-}(aq) -> 2Cl{-}(aq) + Br2(aq)'].map(H);
+BOOK3.forEach((b,i)=>{if(!isBal(b))throw new Error('BOOK3 '+i);});
+const chOf=a=>a.reduce((t,x)=>t+(x[1].el?0:x[0]*x[1].q),0);
+function halfCard(h,show,o){
+  o=o||{};
+  const ox=h.ox,rd=h.red,so=ox.l[0][1],sr=rd.l[0][1],nO=electrons(ox),nR=electrons(rd);
+  const oxL=ox.l,oxR=ox.r.filter(t=>!t[1].el),rdL=rd.l.filter(t=>!t[1].el),rdR=rd.r;
+  return dflt({title:o.title||'Half-equations',
+   html:'<p>Deduce the half-equation of oxidation and the half-equation of reduction for this reaction.</p>'+fm(eqH(show||h.full))+'<p class="legend">Type, for example, <b>Ca -> Ca2+ + 2e-</b>.</p>',
+   fields:[num('Working. Electrons in the <b>oxidation</b> half-equation =',nO,'',{tol:0}),num('Working. Electrons in the <b>reduction</b> half-equation =',nR,'',{tol:0}),
+     eq('Oxidation half-equation:',ox),eq('Reduction half-equation:',rd)],
+   cheat:CH_HALF,
+   hints:['Find the species that loses electrons (its oxidation state goes up). Its half-equation is the oxidation. Find the species that gains electrons: that is the reduction.',
+     'Oxidation: write '+uni(so)+' on the left and what it turns into on the right. Add up the charges on each side: the left side has '+chOf(oxL)+' and the right side has '+chOf(oxR)+'. Add electrons to the more positive side.',
+     'Oxidation has <b>'+nO+'</b> electron'+(nO>1?'s':'')+' on the right. Reduction has <b>'+nR+'</b> electron'+(nR>1?'s':'')+' on the left. Check atoms and charge on both sides.'],
+   scaffold:dflt({title:'',html:'<p>The species that is oxidised is '+uni(so)+'. It [[0]] electrons, so the electrons are on the [[1]] of the half-equation. The species that is reduced is '+uni(sr)+'. It [[2]] electrons, so the electrons are on the [[3]].</p>',bank:['loses','gains','left','right'],fields:[cz(0,'loses'),cz(1,'right'),cz(2,'gains'),cz(3,'left')]},CH_HALF),
+   worked:'<p>Oxidation: '+eqH(ox).replace(/ → /,' → ')+'</p><p>Reduction: '+eqH(rd)+'</p><p>Check: the charge on the left of each half-equation equals the charge on the right.</p>'
+     +(h.kOx!==1||h.kRed!==1?'<p>In the full equation the oxidation is multiplied by '+h.kOx+' and the reduction by '+h.kRed+' so that the electrons cancel. Writing the half-equations with the multiples is also correct.</p>':'')});
+}
+[0,1,2,3].forEach(i=>def('5.'+(i+1),'5',r=>{
+ if(r.seeded)return halfCard(IONIC[i],BOOK3[i],{title:'Half-equations ('+'abcd'[i]+')'});
+ return halfCard(r.pick(IONIC),null,{title:'Half-equations'});}));
+
+/* ===== Section 5: balanced equations in acid ===== */
+sec('6','Balanced equations in acid solution',
+ '<p><b>About 20 minutes.</b> Follow the steps every time: oxidation states, then half-equations (atoms, then O with H<sub>2</sub>O, then H with H<sup>+</sup>, then charge with e<sup>−</sup>), then equalise the electrons and add. '+TYPING.replace('<p class="legend">','<span class="legend">').replace('</p>','</span>')+'</p>');
+const cntOf=(a,c)=>a.reduce((t,x)=>t+(canon(x[1])===c?x[0]:0),0);
+function acidCard(ac,o){
+  o=o||{};
+  const ox=ac.ox,rd=ac.red,skel=ac.sk;
+  const reac=skel.l.map(t=>uni(t[1]));
+  const so=uni(ox.l[0][1]),sr=uni(rd.l[0][1]);
+  const nW=cntOf(rd.l,'H2O')+cntOf(rd.r,'H2O'),nH=cntOf(rd.l,'H+')+cntOf(rd.r,'H+'),ne=electrons(rd);
+  const st=ac.st;
+  return dflt({title:o.title||'Balanced equation in acid',
+   html:'<p>Write a balanced equation for this reaction in acid solution.</p>'+fm(sideH(skel.l)+' → '+sideH(skel.r)),
+   fields:[sel('Step 1. The species that is <b>oxidised</b> is',reac,so),sel('The species that is <b>reduced</b> is',reac,sr),
+     num('Step 2. In the <b>reduction</b> half-equation, the number of H<sub>2</sub>O added is',nW,'',{tol:0}),num('The number of H<sup>+</sup> added is',nH,'',{tol:0}),
+     eq('Reduction half-equation:',rd),eq('Oxidation half-equation:',ox),
+     num('Step 3. Multiply the oxidation half-equation by',ac.kOx,'',{tol:0}),num('Multiply the reduction half-equation by',ac.kRed,'',{tol:0}),
+     eq('Step 4. The balanced equation:',ac.full)],
+   cheat:CH_ACID,
+   hints:['Write the oxidation state of each element under the skeleton equation. <b>'+st[0]+'</b> goes from '+signed(st[1])+' to '+signed(st[2])+' and <b>'+st[3]+'</b> goes from '+signed(st[4])+' to '+signed(st[5])+'. Up is oxidised, down is reduced.',
+     'In the reduction half-equation: balance the atoms other than O and H, add H<sub>2</sub>O for the oxygen, add H<sup>+</sup> for the hydrogen, then add electrons for the charge. It needs '+nW+' H<sub>2</sub>O, '+nH+' H<sup>+</sup> and '+ne+' electron'+(ne>1?'s':'')+'.',
+     'The oxidation half-equation has '+electrons(ox)+' electron'+(electrons(ox)>1?'s':'')+' and the reduction has '+ne+'. Make both '+ac.ne+': multiply the oxidation by '+ac.kOx+' and the reduction by '+ac.kRed+'. Add them and cross out what is the same on both sides, including H<sup>+</sup> and H<sub>2</sub>O.'],
+   worked:'<p><b>Step 1.</b> '+st[0]+': '+signed(st[1])+' → '+signed(st[2])+' (oxidised, '+so+'). '+st[3]+': '+signed(st[4])+' → '+signed(st[5])+' (reduced, '+sr+').</p>'
+     +'<p><b>Step 2.</b></p>'+fm('Reduction: '+eqH(rd))+fm('Oxidation: '+eqH(ox))
+     +'<p><b>Step 3.</b> Multiply the oxidation by '+ac.kOx+' and the reduction by '+ac.kRed+': both have '+ac.ne+' electrons.</p><p><b>Step 4.</b> Add and cancel:</p>'+fm('<b>'+eqH(ac.full)+'</b>')
+     +'<p>Check: the atoms and the total charge are the same on both sides.</p>'});
+}
+const ACP=[0,2,4].map(i=>ACID[i]);
+const EASYACID=[ACID[0],ACID[5],ACID[7],ACID[8],ACID[11],ACID[12]],MIDACID=[ACID[2],ACID[4],ACID[9],ACID[6],ACID[10]];
+def('6.1','6',r=>acidCard(r.seeded?ACID[0]:r.pick(EASYACID),{title:'Equation (a)'}));
+def('6.2','6',r=>acidCard(r.seeded?ACID[2]:r.pick(MIDACID),{title:'Equation (c)'}));
+def('6.3','6',r=>acidCard(r.seeded?ACID[4]:r.pick(MIDACID),{title:'Equation (e)'}));
+
+/* ===== Section 6: spotting redox, comparing oxidation states ===== */
+sec('7','Redox or not? Same oxidation state?',
+ '<p><b>About 5 minutes.</b> A reaction is redox if at least one element changes its oxidation state. In acid–base, precipitation and carbonate reactions no oxidation state changes.</p>');
+const LET='ABCD';
+function redoxPick(eqs,ans){
+  const fields=[];
+  eqs.forEach((e,i)=>fields.push(sel('Working. In '+LET[i]+', does any element change oxidation state?',['yes','no'],i===ans?'yes':'no',{})));
+  fields.push(sel('The equation that represents a redox reaction is',['A','B','C','D'],LET[ans]));
+  return dflt({title:'Which equation is a redox reaction?',
+   html:'<p>Which equation represents a redox reaction?</p>'+eqs.map((e,i)=>fm('<b>'+LET[i]+'</b> &nbsp; '+e)).join(''),
+   fields,cheat:CH_OXRED+'<p>Not redox: acid + alkali, acid + metal oxide, acid + carbonate, and precipitation. Often redox: a metal reacting with an acid or a salt solution, burning, and halogens displacing halides.</p>',
+   hints:['In a redox reaction one element goes up in oxidation state and another goes down. Write the states of the elements under each equation.','Look for an element on its own (0) on one side of the equation: it must change when it forms a compound or is made from one.','Equation '+LET[ans]+' has an element that changes: it is the redox reaction.'],
+   worked:'<p>The redox reaction is <b>'+LET[ans]+'</b>. '+(RDX.find(x=>x[0]===eqs[ans])||[''])[1]+'</p><p>In the other three equations the oxidation states stay the same: they are acid–base, precipitation or carbonate reactions.</p>'});
+}
+def('7.1','7',r=>{
+ if(r.seeded)return redoxPick([NRX[0][0],RDX[0][0],NRX[1][0],NRX[2][0]],1);
+ const red=r.pick(RDX)[0],oth=r.sample(NRX,3).map(x=>x[0]);const all=r.shuffle([red].concat(oth));return redoxPick(all,all.indexOf(red));});
+function sameState(fam,order){
+  /* order: array of [formula,state] in order A..D; the odd one is marked by being not equal to the majority */
+  const states=order.map(x=>x[1]);
+  const maj=states.filter(s=>states.filter(t=>t===s).length>1)[0];
+  const ans=states.findIndex(s=>s!==maj);
+  const fields=order.map((x,i)=>sgn('Working. Oxidation state of '+fam.el+' in '+LET[i]+' ('+F(x[0])+') =',x[1],{}));
+  fields.push(sel('The oxidation state is different in',['A','B','C','D'],LET[ans]));
+  return dflt({title:'Which compound is different?',
+   html:'<p>The oxidation state of '+({Cr:'chromium',Mn:'manganese',S:'sulfur',N:'nitrogen',Fe:'iron',Cu:'copper',Cl:'chlorine',C:'carbon'}[fam.el]).replace('sulfur','sulphur')+' is the same in all the following compounds except:</p>'
+     +'<p style="text-align:center">'+order.map((x,i)=>'<b>'+LET[i]+'</b> &nbsp;'+F(x[0])).join(' &nbsp;&nbsp;&nbsp; ')+'</p>',
+   fields,cheat:CH_OS,
+   hints:['Work out the oxidation state of '+fam.el+' in each compound. Oxygen is −2, chlorine joined to a metal is −1, hydrogen is +1.','For each compound write: (number of '+fam.el+' atoms) × '+I('x')+' + the other states = the charge. Do not forget: if there are two atoms of '+fam.el+', divide by two at the end.','Three of the four compounds have '+fam.el+' in the same state, '+signed(maj)+'. One is different.'],
+   worked:'<p>'+order.map((x,i)=>LET[i]+' '+F(x[0])+': '+fam.el+' is <b>'+signed(x[1])+'</b>').join('<br>')+'</p><p>The odd one out is <b>'+LET[ans]+'</b>.</p>'});
+}
+def('7.2','7',r=>{
+ if(r.seeded){const fam=FAM[0];return sameState(fam,[['CrCl3',3],['Cr2O3',3],['Cr2(CO3)3',3],['CrO3',6]]);}
+ const fam=r.pick(FAM),same=r.sample(fam.same,3),odd=r.pick(fam.odd);
+ return sameState(fam,r.shuffle(same.concat([odd])));});
+
+/* ===== Section 7: names with oxidation numbers ===== */
+sec('8','Names with oxidation numbers',
+ '<p><b>About 6 minutes.</b> The oxidation number goes in Roman numerals in brackets straight after the name of the element, with no space.</p>');
+const NMSG='Check the spelling, the Roman numeral in brackets, and that there is no space before the bracket.';
+function nameCard(list,o){
+  const fields=[];
+  list.forEach(x=>{fields.push(sgn(F(x.f)+': oxidation state of <b>'+x.el+'</b> =',x.n));fields.push(name(F(x.f)+': name',x.name,{msg:NMSG}));});
+  return dflt({title:o.title,
+   html:'<p>Deduce the name of each compound using oxidation numbers. First work out the oxidation state, then write the name.</p>'+list.map(x=>fm('<b>'+F(x.f)+'</b>')).join('')+'<p class="legend">Type, for example, <b>copper(II) oxide</b>.</p>',
+   fields,cheat:CH_NAME,
+   hints:['Work out the oxidation state of '+list.map(x=>x.el).join(', ')+' using the rules: oxygen is −2, hydrogen is +1, chlorine joined to a metal is −1, and all the states add up to 0.',
+     'Write the Roman numeral for each oxidation state: 1 is I, 2 is II, 3 is III, 4 is IV, 5 is V.',
+     list.map(x=>F(x.f)+': the element is '+x.el+' with oxidation state '+signed(x.n)+', so the name has ('+roman(x.n)+') in it.').join('<br>')],
+   worked:list.map(x=>'<p>'+F(x.f)+': '+x.el+' is '+signed(x.n)+', so the name is <b>'+x.name[0]+'</b>.</p>').join('')});
+}
+const NBYF=f=>NAMES.concat(ACIDS).find(x=>x.f===f);
+def('8.1','8',r=>nameCard(r.seeded?['Cr2O3','CuCl','PbO2'].map(NBYF):r.sample(NAMES,3),{title:'Names of compounds (a, b, e)'}));
+def('8.2','8',r=>nameCard(r.seeded?['HNO3','HNO2'].map(NBYF):r.sample(ACIDS,2),{title:'Names of acids (c and d)'}));
+/* ===== Extension ===== */
+sec('X','Extension',
+ '<p>Two more equations in acid solution, with bigger half-equations. The method is the same as in section 6.</p>',true);
+const HARDACID=[ACID[3],ACID[6],ACID[10],ACID[9],ACID[1]];
+def('X.1','X',r=>acidCard(r.seeded?ACID[1]:r.pick(HARDACID),{title:'Equation (b)'}));
+def('X.2','X',r=>acidCard(r.seeded?ACID[3]:r.pick(HARDACID),{title:'Equation (d)'}));
+
+/* ===== Extension Y: harder volumetric analysis ===== */
+sec('Y','Extension: reacting solutions',
+ '<p>Harder questions with solutions that react, to try after the guided one in section 3. Each has a different equation, so <b>read the ratio from the equation every time</b>. There are fewer prompts, but the hints and worked answers are there when you need them. Working scores marks.</p>',true);
+const f4y=x=>nice(+x.toPrecision(4));
+const CHV=(eq,ratioTxt)=>'<p>'+ratioTxt+'</p>'+fm(eq)+'<p><b>The method for every one of these:</b></p>'
+ +fm('1. moles of the known solution = concentration × volume ÷ 1000')
+ +fm('2. moles of the unknown = moles of the known × (ratio from the equation)')
+ +fm('3. concentration of the unknown = moles × 1000 ÷ volume of the unknown')
+ +'<p>Volumes in cm<sup>3</sup>, concentrations in mol dm<sup>−3</sup>. The ratio is the number in front of one substance divided by the number in front of the other.</p>';
+/* Y.1 dichromate(VI) and iron(II): 1 : 6 */
+function dicCard(p){
+  const nCr=p.cCr*p.vCr/1000,nFe=nCr*6,cFe=nFe*1000/p.vFe;
+  return dflt({title:'Dichromate(VI) and iron(II)',
+   html:'<p><b>'+p.vFe.toFixed(1)+' cm<sup>3</sup></b> of iron(II) sulphate solution, in a flask with excess dilute sulphuric acid, needed <b>'+p.vCr.toFixed(1)+' cm<sup>3</sup></b> of <b>'+fc(p.cCr)+' mol dm<sup>−3</sup></b> potassium dichromate(VI) solution to react completely. The balanced equation is:</p>'+fm(eqH(ACID[6].full))+'<p>Find the concentration of the iron(II) sulphate solution.</p>',
+   fields:[
+    num('Moles of Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> = concentration × volume ÷ 1000 =',nCr,'mol',{tol:0.001,abs:1e-12}),
+    sel('The ratio Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> : Fe<sup>2+</sup> in the equation is',['1 : 6','6 : 1','1 : 1','1 : 14'],'1 : 6',{think:1}),
+    num('Moles of Fe<sup>2+</sup> (use the ratio) =',nFe,'mol',{tol:0.001,abs:1e-12}),
+    num('Concentration of Fe<sup>2+</sup> = moles of Fe<sup>2+</sup> × 1000 ÷ volume of Fe<sup>2+</sup> =',cFe,'mol dm<sup>−3</sup>',{tol:0.001,abs:1e-12})],
+   cheat:CHV(eqH(ACID[6].full),'In this equation <b>1</b> Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> reacts with <b>6</b> Fe<sup>2+</sup>. The unknown (Fe<sup>2+</sup>) is the one with the bigger number, so multiply by 6.'),
+   hints:['Start with the solution you know: '+fc(p.cCr)+' × '+p.vCr.toFixed(1)+' = '+f4y(p.cCr*p.vCr)+', then ÷ 1000.','The equation has 1 Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> for every 6 Fe<sup>2+</sup>. There are 6 times more moles of Fe<sup>2+</sup>, so multiply by 6.','Moles of Fe<sup>2+</sup> = '+f4y(nFe)+' mol. Multiply by 1000 and divide by the volume of the iron(II) solution, '+p.vFe.toFixed(1)+' cm<sup>3</sup>.'],
+   worked:fm('moles of Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> = '+fc(p.cCr)+' × '+p.vCr.toFixed(1)+' ÷ 1000 = '+f4y(nCr)+' mol',1)+fm('moles of Fe<sup>2+</sup> = '+f4y(nCr)+' × 6 = '+f4y(nFe)+' mol',1)+fm('concentration of Fe<sup>2+</sup> = '+f4y(nFe)+' × 1000 ÷ '+p.vFe.toFixed(1)+' = <b>'+f4y(cFe)+' mol dm<sup>−3</sup></b>',1)});
+}
+def('Y.1','Y',r=>{
+ if(r.seeded)return dicCard({cCr:0.0200,vCr:22.5,vFe:25.0});
+ for(let k=0;k<200;k++){const cCr=r.pick([0.0100,0.0200,0.0250,0.0500]),vFe=r.pick([20,25]),vCr=r.pick([15,17.5,18.5,20,22.5,24,26.5]);
+  const c=cCr*vCr*6/vFe;if(c>=0.02&&c<=0.2)return dicCard({cCr,vCr,vFe});}
+ return dicCard({cCr:0.0200,vCr:22.5,vFe:25.0});});
+/* Y.2 manganate(VII) and ethanedioate: 2 : 5 */
+const EQOX=eqH(H('5C2O4{2-}(aq) + 2MnO4{-}(aq) + 16H{+}(aq) -> 10CO2(g) + 2Mn{2+}(aq) + 8H2O(l)'));
+function oxCard(p){
+  const nOx=p.cOx*p.vOx/1000,nMn=nOx*2/5,cMn=nMn*1000/p.vMn;
+  return dflt({title:'Manganate(VII) and ethanedioate (a ratio that is not 1 : something)',
+   html:'<p><b>'+p.vOx.toFixed(1)+' cm<sup>3</sup></b> of <b>'+fc(p.cOx)+' mol dm<sup>−3</sup></b> sodium ethanedioate solution, Na<sub>2</sub>C<sub>2</sub>O<sub>4</sub>, was warmed with excess dilute sulphuric acid. Potassium manganate(VII) solution was added until it just reacted completely. It needed <b>'+p.vMn.toFixed(1)+' cm<sup>3</sup></b>. The balanced equation is:</p>'+fm(EQOX)+'<p>Find the concentration of the potassium manganate(VII) solution.</p>',
+   fields:[
+    num('Moles of C<sub>2</sub>O<sub>4</sub><sup>2−</sup> = concentration × volume ÷ 1000 =',nOx,'mol',{tol:0.001,abs:1e-12}),
+    sel('In the equation, 5 C<sub>2</sub>O<sub>4</sub><sup>2−</sup> react with 2 MnO<sub>4</sub><sup>−</sup>. So the moles of MnO<sub>4</sub><sup>−</sup> are',['moles of C₂O₄²⁻ × 2 ÷ 5','moles of C₂O₄²⁻ × 5 ÷ 2','moles of C₂O₄²⁻ ÷ 5 only','the same as the moles of C₂O₄²⁻'],'moles of C₂O₄²⁻ × 2 ÷ 5',{think:1}),
+    num('Moles of MnO<sub>4</sub><sup>−</sup> =',nMn,'mol',{tol:0.001,abs:1e-12}),
+    num('Concentration of MnO<sub>4</sub><sup>−</sup> = moles × 1000 ÷ volume of MnO<sub>4</sub><sup>−</sup> =',cMn,'mol dm<sup>−3</sup>',{tol:0.001,abs:1e-12})],
+   cheat:CHV(EQOX,'In this equation <b>5</b> C<sub>2</sub>O<sub>4</sub><sup>2−</sup> react with <b>2</b> MnO<sub>4</sub><sup>−</sup>. Moles of MnO<sub>4</sub><sup>−</sup> = moles of C<sub>2</sub>O<sub>4</sub><sup>2−</sup> × 2 ÷ 5. Check: there should be fewer moles of MnO<sub>4</sub><sup>−</sup>, because only 2 of them are needed for every 5 ethanedioate ions.'),
+   hints:['Moles of ethanedioate: '+fc(p.cOx)+' × '+p.vOx.toFixed(1)+' = '+f4y(p.cOx*p.vOx)+', then ÷ 1000.','Ratio 5 : 2. Divide the moles of ethanedioate by 5 to get the moles for "1 part", then multiply by 2.','Moles of MnO<sub>4</sub><sup>−</sup> = '+f4y(nMn)+' mol. Multiply by 1000, then divide by '+p.vMn.toFixed(1)+'.'],
+   worked:fm('moles of C<sub>2</sub>O<sub>4</sub><sup>2−</sup> = '+fc(p.cOx)+' × '+p.vOx.toFixed(1)+' ÷ 1000 = '+f4y(nOx)+' mol',1)+fm('moles of MnO<sub>4</sub><sup>−</sup> = '+f4y(nOx)+' × 2 ÷ 5 = '+f4y(nMn)+' mol',1)+fm('concentration = '+f4y(nMn)+' × 1000 ÷ '+p.vMn.toFixed(1)+' = <b>'+f4y(cMn)+' mol dm<sup>−3</sup></b>',1)});
+}
+def('Y.2','Y',r=>{
+ if(r.seeded)return oxCard({cOx:0.0500,vOx:25.0,vMn:20.0});
+ for(let k=0;k<200;k++){const cOx=r.pick([0.025,0.05,0.10]),vOx=r.pick([20,25]),vMn=r.pick([15,17.5,18,20,22.5,24,25]);
+  const c=cOx*vOx*0.4/vMn*1000/1000;if(c>=0.01&&c<=0.1)return oxCard({cOx,vOx,vMn});}
+ return oxCard({cOx:0.0500,vOx:25.0,vMn:20.0});});
+/* Y.3 iron tablet */
+function tabCard(p){
+  const nMn=p.cMn*p.vMn/1000,nFe25=nMn*5,nFe=nFe25*p.vTot/p.vPor,m=nFe*55.8,pc=m/p.mTab*100;
+  return dflt({title:'The percentage of iron in an iron tablet',
+   html:'<p>An iron tablet of mass <b>'+p.mTab.toFixed(2)+' g</b> was dissolved in dilute sulphuric acid and made up to <b>'+p.vTot+' cm<sup>3</sup></b> with water. A <b>'+p.vPor.toFixed(1)+' cm<sup>3</sup></b> portion needed <b>'+p.vMn.toFixed(1)+' cm<sup>3</sup></b> of <b>'+fc(p.cMn)+' mol dm<sup>−3</sup></b> potassium manganate(VII) solution. The iron in the tablet is all present as Fe<sup>2+</sup>. Use:</p>'+fm(eqH(ACID[5].full))+'<p><i>A</i><sub>r</sub>(Fe) = 55.8. Find the percentage of iron by mass in the tablet.</p>',
+   fields:[
+    num('Moles of MnO<sub>4</sub><sup>−</sup> used = concentration × volume ÷ 1000 =',nMn,'mol',{tol:0.001,abs:1e-12}),
+    num('Moles of Fe<sup>2+</sup> in the '+p.vPor.toFixed(1)+' cm³ portion (use the ratio) =',nFe25,'mol',{tol:0.001,abs:1e-12}),
+    sel('The '+p.vPor.toFixed(1)+' cm³ portion is only part of the '+p.vTot+' cm³ solution. To find the moles in the whole '+p.vTot+' cm³ you',['multiply by '+(p.vTot/p.vPor)+' ('+p.vTot+' ÷ '+p.vPor.toFixed(1)+')','divide by '+(p.vTot/p.vPor)+' ('+p.vTot+' ÷ '+p.vPor.toFixed(1)+')','do not need to change the moles'],'multiply by '+(p.vTot/p.vPor)+' ('+p.vTot+' ÷ '+p.vPor.toFixed(1)+')',{think:1}),
+    num('Moles of Fe<sup>2+</sup> in the whole '+p.vTot+' cm³ (in the tablet) =',nFe,'mol',{tol:0.001,abs:1e-12}),
+    num('Mass of iron = moles × 55.8 =',m,'g',{tol:0.001,abs:1e-12}),
+    num('Percentage of iron = mass of iron ÷ mass of tablet × 100 =',pc,'%',{tol:0.005,abs:1e-9})],
+   cheat:CHV(eqH(ACID[5].full),'Same equation as section 3: the ratio Fe<sup>2+</sup> : MnO<sub>4</sub><sup>−</sup> is <b>5 : 1</b>.')
+     +'<p><b>Extra steps for a sample that was made up to a larger volume:</b></p>'+fm('moles in the whole solution = moles in the portion × (total volume ÷ portion volume)')+fm('mass = moles × <i>A</i><sub>r</sub>')+fm('percentage = mass of iron ÷ mass of tablet × 100'),
+   hints:['The solution you know is the manganate(VII). Moles = '+fc(p.cMn)+' × '+p.vMn.toFixed(1)+' ÷ 1000.','Ratio 5 : 1, so the moles of Fe<sup>2+</sup> are 5 times the moles of MnO<sub>4</sub><sup>−</sup>. This is for the portion only.','The portion is '+p.vPor.toFixed(1)+' cm³ out of '+p.vTot+' cm³. The whole solution has '+(p.vTot/p.vPor)+' times as many moles.','Mass = '+f4y(nFe)+' mol × 55.8 g mol<sup>−1</sup>. Then divide by the tablet mass and multiply by 100.'],
+   worked:fm('moles of MnO<sub>4</sub><sup>−</sup> = '+fc(p.cMn)+' × '+p.vMn.toFixed(1)+' ÷ 1000 = '+f4y(nMn)+' mol',1)+fm('moles of Fe<sup>2+</sup> in the portion = '+f4y(nMn)+' × 5 = '+f4y(nFe25)+' mol',1)+fm('moles of Fe<sup>2+</sup> in '+p.vTot+' cm³ = '+f4y(nFe25)+' × '+(p.vTot/p.vPor)+' = '+f4y(nFe)+' mol',1)+fm('mass of iron = '+f4y(nFe)+' × 55.8 = '+f4y(m)+' g',1)+fm('percentage = '+f4y(m)+' ÷ '+p.mTab.toFixed(2)+' × 100 = <b>'+f4y(pc)+' %</b>',1)});
+}
+def('Y.3','Y',r=>{
+ if(r.seeded)return tabCard({mTab:1.60,vTot:250,vPor:25.0,cMn:0.0100,vMn:17.9});
+ const cMn=r.pick([0.0100,0.0200]),mFe=r.pick([0.40,0.45,0.50,0.55,0.60]),mTab=r.pick([1.50,1.60,1.80,2.00]);
+ const vMn=Math.round(mFe/55.8/10/5/cMn*1000*10)/10;
+ return tabCard({mTab,vTot:250,vPor:25.0,cMn,vMn});});
+/* Y.4 hydrogen peroxide: 2 : 5, with dilution */
+const EQPER=eqH(H('5H2O2(aq) + 2MnO4{-}(aq) + 6H{+}(aq) -> 5O2(g) + 2Mn{2+}(aq) + 8H2O(l)'));
+function perCard(p){
+  const nMn=p.cMn*p.vMn/1000,nH=nMn*5/2,cDil=nH*1000/p.vH,cOrig=cDil*p.dil;
+  return dflt({title:'Hydrogen peroxide in a bleach (with a dilution)',
+   html:'<p><b>'+p.vOrig.toFixed(1)+' cm<sup>3</sup></b> of a hydrogen peroxide solution was diluted to <b>'+(p.vOrig*p.dil).toFixed(0)+' cm<sup>3</sup></b> with water. A <b>'+p.vH.toFixed(1)+' cm<sup>3</sup></b> portion of the diluted solution, with excess dilute sulphuric acid, needed <b>'+p.vMn.toFixed(1)+' cm<sup>3</sup></b> of <b>'+fc(p.cMn)+' mol dm<sup>−3</sup></b> potassium manganate(VII) solution. The balanced equation is:</p>'+fm(EQPER)+'<p>Find the concentration of the <b>original</b> hydrogen peroxide solution.</p>',
+   fields:[
+    num('Moles of MnO<sub>4</sub><sup>−</sup> = concentration × volume ÷ 1000 =',nMn,'mol',{tol:0.001,abs:1e-12}),
+    sel('The ratio H<sub>2</sub>O<sub>2</sub> : MnO<sub>4</sub><sup>−</sup> in the equation is',['5 : 2','2 : 5','1 : 1','6 : 2'],'5 : 2',{think:1}),
+    num('Moles of H<sub>2</sub>O<sub>2</sub> in the portion (use the ratio) =',nH,'mol',{tol:0.001,abs:1e-12}),
+    num('Concentration of the diluted H<sub>2</sub>O<sub>2</sub> = moles × 1000 ÷ volume of the portion =',cDil,'mol dm<sup>−3</sup>',{tol:0.001,abs:1e-12}),
+    sel('The solution was diluted from '+p.vOrig.toFixed(1)+' cm³ to '+(p.vOrig*p.dil).toFixed(0)+' cm³, so the original solution was',['more concentrated: multiply by '+p.dil,'less concentrated: divide by '+p.dil,'the same concentration'],'more concentrated: multiply by '+p.dil,{think:1}),
+    num('Concentration of the original H<sub>2</sub>O<sub>2</sub> =',cOrig,'mol dm<sup>−3</sup>',{tol:0.001,abs:1e-12})],
+   cheat:CHV(EQPER,'In this equation <b>5</b> H<sub>2</sub>O<sub>2</sub> react with <b>2</b> MnO<sub>4</sub><sup>−</sup>. The unknown (H<sub>2</sub>O<sub>2</sub>) has the bigger number, so moles of H<sub>2</sub>O<sub>2</sub> = moles of MnO<sub>4</sub><sup>−</sup> × 5 ÷ 2.')
+     +'<p><b>Dilution:</b> if a solution was made '+p.dil+' times bigger in volume by adding water, its concentration became '+p.dil+' times smaller. To get back to the original, multiply by '+p.dil+'.</p>',
+   hints:['The known solution is the manganate(VII): '+fc(p.cMn)+' × '+p.vMn.toFixed(1)+' ÷ 1000.','Ratio 5 : 2. Divide the moles of MnO<sub>4</sub><sup>−</sup> by 2, then multiply by 5.','Concentration of the diluted solution = '+f4y(nH)+' × 1000 ÷ '+p.vH.toFixed(1)+'. Then multiply by '+p.dil+' because it was diluted.'],
+   worked:fm('moles of MnO<sub>4</sub><sup>−</sup> = '+fc(p.cMn)+' × '+p.vMn.toFixed(1)+' ÷ 1000 = '+f4y(nMn)+' mol',1)+fm('moles of H<sub>2</sub>O<sub>2</sub> = '+f4y(nMn)+' × 5 ÷ 2 = '+f4y(nH)+' mol',1)+fm('concentration of the diluted solution = '+f4y(nH)+' × 1000 ÷ '+p.vH.toFixed(1)+' = '+f4y(cDil)+' mol dm<sup>−3</sup>',1)+fm('original concentration = '+f4y(cDil)+' × '+p.dil+' = <b>'+f4y(cOrig)+' mol dm<sup>−3</sup></b>',1)});
+}
+def('Y.4','Y',r=>{
+ if(r.seeded)return perCard({vOrig:10.0,dil:25,vH:25.0,cMn:0.0200,vMn:21.0});
+ const dil=r.pick([10,20,25]),vOrig=r.pick([10,20]),cMn=r.pick([0.0200,0.0250,0.0400]),vH=25.0,vMn=r.pick([16.5,18.0,20.5,21.0,22.5,24.0]);
+ return perCard({vOrig,dil,vH,cMn,vMn});});
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
