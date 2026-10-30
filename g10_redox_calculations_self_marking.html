@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 10 Industrial Chemistry: redox calculations</title>
+<style>
+:root{--ink:#000;--soft:#555;--rule:#000;--tint:#f2f2f2;--tint2:#e6e6e6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--ink);font:17px/1.5 "Palatino Linotype",Palatino,"TeX Gyre Pagella","Book Antiqua",Georgia,serif}
+.sans,h1,h2,h3,button,.qn,.qm,.runhead,.foot,label.k,.bar,th,.tabs a{font-family:"Clear Gothic","Helvetica Neue",Helvetica,Arial,sans-serif}
+.runhead{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 16px;font-size:13px}
+.runhead .score{font-weight:700;white-space:nowrap}
+.runhead button{font-size:13px;padding:3px 10px;margin-left:8px}
+main{max-width:800px;margin:0 auto;padding:16px 16px 40px}
+h1{font-weight:400;font-size:30px;line-height:1.2;margin:18px 0 6px}
+h2{font-weight:400;font-size:23px;margin:38px 0 6px;padding-top:8px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+h2 .tot{font-size:14px}
+h3{font-weight:400;font-size:17px;margin:14px 0 4px}
+p{margin:8px 0}
+.intro{margin:6px 0 14px}
+.box{border:1px solid var(--rule);padding:10px 16px;margin:14px 0}
+.box h3{margin-top:0;font-weight:700}
+ul.nav{columns:2;margin:8px 0 0 18px;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px}
+.q{border:1px solid var(--rule);padding:12px 16px 14px;margin:18px 0;background:#fff}
+.q.practice{border-style:dashed;background:#fafafa;margin-left:14px}
+.q.done{border-width:2px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:4px}
+.qn{font-weight:700}
+.qt{font-size:15px;margin-left:8px;font-weight:400}
+.qm{white-space:nowrap}
+.qtext p:first-child{margin-top:2px}
+.fm{text-align:center;white-space:nowrap;overflow-x:auto;font-weight:700;margin:8px 0;font-size:17px}
+.fm.n{font-weight:400}
+.fields{margin:8px 0}
+.frow{text-align:center;white-space:nowrap;margin:8px 0;overflow-x:auto}
+.frow label.k{font-size:14px;margin-right:6px;white-space:normal;display:inline-block;max-width:60%;vertical-align:middle;text-align:right}
+.frow.wide{text-align:left;white-space:normal}
+input[type=text],select,textarea{font:inherit;font-size:16px;border:1px solid #000;border-radius:0;padding:4px 7px;background:#fff;color:#000}
+input.num{width:8.5em;text-align:center}
+input.txt{width:13em;text-align:center}
+select{max-width:100%}
+textarea{width:100%;min-height:7.5em;resize:vertical;line-height:1.4}
+.unit{margin-left:6px}
+.mark{display:inline-block;min-width:1.4em;font-weight:700;margin-left:6px}
+.ok input,.ok select{border-width:3px}
+.bad input,.bad select{border-style:dashed;border-width:2px}
+.fmsg{font-size:14px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;white-space:normal;display:block;margin:2px auto 0;max-width:34em;text-align:center}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+button{font-size:14px;padding:5px 12px;border:1px solid #000;background:#fff;color:#000;cursor:pointer;border-radius:0}
+button:hover,button:focus{background:var(--tint2)}
+button.main{background:#000;color:#fff}
+button.main:hover,button.main:focus{background:#333}
+button[hidden]{display:none}
+.panel{border:1px solid #000;background:var(--tint);padding:8px 14px;margin:8px 0;font-size:16px}
+.panel h4{margin:0 0 4px;font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif}
+.panel.hint{background:#fff;border-style:dashed}
+.hintl{margin:4px 0}
+.fb{margin:8px 0 2px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px}
+.fb b{font-weight:700}
+.worked{border-left:4px solid #000;padding:2px 12px;margin:10px 0;background:#fff}
+.worked h4{margin:2px 0;font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif}
+.ideas{margin:8px 0;padding:0;list-style:none;font-size:15px}
+.ideas li{margin:4px 0}
+.ideas label{cursor:pointer}
+.model{border:1px solid #000;padding:6px 12px;margin:8px 0;background:#fff;font-size:16px}
+.bank{border:1px solid #000;padding:5px 10px;margin:8px 0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;text-align:center}
+.bank span{display:inline-block;border:1px solid #888;padding:0 8px;margin:2px 3px}
+table{border-collapse:collapse;margin:8px auto;font-size:15px}
+th,td{border:1px solid #000;padding:3px 9px;text-align:center}
+th{background:var(--tint2);font-weight:700;font-size:14px}
+td.l{text-align:left}
+.tip{border-bottom:1px dotted #000;cursor:help;position:relative}
+.tip:hover::after,.tip:focus::after,.tip.on::after{content:attr(data-tip);position:absolute;left:0;top:1.5em;z-index:30;width:17em;max-width:80vw;background:#fff;border:1px solid #000;padding:5px 8px;font:14px/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;white-space:normal;box-shadow:3px 3px 0 #000}
+#ref{position:fixed;inset:0;background:#fff;z-index:50;overflow:auto;padding:16px}
+#ref[hidden]{display:none}
+#ref .in{max-width:800px;margin:0 auto}
+.close{position:sticky;top:0;float:right}
+.summary td,.summary th{padding:4px 12px}
+.foot{border-top:1px solid #000;margin-top:40px;padding-top:6px;font-size:12px}
+dl.gl dt{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;font-size:14px;margin-top:8px}
+dl.gl dd{margin:0 0 0 14px}
+.legend{font-size:14px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+@media(max-width:560px){ul.nav{columns:1}.frow label.k{max-width:100%;display:block;text-align:center;margin-bottom:3px}.fm{font-size:16px}}
+
+
+.key{border:1px solid currentColor;border-radius:6px;padding:.4em .9em;margin:.7em 0;font-size:.95em}.key p{margin:.2em 0}.key ul{margin:.2em 0 .2em 1.1em;padding:0}
+
+.vt{border-collapse:collapse;margin:.6em auto}.vt th,.vt td{border:1px solid currentColor;padding:.25em .7em;text-align:center}.vt th.rl{text-align:left;font-weight:normal}
+
+.grid td.gcell{vertical-align:top;white-space:nowrap}.grid input.num{width:6em}.grid select{max-width:11em;font-size:13px}.grid .mark{margin-left:3px}.grid .fmsg{font-size:12px;max-width:12em;white-space:normal;text-align:left}.grid th{vertical-align:middle}.grid th.rl{max-width:15em;font-size:14px}
+
+.ptools{text-align:center;margin:10px 0}.pbtn{margin:0 4px}
+@page{size:A4;margin:16mm}
+@media print{.runhead,.tools,.ptools,#savepanel,#ref,button,.panel,.fmsg{display:none!important}
+ body{font-size:11pt}.q{break-inside:avoid;page-break-inside:avoid}h2{break-after:avoid}
+ .worked{display:block}.worked[hidden]{display:none}textarea{border:1px solid #000}}
+
+.meta{border-left:3px solid currentColor;padding:4px 10px;margin:8px 0;font-size:14px}.meta select{font-size:14px;max-width:100%}.meta textarea{width:100%;font-size:14px;box-sizing:border-box}.meta .why{display:flex;flex-direction:column;gap:2px}.meta .why label{display:block}
+
+/* bond enthalpy additions */
+pre.sf{font-family:"DejaVu Sans Mono",Consolas,Menlo,monospace;font-size:15px;line-height:1.15;margin:8px 0;padding:8px 12px;background:#fff;border:1px solid #bbb;border-radius:6px;overflow-x:auto;white-space:pre;text-align:left}
+pre.sf.one{display:inline-block}
+.dg{margin:10px 0;padding:6px 8px;border:1px solid #bbb;border-radius:6px;background:#fff}
+.dgsvg svg{width:100%;height:auto;max-width:680px;display:block;margin:0 auto}
+.dgcap{margin-top:4px}
+th.gh{background:#eef2f7;text-align:left;font-weight:700;padding:5px 8px}
+table.bt{border-collapse:collapse;margin:6px 0}table.bt th,table.bt td{border:1px solid #999;padding:2px 10px;text-align:center}
+@media print{.dg{break-inside:avoid}}
+
+input.txt.eq{width:30em;max-width:100%}
+.fblist{list-style:none;margin:6px 0;padding:0}
+li.fb{border-left:6px solid #999;padding:6px 10px;margin:6px 0;background:#fff}
+li.fb.good{border-left-color:#2e7d32}li.fb.mid{border-left-color:#b8860b}li.fb.low{border-left-color:#b23a3a}li.fb.nostart{border-left-color:#bbb;color:#555}
+
+</style>
+</head>
+<body>
+<div class="runhead"><span>Grade 10 Industrial Chemistry</span><span><span class="score" id="score"></span><button id="refbtn" type="button">Reference sheet</button></span></div>
+<main>
+<h1>Redox calculations</h1>
+<p class="sans" style="font-size:14px;margin-top:0">Oxidation numbers, balancing redox equations, and calculations with redox equations. About 60 minutes for the main task. Every question has a cheat sheet, hints and a worked answer.</p>
+<div id="gate" class="box">
+<h3>Before you start</h3>
+<p class="sans" style="font-size:15px">Type your <b>first name</b> and choose your <b>chemistry set</b>. You will be given a three-digit code. Keep it: it is your code in all your saved work.</p>
+<p class="sans" style="text-align:center"><label>First name <input type="text" id="stname" autocomplete="given-name" maxlength="30" style="width:12em"></label> &nbsp; <label>Set <select id="stset"></select></label> &nbsp; <button type="button" id="stgo" class="main">Start</button></p>
+<p class="sans" id="gatemsg" style="font-size:14px;text-align:center" role="status"></p>
+<p class="sans" style="font-size:14px;text-align:center">Already started? <button type="button" class="pbtn" data-act="load">Retrieve progress</button></p>
+</div>
+<div id="savepanel" class="box" hidden>
+<div id="saveblock" hidden><h3>Save progress</h3><p class="sans" style="font-size:14px">Keep the file or the code. When you come back, press <b>Retrieve progress</b> and give it back.</p><textarea id="savecode" readonly rows="3" style="width:100%;font-size:12px"></textarea><p><button type="button" id="copycode">Copy the code</button> <button type="button" id="saveclose">Close</button></p></div>
+<div id="loadblock" hidden><h3>Retrieve progress</h3><p class="sans" style="font-size:14px">Choose the file you saved: <input type="file" id="loadfile" accept=".txt,text/plain"></p><p class="sans" style="font-size:14px">Or paste the code here:</p><textarea id="loadcode" rows="3" style="width:100%;font-size:12px"></textarea><p><button type="button" id="loadgo" class="main">Load</button> <button type="button" id="loadclose">Close</button></p></div>
+<p class="sans" id="savemsg" style="font-size:14px" role="status"></p>
+</div>
+<div id="testbody" hidden>
+<p class="sans" id="who" style="font-size:15px;margin:4px 0"></p>
+<div class="ptools sans" id="ptools"><button type="button" class="pbtn" data-act="save">Save progress</button> <button type="button" class="pbtn" data-act="load">Retrieve progress</button> <button type="button" class="pbtn" data-act="pdf">Save as a .pdf file</button></div>
+<div class="box">
+<h3>How this task works</h3>
+<ul style="margin:6px 0 6px 18px;padding:0">
+<li>The main task takes about <b>60 minutes</b>. The time for each section is at the top of the section. The extension and <b>More practice</b> are extra. You can finish it for homework.</li>
+<li>Every question has a <b>cheat sheet</b>, up to three <b>hints</b>, and a <b>worked answer</b> that appears after you check.</li>
+<li>Press <b>Check</b> as often as you like. A ✓ means correct. A ✗ means not yet.</li>
+<li><b>More practice</b> gives you a new question of the same kind, with its own cheat sheet and hints. It does not change your score. Use it until you can get full marks first time without a hint.</li>
+<li>Write oxidation states with their sign: <b>+3</b>, <b>-2</b>, <b>0</b>. Write answers to calculations as numbers. A small rounding difference is accepted.</li>
+<li>Type equations on one line, for example <b>Ca -> Ca2+ + 2e-</b>. Write a charge after the symbol (2+ or 2-) and electrons as e-. State symbols are optional. The order of the terms on one side does not matter. A multiple of the half-equation is accepted.</li>
+<li>Questions marked <b>Working</b> show you the steps. They score marks, so write them even when you are not sure of the final answer.</li>
+<li>The <b>Reference sheet</b> button (top right) opens the oxidation state rules, the formulae for moles and the steps for half-equations. Move the pointer over a dotted word to see what it means. The glossary is at the end.</li>
+<li><b>Save progress</b> keeps your answers in a file. <b>Retrieve progress</b> brings them back, so you can stop and carry on later. <b>Save as a .pdf file</b> opens the print window: choose <b>Save as PDF</b> as the printer.</li>
+<li>At the end, the <b>Feedback</b> panel tells you which sections are secure and what to do next.</li>
+</ul>
+</div>
+<div class="box"><h3>Before you start</h3><p class="sans" style="font-size:15px;margin:4px 0">In a few words: what do you already know about using balanced equations to calculate masses, volumes and concentrations?</p><textarea id="rstart" rows="3" style="width:100%" aria-label="what I know before"></textarea></div>
+<p class="sans" style="font-size:14px;margin-bottom:2px">Sections</p>
+<ul class="nav" id="nav"></ul>
+<div id="sections"></div>
+<h2><span>Your results</span></h2>
+<div id="feedback" class="box fbbox" aria-live="polite"></div>
+<table class="summary"><thead><tr><th class="l">Section</th><th>Marks</th><th>Out of</th><th>Hints used</th><th>Checks</th></tr></thead><tbody id="sumbody"></tbody></table>
+<div class="box"><h3>Looking back</h3><p class="sans" style="font-size:15px;margin:4px 0">In a few words: what is the one thing about redox calculations that you now understand better, and what would you still like to practise?</p><textarea id="rend" rows="3" style="width:100%" aria-label="what I learned"></textarea></div>
+<div class="ptools sans"><button type="button" class="pbtn" data-act="save">Save progress</button> <button type="button" class="pbtn" data-act="load">Retrieve progress</button> <button type="button" class="pbtn" data-act="pdf">Save as a .pdf file</button></div>
+<p style="text-align:center"><button id="copy" type="button" class="main">Copy my results</button> <span id="copied" class="legend"></span></p>
+<h2><span>Glossary</span></h2>
+<dl class="gl" id="gl"></dl>
+</div>
+<div class="foot">Science Department · Refined with AI</div>
+</main>
+<div id="ref" hidden><div class="in"><button id="refclose" type="button" class="close main">Close</button><h2 style="border-top:0"><span>Reference sheet</span></h2><div id="refbody"></div></div></div>
+<script>
+/* ===== redox data and helpers ===== */
+const MINUS='−';
+const sup=t=>'<sup>'+t+'</sup>';
+function F(f){return f.replace(/([A-Za-z\)])(\d+)/g,'$1<sub>$2</sub>');}
+function nice(x){return String(+(+x).toPrecision(10));}
+const KJ='kJ';
+const I=s=>`<i>${s}</i>`;
+const fm=(h,n)=>`<div class="fm${n?' n':''}">${h}</div>`;
+const signed=x=>(x>0?'+':(x<0?MINUS:''))+Math.abs(x);
+const ROM=['0','I','II','III','IV','V','VI','VII','VIII'];
+const roman=n=>ROM[n];
+const SUBD='₀₁₂₃₄₅₆₇₈₉',SUPD='⁰¹²³⁴⁵⁶⁷⁸⁹';
+
+/* ---- species: {f, q, st, el} ---- */
+function chg(q){return q===0?'':(Math.abs(q)>1?Math.abs(q):'')+(q>0?'+':'-');}
+function chgH(q){return q===0?'':sup((Math.abs(q)>1?Math.abs(q):'')+(q>0?'+':MINUS));}
+const canon=s=>s.el?'e-':s.f+chg(s.q);
+const spH=s=>s.el?'e'+sup(MINUS):F(s.f)+chgH(s.q)+(s.st?'('+s.st+')':'');
+const uni=s=>s.f.replace(/\d/g,d=>SUBD[d])+(s.q?(Math.abs(s.q)>1?String(Math.abs(s.q)).replace(/\d/g,d=>SUPD[d]):'')+(s.q>0?'⁺':'⁻'):'');
+const termH=t=>(t[0]>1?t[0]:'')+spH(t[1]);
+const sideH=a=>a.map(termH).join(' + ');
+const eqH=(e)=>sideH(e.l)+' → '+sideH(e.r);
+const termA=t=>(t[0]>1?t[0]:'')+canon(t[1]);
+const sideA=a=>a.map(termA).join(' + ');
+const eqA=e=>sideA(e.l)+' -> '+sideA(e.r);
+/* parse "Zn(s) + 2H{+}(aq) -> Zn{2+}(aq) + H2(g)" */
+function parseTerm(t){
+  t=t.trim();
+  let m=/^(\d*)e-$/.exec(t);if(m)return [m[1]?+m[1]:1,{f:'e',q:-1,el:1}];
+  m=/^(\d*)([A-Za-z0-9()]+?)(?:\{(\d*)([+-])\})?(?:\((s|l|g|aq)\))?$/.exec(t);
+  if(!m)throw new Error('Bad term '+t);
+  const q=m[4]?(m[3]?+m[3]:1)*(m[4]==='+'?1:-1):0;
+  return [m[1]?+m[1]:1,{f:m[2],q,st:m[5]||''}];
+}
+const parseSide=s=>s.split(' + ').map(parseTerm);
+function H(s){const [l,r]=s.split(' -> ');return {l:parseSide(l),r:parseSide(r)};}
+function parseF(f){let i=0;function grp(){const m={};while(i<f.length){const c=f[i];
+  if(c==='('){i++;const g=grp();let n='';while(/\d/.test(f[i]||''))n+=f[i++];const k=n?+n:1;for(const e in g)m[e]=(m[e]||0)+g[e]*k;}
+  else if(c===')'){i++;return m;}
+  else{let e=c;i++;while(/[a-z]/.test(f[i]||''))e+=f[i++];let n='';while(/\d/.test(f[i]||''))n+=f[i++];m[e]=(m[e]||0)+(n?+n:1);}}return m;}return grp();}
+function totals_(a){const at={};let ch=0;a.forEach(([c,s])=>{ch+=c*s.q;if(!s.el){const p=parseF(s.f);for(const e in p)at[e]=(at[e]||0)+c*p[e];}});return {at,ch};}
+function isBal(e){const L=totals_(e.l),R=totals_(e.r);if(L.ch!==R.ch)return false;const ks=Object.keys(Object.assign({},L.at,R.at));return ks.every(k=>(L.at[k]||0)===(R.at[k]||0));}
+function electrons(e){const a=e.l.concat(e.r).find(t=>t[1].el);return a?a[0]:0;}
+function mult(e,k){return {l:e.l.map(t=>[t[0]*k,t[1]]),r:e.r.map(t=>[t[0]*k,t[1]])};}
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+/* add two half-equations: returns {kOx,kRed,eq} */
+function combine(ox,red){
+  const a=electrons(ox),b=electrons(red),L=a*b/gcd(a,b),kO=L/a,kR=L/b;
+  const o=mult(ox,kO),r=mult(red,kR);
+  const agg=(arr)=>{const m=new Map();arr.forEach(([c,s])=>{const k=canon(s);if(!m.has(k))m.set(k,[0,s]);m.get(k)[0]+=c;});return m;};
+  const l=agg(o.l.concat(r.l)),rt=agg(o.r.concat(r.r));
+  const outL=[],outR=[];
+  const keys=new Set([...l.keys(),...rt.keys()]);
+  keys.forEach(k=>{
+    if(k==='e-')return;
+    const a1=l.has(k)?l.get(k)[0]:0,b1=rt.has(k)?rt.get(k)[0]:0,s=(l.has(k)?l.get(k):rt.get(k))[1];
+    if(a1>b1)outL.push([a1-b1,s]);else if(b1>a1)outR.push([b1-a1,s]);
+  });
+  const rank=t=>(canon(t[1])==='H+'?2:(canon(t[1])==='H2O'?3:1));
+  outL.sort((x,y)=>rank(x)-rank(y));outR.sort((x,y)=>rank(x)-rank(y));
+  const eq={l:outL,r:outR};
+  if(!isBal(eq))throw new Error('Combined equation not balanced: '+eqA(eq));
+  return {kOx:kO,kRed:kR,eq,ne:L};
+}
+
+/* ---- checking a typed equation ---- */
+function normEq(s){
+  s=String(s).replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,c=>SUPD.indexOf(c)).replace(/[₀-₉]/g,c=>SUBD.indexOf(c)).replace(/⁺/g,'+').replace(/⁻/g,'-').replace(/[−–—]/g,'-');
+  s=s.replace(/\s*(-{1,3}>|=>|→|⟶|⇒|=)\s*/g,'>');
+  s=s.replace(/\((aq|s|l|g)\)/gi,'').replace(/[\s\^{}]/g,'');
+  s=s.replace(/e−|e–/g,'e-');
+  return s;
+}
+function termAlts(t){
+  const s=t[1];if(s.el)return ['e-','e'];
+  const a=[canon(s)];
+  if(Math.abs(s.q)>1)a.push(s.f+(s.q>0?'+':'-')+Math.abs(s.q));
+  return a;
+}
+function matchSide(str,rem){
+  if(str==='')return rem.length===0;
+  for(let i=0;i<rem.length;i++){
+    const [c,sp]=rem[i],alts=termAlts([c,sp]);
+    for(const pre of (c===1?['','1']:[String(c)])){
+      for(const alt of alts){
+        const tok=pre+alt;
+        if(str.startsWith(tok)){
+          const rest=str.slice(tok.length),others=rem.filter((_,k)=>k!==i);
+          if(rest===''){if(others.length===0)return true;}
+          else if(rest[0]==='+'){if(matchSide(rest.slice(1),others))return true;}
+        }
+      }
+    }
+  }
+  return false;
+}
+function eqMatches(str,e){
+  const parts=str.split('>');if(parts.length!==2)return false;
+  return matchSide(parts[0],e.l)&&matchSide(parts[1],e.r);
+}
+function checkEq(val,f){
+  if(String(val).trim()==='')return {ok:false,msg:'Nothing entered yet.'};
+  const s=normEq(val);
+  if(s.split('>').length!==2)return {ok:false,msg:'Put an arrow in the equation: type -> between the two sides.'};
+  const e=f.eq;
+  for(let k=1;k<=4;k++)if(eqMatches(s,k===1?e:mult(e,k)))return {ok:true};
+  const sw={l:e.r,r:e.l};
+  if(eqMatches(s,sw))return {ok:false,msg:'This is the equation the wrong way round. Check which side the electrons are on.'};
+  return {ok:false,msg:f.msg||'Not yet. Check the atoms first, then the charge, then the electrons.'};
+}
+function normN(s){return String(s).toLowerCase().replace(/sulfate/g,'sulphate').replace(/sulfuric/g,'sulphuric').replace(/\s*\(\s*/g,'(').replace(/\s*\)\s*/g,')').replace(/\s+/g,' ').trim();}
+const eq=(label,e,o)=>Object.assign({k:'txt',mode:'eq',label,ans:[eqA(e)],eq:e},o||{});
+const name=(label,ans,o)=>Object.assign({k:'txt',mode:'name',label,ans:[].concat(ans)},o||{});
+
+/* ---- glossary ---- */
+const GLOSS={
+ 'oxidation state':'The charge an atom would have if every bond were ionic. It is written with the sign first: +2, −1, 0. The oxidation states of all the atoms in a compound add up to the charge on the species.',
+ 'oxidation number':'The Roman numeral in a name, such as the (III) in iron(III) oxide. It is the oxidation state written as a Roman numeral, in brackets.',
+ 'redox':'A reaction in which oxidation and reduction happen together.',
+ 'oxidation':'Loss of electrons. The oxidation state goes up.',
+ 'reduction':'Gain of electrons. The oxidation state goes down.',
+ 'oxidised':'Has lost electrons. Its oxidation state has gone up.',
+ 'reduced':'Has gained electrons. Its oxidation state has gone down.',
+ 'oxidising agent':'The reactant that accepts electrons. It is reduced, and it makes the other reactant oxidised. Also called the oxidant.',
+ 'reducing agent':'The reactant that supplies electrons. It is oxidised, and it makes the other reactant reduced. Also called the reductant.',
+ 'half-equation':'An equation for only the oxidation or only the reduction, with electrons shown. Atoms and charge must balance.',
+ 'electron':'A negatively charged particle, e⁻. Electrons are lost in oxidation and gained in reduction.',
+ 'acidified':'Made acidic by adding H⁺ ions. In acid solution you can use H⁺ and H₂O to balance a half-equation.',
+ 'spectator ion':'An ion that is in the solution but does not change in the reaction.',
+ 'IUPAC':'The international organisation that agrees the systematic names of chemical compounds.',
+ 'ion':'An atom or group of atoms with an electric charge.',
+ 'mole':'An amount of a substance. One mole contains 6.02 × 10²³ particles. Moles are found from mass, volume of a solution or volume of a gas.',
+ 'molar mass':'The mass of one mole of a substance, in g mol⁻¹. For an element it is the atomic mass, Ar.',
+ 'concentration':'The amount of a substance in a volume of solution, measured in mol dm⁻³.',
+ 'ratio':'In a balanced equation, the ratio of two substances is the numbers in front of them. It tells you how many moles of one react with how many moles of the other.',
+ 'balanced equation':'An equation with the same number of atoms of each element, and the same total charge, on both sides.',
+ 'disproportionation':'A reaction in which the same element is both oxidised and reduced.'
+};
+const AR_ORDER=[],AR={};
+
+/* ===== pools: oxidation states, redox reactions, half-equations, names ===== */
+/* oxidation-state species: formula, charge, [[element,state,count]...], element to work out */
+const OS=[
+ ['NH4',1,[['N',-3,1],['H',1,4]],'N'],['CuCl2',0,[['Cu',2,1],['Cl',-1,2]],'Cu'],['H2O',0,[['H',1,2],['O',-2,1]],'O'],
+ ['SO2',0,[['S',4,1],['O',-2,2]],'S'],['Fe2O3',0,[['Fe',3,2],['O',-2,3]],'Fe'],['NO3',-1,[['N',5,1],['O',-2,3]],'N'],
+ ['MnO2',0,[['Mn',4,1],['O',-2,2]],'Mn'],['PO4',-3,[['P',5,1],['O',-2,4]],'P'],['K2Cr2O7',0,[['K',1,2],['Cr',6,2],['O',-2,7]],'Cr'],
+ ['MnO4',-1,[['Mn',7,1],['O',-2,4]],'Mn'],
+ ['NH3',0,[['N',-3,1],['H',1,3]],'N'],['CH4',0,[['C',-4,1],['H',1,4]],'C'],['CO2',0,[['C',4,1],['O',-2,2]],'C'],
+ ['CO3',-2,[['C',4,1],['O',-2,3]],'C'],['H2O2',0,[['H',1,2],['O',-1,2]],'O'],['SO3',0,[['S',6,1],['O',-2,3]],'S'],
+ ['SO3',-2,[['S',4,1],['O',-2,3]],'S'],['SO4',-2,[['S',6,1],['O',-2,4]],'S'],['H2SO4',0,[['H',1,2],['S',6,1],['O',-2,4]],'S'],
+ ['HNO3',0,[['H',1,1],['N',5,1],['O',-2,3]],'N'],['HNO2',0,[['H',1,1],['N',3,1],['O',-2,2]],'N'],['NO',0,[['N',2,1],['O',-2,1]],'N'],
+ ['NO2',0,[['N',4,1],['O',-2,2]],'N'],['N2O',0,[['N',1,2],['O',-2,1]],'N'],['Cr2O3',0,[['Cr',3,2],['O',-2,3]],'Cr'],
+ ['CrO3',0,[['Cr',6,1],['O',-2,3]],'Cr'],['CrCl3',0,[['Cr',3,1],['Cl',-1,3]],'Cr'],['CrO4',-2,[['Cr',6,1],['O',-2,4]],'Cr'],
+ ['Cr2O7',-2,[['Cr',6,2],['O',-2,7]],'Cr'],['KMnO4',0,[['K',1,1],['Mn',7,1],['O',-2,4]],'Mn'],['MnCl2',0,[['Mn',2,1],['Cl',-1,2]],'Mn'],
+ ['FeO',0,[['Fe',2,1],['O',-2,1]],'Fe'],['FeCl3',0,[['Fe',3,1],['Cl',-1,3]],'Fe'],['V2O5',0,[['V',5,2],['O',-2,5]],'V'],
+ ['TiCl4',0,[['Ti',4,1],['Cl',-1,4]],'Ti'],['Ni(OH)2',0,[['Ni',2,1],['O',-2,2],['H',1,2]],'Ni'],['CuO',0,[['Cu',2,1],['O',-2,1]],'Cu'],
+ ['Cu2O',0,[['Cu',1,2],['O',-2,1]],'Cu'],['ClO3',-1,[['Cl',5,1],['O',-2,3]],'Cl'],['OCl',-1,[['O',-2,1],['Cl',1,1]],'Cl'],
+ ['IO3',-1,[['I',5,1],['O',-2,3]],'I'],['PbO2',0,[['Pb',4,1],['O',-2,2]],'Pb'],['SnCl4',0,[['Sn',4,1],['Cl',-1,4]],'Sn'],
+ ['H2S',0,[['H',1,2],['S',-2,1]],'S'],['Fe(OH)3',0,[['Fe',3,1],['O',-2,3],['H',1,3]],'Fe']
+].map(a=>({f:a[0],q:a[1],els:a[2],unk:a[3]}));
+const osByKey=(f,q)=>OS.find(s=>s.f===f&&s.q===q);
+OS.forEach(s=>{let t=0;s.els.forEach(e=>t+=e[1]*e[2]);if(t!==s.q)throw new Error('Oxidation states do not add up in '+s.f+' '+s.q);
+  const p=parseF(s.f);s.els.forEach(e=>{if(p[e[0]]!==e[2])throw new Error('Count mismatch '+s.f+' '+e[0]);});});
+const osH=s=>F(s.f)+chgH(s.q);
+const osU=s=>s.f.replace(/\d/g,d=>SUBD[d])+(s.q?(Math.abs(s.q)>1?String(Math.abs(s.q)).replace(/\d/g,d=>SUPD[d]):'')+(s.q>0?'⁺':'⁻'):'');
+function osSum(s){
+  const u=s.els.find(e=>e[0]===s.unk),rest=s.els.filter(e=>e[0]!==s.unk);
+  const known=rest.map(e=>e[2]+' × ('+signed(e[1])+')').join(' + ');
+  return (u[2]>1?u[2]:'')+I('x')+(known?' + '+known:'')+' = '+signed(s.q).replace('+0','0').replace('0','0');
+}
+/* ---- reactions for "oxidised or reduced?" ---- */
+function R(str,ox,red){const e=H(str);return {e,ox,red};}
+/* ox / red = [species canon, element, from, to] */
+const RX2=[
+ R('Sn{2+}(aq) + 2Fe{3+}(aq) -> Sn{4+}(aq) + 2Fe{2+}(aq)',['Sn2+','Sn',2,4],['Fe3+','Fe',3,2]),
+ R('Cl2(aq) + 2NaBr(aq) -> Br2(aq) + 2NaCl(aq)',['NaBr','Br',-1,0],['Cl2','Cl',0,-1]),
+ R('2FeCl2(aq) + Cl2(aq) -> 2FeCl3(aq)',['FeCl2','Fe',2,3],['Cl2','Cl',0,-1]),
+ R('2H2O(l) + 2F2(g) -> 4HF(aq) + O2(g)',['H2O','O',-2,0],['F2','F',0,-1]),
+ R('I2(aq) + SO3{2-}(aq) + H2O(l) -> 2I{-}(aq) + SO4{2-}(aq) + 2H{+}(aq)',['SO32-','S',4,6],['I2','I',0,-1]),
+ R('Zn(s) + CuSO4(aq) -> ZnSO4(aq) + Cu(s)',['Zn','Zn',0,2],['CuSO4','Cu',2,0]),
+ R('Mg(s) + 2HCl(aq) -> MgCl2(aq) + H2(g)',['Mg','Mg',0,2],['HCl','H',1,0]),
+ R('2Na(s) + Cl2(g) -> 2NaCl(s)',['Na','Na',0,1],['Cl2','Cl',0,-1]),
+ R('Fe(s) + CuCl2(aq) -> FeCl2(aq) + Cu(s)',['Fe','Fe',0,2],['CuCl2','Cu',2,0]),
+ R('Cl2(aq) + 2KI(aq) -> 2KCl(aq) + I2(aq)',['KI','I',-1,0],['Cl2','Cl',0,-1]),
+ R('2Mg(s) + O2(g) -> 2MgO(s)',['Mg','Mg',0,2],['O2','O',0,-2]),
+ R('H2(g) + Cl2(g) -> 2HCl(g)',['H2','H',0,1],['Cl2','Cl',0,-1]),
+ R('CuO(s) + H2(g) -> Cu(s) + H2O(l)',['H2','H',0,1],['CuO','Cu',2,0]),
+ R('Fe2O3(s) + 3CO(g) -> 2Fe(s) + 3CO2(g)',['CO','C',2,4],['Fe2O3','Fe',3,0]),
+ R('Br2(aq) + 2KI(aq) -> 2KBr(aq) + I2(aq)',['KI','I',-1,0],['Br2','Br',0,-1])
+];
+RX2.forEach(r=>{if(!isBal(r.e))throw new Error('Unbalanced RX2 '+eqA(r.e));
+  const names=r.e.l.map(t=>canon(t[1]));if(names.indexOf(r.ox[0])<0||names.indexOf(r.red[0])<0)throw new Error('RX2 species '+r.ox[0]+' '+r.red[0]);});
+const RX2B=[0,1,2,3,4];   /* the five from the book */
+/* ---- ionic half-equations (no H+ or H2O needed) ---- */
+function IH(ox,red){const o=H(ox),r=H(red);if(!isBal(o)||!isBal(r))throw new Error('Half unbalanced '+ox+' | '+red);const c=combine(o,r);return {ox:o,red:r,full:c.eq,kOx:c.kOx,kRed:c.kRed};}
+const IONIC=[
+ IH('Ca(s) -> Ca{2+}(aq) + 2e-','2H{+}(aq) + 2e- -> H2(g)'),
+ IH('Fe{2+}(aq) -> Fe{3+}(aq) + e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)'),
+ IH('Sn{2+}(aq) -> Sn{4+}(aq) + 2e-','Fe{3+}(aq) + e- -> Fe{2+}(aq)'),
+ IH('2Br{-}(aq) -> Br2(aq) + 2e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)'),
+ IH('Mg(s) -> Mg{2+}(aq) + 2e-','Cu{2+}(aq) + 2e- -> Cu(s)'),
+ IH('Zn(s) -> Zn{2+}(aq) + 2e-','Ag{+}(aq) + e- -> Ag(s)'),
+ IH('Fe(s) -> Fe{2+}(aq) + 2e-','Cu{2+}(aq) + 2e- -> Cu(s)'),
+ IH('Al(s) -> Al{3+}(aq) + 3e-','Cu{2+}(aq) + 2e- -> Cu(s)'),
+ IH('2I{-}(aq) -> I2(aq) + 2e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)'),
+ IH('2I{-}(aq) -> I2(aq) + 2e-','Br2(aq) + 2e- -> 2Br{-}(aq)'),
+ IH('2I{-}(aq) -> I2(aq) + 2e-','2Fe{3+}(aq) + 2e- -> 2Fe{2+}(aq)'),
+ IH('Mg(s) -> Mg{2+}(aq) + 2e-','2H{+}(aq) + 2e- -> H2(g)'),
+ IH('Na(s) -> Na{+}(aq) + e-','Cl2(g) + 2e- -> 2Cl{-}(aq)'),
+ IH('Cu(s) -> Cu{2+}(aq) + 2e-','Ag{+}(aq) + e- -> Ag(s)'),
+ IH('Sn{2+}(aq) -> Sn{4+}(aq) + 2e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)'),
+ IH('Zn(s) -> Zn{2+}(aq) + 2e-','Cu{2+}(aq) + 2e- -> Cu(s)')
+];
+/* ---- equations in acid solution ---- */
+function AC(skel,ox,red,states){const sk=H(skel),o=H(ox),r=H(red);if(!isBal(o)||!isBal(r))throw new Error('Acid half unbalanced '+ox+' | '+red);
+  const c=combine(o,r);
+  const refs=sk.l.map(t=>canon(t[1]));
+  if(refs.indexOf(canon(o.l[0][1]))<0||refs.indexOf(canon(r.l[0][1]))<0)throw new Error('Skeleton mismatch '+skel);
+  return {sk,ox:o,red:r,full:c.eq,kOx:c.kOx,kRed:c.kRed,ne:c.ne,st:states};}
+const ACID=[
+ AC('Zn(s) + SO4{2-}(aq) -> Zn{2+}(aq) + SO2(g)','Zn(s) -> Zn{2+}(aq) + 2e-','SO4{2-}(aq) + 4H{+}(aq) + 2e- -> SO2(g) + 2H2O(l)',['Zn',0,2,'S',6,4]),
+ AC('I{-}(aq) + HSO4{-}(aq) -> I2(aq) + SO2(g)','2I{-}(aq) -> I2(aq) + 2e-','HSO4{-}(aq) + 3H{+}(aq) + 2e- -> SO2(g) + 2H2O(l)',['I',-1,0,'S',6,4]),
+ AC('NO3{-}(aq) + Zn(s) -> NH4{+}(aq) + Zn{2+}(aq)','Zn(s) -> Zn{2+}(aq) + 2e-','NO3{-}(aq) + 10H{+}(aq) + 8e- -> NH4{+}(aq) + 3H2O(l)',['Zn',0,2,'N',5,-3]),
+ AC('I2(aq) + OCl{-}(aq) -> IO3{-}(aq) + Cl{-}(aq)','I2(aq) + 6H2O(l) -> 2IO3{-}(aq) + 12H{+}(aq) + 10e-','OCl{-}(aq) + 2H{+}(aq) + 2e- -> Cl{-}(aq) + H2O(l)',['I',0,5,'Cl',1,-1]),
+ AC('MnO4{-}(aq) + H2SO3(aq) -> SO4{2-}(aq) + Mn{2+}(aq)','H2SO3(aq) + H2O(l) -> SO4{2-}(aq) + 4H{+}(aq) + 2e-','MnO4{-}(aq) + 8H{+}(aq) + 5e- -> Mn{2+}(aq) + 4H2O(l)',['S',4,6,'Mn',7,2]),
+ AC('Fe{2+}(aq) + MnO4{-}(aq) -> Fe{3+}(aq) + Mn{2+}(aq)','Fe{2+}(aq) -> Fe{3+}(aq) + e-','MnO4{-}(aq) + 8H{+}(aq) + 5e- -> Mn{2+}(aq) + 4H2O(l)',['Fe',2,3,'Mn',7,2]),
+ AC('Fe{2+}(aq) + Cr2O7{2-}(aq) -> Fe{3+}(aq) + Cr{3+}(aq)','Fe{2+}(aq) -> Fe{3+}(aq) + e-','Cr2O7{2-}(aq) + 14H{+}(aq) + 6e- -> 2Cr{3+}(aq) + 7H2O(l)',['Fe',2,3,'Cr',6,3]),
+ AC('I{-}(aq) + H2O2(aq) -> I2(aq) + H2O(l)','2I{-}(aq) -> I2(aq) + 2e-','H2O2(aq) + 2H{+}(aq) + 2e- -> 2H2O(l)',['I',-1,0,'O',-1,-2]),
+ AC('Cu(s) + NO3{-}(aq) -> Cu{2+}(aq) + NO(g)','Cu(s) -> Cu{2+}(aq) + 2e-','NO3{-}(aq) + 4H{+}(aq) + 3e- -> NO(g) + 2H2O(l)',['Cu',0,2,'N',5,2]),
+ AC('SO3{2-}(aq) + MnO4{-}(aq) -> SO4{2-}(aq) + Mn{2+}(aq)','SO3{2-}(aq) + H2O(l) -> SO4{2-}(aq) + 2H{+}(aq) + 2e-','MnO4{-}(aq) + 8H{+}(aq) + 5e- -> Mn{2+}(aq) + 4H2O(l)',['S',4,6,'Mn',7,2]),
+ AC('H2S(g) + Cr2O7{2-}(aq) -> S(s) + Cr{3+}(aq)','H2S(g) -> S(s) + 2H{+}(aq) + 2e-','Cr2O7{2-}(aq) + 14H{+}(aq) + 6e- -> 2Cr{3+}(aq) + 7H2O(l)',['S',-2,0,'Cr',6,3]),
+ AC('SO2(g) + Cl2(aq) -> SO4{2-}(aq) + Cl{-}(aq)','SO2(g) + 2H2O(l) -> SO4{2-}(aq) + 4H{+}(aq) + 2e-','Cl2(aq) + 2e- -> 2Cl{-}(aq)',['S',4,6,'Cl',0,-1]),
+ AC('Zn(s) + NO3{-}(aq) -> Zn{2+}(aq) + NO(g)','Zn(s) -> Zn{2+}(aq) + 2e-','NO3{-}(aq) + 4H{+}(aq) + 3e- -> NO(g) + 2H2O(l)',['Zn',0,2,'N',5,2])
+];
+/* ---- equations that are or are not redox ---- */
+const RDX=[
+ ['Zn(s) + 2HCl(aq) → ZnCl<sub>2</sub>(aq) + H<sub>2</sub>(g)','Zn goes 0 → +2 and H goes +1 → 0.'],
+ ['Mg(s) + CuSO<sub>4</sub>(aq) → MgSO<sub>4</sub>(aq) + Cu(s)','Mg goes 0 → +2 and Cu goes +2 → 0.'],
+ ['2Na(s) + Cl<sub>2</sub>(g) → 2NaCl(s)','Na goes 0 → +1 and Cl goes 0 → −1.'],
+ ['Cl<sub>2</sub>(aq) + 2KBr(aq) → 2KCl(aq) + Br<sub>2</sub>(aq)','Br goes −1 → 0 and Cl goes 0 → −1.'],
+ ['CuO(s) + H<sub>2</sub>(g) → Cu(s) + H<sub>2</sub>O(l)','Cu goes +2 → 0 and H goes 0 → +1.'],
+ ['CH<sub>4</sub>(g) + 2O<sub>2</sub>(g) → CO<sub>2</sub>(g) + 2H<sub>2</sub>O(l)','C goes −4 → +4 and O goes 0 → −2.'],
+ ['2H<sub>2</sub>O<sub>2</sub>(aq) → 2H<sub>2</sub>O(l) + O<sub>2</sub>(g)','O goes −1 → −2 and −1 → 0 (the same element is oxidised and reduced).']
+];
+const NRX=[
+ ['NaOH(aq) + HNO<sub>3</sub>(aq) → NaNO<sub>3</sub>(aq) + H<sub>2</sub>O(l)'],['CuO(s) + 2HCl(aq) → CuCl<sub>2</sub>(aq) + H<sub>2</sub>O(l)'],
+ ['MgCO<sub>3</sub>(s) + 2HNO<sub>3</sub>(aq) → Mg(NO<sub>3</sub>)<sub>2</sub>(aq) + H<sub>2</sub>O(l) + CO<sub>2</sub>(g)'],
+ ['AgNO<sub>3</sub>(aq) + NaCl(aq) → AgCl(s) + NaNO<sub>3</sub>(aq)'],['CaCO<sub>3</sub>(s) + 2HCl(aq) → CaCl<sub>2</sub>(aq) + H<sub>2</sub>O(l) + CO<sub>2</sub>(g)'],
+ ['BaCl<sub>2</sub>(aq) + Na<sub>2</sub>SO<sub>4</sub>(aq) → BaSO<sub>4</sub>(s) + 2NaCl(aq)'],['NH<sub>3</sub>(g) + HCl(g) → NH<sub>4</sub>Cl(s)'],
+ ['Ca(OH)<sub>2</sub>(aq) + 2HCl(aq) → CaCl<sub>2</sub>(aq) + 2H<sub>2</sub>O(l)'],['Na<sub>2</sub>CO<sub>3</sub>(aq) + H<sub>2</sub>SO<sub>4</sub>(aq) → Na<sub>2</sub>SO<sub>4</sub>(aq) + H<sub>2</sub>O(l) + CO<sub>2</sub>(g)']
+];
+/* ---- "the oxidation state of X is the same in all except" ---- */
+const FAM=[
+ {el:'Cr',same:[['CrCl3',3],['Cr2O3',3],['Cr2(CO3)3',3],['Cr2(SO4)3',3],['Cr(OH)3',3]],odd:[['CrO3',6],['K2Cr2O7',6],['K2CrO4',6],['CrO',2]]},
+ {el:'Mn',same:[['KMnO4',7],['Mn2O7',7],['NaMnO4',7]],odd:[['MnO2',4],['MnCl2',2],['MnSO4',2],['K2MnO4',6]]},
+ {el:'Mn',same:[['MnCl2',2],['MnSO4',2],['MnO',2],['Mn(OH)2',2]],odd:[['MnO2',4],['KMnO4',7],['Mn2O3',3]]},
+ {el:'S',same:[['SO2',4],['Na2SO3',4],['H2SO3',4],['SOCl2',4]],odd:[['SO3',6],['H2SO4',6],['H2S',-2],['Na2SO4',6]]},
+ {el:'S',same:[['SO3',6],['H2SO4',6],['Na2SO4',6],['SF6',6]],odd:[['SO2',4],['H2S',-2],['Na2SO3',4],['Na2S',-2]]},
+ {el:'N',same:[['HNO3',5],['KNO3',5],['N2O5',5],['NaNO3',5]],odd:[['NO2',4],['HNO2',3],['NO',2],['NH3',-3],['N2O',1]]},
+ {el:'N',same:[['HNO2',3],['NaNO2',3],['N2O3',3],['NF3',3]],odd:[['HNO3',5],['NO2',4],['NH4Cl',-3],['NO',2]]},
+ {el:'Fe',same:[['Fe2O3',3],['FeCl3',3],['Fe(OH)3',3],['Fe2(SO4)3',3]],odd:[['FeO',2],['FeCl2',2],['FeSO4',2]]},
+ {el:'Fe',same:[['FeO',2],['FeCl2',2],['FeSO4',2],['Fe(OH)2',2]],odd:[['Fe2O3',3],['FeCl3',3],['Fe(OH)3',3]]},
+ {el:'Cu',same:[['CuO',2],['CuCl2',2],['CuSO4',2],['Cu(OH)2',2]],odd:[['Cu2O',1],['CuCl',1],['Cu',0]]},
+ {el:'Cl',same:[['HCl',-1],['NaCl',-1],['CaCl2',-1],['AlCl3',-1]],odd:[['NaClO',1],['KClO3',5],['Cl2',0],['HClO4',7]]},
+ {el:'C',same:[['CO2',4],['Na2CO3',4],['CaCO3',4],['CCl4',4]],odd:[['CO',2],['CH4',-4],['C',0],['C2H6',-3]]}
+];
+/* checks on the families: each compound's state for the element is recomputed from known rules where possible */
+/* ---- naming ---- */
+const NAMES=[
+ {f:'Cr2O3',el:'Cr',n:3,name:['chromium(III) oxide']},{f:'CuCl',el:'Cu',n:1,name:['copper(I) chloride']},
+ {f:'PbO2',el:'Pb',n:4,name:['lead(IV) oxide']},{f:'FeO',el:'Fe',n:2,name:['iron(II) oxide']},{f:'Fe2O3',el:'Fe',n:3,name:['iron(III) oxide']},
+ {f:'Cu2O',el:'Cu',n:1,name:['copper(I) oxide']},{f:'CuO',el:'Cu',n:2,name:['copper(II) oxide']},{f:'MnO2',el:'Mn',n:4,name:['manganese(IV) oxide']},
+ {f:'V2O5',el:'V',n:5,name:['vanadium(V) oxide']},{f:'Ni(OH)2',el:'Ni',n:2,name:['nickel(II) hydroxide']},{f:'TiCl4',el:'Ti',n:4,name:['titanium(IV) chloride']},
+ {f:'FeCl3',el:'Fe',n:3,name:['iron(III) chloride']},{f:'SnCl2',el:'Sn',n:2,name:['tin(II) chloride']},{f:'SnCl4',el:'Sn',n:4,name:['tin(IV) chloride']},
+ {f:'CrCl3',el:'Cr',n:3,name:['chromium(III) chloride']},{f:'MnCl2',el:'Mn',n:2,name:['manganese(II) chloride']},{f:'PbO',el:'Pb',n:2,name:['lead(II) oxide']},
+ {f:'Cu(OH)2',el:'Cu',n:2,name:['copper(II) hydroxide']},{f:'CuSO4',el:'Cu',n:2,name:['copper(II) sulphate']},{f:'Fe(OH)3',el:'Fe',n:3,name:['iron(III) hydroxide']}
+];
+const ACIDS=[
+ {f:'HNO3',el:'N',n:5,name:['nitric(V) acid','nitric acid(V)']},{f:'HNO2',el:'N',n:3,name:['nitric(III) acid','nitric acid(III)']},
+ {f:'HClO3',el:'Cl',n:5,name:['chloric(V) acid','chloric acid(V)']},{f:'HClO',el:'Cl',n:1,name:['chloric(I) acid','chloric acid(I)']},
+ {f:'HClO4',el:'Cl',n:7,name:['chloric(VII) acid','chloric acid(VII)']},{f:'H2SO4',el:'S',n:6,name:['sulphuric(VI) acid','sulphuric acid(VI)']},
+ {f:'H2SO3',el:'S',n:4,name:['sulphuric(IV) acid','sulphuric acid(IV)']},{f:'H3PO4',el:'P',n:5,name:['phosphoric(V) acid','phosphoric acid(V)']}
+];
+/* check the names against the oxidation numbers */
+NAMES.concat(ACIDS).forEach(x=>{const want='('+roman(x.n)+')';if(x.name[0].indexOf(want)<0)throw new Error('Name/number mismatch '+x.f);});
+
+/* ---- reference sheet and cheat blocks ---- */
+const NAMETAB='<table class="bt"><tr><th>Formula</th><th>Oxidation state</th><th>Name</th><th>Formula</th><th>Oxidation state</th><th>Name</th></tr>'
+ +'<tr><td>FeO</td><td>Fe +2</td><td>iron(II) oxide</td><td>MnO<sub>4</sub><sup>−</sup></td><td>Mn +7</td><td>manganate(VII) ion</td></tr>'
+ +'<tr><td>Fe<sub>2</sub>O<sub>3</sub></td><td>Fe +3</td><td>iron(III) oxide</td><td>K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub></td><td>Cr +6</td><td>potassium dichromate(VI)</td></tr>'
+ +'<tr><td>Cu<sub>2</sub>O</td><td>Cu +1</td><td>copper(I) oxide</td><td>Cr<sub>2</sub>O<sub>3</sub></td><td>Cr +3</td><td>chromium(III) oxide</td></tr>'
+ +'<tr><td>CuO</td><td>Cu +2</td><td>copper(II) oxide</td><td>NO</td><td>N +2</td><td>nitrogen(II) oxide</td></tr>'
+ +'<tr><td>MnO<sub>2</sub></td><td>Mn +4</td><td>manganese(IV) oxide</td><td>NO<sub>2</sub></td><td>N +4</td><td>nitrogen(IV) oxide</td></tr></table>';
+const RULES='<ol><li>An <b>element on its own</b> (Zn, Cl<sub>2</sub>, O<sub>2</sub>) is <b>0</b>.</li><li>A <b>simple ion</b> has an oxidation state equal to its charge: Fe<sup>3+</sup> is +3, Cl<sup>−</sup> is −1.</li>'
+ +'<li><b>Group 1</b> metals are +1. <b>Group 2</b> metals are +2. <b>Fluorine</b> is −1.</li><li><b>Hydrogen</b> is +1 (except in metal hydrides).</li><li><b>Oxygen</b> is −2 (except in peroxides such as H<sub>2</sub>O<sub>2</sub>, where it is −1).</li>'
+ +'<li><b>Chlorine, bromine, iodine</b> are −1 when joined to a metal or to hydrogen.</li><li>The oxidation states of all the atoms <b>add up to the charge</b> on the species: 0 for a compound, the ion charge for an ion.</li></ol>';
+const OXRED='<p><b>Oxidation is loss of electrons. Reduction is gain of electrons.</b> (OIL RIG: Oxidation Is Loss, Reduction Is Gain.)</p>'
+ +'<table class="bt"><tr><th></th><th>Electrons</th><th>Oxidation state</th><th>The reactant is</th></tr><tr><td>Oxidation</td><td>lost</td><td>goes <b>up</b></td><td>oxidised: it is the <b>reducing agent</b></td></tr><tr><td>Reduction</td><td>gained</td><td>goes <b>down</b></td><td>reduced: it is the <b>oxidising agent</b></td></tr></table>';
+const HALFSTEPS='<ol><li>Write the <b>oxidation states</b> and decide what is oxidised and what is reduced.</li><li>Write a <b>half-equation</b> for each, and balance in this order:<ul><li>(a) atoms other than H and O;</li><li>(b) <b>O</b>: add <b>H<sub>2</sub>O</b>;</li><li>(c) <b>H</b>: add <b>H<sup>+</sup></b>;</li><li>(d) <b>charge</b>: add <b>electrons</b> to the more positive side;</li><li>(e) check atoms and charge.</li></ul></li><li><b>Equalise the electrons</b> by multiplying each half-equation.</li><li><b>Add</b> the half-equations and cancel what is the same on both sides, including the electrons (and any H<sup>+</sup> or H<sub>2</sub>O on both sides).</li></ol>';
+const TYPING='<p class="legend">How to type an equation: <b>Ca -> Ca2+ + 2e-</b>. Write a charge after the symbol (2+ or 2-). Write electrons as e-. State symbols are optional. Capital letters matter.</p>';
+const CALCREF='<p>Three formulae for moles. Use the one that matches what you are given:</p><div class="fm">moles = mass ÷ molar mass &nbsp;&nbsp; <i>n</i> = <i>m</i> ÷ <i>M</i></div><div class="fm">moles of a solution = concentration × volume ÷ 1000 &nbsp;&nbsp; (volume in cm<sup>3</sup>, concentration in mol dm<sup>−3</sup>)</div><div class="fm">moles of a gas = volume ÷ 24 000 &nbsp;&nbsp; (volume in cm<sup>3</sup>, at room temperature and pressure)</div><p><b>The method for every calculation:</b> 1. balanced equation. 2. moles of the substance you know. 3. moles of the substance you want, using the ratio of the numbers in front of them in the equation. 4. turn the moles into the quantity asked for (mass, volume or concentration).</p>';
+function REF(){
+  return '<h3>Oxidation state rules</h3>'+RULES+'<h3>Moles</h3>'+CALCREF+'<h3>Balancing half-equations</h3>'+HALFSTEPS+TYPING;
+}
+/* ---- feedback ---- */
+const FB={
+ '1':{skill:'finding oxidation numbers and naming compounds',do:'Learn the seven rules on the cheat sheet. Work out the element you do not know with an equation: number of atoms × x + the other states = the charge.'},
+ '2':{skill:'balancing half-equations',do:'Balance in this order every time: atoms, O with H₂O, H with H⁺, then charge with e⁻. Check the charge on both sides at the end.'},
+ '3':{skill:'balancing equations with oxidation numbers',do:'Find the two elements that change. Work out how many electrons each atom gains or loses. Make the electrons lost equal the electrons gained, then balance the rest.'},
+ '4':{skill:'calculations with redox equations',do:'Follow the same steps every time: balanced equation, moles of the substance you know (n = m ÷ M or n = concentration × volume ÷ 1000), the ratio from the equation, then the quantity you want.'},
+ 'X':{skill:'working out an oxidation number from volumes',do:'Find the moles of each substance. Count the moles of electrons given and taken. Divide the moles of electrons by the moles of the substance to find the change in oxidation number per atom.'}
+};
+const WHYADV=[
+ 'You ticked that you did not know the oxidation state rules. Keep the rules sheet open and say each rule aloud as you use it.',
+ 'You ticked not knowing the formulae for moles. They are on the cheat sheet in every question: n = m ÷ M, n = concentration × volume ÷ 1000 and n = gas volume ÷ 24 000.',
+ 'You ticked the ratio. Write the balanced equation, put a ring round the two substances you need, and read the numbers in front of them. Those numbers are the ratio.',
+ 'You ticked the wrong volume or the wrong substance. Ask: which solution is this volume for? Match each number to its own substance before you start.',
+ 'You ticked balancing the equation. Do the atoms that are not O or H first, then O with H₂O, then H with H⁺, then the charge.',
+ 'You ticked units. The volume is in cm³: divide by 1000 to use concentration in mol dm⁻³. A gas at room temperature: 24 000 cm³ is one mole.',
+ 'You ticked not getting started. Read the question, then write the balanced equation first. Then open the first hint.',
+ 'You ticked not understanding the words. Hover over the dotted words to read the glossary, and read the cheat sheet before the question.'
+];
+function feedbackHTML(){
+  const rows=[];let any=false;
+  SECS.forEach(s=>{
+    const es=QS.filter(e=>e.sec===s.id);let m=0,g=0,h=0,a=0,tried=0;
+    es.forEach(e=>{const c=SC[e.id]||{};if(c.att){tried++;m+=cardMarks(e);}g+=c.got||0;h+=c.hints||0;a+=c.att||0;});
+    if(!es.length)return;
+    const f=FB[s.id]||{skill:s.title,do:''};const part=tried<es.length?' You have tried '+tried+' of the '+es.length+' questions in this section.':'';
+    let cls,msg;
+    if(!a){cls='nostart';msg='Not started yet.';}
+    else{any=true;const p=g/m;
+      if(p>=0.9){cls='good';msg='<b>Secure.</b> You have '+g+' of '+m+' marks for '+f.skill+'.'+(h>0?' You used '+h+' hint'+(h>1?'s':'')+'. Press <b>More practice</b> and try a new question with no hints.':' Press <b>More practice</b> once to check that it is secure with new numbers.')+part;}
+      else if(p>=0.7){cls='mid';msg='<b>Nearly there.</b> '+g+' of '+m+' marks for '+f.skill+'. '+f.do+part;}
+      else{cls='low';msg='<b>Needs more work.</b> '+g+' of '+m+' marks for '+f.skill+'. '+f.do+' Read the cheat sheet, open the hints one at a time, then try <b>More practice</b> until you get full marks first time.'+part;}
+    }
+    rows.push('<li class="fb '+cls+'"><b>'+(s.ext?s.title:s.id+' '+s.title)+'</b><br>'+msg+'</li>');
+  });
+  if(!any)return '<p class="legend">Your feedback appears here as you work through the sections.</p>';
+  const cnt={};LOG.forEach(x=>{if(x.m&&x.m.why)x.m.why.forEach(k=>{cnt[k]=(cnt[k]||0)+1;});});
+  const top=Object.keys(cnt).map(Number).filter(k=>k<WHYADV.length&&cnt[k]>0).sort((a,b)=>cnt[b]-cnt[a]).slice(0,2);
+  const t=totals();
+  return '<h3>Feedback</h3><p>Main test: <b>'+t.g+' / '+t.m+'</b>'+(t.xm?' &nbsp; Extension: <b>'+t.xg+' / '+t.xm+'</b>':'')+'</p><ul class="fblist">'+rows.join('')+'</ul>'
+    +(top.length?'<h4>What you told us made it challenging</h4><ul>'+top.map(k=>'<li>'+WHYADV[k]+'</li>').join('')+'</ul>':'')
+    +'<p class="legend">Mastery means full marks on a <b>More practice</b> question without opening a hint. Do that once in every section.</p>';
+}
+
+/* ===== engine: registry, checking, rendering, scoring ===== */
+let SEED=Math.floor(Math.random()*2147483647);
+function seedFor(id){let h=SEED>>>0;for(let i=0;i<id.length;i++)h=(Math.imul(h^id.charCodeAt(i),16777619)+0x9e3779b9)>>>0;return h;}
+function RNG(det,seed){
+  let s=seed;
+  const rnd=seed===undefined?Math.random:function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const r={det,seeded:seed!==undefined,
+    pick(a){return det?a[0]:a[Math.floor(rnd()*a.length)];},
+    int(a,b){return det?a:a+Math.floor(rnd()*(b-a+1));},
+    shuffle(a){const b=a.slice();if(det)return b;for(let i=b.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;},
+    sample(a,n){return det?a.slice(0,n):r.shuffle(a).slice(0,n);}
+  };return r;
+}
+const SECS=[],QS=[],SC={},LOG=[];
+const SETS=['G10 Industrial Chem','01A (F-day test)','02A (B-Day test)','04A (B-Day test)','05A (E-day test)'];
+const STU={name:'',set:'',code:''};
+const CONF=['Not at all confident','A little confident','Fairly confident','Very confident'];
+const WHY=['I did not know the oxidation state rules','I did not know the formula for moles','I did not use the ratio from the equation','I used the wrong volume or the wrong substance','I could not balance the equation','I made a slip with the units (cm³ and dm³)','I could not get started','I did not understand the words','I made a careless slip','I did not get stuck'];
+function stuCode(name,set){let h=7;const s=(name.trim().toLowerCase()+'|'+set.slice(0,3));for(let i=0;i<s.length;i++)h=(Math.imul(h,31)+s.charCodeAt(i))>>>0;return String(100+(h%900));}
+function fileStem(){const n=STU.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]/g,'')||'student';return (STU.set.slice(0,3)||'set')+'_'+n+'_'+(STU.code||'000');}
+function startTest(name,set){
+  name=(name||'').trim();if(!name||!set)return false;
+  STU.name=name;STU.set=set;STU.code=stuCode(name,set);
+  document.getElementById('who').innerHTML='<b>'+esc(name)+'</b> · Set '+esc(set)+' · Your code: <b>'+STU.code+'</b>';
+  document.getElementById('gate').hidden=true;document.getElementById('testbody').hidden=false;
+  window.scrollTo(0,0);return true;
+}
+function sec(id,title,intro,ext){SECS.push({id,title,intro:intro||'',ext:!!ext});}
+function def(id,secId,x){
+  const e={id,sec:secId,gen:null,list:[],i:0};
+  if(typeof x==='function'){e.gen=x;e.spec=x(RNG(false,seedFor(id)));e.last=e.spec.html;}
+  else{e.spec=x;e.list=x.practice||[];}
+  QS.push(e);return e;
+}
+/* ---- field constructors ---- */
+const num=(label,ans,unit,o)=>Object.assign({k:'num',label,ans,unit:unit||''},o||{});
+const txt=(label,ans,o)=>Object.assign({k:'txt',label,ans:[].concat(ans),mode:'formula'},o||{});
+const sel=(label,opts,ans,o)=>Object.assign({k:'sel',label,opts,ans},o||{});
+const cz=(n,ans)=>({k:'cloze',n,ans:[].concat(ans)});
+const think=(kind)=>sel(kind==='vol'
+  ?'Think carefully before calculating. Is the volume you are given more than 24000 cm³, or less than 24000 cm³?'
+  :kind==='mass'?'Think carefully before calculating. Compare the mass you are given with the molar mass you just found. Are you given more than one mole, or less than one mole?'
+  :'Think carefully before calculating. Are you given more than one mole, or less than one mole just looking at the numbers given?',
+  kind==='vol'?['more than 24000 cm³','less than 24000 cm³','exactly 24000 cm³']:['more than one mole','less than one mole','exactly one mole'],'',{w:0,think:1});
+/* ---- value checking ---- */
+const SUBS='₀₁₂₃₄₅₆₇₈₉';
+function normF(s){return s.replace(/[\s_{}\^]/g,'').replace(/[₀-₉]/g,c=>String(SUBS.indexOf(c))).replace(/\[/g,'(').replace(/\]/g,')').replace(/\.|·/g,'·');}
+function normW(s){return s.toLowerCase().replace(/sulfate/g,'sulphate').replace(/sulfide/g,'sulphide').replace(/aluminum/g,'aluminium').replace(/[^a-z0-9()]+/g,' ').trim();}
+function pnum(s){s=s.trim().replace(/[−–]/g,'-').replace(',','.').replace(/\s+/g,'');if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s))return NaN;return parseFloat(s);}
+function evalField(f,val){
+  val=String(val===undefined?'':val);
+  if(f.k==='num'){
+    const x=pnum(val);
+    if(isNaN(x))return {ok:false,msg:val.trim()===''?'Nothing entered yet.':'Type the number only. The unit is shown beside the box.'};
+    const tol=f.tol===undefined?0.01:f.tol,A=f.ans,ab=f.abs||0;
+    const near=(a,b)=>Math.abs(a-b)<=Math.max(ab,tol*Math.abs(b));
+    if(f.signed){
+      if(near(Math.abs(x),Math.abs(A))){
+        if(Math.sign(x)===Math.sign(A))return {ok:true};
+        return {ok:false,msg:f.signMsg||'The size is right. Check the sign: temperature rise → exothermic → ΔH negative; temperature fall → endothermic → ΔH positive.'};
+      }
+    }else if(near(x,A))return {ok:true};
+    const xv=f.signed?Math.abs(x):x;
+    for(const w of f.wrong||[])if(near(xv,w.v))return {ok:false,msg:w.msg};
+    return {ok:false};
+  }
+  if(f.k==='txt'){
+    if(val.trim()==='')return {ok:false,msg:'Nothing entered yet.'};
+    if(f.mode==='eq'){const r=checkEq(val,f);return r;}
+    if(f.mode==='name'){const v=normN(val);return f.ans.some(a=>normN(a)===v)?{ok:true}:{ok:false,msg:f.msg};}
+    if(f.mode==='word'){const v=normW(val);return f.ans.some(a=>normW(a)===v)?{ok:true}:{ok:false};}
+    if(f.mode==='emp'){
+      let c;try{c=parseF(normF(val));}catch(e){return {ok:false};}
+      const keys=Object.keys(f.counts);
+      const same=Object.keys(c).length===keys.length&&keys.every(k=>c[k]===f.counts[k]);
+      if(same)return {ok:true};
+      const m=c[keys[0]]/f.counts[keys[0]];
+      if(m>1&&Object.keys(c).length===keys.length&&keys.every(k=>c[k]===f.counts[k]*m))return {ok:false,msg:'That is a multiple of the answer. Divide to get the simplest whole-number ratio.'};
+      return {ok:false};
+    }
+    const v=normF(val);
+    if(f.ans.some(a=>normF(a)===v))return {ok:true};
+    const a0=normF(f.ans[0]);
+    if(a0.indexOf('(')>=0&&v===a0.replace(/[()]/g,''))return {ok:false,msg:'Check the brackets: a group of atoms that is repeated needs brackets round it.'};
+    if(v.toLowerCase()===a0.toLowerCase())return {ok:false,msg:'Check your capital letters: the first letter of a symbol is a capital, the second is small.'};
+    return {ok:false};
+  }
+  if(f.k==='sel'||f.k==='cloze'){
+    if(val==='')return {ok:false,msg:'Choose an answer.'};
+    const A=[].concat(f.ans).map(a=>String(a).toLowerCase());
+    return A.indexOf(val.toLowerCase())>=0?{ok:true}:{ok:false,msg:f.msg};
+  }
+  return {ok:false};
+}
+function plain(h){const d=document.createElement('div');d.innerHTML=h;return d.textContent.replace(/\s+/g,' ').trim();}
+function ideaHit(idea,text){return idea.g.every(grp=>grp.some(a=>new RegExp(a,'i').test(text)));}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+function sortBank(b){return b.slice().sort((x,y)=>String(x).localeCompare(String(y),'en',{numeric:true}));}
+/* ---- card ---- */
+function buildCard(spec,label,o){
+  o=o||{};
+  const el=document.createElement('article');
+  el.className='q'+(o.practice?' practice':'');
+  const fields=spec.fields||[],ideas=spec.ideas||null;
+  const marks=ideas?(spec.need||ideas.length):fields.reduce((s,f)=>s+(f.w===undefined?1:f.w),0);
+  const hints=spec.hints||[];
+  let attempts=0,shown=0,got=0,checked=false,cheatOpened=false,workedOpened=false;
+  /* body with inline cloze selects */
+  const bank=spec.bank?sortBank(spec.bank):null;
+  const selOpts=bank?'<option value="">…</option>'+bank.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join(''):'';
+  let body=spec.html||'';
+  body=body.replace(/\[\[(\d+)\]\]/g,(m,n)=>{
+    const i=fields.findIndex(f=>f.k==='cloze'&&f.n===+n);
+    return `<span class="cz" data-r="${i}"><select data-i="${i}" aria-label="blank ${+n+1}">${selOpts}</select><span class="mark"></span></span>`;});
+  let fh='';
+  const cellH=(i)=>{const f=fields[i];
+    const ctl=f.k==='num'?`<input class="num" type="text" inputmode="decimal" autocomplete="off" data-i="${i}">${f.unit?'<span class="unit">'+f.unit+'</span>':''}`:`<select data-i="${i}"><option value="">choose…</option>${f.opts.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')}</select>`;
+    return ctl+'<span class="mark"></span><span class="fmsg"></span>';};
+  if(spec.grid){
+    const g=spec.grid,nc=g.cols.length;
+    fh+='<table class="vt grid"><tr><th></th>'+g.cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'
+      +g.rows.map(r=>r.head?'<tr><th class="gh" colspan="'+(nc+1)+'">'+r.label+'</th></tr>':'<tr><th class="rl">'+r.label+'</th>'+(r.idx.length===1&&nc>1?`<td class="gcell" colspan="${nc}" data-r="${r.idx[0]}">${cellH(r.idx[0])}</td>`:r.idx.map(i=>`<td class="gcell" data-r="${i}">${cellH(i)}</td>`).join(''))+'</tr>').join('')+'</table>';
+  }
+  fields.forEach((f,i)=>{
+    if(f.k==='cloze'||(spec.grid&&spec.grid.rows.some(r=>r.idx&&r.idx.indexOf(i)>=0)))return;
+    if(f.k==='num')fh+=`<div class="frow" data-r="${i}"><label class="k">${f.label}</label><input class="num" type="text" inputmode="decimal" autocomplete="off" data-i="${i}"><span class="unit">${f.unit}</span><span class="mark"></span><span class="fmsg"></span></div>`;
+    else if(f.k==='txt')fh+=`<div class="frow" data-r="${i}"><label class="k">${f.label}</label><input class="txt${f.mode==='eq'?' eq':''}" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-i="${i}"><span class="mark"></span><span class="fmsg"></span></div>`;
+    else if(f.k==='sel')fh+=`<div class="frow${f.think?' wide':''}" data-r="${i}"><label class="k">${f.label}</label> <select data-i="${i}"><option value="">choose…</option>${f.opts.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')}</select><span class="mark"></span><span class="fmsg"></span></div>`;
+  });
+  if(ideas)fh+=`<div class="frow wide"><textarea data-t="1" placeholder="Write your explanation here, in full sentences." aria-label="your explanation"></textarea></div><div class="ideas-wrap"></div>`;
+  const bankHtml=bank?`<div class="bank">Word bank: ${bank.map(w=>`<span>${esc(w)}</span>`).join('')}</div>`:'';
+  const hasMeta=!!spec.title;
+  const confOpts='<option value="">choose…</option>'+CONF.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  const metaPre=hasMeta?`<div class="meta pre sans"><label>Before you try it: how confident do you feel about this question? <select data-m="pre">${confOpts}</select></label></div>`:'';
+  const metaPost=hasMeta?`<div class="meta post sans" hidden><p style="margin:2px 0"><b>Reflect</b></p><p style="margin:4px 0"><label>Now, how confident do you feel? <select data-m="post">${confOpts}</select></label></p><p style="margin:4px 0 2px">What made any part challenging? Tick any that fit:</p><div class="why">${WHY.map((w,k)=>`<label><input type="checkbox" data-m="why" data-k="${k}"> ${esc(w)}</label>`).join('')}</div><p style="margin:6px 0 2px"><label for="n${Math.random().toString(36).slice(2,8)}">In your own words: how do you feel about this question? Where did you get stuck, and why? What helped?</label></p><textarea data-m="note" rows="2" placeholder="Write a sentence or two. You can leave this empty."></textarea></div>`:'';
+  el.innerHTML=`<div class="qhead"><span><span class="qn">${label}</span><span class="qt">${spec.title||''}</span></span><span class="qm">${marks?marks+(marks===1?' mark':' marks'):'practice'}</span></div>
+   <div class="qtext">${body}</div>${spec.diag?'<div class="dg"><div class="dgsvg"></div><div class="dgcap legend"></div></div>':''}${bankHtml}${metaPre}<div class="fields">${fh}</div>
+   <div class="tools"><button data-a="cheat">Cheat sheet</button><button data-a="hint"${hints.length?'':' hidden'}>Hint</button>${spec.scaffold?'<button data-a="scaf">Word fill help</button>':''}<button class="main" data-a="check">Check</button><button data-a="worked" hidden>Worked answer</button><button data-a="more"${(o.noMore)?' hidden':''}>${o.practice?'Another one':'More practice'}</button></div>
+   <div class="panel cheat" hidden><h4>Cheat sheet</h4>${spec.cheat||''}</div><div class="panel hint" hidden></div><div class="scaf"></div>
+   <div class="fb" role="status" aria-live="polite"></div>${metaPost}<div class="worked" hidden><h4>Worked answer</h4>${spec.worked||''}</div><div class="prac"></div>`;
+  const $=s=>el.querySelector(s);
+  const drawDiag=(m)=>{if(!spec.diag)return;const w=$('.dgsvg');if(!w)return;w.innerHTML=energyDiagram(spec.diag,m);$('.dgcap').innerHTML=(m==='full')?diagCaption(spec.diag,true):(spec.diag.note||diagCaption(spec.diag,false));};
+  drawDiag(spec.diag&&spec.diag.show==='given'?'given':'skeleton');
+  const get=i=>el.querySelector(`[data-i="${i}"]`);
+  function result(){
+    el.classList.toggle('done',marks>0&&got===marks);
+    const fb=$('.fb');
+    fb.innerHTML=`<b>${got} / ${marks}</b> ${got===marks?'Full marks.':'Not yet full marks. Look at the ✗ items, use the cheat sheet or a hint, then check again.'}`;
+    if(spec.diag&&got===marks)drawDiag('full');
+    if(!o.practice){SC[o.id]=Object.assign(SC[o.id]||{},{got:Math.max(got,(SC[o.id]||{}).got||0),marks,att:attempts,hints:shown,sec:o.sec});updateTop();}
+  }
+  function check(){check0();const pm=$('.meta.post');if(pm)pm.hidden=false;logCheck();}
+  function logCheck(){
+    const fl=fields.map((f,i)=>{const inp=get(i),row=el.querySelector(`[data-r="${i}"]`);return {l:f.k==='cloze'?'blank '+(f.n+1):plain(f.label||'').slice(0,90),g:inp?inp.value:'',ok:row?row.classList.contains('ok'):false};});
+    const ta=el.querySelector('[data-t]');
+    LOG.push({ts:new Date().toISOString(),id:(o.entry&&o.entry.id)||o.id||label,prac:!!o.practice,label,title:plain(spec.title||''),q:plain(spec.html||'').slice(0,320),att:attempts,hints:shown,cheat:cheatOpened,worked:workedOpened,got,marks,f:fl,t:ta?ta.value.slice(0,600):undefined,ideas:ideas?[...el.querySelectorAll('.ideas-wrap input[type=checkbox]')].map(c=>c.checked?1:0):undefined,m:readMeta(el)});
+    if(LOG.length>800)LOG.splice(0,LOG.length-800);
+  }
+  function check0(){
+    attempts++;checked=true;got=0;
+    fields.forEach((f,i)=>{
+      const inp=get(i),r=evalField(f,inp.value),w=f.w===undefined?1:f.w;
+      const row=el.querySelector(`[data-r="${i}"]`);
+      row.classList.toggle('ok',r.ok);row.classList.toggle('bad',!r.ok);
+      row.querySelector('.mark').textContent=r.ok?'✓':'✗';
+      const m=row.querySelector('.fmsg');if(m)m.textContent=r.ok?'':(r.msg||'');
+      if(r.ok)got+=w;
+    });
+    if(ideas){
+      const t=el.querySelector('[data-t]').value.toLowerCase();
+      const wrap=$('.ideas-wrap');
+      wrap.innerHTML='<p class="legend">Ideas I looked for in your answer. A tick means I found it. If you included an idea in different words, tick it yourself.</p><ul class="ideas">'+ideas.map((d,k)=>`<li><label><input type="checkbox" data-k="${k}"${ideaHit(d,t)?' checked':''}> ${d.t}</label></li>`).join('')+'</ul>'+(spec.need&&spec.need<ideas.length?`<p class="legend">You need ${spec.need} of these.</p>`:'')+`<div class="model"><b>Model answer.</b> ${spec.model}</div>`+(spec.extended?`<div class="model"><b>Extended.</b> ${spec.extended}</div>`:'');
+      const tally=()=>{const n=wrap.querySelectorAll('input:checked').length;got=Math.min(n,marks);result();};
+      wrap.querySelectorAll('input').forEach(c=>c.addEventListener('change',tally));
+      tally();$('[data-a=worked]').hidden=!spec.worked;return;
+    }
+    $('[data-a=worked]').hidden=false;
+    result();
+  }
+  function practiceNext(){
+    const e=o.entry;let s;
+    if(e.gen){for(let k=0;k<12;k++){s=e.gen(RNG(false));if(s.html!==e.last)break;}e.last=s.html;}
+    else{if(!e.list.length)return null;s=e.list[e.i%e.list.length];e.i++;}
+    return s;
+  }
+  el.addEventListener('click',ev=>{
+    const b=ev.target.closest('button[data-a]');
+    if(b&&b.closest('.q')!==el)return;
+    if(b){
+      const a=b.dataset.a;
+      if(a==='check')check();
+      else if(a==='cheat'){const p=$('.cheat');p.hidden=!p.hidden;if(!p.hidden)cheatOpened=true;}
+      else if(a==='worked'){const p=$('.worked');p.hidden=!p.hidden;if(!p.hidden){workedOpened=true;drawDiag('full');}}
+      else if(a==='hint'){
+        const p=$('.hint');if(shown<hints.length){shown++;}
+        p.hidden=false;p.innerHTML='<h4>Hints</h4>'+hints.slice(0,shown).map((h,i)=>`<div class="hintl"><b>${i+1}.</b> ${h}</div>`).join('')+(shown>=hints.length?'<div class="hintl"><i>No more hints. Try the worked answer after a check.</i></div>':'');
+        b.textContent=shown>=hints.length?'Hints used':`Hint (${shown}/${hints.length})`;
+        if(!o.practice){SC[o.id]=Object.assign(SC[o.id]||{marks,sec:o.sec,got:0,att:0},{hints:shown});updateTop();}
+      }
+      else if(a==='scaf'){
+        const s=$('.scaf');
+        if(s.firstChild){s.innerHTML='';return;}
+        s.appendChild(buildCard(spec.scaffold,'Word fill',{practice:true,noMore:true,entry:o.entry}));
+        tipify(s);
+      }
+      else if(a==='more'){
+        const s=practiceNext();if(!s){$('.prac').innerHTML='<p class="legend">No more practice questions of this type.</p>';return;}
+        if(o.practice){
+          const nc=buildCard(s,label+' practice',{practice:true,entry:o.entry});el.replaceWith(nc);tipify(nc);
+        }else{
+          const holder=$('.prac');holder.innerHTML='';
+          const nc=buildCard(s,label+' practice',{practice:true,entry:o.entry});holder.appendChild(nc);tipify(nc);
+          b.textContent='Another one';
+        }
+      }
+      return;
+    }
+  });
+  let metaEntry=null;
+  el.addEventListener('change',ev=>{
+    if(!ev.target.closest('[data-m]')||ev.target.closest('.q')!==el)return;
+    const m=readMeta(el);
+    if(!metaEntry||LOG.indexOf(metaEntry)<0){metaEntry={ts:new Date().toISOString(),id:(o.entry&&o.entry.id)||o.id||label,prac:!!o.practice,label,title:plain(spec.title||''),q:plain(spec.html||'').slice(0,320),reflect:1,att:attempts,got,marks};LOG.push(metaEntry);}
+    metaEntry.m=m;metaEntry.att=attempts;metaEntry.got=got;metaEntry.ts=new Date().toISOString();
+  });
+  el.addEventListener('keydown',ev=>{if(ev.key==='Enter'&&ev.target.matches('input[type=text]')){ev.preventDefault();check();}});
+  el._api={spec,marks,
+    fill(){
+      fields.forEach((f,i)=>{
+        const inp=get(i);
+        if(f.k==='num')inp.value=String(f.ans);
+        else if(f.k==='txt')inp.value=f.mode==='emp'?f.display:f.ans[0];
+        else inp.value=[].concat(f.ans)[0];
+      });
+      if(ideas)el.querySelector('[data-t]').value=plain(spec.model);
+    },
+    check,get got(){return got;},get marks(){return marks;}};
+  el._restore=(a,s)=>{attempts=a;shown=s;};
+  return el;
+}
+/* ---- tool-tips ---- */
+const TERMS=Object.keys(GLOSS).sort((a,b)=>b.length-a.length);
+function tipify(root){
+  root.querySelectorAll('.qtext,.intro').forEach(box=>{
+    for(const t of TERMS){
+      const re=new RegExp('(^|[^A-Za-z0-9])('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:s)?)(?![A-Za-z0-9])','i');
+      const w=document.createTreeWalker(box,NodeFilter.SHOW_TEXT,{acceptNode(n){const p=n.parentElement;return(!p||p.closest('select,option,textarea,button,.tip,.fm'))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT;}});
+      let n;
+      while((n=w.nextNode())){
+        const m=re.exec(n.nodeValue);if(!m)continue;
+        const idx=m.index+m[1].length,after=n.splitText(idx),rest=after.splitText(m[2].length);
+        const sp=document.createElement('span');sp.className='tip';sp.tabIndex=0;sp.dataset.tip=GLOSS[t];sp.textContent=m[2];
+        after.replaceWith(sp);
+        sp.addEventListener('click',()=>sp.classList.toggle('on'));
+        break;
+      }
+    }
+  });
+}
+/* ---- top bar and summary ---- */
+function totals(){
+  let m=0,g=0,xm=0,xg=0;
+  QS.forEach(e=>{const sc=SC[e.id]||{};const mk=cardMarks(e);const ex=SECS.find(s=>s.id===e.sec).ext;
+    if(ex){xm+=mk;xg+=sc.got||0;}else{m+=mk;g+=sc.got||0;}});
+  return {m,g,xm,xg};
+}
+function cardMarks(e){const s=e.spec;return s.ideas?(s.need||s.ideas.length):(s.fields||[]).reduce((t,f)=>t+(f.w===undefined?1:f.w),0);}
+function updateTop(){
+  const t=totals();try{const fb=document.getElementById('feedback');if(fb)fb.innerHTML=feedbackHTML();}catch(e){}
+  const el=document.getElementById('score');if(!el)return;
+  el.textContent=`Score ${t.g} / ${t.m}   Extension ${t.xg} / ${t.xm}`;
+  const body=document.getElementById('sumbody');if(!body)return;
+  body.innerHTML=SECS.map(s=>{
+    const es=QS.filter(e=>e.sec===s.id);let m=0,g=0,h=0,a=0;
+    es.forEach(e=>{const sc=SC[e.id]||{};m+=cardMarks(e);g+=sc.got||0;h+=sc.hints||0;a+=sc.att||0;});
+    return `<tr><td class="l">${s.ext?s.title:s.id+' '+s.title}</td><td>${g}</td><td>${m}</td><td>${h}</td><td>${a}</td></tr>`;}).join('')
+    +`<tr><th class="l">Main test</th><th>${t.g}</th><th>${t.m}</th><th></th><th></th></tr><tr><th class="l">Extension</th><th>${t.xg}</th><th>${t.xm}</th><th></th><th></th></tr>`;
+}
+function resultsText(){
+  const t=totals();let s='Grade 10 Industrial Chemistry: redox processes practice test\n'+(STU.name?'Name: '+STU.name+'\nSet: '+STU.set+'\nCode: '+STU.code+'\n':'');
+  SECS.forEach(sc=>{let m=0,g=0,h=0;QS.filter(e=>e.sec===sc.id).forEach(e=>{const c=SC[e.id]||{};m+=cardMarks(e);g+=c.got||0;h+=c.hints||0;});
+    s+=(sc.ext?sc.title:sc.id+' '+sc.title)+': '+g+' / '+m+' (hints used '+h+')\n';});
+  return s+`Main test: ${t.g} / ${t.m}\nExtension: ${t.xg} / ${t.xm}`;
+}
+/* ---- reference sheet ---- */
+function refHTML(){return REF();}
+/* ---- page assembly ---- */
+const own=(el,sel)=>[...el.querySelectorAll(sel)].filter(x=>x.closest('.q')===el);
+function readMeta(el){const g=s=>{const x=own(el,s)[0];return x?x.value:''};
+  return {pre:g('[data-m=pre]'),post:g('[data-m=post]'),why:own(el,'[data-m=why]').filter(c=>c.checked).map(c=>+c.dataset.k),note:g('[data-m=note]').slice(0,600)};}
+function writeMeta(el,m){if(!m)return;const s=(q,v)=>{const x=own(el,q)[0];if(x)x.value=v||'';};s('[data-m=pre]',m.pre);s('[data-m=post]',m.post);s('[data-m=note]',m.note);
+  own(el,'[data-m=why]').forEach(c=>{c.checked=(m.why||[]).indexOf(+c.dataset.k)>=0;});
+  if(m.post||m.note||(m.why&&m.why.length)){const pm=own(el,'.meta.post')[0];if(pm)pm.hidden=false;}}
+function buildAll(){
+  const main=document.getElementById('sections'),nav=document.getElementById('nav');
+  main.innerHTML='';nav.innerHTML='';
+  SECS.forEach(s=>{
+    const es=QS.filter(e=>e.sec===s.id);
+    const tot=es.reduce((t,e)=>t+cardMarks(e),0);
+    const h=document.createElement('section');h.id='s'+s.id;
+    h.innerHTML=`<h2><span>${s.ext?s.title:s.id+' '+s.title}</span><span class="tot sans">${tot} marks${s.ext?', marked separately':''}</span></h2><div class="intro">${s.intro}</div>`;
+    es.forEach(e=>{const lab=e.id;const c=buildCard(e.spec,lab,{id:e.id,sec:e.sec,entry:e});h.appendChild(c);e.el=c;});
+    main.appendChild(h);
+    nav.innerHTML+=`<li><a href="#s${s.id}">${s.ext?s.title:s.id+' '+s.title}</a></li>`;
+  });
+  tipify(main);
+}
+/* ---- save / retrieve progress ---- */
+function collectProgress(){
+  const cards={};
+  QS.forEach(e=>{if(!e.el)return;const v={};own(e.el,'[data-i]').forEach(x=>{v[x.getAttribute('data-i')]=x.value;});
+    const ta=own(e.el,'[data-t]')[0];const ck=own(e.el,'.ideas-wrap input[type=checkbox]').map(c=>c.checked?1:0);
+    cards[e.id]={v,t:ta?ta.value:'',ck,m:readMeta(e.el)};});
+  const refl={start:(document.getElementById('rstart')||{}).value||'',end:(document.getElementById('rend')||{}).value||''};
+  return {app:'g10-redoxcalc',ver:2,refl,stu:{set:STU.set,code:STU.code},seed:SEED,saved:new Date().toISOString(),sc:SC,cards,log:LOG};
+}
+function encodeProgress(){return 'G10REDOXCALC1:'+btoa(unescape(encodeURIComponent(JSON.stringify(collectProgress()))));}
+function applyProgress(code){
+  let d;
+  try{d=JSON.parse(decodeURIComponent(escape(atob(code.trim().replace(/^G10REDOXCALC1:/,'')))));}catch(x){return 'That does not look like a saved progress code. Choose the file you saved, or paste the whole code.';}
+  if(!d||d.app!=='g10-redoxcalc')return 'That does not look like a saved progress code.';
+  SEED=d.seed;
+  QS.forEach(e=>{if(e.gen){e.spec=e.gen(RNG(false,seedFor(e.id)));e.last=e.spec.html;}});
+  buildAll();
+  QS.forEach(e=>{const c=d.cards[e.id];if(!c||!e.el)return;
+    const used=Object.keys(c.v).some(k=>c.v[k]!==''&&c.v[k]!==undefined)||c.t;
+    Object.keys(c.v).forEach(k=>{const x=e.el.querySelector(`[data-i="${k}"]`);if(x)x.value=c.v[k];});
+    const ta=e.el.querySelector('[data-t]');if(ta)ta.value=c.t||'';
+    writeMeta(e.el,c.m);
+    const s=d.sc[e.id];
+    if(used&&s&&s.att){const b=e.el.querySelector('[data-a=check]');if(b)b.click();
+      const ws=e.el.querySelectorAll('.ideas-wrap input[type=checkbox]');(c.ck||[]).forEach((on,k)=>{if(ws[k]&&ws[k].checked!==!!on){ws[k].checked=!!on;ws[k].dispatchEvent(new Event('change'));}});
+      e.el._restore(s.att,s.hints||0);}
+  });
+  if(d.stu&&d.stu.set){const ss=document.getElementById('stset');if(ss&&!STU.set)ss.value=SETS.find(x=>x.slice(0,3)===d.stu.set.slice(0,3))||'';}
+  if(d.refl){const a=document.getElementById('rstart'),b=document.getElementById('rend');if(a)a.value=d.refl.start||'';if(b)b.value=d.refl.end||'';}
+  Object.keys(SC).forEach(k=>delete SC[k]);Object.assign(SC,d.sc);LOG.length=0;(d.log||[]).forEach(x=>LOG.push(x));updateTop();
+  return STU.name?'':'NEEDNAME';
+}
+function init(){
+  document.getElementById('refbody').innerHTML=refHTML();
+  buildAll();
+  document.getElementById('stset').innerHTML='<option value="">choose your set…</option>'+SETS.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
+  const go=()=>{const n=document.getElementById('stname').value,s=document.getElementById('stset').value,m=document.getElementById('gatemsg');if(!n.trim()){m.textContent='Type your first name.';return;}if(!s){m.textContent='Choose your chemistry set.';return;}startTest(n,s);};
+  document.getElementById('stgo').onclick=go;document.getElementById('stname').addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+  document.getElementById('gl').innerHTML=Object.keys(GLOSS).sort().map(t=>`<dt>${t}</dt><dd>${GLOSS[t]}</dd>`).join('');
+  tipify(document.body);
+  initProgressUI();
+  document.getElementById('refbtn').onclick=()=>{document.getElementById('ref').hidden=false;};
+  document.getElementById('refclose').onclick=()=>{document.getElementById('ref').hidden=true;};
+  document.getElementById('copy').onclick=()=>{
+    const t=resultsText();
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).catch(()=>fallback(t));else fallback(t);
+    document.getElementById('copied').textContent='Copied. Paste it into Canvas or an email.';
+  };
+  function fallback(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}a.remove();}
+  updateTop();
+}
+
+function initProgressUI(){
+  const panel=document.getElementById('savepanel'),box=document.getElementById('savecode'),msg=document.getElementById('savemsg'),file=document.getElementById('loadfile');
+  const show=(t)=>{msg.textContent=t||'';};
+  function openPanel(mode){panel.hidden=false;document.getElementById('saveblock').hidden=mode!=='save';document.getElementById('loadblock').hidden=mode!=='load';show('');}
+  document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',()=>{
+    const a=b.getAttribute('data-act');
+    if(a==='save'){
+      const code=encodeProgress();box.value=code;openPanel('save');
+      try{const blob=new Blob([code],{type:'text/plain'}),u=URL.createObjectURL(blob),l=document.createElement('a');l.href=u;l.download='redoxcalc_'+fileStem()+'.txt';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);
+        show('Your progress is saved in the file redoxcalc_'+fileStem()+'.txt (check your Downloads folder). The code below is a back-up: copy it into a note if the file did not download.');}
+      catch(x){show('Copy the code below and keep it in a note. You can paste it back in later.');}
+    }
+    else if(a==='load')openPanel('load');
+    else if(a==='pdf'){panel.hidden=true;window.print();}
+  }));
+  document.getElementById('copycode').onclick=()=>{box.select();try{document.execCommand('copy');show('Code copied.');}catch(x){show('Select the code and copy it yourself.');}};
+  document.getElementById('loadgo').onclick=()=>{
+    const code=document.getElementById('loadcode').value;
+    if(!code.trim()){show('Choose your saved file, or paste your code first.');return;}
+    const err=applyProgress(code);show(err==='NEEDNAME'?'Your progress is loaded. Now type your first name above and press Start.':(err||'Your progress is back. Scroll down to carry on.'));if(!err)document.getElementById('loadcode').value='';
+  };
+  file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById('loadcode').value=String(r.result);const err=applyProgress(String(r.result));show(err==='NEEDNAME'?'Your progress is loaded. Now type your first name above and press Start.':(err||'Your progress is back. Scroll down to carry on.'));};r.readAsText(f);});
+  document.getElementById('saveclose').onclick=document.getElementById('loadclose').onclick=()=>{panel.hidden=true;};
+}
+
+/* ===== shared builders ===== */
+function dflt(s,ch,hs){s.cheat=s.cheat||ch;s.hints=s.hints||hs||['Read the cheat sheet first.','Work one step at a time.'];return s;}
+const SIGNMSG='The size is right. Check the sign: write + or − before the number.';
+const sgn=(label,ans,o)=>num(label,ans,'',Object.assign({signed:true,tol:0,signMsg:SIGNMSG},o||{}));
+const CH_OS=RULES+'<p><b>Example: SO<sub>2</sub>.</b> Oxygen is −2, so two O atoms give 2 × (−2) = −4. The compound is neutral, so S + (−4) = 0 and S = <b>+4</b>.</p>'+fm('(number of atoms) × '+I('x')+' + the other oxidation states = the charge')+'<p>Write the sign every time: +4, −2, 0.</p>';
+const CH_OXRED=OXRED+'<p>To decide: write the oxidation state under <b>every</b> element in the equation. Find the elements whose state changes. Up = oxidised. Down = reduced.</p>';
+const CH_HALF=HALFSTEPS+'<p><b>Example: Zn + Cu<sup>2+</sup> → Zn<sup>2+</sup> + Cu.</b></p>'+fm('Zn → Zn<sup>2+</sup> + 2e<sup>−</sup> &nbsp; (oxidation: electrons are lost)')+fm('Cu<sup>2+</sup> + 2e<sup>−</sup> → Cu &nbsp; (reduction: electrons are gained)')+TYPING;
+const CH_ACID=HALFSTEPS+'<p><b>Example: Cu + NO<sub>3</sub><sup>−</sup> → Cu<sup>2+</sup> + NO in acid.</b></p>'+fm('Cu → Cu<sup>2+</sup> + 2e<sup>−</sup>')+fm('NO<sub>3</sub><sup>−</sup> + 4H<sup>+</sup> + 3e<sup>−</sup> → NO + 2H<sub>2</sub>O')+'<p>Multiply the first by 3 and the second by 2 (6 electrons each), then add:</p>'+fm('3Cu + 2NO<sub>3</sub><sup>−</sup> + 8H<sup>+</sup> → 3Cu<sup>2+</sup> + 2NO + 4H<sub>2</sub>O')+TYPING;
+const CH_NAME='<p>Name = name of the element + the <b>oxidation number</b> in Roman numerals, in brackets, with <b>no space</b>: copper(II) oxide.</p><table class="bt"><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr><tr><td>I</td><td>II</td><td>III</td><td>IV</td><td>V</td><td>VI</td><td>VII</td></tr></table><ol><li>Work out the oxidation state of the element that can have more than one (O is −2, Cl is −1, H is +1).</li><li>Write its Roman numeral in brackets after the name.</li><li>Add the name of the other part: oxide, chloride, hydroxide.</li><li>Acids: the number goes after the first part: nitric(V) acid.</li></ol>'+NAMETAB;
+/* a list of species cards for oxidation states */
+function osCard(list,o){
+  o=o||{};
+  const fields=[];
+  list.forEach(s=>s.els.forEach(e=>fields.push(sgn(osH(s)+': oxidation state of <b>'+e[0]+'</b> =',e[1]))));
+  const first=list[0];
+  return dflt({title:o.title||'Oxidation states',
+   html:'<p>Assign oxidation states to every element in each of these species. Write the sign.</p>'+list.map(s=>fm('<b>'+osH(s)+'</b>')).join(''),
+   fields,cheat:CH_OS,
+   hints:['Use the rules on the cheat sheet. Start with the atoms you know: oxygen is −2, hydrogen is +1, a Group 1 metal is +1, chlorine joined to a metal is −1.',
+     'Write an equation for the unknown element. For '+osH(first)+': '+osSum(first)+'. Solve it for '+I('x')+'.'+(list[1]?' For '+osH(list[1])+': '+osSum(list[1])+'.':''),
+     list.slice(2).map(s=>osH(s)+': '+osSum(s)).join('<br>')||'Check that all the oxidation states add up to the charge on the species.'],
+   worked:list.map(s=>'<p><b>'+osH(s)+'</b>: '+osSum(s)+', so '+s.els.map(e=>e[0]+' is <b>'+signed(e[1])+'</b>').join(', ')+'.</p>').join('')});
+}
+const rname=t=>uni(t[1]);
+function reactantOpts(e){return e.l.map(t=>uni(t[1]));}
+function findSp(e,c){return e.l.find(t=>canon(t[1])===c)[1];}
+
+/* ===== Section 1: oxidation numbers (worksheet 1) ===== */
+sec('1','Oxidation numbers',
+ '<p><b>About 10 minutes.</b> The oxidation state is the charge an atom would have if all its bonds were ionic. Use the rules on the cheat sheet. Write the sign every time. The oxidation number in a name is the oxidation state in Roman numerals.</p>');
+const O=(f,q)=>osByKey(f,q);
+const POOL1=OS.filter(s=>s.els.length<=3);
+const HARD1=[O('K2Cr2O7',0),O('MnO4',-1),O('Cr2O7',-2),O('KMnO4',0),O('H2SO4',0),O('HNO3',0),O('IO3',-1),O('ClO3',-1),O('Fe(OH)3',0),O('V2O5',0)];
+def('1.1','1',r=>osCard(r.seeded?[O('CuCl2',0),O('SO2',0),O('Fe2O3',0),O('V2O5',0)]:r.sample(POOL1,4),{title:'Oxidation numbers in compounds'}));
+def('1.2','1',r=>osCard(r.seeded?[O('NO3',-1),O('SO4',-2),O('SO3',-2),O('NH4',1)]:r.sample(POOL1,4),{title:'Oxidation numbers in ions'}));
+def('1.3','1',r=>osCard(r.seeded?[O('K2Cr2O7',0),O('MnO4',-1)]:r.sample(HARD1,2),{title:'Oxidation numbers: Cr and Mn'}));
+const NMSG='Check the spelling, the Roman numeral in brackets, and that there is no space before the bracket.';
+function nameCard(list,o){
+  const fields=[];
+  list.forEach(x=>{fields.push(sgn(F(x.f)+': oxidation state of <b>'+x.el+'</b> =',x.n));fields.push(name(F(x.f)+': name',x.name,{msg:NMSG}));});
+  return dflt({title:o.title,
+   html:'<p>Deduce the name of each compound using oxidation numbers. First work out the oxidation state, then write the name.</p>'+list.map(x=>fm('<b>'+F(x.f)+'</b>')).join('')+'<p class="legend">Type, for example, <b>copper(II) oxide</b>.</p>',
+   fields,cheat:CH_NAME,
+   hints:['Work out the oxidation state of '+list.map(x=>x.el).join(', ')+' using the rules: oxygen is −2, hydrogen is +1, chlorine joined to a metal is −1, and all the states add up to 0.',
+     'Write the Roman numeral for each oxidation state: 1 is I, 2 is II, 3 is III, 4 is IV, 5 is V.',
+     list.map(x=>F(x.f)+': the element is '+x.el+' with oxidation state '+signed(x.n)+', so the name has ('+roman(x.n)+') in it.').join('<br>')],
+   worked:list.map(x=>'<p>'+F(x.f)+': '+x.el+' is '+signed(x.n)+', so the name is <b>'+x.name[0]+'</b>.</p>').join('')});
+}
+const NBYF=f=>NAMES.concat(ACIDS).find(x=>x.f===f);
+def('1.4','1',r=>nameCard(r.seeded?['Cr2O3','CuCl','PbO2'].map(NBYF):r.sample(NAMES,3),{title:'Names of compounds (a, b, e)'}));
+def('1.5','1',r=>nameCard(r.seeded?['HNO3','HNO2'].map(NBYF):r.sample(ACIDS,2),{title:'Names of acids (c and d)'}));
+
+/* ===== Section 2: balancing half-equations (worksheet 2) ===== */
+sec('2','Balancing half-equations',
+ '<p><b>About 10 minutes.</b> Each half-equation is in acid solution and shows <b>reduction</b>, so the electrons go on the left. Balance in this order: atoms, then O with H<sub>2</sub>O, then H with H<sup>+</sup>, then charge with e<sup>−</sup>. '+TYPING.replace('<p class="legend">','<span class="legend">').replace('</p>','</span>')+'</p>');
+const HALVES=[
+ ['MnO4{-}(aq) + H{+}(aq) + e- -> Mn{2+}(aq) + H2O(l)','MnO4{-}(aq) + 8H{+}(aq) + 5e- -> Mn{2+}(aq) + 4H2O(l)'],
+ ['Cr2O7{2-}(aq) + H{+}(aq) + e- -> Cr{3+}(aq) + H2O(l)','Cr2O7{2-}(aq) + 14H{+}(aq) + 6e- -> 2Cr{3+}(aq) + 7H2O(l)'],
+ ['ClO3{-}(aq) + H{+}(aq) + e- -> Cl2(g) + H2O(l)','2ClO3{-}(aq) + 12H{+}(aq) + 10e- -> Cl2(g) + 6H2O(l)'],
+ ['NO3{-}(aq) + H{+}(aq) + e- -> NO2(g) + H2O(l)','NO3{-}(aq) + 2H{+}(aq) + e- -> NO2(g) + H2O(l)'],
+ ['NO3{-}(aq) + H{+}(aq) + e- -> NH4{+}(aq) + H2O(l)','NO3{-}(aq) + 10H{+}(aq) + 8e- -> NH4{+}(aq) + 3H2O(l)'],
+ ['XeO3(aq) + H{+}(aq) + e- -> Xe(g) + H2O(l)','XeO3(aq) + 6H{+}(aq) + 6e- -> Xe(g) + 3H2O(l)'],
+ ['SO4{2-}(aq) + H{+}(aq) + e- -> SO2(g) + H2O(l)','SO4{2-}(aq) + 4H{+}(aq) + 2e- -> SO2(g) + 2H2O(l)'],
+ ['MnO2(s) + H{+}(aq) + e- -> Mn{2+}(aq) + H2O(l)','MnO2(s) + 4H{+}(aq) + 2e- -> Mn{2+}(aq) + 2H2O(l)'],
+ ['IO3{-}(aq) + H{+}(aq) + e- -> I2(aq) + H2O(l)','2IO3{-}(aq) + 12H{+}(aq) + 10e- -> I2(aq) + 6H2O(l)'],
+ ['H2O2(aq) + H{+}(aq) + e- -> H2O(l)','H2O2(aq) + 2H{+}(aq) + 2e- -> 2H2O(l)']
+].map(a=>({sk:H(a[0]),ans:H(a[1])}));
+HALVES.forEach((h,i)=>{if(!isBal(h.ans))throw new Error('HALVES '+i);});
+function halfOnly(h,o){
+  const a=h.ans,nW=cntOf2(a.r,'H2O')+cntOf2(a.l,'H2O'),nH=cntOf2(a.l,'H+')+cntOf2(a.r,'H+'),ne=electrons(a);
+  const heavy=a.l.filter(t=>!t[1].el&&canon(t[1])!=='H+'),hv=heavy[0];
+  const chL=chOf2(a.l),chR=chOf2(a.r);
+  return dflt({title:o.title,
+   html:'<p>Balance this half-equation. It is in acid solution.</p>'+fm(eqH(h.sk))+'<p class="legend">Type the balanced half-equation, for example <b>Fe3+ + e- -> Fe2+</b>.</p>',
+   fields:[
+    num('Step 1. Working. The number of H<sub>2</sub>O needed to balance the oxygen is',nW,'',{tol:0}),
+    num('Step 2. Working. The number of H<sup>+</sup> needed to balance the hydrogen is',nH,'',{tol:0}),
+    num('Step 3. Working. The number of electrons needed to balance the charge is',ne,'',{tol:0}),
+    sel('The electrons are on the',['left, because this is a reduction (electrons are gained)','right, because this is an oxidation (electrons are lost)'],'left, because this is a reduction (electrons are gained)',{think:1}),
+    eq('Step 4. The balanced half-equation:',a)],
+   cheat:CH_HALF,
+   hints:['Balance the atoms that are not O or H first. Then count the oxygen atoms on each side and add H<sub>2</sub>O to the side that needs oxygen. '+(nW>0?'This one needs '+nW+' H<sub>2</sub>O.':''),
+    'Count the hydrogen atoms on each side (including the H in H<sub>2</sub>O) and add H<sup>+</sup> to the side that needs hydrogen. This one needs '+nH+' H<sup>+</sup>.',
+    'Add up the charge on each side. Then add electrons to the more positive side until the charges are equal. This one needs '+ne+' electron'+(ne>1?'s':'')+'.'],
+   worked:'<p>'+eqH(a)+'</p><p>Check: atoms of every element are the same on both sides, and the charge is the same on both sides.</p>'});
+}
+const cntOf2=(a,c)=>a.reduce((t,x)=>t+(canon(x[1])===c?x[0]:0),0);
+const chOf2=a=>a.reduce((t,x)=>t+(x[1].el?-x[0]:x[0]*x[1].q),0);
+def('2.1','2',r=>halfOnly(r.seeded?HALVES[0]:r.pick(HALVES),{title:'Half-equation (a)'}));
+def('2.2','2',r=>halfOnly(r.seeded?HALVES[1]:r.pick(HALVES),{title:'Half-equation (b)'}));
+def('2.3','2',r=>halfOnly(r.seeded?HALVES[4]:r.pick(HALVES),{title:'Half-equation (e)'}));
+
+/* ===== Section 3: balancing with oxidation numbers (worksheet 3, question 1) ===== */
+sec('3','Balancing equations with oxidation numbers',
+ '<p><b>About 12 minutes.</b> Find the two elements whose oxidation numbers change. The <b>electrons lost</b> by one must equal the <b>electrons gained</b> by the other. Choose the numbers of each particle to make that true, then balance the rest. '+TYPING.replace('<p class="legend">','<span class="legend">').replace('</p>','</span>')+'</p>');
+const CH_ON='<p><b>Balancing with oxidation numbers: the steps.</b></p><ol><li>Write the oxidation number of every element. Find the two that change.</li><li>For each, work out the <b>change per atom</b> (the electrons lost or gained by one atom).</li><li>Make the <b>total electrons lost = total electrons gained</b>. Find the smallest numbers of each particle that do this.</li><li>Put those numbers in front of the species in the equation. Then balance O with H<sub>2</sub>O and H with H<sup>+</sup> if needed. Check that the atoms and the charge balance.</li></ol>'
+ +'<p><b>Example: Mg + Fe<sup>3+</sup> → Mg<sup>2+</sup> + Fe.</b> Mg goes 0 → +2: loses 2 electrons per atom. Fe goes +3 → 0: gains 3 electrons per ion. The smallest number that both 2 and 3 go into is 6. So 3 Mg (3 × 2 = 6 lost) and 2 Fe<sup>3+</sup> (2 × 3 = 6 gained):</p>'+fm('3Mg + 2Fe<sup>3+</sup> → 3Mg<sup>2+</sup> + 2Fe');
+const ONS=[
+ {sk:'Zn(s) + Fe{3+}(aq) -> Zn{2+}(aq) + Fe(s)',full:'3Zn(s) + 2Fe{3+}(aq) -> 3Zn{2+}(aq) + 2Fe(s)',A:{sp:'Zn',el:'Zn',b:0,a:2},B:{sp:'Fe<sup>3+</sup>',el:'Fe',b:3,a:0},cA:3,cB:2,t:'(a)'},
+ {sk:'Cu{2+}(aq) + Al(s) -> Al{3+}(aq) + Cu(s)',full:'3Cu{2+}(aq) + 2Al(s) -> 2Al{3+}(aq) + 3Cu(s)',A:{sp:'Al',el:'Al',b:0,a:3},B:{sp:'Cu<sup>2+</sup>',el:'Cu',b:2,a:0},cA:2,cB:3,t:'(b)'},
+ {sk:'Al(s) + H{+}(aq) -> Al{3+}(aq) + H2(g)',full:'2Al(s) + 6H{+}(aq) -> 2Al{3+}(aq) + 3H2(g)',A:{sp:'Al',el:'Al',b:0,a:3},B:{sp:'H<sup>+</sup>',el:'H',b:1,a:0},cA:1,cB:3,t:'(c)',note:'Hydrogen gas is H<sub>2</sub>: it has two atoms, so in the final equation double everything.'},
+ {sk:'Fe{2+}(aq) + ClO3{-}(aq) + H{+}(aq) -> Fe{3+}(aq) + Cl{-}(aq) + H2O(l)',full:'6Fe{2+}(aq) + ClO3{-}(aq) + 6H{+}(aq) -> 6Fe{3+}(aq) + Cl{-}(aq) + 3H2O(l)',A:{sp:'Fe<sup>2+</sup>',el:'Fe',b:2,a:3},B:{sp:'ClO<sub>3</sub><sup>−</sup>',el:'Cl',b:5,a:-1},cA:6,cB:1,t:'(g)'},
+ {sk:'I{-}(aq) + IO3{-}(aq) + H{+}(aq) -> I2(s) + H2O(l)',full:'5I{-}(aq) + IO3{-}(aq) + 6H{+}(aq) -> 3I2(s) + 3H2O(l)',A:{sp:'I<sup>−</sup>',el:'I',b:-1,a:0},B:{sp:'IO<sub>3</sub><sup>−</sup>',el:'I',b:5,a:0},cA:5,cB:1,t:'(h)',note:'Iodine appears in both I<sup>−</sup> and IO<sub>3</sub><sup>−</sup>, and both turn into I<sub>2</sub>.'},
+ {sk:'Mg(s) + Ag{+}(aq) -> Mg{2+}(aq) + Ag(s)',full:'Mg(s) + 2Ag{+}(aq) -> Mg{2+}(aq) + 2Ag(s)',A:{sp:'Mg',el:'Mg',b:0,a:2},B:{sp:'Ag<sup>+</sup>',el:'Ag',b:1,a:0},cA:1,cB:2,t:'(extra)'},
+ {sk:'Fe{2+}(aq) + Ce{4+}(aq) -> Fe{3+}(aq) + Ce{3+}(aq)',full:'Fe{2+}(aq) + Ce{4+}(aq) -> Fe{3+}(aq) + Ce{3+}(aq)',A:{sp:'Fe<sup>2+</sup>',el:'Fe',b:2,a:3},B:{sp:'Ce<sup>4+</sup>',el:'Ce',b:4,a:3},cA:1,cB:1,t:'(extra)'},
+ {sk:'Zn(s) + Sn{4+}(aq) -> Zn{2+}(aq) + Sn{2+}(aq)',full:'Zn(s) + Sn{4+}(aq) -> Zn{2+}(aq) + Sn{2+}(aq)',A:{sp:'Zn',el:'Zn',b:0,a:2},B:{sp:'Sn<sup>4+</sup>',el:'Sn',b:4,a:2},cA:1,cB:1,t:'(extra)'}
+].map(o=>Object.assign(o,{skH:H(o.sk),fullH:H(o.full)}));
+ONS.forEach((o,i)=>{if(!isBal(o.fullH))throw new Error('ONS '+i);});
+function onCard(o,title){
+  const lost=o.A.a-o.A.b,gain=o.B.b-o.B.a;
+  const g=gcd(lost,gain),rA=gain/g,rB=lost/g;
+  return dflt({title:title,
+   html:'<p>Balance this equation using oxidation numbers.</p>'+fm(eqH(o.skH))+(o.note?'<p class="legend">'+o.note+'</p>':'')+'<p class="legend">Type the balanced equation on one line, for example <b>Mg + 2Ag+ -> Mg2+ + 2Ag</b>.</p>',
+   fields:[
+    sgn('Step 1. Oxidation number of '+o.A.el+' in '+o.A.sp+' (before) =',o.A.b),
+    sgn('Oxidation number of '+o.A.el+' after the reaction =',o.A.a),
+    sgn('Oxidation number of '+o.B.el+' in '+o.B.sp+' (before) =',o.B.b),
+    sgn('Oxidation number of '+o.B.el+' after the reaction =',o.B.a),
+    num('Step 2. Working. Electrons <b>lost</b> by each atom of '+o.A.el+' in '+o.A.sp+' =',lost,'',{tol:0}),
+    num('Working. Electrons <b>gained</b> by each atom of '+o.B.el+' in '+o.B.sp+' =',gain,'',{tol:0}),
+    num('Step 3. Smallest number of '+o.A.sp+' needed =',rA,'',{tol:0}),
+    num('Smallest number of '+o.B.sp+' needed, so that the electrons lost = the electrons gained =',rB,'',{tol:0}),
+    eq('Step 4. The balanced equation:',o.fullH)],
+   cheat:CH_ON,
+   hints:['Write the oxidation number of each element under the equation. The two elements whose numbers change are '+o.A.el+' and '+o.B.el+'. The one that goes up is oxidised (loses electrons) and the one that goes down is reduced (gains electrons).',
+    'Change per atom: '+o.A.el+' goes from '+signed(o.A.b)+' to '+signed(o.A.a)+', so it loses '+lost+'. '+o.B.el+' goes from '+signed(o.B.b)+' to '+signed(o.B.a)+', so it gains '+gain+'.',
+    'Find the smallest number that both '+lost+' and '+gain+' go into: it is '+(lost*gain/g)+'. So you need '+rA+' of '+o.A.sp+' (×'+lost+' = '+rA*lost+') and '+rB+' of '+o.B.sp+' (×'+gain+' = '+rB*gain+').'],
+   worked:'<p><b>Step 1.</b> '+o.A.el+': '+signed(o.A.b)+' → '+signed(o.A.a)+'. '+o.B.el+': '+signed(o.B.b)+' → '+signed(o.B.a)+'.</p><p><b>Step 2.</b> '+o.A.el+' loses '+lost+'; '+o.B.el+' gains '+gain+'.</p><p><b>Step 3.</b> '+rA+' × '+lost+' = '+rB+' × '+gain+' = '+rA*lost+' electrons.</p><p><b>Step 4.</b></p>'+fm('<b>'+eqH(o.fullH)+'</b>')+'<p>Check: the atoms and the total charge are the same on both sides.</p>'});
+}
+[0,1,3].forEach((ix,k)=>def('3.'+(k+1),'3',r=>{
+ if(r.seeded)return onCard(ONS[ix],'Equation '+ONS[ix].t);
+ const o=r.pick(ONS);return onCard(o,'Balance with oxidation numbers');}));
+def('3.4','3',r=>{
+ if(r.seeded)return onCard(ONS[4],'Equation (h)');
+ const o=r.pick(ONS);return onCard(o,'Balance with oxidation numbers');});
+
+/* ===== Section 4: calculations with redox equations (worksheet 4) ===== */
+sec('4','Calculations with redox equations',
+ '<p><b>About 25 minutes.</b> Every calculation follows the same four steps: <b>1.</b> the balanced equation. <b>2.</b> the moles of the substance you know. <b>3.</b> the moles of the substance you want, using the ratio of the numbers in front of them in the equation. <b>4.</b> turn the moles into the mass, volume or concentration you are asked for. Working scores marks. Volumes of solutions are in cm<sup>3</sup> and concentrations in mol dm<sup>−3</sup>.</p>');
+const uni2=t=>t.replace(/<sub>(\d+)<\/sub>/g,(_,d)=>d.replace(/\d/g,x=>'₀₁₂₃₄₅₆₇₈₉'[x])).replace(/<sup>([^<]+)<\/sup>/g,(_,u)=>u.replace(/\d/g,x=>'⁰¹²³⁴⁵⁶⁷⁸⁹'[x]).replace('+','⁺').replace('−','⁻').replace('-','⁻'));
+const NAOH='sodium hydroxide (CARE: CORROSIVE!)';
+const fcc=c=>String(+c.toPrecision(3));
+const f4c=x=>nice(+x.toPrecision(4));
+const ARTAB=(sym,M)=>'<p><b>Molar mass (atomic mass, A<sub>r</sub>)</b> in g mol<sup>−1</sup>:</p><table class="bt"><tr>'+sym.map(s=>'<th>'+s+'</th>').join('')+'</tr><tr>'+M.map(m=>'<td>'+m+'</td>').join('')+'</tr></table>';
+const CALCSTEPS='<p><b>The three formulae for moles</b></p>'+fm('moles of a solid: <i>n</i> = mass ÷ molar mass')+fm('moles of a solution: <i>n</i> = concentration × volume ÷ 1000')+fm('moles of a gas: <i>n</i> = volume ÷ 24 000')+'<p class="legend">Volumes in cm<sup>3</sup>. Concentration in mol dm<sup>−3</sup>. 24 000 cm<sup>3</sup> is the volume of one mole of any gas at room temperature and pressure.</p>'
+ +'<p><b>To change moles back</b></p>'+fm('mass = moles × molar mass')+fm('volume of a solution = moles × 1000 ÷ concentration')+fm('volume of a gas = moles × 24 000');
+const ratioExpr=(a,b,s)=>b===1?'moles of '+s+' × '+a:'moles of '+s+' × '+a+' ÷ '+b;
+function ratioSel(label,a,b,s){ // moles wanted = moles known × a ÷ b
+  const right=a===b?'the same as the moles of '+s:ratioExpr(a,b,s);
+  const opts=a===b?[right,'twice the moles of '+s,'half the moles of '+s]:[right,ratioExpr(b,a,s),'the same as the moles of '+s];
+  return sel(label,opts,right,{think:1});
+}
+const thinkM=(m,M)=>{const t=think('mass');t.ans=m<M?'less than one mole':(m>M?'more than one mole':'exactly one mole');return t;};
+const thinkV=(V)=>{const t=think('vol');t.ans=V<24000?'less than 24000 cm³':(V>24000?'more than 24000 cm³':'exactly 24000 cm³');return t;};
+const eqLine=s=>fm(eqH(H(s)));
+/* ---- 4.1: volume of gas from the mass of a metal ---- */
+const GASRX=[
+ {sym:'Sn',name:'tin',M:119,full:'Sn(s) + 4HNO3(l) -> SnO2(s) + 4NO2(g) + 2H2O(l)',kM:1,kG:4,gas:'NO<sub>2</sub>',acid:'concentrated nitric(V) acid',ms:[0.6,1.0,1.5,2.0,2.5,3.0]},
+ {sym:'Zn',name:'zinc',M:65.4,full:'Zn(s) + 2H{+}(aq) -> Zn{2+}(aq) + H2(g)',kM:1,kG:1,gas:'H<sub>2</sub>',acid:'excess dilute acid',ms:[0.5,1.0,2.0,3.0,5.0]},
+ {sym:'Mg',name:'magnesium',M:24,full:'Mg(s) + 2H{+}(aq) -> Mg{2+}(aq) + H2(g)',kM:1,kG:1,gas:'H<sub>2</sub>',acid:'excess dilute acid',ms:[0.6,1.2,2.4,3.6]},
+ {sym:'Al',name:'aluminium',M:27,full:'2Al(s) + 6H{+}(aq) -> 2Al{3+}(aq) + 3H2(g)',kM:2,kG:3,gas:'H<sub>2</sub>',acid:'excess dilute acid',ms:[0.54,1.0,2.7,5.4]}
+];
+GASRX.forEach(g=>{if(!isBal(H(g.full)))throw new Error('GASRX '+g.sym);});
+function gasCard(g,m){
+  const nM=m/g.M,nG=nM*g.kG/g.kM,V=nG*24000;
+  const E=eqLine(g.full);
+  return dflt({title:'Volume of '+g.gas+' produced (worksheet 4, question 1)',
+   html:'<p>According to the equation:</p>'+E+'<p>what volume of '+g.gas+' is produced when <b>'+m+' g</b> of '+g.name+' is added to '+g.acid+'? (1 mol of gas at room temperature and pressure occupies 24 000 cm<sup>3</sup>. Molar mass (atomic mass, A<sub>r</sub>) of '+g.sym+' = '+g.M+' g mol<sup>−1</sup>.)</p>',
+   fields:[
+    num('Step 1. The molar mass of '+g.sym+' (from the question) =',g.M,'g mol<sup>−1</sup>',{tol:0}),
+    thinkM(m,g.M),
+    num('Step 2. Moles of '+g.sym+': <i>n</i> = mass ÷ molar mass =',nM,'mol',{tol:0.01,abs:1e-12}),
+    ratioSel('Step 3. In the equation, '+g.kM+' '+g.sym+' gives '+g.kG+' '+g.gas+'. So the moles of '+g.gas+' are',g.kG,g.kM,g.sym),
+    num('Moles of '+g.gas+' =',nG,'mol',{tol:0.01,abs:1e-12}),
+    thinkV(V),
+    num('Step 4. Volume of '+g.gas+' = moles × 24 000 =',V,'cm<sup>3</sup>',{tol:0.01,abs:1e-6})],
+   cheat:'<p>The balanced equation:</p>'+E+ARTAB([g.sym],[g.M])+CALCSTEPS,
+   hints:['Step 2: moles = mass ÷ molar mass = '+m+' ÷ '+g.M+'. Use your calculator and write the answer with at least three figures.',
+    'Step 3: the numbers in front of the two substances in the equation are '+g.kM+' for '+g.sym+' and '+g.kG+' for '+g.gas+'. '+(g.kG===g.kM?'They are equal, so the moles are equal.':'The moles of '+g.gas+' = the moles of '+g.sym+' × '+g.kG+(g.kM>1?' ÷ '+g.kM:'')+'.'),
+    'Step 4: moles of '+g.gas+' = '+f4c(nG)+' mol. Multiply by 24 000 to get the volume in cm<sup>3</sup>.'],
+   worked:fm('<i>n</i>('+g.sym+') = '+m+' ÷ '+g.M+' = '+f4c(nM)+' mol',1)+fm('<i>n</i>('+g.gas+') = '+f4c(nM)+' × '+g.kG+(g.kM>1?' ÷ '+g.kM:'')+' = '+f4c(nG)+' mol',1)+fm('volume = '+f4c(nG)+' × 24 000 = <b>'+f4c(V)+' cm<sup>3</sup></b>',1)});
+}
+def('4.1','4',r=>{if(r.seeded)return gasCard(GASRX[0],1.5);const g=r.pick(GASRX);return gasCard(g,r.pick(g.ms));});
+/* ---- 4.2: mass of a metal from the volume of sulphuric acid ---- */
+const ACRX=[
+ {sym:'Al',name:'aluminium',M:27,full:'2Al(s) + 6H{+}(aq) -> 2Al{3+}(aq) + 3H2(g)',kM:2,kH:6},
+ {sym:'Mg',name:'magnesium',M:24,full:'Mg(s) + 2H{+}(aq) -> Mg{2+}(aq) + H2(g)',kM:1,kH:2},
+ {sym:'Zn',name:'zinc',M:65.4,full:'Zn(s) + 2H{+}(aq) -> Zn{2+}(aq) + H2(g)',kM:1,kH:2}
+];
+function acidMetalCard(g,c,V){
+  const nA=c*V/1000,nH=nA*2,nM=nH*g.kM/g.kH,m=nM*g.M;
+  const E=eqLine(g.full);
+  return dflt({title:'Mass of '+g.name+' that reacts with sulphuric acid (worksheet 4, question 2)',
+   html:'<p>What mass of '+g.name+' metal will react exactly with <b>'+V+' cm<sup>3</sup></b> of <b>'+fcc(c)+' mol dm<sup>−3</sup></b> sulphuric acid, H<sub>2</sub>SO<sub>4</sub>? (A<sub>r</sub>('+g.sym+') = '+g.M+'.) Use the equation:</p>'+E,
+   fields:[
+    num('Step 1. Moles of H<sub>2</sub>SO<sub>4</sub> = concentration × volume ÷ 1000 =',nA,'mol',{tol:0.01,abs:1e-12}),
+    sel('Step 2. Each H<sub>2</sub>SO<sub>4</sub> gives two H<sup>+</sup> ions: H<sub>2</sub>SO<sub>4</sub> → 2H<sup>+</sup> + SO<sub>4</sub><sup>2−</sup>. So the moles of H<sup>+</sup> are',['twice the moles of H₂SO₄','the same as the moles of H₂SO₄','half the moles of H₂SO₄'],'twice the moles of H₂SO₄',{think:1}),
+    num('Moles of H<sup>+</sup> =',nH,'mol',{tol:0.01,abs:1e-12}),
+    ratioSel('Step 3. In the equation, '+g.kM+' '+g.sym+' reacts with '+g.kH+' H<sup>+</sup>. So the moles of '+g.sym+' are',g.kM,g.kH,'H⁺'),
+    num('Moles of '+g.sym+' =',nM,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 4. Mass of '+g.sym+' = moles × molar mass ('+g.M+') =',m,'g',{tol:0.01,abs:1e-9})],
+   cheat:'<p>The balanced equation:</p>'+E+ARTAB([g.sym],[g.M])+CALCSTEPS+'<p><b>Remember:</b> sulphuric acid is H<sub>2</sub>SO<sub>4</sub>. Each formula unit gives <b>2</b> H<sup>+</sup> ions. The equation uses H<sup>+</sup>, so double the moles of acid first.</p>',
+   hints:['Step 1: '+fcc(c)+' × '+V+' = '+f4c(c*V)+', then divide by 1000.','Step 2: H<sub>2</sub>SO<sub>4</sub> gives 2 H<sup>+</sup>, so multiply the moles of acid by 2. Moles of H<sup>+</sup> = '+f4c(nH)+' mol.','Step 3: the equation has '+g.kM+' '+g.sym+' for '+g.kH+' H<sup>+</sup>, so moles of '+g.sym+' = moles of H<sup>+</sup> × '+g.kM+' ÷ '+g.kH+'. Step 4: multiply the moles of '+g.sym+' ('+f4c(nM)+') by '+g.M+'.'],
+   worked:fm('<i>n</i>(H<sub>2</sub>SO<sub>4</sub>) = '+fcc(c)+' × '+V+' ÷ 1000 = '+f4c(nA)+' mol',1)+fm('<i>n</i>(H<sup>+</sup>) = '+f4c(nA)+' × 2 = '+f4c(nH)+' mol',1)+fm('<i>n</i>('+g.sym+') = '+f4c(nH)+' × '+g.kM+' ÷ '+g.kH+' = '+f4c(nM)+' mol',1)+fm('mass = '+f4c(nM)+' × '+g.M+' = <b>'+f4c(m)+' g</b>',1)});
+}
+def('4.2','4',r=>{if(r.seeded)return acidMetalCard(ACRX[0],0.012,25);const g=r.pick(ACRX);return acidMetalCard(g,r.pick([0.010,0.020,0.050,0.100,0.012]),r.pick([20,25,50]));});
+/* ---- 4.3: manganate(VII) and ethanedioate ---- */
+const OXEQ=H('2MnO4{-}(aq) + 5C2O4{2-}(aq) + 16H{+}(aq) -> 2Mn{2+}(aq) + 10CO2(g) + 8H2O(l)');
+if(!isBal(OXEQ))throw new Error('OXEQ');
+function oxalCard(cMn,cOx,vOx){
+  const nOx=cOx*vOx/1000,nMn=nOx*2/5,V=nMn*1000/cMn;
+  const SK=eqLine('MnO4{-}(aq) + C2O4{2-}(aq) -> Mn{2+}(aq) + CO2(g)');
+  const EF=fm(eqH(OXEQ));
+  return dflt({title:'Manganate(VII) and ethanedioate (worksheet 4, question 3)',
+   html:'<p>Balance the following oxidation–reduction equation in acidic solution:</p>'+SK+'<p>What volume of <b>'+fcc(cMn)+' mol dm<sup>−3</sup></b> MnO<sub>4</sub><sup>−</sup>(aq) will react with <b>'+vOx+' cm<sup>3</sup></b> of <b>'+fcc(cOx)+' mol dm<sup>−3</sup></b> C<sub>2</sub>O<sub>4</sub><sup>2−</sup>(aq)?</p><p class="legend">Type the balanced equation on one line. After the electrons balance, add H<sub>2</sub>O for the oxygen and H<sup>+</sup> for the hydrogen.</p>',
+   fields:[
+    sgn('Step 1. Oxidation number of Mn in MnO<sub>4</sub><sup>−</sup> =',7),
+    sgn('Oxidation number of Mn in Mn<sup>2+</sup> =',2),
+    sgn('Oxidation number of C in C<sub>2</sub>O<sub>4</sub><sup>2−</sup> =',3),
+    sgn('Oxidation number of C in CO<sub>2</sub> =',4),
+    num('Step 2. Working. Electrons gained by one MnO<sub>4</sub><sup>−</sup> =',5,'',{tol:0}),
+    num('Working. Electrons lost by one C<sub>2</sub>O<sub>4</sub><sup>2−</sup> (it has 2 carbon atoms) =',2,'',{tol:0}),
+    num('Step 3. Smallest number of MnO<sub>4</sub><sup>−</sup> so that the electrons balance =',2,'',{tol:0}),
+    num('Smallest number of C<sub>2</sub>O<sub>4</sub><sup>2−</sup> =',5,'',{tol:0}),
+    eq('Step 4. The balanced equation:',OXEQ),
+    num('Step 5. Moles of C<sub>2</sub>O<sub>4</sub><sup>2−</sup> = concentration × volume ÷ 1000 =',nOx,'mol',{tol:0.01,abs:1e-12}),
+    ratioSel('Step 6. In the equation, 5 C<sub>2</sub>O<sub>4</sub><sup>2−</sup> react with 2 MnO<sub>4</sub><sup>−</sup>. So the moles of MnO<sub>4</sub><sup>−</sup> are',2,5,'C₂O₄²⁻'),
+    num('Moles of MnO<sub>4</sub><sup>−</sup> =',nMn,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 7. Volume of MnO<sub>4</sub><sup>−</sup> = moles × 1000 ÷ concentration =',V,'cm<sup>3</sup>',{tol:0.01,abs:1e-9})],
+   cheat:CH_ON+'<p><b>Then the calculation:</b></p>'+CALCSTEPS+'<p>Look at the numbers in front of the two substances in the balanced equation. The ratio is the number in front of the one you want divided by the number in front of the one you know.</p>',
+   hints:['Mn goes from +7 to +2: it gains 5 electrons. Each C goes from +3 to +4 and there are 2 C atoms in C<sub>2</sub>O<sub>4</sub><sup>2−</sup>: it loses 2 electrons. The smallest number that 5 and 2 both go into is 10: 2 MnO<sub>4</sub><sup>−</sup> (2 × 5) and 5 C<sub>2</sub>O<sub>4</sub><sup>2−</sup> (5 × 2).',
+    'Put 2 in front of MnO<sub>4</sub><sup>−</sup> and Mn<sup>2+</sup>, 5 in front of C<sub>2</sub>O<sub>4</sub><sup>2−</sup> and 10 in front of CO<sub>2</sub>. Count the oxygen: the left side has 2 × 4 + 5 × 4 = 28 and the right side has 10 × 2 = 20, so add 8 H<sub>2</sub>O on the right. That gives 16 H on the right, so add 16 H<sup>+</sup> on the left.',
+    'Moles of C<sub>2</sub>O<sub>4</sub><sup>2−</sup> = '+fcc(cOx)+' × '+vOx+' ÷ 1000 = '+f4c(nOx)+' mol. In the equation 5 C<sub>2</sub>O<sub>4</sub><sup>2−</sup> go with 2 MnO<sub>4</sub><sup>−</sup>, so moles of MnO<sub>4</sub><sup>−</sup> = '+f4c(nOx)+' × 2 ÷ 5.'],
+   worked:'<p><b>Steps 1 to 4.</b> Mn: +7 → +2 (gains 5). C: +3 → +4 (each C<sub>2</sub>O<sub>4</sub><sup>2−</sup> loses 2). 2 × 5 = 5 × 2 = 10.</p>'+fm('<b>'+eqH(OXEQ)+'</b>',1)+fm('<i>n</i>(C<sub>2</sub>O<sub>4</sub><sup>2−</sup>) = '+fcc(cOx)+' × '+vOx+' ÷ 1000 = '+f4c(nOx)+' mol',1)+fm('<i>n</i>(MnO<sub>4</sub><sup>−</sup>) = '+f4c(nOx)+' × 2 ÷ 5 = '+f4c(nMn)+' mol',1)+fm('volume = '+f4c(nMn)+' × 1000 ÷ '+fcc(cMn)+' = <b>'+f4c(V)+' cm<sup>3</sup></b>',1)});
+}
+def('4.3','4',r=>{
+ if(r.seeded)return oxalCard(0.02,0.1,50);
+ for(let k=0;k<200;k++){const cMn=r.pick([0.02,0.04,0.05]),cOx=r.pick([0.05,0.10,0.20]),v=r.pick([20,25,50]);const V=cOx*v*0.4/cMn;if(V>=5&&V<=150&&Math.abs(V*10-Math.round(V*10))<1e-6)return oxalCard(cMn,cOx,v);}
+ return oxalCard(0.02,0.1,50);});
+/* ---- 4.4 and 4.5: metal and metal ion ---- */
+const MIX=[
+ {m:'Zn',M:65.4,ion:'Fe<sup>3+</sup>',sk:'Fe{3+}(aq) + Zn(s) -> Fe{2+}(aq) + Zn{2+}(aq)',full:'2Fe{3+}(aq) + Zn(s) -> 2Fe{2+}(aq) + Zn{2+}(aq)',kI:2,kM:1},
+ {m:'Zn',M:65.4,ion:'Cu<sup>2+</sup>',sk:'Cu{2+}(aq) + Zn(s) -> Cu(s) + Zn{2+}(aq)',full:'Cu{2+}(aq) + Zn(s) -> Cu(s) + Zn{2+}(aq)',kI:1,kM:1},
+ {m:'Mg',M:24,ion:'Fe<sup>3+</sup>',sk:'Fe{3+}(aq) + Mg(s) -> Fe(s) + Mg{2+}(aq)',full:'2Fe{3+}(aq) + 3Mg(s) -> 2Fe(s) + 3Mg{2+}(aq)',kI:2,kM:3},
+ {m:'Zn',M:65.4,ion:'Ag<sup>+</sup>',sk:'Ag{+}(aq) + Zn(s) -> Ag(s) + Zn{2+}(aq)',full:'2Ag{+}(aq) + Zn(s) -> 2Ag(s) + Zn{2+}(aq)',kI:2,kM:1},
+ {m:'Al',M:27,ion:'Cu<sup>2+</sup>',sk:'Cu{2+}(aq) + Al(s) -> Al{3+}(aq) + Cu(s)',full:'3Cu{2+}(aq) + 2Al(s) -> 2Al{3+}(aq) + 3Cu(s)',kI:3,kM:2},
+ {m:'Al',M:27,ion:'Ag<sup>+</sup>',sk:'Ag{+}(aq) + Al(s) -> Al{3+}(aq) + Ag(s)',full:'3Ag{+}(aq) + Al(s) -> Al{3+}(aq) + 3Ag(s)',kI:3,kM:1},
+ {m:'Mg',M:24,ion:'Ag<sup>+</sup>',sk:'Ag{+}(aq) + Mg(s) -> Mg{2+}(aq) + Ag(s)',full:'2Ag{+}(aq) + Mg(s) -> Mg{2+}(aq) + 2Ag(s)',kI:2,kM:1}
+].map(o=>Object.assign(o,{skH:H(o.sk),fullH:H(o.full)}));
+MIX.forEach((o,i)=>{if(!isBal(o.fullH))throw new Error('MIX '+i);});
+function volFromMass(o,m,c){
+  const nM=m/o.M,nI=nM*o.kI/o.kM,V=nI*1000/c;
+  const E=eqLine(o.sk);
+  return dflt({title:'Volume of '+o.ion+'(aq) that reacts with '+o.m+' (worksheet 4, question 4)',
+   html:'<p>Balance the following equation:</p>'+E+'<p>What volume of <b>'+fcc(c)+' mol dm<sup>−3</sup></b> '+o.ion+'(aq) will react with <b>'+m+' g</b> of '+o.m+' metal? (A<sub>r</sub>('+o.m+') = '+o.M+')</p><p class="legend">Type the balanced equation on one line, for example <b>Mg + 2Ag+ -> Mg2+ + 2Ag</b>.</p>',
+   fields:[
+    eq('Step 1. The balanced equation:',o.fullH),
+    num('Step 2. The molar mass of '+o.m+' (from the question) =',o.M,'g mol<sup>−1</sup>',{tol:0}),
+    thinkM(m,o.M),
+    num('Moles of '+o.m+': <i>n</i> = mass ÷ molar mass =',nM,'mol',{tol:0.01,abs:1e-12}),
+    ratioSel('Step 3. In your balanced equation, '+o.kI+' '+o.ion+' reacts with '+o.kM+' '+o.m+'. So the moles of '+o.ion+' are',o.kI,o.kM,o.m),
+    num('Moles of '+o.ion+' =',nI,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 4. Volume of '+o.ion+'(aq) = moles × 1000 ÷ concentration =',V,'cm<sup>3</sup>',{tol:0.01,abs:1e-9})],
+   cheat:CH_ON+ARTAB([o.m],[o.M])+CALCSTEPS,
+   hints:['Step 1: find the two elements that change oxidation number and make the electrons lost equal the electrons gained. The balanced equation is on the worked answer if you need it after you check.',
+    'Step 2 and 3: moles of '+o.m+' = '+m+' ÷ '+o.M+' = '+f4c(nM)+' mol. The equation has '+o.kI+' '+o.ion+' for '+o.kM+' '+o.m+'. Moles of '+o.ion+' = moles of '+o.m+' × '+o.kI+(o.kM>1?' ÷ '+o.kM:'')+'.',
+    'Step 4: moles of '+o.ion+' = '+f4c(nI)+' mol. Volume = '+f4c(nI)+' × 1000 ÷ '+fcc(c)+'.'],
+   worked:fm('<b>'+eqH(o.fullH)+'</b>',1)+fm('<i>n</i>('+o.m+') = '+m+' ÷ '+o.M+' = '+f4c(nM)+' mol',1)+fm('<i>n</i>('+o.ion+') = '+f4c(nM)+' × '+o.kI+(o.kM>1?' ÷ '+o.kM:'')+' = '+f4c(nI)+' mol',1)+fm('volume = '+f4c(nI)+' × 1000 ÷ '+fcc(c)+' = <b>'+f4c(V)+' cm<sup>3</sup></b>',1)});
+}
+function massFromVol(o,V,c){
+  const nI=c*V/1000,nM=nI*o.kM/o.kI,m=nM*o.M;
+  const E=eqLine(o.sk);
+  return dflt({title:'Mass of '+o.m+' that reacts with '+o.ion+'(aq) (worksheet 4, question 5)',
+   html:'<p>Balance the equation:</p>'+E+'<p>What mass of '+o.m+' metal will react with <b>'+V+' cm<sup>3</sup></b> of <b>'+fcc(c)+' mol dm<sup>−3</sup></b> '+o.ion+'(aq)? (A<sub>r</sub>('+o.m+') = '+o.M+')</p><p class="legend">Type the balanced equation on one line, for example <b>Mg + 2Ag+ -> Mg2+ + 2Ag</b>.</p>',
+   fields:[
+    eq('Step 1. The balanced equation:',o.fullH),
+    num('Step 2. Moles of '+o.ion+' = concentration × volume ÷ 1000 =',nI,'mol',{tol:0.01,abs:1e-12}),
+    ratioSel('Step 3. In your balanced equation, '+o.kM+' '+o.m+' reacts with '+o.kI+' '+o.ion+'. So the moles of '+o.m+' are',o.kM,o.kI,uni2(o.ion)),
+    num('Moles of '+o.m+' =',nM,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 4. Mass of '+o.m+' = moles × molar mass ('+o.M+') =',m,'g',{tol:0.01,abs:1e-9})],
+   cheat:CH_ON+ARTAB([o.m],[o.M])+CALCSTEPS,
+   hints:['Step 1: find the two elements that change oxidation number and make the electrons lost equal the electrons gained.',
+    'Step 2 and 3: moles of '+o.ion+' = '+fcc(c)+' × '+V+' ÷ 1000 = '+f4c(nI)+' mol. The equation has '+o.kM+' '+o.m+' for '+o.kI+' '+o.ion+'. Moles of '+o.m+' = moles of '+o.ion+' × '+o.kM+(o.kI>1?' ÷ '+o.kI:'')+'.',
+    'Step 4: moles of '+o.m+' = '+f4c(nM)+' mol. Mass = '+f4c(nM)+' × '+o.M+'.'],
+   worked:fm('<b>'+eqH(o.fullH)+'</b>',1)+fm('<i>n</i>('+o.ion+') = '+fcc(c)+' × '+V+' ÷ 1000 = '+f4c(nI)+' mol',1)+fm('<i>n</i>('+o.m+') = '+f4c(nI)+' × '+o.kM+(o.kI>1?' ÷ '+o.kI:'')+' = '+f4c(nM)+' mol',1)+fm('mass = '+f4c(nM)+' × '+o.M+' = <b>'+f4c(m)+' g</b>',1)});
+}
+def('4.4','4',r=>{if(r.seeded)return volFromMass(MIX[0],2,0.05);const o=r.pick(MIX);return volFromMass(o,r.pick([0.5,1.0,1.5,2.0,3.0]),r.pick([0.05,0.10,0.20]));});
+def('4.5','4',r=>{if(r.seeded)return massFromVol(MIX[4],20,0.05);const o=r.pick(MIX);return massFromVol(o,r.pick([10,20,25,50]),r.pick([0.05,0.10,0.20]));});
+/* ---- 4.6: sulphur dioxide and bromine ---- */
+const SO2EQ=H('SO2(g) + Br2(aq) + 2H2O(l) -> 4H{+}(aq) + SO4{2-}(aq) + 2Br{-}(aq)');
+if(!isBal(SO2EQ))throw new Error('SO2EQ');
+function so2Card(vG,c){
+  const nG=vG/24000,nH=nG*4,V=nH*1000/c;
+  const SK=eqLine('SO2(g) + Br2(aq) + H2O(l) -> H{+}(aq) + SO4{2-}(aq) + Br{-}(aq)');
+  return dflt({title:'Sulphur dioxide and bromine (worksheet 4, question 6)',
+   html:'<p><b>(a)</b> Balance the equation:</p>'+SK+'<p><b>(b)</b> When <b>'+vG+' cm<sup>3</sup></b> of sulphur dioxide gas at room temperature and pressure is reacted with excess bromine solution in this reaction, what volume of <b>'+fcc(c)+' mol dm<sup>−3</sup></b> '+NAOH+' solution is needed to react exactly with the acid formed? (1 mol of gas at room temperature and pressure occupies 24 000 cm<sup>3</sup>.)</p><p class="legend">Type the balanced equation on one line.</p>',
+   fields:[
+    sgn('(a) Oxidation number of S in SO<sub>2</sub> =',4),
+    sgn('Oxidation number of S in SO<sub>4</sub><sup>2−</sup> =',6),
+    sgn('Oxidation number of Br in Br<sub>2</sub> =',0),
+    sgn('Oxidation number of Br in Br<sup>−</sup> =',-1),
+    eq('The balanced equation (the sulphur loses 2 electrons; each Br<sub>2</sub> gains 2 electrons):',SO2EQ),
+    thinkV(vG),
+    num('(b) Step 1. Moles of SO<sub>2</sub> = volume ÷ 24 000 =',nG,'mol',{tol:0.01,abs:1e-12}),
+    ratioSel('Step 2. In the equation, 1 SO<sub>2</sub> gives 4 H<sup>+</sup>. So the moles of H<sup>+</sup> are',4,1,'SO₂'),
+    num('Moles of H<sup>+</sup> formed =',nH,'mol',{tol:0.01,abs:1e-12}),
+    sel('Step 3. The acid reacts with '+NAOH+': H<sup>+</sup> + OH<sup>−</sup> → H<sub>2</sub>O. One H<sup>+</sup> reacts with one OH<sup>−</sup>, so the moles of OH<sup>−</sup> needed are',['the same as the moles of H⁺','twice the moles of H⁺','half the moles of H⁺'],'the same as the moles of H⁺',{think:1}),
+    num('Moles of OH<sup>−</sup> needed =',nH,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 4. Volume of '+NAOH+' = moles × 1000 ÷ concentration =',V,'cm<sup>3</sup>',{tol:0.01,abs:1e-9})],
+   cheat:CH_ON+CALCSTEPS+'<p><b>Neutralisation:</b></p>'+fm('H<sup>+</sup>(aq) + OH<sup>−</sup>(aq) → H<sub>2</sub>O(l)')+'<p>The ratio H<sup>+</sup> : OH<sup>−</sup> is 1 : 1. Our simplest source of hydroxide ions is '+NAOH+'.</p>',
+   hints:['(a) S goes from +4 to +6: it loses 2 electrons. Each Br goes from 0 to −1 and there are 2 Br in Br<sub>2</sub>: Br<sub>2</sub> gains 2 electrons. The electrons already balance with 1 SO<sub>2</sub> and 1 Br<sub>2</sub>. Then balance O with H<sub>2</sub>O (2) and H with H<sup>+</sup> (4).',
+    '(b) Moles of SO<sub>2</sub> = '+vG+' ÷ 24 000 = '+f4c(nG)+' mol. The equation gives 4 H<sup>+</sup> for each SO<sub>2</sub>, so multiply by 4.',
+    'The H<sup>+</sup> reacts 1 : 1 with hydroxide ions, so the moles of '+NAOH+' equal the moles of H<sup>+</sup> ('+f4c(nH)+' mol). Volume = moles × 1000 ÷ '+fcc(c)+'.'],
+   worked:'<p><b>(a)</b></p>'+fm('<b>'+eqH(SO2EQ)+'</b>',1)+'<p><b>(b)</b></p>'+fm('<i>n</i>(SO<sub>2</sub>) = '+vG+' ÷ 24 000 = '+f4c(nG)+' mol',1)+fm('<i>n</i>(H<sup>+</sup>) = '+f4c(nG)+' × 4 = '+f4c(nH)+' mol',1)+fm('<i>n</i>(OH<sup>−</sup>) = '+f4c(nH)+' mol (1 : 1)',1)+fm('volume = '+f4c(nH)+' × 1000 ÷ '+fcc(c)+' = <b>'+f4c(V)+' cm<sup>3</sup></b>',1)});
+}
+def('4.6','4',r=>{if(r.seeded)return so2Card(400,0.02);return so2Card(r.pick([240,360,480,600,720,960]),r.pick([0.02,0.05,0.10,0.025]));});
+
+/* ===== Extension: finding an oxidation number from reacting volumes (worksheet 3, question 2) ===== */
+sec('X','Extension: finding an oxidation number from reacting amounts',
+ '<p>Harder questions. You are told how much of two substances react exactly. The <b>moles of electrons lost</b> must equal the <b>moles of electrons gained</b>. Divide the moles of electrons by the moles of the substance to find the electrons for each atom or ion. Then add or subtract from its oxidation number. Working scores marks.</p>',true);
+const CH_EL='<p><b>The method.</b></p><ol><li>Moles of each substance: use <i>n</i> = concentration × volume ÷ 1000 for a solution, or <i>n</i> = mass ÷ molar mass for a solid.</li><li>For the substance whose change you know, find the moles of electrons: <b>moles of electrons = moles × electrons for each particle</b>.</li><li>The other substance takes (or gives) the same number of moles of electrons.</li><li><b>Electrons for each particle = moles of electrons ÷ moles of that substance.</b> A particle that <b>gains</b> electrons has its oxidation number go <b>down</b>. One that <b>loses</b> electrons goes <b>up</b>.</li></ol>'+CALCSTEPS;
+/* X.1 cerium(IV) and tin(II) */
+function ceCard(vCe,vSn){
+  const cCe=1,cSn=1,nCe=cCe*vCe/1000,nSn=cSn*vSn/1000,ne=nSn*2,per=Math.round(ne/nCe),nw=4-per;
+  return dflt({title:'The oxidation number of cerium (worksheet 3, question 2a)',
+   html:'<p><b>'+vCe.toFixed(2)+' cm<sup>3</sup></b> of <b>1 mol dm<sup>−3</sup></b> Ce<sup>4+</sup>(aq) reacts exactly with <b>'+vSn+' cm<sup>3</sup></b> of <b>1 mol dm<sup>−3</sup></b> Sn<sup>2+</sup>(aq). The tin is oxidised to Sn<sup>4+</sup>(aq). What is the oxidation number of cerium in the reduction product?</p>',
+   fields:[
+    num('Step 1. Moles of Ce<sup>4+</sup> = concentration × volume ÷ 1000 =',nCe,'mol',{tol:0.01,abs:1e-12}),
+    num('Moles of Sn<sup>2+</sup> =',nSn,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 2. Electrons lost by each Sn<sup>2+</sup> (Sn<sup>2+</sup> → Sn<sup>4+</sup>) =',2,'',{tol:0}),
+    num('Moles of electrons lost by all the Sn<sup>2+</sup> =',ne,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 3. Electrons gained by each Ce<sup>4+</sup> = moles of electrons ÷ moles of Ce<sup>4+</sup> (to the nearest whole number) =',per,'',{tol:0}),
+    sgn('Step 4. New oxidation number of cerium (+4 minus the electrons gained) =',nw)],
+   cheat:CH_EL,
+   hints:['Step 1: moles = 1 × '+vCe.toFixed(2)+' ÷ 1000 for Ce<sup>4+</sup>, and 1 × '+vSn+' ÷ 1000 for Sn<sup>2+</sup>.','Sn<sup>2+</sup> → Sn<sup>4+</sup> loses 2 electrons. The moles of electrons = moles of Sn<sup>2+</sup> × 2 = '+f4c(ne)+' mol. The Ce<sup>4+</sup> gains this many moles of electrons.','Electrons for each Ce<sup>4+</sup> = '+f4c(ne)+' ÷ '+f4c(nCe)+' = '+f4c(ne/nCe)+', which is '+per+' to the nearest whole number. Gaining electrons makes the oxidation number go down: +4 − '+per+'.'],
+   worked:fm('<i>n</i>(Ce<sup>4+</sup>) = '+vCe.toFixed(2)+' ÷ 1000 = '+f4c(nCe)+' mol; <i>n</i>(Sn<sup>2+</sup>) = '+vSn+' ÷ 1000 = '+f4c(nSn)+' mol',1)+fm('moles of electrons = '+f4c(nSn)+' × 2 = '+f4c(ne)+' mol',1)+fm('electrons for each Ce<sup>4+</sup> = '+f4c(ne)+' ÷ '+f4c(nCe)+' = '+per,1)+fm('oxidation number of Ce = +4 − '+per+' = <b>'+signed(nw)+'</b>',1)});
+}
+def('X.1','X',r=>{if(r.seeded)return ceCard(40.05,20);const v=r.pick([10,20,25]);return ceCard(Math.round(v*2*r.pick([1,1.0025,0.9975])*100)/100,v);});
+/* X.2 phosphorus and copper(II) */
+function pCard(cCu,vCu,mP){
+  const nCu=cCu*vCu/1000,ne=nCu*2,nP=mP/31,per=Math.round(ne/nP);
+  return dflt({title:'The oxidation number of phosphorus (worksheet 3, question 2c)',
+   html:'<p><b>'+vCu+' cm<sup>3</sup></b> of <b>'+fcc(cCu)+' mol dm<sup>−3</sup></b> copper(II) sulphate reacts with exactly <b>'+mP+' g</b> of phosphorus atoms. The copper moves down to zero in the reaction (Cu<sup>2+</sup> → Cu). What is the oxidation number of the phosphorus in the product? (Molar mass (atomic mass, A<sub>r</sub>) of P = 31 g mol<sup>−1</sup>.)</p>',
+   fields:[
+    num('Step 1. Moles of Cu<sup>2+</sup> = concentration × volume ÷ 1000 =',nCu,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 2. Electrons gained by each Cu<sup>2+</sup> (Cu<sup>2+</sup> → Cu) =',2,'',{tol:0}),
+    num('Moles of electrons gained = moles of Cu<sup>2+</sup> × 2 =',ne,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 3. The molar mass of P (from the question) =',31,'g mol<sup>−1</sup>',{tol:0}),
+    thinkM(mP,31),
+    num('Moles of P: <i>n</i> = mass ÷ molar mass =',nP,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 4. Electrons lost by each P = moles of electrons ÷ moles of P (to the nearest whole number) =',per,'',{tol:0}),
+    sgn('Oxidation number of P in the product (it started at 0, and it lost electrons) =',per)],
+   cheat:CH_EL+ARTAB(['P'],[31]),
+   hints:['Step 1: '+fcc(cCu)+' × '+vCu+' ÷ 1000. Each Cu<sup>2+</sup> gains 2 electrons to become Cu, so multiply the moles by 2.','Step 3: moles of P = '+mP+' ÷ 31 = '+f4c(nP)+' mol.','Electrons lost by each P = '+f4c(ne)+' ÷ '+f4c(nP)+' = '+f4c(ne/nP)+', which is '+per+'. Phosphorus started at 0 and lost '+per+' electrons, so its oxidation number went up to +'+per+'.'],
+   worked:fm('<i>n</i>(Cu<sup>2+</sup>) = '+fcc(cCu)+' × '+vCu+' ÷ 1000 = '+f4c(nCu)+' mol',1)+fm('moles of electrons = '+f4c(nCu)+' × 2 = '+f4c(ne)+' mol',1)+fm('<i>n</i>(P) = '+mP+' ÷ 31 = '+f4c(nP)+' mol',1)+fm('electrons for each P = '+f4c(ne)+' ÷ '+f4c(nP)+' = '+per+'. Oxidation number of P = 0 + '+per+' = <b>'+signed(per)+'</b>',1)});
+}
+def('X.2','X',r=>{if(r.seeded)return pCard(0.02,50,0.0124);const c=r.pick([0.01,0.02,0.05]),v=r.pick([25,50]),z=r.pick([3,5]);const nP=c*v/1000*2/z;return pCard(c,v,Math.round(nP*31*10000)/10000);});
+/* X.3 selenium dioxide and chromium(II) */
+function seCard(cSe,vSe,cCr,vCr){
+  const nSe=cSe*vSe/1000,nCr=cCr*vCr/1000,per=Math.round(nCr/nSe),nw=4-per;
+  return dflt({title:'The oxidation number of selenium (worksheet 3, question 2b)',
+   html:'<p><b>'+vSe+' cm<sup>3</sup></b> of <b>'+cSe+' mol dm<sup>−3</sup></b> selenium dioxide, SeO<sub>2</sub>, reacts with exactly <b>'+vCr+' cm<sup>3</sup></b> of <b>'+cCr.toFixed(4).replace(/0+$/,'')+' mol dm<sup>−3</sup></b> CrSO<sub>4</sub>. In the reaction Cr<sup>2+</sup> is converted to Cr<sup>3+</sup>. To what oxidation state was the selenium converted?</p>',
+   fields:[
+    num('Step 1. Moles of SeO<sub>2</sub> = concentration × volume ÷ 1000 =',nSe,'mol',{tol:0.01,abs:1e-12}),
+    num('Moles of Cr<sup>2+</sup> =',nCr,'mol',{tol:0.01,abs:1e-12}),
+    num('Step 2. Electrons lost by each Cr<sup>2+</sup> (Cr<sup>2+</sup> → Cr<sup>3+</sup>) =',1,'',{tol:0}),
+    num('Moles of electrons lost =',nCr,'mol',{tol:0.01,abs:1e-12}),
+    sgn('Step 3. Oxidation number of Se in SeO<sub>2</sub> (oxygen is −2) =',4),
+    num('Step 4. Electrons gained by each Se = moles of electrons ÷ moles of Se (to the nearest whole number) =',per,'',{tol:0}),
+    sgn('Step 5. New oxidation number of Se (the old one minus the electrons gained) =',nw)],
+   cheat:CH_EL,
+   hints:['Step 1: concentration × volume ÷ 1000 for each solution.','Each Cr<sup>2+</sup> loses 1 electron to become Cr<sup>3+</sup>, so the moles of electrons equal the moles of Cr<sup>2+</sup>: '+f4c(nCr)+' mol. In SeO<sub>2</sub>: Se + 2 × (−2) = 0, so Se is +4.','Electrons gained by each Se = '+f4c(nCr)+' ÷ '+f4c(nSe)+' = '+f4c(nCr/nSe)+', which is '+per+' to the nearest whole number. The oxidation number goes down by '+per+'.'],
+   worked:fm('<i>n</i>(SeO<sub>2</sub>) = '+cSe+' × '+vSe+' ÷ 1000 = '+f4c(nSe)+' mol; <i>n</i>(Cr<sup>2+</sup>) = '+f4c(nCr)+' mol',1)+fm('moles of electrons = '+f4c(nCr)+' × 1 = '+f4c(nCr)+' mol',1)+fm('electrons for each Se = '+f4c(nCr)+' ÷ '+f4c(nSe)+' = '+per,1)+fm('oxidation number of Se = +4 − '+per+' = <b>'+signed(nw)+'</b>',1)});
+}
+def('X.3','X',r=>{if(r.seeded)return seCard(0.05093,12.53,0.1,25.52);const c=r.pick([0.02,0.04,0.05]),v=r.pick([10,20,25]),z=r.pick([2,4]);const nCr=c*v/1000*z;return seCard(c,v,0.1,Math.round(nCr*1000/0.1*100)/100);});
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
