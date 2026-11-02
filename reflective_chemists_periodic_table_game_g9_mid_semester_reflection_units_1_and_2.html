@@ -525,6 +525,7 @@
   .grade-block{margin-top:14px;text-align:left;}
   .grade-block .topic-extra-label{margin-top:0;}
   .grade-row{display:flex;gap:10px;}
+  .grade-wide{width:100%;box-sizing:border-box;text-align:left;padding:8px 12px;}
   .grade-input{flex:1 1 0;min-width:0;font-family:'Kalam','Comic Sans MS',cursive;font-size:16px;text-align:center;padding:8px 6px;border:2.2px solid var(--ink);border-radius:8px 12px 7px 13px / 11px 7px 13px 8px;color:var(--ink);}
   .grade-input:focus{outline:2px solid var(--accent);outline-offset:1px;}
   .grade-avg{margin-top:8px;font-size:14px;font-weight:700;color:var(--accent);min-height:1.4em;}
@@ -632,20 +633,21 @@
       <div id="topicChecklist"></div>
       <span class="topic-check-tip" id="ratedCount">Rating every skill gives you the most useful certificate.</span>
       <div class="grade-block">
-        <label class="topic-extra-label" for="grade1Input">Your three Canvas grades so far, each a whole number from 1 to 7 (optional). They go on your certificate with their average.</label>
+        <label class="topic-extra-label" for="canvasGradeInput">Look up your average grade for the semester so far in Canvas, and type it exactly as Canvas shows it (optional).</label>
+        <input type="text" id="canvasGradeInput" class="grade-input grade-wide" maxlength="12" placeholder="Your Canvas grade so far for this course" aria-label="Your Canvas grade so far for this course">
+        <label class="topic-extra-label" for="score1Input" style="margin-top:12px;">The first two 1 to 7 scores you achieved that are recorded in Canvas so far. Leave out the most recent assessment (optional).</label>
         <div class="grade-row">
-          <input type="number" id="grade1Input" class="grade-input" min="1" max="7" step="1" inputmode="numeric" placeholder="Grade 1" aria-label="First Canvas grade, 1 to 7">
-          <input type="number" id="grade2Input" class="grade-input" min="1" max="7" step="1" inputmode="numeric" placeholder="Grade 2" aria-label="Second Canvas grade, 1 to 7">
-          <input type="number" id="grade3Input" class="grade-input" min="1" max="7" step="1" inputmode="numeric" placeholder="Grade 3" aria-label="Third Canvas grade, 1 to 7">
+          <input type="number" id="score1Input" class="grade-input" min="1" max="7" step="1" inputmode="numeric" placeholder="First score" aria-label="First assessment score, 1 to 7">
+          <input type="number" id="score2Input" class="grade-input" min="1" max="7" step="1" inputmode="numeric" placeholder="Second score" aria-label="Second assessment score, 1 to 7">
         </div>
-        <div class="grade-avg" id="gradeAvg">Enter all three grades to see your average.</div>
+        <div class="grade-avg" id="gradeAvg"></div>
       </div>
       <label for="enjoyInput" class="topic-extra-label">Which parts of the course have you enjoyed the most so far? (optional)</label>
       <textarea id="enjoyInput" rows="2" maxlength="300" placeholder="e.g. a practical, a type of reaction, a kind of calculation... (max 300 characters)"></textarea>
       <label for="hardInput" class="topic-extra-label">Which areas have you found the most challenging? (optional)</label>
       <textarea id="hardInput" rows="2" maxlength="300" placeholder="Name the skills or ideas, and say what makes them challenging (max 300 characters)"></textarea>
-      <label for="targetInput" class="topic-extra-label">Your measurable targets for December (optional). A measurable target has a number and a date, for example: &ldquo;Score 8 out of 10 on empirical formula questions by the last week of term.&rdquo;</label>
-      <textarea id="targetInput" rows="3" maxlength="300" placeholder="Write one to three targets, each with a number and a date (max 300 characters)"></textarea>
+      <label for="targetInput" class="topic-extra-label">Your measurable targets for December (optional). A measurable target is something that can be measured: you can attach either a proficiency to it (can do, can&rsquo;t yet do) or a number. Examples: &ldquo;By 11 December I can write the formula for any compound in Unit 1 without the cheat sheet (can do / can&rsquo;t yet do).&rdquo; &ldquo;Score 8 out of 10 on empirical formula questions by 11 December (a number).&rdquo;</label>
+      <textarea id="targetInput" rows="3" maxlength="300" placeholder="One to three targets, each one measurable (a number, or can do / can't yet do) with a date (max 300 characters)"></textarea>
     </div>
     <button id="certBtnPhase1" type="button" class="cert-download-btn">Download My Certificate (PDF)</button>
     <p class="part2-carrot"><b>Part 2 is optional.</b> Play on through the other 61 elements, up to the full 118-element table, and your Part 2 result is added to an updated certificate: how many you place correctly first time, your time, and your score.</p>
@@ -853,29 +855,23 @@
     };
   }
 
-  // The three Canvas grades (whole numbers, 1-7) and their average,
-  // rounded to the nearest whole number with .5 and above rounding up.
-  const gradeInputs = ['grade1Input','grade2Input','grade3Input'].map(function(id){ return document.getElementById(id); });
+  // Canvas results: the student's average grade so far (typed as Canvas shows
+  // it) and the first two 1-7 assessment scores recorded in Canvas, leaving
+  // out the most recent assessment.
+  const canvasGradeInput = document.getElementById('canvasGradeInput');
+  const scoreInputs = ['score1Input','score2Input'].map(function(id){ return document.getElementById(id); });
   const gradeAvgEl = document.getElementById('gradeAvg');
   function readGrades(){
-    const vals = gradeInputs.map(function(el){ return el ? el.value.trim() : ''; });
-    const entered = vals.filter(function(v){ return v !== ''; });
-    const nums = entered.map(Number);
-    const bad = nums.some(function(n){ return !Number.isInteger(n) || n < 1 || n > 7; });
-    if(entered.length === 0) return { status:'none' };
-    if(bad) return { status:'bad' };
-    if(entered.length < 3) return { status:'partial', grades:nums };
-    const mean = (nums[0]+nums[1]+nums[2])/3;
-    return { status:'ok', grades:nums, mean:mean, rounded:Math.floor(mean + 0.5) };
+    const canvas = canvasGradeInput ? canvasGradeInput.value.trim() : '';
+    const nums = scoreInputs.map(function(el){ const v = el ? el.value.trim() : ''; return v === '' ? null : Number(v); });
+    const badScores = nums.some(function(n){ return n !== null && (!Number.isInteger(n) || n < 1 || n > 7); });
+    return { canvas: canvas, badScores: badScores, scores: badScores ? [] : nums.filter(function(n){ return n !== null; }) };
   }
   function updateGradeAvg(){
     if(!gradeAvgEl) return;
-    const g = readGrades();
-    if(g.status === 'ok') gradeAvgEl.textContent = 'Average: '+g.mean.toFixed(2)+', which rounds to '+g.rounded+'.';
-    else if(g.status === 'bad') gradeAvgEl.textContent = 'Grades are whole numbers from 1 to 7.';
-    else gradeAvgEl.textContent = 'Enter all three grades to see your average.';
+    gradeAvgEl.textContent = readGrades().badScores ? 'Scores are whole numbers from 1 to 7.' : '';
   }
-  gradeInputs.forEach(function(el){ if(el) el.addEventListener('input', updateGradeAvg); });
+  scoreInputs.forEach(function(el){ if(el) el.addEventListener('input', updateGradeAvg); });
 
   // Periodic Table level, from the number of required elements placed
   // correctly first time (no wrong landings).
@@ -1786,19 +1782,23 @@
     // ================= PAGE 1 (lower part): Canvas grades and My reflection =================
     let y = withPart2 ? 114 : 108;
     const gr = readGrades();
-    if(gr.status === 'ok' || gr.status === 'partial'){
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(12);
-      doc.setTextColor(30,60,110);
-      doc.text('Canvas grades (1 to 7):', 24, y);
-      const gradeLabelW = doc.getTextWidth('Canvas grades (1 to 7):');
-      doc.setFont('helvetica','normal');
-      doc.setFontSize(11);
-      doc.setTextColor(60,60,60);
-      let gradeText = gr.grades.join('   ·   ');
-      if(gr.status === 'ok') gradeText += '      Average '+gr.mean.toFixed(2)+', rounded to ' + gr.rounded;
-      doc.text(gradeText, 24 + gradeLabelW + 4, y);
-      y += 11;
+    const gradeLines = [];
+    if(gr.canvas) gradeLines.push(['Your Canvas grade so far for this course:', gr.canvas]);
+    if(gr.scores.length) gradeLines.push(['Assessment scores so far:', gr.scores.join('   ·   ')]);
+    if(gradeLines.length){
+      gradeLines.forEach(function(pair){
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(12);
+        doc.setTextColor(30,60,110);
+        doc.text(pair[0], 24, y);
+        const labelW2 = doc.getTextWidth(pair[0]);
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(11);
+        doc.setTextColor(60,60,60);
+        doc.text(pair[1], 24 + labelW2 + 4, y);
+        y += 6.5;
+      });
+      y += 4.5;
     } else {
       y += 2;
     }
@@ -2012,7 +2012,7 @@
     phase1Overlay.hidden = true;
     endOverlay.hidden = true;
     mainReflections = { enjoy:'', hard:'', target:'' };
-    [enjoyInput, hardInput, targetInput].concat(gradeInputs).forEach(function(el){ if(el) el.value = ''; });
+    [enjoyInput, hardInput, targetInput, canvasGradeInput].concat(scoreInputs).forEach(function(el){ if(el) el.value = ''; });
     updateGradeAvg();
     resetTopicChecklist();
     gameRunning = false;
