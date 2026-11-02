@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G9 Average bond enthalpies model</title>
+<style>
+  :root { --ink:#111; --mid:#555; --rule:#999; --soft:#f2f2f2; --ok:#1d6b2a; --bad:#a11; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#fff; color:var(--ink);
+    font-family:"Palatino","Palatino Linotype","Book Antiqua",Georgia,serif; font-size:17px; line-height:1.55; }
+  .page { max-width:900px; margin:0 auto; padding:24px 20px 40px; }
+  .runhead { display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--ink);
+    padding-bottom:4px; font-size:14px; }
+  h1,h2,h3 { font-family:"Clear Gothic","Century Gothic","Avenir","Helvetica Neue",Arial,sans-serif; font-weight:400; }
+  h1 { font-size:30px; margin:26px 0 6px; }
+  .body { padding-left:min(88px,6vw); }
+  main { counter-reset:sec; }
+  h2 { counter-increment:sec; font-size:22px; margin:34px 0 8px; }
+  h2::before { content:counter(sec) "  "; }
+  h3 { font-size:17px; margin:22px 0 6px; }
+  ul { margin:6px 0 6px 0; padding-left:22px; }
+  .eq { text-align:center; white-space:nowrap; overflow-x:auto; margin:8px 0; padding:2px 0; font-size:18px; }
+  .eq.work { font-size:17px; }
+  .eq input { vertical-align:baseline; }
+  table { border-collapse:collapse; margin:8px 0; }
+  th,td { border:1px solid var(--ink); padding:4px 10px; text-align:center; }
+  th { font-weight:400; background:var(--soft); }
+  td.l, th.l { text-align:left; }
+  .centre { display:flex; justify-content:center; overflow-x:auto; }
+  .pads { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin:8px 0; }
+  .pad-box svg { width:100%; height:auto; border:1px solid var(--ink); background:#fff; touch-action:none; display:block; user-select:none; -webkit-user-select:none; }
+  .pad-box.wide { grid-column:1/-1; }
+  .svgwrap { position:relative; }
+  .angpop { display:none; position:absolute; transform:translate(-50%,-50%); align-items:center; gap:6px; background:#fff; border:1px solid var(--ink); padding:3px 8px; font-size:14px; white-space:nowrap; box-shadow:0 1px 4px rgba(0,0,0,.25); z-index:3; }
+  .pad-box .status { font-size:15px; min-height:3.4em; margin:4px 0; }
+  input.sm { width:48px !important; }
+  input[type=number] { width:64px; font:inherit; padding:2px 4px; border:1px solid var(--ink); background:#fff; text-align:center; }
+  select { font:inherit; padding:3px 6px; border:1px solid var(--ink); background:#fff; }
+  .mk { display:inline-block; width:1.4em; text-align:center; font-family:Arial,sans-serif; }
+  .ok { color:var(--ok); } .no { color:var(--bad); }
+  .box { border:1px solid var(--ink); padding:8px 14px; margin:10px 0; }
+  .result { border:2px solid var(--ink); padding:8px 14px; margin:10px 0; text-align:center; }
+  .muted { color:var(--mid); font-size:15px; }
+  details { margin:6px 0; } summary { cursor:pointer; }
+  button { font:inherit; padding:4px 12px; border:1px solid var(--ink); background:#fff; cursor:pointer; }
+  button:hover { background:var(--soft); }
+  .tip { border-bottom:1px dotted var(--ink); cursor:help; position:relative; }
+  .tip:hover::after,.tip:focus::after { content:attr(data-tip); position:absolute; left:0; top:1.5em; z-index:5;
+    width:260px; background:#fff; border:1px solid var(--ink); padding:6px 8px; font-size:14px; line-height:1.35; }
+  .hl { background:var(--soft); }
+  footer { margin-top:40px; border-top:1px solid var(--ink); padding-top:6px; font-size:13px; color:var(--mid); text-align:center; }
+  @media print { @page { size:A4; margin:15mm; } .noprint { display:none; } .page { padding:0; } }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="runhead"><span>G9 Average bond enthalpies</span><span id="today"></span></div>
+<h1>Average bond enthalpies: energy from alcohols</h1>
+
+<main class="body">
+
+<h2>Learning objectives</h2>
+<ul>
+  <li>Balance the equation for the complete combustion of an alcohol.</li>
+  <li>Build the molecules, count the bonds in each and identify their bond angles.</li>
+  <li>Count the bonds broken and the bonds formed, and use <span class="tip" tabindex="0" data-tip="The energy needed to break one mole of a given type of bond, averaged over many different molecules. Units: kJ mol⁻¹.">average bond enthalpies</span> to calculate ΔH.</li>
+  <li>Scale ΔH to one mole of alcohol, then convert it to energy released per gram, and per cm³.</li>
+  <li>Recognise that bond enthalpies describe gases, and correct for the alcohol and the water being liquids.</li>
+</ul>
+
+<h2>The Exploration</h2>
+<p class="muted">Bond enthalpies apply to molecules in the gas state, so every substance in this model is treated as a gas. Fill in every box. A tick or a cross appears beside each answer, so you can correct it as you go.</p>
+
+<h3>Step 1: choose the alcohol and balance the equation</h3>
+<p>Alcohol: <select id="alc"></select> &nbsp; molecular formula: <span id="disp"></span></p>
+<p>Write the whole-number coefficients that balance the equation:</p>
+<div class="eq">
+  <input type="number" min="0" id="ea"> <span id="fname"></span> + <input type="number" min="0" id="eb"> O₂ → <input type="number" min="0" id="ec"> CO₂ + <input type="number" min="0" id="ed"> H₂O
+</div>
+<div class="centre"><table id="balt">
+  <tr><th class="l">Atoms</th><th>Left</th><th>Right</th><th></th></tr>
+  <tr><td class="l">C</td><td id="lC"></td><td id="rC"></td><td id="kC"></td></tr>
+  <tr><td class="l">H</td><td id="lH"></td><td id="rH"></td><td id="kH"></td></tr>
+  <tr><td class="l">O</td><td id="lO"></td><td id="rO"></td><td id="kO"></td></tr>
+</table></div>
+<p id="balmsg" class="muted"></p>
+
+<h3>Step 2: build the molecules and deduce their bonds</h3>
+<p>The atoms for each molecule are supplied in its box. Join them to build the molecule: click one atom, then click the atom you want to bond it to. Drag the atoms to arrange them neatly. To change a bond, click on the bond line: single, then double, then triple, then removed.</p>
+<p class="muted">Each carbon atom makes 4 bonds, each oxygen atom makes 2 bonds and each hydrogen atom makes 1 bond. A red open circle is a bond that an atom has still to make. An atom with the right number of bonds gets a green ring, and the message under the box tells you what is left to do.</p>
+<div class="pads" id="pads"></div>
+<p>When a molecule is complete, press <b style="font-weight:400">Find bond angles</b> under its box. Click a grey arc between two bonds, then choose its <span class="tip" tabindex="0" data-tip="The angle between two bonds that meet at the same atom. Electron pairs (bonding pairs and lone pairs) around an atom repel and spread as far apart as they can.">bond angle</span> from the menu: 180°, 109.5°, 107° or 104.5°. A tick or a cross appears at once. The picture is flat, so the angles will not look like these values: decide from the electron pairs around the atom, not from the picture.</p>
+<details><summary>Hint: choosing the angle</summary>
+  <p>Count the electron pairs around the central atom: the bonding pairs (a double bond counts as one region) and the lone pairs. The pairs repel and spread as far apart as they can. Lone pairs repel more strongly than bonding pairs, so they squeeze the bond angle smaller.</p>
+  <ul>
+    <li>2 regions, no lone pairs: the bonds point in opposite directions.</li>
+    <li>4 regions, no lone pairs: the bonds point to the corners of a tetrahedron.</li>
+    <li>4 regions, two of them lone pairs: the angle is squeezed below the tetrahedral value.</li>
+  </ul>
+</details>
+<p>Now count the bonds of each type in <b style="font-weight:400">one molecule</b>, reading them from the molecule you built. Enter 0 where a bond type is absent.</p>
+<div class="centre"><table id="deduce"></table></div>
+<p class="muted">One of the four angles does not occur in any of these molecules. Which one? Which molecule would you need for it?</p>
+<p class="muted">Which bond types appear in more than one molecule? Which bond type appears in only one molecule? Keep your answers in mind for Step 3.</p>
+
+<h3>Step 3: bond enthalpies and bonds broken</h3>
+<div class="centre"><table>
+  <tr><th class="l">Bond</th><th>C–C</th><th>C–H</th><th>C–O</th><th>O–H</th><th>O=O</th><th>C=O</th></tr>
+  <tr><td class="l">Average bond enthalpy (kJ mol⁻¹)</td><td>347</td><td>413</td><td>358</td><td>464</td><td>498</td><td>805</td></tr>
+</table></div>
+<details><summary>Hint: use your table from Step 2</summary>
+  <p id="hint1"></p>
+  <p class="muted">Your equation may contain more than one molecule of the alcohol, so multiply each number by the coefficient of the alcohol. For O=O, multiply the bonds in one O₂ molecule by the coefficient of O₂.</p>
+</details>
+<p><b style="font-weight:400">Bonds broken</b> (reactants, whole equation):</p>
+<div class="centre"><table>
+  <tr><th>Bond</th><th>Number</th><th></th><th>Energy (kJ mol⁻¹)</th><th>Total (kJ)</th></tr>
+  <tr><td>C–C</td><td><input type="number" min="0" id="bCC"></td><td id="kbCC" class="mk"></td><td>347</td><td id="tbCC"></td></tr>
+  <tr><td>C–H</td><td><input type="number" min="0" id="bCH"></td><td id="kbCH" class="mk"></td><td>413</td><td id="tbCH"></td></tr>
+  <tr><td>C–O</td><td><input type="number" min="0" id="bCO"></td><td id="kbCO" class="mk"></td><td>358</td><td id="tbCO"></td></tr>
+  <tr><td>O–H</td><td><input type="number" min="0" id="bOH"></td><td id="kbOH" class="mk"></td><td>464</td><td id="tbOH"></td></tr>
+  <tr><td>O=O</td><td><input type="number" min="0" id="bOO"></td><td id="kbOO" class="mk"></td><td>498</td><td id="tbOO"></td></tr>
+  <tr><th class="l" colspan="4">Energy needed to break the bonds (energy in)</th><th id="Ein">–</th></tr>
+</table></div>
+
+<h3>Step 4: bonds formed and ΔH for the equation</h3>
+<p><b style="font-weight:400">Bonds formed</b> (products, whole equation). Each CO₂ molecule contains two C=O bonds, and each H₂O molecule contains two O–H bonds.</p>
+<div class="centre"><table>
+  <tr><th>Bond</th><th>Number</th><th></th><th>Energy (kJ mol⁻¹)</th><th>Total (kJ)</th></tr>
+  <tr><td>C=O</td><td><input type="number" min="0" id="fCO"></td><td id="kfCO" class="mk"></td><td>805</td><td id="tfCO"></td></tr>
+  <tr><td>O–H</td><td><input type="number" min="0" id="fOH"></td><td id="kfOH" class="mk"></td><td>464</td><td id="tfOH"></td></tr>
+  <tr><th class="l" colspan="4">Energy released by making the bonds (energy out)</th><th id="Eout">–</th></tr>
+</table></div>
+<div class="eq">ΔH = energy in − energy out</div>
+<div class="eq work" id="dHline">ΔH = – − – = – kJ</div>
+<p id="dHmsg" class="muted">Rule: temperature rise → exothermic → ΔH negative; temperature fall → endothermic → ΔH positive.</p>
+
+<h3>Step 5: ΔH for one mole of alcohol</h3>
+<p>The equation as you wrote it burns <span id="acount">–</span> mole(s) of alcohol. Divide ΔH by the coefficient of the alcohol.</p>
+<div class="eq">ΔH per mole of alcohol = ΔH ÷ coefficient of alcohol</div>
+<div class="eq work" id="molline">ΔH = – ÷ – = – kJ mol⁻¹</div>
+
+<h3>Step 6: molar mass of the alcohol</h3>
+<div class="centre"><table>
+  <caption class="muted">Molar mass (atomic mass, Ar)</caption>
+  <tr><th>C</th><th>H</th><th>O</th></tr>
+  <tr><td>12</td><td>1</td><td>16</td></tr>
+</table></div>
+<p>Atoms in one molecule of the alcohol:</p>
+<p>C <input type="number" min="0" id="mC"><span id="kmC" class="mk"></span>
+   &nbsp; H <input type="number" min="0" id="mH"><span id="kmH" class="mk"></span>
+   &nbsp; O <input type="number" min="0" id="mO"><span id="kmO" class="mk"></span></p>
+<div class="eq">Mr = (C atoms × 12) + (H atoms × 1) + (O atoms × 16)</div>
+<div class="eq work" id="mrline">Mr = (– × 12) + (– × 1) + (– × 16) = – g mol⁻¹</div>
+
+<h3>Step 7: energy released in J per gram</h3>
+<div class="eq">energy released (J g⁻¹) = ΔH per mole (kJ mol⁻¹, no sign) × 1000 ÷ Mr</div>
+<div class="eq work" id="jgline">energy released = – × 1000 ÷ – = – J g⁻¹</div>
+
+<h3>Step 8: energy density, using the table of densities</h3>
+<p>Fuels are bought and burned by volume as well as by mass. The density tells you how many grams there are in each cm³, so it turns J g⁻¹ into J cm⁻³. (The density is not needed for J g⁻¹; that value comes from the molar mass alone.)</p>
+<div class="centre"><table id="dens"></table></div>
+<div class="eq">energy density (J cm⁻³) = energy released (J g⁻¹) × density (g cm⁻³)</div>
+<div class="eq work" id="jcline">energy density = – × – = – J cm⁻³</div>
+<p>Now express the energy density in kJ.</p>
+<div class="eq">energy density (kJ cm⁻³) = energy density (J cm⁻³) ÷ 1000</div>
+<div class="eq work" id="kjline">energy density = – ÷ 1000 = – kJ cm⁻³</div>
+
+<p class="muted">Step 9 tests an assumption made in Steps 7 and 8.</p>
+
+<h3>Step 9: the alcohol is a liquid, but bond enthalpies describe gases</h3>
+<p>Look back at what we calculated. Choose the phase that each part describes.</p>
+<div class="centre"><table>
+  <tr><th class="l">The calculation</th><th>Choose</th><th></th></tr>
+  <tr><td class="l">The bond enthalpy calculation (Steps 3 to 5) burns the alcohol as a</td><td><select class="ph" id="p1"><option value="">choose</option><option value="g">gas</option><option value="l">liquid</option></select></td><td class="mk" id="kp1"></td></tr>
+  <tr><td class="l">The bond enthalpy calculation makes the water as a</td><td><select class="ph" id="p2"><option value="">choose</option><option value="g">gas (steam)</option><option value="l">liquid</option></select></td><td class="mk" id="kp2"></td></tr>
+  <tr><td class="l">The densities in Step 8 are for the alcohol as a</td><td><select class="ph" id="p3"><option value="">choose</option><option value="g">gas</option><option value="l">liquid</option></select></td><td class="mk" id="kp3"></td></tr>
+</table></div>
+<p>Step 8 therefore combined an energy for a <i>gas</i> with a density for a <i>liquid</i>. The density has to be that of the liquid, because a liquid fuel holds about a thousand times more alcohol in each cm³ than its vapour does. The energy has to be corrected instead.</p>
+
+<h3>Correction 1: vaporising the alcohol</h3>
+<p>Before liquid alcohol can burn as a gas, each mole must be turned into a gas. That takes in energy, called the <span class="tip" tabindex="0" data-tip="The energy taken in to change one mole of a liquid into a gas at constant temperature. It is always positive (endothermic). Units: kJ mol⁻¹.">enthalpy of vaporisation</span>. Burning the liquid will therefore release
+ <select class="ph" id="p4"><option value="">choose</option><option value="larger">more</option><option value="smaller">less</option></select><span class="mk" id="kp4"></span> energy than burning the gas.</p>
+<div class="centre"><table id="vaptab"></table></div>
+<div class="eq">energy released (liquid alcohol) = energy released (gas alcohol) − energy to vaporise</div>
+<div class="eq work">energy released = <span id="g1">–</span> − <span id="hv1">–</span> = <input type="number" id="liq"><span class="mk" id="kliq"></span> kJ mol⁻¹</div>
+<p class="muted">Use the size of each energy, with no signs. Round the energy from Step 5 to the nearest whole number.</p>
+<div class="eq">energy released (J g⁻¹) = energy released (kJ mol⁻¹) × 1000 ÷ Mr</div>
+<div class="eq work" id="jg2line">energy released = – × 1000 ÷ – = – J g⁻¹</div>
+<div class="eq">energy density (J cm⁻³) = energy released (J g⁻¹) × density (g cm⁻³)</div>
+<div class="eq work" id="jc2line">energy density = – × – = – J cm⁻³</div>
+<div class="eq work" id="pct2line"></div>
+
+<h3>Correction 2: condensing the water</h3>
+<p>Bond enthalpies give the water as a gas. Cooled to room temperature, as in a calorimeter, the water condenses to a liquid and releases energy: <b style="font-weight:400">44 kJ for every mole of water</b>. (In a flame or an engine the water leaves as steam, and this energy is not collected.)</p>
+<p>From your balanced equation, burning 1 mole of alcohol makes <input type="number" min="0" id="wm"><span class="mk" id="kwm"></span> mole(s) of water.</p>
+<div class="eq">energy released (liquid alcohol, liquid water) = energy released (Correction 1) + 44 × moles of water</div>
+<div class="eq work">energy released = <span id="f1">–</span> + 44 × <span id="f2">–</span> = <input type="number" id="fin"><span class="mk" id="kfin"></span> kJ mol⁻¹</div>
+<div class="eq work" id="jg3line">energy released = – × 1000 ÷ – = – J g⁻¹</div>
+<div class="eq work" id="jc3line">energy density = – × – = – J cm⁻³ = – kJ cm⁻³</div>
+
+<h3>Compare with the data book</h3>
+<p>The data-book energy of combustion is measured for liquid alcohol, with the water as a liquid.</p>
+<div class="centre"><table id="cmp9"></table></div>
+<ul>
+  <li>Correction 1 on its own moved your answer further from the data book. Why does the data book need Correction 2 as well?</li>
+  <li>Even after both corrections, your value differs a little from the data book. Suggest two reasons, thinking about what an <i>average</i> bond enthalpy is.</li>
+  <li>Which of the two corrections is larger for ethanol? How does the size of Correction 1 change as the carbon chain gets longer?</li>
+</ul>
+
+<div class="result" id="summary">Complete the steps above to see your results.</div>
+<p class="noprint"><button id="rec">Add this result to the comparison table</button> <button id="clr">Clear the table</button></p>
+<div class="centre"><table id="cmp">
+  <tr><th>Alcohol</th><th>Bond enthalpies: ΔH (kJ mol⁻¹)</th><th>Bond enthalpies: energy released (J g⁻¹)</th><th>Bond enthalpies: energy density (kJ cm⁻³)</th><th>Corrected: energy released (kJ mol⁻¹)</th><th>Corrected: energy released (J g⁻¹)</th><th>Corrected: energy density (kJ cm⁻³)</th></tr>
+</table></div>
+
+<h2>Underlying ideas: definitions to learn</h2>
+<ul>
+  <li><span class="tip" tabindex="0" data-tip="The energy needed to break one mole of a given type of bond, averaged over many different molecules. Units: kJ mol⁻¹.">Average bond enthalpy</span>: the mean energy needed to break one mole of a bond, with the substances in the gas state.</li>
+  <li><span class="tip" tabindex="0" data-tip="Energy is taken in to break bonds, so breaking bonds is endothermic.">Breaking bonds</span> takes in energy (endothermic). <span class="tip" tabindex="0" data-tip="Energy is given out when bonds form, so making bonds is exothermic.">Making bonds</span> gives out energy (exothermic).</li>
+  <li>ΔH = energy in (bonds broken) − energy out (bonds formed). A negative ΔH means the reaction is <span class="tip" tabindex="0" data-tip="Exothermic: the temperature of the surroundings rises. ΔH is negative.">exothermic</span>.</li>
+  <li><span class="tip" tabindex="0" data-tip="The energy taken in to change one mole of a liquid into a gas at constant temperature. It is always positive (endothermic). Units: kJ mol⁻¹.">Enthalpy of vaporisation</span>: the energy taken in to turn one mole of a liquid into a gas. Bond enthalpies describe gases, so a liquid fuel needs this correction.</li>
+  <li><span class="tip" tabindex="0" data-tip="The energy released when one mole of a gas condenses to a liquid. For water it is 44 kJ per mole at room temperature.">Condensing</span> releases energy: 44 kJ for each mole of water vapour that becomes liquid water.</li>
+  <li><span class="tip" tabindex="0" data-tip="The mass of one mole of a substance, in g mol⁻¹. For a compound, add the molar masses of all the atoms in its formula.">Molar mass</span> (Mr for a compound) links moles to grams.</li>
+  <li><span class="tip" tabindex="0" data-tip="Mass per unit volume. For liquids we use g cm⁻³.">Density</span>: mass ÷ volume, in g cm⁻³.</li>
+</ul>
+
+<h2>Reflection question</h2>
+<p>Add all six alcohols to the comparison table, with both the bond enthalpy values and the corrected values. As the carbon chain gets longer, what happens to the energy released per gram, and what happens to the energy released per cm³? Is the trend the same before and after the corrections?</p>
+
+</main>
+<footer>Science Department · Refined with AI</footer>
+</div>
+
+<script>
+const E = {CC:347, CH:413, CO:358, OH:464, OO:498, fCO:805};
+const ALC = [
+  {name:'methanol', n:1, d:0.79, hv:37, dc:726},
+  {name:'ethanol', n:2, d:0.79, hv:42, dc:1367},
+  {name:'propan-1-ol', n:3, d:0.80, hv:48, dc:2021},
+  {name:'butan-1-ol', n:4, d:0.81, hv:52, dc:2676},
+  {name:'pentan-1-ol', n:5, d:0.81, hv:57, dc:3331},
+  {name:'hexan-1-ol', n:6, d:0.81, hv:62, dc:3984}
+];
+const MOLS = [{k:'A'}, {k:'O2', f:'O₂'}, {k:'CO2', f:'CO₂'}, {k:'H2O', f:'H₂O'}];
+const BT = [{k:'CC',l:'C–C'}, {k:'CH',l:'C–H'}, {k:'CO',l:'C–O'}, {k:'OH',l:'O–H'}, {k:'OO',l:'O=O'}, {k:'DC',l:'C=O'}];
+const SUB = '₀₁₂₃₄₅₆₇₈₉';
+const sub = k => String(k).split('').map(c => SUB[+c]).join('');
+const $ = id => document.getElementById(id);
+const fmt = x => Math.round(x).toLocaleString('en-GB').replace('-', '−');
+const sg = x => (x < 0 ? '−' : '') + Math.abs(Math.round(x)).toLocaleString('en-GB');
+const val = id => { const v = $(id).value; return v === '' ? null : Number(v); };
+const cur = () => ALC[$('alc').selectedIndex];
+const formula = n => n === 1 ? 'CH₃OH' : 'C' + sub(n) + 'H' + sub(2*n+1) + 'OH';
+const structure = n => 'CH₃' + 'CH₂'.repeat(Math.max(n-1,0)) + 'OH';
+const mark = (id, got, exp) => {
+  const el = $(id); if (got === null) { el.textContent = ''; el.className = 'mk'; return; }
+  const ok = got === exp; el.textContent = ok ? '✓' : '✗'; el.className = 'mk ' + (ok ? 'ok' : 'no');
+};
+
+ALC.forEach(a => { const o = document.createElement('option'); o.textContent = a.name; $('alc').appendChild(o); });
+$('alc').selectedIndex = 1;
+$('today').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+function buildDens() {
+  const t = $('dens');
+  let h = '<tr><th class="l">Alcohol</th>' + ALC.map(a => '<th>' + a.name + '</th>').join('') + '</tr>';
+  h += '<tr><td class="l">Density (g cm⁻³)</td>' + ALC.map(a => '<td>' + a.d.toFixed(2) + '</td>').join('') + '</tr>';
+  t.innerHTML = h;
+}
+buildDens();
+(function buildVap() {
+  $('vaptab').innerHTML = '<tr><th class="l">Alcohol</th>' + ALC.map(a => '<th>' + a.name + '</th>').join('') + '</tr>' +
+    '<tr><td class="l">Energy to vaporise (kJ mol⁻¹)</td>' + ALC.map(a => '<td>' + a.hv + '</td>').join('') + '</tr>';
+})();
+
+function update() {
+  const A = cur(), n = A.n;
+  $('disp').textContent = formula(n);
+  $('fname').textContent = formula(n);
+  const g = (m,b) => { const v = val('m_'+m+'_'+b); return v === null ? '–' : v; };
+  $('hint1').textContent = 'From your table, one molecule of ' + A.name + ' has ' + g('A','CC') + ' C–C, ' + g('A','CH') + ' C–H, ' + g('A','CO') + ' C–O and ' + g('A','OH') + ' O–H; one O₂ molecule has ' + g('O2','OO') + ' O=O.';
+  MOLS.forEach(m => BT.forEach(b => mark('k_'+m.k+'_'+b.k, val('m_'+m.k+'_'+b.k), expMol(m.k, b.k, n))));
+  MOLS.forEach((m,i) => { const t = m.k === 'A' ? formula(n) : m.f; $('dl'+i).textContent = t; $('tl_'+m.k).textContent = t; });
+
+  const a = val('ea'), b = val('eb'), c = val('ec'), d = val('ed');
+  const all4 = [a,b,c,d].every(v => v !== null);
+  let balanced = false;
+  if (all4) {
+    const l = [a*n, a*(2*n+2), a + 2*b], r = [c, 2*d, 2*c + d];
+    ['C','H','O'].forEach((el, i) => {
+      $('l'+el).textContent = l[i]; $('r'+el).textContent = r[i];
+      $('k'+el).textContent = l[i] === r[i] ? '✓' : '✗'; $('k'+el).className = l[i] === r[i] ? 'ok' : 'no';
+    });
+    balanced = l.every((v,i) => v === r[i]) && a > 0;
+    $('balmsg').textContent = balanced ? 'The equation is balanced.' : 'The atoms are not equal on both sides yet. Change the coefficients until every row shows a tick.';
+  } else {
+    ['C','H','O'].forEach(el => { $('l'+el).textContent = $('r'+el).textContent = $('k'+el).textContent = ''; });
+    $('balmsg').textContent = '';
+  }
+  $('acount').textContent = a === null ? '–' : a;
+
+  // bonds broken
+  const expB = {CC:(a||0)*(n-1), CH:(a||0)*(2*n+1), CO:(a||0), OH:(a||0), OO:(b||0)};
+  let Ein = 0, filledB = true;
+  Object.keys(expB).forEach(k => {
+    const v = val('b'+k); mark('kb'+k, v, expB[k]);
+    if (v === null) { filledB = false; $('tb'+k).textContent = ''; } else { $('tb'+k).textContent = fmt(v*E[k]); Ein += v*E[k]; }
+  });
+  $('Ein').textContent = filledB ? fmt(Ein) : '–';
+
+  // bonds formed
+  const expF = {CO:2*(c||0), OH:2*(d||0)};
+  let Eout = 0, filledF = true;
+  const fE = {CO:E.fCO, OH:E.OH};
+  Object.keys(expF).forEach(k => {
+    const v = val('f'+k); mark('kf'+k, v, expF[k]);
+    if (v === null) { filledF = false; $('tf'+k).textContent = ''; } else { $('tf'+k).textContent = fmt(v*fE[k]); Eout += v*fE[k]; }
+  });
+  $('Eout').textContent = filledF ? fmt(Eout) : '–';
+
+  const ready = filledB && filledF && all4 && a > 0;
+  let dH = null, dHm = null, jg = null, jc = null;
+  const Mr = (() => { const x = val('mC'), y = val('mH'), z = val('mO'); return (x===null||y===null||z===null) ? null : x*12 + y*1 + z*16; })();
+  mark('kmC', val('mC'), n); mark('kmH', val('mH'), 2*n+2); mark('kmO', val('mO'), 1);
+
+  if (ready) {
+    dH = Ein - Eout;
+    $('dHline').textContent = 'ΔH = ' + fmt(Ein) + ' − ' + fmt(Eout) + ' = ' + sg(dH) + ' kJ';
+    $('dHmsg').textContent = dH < 0 ? 'ΔH is negative, so the combustion is exothermic: more energy is released making bonds than is taken in breaking them.' :
+      'ΔH is positive, so this would be endothermic. Check your bond counts: combustion should be exothermic.';
+    dHm = dH / a;
+    $('molline').textContent = 'ΔH = ' + sg(dH) + ' ÷ ' + a + ' = ' + sg(dHm) + ' kJ mol⁻¹';
+  } else {
+    $('dHline').textContent = 'ΔH = – − – = – kJ';
+    $('molline').textContent = 'ΔH = – ÷ – = – kJ mol⁻¹';
+  }
+  if (Mr !== null) {
+    $('mrline').textContent = 'Mr = (' + val('mC') + ' × 12) + (' + val('mH') + ' × 1) + (' + val('mO') + ' × 16) = ' + Mr + ' g mol⁻¹';
+  } else $('mrline').textContent = 'Mr = (– × 12) + (– × 1) + (– × 16) = – g mol⁻¹';
+
+  if (dHm !== null && Mr) {
+    jg = Math.abs(dHm) * 1000 / Mr;
+    $('jgline').textContent = 'energy released = ' + fmt(Math.abs(dHm)) + ' × 1000 ÷ ' + Mr + ' = ' + fmt(jg) + ' J g⁻¹';
+    jc = jg * A.d;
+    $('jcline').textContent = 'energy density = ' + fmt(jg) + ' × ' + A.d.toFixed(2) + ' = ' + fmt(jc) + ' J cm⁻³';
+    $('kjline').textContent = 'energy density = ' + fmt(jc) + ' ÷ 1000 = ' + (jc/1000).toFixed(1) + ' kJ cm⁻³';
+    $('summary').innerHTML = A.name + ': ΔH = ' + sg(dHm) + ' kJ mol⁻¹ &nbsp;|&nbsp; ' + fmt(jg) + ' J g⁻¹ &nbsp;|&nbsp; ' + fmt(jc) + ' J cm⁻³ &nbsp;|&nbsp; ' + (jc/1000).toFixed(1) + ' kJ cm⁻³';
+  } else {
+    $('jgline').textContent = 'energy released = – × 1000 ÷ – = – J g⁻¹';
+    $('jcline').textContent = 'energy density = – × – = – J cm⁻³';
+    $('kjline').textContent = 'energy density = – ÷ 1000 = – kJ cm⁻³';
+    $('summary').textContent = 'Complete the steps above to see your results.';
+  }
+
+  // Step 9: phase corrections
+  const PHK = {p1:'g', p2:'g', p3:'l', p4:'smaller'};
+  Object.keys(PHK).forEach(k => {
+    const v = $(k).value, el = $('k' + k);
+    if (v === '') { el.textContent = ''; el.className = 'mk'; } else { const ok = v === PHK[k]; el.textContent = ok ? '✓' : '✗'; el.className = 'mk ' + (ok ? 'ok' : 'no'); }
+  });
+  const G = dHm !== null ? Math.abs(Math.round(dHm)) : null, liqv = val('liq'), wmv = val('wm'), finv = val('fin');
+  $('g1').textContent = G === null ? '–' : fmt(G);
+  $('hv1').textContent = A.hv;
+  if (G === null) { $('kliq').textContent = ''; $('kliq').className = 'mk'; } else mark('kliq', liqv, G - A.hv);
+  mark('kwm', wmv, n + 1);
+  $('f1').textContent = liqv === null ? '–' : fmt(liqv);
+  $('f2').textContent = wmv === null ? '–' : wmv;
+  if (liqv !== null && wmv !== null) mark('kfin', finv, liqv + 44*wmv); else { $('kfin').textContent = ''; $('kfin').className = 'mk'; }
+  let jg2 = null, jc2 = null, jg3 = null, jc3 = null;
+  if (liqv !== null && Mr) {
+    jg2 = liqv*1000 / Mr; jc2 = jg2 * A.d;
+    $('jg2line').textContent = 'energy released = ' + fmt(liqv) + ' × 1000 ÷ ' + Mr + ' = ' + fmt(jg2) + ' J g⁻¹';
+    $('jc2line').textContent = 'energy density = ' + fmt(jg2) + ' × ' + A.d.toFixed(2) + ' = ' + fmt(jc2) + ' J cm⁻³';
+    $('pct2line').textContent = jc ? 'This is ' + (100*(jc - jc2)/jc).toFixed(1) + ' % lower than the energy density in Step 8.' : '';
+  } else {
+    $('jg2line').textContent = 'energy released = – × 1000 ÷ – = – J g⁻¹';
+    $('jc2line').textContent = 'energy density = – × – = – J cm⁻³';
+    $('pct2line').textContent = '';
+  }
+  if (finv !== null && Mr) {
+    jg3 = finv*1000 / Mr; jc3 = jg3 * A.d;
+    $('jg3line').textContent = 'energy released = ' + fmt(finv) + ' × 1000 ÷ ' + Mr + ' = ' + fmt(jg3) + ' J g⁻¹';
+    $('jc3line').textContent = 'energy density = ' + fmt(jg3) + ' × ' + A.d.toFixed(2) + ' = ' + fmt(jc3) + ' J cm⁻³ = ' + (jc3/1000).toFixed(1) + ' kJ cm⁻³';
+  } else {
+    $('jg3line').textContent = 'energy released = – × 1000 ÷ – = – J g⁻¹';
+    $('jc3line').textContent = 'energy density = – × – = – J cm⁻³ = – kJ cm⁻³';
+  }
+  const dcv = A.dc, pd = x => x === null ? '–' : (x >= dcv ? '+' : '−') + Math.abs(100*(x - dcv)/dcv).toFixed(1) + ' %';
+  $('cmp9').innerHTML = '<tr><th class="l">Energy released (kJ mol⁻¹), ' + A.name + '</th><th>Value</th><th>Difference from data book</th></tr>' +
+    '<tr><td class="l">Bond enthalpies (gas)</td><td>' + (G === null ? '–' : fmt(G)) + '</td><td>' + pd(G) + '</td></tr>' +
+    '<tr><td class="l">After Correction 1</td><td>' + (liqv === null ? '–' : fmt(liqv)) + '</td><td>' + pd(liqv) + '</td></tr>' +
+    '<tr><td class="l">After Corrections 1 and 2</td><td>' + (finv === null ? '–' : fmt(finv)) + '</td><td>' + pd(finv) + '</td></tr>' +
+    '<tr><td class="l">Data book (liquid alcohol, liquid water)</td><td>' + (finv === null ? '–' : fmt(dcv)) + '</td><td>–</td></tr>';
+  window._res = (dHm !== null && Mr) ? {name:A.name, dHm, jg, jc, fin:finv, jg3, jc3} : null;
+}
+
+/* Step 2: atom builder */
+const VAL = {C:4, O:2, H:1};
+const NAME = {C:'carbon', O:'oxygen', H:'hydrogen'};
+const BUILD = {};
+function atomsFor(key, n) {
+  const list = [];
+  if (key === 'A') {
+    for (let i = 0; i < n; i++) list.push({el:'C', x:60 + i*90, y:50});
+    list.push({el:'O', x:60, y:135});
+    for (let i = 0; i < 2*n + 2; i++) list.push({el:'H', x:40 + i*55, y:235});
+  } else {
+    const spec = {O2:{O:2}, CO2:{C:1,O:2}, H2O:{O:1,H:2}}[key];
+    const pos = {O2:[[80,95],[220,95]], CO2:[[150,40],[60,140],[240,140]], H2O:[[150,45],[70,140],[230,140]]}[key];
+    let p = 0;
+    ['C','O','H'].forEach(el => { for (let i = 0; i < (spec[el] || 0); i++) { list.push({el, x:pos[p][0], y:pos[p][1]}); p++; } });
+  }
+  return list;
+}
+function buildMol(key) {
+  BUILD[key] = {atoms:atomsFor(key, cur().n), bonds:{}, sel:null, W:key === 'A' ? 860 : 300, H:key === 'A' ? 280 : 190, mode:'build', aSel:null, ans:{}, ok:false, _w:[]};
+  renderMol(key);
+}
+function buildAll() { MOLS.forEach(m => buildMol(m.k)); }
+function angDist(x, y) { const z = Math.abs(x - y) % (2*Math.PI); return z > Math.PI ? 2*Math.PI - z : z; }
+function stubAngles(S, i, count) {
+  const a = S.atoms[i], used = [], res = [];
+  Object.keys(S.bonds).forEach(k => {
+    const [p, q] = k.split('-').map(Number);
+    if (p === i || q === i) { const o = S.atoms[p === i ? q : p]; used.push(Math.atan2(o.y - a.y, o.x - a.x)); }
+  });
+  const cand = Array.from({length:24}, (_, t) => t*Math.PI/12);
+  for (let c = 0; c < count; c++) {
+    let best = 0, bs = -1;
+    cand.forEach(t => { const m = Math.min(Math.PI, ...used.concat(res).map(u => angDist(t, u))); if (m > bs) { bs = m; best = t; } });
+    res.push(best);
+  }
+  return res;
+}
+function bondType(ea, eb, o) {
+  const k = [ea, eb].sort().join('') + o;
+  return {CC1:'CC', CH1:'CH', CO1:'CO', HO1:'OH', OO2:'OO', CO2:'DC'}[k] || 'X';
+}
+function nbrs(S, c) {
+  const r = [];
+  Object.keys(S.bonds).forEach(k => { const [p, q] = k.split('-').map(Number); if (p === c) r.push(q); else if (q === c) r.push(p); });
+  return r;
+}
+function expAngle(S, c) {
+  const el = S.atoms[c].el, k = nbrs(S, c).length;
+  if (el === 'C') return k === 4 ? '109.5' : k === 2 ? '180' : null;
+  if (el === 'O') return k === 2 ? '104.5' : null;
+  return null;
+}
+function wedgesFor(S) {
+  const W = [];
+  S.atoms.forEach((a, c) => {
+    const nb = nbrs(S, c);
+    if (nb.length < 2 || a.el === 'H') return;
+    const items = nb.map(j => ({j, t:Math.atan2(S.atoms[j].y - a.y, S.atoms[j].x - a.x)})).sort((x, y) => x.t - y.t), pairs = [];
+    if (items.length === 2) { const g = items[1].t - items[0].t; pairs.push(g <= Math.PI ? [items[0], items[1], g] : [items[1], items[0], 2*Math.PI - g]); }
+    else items.forEach((it, i) => { const nx = items[(i + 1) % items.length]; let g = nx.t - it.t; if (g <= 0) g += 2*Math.PI; pairs.push([it, nx, g]); });
+    pairs.forEach(([p, q, g]) => {
+      const ks = [p.j, q.j].sort((x, y) => x - y).join('-');
+      W.push({c, key:c + ':' + ks, t1:p.t, gap:g, el:a.el, label:S.atoms[p.j].el + '–' + a.el + '–' + S.atoms[q.j].el, exp:expAngle(S, c)});
+    });
+  });
+  return W;
+}
+function renderMol(key) {
+  const S = BUILD[key], svg = $('svg_' + key), n = cur().n, ang = S.mode === 'angle';
+  const val = S.atoms.map(() => 0);
+  Object.entries(S.bonds).forEach(([k, o]) => { const [i, j] = k.split('-').map(Number); val[i] += o; val[j] += o; });
+  let out = '';
+  Object.entries(S.bonds).forEach(([k, o]) => {
+    const [i, j] = k.split('-').map(Number), a = S.atoms[i], b = S.atoms[j];
+    const dx = b.x - a.x, dy = b.y - a.y, L = Math.hypot(dx, dy) || 1, nx = -dy/L, ny = dx/L;
+    for (let t = 0; t < o; t++) {
+      const off = (t - (o - 1)/2) * 7;
+      out += '<line x1="'+(a.x+nx*off)+'" y1="'+(a.y+ny*off)+'" x2="'+(b.x+nx*off)+'" y2="'+(b.y+ny*off)+'" stroke="#111" stroke-width="2.5"/>';
+    }
+    if (!ang) out += '<line data-b="'+k+'" x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" stroke="transparent" stroke-width="16" style="cursor:pointer"/>';
+  });
+  S.atoms.forEach((a, i) => {
+    const r = a.el === 'H' ? 13 : 17, m = VAL[a.el] - val[i];
+    if (m > 0) stubAngles(S, i, m).forEach(t => {
+      const x1 = a.x + Math.cos(t)*r, y1 = a.y + Math.sin(t)*r, x2 = a.x + Math.cos(t)*(r + 16), y2 = a.y + Math.sin(t)*(r + 16);
+      out += '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#a11" stroke-width="2" stroke-dasharray="3 2"/>' +
+             '<circle cx="'+(a.x + Math.cos(t)*(r + 20))+'" cy="'+(a.y + Math.sin(t)*(r + 20))+'" r="4" fill="#fff" stroke="#a11" stroke-width="2"/>';
+    });
+  });
+  S.atoms.forEach((a, i) => {
+    const r = a.el === 'H' ? 13 : 17, m = VAL[a.el] - val[i];
+    const ring = m === 0 ? '#1d6b2a' : m > 0 ? '#a11' : '#b45f00', fill = {C:'#d9d9d9', O:'#bdbdbd', H:'#fff'}[a.el];
+    out += '<g data-i="'+i+'" style="cursor:'+(ang ? 'default' : 'grab')+'">' +
+      (S.sel === i && !ang ? '<circle cx="'+a.x+'" cy="'+a.y+'" r="'+(r+7)+'" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="4 3"/>' : '') +
+      '<circle cx="'+a.x+'" cy="'+a.y+'" r="'+r+'" fill="'+fill+'" stroke="'+ring+'" stroke-width="3.5"/>' +
+      '<text x="'+a.x+'" y="'+(a.y + 5)+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="'+(a.el === 'H' ? 14 : 17)+'" fill="#111" pointer-events="none">'+a.el+'</text>' +
+      (m < 0 ? '<text x="'+(a.x + r)+'" y="'+(a.y - r + 2)+'" font-family="Arial,sans-serif" font-size="15" fill="#b45f00" pointer-events="none">✗</text>' : '') + '</g>';
+  });
+  // bond angle arcs
+  S._w = ang ? wedgesFor(S) : [];
+  S._w.forEach(w => {
+    const a = S.atoms[w.c], R = (a.el === 'H' ? 13 : 17) + 14, d = Math.min(0.14, w.gap*0.2), s = w.t1 + d, e = w.t1 + w.gap - d;
+    const ans = S.ans[w.key], good = ans !== undefined && ans === w.exp, bad = ans !== undefined && !good, isSel = S.aSel === w.key;
+    const col = good ? '#1d6b2a' : bad ? '#a11' : isSel ? '#111' : '#8a8a8a';
+    out += '<path data-w="'+w.key+'" d="M'+(a.x+Math.cos(s)*R)+' '+(a.y+Math.sin(s)*R)+' A'+R+' '+R+' 0 '+((w.gap - 2*d) > Math.PI ? 1 : 0)+' 1 '+(a.x+Math.cos(e)*R)+' '+(a.y+Math.sin(e)*R)+'" fill="none" stroke="'+col+'" stroke-width="'+(isSel ? 10 : 8)+'" stroke-linecap="round" opacity="'+((ans === undefined && !isSel) ? 0.7 : 1)+'" style="cursor:pointer"/>';
+    if (good) { const mid = w.t1 + w.gap/2; out += '<text x="'+(a.x+Math.cos(mid)*(R+19))+'" y="'+(a.y+Math.sin(mid)*(R+19)+4)+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#1d6b2a" pointer-events="none">'+w.exp+'°</text>'; }
+  });
+  svg.innerHTML = out;
+
+  // status message
+  const st = $('st_' + key), cnt = {}, over = {};
+  let incomplete = 0, overN = 0;
+  S.atoms.forEach((a, i) => {
+    const m = VAL[a.el] - val[i];
+    if (m > 0) { incomplete++; cnt[a.el] = (cnt[a.el] || 0) + 1; }
+    if (m < 0) { overN++; over[a.el] = (over[a.el] || 0) + 1; }
+  });
+  const list = o => Object.keys(o).map(e => o[e] + ' ' + NAME[e] + (o[e] > 1 ? ' atoms' : ' atom')).join(' and ');
+  let msg = '', cls = 'muted'; S.ok = false;
+  if (S.sel !== null && !ang) msg = 'Selected: ' + S.atoms[S.sel].el + '. Now click the atom to bond it to, or click it again to deselect. ';
+  if (!Object.keys(S.bonds).length) { if (S.sel === null) msg += 'Click one atom, then another, to join them with a bond.'; }
+  else if (overN) { cls = 'no'; msg += '✗ Too many bonds on ' + list(over) + '. Each carbon atom makes 4 bonds, each oxygen atom 2 and each hydrogen atom 1. Click a bond to change it.'; }
+  else if (incomplete) {
+    cls = 'no';
+    const pairs = Object.entries(S.bonds).some(([k]) => { const [p, q] = k.split('-').map(Number); return VAL[S.atoms[p].el] - val[p] > 0 && VAL[S.atoms[q].el] - val[q] > 0; });
+    msg += '✗ Incomplete: ' + list(cnt) + (incomplete > 1 ? ' still have' : ' still has') + ' open bonds (red circles). Join open bonds to other atoms.' +
+      (pairs ? ' Two joined atoms that both have open bonds can share more than one bond: click the bond between them to make it double.' : '');
+  } else {
+    const seen = new Set([0]), q = [0];
+    while (q.length) { const c = q.pop(); Object.keys(S.bonds).forEach(k => { const [p, r] = k.split('-').map(Number); const o = p === c ? r : r === c ? p : -1; if (o >= 0 && !seen.has(o)) { seen.add(o); q.push(o); } }); }
+    if (seen.size < S.atoms.length) { cls = 'no'; msg += '✗ Every atom has its full number of bonds, but the atoms form separate pieces. A molecule is one joined structure.'; }
+    else {
+      const got = {}; Object.entries(S.bonds).forEach(([k, o]) => { const [p, r] = k.split('-').map(Number); const t = bondType(S.atoms[p].el, S.atoms[r].el, o); got[t] = (got[t] || 0) + 1; });
+      const same = !got.X && BT.every(b => (got[b.k] || 0) === expMol(key, b.k, n));
+      if (same) {
+        cls = 'ok'; S.ok = true;
+        msg += key === 'O2' ? '✓ Complete: every atom has its full number of bonds. O₂ has only two atoms, so it has no bond angle. Now count the bonds of each type in the table below.' :
+          '✓ Complete: every atom has its full number of bonds. Press "Find bond angles" to identify its angles, and count the bonds of each type in the table below.';
+      }
+      else { cls = 'no'; msg += '✗ Every atom has its full number of bonds, but this is not ' + (key === 'A' ? formula(n) + ' (' + cur().name + ')' : MOLS.find(m => m.k === key).f) + '.' + (key === 'A' && !got.OH ? ' An alcohol contains an O–H bond.' : ' Check how the atoms are joined.'); }
+    }
+  }
+  if (ang && S.ok) {
+    const kinds = {};
+    S._w.forEach(w => { if (!(w.el in kinds)) kinds[w.el] = {done:false, exp:w.exp}; if (S.ans[w.key] !== undefined && S.ans[w.key] === w.exp) kinds[w.el].done = true; });
+    const pending = Object.keys(kinds).filter(e => !kinds[e].done).map(e => NAME[e]);
+    if (!pending.length) { cls = 'ok'; msg = '✓ Bond angles found: ' + Object.keys(kinds).map(e => NAME[e] + ' ' + kinds[e].exp + '°').join(', ') + '.'; }
+    else { cls = 'muted'; msg = 'Click a grey arc between two bonds, then choose its bond angle from the menu. Still to find: ' + pending.join(' and ') + '.'; }
+  }
+  st.textContent = msg; st.className = 'status ' + (cls === 'muted' ? 'muted' : cls);
+
+  // angle menu and mode button
+  const pop = $('pop_' + key), w = ang ? S._w.find(x => x.key === S.aSel) : null;
+  if (w) {
+    const a = S.atoms[w.c], mid = w.t1 + w.gap/2;
+    let x = a.x + Math.cos(mid)*58, y = a.y + Math.sin(mid)*58;
+    x = Math.max(S.W*0.16, Math.min(S.W*0.84, x)); y = Math.max(S.H*0.14, Math.min(S.H*0.86, y));
+    pop.style.left = (100*x/S.W) + '%'; pop.style.top = (100*y/S.H) + '%'; pop.style.display = 'flex';
+    pop.querySelector('.lab').textContent = w.label;
+    pop.querySelector('select').value = S.ans[w.key] || '';
+    const mk = pop.querySelector('.mk'), an = S.ans[w.key];
+    if (an === undefined) { mk.textContent = ''; mk.className = 'mk'; } else { const ok = an === w.exp; mk.textContent = ok ? '✓' : '✗'; mk.className = 'mk ' + (ok ? 'ok' : 'no'); }
+  } else pop.style.display = 'none';
+  const btn = $('angbtn_' + key);
+  btn.style.display = key === 'O2' ? 'none' : '';
+  btn.textContent = ang ? 'Back to building' : 'Find bond angles';
+  btn.disabled = !ang && !S.ok;
+}
+function wireMol(key) {
+  const svg = $('svg_' + key); let drag = null;
+  const toSvg = e => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); };
+  const sel = $('pop_' + key).querySelector('select');
+  sel.addEventListener('change', () => {
+    const S = BUILD[key];
+    if (!S.aSel) return;
+    if (sel.value === '') delete S.ans[S.aSel]; else S.ans[S.aSel] = sel.value;
+    renderMol(key);
+  });
+  svg.addEventListener('pointerdown', e => {
+    const S = BUILD[key];
+    if (S.mode === 'angle') {
+      const w = e.target.closest('[data-w]');
+      S.aSel = w ? w.dataset.w : null;
+      renderMol(key);
+      return;
+    }
+    const g = e.target.closest('[data-i]'), bd = e.target.closest('[data-b]');
+    if (g) { drag = {i:+g.dataset.i, moved:false, sx:e.clientX, sy:e.clientY}; svg.setPointerCapture(e.pointerId); }
+    else if (bd) {
+      const k = bd.dataset.b, o = S.bonds[k] + 1;
+      if (o > 3) delete S.bonds[k]; else S.bonds[k] = o;
+      renderMol(key);
+    }
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return;
+    if (!drag.moved && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 5) drag.moved = true;
+    if (!drag.moved) return;
+    const S = BUILD[key], p = toSvg(e), a = S.atoms[drag.i];
+    a.x = Math.max(24, Math.min(S.W - 24, p.x)); a.y = Math.max(24, Math.min(S.H - 24, p.y));
+    renderMol(key);
+  });
+  svg.addEventListener('pointerup', () => {
+    if (drag && !drag.moved) {
+      const S = BUILD[key], i = drag.i;
+      if (S.sel === null) S.sel = i;
+      else if (S.sel === i) S.sel = null;
+      else { const k = Math.min(S.sel, i) + '-' + Math.max(S.sel, i), o = (S.bonds[k] || 0) + 1; if (o > 3) delete S.bonds[k]; else S.bonds[k] = o; S.sel = null; }
+      renderMol(key);
+    }
+    drag = null;
+  });
+  svg.addEventListener('pointercancel', () => { drag = null; });
+}
+
+/* Step 2: deduction table */
+function expMol(m, b, n) {
+  const t = {A:{CC:n-1, CH:2*n+1, CO:1, OH:1, OO:0, DC:0}, O2:{OO:1}, CO2:{DC:2}, H2O:{OH:2}};
+  return t[m][b] || 0;
+}
+(function buildStep2() {
+  const AOPTS = '<option value="">choose the angle</option><option value="180">180°</option><option value="109.5">109.5°</option><option value="107">107°</option><option value="104.5">104.5°</option>';
+  $('pads').innerHTML = MOLS.map((m,i) => {
+    const wide = m.k === 'A', W = wide ? 860 : 300, H = wide ? 280 : 190;
+    return '<div class="pad-box' + (wide ? ' wide' : '') + '"><div class="muted">Build: <span id="dl'+i+'"></span></div>' +
+      '<div class="svgwrap"><svg id="svg_'+m.k+'" viewBox="0 0 '+W+' '+H+'"></svg>' +
+      '<div class="angpop" id="pop_'+m.k+'"><span class="lab"></span><select>'+AOPTS+'</select><span class="mk"></span></div></div>' +
+      '<div class="status" id="st_'+m.k+'"></div>' +
+      '<div class="noprint"><button type="button" data-k="'+m.k+'" data-a="clear">Clear bonds</button> <button type="button" data-k="'+m.k+'" data-a="reset">Reset atoms</button> <button type="button" id="angbtn_'+m.k+'" data-k="'+m.k+'" data-a="angle">Find bond angles</button></div></div>';
+  }).join('');
+  MOLS.forEach(m => wireMol(m.k));
+  document.querySelectorAll('#pads button').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.k, S = BUILD[k];
+    if (b.dataset.a === 'clear') { S.bonds = {}; S.sel = null; S.mode = 'build'; S.aSel = null; S.ans = {}; renderMol(k); }
+    else if (b.dataset.a === 'angle') { if (S.mode === 'angle') { S.mode = 'build'; S.aSel = null; } else if (S.ok) S.mode = 'angle'; renderMol(k); }
+    else buildMol(k);
+  }));
+  buildAll();
+  let h = '<tr><th class="l">Molecule</th>' + BT.map(b => '<th>'+b.l+'</th>').join('') + '</tr>';
+  MOLS.forEach(m => {
+    h += '<tr><td class="l" id="tl_'+m.k+'"></td>' + BT.map(b =>
+      '<td><input type="number" min="0" class="sm" id="m_'+m.k+'_'+b.k+'"><span class="mk" id="k_'+m.k+'_'+b.k+'"></span></td>').join('') + '</tr>';
+  });
+  $('deduce').innerHTML = h;
+})();
+
+document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', update));
+$('alc').addEventListener('change', () => {
+  buildAll();
+  document.querySelectorAll('select.ang, select.ph').forEach(s => s.value = '');
+  document.querySelectorAll('input[type=number]').forEach(i => i.value = '');
+  update();
+});
+$('rec').addEventListener('click', () => {
+  if (!window._res) { alert('Complete all the steps first.'); return; }
+  const r = window._res, t = $('cmp');
+  for (const row of t.rows) if (row.dataset.n === r.name) { row.remove(); break; }
+  const tr = t.insertRow(); tr.dataset.n = r.name;
+  tr.innerHTML = '<td>' + r.name + '</td><td>' + sg(r.dHm) + '</td><td>' + fmt(r.jg) + '</td><td>' + (r.jc/1000).toFixed(1) + '</td>' +
+    (r.fin !== null ? '<td>' + fmt(r.fin) + '</td><td>' + fmt(r.jg3) + '</td><td>' + (r.jc3/1000).toFixed(1) + '</td>' : '<td>–</td><td>–</td><td>–</td>');
+});
+$('clr').addEventListener('click', () => { const t = $('cmp'); while (t.rows.length > 1) t.deleteRow(1); });
+update();
+</script>
+</body>
+</html>
