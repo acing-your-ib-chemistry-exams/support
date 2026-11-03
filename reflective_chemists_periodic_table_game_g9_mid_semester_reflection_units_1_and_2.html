@@ -529,6 +529,20 @@
   .grade-input{flex:1 1 0;min-width:0;font-family:'Kalam','Comic Sans MS',cursive;font-size:16px;text-align:center;padding:8px 6px;border:2.2px solid var(--ink);border-radius:8px 12px 7px 13px / 11px 7px 13px 8px;color:var(--ink);}
   .grade-input:focus{outline:2px solid var(--accent);outline-offset:1px;}
   .grade-avg{margin-top:8px;font-size:14px;font-weight:700;color:var(--accent);min-height:1.4em;}
+  .targets-block{margin-top:14px;text-align:left;}
+  .targets-intro{font-size:13px;line-height:1.5;color:var(--ink-soft);margin-bottom:6px;}
+  .target-card{border:2.2px solid var(--ink);border-radius:10px 14px 9px 15px / 13px 9px 14px 10px;padding:6px 12px 12px;margin:12px 0;}
+  .target-card legend{font-family:'Architects Daughter',cursive;color:var(--accent);padding:0 6px;font-size:15px;}
+  .targets-block .t-label{display:block;font-size:12.5px;color:var(--ink-soft);margin:9px 0 3px;}
+  .targets-block select,.targets-block input[type=text],.targets-block input[type=date],.targets-block textarea{width:100%;box-sizing:border-box;font-family:'Kalam','Comic Sans MS',cursive;font-size:14px;padding:7px 9px;border:2px solid var(--ink);border-radius:8px 12px 7px 13px / 11px 7px 13px 8px;color:var(--ink);background:#fff;}
+  .targets-block textarea{resize:vertical;}
+  .targets-block select:focus,.targets-block input:focus,.targets-block textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .t-type{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px;margin:2px 0 7px;}
+  .t-type label{display:flex;gap:6px;align-items:center;cursor:pointer;}
+  .word-count{font-size:12px;color:var(--ink-soft);text-align:right;margin:3px 0 0;}
+  .word-count.met{color:#2f9e5c;font-weight:700;}
+  .min-words-note{font-size:13px;line-height:1.45;color:var(--accent);font-weight:700;margin:14px 0 0;text-align:left;}
+  .card button:disabled{opacity:.4;cursor:not-allowed;filter:none;}
   .topic-group-note{font-size:12px;color:var(--ink-soft);text-align:left;margin:-2px 0 4px;line-height:1.45;}
   @media (max-width:560px){ .topic-btns{flex-direction:column;} }
 </style>
@@ -633,22 +647,59 @@
       <div id="topicChecklist"></div>
       <span class="topic-check-tip" id="ratedCount">Rating every skill gives you the most useful certificate.</span>
       <div class="grade-block">
-        <label class="topic-extra-label" for="canvasGradeInput">Look up your average grade for the semester so far in Canvas, and type it exactly as Canvas shows it (optional).</label>
+        <label class="topic-extra-label" for="canvasGradeInput">Look up your average grade for the semester so far in Canvas, and type it exactly as Canvas shows it.</label>
         <input type="text" id="canvasGradeInput" class="grade-input grade-wide" maxlength="12" placeholder="Your Canvas grade so far for this course" aria-label="Your Canvas grade so far for this course">
-        <label class="topic-extra-label" for="score1Input" style="margin-top:12px;">The first two 1 to 7 scores you achieved that are recorded in Canvas so far. Leave out the most recent assessment (optional).</label>
+        <label class="topic-extra-label" for="score1Input" style="margin-top:12px;">The first two 1 to 7 scores you achieved that are recorded in Canvas so far. Leave out the most recent assessment.</label>
         <div class="grade-row">
           <input type="number" id="score1Input" class="grade-input" min="1" max="7" step="1" inputmode="numeric" placeholder="First score" aria-label="First assessment score, 1 to 7">
           <input type="number" id="score2Input" class="grade-input" min="1" max="7" step="1" inputmode="numeric" placeholder="Second score" aria-label="Second assessment score, 1 to 7">
         </div>
         <div class="grade-avg" id="gradeAvg"></div>
       </div>
-      <label for="enjoyInput" class="topic-extra-label">Which parts of the course have you enjoyed the most so far? (optional)</label>
-      <textarea id="enjoyInput" rows="2" maxlength="300" placeholder="e.g. a practical, a type of reaction, a kind of calculation... (max 300 characters)"></textarea>
-      <label for="hardInput" class="topic-extra-label">Which areas have you found the most challenging? (optional)</label>
-      <textarea id="hardInput" rows="2" maxlength="300" placeholder="Name the skills or ideas, and say what makes them challenging (max 300 characters)"></textarea>
-      <label for="targetInput" class="topic-extra-label">Your measurable targets for December (optional). A measurable target is something that can be measured: you can attach either a proficiency to it (can do, can&rsquo;t yet do) or a number. Examples: &ldquo;By 11 December I can write the formula for any compound in Unit 1 without the cheat sheet (can do / can&rsquo;t yet do).&rdquo; &ldquo;Score 8 out of 10 on empirical formula questions by 11 December (a number).&rdquo;</label>
-      <textarea id="targetInput" rows="3" maxlength="300" placeholder="One to three targets, each one measurable (a number, or can do / can't yet do) with a date (max 300 characters)"></textarea>
+      <label for="enjoyInput" class="topic-extra-label">Which parts of the course have you enjoyed the most so far?</label>
+      <textarea id="enjoyInput" rows="3" maxlength="500" placeholder="e.g. a practical, a type of reaction, a kind of calculation... Write at least 50 words."></textarea>
+      <div class="word-count" id="enjoyCount"></div>
+      <label for="hardInput" class="topic-extra-label">Which areas have you found the most challenging?</label>
+      <textarea id="hardInput" rows="3" maxlength="500" placeholder="Name the skills or ideas, and say what makes them challenging. Write at least 50 words."></textarea>
+      <div class="word-count" id="hardCount"></div>
+      <div class="targets-block" id="targetsBlock">
+        <div class="targets-intro"><b>Your measurable targets for December.</b> A measurable target is something that can be measured: you can attach either a proficiency to it (can do, can&rsquo;t yet do) or a number. Choose two skills from your ratings above, starting with those you rated &ldquo;Not there yet&rdquo;. For each one, say how you will measure it, what you will do and how often, and the date you will check. Be specific enough that in December you can answer yes or no: did I reach it?</div>
+        <fieldset class="target-card">
+          <legend>Target 1</legend>
+          <label class="t-label" for="t1Skill">The skill or idea I will work on</label>
+          <select id="t1Skill"></select>
+          <div class="t-label">I will measure it as</div>
+          <div class="t-type">
+            <label><input type="radio" name="t1Type" value="number"> a number</label>
+            <label><input type="radio" name="t1Type" value="proficiency"> can do / can&rsquo;t yet do</label>
+          </div>
+          <input type="text" id="t1Measure" maxlength="90" placeholder="A number (e.g. 8 out of 10 on practice questions) or: I can ... without the cheat sheet">
+          <label class="t-label" for="t1Plan">What I will do, and how often</label>
+          <textarea id="t1Plan" rows="2" maxlength="150" placeholder="e.g. Redo the self-marking worksheet on Mondays and Thursdays and check each answer against the worked solution"></textarea>
+          <label class="t-label" for="t1Date">I will check my result on (a date in December)</label>
+          <input type="date" id="t1Date">
+        </fieldset>
+        <fieldset class="target-card">
+          <legend>Target 2</legend>
+          <label class="t-label" for="t2Skill">The skill or idea I will work on</label>
+          <select id="t2Skill"></select>
+          <div class="t-label">I will measure it as</div>
+          <div class="t-type">
+            <label><input type="radio" name="t2Type" value="number"> a number</label>
+            <label><input type="radio" name="t2Type" value="proficiency"> can do / can&rsquo;t yet do</label>
+          </div>
+          <input type="text" id="t2Measure" maxlength="90" placeholder="A number (e.g. 8 out of 10 on practice questions) or: I can ... without the cheat sheet">
+          <label class="t-label" for="t2Plan">What I will do, and how often</label>
+          <textarea id="t2Plan" rows="2" maxlength="150" placeholder="e.g. Redo the self-marking worksheet on Mondays and Thursdays and check each answer against the worked solution"></textarea>
+          <label class="t-label" for="t2Date">I will check my result on (a date in December)</label>
+          <input type="date" id="t2Date">
+        </fieldset>
+        <label class="t-label" for="tObstacle">What could get in the way, and what I will do about it</label>
+        <textarea id="tObstacle" class="t-obstacle" rows="2" maxlength="160" placeholder="e.g. Football training on Thursdays: I will do my practice on Wednesday evening instead"></textarea>
+        <div class="word-count" id="targetCount"></div>
+      </div>
     </div>
+    <div class="min-words-note" id="gateNote"></div>
     <button id="certBtnPhase1" type="button" class="cert-download-btn">Download My Certificate (PDF)</button>
     <p class="part2-carrot"><b>Part 2 is optional.</b> Play on through the other 61 elements, up to the full 118-element table, and your Part 2 result is added to an updated certificate: how many you place correctly first time, your time, and your score.</p>
     <button id="continueBtn" type="button">Continue to Part 2 (optional) and add it to my certificate</button>
@@ -662,8 +713,8 @@
     <div class="final-score" id="finalScore">0</div>
     <p id="finalTime"></p>
     <div class="cert-reflection">
-      <label for="reflection2Input">A further short reflection, now you've finished the whole table (optional):</label>
-      <textarea id="reflection2Input" rows="3" maxlength="220" placeholder="Anything to add? (max 220 characters, optional)"></textarea>
+      <label for="reflection2Input">A further short reflection, now you've finished the whole table:</label>
+      <textarea id="reflection2Input" rows="3" maxlength="220" placeholder="Anything to add? (max 220 characters)"></textarea>
     </div>
     <button id="certBtn" type="button" class="cert-download-btn">Download My Updated Certificate (PDF)</button>
     <button id="restartBtn">Play Again</button>
@@ -846,13 +897,70 @@
   // BOTH reflections even though #reflectionInput itself is only visible
   // during the Part-1 checkpoint overlay.
   let part1Score = 0, part2StartMs = 0, part2Ms = 0;
-  let mainReflections = { enjoy:'', hard:'', target:'' };
+  let mainReflections = { enjoy:'', hard:'', targets:null };
+  const TARGET_NUMS = [1, 2];
+  function emptyTargets(){
+    return { items: TARGET_NUMS.map(function(){ return { skill:'', type:'', measure:'', plan:'', date:'' }; }), obstacle:'' };
+  }
+  mainReflections.targets = emptyTargets();
+  function readTargets(){
+    const out = { items: [], obstacle: '' };
+    TARGET_NUMS.forEach(function(n){
+      const skillEl = document.getElementById('t'+n+'Skill');
+      const typeEl = document.querySelector('input[name="t'+n+'Type"]:checked');
+      out.items.push({
+        skill:   skillEl ? skillEl.value : '',
+        type:    typeEl ? typeEl.value : '',
+        measure: (document.getElementById('t'+n+'Measure').value || '').trim(),
+        plan:    (document.getElementById('t'+n+'Plan').value || '').trim(),
+        date:    document.getElementById('t'+n+'Date').value || ''
+      });
+    });
+    out.obstacle = (document.getElementById('tObstacle').value || '').trim();
+    return out;
+  }
+  function clearTargets(){
+    TARGET_NUMS.forEach(function(n){
+      const skillEl = document.getElementById('t'+n+'Skill'); if(skillEl) skillEl.value = '';
+      document.querySelectorAll('input[name="t'+n+'Type"]').forEach(function(r){ r.checked = false; });
+      ['Measure','Plan','Date'].forEach(function(f){ const el = document.getElementById('t'+n+f); if(el) el.value = ''; });
+    });
+    const ob = document.getElementById('tObstacle'); if(ob) ob.value = '';
+  }
   function readReflections(){
     return {
-      enjoy:  (enjoyInput && enjoyInput.value.trim()) || '',
-      hard:   (hardInput && hardInput.value.trim()) || '',
-      target: (targetInput && targetInput.value.trim()) || ''
+      enjoy:   (enjoyInput && enjoyInput.value.trim()) || '',
+      hard:    (hardInput && hardInput.value.trim()) || '',
+      targets: readTargets()
     };
+  }
+  // The skill menus in the targets list the skills the student rated
+  // "Not there yet" first, then "There, but not confident yet", then the rest.
+  function refreshSkillOptions(){
+    const groups = [
+      { title:'Rated: Not there yet',                  test:function(r){ return r === 'practice'; } },
+      { title:'Rated: There, but not confident yet',   test:function(r){ return r === 'nearly'; } },
+      { title:'Other skills',                          test:function(r){ return r !== 'practice' && r !== 'nearly'; } }
+    ];
+    TARGET_NUMS.forEach(function(n){
+      const el = document.getElementById('t'+n+'Skill');
+      if(!el) return;
+      const keep = el.value;
+      let html = '<option value="">Choose a skill or idea</option>';
+      groups.forEach(function(g){
+        const items = TOPIC_LIST.filter(function(t){ return g.test(topicRatings[t.id]); });
+        if(!items.length) return;
+        html += '<optgroup label="'+g.title+'">'+items.map(function(t){ return '<option value="'+t.id+'">'+t.label+'</option>'; }).join('')+'</optgroup>';
+      });
+      el.innerHTML = html;
+      el.value = keep;
+    });
+  }
+  const DEC_YEAR = new Date().getFullYear();
+  const DEC_MIN = DEC_YEAR+'-12-01', DEC_MAX = DEC_YEAR+'-12-31';
+  function formatDateLong(iso){
+    const d = new Date(iso+'T00:00:00');
+    return isNaN(d) ? iso : d.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
   }
 
   // Canvas results: the student's average grade so far (typed as Canvas shows
@@ -872,6 +980,51 @@
     gradeAvgEl.textContent = readGrades().badScores ? 'Scores are whole numbers from 1 to 7.' : '';
   }
   scoreInputs.forEach(function(el){ if(el) el.addEventListener('input', updateGradeAvg); });
+
+  // The certificate and Part 2 unlock only when the Canvas grade, the two
+  // Canvas scores, 50 words in each of the first two reflections, and two
+  // complete targets (30 words typed across them) are in.
+  const MIN_WORDS = 50, MIN_TARGET_WORDS = 30;
+  function wordCount(t){ const m = (t || '').trim().match(/\S+/g); return m ? m.length : 0; }
+  function updateGate(){
+    const r = readReflections();
+    const g = readGrades();
+    const missing = [];
+    if(!g.canvas) missing.push('your Canvas grade so far');
+    if(g.badScores || g.scores.length < 2) missing.push('your first two Canvas scores (whole numbers from 1 to 7)');
+    [['enjoy','enjoyCount','the first reflection'],['hard','hardCount','the second reflection']].forEach(function(row){
+      const n = wordCount(r[row[0]]);
+      const el = document.getElementById(row[1]);
+      if(el){
+        el.textContent = n+' of '+MIN_WORDS+' words'+(n >= MIN_WORDS ? ' ✓' : '');
+        el.classList.toggle('met', n >= MIN_WORDS);
+      }
+      if(n < MIN_WORDS) missing.push('at least '+MIN_WORDS+' words in '+row[2]);
+    });
+    const t = r.targets;
+    t.items.forEach(function(it, i){
+      const miss = [];
+      if(!it.skill) miss.push('a skill');
+      if(!it.type) miss.push('number or can do / can’t yet do');
+      if(!it.measure) miss.push('how you will measure it');
+      if(!it.plan) miss.push('what you will do');
+      if(!it.date || it.date < DEC_MIN || it.date > DEC_MAX) miss.push('a check date in December');
+      if(miss.length) missing.push('Target '+(i+1)+': '+miss.join(', '));
+    });
+    if(!t.obstacle) missing.push('what could get in the way');
+    const tw = t.items.reduce(function(a, it){ return a + wordCount(it.measure) + wordCount(it.plan); }, 0) + wordCount(t.obstacle);
+    const tEl = document.getElementById('targetCount');
+    if(tEl){
+      tEl.textContent = tw+' of '+MIN_TARGET_WORDS+' words typed in the targets'+(tw >= MIN_TARGET_WORDS ? ' ✓' : '');
+      tEl.classList.toggle('met', tw >= MIN_TARGET_WORDS);
+    }
+    if(tw < MIN_TARGET_WORDS) missing.push('at least '+MIN_TARGET_WORDS+' words across the targets');
+    const ok = missing.length === 0;
+    if(certBtnPhase1) certBtnPhase1.disabled = !ok;
+    if(continueBtn) continueBtn.disabled = !ok;
+    const note = document.getElementById('gateNote');
+    if(note) note.textContent = ok ? '' : 'To download your certificate or continue to Part 2, add: '+missing.join('; ')+'.';
+  }
 
   // Periodic Table level, from the number of required elements placed
   // correctly first time (no wrong landings).
@@ -950,7 +1103,6 @@
   const studentNameInput = document.getElementById('studentNameInput');
   const enjoyInput = document.getElementById('enjoyInput');
   const hardInput = document.getElementById('hardInput');
-  const targetInput = document.getElementById('targetInput');
   const certBtn = document.getElementById('certBtn');
   const certBtnPhase1 = document.getElementById('certBtnPhase1');
   const continueBtn = document.getElementById('continueBtn');
@@ -1798,12 +1950,12 @@
         doc.text(pair[1], 24 + labelW2 + 4, y);
         y += 6.5;
       });
-      y += 4.5;
+      y += 3;
     } else {
       y += 2;
     }
 
-    if(refl.enjoy || refl.hard || refl.target){
+    if(refl.enjoy || refl.hard){
       doc.setFont('helvetica','bold');
       doc.setFontSize(13);
       doc.setTextColor(30,60,110);
@@ -1811,29 +1963,118 @@
       doc.setDrawColor(154,97,0);
       doc.setLineWidth(0.3);
       doc.line(24, y+1.8, W-24, y+1.8);
-      y += 9;
-      // Three columns side by side, so even three long answers fit on page 1.
-      const colW3 = 76, colX3 = [24, 24+colW3+10.5, 24+2*(colW3+10.5)];
+      y += 8;
+      // Two wide columns side by side
+      const colW2 = 118, colX2 = [24, 24+colW2+13];
       [
         ['What I have enjoyed the most', refl.enjoy],
-        ['What I have found the most challenging', refl.hard],
-        ['My measurable targets for December', refl.target]
+        ['What I have found the most challenging', refl.hard]
       ].forEach(function(pair, i){
         if(!pair[1]) return;
         doc.setFont('helvetica','bold');
-        doc.setFontSize(10);
+        doc.setFontSize(10.5);
         doc.setTextColor(30,60,110);
-        doc.text(pair[0], colX3[i], y);
+        doc.text(pair[0], colX2[i], y);
         doc.setFont('helvetica','normal');
         doc.setFontSize(9.5);
         doc.setTextColor(60,60,60);
-        let ls = doc.splitTextToSize(pair[1], colW3);
-        if(ls.length > 9){
-          ls = ls.slice(0, 9);
-          ls[8] = ls[8].replace(/\s*$/, '') + '…';
+        let ls = doc.splitTextToSize(pair[1], colW2);
+        if(ls.length > 11){
+          ls = ls.slice(0, 11);
+          ls[10] = ls[10].replace(/\s*$/, '') + '…';
         }
-        ls.forEach(function(line, k){ doc.text(line, colX3[i], y + 5.5 + k*4.4); });
+        ls.forEach(function(line, k){ doc.text(line, colX2[i], y + 5.5 + k*4.3); });
       });
+    }
+
+    // ================= LAST PAGE (drawn at the end): my targets for December =================
+    const tg = refl.targets;
+    const anyTarget = tg && (tg.items.some(function(it){ return it.skill || it.measure || it.plan; }) || tg.obstacle);
+    function drawTargetsPage(){
+      if(!anyTarget) return;
+      drawFooter();
+      doc.addPage();
+      drawFrame();
+      let yt = 25;
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(15);
+      doc.setTextColor(30,60,110);
+      doc.text('My measurable targets for December', W/2, yt, { align:'center' });
+      yt += 6;
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10);
+      doc.setTextColor(90,70,30);
+      doc.text(studentName+'   •   '+new Date().toLocaleDateString(), W/2, yt, { align:'center' });
+      yt += 12;
+
+      const tcolW = 118, tcolX = [24, 24+tcolW+13];
+      function tLabel(x, yy, text){
+        doc.setFont('helvetica','italic');
+        doc.setFontSize(8.5);
+        doc.setTextColor(120,120,120);
+        doc.text(text, x, yy);
+        return yy + 4.8;
+      }
+      function tBody(x, yy, text, bold){
+        doc.setFont('helvetica', bold ? 'bold' : 'normal');
+        doc.setFontSize(10.5);
+        doc.setTextColor(40,40,40);
+        const ls = doc.splitTextToSize(text || '', tcolW);
+        ls.forEach(function(line){ doc.text(line, x, yy); yy += 5; });
+        return yy + 3;
+      }
+      let tBottom = yt;
+      tg.items.forEach(function(it, i){
+        const x = tcolX[i];
+        let yy = yt;
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(12);
+        doc.setTextColor(30,60,110);
+        doc.text('Target '+(i+1), x, yy);
+        doc.setDrawColor(154,97,0);
+        doc.setLineWidth(0.3);
+        doc.line(x, yy+1.8, x+tcolW, yy+1.8);
+        yy += 9;
+        const topic = TOPIC_LIST.filter(function(t){ return t.id === it.skill; })[0];
+        yy = tLabel(x, yy, 'The skill or idea I will work on');
+        yy = tBody(x, yy, topic ? (topic.pdfLabel || topic.label) : '', true);
+        yy = tLabel(x, yy, 'I will measure it as: '+(it.type === 'number' ? 'a number' : (it.type === 'proficiency' ? 'can do / can’t yet do' : '')));
+        yy = tBody(x, yy, it.measure, false);
+        yy = tLabel(x, yy, 'What I will do, and how often');
+        yy = tBody(x, yy, it.plan, false);
+        yy = tLabel(x, yy, 'I will check my result on');
+        yy = tBody(x, yy, it.date ? formatDateLong(it.date) : '', true);
+        if(yy > tBottom) tBottom = yy;
+      });
+      let yo = tBottom + 4;
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(12);
+      doc.setTextColor(30,60,110);
+      doc.text('What could get in the way, and what I will do about it', 24, yo);
+      doc.setDrawColor(154,97,0);
+      doc.setLineWidth(0.3);
+      doc.line(24, yo+1.8, W-24, yo+1.8);
+      yo += 9;
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10.5);
+      doc.setTextColor(40,40,40);
+      doc.splitTextToSize(tg.obstacle || '', W-48).forEach(function(line){ doc.text(line, 24, yo); yo += 5; });
+
+      // signature lines
+      const sy = H-34;
+      doc.setDrawColor(120,120,120);
+      doc.setLineWidth(0.25);
+      doc.line(24, sy, 100, sy);
+      doc.line(112, sy, 148, sy);
+      doc.line(165, sy, 241, sy);
+      doc.line(253, sy, 273, sy);
+      doc.setFont('helvetica','italic');
+      doc.setFontSize(8.5);
+      doc.setTextColor(120,120,120);
+      doc.text('Student signature', 24, sy+4.5);
+      doc.text('Date', 112, sy+4.5);
+      doc.text('Teacher signature', 165, sy+4.5);
+      doc.text('Date', 253, sy+4.5);
     }
 
     // ================= LAST PAGE: elements to keep practising + skills self-check =================
@@ -1972,6 +2213,9 @@
       followUpLines.forEach(function(line){ doc.text(line, 32, y2); y2 += 7; });
     }
 
+    // The targets page is always the last page of the certificate.
+    drawTargetsPage();
+
     drawFooter();
 
     const safeName = (studentName || 'student').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'student';
@@ -2011,9 +2255,12 @@
     startOverlay.hidden = true;
     phase1Overlay.hidden = true;
     endOverlay.hidden = true;
-    mainReflections = { enjoy:'', hard:'', target:'' };
-    [enjoyInput, hardInput, targetInput, canvasGradeInput].concat(scoreInputs).forEach(function(el){ if(el) el.value = ''; });
+    mainReflections = { enjoy:'', hard:'', targets:emptyTargets() };
+    [enjoyInput, hardInput, canvasGradeInput].concat(scoreInputs).forEach(function(el){ if(el) el.value = ''; });
+    clearTargets();
+    refreshSkillOptions();
     updateGradeAvg();
+    updateGate();
     resetTopicChecklist();
     gameRunning = false;
 
@@ -2193,6 +2440,7 @@
           b.classList.toggle('active', b === btn);
         });
         updateRatedCount();
+        refreshSkillOptions();
       });
     });
     updateRatedCount();
@@ -2203,11 +2451,21 @@
     if(!topicChecklistEl) return;
     topicChecklistEl.querySelectorAll('.topic-btn.active').forEach(function(b){ b.classList.remove('active'); });
     updateRatedCount();
+    refreshSkillOptions();
   }
 
   // Build the table once immediately so it's visible behind the start overlay
   buildTable();
   buildTopicChecklist();
+  [enjoyInput, hardInput, canvasGradeInput].concat(scoreInputs).forEach(function(el){ if(el) el.addEventListener('input', updateGate); });
+  const targetsBlockEl = document.getElementById('targetsBlock');
+  if(targetsBlockEl){
+    targetsBlockEl.addEventListener('input', updateGate);
+    targetsBlockEl.addEventListener('change', updateGate);
+  }
+  TARGET_NUMS.forEach(function(n){ const d = document.getElementById('t'+n+'Date'); if(d){ d.min = DEC_MIN; d.max = DEC_MAX; } });
+  refreshSkillOptions();
+  updateGate();
 })();
 </script>
   <div class="ai-credit-line">Science Department · Refined with AI</div>
