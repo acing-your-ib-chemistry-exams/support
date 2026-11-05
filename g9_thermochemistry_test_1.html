@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 9 Chemistry: thermochemistry test</title>
+<style>
+:root{--ink:#000;--soft:#555;--rule:#000;--tint:#f2f2f2;--tint2:#e6e6e6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--ink);font:17px/1.5 "Palatino Linotype",Palatino,"TeX Gyre Pagella","Book Antiqua",Georgia,serif}
+.sans,h1,h2,h3,button,.qn,.qm,.runhead,.foot,label.k,.bar,th,.tabs a{font-family:"Clear Gothic","Helvetica Neue",Helvetica,Arial,sans-serif}
+.runhead{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 16px;font-size:13px}
+.runhead .score{font-weight:700;white-space:nowrap}
+.runhead button{font-size:13px;padding:3px 10px;margin-left:8px}
+main{max-width:800px;margin:0 auto;padding:16px 16px 40px}
+h1{font-weight:400;font-size:30px;line-height:1.2;margin:18px 0 6px}
+h2{font-weight:400;font-size:23px;margin:38px 0 6px;padding-top:8px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+h2 .tot{font-size:14px}
+h3{font-weight:400;font-size:17px;margin:14px 0 4px}
+p{margin:8px 0}
+.intro{margin:6px 0 14px}
+.box{border:1px solid var(--rule);padding:10px 16px;margin:14px 0}
+.box h3{margin-top:0;font-weight:700}
+ul.nav{columns:2;margin:8px 0 0 18px;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px}
+.q{border:1px solid var(--rule);padding:12px 16px 14px;margin:18px 0;background:#fff}
+.q.practice{border-style:dashed;background:#fafafa;margin-left:14px}
+.q.done{border-width:2px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:4px}
+.qn{font-weight:700}
+.qt{font-size:15px;margin-left:8px;font-weight:400}
+.qm{white-space:nowrap}
+.qtext p:first-child{margin-top:2px}
+.fm{text-align:center;white-space:nowrap;overflow-x:auto;font-weight:700;margin:8px 0;font-size:17px}
+.fm.n{font-weight:400}
+.fields{margin:8px 0}
+.frow{text-align:center;white-space:nowrap;margin:8px 0;overflow-x:auto}
+.frow label.k{font-size:14px;margin-right:6px;white-space:normal;display:inline-block;max-width:60%;vertical-align:middle;text-align:right}
+.frow.wide{text-align:left;white-space:normal}
+input[type=text],select,textarea{font:inherit;font-size:16px;border:1px solid #000;border-radius:0;padding:4px 7px;background:#fff;color:#000}
+input.num{width:8.5em;text-align:center}
+input.txt{width:13em;text-align:center}
+select{max-width:100%}
+textarea{width:100%;min-height:7.5em;resize:vertical;line-height:1.4}
+.unit{margin-left:6px}
+.mark{display:inline-block;min-width:1.4em;font-weight:700;margin-left:6px}
+.ok input,.ok select{border-width:3px}
+.bad input,.bad select{border-style:dashed;border-width:2px}
+.fmsg{font-size:14px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;white-space:normal;display:block;margin:2px auto 0;max-width:34em;text-align:center}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+button{font-size:14px;padding:5px 12px;border:1px solid #000;background:#fff;color:#000;cursor:pointer;border-radius:0}
+button:hover,button:focus{background:var(--tint2)}
+button.main{background:#000;color:#fff}
+button.main:hover,button.main:focus{background:#333}
+button[hidden]{display:none}
+.panel{border:1px solid #000;background:var(--tint);padding:8px 14px;margin:8px 0;font-size:16px}
+.panel h4{margin:0 0 4px;font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif}
+.panel.hint{background:#fff;border-style:dashed}
+.hintl{margin:4px 0}
+.fb{margin:8px 0 2px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px}
+.fb b{font-weight:700}
+.worked{border-left:4px solid #000;padding:2px 12px;margin:10px 0;background:#fff}
+.worked h4{margin:2px 0;font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif}
+.ideas{margin:8px 0;padding:0;list-style:none;font-size:15px}
+.ideas li{margin:4px 0}
+.ideas label{cursor:pointer}
+.model{border:1px solid #000;padding:6px 12px;margin:8px 0;background:#fff;font-size:16px}
+.bank{border:1px solid #000;padding:5px 10px;margin:8px 0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;text-align:center}
+.bank span{display:inline-block;border:1px solid #888;padding:0 8px;margin:2px 3px}
+table{border-collapse:collapse;margin:8px auto;font-size:15px}
+th,td{border:1px solid #000;padding:3px 9px;text-align:center}
+th{background:var(--tint2);font-weight:700;font-size:14px}
+td.l{text-align:left}
+.tip{border-bottom:1px dotted #000;cursor:help;position:relative}
+.tip:hover::after,.tip:focus::after,.tip.on::after{content:attr(data-tip);position:absolute;left:0;top:1.5em;z-index:30;width:17em;max-width:80vw;background:#fff;border:1px solid #000;padding:5px 8px;font:14px/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;white-space:normal;box-shadow:3px 3px 0 #000}
+#ref{position:fixed;inset:0;background:#fff;z-index:50;overflow:auto;padding:16px}
+#ref[hidden]{display:none}
+#ref .in{max-width:800px;margin:0 auto}
+.close{position:sticky;top:0;float:right}
+.summary td,.summary th{padding:4px 12px}
+.foot{border-top:1px solid #000;margin-top:40px;padding-top:6px;font-size:12px}
+dl.gl dt{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;font-size:14px;margin-top:8px}
+dl.gl dd{margin:0 0 0 14px}
+.legend{font-size:14px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+@media(max-width:560px){ul.nav{columns:1}.frow label.k{max-width:100%;display:block;text-align:center;margin-bottom:3px}.fm{font-size:16px}}
+
+
+.key{border:1px solid currentColor;border-radius:6px;padding:.4em .9em;margin:.7em 0;font-size:.95em}.key p{margin:.2em 0}.key ul{margin:.2em 0 .2em 1.1em;padding:0}
+
+.vt{border-collapse:collapse;margin:.6em auto}.vt th,.vt td{border:1px solid currentColor;padding:.25em .7em;text-align:center}.vt th.rl{text-align:left;font-weight:normal}
+
+.grid td.gcell{vertical-align:top;white-space:nowrap}.grid input.num{width:6em}.grid select{max-width:11em;font-size:13px}.grid .mark{margin-left:3px}.grid .fmsg{font-size:12px;max-width:12em;white-space:normal;text-align:left}.grid th{vertical-align:middle}.grid th.rl{max-width:15em;font-size:14px}
+
+.ptools{text-align:center;margin:10px 0}.pbtn{margin:0 4px}
+@page{size:A4;margin:16mm}
+@media print{.runhead,.tools,.ptools,#savepanel,#ref,button,.panel,.fmsg{display:none!important}
+ body{font-size:11pt}.q{break-inside:avoid;page-break-inside:avoid}h2{break-after:avoid}
+ .worked{display:block}.worked[hidden]{display:none}textarea{border:1px solid #000}}
+
+.meta{border-left:3px solid currentColor;padding:4px 10px;margin:8px 0;font-size:14px}.meta select{font-size:14px;max-width:100%}.meta textarea{width:100%;font-size:14px;box-sizing:border-box}.meta .why{display:flex;flex-direction:column;gap:2px}.meta .why label{display:block}
+
+/* bond enthalpy additions */
+pre.sf{font-family:"DejaVu Sans Mono",Consolas,Menlo,monospace;font-size:15px;line-height:1.15;margin:8px 0;padding:8px 12px;background:#fff;border:1px solid #bbb;border-radius:6px;overflow-x:auto;white-space:pre;text-align:left}
+pre.sf.one{display:inline-block}
+.dg{margin:10px 0;padding:6px 8px;border:1px solid #bbb;border-radius:6px;background:#fff}
+.dgsvg svg{width:100%;height:auto;max-width:680px;display:block;margin:0 auto}
+.dgcap{margin-top:4px}
+th.gh{background:#eef2f7;text-align:left;font-weight:700;padding:5px 8px}
+table.bt{border-collapse:collapse;margin:6px 0}table.bt th,table.bt td{border:1px solid #999;padding:2px 10px;text-align:center}
+@media print{.dg{break-inside:avoid}}
+
+input.txt.eq{width:30em;max-width:100%}
+.fblist{list-style:none;margin:6px 0;padding:0}
+li.fb{border-left:6px solid #999;padding:6px 10px;margin:6px 0;background:#fff}
+li.fb.good{border-left-color:#2e7d32}li.fb.mid{border-left-color:#b8860b}li.fb.low{border-left-color:#b23a3a}li.fb.nostart{border-left-color:#bbb;color:#555}
+
+#finishbox[hidden]{display:none}
+@media print{#finishbox{display:none!important}}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .3em;line-height:1.25;font-weight:inherit}
+.fr>span{display:block;padding:0 .35em}
+.fr>span:first-child{border-bottom:1.5px solid currentColor}
+.pics{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:8px 0}
+.pics figure{margin:0;text-align:center;border:1px solid #bbb;border-radius:6px;padding:6px 8px;background:#fff}
+.pics figcaption{font-size:16px;font-weight:700}
+@media print{.pics figure{break-inside:avoid}}
+@media(max-width:560px){
+ table.vt.grid{display:block;max-width:100%;overflow-x:auto}
+ table.vt.grid th,table.vt.grid td{padding:.2em .35em;font-size:14px}
+ table.vt.grid input.num{width:5em}
+ table.vt.grid select{max-width:9em}
+}
+.scrollx{overflow-x:auto;max-width:100%}
+@media(max-width:560px){.scrollx table th,.scrollx table td{padding:.15em .3em;font-size:13px}}
+@media print{h2{break-after:avoid;page-break-after:avoid}.intro{break-after:avoid;page-break-after:avoid}}
+
+</style>
+</head>
+<body>
+<div class="runhead"><span>Grade 9 Chemistry</span><span><span class="score" id="score"></span><button id="refbtn" type="button">Reference sheet</button></span></div>
+<main>
+<h1>Thermochemistry: test</h1>
+<p class="sans" style="font-size:14px;margin-top:0">Metals and non-metals, ionic formulae, empirical formulae, shapes of molecules, system and surroundings, bond enthalpies and calorimetry. About 60 minutes. You work alone.</p>
+<div id="gate" class="box">
+<h3>Before you start</h3>
+<p class="sans" style="font-size:15px">Type your <b>first name</b> and choose your <b>chemistry set</b>. You will be given a three-digit code. Keep it: it is your code in all your saved work.</p>
+<p class="sans" style="text-align:center"><label>First name <input type="text" id="stname" autocomplete="given-name" maxlength="30" style="width:12em"></label> &nbsp; <label>Set <select id="stset"></select></label> &nbsp; <button type="button" id="stgo" class="main">Start</button></p>
+<p class="sans" id="gatemsg" style="font-size:14px;text-align:center" role="status"></p>
+<p class="sans" style="font-size:14px;text-align:center">Already started? <button type="button" class="pbtn" data-act="load">Retrieve progress</button></p>
+</div>
+<div id="savepanel" class="box" hidden>
+<div id="saveblock" hidden><h3>Save progress</h3><p class="sans" style="font-size:14px">Keep the file or the code. When you come back, press <b>Retrieve progress</b> and give it back.</p><textarea id="savecode" readonly rows="3" style="width:100%;font-size:12px"></textarea><p><button type="button" id="copycode">Copy the code</button> <button type="button" id="saveclose">Close</button></p></div>
+<div id="loadblock" hidden><h3>Retrieve progress</h3><p class="sans" style="font-size:14px">Choose the file you saved: <input type="file" id="loadfile" accept=".txt,text/plain"></p><p class="sans" style="font-size:14px">Or paste the code here:</p><textarea id="loadcode" rows="3" style="width:100%;font-size:12px"></textarea><p><button type="button" id="loadgo" class="main">Load</button> <button type="button" id="loadclose">Close</button></p></div>
+<p class="sans" id="savemsg" style="font-size:14px" role="status"></p>
+</div>
+<div id="testbody" hidden>
+<p class="sans" id="who" style="font-size:15px;margin:4px 0"></p>
+<div class="ptools sans" id="ptools"><button type="button" class="pbtn" data-act="save">Save progress</button> <button type="button" class="pbtn" data-act="load">Retrieve progress</button> <button type="button" class="pbtn" data-act="pdf">Save as a .pdf file</button></div>
+<div class="box">
+<h3>How this test works</h3>
+<ul style="margin:6px 0 6px 18px;padding:0">
+<li>The test takes about <b>60 minutes</b>. A timer at the top right counts the minutes. It does not stop you.</li>
+<li>Answer every question. Nothing is marked until you press <b>Finish and mark my test</b> at the end. After that you cannot change your answers.</li>
+<li>Every question has a <b>Cheat sheet</b> button. Open it whenever you need it. There are no hints.</li>
+<li>Questions marked <b>Working</b> show you the steps. They score marks, so write them even when you are not sure of the final answer.</li>
+<li>Write answers to calculations as numbers. The unit is shown beside the box. Type formulae on one line, for example <b>Ca(OH)2</b>.</li>
+<li>The <b>Reference sheet</b> button (top right) opens the table of ions, the molar masses, the bond enthalpies and the calorimetry formulae. Move the pointer over a dotted word to see what it means.</li>
+<li><b>Save progress</b> keeps your answers in a file. <b>Retrieve progress</b> brings them back if you need to stop. After you finish, <b>Save as a .pdf file</b> opens the print window: choose <b>Save as PDF</b> as the printer. Upload the saved file to Canvas.</li>
+<li>When you finish, you get your score, your <b>strengths</b>, your <b>areas of growth</b> and your <b>targets for improvement</b>, with the worked answer under every question.</li>
+</ul>
+</div>
+<p class="sans" style="font-size:14px;margin-bottom:2px">Sections</p>
+<ul class="nav" id="nav"></ul>
+<div id="sections"></div>
+<div class="box" id="finishbox"><h3>Finished?</h3><p class="sans" style="font-size:15px;margin:4px 0">Check that you have answered every question. Then press the button.</p><p style="text-align:center"><button id="finishbtn" type="button" class="main">Finish and mark my test</button></p><p class="sans" id="finishmsg" style="font-size:14px;text-align:center" role="status"></p></div>
+<h2 id="results"><span>Your results</span></h2>
+<div id="feedback" class="box fbbox" aria-live="polite"></div>
+<table class="summary"><thead><tr><th class="l">Section</th><th>Marks</th><th>Out of</th><th>Percent</th></tr></thead><tbody id="sumbody"></tbody></table>
+<div class="box"><h3>Looking back</h3><p class="sans" style="font-size:15px;margin:4px 0">In a few words: what part of the test did you find easiest, and what will you practise before the next test?</p><textarea id="rend" rows="3" style="width:100%" aria-label="what I learned"></textarea></div>
+<div class="ptools sans"><button type="button" class="pbtn" data-act="save">Save progress</button> <button type="button" class="pbtn" data-act="load">Retrieve progress</button> <button type="button" class="pbtn" data-act="pdf">Save as a .pdf file</button></div>
+<p style="text-align:center"><button id="copy" type="button" class="main">Copy my results</button> <span id="copied" class="legend"></span></p>
+<h2><span>Glossary</span></h2>
+<dl class="gl" id="gl"></dl>
+</div>
+<div class="foot">Science Department · Refined with AI</div>
+</main>
+<div id="ref" hidden><div class="in"><button id="refclose" type="button" class="close main">Close</button><h2 style="border-top:0"><span>Reference sheet</span></h2><div id="refbody"></div></div></div>
+<script>
+/* ===== reference data and chemistry helpers ===== */
+const AR={H:1,C:12,N:14,O:16,Na:23,Mg:24,Al:27,P:31,S:32,Cl:35.5,K:39,Ca:40,Fe:56,Cu:64,Zn:65};
+const AR_ORDER=['H','C','N','O','Na','Mg','Al','P','S','Cl','K','Ca','Fe','Cu','Zn'];
+
+function parseF(s){
+  let i=0;
+  const num=(d)=>{let m=/^\d+/.exec(s.slice(i));if(m){i+=m[0].length;return +m[0];}return d===undefined?1:d;};
+  function grp(){
+    const c={};
+    while(i<s.length){
+      const ch=s[i];
+      if(ch==='('){i++;const g=grp();i++;const n=num();for(const k in g)c[k]=(c[k]||0)+g[k]*n;}
+      else if(ch===')')break;
+      else if(/[A-Z]/.test(ch)){let e=ch;i++;if(i<s.length&&/[a-z]/.test(s[i])){e+=s[i];i++;}const n=num();c[e]=(c[e]||0)+n;}
+      else if(ch==='·'||ch==='.'){i++;const m=num();const g=grp();for(const k in g)c[k]=(c[k]||0)+g[k]*m;break;}
+      else i++;
+    }
+    return c;
+  }
+  return grp();
+}
+function Mr(f){const c=parseF(f);let t=0;for(const e in c){if(AR[e]===undefined)throw new Error('Unknown element '+e+' in '+f);t+=AR[e]*c[e];}return Math.round(t*1000)/1000;}
+function atoms(f){const c=parseF(f);let t=0;for(const e in c)t+=c[e];return t;}
+function nice(x,dp){if(dp!==undefined)return (+x).toFixed(dp);return String(+(+x).toPrecision(10));}
+/* subscript-format a chemical formula for display */
+function F(f){return f.replace(/([A-Za-z\)])(\d+)/g,'$1<sub>$2</sub>');}
+function ionHTML(f,c){return F(f)+'<sup>'+(Math.abs(c)>1?Math.abs(c):'')+(c>0?'+':'−')+'</sup>';}
+
+/* ions */
+const CAT=[
+ {f:'Na',c:1,n:'sodium'},{f:'K',c:1,n:'potassium'},{f:'NH4',c:1,n:'ammonium',poly:1},
+ {f:'Mg',c:2,n:'magnesium'},{f:'Ca',c:2,n:'calcium'},{f:'Zn',c:2,n:'zinc'},
+ {f:'Cu',c:2,n:'copper(II)'},{f:'Fe',c:2,n:'iron(II)'},{f:'Fe',c:3,n:'iron(III)'},{f:'Al',c:3,n:'aluminium'}];
+const AN=[
+ {f:'Cl',c:1,n:'chloride'},{f:'OH',c:1,n:'hydroxide',poly:1},{f:'NO3',c:1,n:'nitrate',poly:1},
+ {f:'O',c:2,n:'oxide'},{f:'S',c:2,n:'sulphide'},{f:'SO4',c:2,n:'sulphate',poly:1},
+ {f:'CO3',c:2,n:'carbonate',poly:1},{f:'PO4',c:3,n:'phosphate',poly:1}];
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+function mk(cat,an){
+  const g=gcd(cat.c,an.c),nc=an.c/g,na=cat.c/g;
+  const part=(ion,n)=>n===1?ion.f:(ion.poly?'('+ion.f+')'+n:ion.f+n);
+  return {f:part(cat,nc)+part(an,na),name:cat.n+' '+an.n,cat,an,nc,na,
+          brackets:(cat.poly&&nc>1)||(an.poly&&na>1)};
+}
+const COMBOS=[];for(const c of CAT)for(const a of AN)COMBOS.push(mk(c,a));
+const BR=COMBOS.filter(x=>x.brackets);
+const NB=COMBOS.filter(x=>!x.brackets&&x.nc+x.na>=2);
+const TM=COMBOS.filter(x=>/copper|iron|zinc/.test(x.cat.n));
+function find(cn,an,cc){return COMBOS.find(x=>x.cat.n===cn&&x.an.n===an&&(cc===undefined||x.cat.c===cc));}
+
+/* molecules */
+const MOLS={CH4:'methane',NH3:'ammonia',H2O:'water',CO2:'carbon dioxide',N2:'nitrogen',O2:'oxygen',C2H5OH:'ethanol',
+  C2H6:'ethane',HCl:'hydrogen chloride',SO2:'sulphur dioxide',C3H8:'propane',H2SO4:'sulphuric acid',H2:'hydrogen'};
+
+
+const KJ='kJ',KJM='kJ mol<sup>−1</sup>';
+const I=s=>`<i>${s}</i>`;
+const fm=(h,n)=>`<div class="fm${n?' n':''}">${h}</div>`;
+/* stacked fraction: no division signs or slashes anywhere in this test */
+const frac=(a,b)=>`<span class="fr"><span>${a}</span><span>${b}</span></span>`;
+
+const BOND_ORDER=['H–H','H–Cl','H–O','Br–Br','Cl–Cl','O=O','C–C','N–H','C=C','C≡C','C–H','C–Cl','C–Br','C–O','C=O','N≡N'];
+const BE={'H–H':436,'H–Cl':432,'H–O':463,'Br–Br':193,'Cl–Cl':243,'O=O':498,'C–C':348,'N–H':391,'C=C':612,'C≡C':838,'C–H':412,'C–Cl':346,'C–Br':276,'C–O':360,'C=O':743,'N≡N':945};
+const VAL={H:1,C:4,N:3,O:2,Cl:1,Br:1};
+const bondEls=b=>b.split(/[–=≡]/);
+const bondOrd=b=>b.indexOf('≡')>=0?3:(b.indexOf('=')>=0?2:1);
+
+const minus=x=>(x<0?'−':(x>0?'+':''))+Math.abs(x);
+
+/* species: formula, name, atoms, bonds (type: number in ONE molecule), structural formula (monospace) */
+const SP={
+ H2:{n:'hydrogen',atoms:{H:2},bonds:{'H–H':1},sf:['H-H']},
+ Cl2:{n:'chlorine',atoms:{Cl:2},bonds:{'Cl–Cl':1},sf:['Cl-Cl']},
+ Br2:{n:'bromine',atoms:{Br:2},bonds:{'Br–Br':1},sf:['Br-Br']},
+ O2:{n:'oxygen',atoms:{O:2},bonds:{'O=O':1},sf:['O=O']},
+ N2:{n:'nitrogen',atoms:{N:2},bonds:{'N≡N':1},sf:['N≡N']},
+ HCl:{n:'hydrogen chloride',atoms:{H:1,Cl:1},bonds:{'H–Cl':1},sf:['H-Cl']},
+ H2O:{n:'water (steam)',atoms:{H:2,O:1},bonds:{'H–O':2},sf:['H-O-H']},
+ CO2:{n:'carbon dioxide',atoms:{C:1,O:2},bonds:{'C=O':2},sf:['O=C=O']},
+ NH3:{n:'ammonia',atoms:{N:1,H:3},bonds:{'N–H':3},sf:['H-N-H','  |','  H']},
+ CH4:{n:'methane',atoms:{C:1,H:4},bonds:{'C–H':4},sf:['  H','  |','H-C-H','  |','  H']},
+ C2H2:{n:'ethyne',atoms:{C:2,H:2},bonds:{'C≡C':1,'C–H':2},sf:['H-C≡C-H']},
+ C2H4:{n:'ethene',atoms:{C:2,H:4},bonds:{'C=C':1,'C–H':4},sf:['H     H',' \\   /','  C=C',' /   \\','H     H']},
+ C2H6:{n:'ethane',atoms:{C:2,H:6},bonds:{'C–C':1,'C–H':6},sf:['  H H','  | |','H-C-C-H','  | |','  H H']},
+ C2H4Br2:{n:'1,2-dibromoethane',atoms:{C:2,H:4,Br:2},bonds:{'C–C':1,'C–H':4,'C–Br':2},sf:['  H H','  | |','H-C-C-H','  | |',' Br Br']},
+ C2H4Cl2:{n:'1,2-dichloroethane',atoms:{C:2,H:4,Cl:2},bonds:{'C–C':1,'C–H':4,'C–Cl':2},sf:['  H H','  | |','H-C-C-H','  | |',' Cl Cl']},
+ C2H5OH:{n:'ethanol',atoms:{C:2,H:6,O:1},bonds:{'C–C':1,'C–H':5,'C–O':1,'H–O':1},sf:['  H H','  | |','H-C-C-O-H','  | |','  H H']},
+ CH3Cl:{n:'chloromethane',atoms:{C:1,H:3,Cl:1},bonds:{'C–H':3,'C–Cl':1},sf:['  H','  |','H-C-Cl','  |','  H']},
+ CH3COOH:{n:'ethanoic acid',atoms:{C:2,H:4,O:2},bonds:{'C–H':3,'C–C':1,'C=O':1,'C–O':1,'H–O':1},sf:['  H O','  | ‖','H-C-C-O-H','  |','  H']},
+ ClCH2COOH:{n:'chloroethanoic acid',atoms:{C:2,H:3,O:2,Cl:1},bonds:{'C–H':2,'C–Cl':1,'C–C':1,'C=O':1,'C–O':1,'H–O':1},sf:['   H O','   | ‖','Cl-C-C-O-H','   |','   H']}
+};
+/* check every species: valences must match the bond list */
+(function(){for(const k in SP){const s=SP[k],tot={};
+  for(const b in s.bonds){const n=s.bonds[b],o=bondOrd(b);bondEls(b).forEach(e=>{tot[e]=(tot[e]||0)+n*o;});}
+  for(const e in s.atoms){if(tot[e]!==VAL[e]*s.atoms[e])throw new Error('Valence problem in '+k+' for '+e);}
+  for(const e in tot){if(!s.atoms[e])throw new Error('Extra element '+e+' in '+k);}
+  for(const b in s.bonds){if(BE[b]===undefined)throw new Error('No bond enthalpy for '+b);}
+}})();
+
+/* reaction: sides are arrays of [coefficient, species] */
+function mkRx(id,rs,ps,o){
+  const rx={id,rs,ps,all:'(g)'};Object.assign(rx,o||{});
+  const side=(a)=>{const agg={};a.forEach(([c,s])=>{for(const b in SP[s].bonds)agg[b]=(agg[b]||0)+c*SP[s].bonds[b];});
+    const rows=BOND_ORDER.filter(b=>agg[b]).map(b=>({b,n:agg[b],e:BE[b],t:agg[b]*BE[b]}));
+    return {rows,total:rows.reduce((t,r)=>t+r.t,0)};};
+  const atomsOf=a=>{const t={};a.forEach(([c,s])=>{for(const e in SP[s].atoms)t[e]=(t[e]||0)+c*SP[s].atoms[e];});return t;};
+  const A=atomsOf(rs),B=atomsOf(ps);
+  for(const e in A)if(A[e]!==B[e])throw new Error('Unbalanced '+id+' '+e);
+  for(const e in B)if(A[e]!==B[e])throw new Error('Unbalanced '+id+' '+e);
+  rx.A=A;rx.brk=side(rs);rx.mk=side(ps);rx.dH=rx.brk.total-rx.mk.total;
+  if(rx.dH===0)throw new Error('Zero dH '+id);
+  return rx;
+}
+function eqHTML(rx){
+  const side=a=>a.map(([c,s])=>(c>1?c:'')+F(s)+'(g)').join(' + ');
+  return side(rx.rs)+' → '+side(rx.ps);
+}
+function atomsHTML(rx){
+  const order=['C','H','N','O','Cl','Br'];
+  return order.filter(e=>rx.A[e]).map(e=>(rx.A[e]>1?rx.A[e]:'')+e).join(' + ');
+}
+function sideLabel(a){return a.map(([c,s])=>(c>1?c:'')+F(s)).join(' + ');}
+/* structural formulae side by side */
+function joinSF(rx){
+  const blocks=[];const seps=[];
+  const add=(a,arrowAfter)=>a.forEach(([c,s],i)=>{
+    for(let k=0;k<c;k++){blocks.push(SP[s].sf);seps.push(k<c-1||i<a.length-1?' + ':(arrowAfter?'  →  ':''));}});
+  add(rx.rs,true);const nr=blocks.length;add(rx.ps,false);
+  seps[nr-1]='  →  ';seps[blocks.length-1]='';
+  const H=Math.max.apply(null,blocks.map(b=>b.length)),mid=Math.floor(H/2);
+  const rows=Array.from({length:H},()=>'');
+  blocks.forEach((b,i)=>{
+    const w=Math.max.apply(null,b.map(l=>l.length)),off=Math.floor((H-b.length)/2);
+    for(let r=0;r<H;r++){const l=(r>=off&&r<off+b.length)?b[r-off]:'';rows[r]+=l+' '.repeat(w-l.length);}
+    const sp=seps[i];for(let r=0;r<H;r++)rows[r]+=(r===mid?sp:' '.repeat(sp.length));
+  });
+  return '<pre class="sf" aria-label="structural formulae">'+rows.join('\n').replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre>';
+}
+function sfOne(s){return '<pre class="sf one">'+SP[s].sf.join('\n').replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre>';}
+
+/* the reaction pool, all gas phase, all from the table of average bond enthalpies */
+const RX={
+ hcl:mkRx('hcl',[[1,'H2'],[1,'Cl2']],[[2,'HCl']]),
+ hclrev:mkRx('hclrev',[[2,'HCl']],[[1,'H2'],[1,'Cl2']]),
+ h2o:mkRx('h2o',[[2,'H2'],[1,'O2']],[[2,'H2O']]),
+ h2orev:mkRx('h2orev',[[2,'H2O']],[[2,'H2'],[1,'O2']]),
+ ethyne:mkRx('ethyne',[[1,'C2H2'],[1,'H2']],[[1,'C2H4']]),
+ ethene_br:mkRx('ethene_br',[[1,'C2H4'],[1,'Br2']],[[1,'C2H4Br2']]),
+ ethene_cl:mkRx('ethene_cl',[[1,'C2H4'],[1,'Cl2']],[[1,'C2H4Cl2']]),
+ ethene_h:mkRx('ethene_h',[[1,'C2H4'],[1,'H2']],[[1,'C2H6']]),
+ ethanol:mkRx('ethanol',[[1,'C2H4'],[1,'H2O']],[[1,'C2H5OH']]),
+ nh3:mkRx('nh3',[[1,'N2'],[3,'H2']],[[2,'NH3']]),
+ nh3rev:mkRx('nh3rev',[[2,'NH3']],[[1,'N2'],[3,'H2']]),
+ ch4:mkRx('ch4',[[1,'CH4'],[2,'O2']],[[1,'CO2'],[2,'H2O']]),
+ ch4cl:mkRx('ch4cl',[[1,'CH4'],[1,'Cl2']],[[1,'CH3Cl'],[1,'HCl']]),
+ c2h4o:mkRx('c2h4o',[[1,'C2H4'],[3,'O2']],[[2,'CO2'],[2,'H2O']]),
+ ethyne2:mkRx('ethyne2',[[1,'C2H2'],[2,'H2']],[[1,'C2H6']]),
+ acid:mkRx('acid',[[1,'CH3COOH'],[1,'Cl2']],[[1,'ClCH2COOH'],[1,'HCl']])
+};
+const EASY=['hcl','hclrev','h2o','h2orev','ethyne','nh3rev'];
+const MID=['ethene_br','ethene_cl','ethene_h','ethanol','nh3','ch4cl','ethyne2','ch4'];
+const HARD=['c2h4o','acid','ch4','ethyne2'];
+
+
+/* shapes and bond angles look-up table */
+const SHAPE_TABLE=[['CH4','methane','tetrahedral','109.5°'],['NH3','ammonia','pyramid','107°'],['H2O','water','bent','104.5°'],['CO2','carbon dioxide','straight line (linear)','180°']];
+function shapeTable(){
+  return '<table><tr><th>Molecule</th><th>Formula</th><th>Shape</th><th>Bond angle</th></tr>'
+   +SHAPE_TABLE.map(r=>`<tr><td class="l">${r[1]}</td><td>${F(r[0])}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')+'</table>';
+}
+
+
+/* ===== glossary, reference sheet, feedback ===== */
+const GLOSS={
+ 'exothermic':'A reaction that gives out energy to the surroundings. The temperature of the surroundings rises. ΔH is negative.',
+ 'endothermic':'A reaction that takes in energy from the surroundings. The temperature of the surroundings falls. ΔH is positive.',
+ 'enthalpy change':'The energy transferred in a reaction, written ΔH. Its units are kJ mol⁻¹.',
+ 'system':'The chemicals that are reacting. They are the part we are studying.',
+ 'surroundings':'Everything else: the water, the cup or tube, the thermometer and the air.',
+ 'law of conservation of energy':'Energy cannot be created or destroyed. It can only be transferred. The total energy stays the same.',
+ 'bond enthalpy':'The energy needed to break one mole of a bond in gaseous molecules, in kJ mol⁻¹. The same amount of energy is given out when one mole of that bond forms.',
+ 'bonds broken':'The bonds in the reactants that are pulled apart. This takes energy in.',
+ 'bonds made':'The new bonds that form in the products. This gives energy out.',
+ 'bond angle':'The angle between two bonds that join the same atom.',
+ 'tetrahedral':'A shape with a central atom and four bonds pointing to the corners of a tetrahedron. The bond angle is 109.5°.',
+ 'pyramid':'A shape with a central atom, three bonds and one lone pair. The bond angle is about 107°.',
+ 'bent':'A shape with a central atom, two bonds and two lone pairs. The bond angle is about 104.5°.',
+ 'molar mass':'The mass of one mole of a substance, in g mol⁻¹. Add the atomic masses (Ar) of all the atoms in the formula.',
+ 'mole':'A fixed number of particles, the same for every substance. The amount of a substance, n, is measured in mol.',
+ 'covalent':'A bond in which atoms share electrons. Found between non-metal atoms.',
+ 'ionic':'A compound of ions, made from a metal and a non-metal. The ions are held together by the attraction between positive and negative charges.',
+ 'metal':'An element on the left or in the middle of the periodic table. Metals form positive ions.',
+ 'non-metal':'An element on the right of the periodic table (and hydrogen). Non-metals form negative ions or share electrons.',
+ 'empirical formula':'The simplest whole-number ratio of the atoms of each element in a compound.',
+ 'polyatomic ion':'An ion made of several atoms joined together, such as OH⁻, NO₃⁻, SO₄²⁻ or NH₄⁺. Use brackets around it when you need more than one.',
+ 'cation':'A positive ion, usually formed by a metal.',
+ 'anion':'A negative ion, usually formed by a non-metal or a group of non-metals.',
+ 'limiting reactant':'The reactant that is used up first. It decides how much product forms.',
+ 'excess':'More of a reactant than is needed. Some is left over when the reaction finishes.',
+ 'energy level diagram':'A diagram with energy going up the page. Each level is a set of substances. Arrows show energy taken in (up) or given out (down).',
+ 'reactants':'The substances at the start of a reaction, on the left of the arrow.',
+ 'products':'The substances made in a reaction, on the right of the arrow.',
+ 'concentration':'The amount of solute in a volume of solution, here in mol dm⁻³.',
+ 'ratio':'A comparison of amounts. For example, 2 : 3.',
+ 'calorimetry':'Measuring the energy transferred in a reaction from the temperature change of water.'
+};
+function REF(){
+  return '<h3>Metals, non-metals and types of compound</h3>'+CH_TYPE+'<h3>Table of ions</h3>'+ionTables()
+   +'<h3>Molar mass (atomic mass, A<sub>r</sub>) in g mol<sup>−1</sup></h3><div class="scrollx"><table><tr>'+AR_ORDER.map(e=>`<th>${e}</th>`).join('')+'</tr><tr>'+AR_ORDER.map(e=>`<td>${AR[e]}</td>`).join('')+'</tr></table></div>'
+   +'<h3>Shapes and bond angles</h3>'+shapeTable()
+   +'<h3>Average bond enthalpies (kJ mol<sup>−1</sup>)</h3><p class="legend">– is a single bond, = a double bond, ≡ a triple bond.</p>'+bondTable()
+   +fm('Δ'+I('H')+' = (sum of bonds broken) − (sum of bonds made)')
+   +'<h3>System, surroundings and energy</h3>'+CH_SYS+'<h3>Calorimetry</h3>'+CH_CAL;
+}
+/* ---- feedback ---- */
+const FB={
+ '1':{nx:'learn the short list of non-metals and decide metal or non-metal before deciding ionic or covalent',skill:'recognising metals and non-metals and ionic and covalent compounds',strong:'You recognise metals and non-metals, and you use them to decide between ionic and covalent molecular compounds.',grow:'You can sort many elements and compounds. Check each one against the short list of non-metals: a metal with a non-metal is ionic, and non-metals only are covalent molecular.',target:'Learn the short list of non-metals (H, C, N, O, P, S, Cl and the noble gases). Then practise: first decide metal or non-metal for each element, then decide ionic or covalent molecular.'},
+ '2':{nx:'practise writing ionic formulae by balancing the charges and using brackets for polyatomic ions',skill:'writing formulae of ionic compounds',strong:'You write ionic formulae correctly by balancing the charges, with brackets round polyatomic ions.',grow:'You can write many ionic formulae. Check that the charges add up to zero, and use brackets when you need more than one polyatomic ion.',target:'Use the table of ions. Write each ion with its charge, find how many of each make the charges add up to zero, and put brackets round a polyatomic ion when you need more than one.'},
+ '3':{nx:'practise the vertical table for empirical formulae, one column for each element, and the step of dividing by the smallest',skill:'working out empirical formulae',strong:'You work out empirical formulae from percentages, step by step, and you link the formula to the charges on the ions.',grow:'You have most of the steps. Check the moles for each element, divide every number of moles by the smallest, and think about whether each answer is more or less than one mole.',target:'Practise the vertical table: write “Let’s take 100 g of the compound”, then mass, molar mass, moles, divide by the smallest, and the whole-number ratio. Check the ratio against the ion charges.'},
+ '4':{nx:'learn the four shapes and their bond angles from the look-up table and picture each one',skill:'shapes of molecules and bond angles',strong:'You recognise the shape of each molecule from its picture and know the bond angle.',grow:'You know some shapes and angles. Use the look-up table: tetrahedral is 109.5°, pyramid is 107°, bent is 104.5° and a straight line is 180°.',target:'Learn the table of shapes and bond angles. Practise by looking at a picture, counting the bonds, and then naming the shape.'},
+ '5':{nx:'learn that energy lost by the system equals energy gained by the surroundings, and say it using the words system and surroundings',skill:'system, surroundings and the Law of Conservation of Energy',strong:'You identify the system and the surroundings, and you explain that energy is transferred, not created or destroyed, so the energy lost by one equals the energy gained by the other.',grow:'You can identify the system and the surroundings. Now make sure you state the Law of Conservation of Energy and say that the energy lost by the system equals the energy gained by the surroundings.',target:'Learn the definitions: the system is the reacting chemicals and the surroundings are everything else. Practise saying which way energy moves in an exothermic and in an endothermic reaction, and state the Law of Conservation of Energy.'},
+ '6':{nx:'practise counting the bonds broken and made, and finding the difference between the energy in and the energy out',skill:'bond enthalpies and finding ΔH from bonds broken and bonds made',strong:'You identify the bonds broken and made, add up the energies, and find ΔH as the difference, with the correct sign.',grow:'You can find the bonds broken and made. Check the totals, and remember that ΔH is bonds broken minus bonds made. A bigger bonds-made total means a negative ΔH.',target:'Practise counting every bond in each molecule, multiplying by the number in front of the formula, and adding. Remember: breaking bonds takes energy in, making bonds gives energy out, and ΔH is broken minus made.'},
+ '7':{nx:'practise the calorimetry steps in order: total volume, Δt, q, q in kJ, moles, then ΔH with its sign',skill:'calorimetry: finding ΔH and moles from an experiment',strong:'You work through calorimetry calculations in the right order, find the moles correctly, and put the sign on ΔH last.',grow:'You can do the main steps. Check the total volume, that q is changed from J to kJ, that the moles are for the limiting reactant, and the sign of ΔH.',target:'Learn the steps: total volume, Δt, q = v × 4.2 × Δt, q in kJ, moles, ΔH, and the sign last. Temperature rise is exothermic and ΔH is negative. Temperature fall is endothermic and ΔH is positive.'}
+};
+const pc=(g,m)=>m?Math.round(100*g/m):0;
+function secStats(){
+  return SECS.map(s=>{const es=QS.filter(e=>e.sec===s.id);let m=0,g=0;
+    es.forEach(e=>{const c=SC[e.id]||{};m+=cardMarks(e);g+=c.got||0;});
+    return {id:s.id,title:s.title,m,g,p:m?g/m:0,f:FB[s.id]||{skill:s.title,strong:'',grow:'',target:''}};});
+}
+function overallWords(p){return p>=0.85?'a strong result across the topic':p>=0.65?'a secure result, with some clear targets':p>=0.45?'a developing result, with important targets to work on':'a result that shows the foundations still need building';}
+/* indicative level on the Unit 2 rubric (levels 2 to 7): the teacher moderates this */
+const LEVELS={
+ 2:'Level 2: not yet linking energy changes to the difference between the energy needed to break bonds and the energy given out forming bonds.',
+ 3:'Level 3: ideas about energy changes and bonds are present, with a significant frequency of errors.',
+ 4:'Level 4: close to proficient with errors. Identifies some bonds, recognises that reactions involve energy changes, describes simple energy transfers and states that energy is conserved.',
+ 5:'Level 5: proficient. Identifies the main bonds broken and formed, knows that breaking bonds needs energy and forming bonds releases it, describes energy transfer between system and surroundings and states the Law of Conservation of Energy.',
+ 6:'Level 6: identifies all bonds broken and formed and describes how the total energy change equals the difference between the energy of the bonds broken and formed.',
+ 7:'Level 7: goes beyond stating the Law of Conservation of Energy and shows that the energy gained or lost by the system equals the energy lost or gained by the surroundings.'};
+function rubricLevel(){
+  const st=secStats(),t=totals(),p=t.m?t.g/t.m:0;
+  const by=id=>(st.find(x=>x.id===id)||{p:0}).p;
+  let L=p>=0.85?7:p>=0.70?6:p>=0.55?5:p>=0.40?4:p>=0.25?3:2;
+  if(L>=6&&by('6')<0.7)L=5;
+  if(L>=7&&(by('5')<0.75||by('6')<0.85))L=6;
+  if(L>=5&&by('5')<0.4)L=4;
+  return L;
+}
+function reportText(){
+  if(!FIN)return '';
+  const t=totals(),st=secStats(),n=STU.name||'The student',p=t.m?t.g/t.m:0;
+  const S=st.filter(x=>x.p>=0.8),G=st.filter(x=>x.p>=0.5&&x.p<0.8),T=st.filter(x=>x.p<0.5);
+  const j=a=>a.map(x=>x.f.skill).join('; ');
+  let s='Ideas for the report card\n'+n+' scored '+t.g+' out of '+t.m+' ('+pc(t.g,t.m)+'%) on the Grade 9 Chemistry test on thermochemistry, '+overallWords(p)+'. ';
+  s+=S.length?'Strengths: '+j(S)+'. ':n+' is building the foundations in this topic. ';
+  if(G.length)s+='Areas of growth: '+j(G)+'. ';
+  if(T.length)s+='Targets for improvement: '+T.map(x=>x.f.skill).join('; ')+'. Next steps: '+n+' should '+T.slice(0,2).map(x=>x.f.nx).join(' and ')+'. ';
+  s+='\nIndicative rubric level (Unit 2, Chemical Reactions and Energy Transfer, for the teacher to moderate): '+rubricLevel()+'. '+LEVELS[rubricLevel()];
+  return s;
+}
+function feedbackHTML(){
+  if(!FIN)return '<p class="legend">Your results and feedback appear here when you finish the test.</p>';
+  const t=totals(),st=secStats(),p=t.m?t.g/t.m:0;
+  const S=st.filter(x=>x.p>=0.8),G=st.filter(x=>x.p>=0.5&&x.p<0.8),T=st.filter(x=>x.p<0.5);
+  const li=(x,txt,c)=>'<li class="fb '+c+'"><b>'+x.id+' '+x.title+'</b> ('+x.g+' out of '+x.m+'): '+txt+'</li>';
+  const rev=QS.filter(e=>{const c=SC[e.id]||{};return (c.got||0)<cardMarks(e);}).map(e=>e.id+' ('+((SC[e.id]||{}).got||0)+' out of '+cardMarks(e)+')');
+  const L=rubricLevel();
+  return '<h3>Your result</h3><p style="font-size:1.1em"><b>'+t.g+' out of '+t.m+' ('+pc(t.g,t.m)+'%)</b> &nbsp; Time taken: '+fmtT(EL)+'</p><p>This is '+overallWords(p)+'. Working scores marks, so every correct step counts.</p>'
+   +'<h4>Strengths</h4>'+(S.length?'<ul class="fblist">'+S.map(x=>li(x,x.f.strong,'good')).join('')+'</ul>':'<p>You have not reached 80% in a section yet. '+(G.length?'Your areas of growth below show where you are closest.':'Start with the targets below.')+'</p>')
+   +'<h4>Areas of growth</h4>'+(G.length?'<ul class="fblist">'+G.map(x=>li(x,x.f.grow,'mid')).join('')+'</ul>':'<p>None. Each section is either a strength or a target.</p>')
+   +'<h4>Targets for improvement</h4>'+(T.length?'<ul class="fblist">'+T.map(x=>li(x,x.f.target,'low')).join('')+'</ul>':'<p>No section is below 50%. Choose the weakest section in your areas of growth as your target.</p>')
+   +(rev.length?'<p class="legend">Questions where you lost marks: '+rev.join(', ')+'. The worked answer under each question shows the method.</p>':'<p class="legend">You have full marks on every question.</p>')
+   +'<h4>Where you are on the Unit 2 rubric</h4><p>Indicative level: <b>'+L+'</b>. '+LEVELS[L]+' Your teacher will confirm the level.</p>'
+   +'<h4>Ideas for the report card</h4><p>'+reportText().replace(/^Ideas for the report card\n/,'').replace(/\n/g,'<br>')+'</p>';
+}
+
+/* ===== engine: registry, checking, rendering, scoring ===== */
+let SEED=Math.floor(Math.random()*2147483647);
+function seedFor(id){let h=SEED>>>0;for(let i=0;i<id.length;i++)h=(Math.imul(h^id.charCodeAt(i),16777619)+0x9e3779b9)>>>0;return h;}
+function RNG(det,seed){
+  let s=seed;
+  const rnd=seed===undefined?Math.random:function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const r={det,seeded:seed!==undefined,
+    pick(a){return det?a[0]:a[Math.floor(rnd()*a.length)];},
+    int(a,b){return det?a:a+Math.floor(rnd()*(b-a+1));},
+    shuffle(a){const b=a.slice();if(det)return b;for(let i=b.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;},
+    sample(a,n){return det?a.slice(0,n):r.shuffle(a).slice(0,n);}
+  };return r;
+}
+const SECS=[],QS=[],SC={},LOG=[];
+const SETS=['G10 Industrial Chem','01A (F-day test)','02A (B-Day test)','04A (B-Day test)','05A (E-day test)'];
+const STU={name:'',set:'',code:''};
+const TEST=true;let FIN=false,T0=0,EL=0;
+const curEl=()=>FIN?EL:EL+(T0?Date.now()-T0:0);
+const fmtT=ms=>{const s=Math.floor(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+const CONF=['Not at all confident','A little confident','Fairly confident','Very confident'];
+const WHY=['I did not know what to do first','I did not know which bonds are broken or made','I counted the bonds wrongly','I mixed up bonds broken and bonds made','I got the sign of ΔH wrong','I could not find the molar mass or the moles','I got stuck with the calculator','I did not understand the words','I made a careless slip','I ran out of time'];
+function stuCode(name,set){let h=7;const s=(name.trim().toLowerCase()+'|'+set.slice(0,3));for(let i=0;i<s.length;i++)h=(Math.imul(h,31)+s.charCodeAt(i))>>>0;return String(100+(h%900));}
+function fileStem(){const n=STU.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]/g,'')||'student';return (STU.set.slice(0,3)||'set')+'_'+n+'_'+(STU.code||'000');}
+function startTest(name,set){
+  name=(name||'').trim();if(!name||!set)return false;
+  STU.name=name;STU.set=set;STU.code=stuCode(name,set);
+  document.getElementById('who').innerHTML='<b>'+esc(name)+'</b> · Set '+esc(set)+' · Your code: <b>'+STU.code+'</b>';
+  document.getElementById('gate').hidden=true;document.getElementById('testbody').hidden=false;
+  T0=Date.now();window.scrollTo(0,0);return true;
+}
+function sec(id,title,intro,ext){SECS.push({id,title,intro:intro||'',ext:!!ext});}
+function def(id,secId,x){
+  const e={id,sec:secId,gen:null,list:[],i:0};
+  if(typeof x==='function'){e.gen=x;e.spec=x(RNG(false,seedFor(id)));e.last=e.spec.html;}
+  else{e.spec=x;e.list=x.practice||[];}
+  QS.push(e);return e;
+}
+/* ---- field constructors ---- */
+const num=(label,ans,unit,o)=>Object.assign({k:'num',label,ans,unit:unit||''},o||{});
+const txt=(label,ans,o)=>Object.assign({k:'txt',label,ans:[].concat(ans),mode:'formula'},o||{});
+const sel=(label,opts,ans,o)=>Object.assign({k:'sel',label,opts,ans},o||{});
+const cz=(n,ans)=>({k:'cloze',n,ans:[].concat(ans)});
+const think=(kind)=>sel(kind==='vol'
+  ?'Think carefully before calculating. Is the volume you are given more than 24000 cm³, or less than 24000 cm³?'
+  :kind==='mass'?'Think carefully before calculating. Compare the mass you are given with the molar mass you just found. Are you given more than one mole, or less than one mole?'
+  :'Think carefully before calculating. Are you given more than one mole, or less than one mole just looking at the numbers given?',
+  kind==='vol'?['more than 24000 cm³','less than 24000 cm³','exactly 24000 cm³']:['more than one mole','less than one mole','exactly one mole'],'',{w:0,think:1});
+/* ---- value checking ---- */
+const SUBS='₀₁₂₃₄₅₆₇₈₉';
+function normF(s){return s.replace(/[\s_{}\^]/g,'').replace(/[₀-₉]/g,c=>String(SUBS.indexOf(c))).replace(/\[/g,'(').replace(/\]/g,')').replace(/\.|·/g,'·');}
+function normW(s){return s.toLowerCase().replace(/sulfate/g,'sulphate').replace(/sulfide/g,'sulphide').replace(/aluminum/g,'aluminium').replace(/[^a-z0-9()]+/g,' ').trim();}
+function pnum(s){s=s.trim().replace(/[−–]/g,'-').replace(',','.').replace(/\s+/g,'');if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s))return NaN;return parseFloat(s);}
+function evalField(f,val){
+  val=String(val===undefined?'':val);
+  if(f.k==='num'){
+    const x=pnum(val);
+    if(isNaN(x))return {ok:false,msg:val.trim()===''?'Nothing entered yet.':'Type the number only. The unit is shown beside the box.'};
+    const tol=f.tol===undefined?0.01:f.tol,A=f.ans,ab=f.abs||0;
+    const near=(a,b)=>Math.abs(a-b)<=Math.max(ab,tol*Math.abs(b));
+    if(f.signed){
+      if(near(Math.abs(x),Math.abs(A))){
+        if(Math.sign(x)===Math.sign(A))return {ok:true};
+        return {ok:false,msg:f.signMsg||'The size is right. Check the sign: temperature rise → exothermic → ΔH negative; temperature fall → endothermic → ΔH positive.'};
+      }
+    }else if(near(x,A))return {ok:true};
+    const xv=f.signed?Math.abs(x):x;
+    for(const w of f.wrong||[])if(near(xv,w.v))return {ok:false,msg:w.msg};
+    return {ok:false};
+  }
+  if(f.k==='txt'){
+    if(val.trim()==='')return {ok:false,msg:'Nothing entered yet.'};
+    if(f.mode==='eq'){const r=checkEq(val,f);return r;}
+    if(f.mode==='name'){const v=normN(val);return f.ans.some(a=>normN(a)===v)?{ok:true}:{ok:false,msg:f.msg};}
+    if(f.mode==='word'){const v=normW(val);return f.ans.some(a=>normW(a)===v)?{ok:true}:{ok:false};}
+    if(f.mode==='emp'){
+      let c;try{c=parseF(normF(val));}catch(e){return {ok:false};}
+      const keys=Object.keys(f.counts);
+      const same=Object.keys(c).length===keys.length&&keys.every(k=>c[k]===f.counts[k]);
+      if(same)return {ok:true};
+      const m=c[keys[0]]/f.counts[keys[0]];
+      if(m>1&&Object.keys(c).length===keys.length&&keys.every(k=>c[k]===f.counts[k]*m))return {ok:false,msg:'That is a multiple of the answer. Divide to get the simplest whole-number ratio.'};
+      return {ok:false};
+    }
+    const v=normF(val);
+    if(f.ans.some(a=>normF(a)===v))return {ok:true};
+    const a0=normF(f.ans[0]);
+    if(a0.indexOf('(')>=0&&v===a0.replace(/[()]/g,''))return {ok:false,msg:'Check the brackets: a group of atoms that is repeated needs brackets round it.'};
+    if(v.toLowerCase()===a0.toLowerCase())return {ok:false,msg:'Check your capital letters: the first letter of a symbol is a capital, the second is small.'};
+    return {ok:false};
+  }
+  if(f.k==='sel'||f.k==='cloze'){
+    if(val==='')return {ok:false,msg:'Choose an answer.'};
+    const A=[].concat(f.ans).map(a=>String(a).toLowerCase());
+    return A.indexOf(val.toLowerCase())>=0?{ok:true}:{ok:false,msg:f.msg};
+  }
+  return {ok:false};
+}
+function plain(h){const d=document.createElement('div');d.innerHTML=h;return d.textContent.replace(/\s+/g,' ').trim();}
+function ideaHit(idea,text){return idea.g.every(grp=>grp.some(a=>new RegExp(a,'i').test(text)));}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+function sortBank(b){return b.slice().sort((x,y)=>String(x).localeCompare(String(y),'en',{numeric:true}));}
+/* ---- card ---- */
+function buildCard(spec,label,o){
+  o=o||{};
+  const el=document.createElement('article');
+  el.className='q'+(o.practice?' practice':'');
+  const fields=spec.fields||[],ideas=spec.ideas||null;
+  const marks=ideas?(spec.need||ideas.length):fields.reduce((s,f)=>s+(f.w===undefined?1:f.w),0);
+  const hints=spec.hints||[];
+  let attempts=0,shown=0,got=0,checked=false,cheatOpened=false,workedOpened=false;
+  /* body with inline cloze selects */
+  const bank=spec.bank?sortBank(spec.bank):null;
+  const selOpts=bank?'<option value="">…</option>'+bank.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join(''):'';
+  let body=spec.html||'';
+  body=body.replace(/\[\[(\d+)\]\]/g,(m,n)=>{
+    const i=fields.findIndex(f=>f.k==='cloze'&&f.n===+n);
+    return `<span class="cz" data-r="${i}"><select data-i="${i}" aria-label="blank ${+n+1}">${selOpts}</select><span class="mark"></span></span>`;});
+  let fh='';
+  const cellH=(i)=>{const f=fields[i];
+    const ctl=f.k==='num'?`<input class="num" type="text" inputmode="decimal" autocomplete="off" data-i="${i}">${f.unit?'<span class="unit">'+f.unit+'</span>':''}`:`<select data-i="${i}"><option value="">choose…</option>${f.opts.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')}</select>`;
+    return ctl+'<span class="mark"></span><span class="fmsg"></span>';};
+  if(spec.grid){
+    const g=spec.grid,nc=g.cols.length;
+    fh+='<table class="vt grid"><tr><th></th>'+g.cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'
+      +g.rows.map(r=>r.head?'<tr><th class="gh" colspan="'+(nc+1)+'">'+r.label+'</th></tr>':'<tr><th class="rl">'+r.label+'</th>'+(r.idx.length===1&&nc>1?`<td class="gcell" colspan="${nc}" data-r="${r.idx[0]}">${cellH(r.idx[0])}</td>`:r.idx.map(i=>`<td class="gcell" data-r="${i}">${cellH(i)}</td>`).join(''))+'</tr>').join('')+'</table>';
+  }
+  fields.forEach((f,i)=>{
+    if(f.k==='cloze'||(spec.grid&&spec.grid.rows.some(r=>r.idx&&r.idx.indexOf(i)>=0)))return;
+    if(f.k==='num')fh+=`<div class="frow" data-r="${i}"><label class="k">${f.label}</label><input class="num" type="text" inputmode="decimal" autocomplete="off" data-i="${i}"><span class="unit">${f.unit}</span><span class="mark"></span><span class="fmsg"></span></div>`;
+    else if(f.k==='txt')fh+=`<div class="frow" data-r="${i}"><label class="k">${f.label}</label><input class="txt${f.mode==='eq'?' eq':''}" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-i="${i}"><span class="mark"></span><span class="fmsg"></span></div>`;
+    else if(f.k==='sel')fh+=`<div class="frow${f.think?' wide':''}" data-r="${i}"><label class="k">${f.label}</label> <select data-i="${i}"><option value="">choose…</option>${f.opts.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')}</select><span class="mark"></span><span class="fmsg"></span></div>`;
+  });
+  if(ideas)fh+=`<div class="frow wide"><textarea data-t="1" placeholder="Write your explanation here, in full sentences." aria-label="your explanation"></textarea></div><div class="ideas-wrap"></div>`;
+  const bankHtml=bank?`<div class="bank">Word bank: ${bank.map(w=>`<span>${esc(w)}</span>`).join('')}</div>`:'';
+  const hasMeta=!!spec.title&&!TEST;
+  const confOpts='<option value="">choose…</option>'+CONF.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  const metaPre=hasMeta?`<div class="meta pre sans"><label>Before you try it: how confident do you feel about this question? <select data-m="pre">${confOpts}</select></label></div>`:'';
+  const metaPost=hasMeta?`<div class="meta post sans" hidden><p style="margin:2px 0"><b>Reflect</b></p><p style="margin:4px 0"><label>Now, how confident do you feel? <select data-m="post">${confOpts}</select></label></p><p style="margin:4px 0 2px">What made any part challenging? Tick any that fit:</p><div class="why">${WHY.map((w,k)=>`<label><input type="checkbox" data-m="why" data-k="${k}"> ${esc(w)}</label>`).join('')}</div><p style="margin:6px 0 2px"><label for="n${Math.random().toString(36).slice(2,8)}">In your own words: how do you feel about this question? Where did you get stuck, and why? What helped?</label></p><textarea data-m="note" rows="2" placeholder="Write a sentence or two. You can leave this empty."></textarea></div>`:'';
+  el.innerHTML=`<div class="qhead"><span><span class="qn">${label}</span><span class="qt">${spec.title||''}</span></span><span class="qm">${marks?marks+(marks===1?' mark':' marks'):'practice'}</span></div>
+   <div class="qtext">${body}</div>${spec.diag?'<div class="dg"><div class="dgsvg"></div><div class="dgcap legend"></div></div>':''}${bankHtml}${metaPre}<div class="fields">${fh}</div>
+   <div class="tools"><button data-a="cheat">Cheat sheet</button><button data-a="hint"${hints.length?'':' hidden'}>Hint</button>${spec.scaffold?'<button data-a="scaf">Word fill help</button>':''}<button class="main" data-a="check">Check</button><button data-a="worked" hidden>Worked answer</button><button data-a="more"${(o.noMore)?' hidden':''}>${o.practice?'Another one':'More practice'}</button></div>
+   <div class="panel cheat" hidden><h4>Cheat sheet</h4>${spec.cheat||''}</div><div class="panel hint" hidden></div><div class="scaf"></div>
+   <div class="fb" role="status" aria-live="polite"></div>${metaPost}<div class="worked" hidden><h4>Worked answer</h4>${spec.worked||''}</div><div class="prac"></div>`;
+  const $=s=>el.querySelector(s);
+  if(TEST)el.querySelectorAll('[data-a=hint],[data-a=check],[data-a=more],[data-a=worked],[data-a=scaf]').forEach(b=>b.remove());
+  const drawDiag=(m)=>{if(!spec.diag)return;const w=$('.dgsvg');if(!w)return;w.innerHTML=energyDiagram(spec.diag,m);$('.dgcap').innerHTML=(m==='full')?diagCaption(spec.diag,true):(spec.diag.note||diagCaption(spec.diag,false));};
+  drawDiag(spec.diag&&spec.diag.show==='given'?'given':'skeleton');
+  const get=i=>el.querySelector(`[data-i="${i}"]`);
+  function result(){
+    el.classList.toggle('done',marks>0&&got===marks);
+    const fb=$('.fb');
+    fb.innerHTML=TEST?`<b>${got} out of ${marks}</b> ${got===marks?'Full marks.':'Look at the ✗ items and read the worked answer to see the method.'}`:`<b>${got} out of ${marks}</b> ${got===marks?'Full marks.':'Not yet full marks. Look at the ✗ items, use the cheat sheet or a hint, then check again.'}`;
+    if(spec.diag&&got===marks)drawDiag('full');
+    if(!o.practice){SC[o.id]=Object.assign(SC[o.id]||{},{got:Math.max(got,(SC[o.id]||{}).got||0),marks,att:attempts,hints:shown,sec:o.sec});if(!TEST||FIN)updateTop();}
+  }
+  function check(){check0();const pm=$('.meta.post');if(pm)pm.hidden=false;logCheck();}
+  function logCheck(){
+    const fl=fields.map((f,i)=>{const inp=get(i),row=el.querySelector(`[data-r="${i}"]`);return {l:f.k==='cloze'?'blank '+(f.n+1):plain(f.label||'').slice(0,90),g:inp?inp.value:'',ok:row?row.classList.contains('ok'):false};});
+    const ta=el.querySelector('[data-t]');
+    LOG.push({ts:new Date().toISOString(),id:(o.entry&&o.entry.id)||o.id||label,prac:!!o.practice,label,title:plain(spec.title||''),q:plain(spec.html||'').slice(0,320),att:attempts,hints:shown,cheat:cheatOpened,worked:workedOpened,got,marks,f:fl,t:ta?ta.value.slice(0,600):undefined,ideas:ideas?[...el.querySelectorAll('.ideas-wrap input[type=checkbox]')].map(c=>c.checked?1:0):undefined,m:readMeta(el)});
+    if(LOG.length>800)LOG.splice(0,LOG.length-800);
+  }
+  function check0(){
+    attempts++;checked=true;got=0;
+    fields.forEach((f,i)=>{
+      const inp=get(i),r=evalField(f,inp.value),w=f.w===undefined?1:f.w;
+      const row=el.querySelector(`[data-r="${i}"]`);
+      row.classList.toggle('ok',r.ok);row.classList.toggle('bad',!r.ok);
+      row.querySelector('.mark').textContent=r.ok?'✓':'✗';
+      const m=row.querySelector('.fmsg');if(m)m.textContent=r.ok?'':(r.msg||'');
+      if(r.ok)got+=w;
+    });
+    if(ideas){
+      const t=el.querySelector('[data-t]').value.toLowerCase();
+      const wrap=$('.ideas-wrap');
+      wrap.innerHTML='<p class="legend">Ideas I looked for in your answer. A tick means I found it. If you included an idea in different words, tick it yourself.</p><ul class="ideas">'+ideas.map((d,k)=>`<li><label><input type="checkbox" data-k="${k}"${ideaHit(d,t)?' checked':''}> ${d.t}</label></li>`).join('')+'</ul>'+(spec.need&&spec.need<ideas.length?`<p class="legend">You need ${spec.need} of these.</p>`:'')+`<div class="model"><b>Model answer.</b> ${spec.model}</div>`+(spec.extended?`<div class="model"><b>Extended.</b> ${spec.extended}</div>`:'');
+      const tally=()=>{const n=wrap.querySelectorAll('input:checked').length;got=Math.min(n,marks);result();};
+      wrap.querySelectorAll('input').forEach(c=>c.addEventListener('change',tally));
+      tally();return;
+    }
+    result();
+  }
+  function practiceNext(){
+    const e=o.entry;let s;
+    if(e.gen){for(let k=0;k<12;k++){s=e.gen(RNG(false));if(s.html!==e.last)break;}e.last=s.html;}
+    else{if(!e.list.length)return null;s=e.list[e.i%e.list.length];e.i++;}
+    return s;
+  }
+  el.addEventListener('click',ev=>{
+    const b=ev.target.closest('button[data-a]');
+    if(b&&b.closest('.q')!==el)return;
+    if(b){
+      const a=b.dataset.a;
+      if(a==='check')check();
+      else if(a==='cheat'){const p=$('.cheat');p.hidden=!p.hidden;if(!p.hidden)cheatOpened=true;}
+      else if(a==='worked'){const p=$('.worked');p.hidden=!p.hidden;if(!p.hidden){workedOpened=true;drawDiag('full');}}
+      else if(a==='hint'){
+        const p=$('.hint');if(shown<hints.length){shown++;}
+        p.hidden=false;p.innerHTML='<h4>Hints</h4>'+hints.slice(0,shown).map((h,i)=>`<div class="hintl"><b>${i+1}.</b> ${h}</div>`).join('')+(shown>=hints.length?'<div class="hintl"><i>No more hints. Try the worked answer after a check.</i></div>':'');
+        b.textContent=shown>=hints.length?'Hints used':`Hint (${shown}/${hints.length})`;
+        if(!o.practice){SC[o.id]=Object.assign(SC[o.id]||{marks,sec:o.sec,got:0,att:0},{hints:shown});updateTop();}
+      }
+      else if(a==='scaf'){
+        const s=$('.scaf');
+        if(s.firstChild){s.innerHTML='';return;}
+        s.appendChild(buildCard(spec.scaffold,'Word fill',{practice:true,noMore:true,entry:o.entry}));
+        tipify(s);
+      }
+      else if(a==='more'){
+        const s=practiceNext();if(!s){$('.prac').innerHTML='<p class="legend">No more practice questions of this type.</p>';return;}
+        if(o.practice){
+          const nc=buildCard(s,label+' practice',{practice:true,entry:o.entry});el.replaceWith(nc);tipify(nc);
+        }else{
+          const holder=$('.prac');holder.innerHTML='';
+          const nc=buildCard(s,label+' practice',{practice:true,entry:o.entry});holder.appendChild(nc);tipify(nc);
+          b.textContent='Another one';
+        }
+      }
+      return;
+    }
+  });
+  let metaEntry=null;
+  el.addEventListener('change',ev=>{
+    if(!ev.target.closest('[data-m]')||ev.target.closest('.q')!==el)return;
+    const m=readMeta(el);
+    if(!metaEntry||LOG.indexOf(metaEntry)<0){metaEntry={ts:new Date().toISOString(),id:(o.entry&&o.entry.id)||o.id||label,prac:!!o.practice,label,title:plain(spec.title||''),q:plain(spec.html||'').slice(0,320),reflect:1,att:attempts,got,marks};LOG.push(metaEntry);}
+    metaEntry.m=m;metaEntry.att=attempts;metaEntry.got=got;metaEntry.ts=new Date().toISOString();
+  });
+  el.addEventListener('keydown',ev=>{if(ev.key==='Enter'&&ev.target.matches('input[type=text]')){ev.preventDefault();if(!TEST)check();}});
+  let finished=false;
+  function finish(){if(finished)return;finished=true;check0();logCheck();el.querySelectorAll('input,select,textarea').forEach(x=>{x.disabled=true;});const w=$('.worked');if(w)w.hidden=false;}
+  el._api={spec,marks,finish,
+    fill(){
+      fields.forEach((f,i)=>{
+        const inp=get(i);
+        if(f.k==='num')inp.value=String(f.ans);
+        else if(f.k==='txt')inp.value=f.mode==='emp'?f.display:f.ans[0];
+        else inp.value=[].concat(f.ans)[0];
+      });
+      if(ideas)el.querySelector('[data-t]').value=plain(spec.model);
+    },
+    check,get got(){return got;},get marks(){return marks;}};
+  el._restore=(a,s)=>{attempts=a;shown=s;};
+  return el;
+}
+/* ---- tool-tips ---- */
+const TERMS=Object.keys(GLOSS).sort((a,b)=>b.length-a.length);
+function tipify(root){
+  root.querySelectorAll('.qtext,.intro').forEach(box=>{
+    for(const t of TERMS){
+      const re=new RegExp('(^|[^A-Za-z0-9])('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:s)?)(?![A-Za-z0-9])','i');
+      const w=document.createTreeWalker(box,NodeFilter.SHOW_TEXT,{acceptNode(n){const p=n.parentElement;return(!p||p.closest('select,option,textarea,button,.tip,.fm'))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT;}});
+      let n;
+      while((n=w.nextNode())){
+        const m=re.exec(n.nodeValue);if(!m)continue;
+        const idx=m.index+m[1].length,after=n.splitText(idx),rest=after.splitText(m[2].length);
+        const sp=document.createElement('span');sp.className='tip';sp.tabIndex=0;sp.dataset.tip=GLOSS[t];sp.textContent=m[2];
+        after.replaceWith(sp);
+        sp.addEventListener('click',()=>sp.classList.toggle('on'));
+        break;
+      }
+    }
+  });
+}
+/* ---- top bar and summary ---- */
+function totals(){
+  let m=0,g=0,xm=0,xg=0;
+  QS.forEach(e=>{const sc=SC[e.id]||{};const mk=cardMarks(e);const ex=SECS.find(s=>s.id===e.sec).ext;
+    if(ex){xm+=mk;xg+=sc.got||0;}else{m+=mk;g+=sc.got||0;}});
+  return {m,g,xm,xg};
+}
+function cardMarks(e){const s=e.spec;return s.ideas?(s.need||s.ideas.length):(s.fields||[]).reduce((t,f)=>t+(f.w===undefined?1:f.w),0);}
+function updateTop(){
+  const t=totals();try{const fb=document.getElementById('feedback');if(fb)fb.innerHTML=feedbackHTML();}catch(e){}
+  const el=document.getElementById('score');if(!el)return;
+  el.textContent=FIN?`Score ${t.g} out of ${t.m}   Time ${fmtT(EL)}`:'Time '+fmtT(curEl());
+  const body=document.getElementById('sumbody');if(!body)return;
+  body.innerHTML=SECS.map(s=>{
+    const es=QS.filter(e=>e.sec===s.id);let m=0,g=0;
+    es.forEach(e=>{const sc=SC[e.id]||{};m+=cardMarks(e);g+=sc.got||0;});
+    return `<tr><td class="l">${s.id+' '+s.title}</td><td>${FIN?g:''}</td><td>${m}</td><td>${FIN?Math.round(100*g/m)+'%':''}</td></tr>`;}).join('')
+    +`<tr><th class="l">Total</th><th>${FIN?t.g:''}</th><th>${t.m}</th><th>${FIN?Math.round(100*t.g/t.m)+'%':''}</th></tr>`;
+}
+function resultsText(){
+  const t=totals();let s='Grade 9 Chemistry: thermochemistry test\n'+(STU.name?'Name: '+STU.name+'\nSet: '+STU.set+'\nCode: '+STU.code+'\n':'')+'Time taken: '+fmtT(EL)+'\n';
+  SECS.forEach(sc=>{let m=0,g=0;QS.filter(e=>e.sec===sc.id).forEach(e=>{const c=SC[e.id]||{};m+=cardMarks(e);g+=c.got||0;});
+    s+=sc.id+' '+sc.title+': '+g+' out of '+m+'\n';});
+  return s+'Total: '+t.g+' out of '+t.m+' ('+Math.round(100*t.g/t.m)+'%)\n\n'+(typeof reportText==='function'?reportText():'');
+}
+/* ---- reference sheet ---- */
+function refHTML(){return REF();}
+/* ---- page assembly ---- */
+const own=(el,sel)=>[...el.querySelectorAll(sel)].filter(x=>x.closest('.q')===el);
+function readMeta(el){const g=s=>{const x=own(el,s)[0];return x?x.value:''};
+  return {pre:g('[data-m=pre]'),post:g('[data-m=post]'),why:own(el,'[data-m=why]').filter(c=>c.checked).map(c=>+c.dataset.k),note:g('[data-m=note]').slice(0,600)};}
+function writeMeta(el,m){if(!m)return;const s=(q,v)=>{const x=own(el,q)[0];if(x)x.value=v||'';};s('[data-m=pre]',m.pre);s('[data-m=post]',m.post);s('[data-m=note]',m.note);
+  own(el,'[data-m=why]').forEach(c=>{c.checked=(m.why||[]).indexOf(+c.dataset.k)>=0;});
+  if(m.post||m.note||(m.why&&m.why.length)){const pm=own(el,'.meta.post')[0];if(pm)pm.hidden=false;}}
+function buildAll(){
+  const main=document.getElementById('sections'),nav=document.getElementById('nav');
+  main.innerHTML='';nav.innerHTML='';
+  SECS.forEach(s=>{
+    const es=QS.filter(e=>e.sec===s.id);
+    const tot=es.reduce((t,e)=>t+cardMarks(e),0);
+    const h=document.createElement('section');h.id='s'+s.id;
+    h.innerHTML=`<h2><span>${s.ext?s.title:s.id+' '+s.title}</span><span class="tot sans">${tot} marks${s.ext?', marked separately':''}</span></h2><div class="intro">${s.intro}</div>`;
+    es.forEach(e=>{const lab=e.id;const c=buildCard(e.spec,lab,{id:e.id,sec:e.sec,entry:e});h.appendChild(c);e.el=c;});
+    main.appendChild(h);
+    nav.innerHTML+=`<li><a href="#s${s.id}">${s.ext?s.title:s.id+' '+s.title}</a></li>`;
+  });
+  tipify(main);
+}
+/* ---- save / retrieve progress ---- */
+function collectProgress(){
+  const cards={};
+  QS.forEach(e=>{if(!e.el)return;const v={};own(e.el,'[data-i]').forEach(x=>{v[x.getAttribute('data-i')]=x.value;});
+    const ta=own(e.el,'[data-t]')[0];const ck=own(e.el,'.ideas-wrap input[type=checkbox]').map(c=>c.checked?1:0);
+    cards[e.id]={v,t:ta?ta.value:'',ck,m:readMeta(e.el)};});
+  const refl={start:(document.getElementById('rstart')||{}).value||'',end:(document.getElementById('rend')||{}).value||''};
+  return {app:'g9-thermotest',ver:2,done:FIN,el:curEl(),refl,stu:{set:STU.set,code:STU.code},seed:SEED,saved:new Date().toISOString(),sc:SC,cards,log:LOG};
+}
+function encodeProgress(){return 'G9THERMOTEST1:'+btoa(unescape(encodeURIComponent(JSON.stringify(collectProgress()))));}
+function applyProgress(code){
+  let d;
+  try{d=JSON.parse(decodeURIComponent(escape(atob(code.trim().replace(/^G9THERMOTEST1:/,'')))));}catch(x){return 'That does not look like a saved progress code. Choose the file you saved, or paste the whole code.';}
+  if(!d||d.app!=='g9-thermotest')return 'That does not look like a saved progress code.';
+  FIN=false;SEED=d.seed;
+  QS.forEach(e=>{if(e.gen){e.spec=e.gen(RNG(false,seedFor(e.id)));e.last=e.spec.html;}});
+  buildAll();
+  QS.forEach(e=>{const c=d.cards[e.id];if(!c||!e.el)return;
+    const used=Object.keys(c.v).some(k=>c.v[k]!==''&&c.v[k]!==undefined)||c.t;
+    Object.keys(c.v).forEach(k=>{const x=e.el.querySelector(`[data-i="${k}"]`);if(x)x.value=c.v[k];});
+    const ta=e.el.querySelector('[data-t]');if(ta)ta.value=c.t||'';
+    writeMeta(e.el,c.m);
+    const s=d.sc[e.id];
+    if(!TEST&&used&&s&&s.att){const b=e.el.querySelector('[data-a=check]');if(b)b.click();
+      const ws=e.el.querySelectorAll('.ideas-wrap input[type=checkbox]');(c.ck||[]).forEach((on,k)=>{if(ws[k]&&ws[k].checked!==!!on){ws[k].checked=!!on;ws[k].dispatchEvent(new Event('change'));}});
+      e.el._restore(s.att,s.hints||0);}
+  });
+  EL=d.el||0;T0=Date.now();
+  if(d.stu&&d.stu.set){const ss=document.getElementById('stset');if(ss&&!STU.set)ss.value=SETS.find(x=>x.slice(0,3)===d.stu.set.slice(0,3))||'';}
+  if(d.refl){const a=document.getElementById('rstart'),b=document.getElementById('rend');if(a)a.value=d.refl.start||'';if(b)b.value=d.refl.end||'';}
+  Object.keys(SC).forEach(k=>delete SC[k]);Object.assign(SC,d.sc);LOG.length=0;(d.log||[]).forEach(x=>LOG.push(x));if(d.done)finishAll();updateTop();
+  return STU.name?'':'NEEDNAME';
+}
+function finishAll(){
+  if(FIN)return;
+  QS.forEach(e=>{if(e.el&&e.el._api)e.el._api.finish();});
+  EL=curEl();FIN=true;
+  const fb=document.getElementById('finishbox');if(fb)fb.hidden=true;
+  updateTop();
+}
+function init(){
+  setInterval(()=>{if(!FIN&&T0){const el=document.getElementById('score');if(el)el.textContent='Time '+fmtT(curEl());}},1000);
+  const fbtn=document.getElementById('finishbtn'),fmsg=document.getElementById('finishmsg');
+  if(fbtn)fbtn.onclick=()=>{
+    if(!fbtn.dataset.sure){fbtn.dataset.sure='1';fbtn.textContent='Yes, finish and mark my test';fmsg.textContent='You cannot change your answers after this. Press the button again to finish, or scroll up to check your work.';return;}
+    finishAll();document.getElementById('results').scrollIntoView();
+  };
+  document.getElementById('refbody').innerHTML=refHTML();
+  buildAll();
+  document.getElementById('stset').innerHTML='<option value="">choose your set…</option>'+SETS.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
+  const go=()=>{const n=document.getElementById('stname').value,s=document.getElementById('stset').value,m=document.getElementById('gatemsg');if(!n.trim()){m.textContent='Type your first name.';return;}if(!s){m.textContent='Choose your chemistry set.';return;}startTest(n,s);};
+  document.getElementById('stgo').onclick=go;document.getElementById('stname').addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+  document.getElementById('gl').innerHTML=Object.keys(GLOSS).sort().map(t=>`<dt>${t}</dt><dd>${GLOSS[t]}</dd>`).join('');
+  tipify(document.body);
+  initProgressUI();
+  document.getElementById('refbtn').onclick=()=>{document.getElementById('ref').hidden=false;};
+  document.getElementById('refclose').onclick=()=>{document.getElementById('ref').hidden=true;};
+  document.getElementById('copy').onclick=()=>{
+    const t=resultsText();
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).catch(()=>fallback(t));else fallback(t);
+    document.getElementById('copied').textContent='Copied. Paste it into Canvas or an email.';
+  };
+  function fallback(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}a.remove();}
+  updateTop();
+}
+
+function initProgressUI(){
+  const panel=document.getElementById('savepanel'),box=document.getElementById('savecode'),msg=document.getElementById('savemsg'),file=document.getElementById('loadfile');
+  const show=(t)=>{msg.textContent=t||'';};
+  function openPanel(mode){panel.hidden=false;document.getElementById('saveblock').hidden=mode!=='save';document.getElementById('loadblock').hidden=mode!=='load';show('');}
+  document.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',()=>{
+    const a=b.getAttribute('data-act');
+    if(a==='save'){
+      const code=encodeProgress();box.value=code;openPanel('save');
+      try{const blob=new Blob([code],{type:'text/plain'}),u=URL.createObjectURL(blob),l=document.createElement('a');l.href=u;l.download='thermotest_'+fileStem()+'.txt';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);
+        show('Your progress is saved in the file thermotest_'+fileStem()+'.txt (check your Downloads folder). The code below is a back-up: copy it into a note if the file did not download.');}
+      catch(x){show('Copy the code below and keep it in a note. You can paste it back in later.');}
+    }
+    else if(a==='load')openPanel('load');
+    else if(a==='pdf'){panel.hidden=true;window.print();}
+  }));
+  document.getElementById('copycode').onclick=()=>{box.select();try{document.execCommand('copy');show('Code copied.');}catch(x){show('Select the code and copy it yourself.');}};
+  document.getElementById('loadgo').onclick=()=>{
+    const code=document.getElementById('loadcode').value;
+    if(!code.trim()){show('Choose your saved file, or paste your code first.');return;}
+    const err=applyProgress(code);show(err==='NEEDNAME'?'Your progress is loaded. Now type your first name above and press Start.':(err||'Your progress is back. Scroll down to carry on.'));if(!err)document.getElementById('loadcode').value='';
+  };
+  file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById('loadcode').value=String(r.result);const err=applyProgress(String(r.result));show(err==='NEEDNAME'?'Your progress is loaded. Now type your first name above and press Start.':(err||'Your progress is back. Scroll down to carry on.'));};r.readAsText(f);});
+  document.getElementById('saveclose').onclick=document.getElementById('loadclose').onclick=()=>{panel.hidden=true;};
+}
+
+/* ===== energy level diagrams (inline SVG, drawn to scale) ===== */
+function svgFix(t){return String(t).replace(/<sub>/g,'<tspan baseline-shift="sub" font-size="75%">').replace(/<sup>/g,'<tspan baseline-shift="super" font-size="75%">').replace(/<\/su[bp]>/g,'</tspan>').replace(/<i>/g,'<tspan font-style="italic">').replace(/<\/i>/g,'</tspan>');}
+function svgText(x,y,t,o){
+  o=o||{};t=svgFix(t);
+  return `<text x="${x}" y="${y}" text-anchor="${o.a||'middle'}" font-size="${o.s||13}"${o.b?' font-weight="700"':''}${o.i?' font-style="italic"':''}>${t}</text>`;
+}
+function arrow(x,y1,y2,dash){
+  const up=y2<y1,h=up?y2+9:y2-9;
+  return `<line x1="${x}" y1="${y1}" x2="${x}" y2="${h}" stroke="#000" stroke-width="2"${dash?' stroke-dasharray="5,4"':''}/>`
+   +`<path d="M${x-6},${up?y2+11:y2-11} L${x},${y2} L${x+6},${up?y2+11:y2-11}" fill="none" stroke="#000" stroke-width="2"/>`;
+}
+function level(x1,x2,y,dash){return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="3"${dash?' stroke-dasharray="7,5"':''}/>`;}
+const fmtE=(x)=>String(x);
+/* d: {type:'rx'|'break'|'make', rx, px, atoms, broken, made, show:'full'|'skeleton'|'given'} */
+function energyDiagram(d,mode){
+  mode=mode||'skeleton';
+  const W=670,top=48,span=190,bot=48;
+  const full=mode==='full',given=mode==='given';
+  const known=full||given;
+  if(d.type==='break'||d.type==='make'){
+    const brk=d.type==='break',E=d.energy;
+    const H=top+span+bot,yA=top,yS=known?top+span:top+span*0.8;
+    let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Energy level diagram" xmlns="http://www.w3.org/2000/svg" font-family="Palatino Linotype,Palatino,TeX Gyre Pagella,Georgia,serif">`;
+    s+=arrow(34,H-18,22)+svgText(34,H-2,'Energy',{s:12});
+    s+=level(110,520,yA)+svgText(315,yA-10,d.atoms,{b:1});
+    s+=level(110,520,yS)+svgText(315,yS+22,d.mol);
+    const x=brk?250:380;
+    s+=arrow(x,brk?yS:yA,brk?yA:yS);
+    const lab=known?(brk?`+${fmtE(E)} kJ taken in`:`−${fmtE(E)} kJ given out`):(brk?'energy taken in: + ? kJ':'energy given out: − ? kJ');
+    s+=svgText(x+(brk?12:12),(yA+yS)/2+4,lab,{a:'start'});
+    s+='</svg>';return s;
+  }
+  const B=d.broken,M=d.made,mx=Math.max(B,M);
+  const sc=span/mx;
+  const yA=top,yR=known?yA+B*sc:yA+span*0.62,yP=known?yA+M*sc:yR;
+  const H=top+span+bot;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Energy level diagram" xmlns="http://www.w3.org/2000/svg" font-family="Palatino Linotype,Palatino,TeX Gyre Pagella,Georgia,serif">`;
+  s+=arrow(34,H-18,22)+svgText(34,H-2,'Energy',{s:12});
+  s+=level(100,470,yA)+svgText(285,yA-10,'separate gaseous atoms: '+d.atoms,{b:1});
+  s+=level(100,230,yR)+svgText(165,yR+22,d.rx);
+  s+=level(340,470,yP,!known)+svgText(405,yP+22,d.px+(known?'':' (higher or lower?)'));
+  s+=arrow(150,yR,yA);
+  s+=arrow(420,yA,yP);
+  const l1=known?`bonds broken: +${fmtE(B)} kJ`:'bonds broken: + ? kJ';
+  const l2=known?`bonds made: −${fmtE(M)} kJ`:'bonds made: − ? kJ';
+  s+=svgText(158,yA+(yR-yA)*0.72,l1,{a:'start'});
+  s+=svgText(412,yA+(yP-yA)*0.30,l2,{a:'end'});
+  if(full){
+    const dH=B-M;
+    s+=`<line x1="230" y1="${yR}" x2="560" y2="${yR}" stroke="#000" stroke-width="1" stroke-dasharray="3,4"/>`;
+    s+=arrow(540,yR,yP,false);
+    s+=svgText(552,(yR+yP)/2+4,'Δ<tspan font-style="italic">H</tspan> = '+(dH<0?'−':'+')+Math.abs(dH)+' kJ',{a:'start',b:1,s:13}).replace('<text','<text').replace('x="552"','x="548"');
+    s+=svgText(548,(yR+yP)/2+22,dH<0?'exothermic':'endothermic',{a:'start',s:12,i:1});
+  } else if(!known){
+    s+=svgText(540,(yR)+4,'Δ<tspan font-style="italic">H</tspan> = ?',{a:'start',b:1});
+  }
+  s+='</svg>';return s;
+}
+function diagCaption(d,full){
+  if(d.type==='break')return full?'Breaking every bond takes in energy, so the molecule sits <b>lower</b> than the separate atoms.':'The completed diagram, drawn to scale, is shown in the worked answer after you finish.';
+  if(d.type==='make')return full?'Making every bond gives out energy, so the molecule sits <b>lower</b> than the separate atoms.':'The completed diagram, drawn to scale, is shown in the worked answer after you finish.';
+  if(!full)return 'The completed diagram, drawn to scale, is shown in the worked answer after you finish.';
+  const dH=d.broken-d.made;
+  return dH<0?'More energy is given out making the new bonds ('+d.made+' kJ) than is taken in breaking the old bonds ('+d.broken+' kJ). The products are <b>lower</b> in energy than the reactants: the reaction is <b>exothermic</b>, so Δ<i>H</i> is negative.'
+             :'More energy is taken in breaking the old bonds ('+d.broken+' kJ) than is given out making the new bonds ('+d.made+' kJ). The products are <b>higher</b> in energy than the reactants: the reaction is <b>endothermic</b>, so Δ<i>H</i> is positive.';
+}
+
+/* ===== shared helpers: reaction cards ===== */
+const SIGNMSG='The size is right. Check the sign. If the bonds made total is bigger, energy is given out: exothermic, so ΔH is negative. If the bonds broken total is bigger, energy is taken in: endothermic, so ΔH is positive.';
+function dflt(s,ch,hs){s.cheat=s.cheat||ch;s.hints=s.hints||hs||['Read the cheat sheet first.','Work one step at a time.'];return s;}
+function bondList(s){const b=SP[s].bonds;return BOND_ORDER.filter(k=>b[k]).map(k=>b[k]+' × '+k).join(', ');}
+function rxSpecies(rx){const seen={},out=[];rx.rs.concat(rx.ps).forEach(([c,s])=>{if(!seen[s]){seen[s]=1;out.push(s);}});return out;}
+const CHEAT_RX='<p>Average bond enthalpies in kJ mol<sup>−1</sup>:</p>'+bondTable()
+ +fm('Δ'+I('H')+' = (sum of bonds broken) − (sum of bonds made)')
+ +'<ol><li>Read the structural formulae and count every bond. A number in front of a formula multiplies all its bonds.</li>'
+ +'<li><b>Bonds broken</b> (reactants): number of bonds × bond enthalpy, for each type, then add. This energy goes <b>in</b>.</li>'
+ +'<li><b>Bonds made</b> (products): the same for the products. This energy comes <b>out</b>.</li>'
+ +'<li>Δ'+I('H')+' = broken − made. Negative means exothermic. Positive means endothermic.</li>'
+ +'<li>Check: if the bonds made total is bigger, Δ'+I('H')+' is negative. If the bonds broken total is bigger, Δ'+I('H')+' is positive.</li></ol>'
+ +'<p class="legend">Only gases: every substance in the equation must be (g).</p>';
+function workedRx(rx){
+  const side=(s,w)=>s.rows.map(r=>r.n+' × '+r.b+' ('+r.e+') = '+r.t).join('<br>')+'<br><b>Total '+w+' = '+s.total+' kJ</b>';
+  return '<p><b>Bonds broken</b><br>'+side(rx.brk,'broken')+'</p><p><b>Bonds made</b><br>'+side(rx.mk,'made')+'</p>'
+   +fm('Δ'+I('H')+' = '+rx.brk.total+' − '+rx.mk.total+' = <b>'+minus(rx.dH)+' kJ mol<sup>−1</sup></b>',1)
+   +'<p>'+(rx.dH<0?'More energy is given out making bonds than is taken in breaking bonds: the reaction is <b>exothermic</b> and Δ'+I('H')+' is negative.':'More energy is taken in breaking bonds than is given out making bonds: the reaction is <b>endothermic</b> and Δ'+I('H')+' is positive.')+'</p>';
+}
+function diagOf(rx,show){return {type:'rx',rx:sideLabel(rx.rs),px:sideLabel(rx.ps),atoms:atomsHTML(rx),broken:rx.brk.total,made:rx.mk.total,show:show||'skeleton'};}
+/* the full calculation card: a vertical table (bonds broken, then bonds made), then the sign */
+function rxSpec(rx,o){
+  o=o||{};const showE=o.showE!==false;
+  const fields=[],rows=[];
+  const addSide=(side,head,tot)=>{
+    rows.push({head:1,label:head});
+    side.rows.forEach(r=>{
+      const i=fields.length;
+      fields.push(num('number of '+r.b+' bonds',r.n,'',{tol:0}));
+      fields.push(num('energy for '+r.b+' bonds',r.t,KJ,{tol:0}));
+      rows.push({label:r.b+(showE?' ('+r.e+' kJ mol<sup>−1</sup>)':''),idx:[i,i+1]});
+    });
+    const t=fields.length;fields.push(num('total',side.total,KJ,{tol:0}));
+    rows.push({label:tot,idx:[t]});
+  };
+  addSide(rx.brk,'Bonds broken in the reactants: energy goes IN','Total energy taken in');
+  addSide(rx.mk,'Bonds made in the products: energy comes OUT','Total energy given out');
+  const bigger=rx.brk.total>rx.mk.total?'the energy taken in to break the bonds':'the energy given out making the bonds';
+  fields.push(sel('Look at your two totals. Which is bigger?',['the energy taken in to break the bonds','the energy given out making the bonds'],bigger,{w:0,think:1}));
+  fields.push(num('ΔH = broken − made = '+(o.blank?'':'…'),rx.dH,KJM,{signed:true,tol:0,signMsg:SIGNMSG}));
+  fields.push(sel('Reflect. Does the sign of your ΔH agree with the total you said was bigger?',['yes, they agree','no, I will check my working'],'yes, they agree',{w:0,think:1}));
+  fields.push(sel('The reaction is',['exothermic','endothermic'],rx.dH<0?'exothermic':'endothermic'));
+  fields.push(sel('On the energy level diagram the products are',['lower in energy than the reactants','higher in energy than the reactants'],rx.dH<0?'lower in energy than the reactants':'higher in energy than the reactants'));
+  const sp=rxSpecies(rx);
+  return dflt({
+    title:o.title||'Predicting ΔH from bond enthalpies',
+    html:'<p>'+(o.lead||'Use average bond enthalpies to predict Δ<i>H</i> for this gas-phase reaction.')+'</p>'+fm(eqHTML(rx))+joinSF(rx)
+      +'<p class="legend">The structural formulae show every bond. – is a single bond, = a double bond, ≡ a triple bond.'+(o.note?' '+o.note:'')+'</p>',
+    grid:{cols:['Number of bonds','Energy (kJ)'],rows},
+    fields,
+    cheat:CHEAT_RX,
+    hints:[
+      'Look at each structural formula and write down every bond in <b>one molecule</b>. Then multiply by the number in front of the formula.'+(showE?'':' Find each bond in the table (Cheat sheet or Reference sheet button).'),
+      'Bonds in one molecule: '+sp.map(s=>F(s)+': '+bondList(s)).join('; ')+'. Multiply by the number in front of each formula, and add up bonds of the same type on each side.',
+      'The total for bonds broken is <b>'+rx.brk.total+' kJ</b> and the total for bonds made is <b>'+rx.mk.total+' kJ</b>. Now Δ<i>H</i> = '+rx.brk.total+' − '+rx.mk.total+'.'],
+    worked:workedRx(rx),
+    diag:diagOf(rx)});
+}
+function pickRx(r,fixed,pool){return r.seeded?RX[fixed]:RX[r.pick(pool)];}
+
+const ELN={Na:'sodium',Mg:'magnesium',Ca:'calcium',Zn:'zinc',Cu:'copper',Fe:'iron',Al:'aluminium',O:'oxygen',Cl:'chlorine',S:'sulphur',K:'potassium',C:'carbon',N:'nitrogen',H:'hydrogen'};
+const r3=x=>Math.round(x*1000)/1000;
+function rowsOf(f,u){const c=parseF(f);return Object.keys(c).map(e=>({e,cnt:c[e],m:r3(u*c[e]*AR[e]),n:u*c[e]}));}
+function empField(f){return txt('Empirical formula =',[f],{mode:'emp',counts:parseF(f),display:f});}
+function empTable(rows,mcol){
+ /* vertical layout: one column per element, the steps run down the page */
+ const mn=Math.min.apply(null,rows.map(x=>x.n));
+ const row=(lab,fn)=>'<tr><th class="rl">'+lab+'</th>'+rows.map(x=>'<td>'+fn(x)+'</td>').join('')+'</tr>';
+ return '<table class="vt"><tr><th></th>'+rows.map(x=>'<th>'+x.e+'</th>').join('')+'</tr>'
+  +row(mcol||'Mass (g)',x=>nice(x.m))
+  +row('Molar mass, '+I('M')+' ('+GM+')',x=>AR[x.e])
+  +row('Moles, '+I('n')+' = '+frac(I('m'),I('M'))+' (mol)',x=>nice(+x.n.toPrecision(3)))
+  +row('Divide by the smallest ('+nice(+mn.toPrecision(3))+')',x=>nice(+(x.n/mn).toPrecision(3)))
+  +row('Whole-number ratio',x=>x.cnt)+'</table>';
+}
+/* vertical grid: one column per element, the steps run down the page */
+function stepFields(rows,o){
+ o=o||{};const fields=[],grid={cols:rows.map(x=>'<b>'+x.e+'</b><br><small>'+ELN[x.e]+'</small>'),rows:[]};
+ const mn=Math.min.apply(null,rows.map(x=>x.n));
+ const add=(label,list)=>{const idx=[];list.forEach(f=>{fields.push(f);idx.push(fields.length-1+(o.offset||0));});grid.rows.push({label,idx});};
+ if(!o.noMass)add((o.massLabel||'Mass in the question, '+I('m'))+' (g)',rows.map(x=>num('',x.m,'',{abs:o.massAbs||1e-6})));
+ add('Molar mass, '+I('M')+' ('+GM+'), from the table',rows.map(x=>num('',AR[x.e],'',{abs:1e-9})));
+ add('Think: is the mass more or less than the molar mass? So will your answer be more or less than 1 mole?',rows.map(x=>{
+  const lt=x.m<AR[x.e],eq=x.m===AR[x.e];
+  return sel('',['more than 1 mole','less than 1 mole','exactly 1 mole'],eq?'exactly 1 mole':(lt?'less than 1 mole':'more than 1 mole'),{w:0,msg:'Compare the two numbers above. A mass smaller than the molar mass is less than one mole. A mass bigger than the molar mass is more than one mole.'});}));
+ add('Moles of atoms, '+I('n')+' = '+frac(I('m'),I('M'))+' (mol)',rows.map(x=>num('',x.n,'',{tol:o.tol})));
+ add('Reflect: does your answer match your prediction?',rows.map(x=>sel('',['less than 1, as predicted: makes sense','more than 1, as predicted: makes sense','does not match: check my calculator'],x.n<1?'less than 1, as predicted: makes sense':'more than 1, as predicted: makes sense',{w:0,msg:x.n<1?'The mass is smaller than the molar mass, so the answer must be less than 1. Use the calculator again: enter the smaller number (the mass) first, press the divide key, then enter the bigger number (the molar mass), then =.':'The mass is bigger than the molar mass, so the answer must be more than 1. Use the calculator again: enter the mass first, press the divide key, then the molar mass, then =.'})));
+ add('The smallest number of moles',[num('',mn,'',{tol:o.tol})]);
+ add(frac(I('n'),'smallest'),rows.map(x=>num('',x.n/mn,'',{tol:o.tol||0.01})));
+ add('Whole-number ratio',rows.map(x=>num('',x.cnt,'',{abs:1e-9})));
+ return {fields,grid};
+}
+const GENTLE=['Start with the first element. Find its mass in the question and write it in the box.','Look in the table of molar masses for the same element. Its molar mass is the number under its symbol.','Divide the mass by the molar mass. That gives the moles of atoms of that element. Repeat for the next element.','Pick the smallest number of moles. Divide every number of moles by it.'];
+const EMPW='<p>If the ratio after dividing by the smallest is 1 : 1.5, multiply both by 2 to get 2 : 3. If it is 1 : 1.33, multiply both by 3 to get 3 : 4.</p>';
+
+
+
+/* ===== thermochemistry test: helpers and cheat sheets ===== */
+function bondTable(){
+  const rows=[];for(let i=0;i<8;i++){const a=BOND_ORDER[i],b=BOND_ORDER[i+8];rows.push(`<tr><td>${a}</td><td>${BE[a]}</td><td>${b}</td><td>${BE[b]}</td></tr>`);}
+  return `<table class="bt"><tr><th>Bond</th><th>kJ mol<sup>−1</sup></th><th>Bond</th><th>kJ mol<sup>−1</sup></th></tr>${rows.join('')}</table>`;
+}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const GM='g mol<sup>−1</sup>',CM3='cm<sup>3</sup>',MD='mol dm<sup>−3</sup>';
+const NAOH='sodium hydroxide solution (CARE: CORROSIVE!)';
+const thinkM=(m,M)=>{const t=think('mass');t.ans=m<M?'less than one mole':(m>M?'more than one mole':'exactly one mole');return t;};
+const ATMASS='<p>Molar mass (atomic mass, A<sub>r</sub>) in '+GM+'. Symbol on top, molar mass beneath.</p><div class="scrollx"><table><tr>'+AR_ORDER.map(e=>`<th>${e}</th>`).join('')+'</tr><tr>'+AR_ORDER.map(e=>`<td>${AR[e]}</td>`).join('')+'</tr></table></div>';
+const ionTables=()=>{
+  const cat=CAT.map(c=>`<tr><td>${c.n} ion</td><td>${ionHTML(c.f,c.c)}</td></tr>`).join('');
+  const an=AN.map(c=>`<tr><td>${c.n} ion</td><td>${ionHTML(c.f,-c.c)}</td></tr>`).join('');
+  return `<table style="display:inline-table;margin:8px 14px;vertical-align:top"><tr><th colspan="2">Positive ions (cations)</th></tr>${cat}</table><table style="display:inline-table;margin:8px 14px;vertical-align:top"><tr><th colspan="2">Negative ions (anions)</th></tr>${an}</table>`;
+};
+const CH_TYPE='<p><b>Metals</b> are on the left and in the middle of the periodic table: Na, K, Mg, Ca, Al, Fe, Cu, Zn.</p><p><b>Non-metals</b> (a short list): H, C, N, O, P, S, Cl, and the noble gases.</p><ul><li>A <b>metal</b> joined to a non-metal: <b>ionic</b>. It is made of ions in a giant lattice, and its formula shows the simplest ratio of ions.</li><li><b>Non-metals only</b>: <b>covalent molecular</b>. It is made of separate molecules.</li></ul>';
+const CH_IONS='<p>The charges of the ions must add up to zero.</p><ol><li>Write each ion with its charge.</li><li>Find how many of each ion make the charges add up to zero.</li><li>Write the positive ion first. Put <b>brackets</b> round a polyatomic ion if you need more than one.</li></ol><p>Example: Ca<sup>2+</sup> and NO<sub>3</sub><sup>−</sup>. One Ca<sup>2+</sup> needs two NO<sub>3</sub><sup>−</sup>: Ca(NO<sub>3</sub>)<sub>2</sub>.</p>'+ionTables();
+const LETTERS_T='<div class="key"><p><b>What the letters mean</b></p><ul><li>'+I('m')+' = the <b>mass</b> in grams (g).</li><li>'+I('M')+' = the <b>molar mass</b> in g mol<sup>−1</sup>: the number under the symbol in the table.</li><li>'+I('n')+' = the <b>moles</b> (mol).</li></ul></div>';
+const CH_EMP=LETTERS_T+'<p>Do the same calculation for each element, one column per element.</p>'+fm(I('n')+' = '+frac(I('m'),I('M')))+'<p>Then divide every number of moles by the smallest. If you get about 1.5, multiply by 2. If you get about 1.33, multiply by 3.</p><p><b>Percentages:</b> say <b>“Let’s take 100 g of the compound”</b>. Then 40% is 40 g.</p>'+ATMASS;
+const CH_SHAPE='<p>Look-up table: shapes and bond angles.</p>'+shapeTable();
+const CH_SYS='<ul><li>The <b>system</b> is the chemicals that are reacting.</li><li>The <b>surroundings</b> are everything else: the water, the cup or tube, the thermometer, the air.</li><li><b>Exothermic:</b> energy goes from the system to the surroundings. The surroundings get warmer.</li><li><b>Endothermic:</b> energy goes from the surroundings to the system. The surroundings get colder.</li></ul><p><b>Law of Conservation of Energy:</b> energy cannot be created or destroyed. It is only transferred. The energy lost by the system equals the energy gained by the surroundings, so the total energy does not change.</p>';
+const CH_CAL=fm(I('v')+' = total volume of the mixture ('+CM3+')')+fm(I('q')+' = '+I('v')+' × 4.2 × Δ'+I('t'))+fm(I('n')+' = '+frac('concentration × volume','1000'))+fm(I('n')+' = '+frac(I('m'),I('M')))+fm('Δ'+I('H')+' = '+frac(I('q')+' in kJ',I('n')))+'<p>'+I('q')+' is in J. Change it to kJ before you find Δ'+I('H')+': '+frac('J','1000')+'. Δ'+I('t')+' is the size of the temperature change, with no sign. Put the sign on Δ'+I('H')+' last: temperature rise, exothermic, Δ'+I('H')+' negative. Temperature fall, endothermic, Δ'+I('H')+' positive.</p>';
+
+/* pictures of molecules (no molecule kits): plain atoms, wedge = towards you, dashes = away from you */
+function molSVG(f){
+  const atom=(x,y,s,r)=>`<circle cx="${x}" cy="${y}" r="${r||15}" fill="#fff" stroke="#000" stroke-width="2"/><text x="${x}" y="${y+5}" text-anchor="middle" font-size="${(r||15)>12?14:12}" font-weight="700" font-family="Helvetica,Arial,sans-serif">${s}</text>`;
+  const ln=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#000" stroke-width="3"/>`;
+  const dash=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#000" stroke-width="3" stroke-dasharray="3,4"/>`;
+  const wedge=(x1,y1,x2,y2)=>{const dx=x2-x1,dy=y2-y1,l=Math.hypot(dx,dy),px=-dy/l*7,py=dx/l*7;return `<polygon points="${x1},${y1} ${x2+px},${y2+py} ${x2-px},${y2-py}" fill="#000"/>`;};
+  let b='',cap='';
+  if(f==='H2O'){b=ln(100,45,52,102)+ln(100,45,148,102)+atom(100,45,'O')+atom(52,102,'H',11)+atom(148,102,'H',11);}
+  if(f==='NH3'){b=ln(100,40,45,100)+dash(100,40,155,100)+wedge(100,40,100,108)+atom(100,40,'N')+atom(45,100,'H',11)+atom(155,100,'H',11)+atom(100,108,'H',11);}
+  if(f==='CH4'){b=ln(100,70,100,15)+ln(100,70,48,118)+wedge(100,70,158,100)+dash(100,70,155,36)+atom(100,70,'C')+atom(100,15,'H',11)+atom(48,118,'H',11)+atom(158,100,'H',11)+atom(155,36,'H',11);}
+  if(f==='CO2'){b=ln(36,60,164,60).replace('y1="60"','y1="55"').replace('y2="60"','y2="55"')+ln(36,66,164,66)+atom(36,60,'O')+atom(100,60,'C')+atom(164,60,'O');}
+  return `<svg viewBox="0 0 200 135" width="140" role="img" aria-label="picture of one molecule of ${f}" xmlns="http://www.w3.org/2000/svg">${b}</svg>`;
+}
+const molPics=list=>'<div class="pics">'+list.map(f=>'<figure><div>'+molSVG(f)+'</div><figcaption>'+F(f)+'</figcaption></figure>').join('')+'</div><p class="legend">A plain line is a bond in the plane of the page. A thick wedge points towards you. A dashed line points away from you.</p>';
+
+/* ===== the test: new examples in the style of the practice material ===== */
+sec('1','Metals, non-metals and types of compound','<p><b>About 4 minutes.</b> Decide whether each element is a metal or a non-metal. A metal with a non-metal makes an ionic compound. Non-metals only make a covalent molecular compound.</p>');
+def('1.1','1',dflt({title:'Metal or non-metal?',
+ html:'<p>Choose metal or non-metal for each element.</p>',
+ fields:[['calcium','Ca','metal'],['chlorine','Cl','non-metal'],['copper','Cu','metal'],['nitrogen','N','non-metal'],['aluminium','Al','metal'],['phosphorus','P','non-metal']].map(([n,s,a])=>sel(cap(n)+', '+s,['metal','non-metal'],a)),
+ cheat:CH_TYPE,
+ worked:'<p>Metals: calcium, copper, aluminium. Non-metals: chlorine, nitrogen, phosphorus (on the short list: H, C, N, O, P, S, Cl and the noble gases).</p>'}));
+def('1.2','1',dflt({title:'Ionic or covalent molecular?',
+ html:'<p>Choose the type of each compound.</p>',
+ fields:[['KCl','potassium chloride','ionic'],['SO2','sulphur dioxide','covalent molecular'],['Fe2O3','iron(III) oxide','ionic'],['NH3','ammonia','covalent molecular']].map(([f,n,a])=>sel(cap(n)+', '+F(f),['ionic','covalent molecular'],a)),
+ cheat:CH_TYPE,
+ worked:'<p>KCl: potassium is a metal, so <b>ionic</b>. SO<sub>2</sub>: sulphur and oxygen are both non-metals, so <b>covalent molecular</b>. Fe<sub>2</sub>O<sub>3</sub>: iron is a metal, so <b>ionic</b>. NH<sub>3</sub>: nitrogen and hydrogen are both non-metals, so <b>covalent molecular</b>.</p>'}));
+
+sec('2','Writing formulae of ionic compounds','<p><b>About 5 minutes.</b> The charges on the ions must add up to zero. Use brackets round a polyatomic ion when you need more than one.</p>');
+def('2.1','2',dflt({title:'Writing formulae',
+ html:'<p>Write the formula of each compound. Type the numbers on the line, for example <b>Ca(OH)2</b>.</p>',
+ fields:[find('potassium','oxide'),find('calcium','nitrate'),find('aluminium','hydroxide'),find('iron(III)','sulphate')].map(x=>txt(cap(x.name)+' =',x.f,{})),
+ cheat:CH_IONS,
+ worked:'<p>Potassium oxide: K<sup>+</sup> and O<sup>2−</sup>, two K<sup>+</sup> for one O<sup>2−</sup>: <b>K<sub>2</sub>O</b>.<br>Calcium nitrate: Ca<sup>2+</sup> and NO<sub>3</sub><sup>−</sup>, two NO<sub>3</sub><sup>−</sup>: <b>Ca(NO<sub>3</sub>)<sub>2</sub></b>.<br>Aluminium hydroxide: Al<sup>3+</sup> and OH<sup>−</sup>, three OH<sup>−</sup>: <b>Al(OH)<sub>3</sub></b>.<br>Iron(III) sulphate: Fe<sup>3+</sup> and SO<sub>4</sub><sup>2−</sup>, two Fe<sup>3+</sup> (6+) and three SO<sub>4</sub><sup>2−</sup> (6−): <b>Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub></b>.</p>'}));
+def('2.2','2',dflt({title:'Magnesium phosphate',
+ html:'<p>The formula of magnesium phosphate is Mg<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub>. Use the table of ions to explain the formula.</p>',
+ fields:[sel('Charge on the magnesium ion',['1+','2+','3+'],'2+'),sel('Charge on the phosphate ion',['1−','2−','3−'],'3−'),num('Number of magnesium ions in one unit of the formula =',3,'',{abs:1e-9}),num('Number of phosphate ions in one unit of the formula =',2,'',{abs:1e-9})],
+ cheat:CH_IONS,
+ worked:'<p>Mg<sup>2+</sup> and PO<sub>4</sub><sup>3−</sup>. Three Mg<sup>2+</sup> give 6+. Two PO<sub>4</sub><sup>3−</sup> give 6−. The charges add up to zero, so the formula is <b>Mg<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub></b>.</p>'}));
+
+sec('3','Empirical formulae','<p><b>About 12 minutes.</b> Work down the table, one column for each element. Working scores marks.</p>');
+def('3.1','3',r=>{
+ const f='K2S',c=parseF(f),els=Object.keys(c),M=Mr(f);
+ const P=els.map(e=>Math.round(1000*c[e]*AR[e]/M)/10);
+ const n=els.map((e,i)=>P[i]/AR[e]);
+ const rows=els.map((e,i)=>({e,m:P[i],n:n[i],cnt:c[e]})),SF=stepFields(rows,{tol:0.02,massAbs:0.05,massLabel:'Mass in 100 g of the compound, '+I('m')});
+ return dflt({title:'Empirical formula from percentages',
+  html:'<p>A compound contains <b>'+nice(P[0],1)+'%</b> '+ELN[els[0]]+' and <b>'+nice(P[1],1)+'%</b> '+ELN[els[1]]+' by mass. Find its empirical formula.</p>',
+  fields:SF.fields.concat([empField(f)]),grid:SF.grid,
+  cheat:CH_EMP,
+  worked:empTable(rows,'Mass in 100 g')+'<p>Empirical formula: <b>'+F(f)+'</b></p>'});
+});
+def('3.2','3',dflt({title:'Is it ionic?',
+ html:'<p>The empirical formula in question 3.1 is K<sub>2</sub>S. Use it to answer these questions.</p>',
+ fields:[sel('Potassium is a metal and sulphur is a non-metal, so the compound is',['ionic','covalent molecular'],'ionic'),sel('The charge on the potassium ion is',['1+','2+','3+'],'1+'),sel('The charge on the sulphide ion is',['1−','2−','3−'],'2−')],
+ cheat:CH_IONS+CH_TYPE,
+ worked:'<p>A metal with a non-metal: <b>ionic</b>. K<sup>+</sup> is <b>1+</b> and S<sup>2−</sup> is <b>2−</b>. Two K<sup>+</sup> (2+) balance one S<sup>2−</sup> (2−), which agrees with the ratio 2 : 1 from the percentages.</p>'}));
+
+sec('4','Shapes of molecules and bond angles','<p><b>About 4 minutes.</b> Look at each picture. Use the look-up table on the cheat sheet.</p>');
+def('4.1','4',r=>{
+ const L=['H2O','NH3','CH4','CO2'],SH={H2O:'bent',NH3:'pyramid',CH4:'tetrahedral',CO2:'straight line'},AN2={H2O:'104.5°',NH3:'107°',CH4:'109.5°',CO2:'180°'};
+ const fields=[];L.forEach(f=>{fields.push(sel('Shape of '+F(f),['straight line','bent','pyramid','tetrahedral'],SH[f]));fields.push(sel('Bond angle in '+F(f),['180°','109.5°','107°','104.5°'],AN2[f]));});
+ return dflt({title:'Pictures of molecules',
+  html:'<p>Each picture shows one molecule. Choose the shape and the bond angle.</p>'+molPics(L),
+  fields,cheat:CH_SHAPE,
+  worked:'<p>H<sub>2</sub>O: <b>bent</b>, <b>104.5°</b>. NH<sub>3</sub>: <b>pyramid</b>, <b>107°</b>. CH<sub>4</sub>: <b>tetrahedral</b>, <b>109.5°</b>. CO<sub>2</sub>: <b>straight line</b>, <b>180°</b>.</p>'});
+});
+
+sec('5','System, surroundings and the Law of Conservation of Energy','<p><b>About 8 minutes.</b> The system is the chemicals that react. The surroundings are everything else.</p>');
+def('5.1','5',dflt({title:'Identify the system and the surroundings',
+ html:'<p>A student adds magnesium ribbon to dilute hydrochloric acid in a glass boiling tube. A thermometer in the acid shows the temperature rising from 21 °C to 33 °C.</p>',
+ fields:[sel('The magnesium and the acid are',['the system','the surroundings'],'the system'),sel('The thermometer is',['the system','the surroundings'],'the surroundings'),sel('The glass of the boiling tube is',['the system','the surroundings'],'the surroundings'),sel('The air around the tube is',['the system','the surroundings'],'the surroundings'),sel('The temperature rises, so energy moves',['from the system to the surroundings','from the surroundings to the system'],'from the system to the surroundings')],
+ cheat:CH_SYS,
+ worked:'<p>The reacting chemicals (the magnesium and the acid) are the <b>system</b>. The thermometer, the glass and the air are the <b>surroundings</b>. The temperature rises, so energy moves <b>from the system to the surroundings</b>: the reaction is exothermic.</p>'}));
+def('5.2','5',dflt({title:'Energy in an exothermic reaction (word fill)',
+ html:'<p>Complete the passage using the word bank.</p><p>In an exothermic reaction, energy moves from the [[0]] to the [[1]], so the temperature of the surroundings [[2]]. The Law of Conservation of Energy says that energy cannot be created or [[3]]. So the energy lost by the system is [[4]] the energy gained by the surroundings.</p>',
+ bank:['system','surroundings','rises','falls','destroyed','used','equal to','greater than','smaller than'],
+ fields:[cz(0,'system'),cz(1,'surroundings'),cz(2,'rises'),cz(3,'destroyed'),cz(4,'equal to')],
+ cheat:CH_SYS,
+ worked:'<p>Energy moves from the <b>system</b> to the <b>surroundings</b>, so the temperature of the surroundings <b>rises</b>. Energy cannot be created or <b>destroyed</b>, so the energy lost by the system is <b>equal to</b> the energy gained by the surroundings.</p>'}));
+def('5.3','5',dflt({title:'Explain: an endothermic reaction',
+ html:'<p>A student mixes citric acid solution with sodium hydrogencarbonate in a plastic cup. The temperature falls from 24 °C to 19 °C. <b>Explain what happens to the energy.</b> Use the words <b>system</b> and <b>surroundings</b> and state the <b>Law of Conservation of Energy</b>.</p>',
+ ideas:[
+  {t:'Energy is taken in by the system from the surroundings (endothermic).',g:[['energy','heat'],['taken in','takes in','absorb','gains','gained','from the surroundings','into the system','transferred to the system','flows in','moves in','goes in','endothermic']]},
+  {t:'The surroundings lose energy, so their temperature falls.',g:[['surroundings','solution','water','cup'],['lose','lost','loses','less energy','fall','cooler','colder','drops','decrease','goes down','cold']]},
+  {t:'Energy is conserved: it is not created or destroyed, so the energy gained by the system equals the energy lost by the surroundings.',g:[['conserv','not created','not destroyed','cannot be created','neither created','transferred','transfers'],['equal','same','total','unchanged','balance','gained','lost','from the surroundings','to the system']]}],
+ model:'The temperature falls, so the reaction is endothermic. The system (the reacting chemicals) takes in energy from the surroundings (the solution and the cup), so the surroundings lose energy and get colder. By the Law of Conservation of Energy, energy is not created or destroyed, only transferred: the energy gained by the system is equal to the energy lost by the surroundings.',
+ cheat:CH_SYS,
+ worked:'<p>The temperature falls, so the reaction is endothermic. The system takes in energy from the surroundings, so the surroundings lose energy and the temperature falls. Energy is conserved (it is not created or destroyed): the energy gained by the system equals the energy lost by the surroundings.</p>'}));
+
+sec('6','Bond enthalpies and ΔH','<p><b>About 14 minutes.</b> Breaking bonds takes energy <b>in</b>. Making bonds gives energy <b>out</b>. Δ<i>H</i> is the difference. Working scores marks.</p>');
+def('6.1','6',r=>rxSpec(RX.nh3,{title:'Predicting ΔH from bond enthalpies',lead:'Use average bond enthalpies to predict Δ<i>H</i> for the reaction in which ammonia is made. All the substances are gases.',blank:true}));
+def('6.2','6',r=>{
+ const rx=RX.hclrev;
+ return dflt({title:'Reading an energy level diagram',
+  html:'<p>The energy level diagram below is for '+eqHTML(rx)+'. The numbers are on the diagram. Use them to answer the questions.</p>',
+  fields:[sel('The products are',['lower in energy than the reactants','higher in energy than the reactants'],'higher in energy than the reactants'),num('Δ<i>H</i> = bonds broken − bonds made =',rx.dH,KJM,{signed:true,tol:0,signMsg:SIGNMSG}),sel('The reaction is',['exothermic','endothermic'],'endothermic'),sel('During the reaction the surroundings get',['warmer','colder'],'colder')],
+  cheat:'<p>On the diagram the upward arrow is <b>bonds broken</b> and the downward arrow is <b>bonds made</b>.</p>'+fm('Δ'+I('H')+' = (sum of bonds broken) − (sum of bonds made)')+'<p>Products lower than the reactants: exothermic, Δ<i>H</i> negative. Products higher than the reactants: endothermic, Δ<i>H</i> positive.</p>',
+  worked:'<p>Δ<i>H</i> = '+rx.brk.total+' − '+rx.mk.total+' = <b>+'+rx.dH+' '+KJM+'</b>. More energy is taken in breaking bonds than is given out making bonds, so the products are <b>higher</b> than the reactants, the reaction is <b>endothermic</b> and the surroundings get <b>colder</b>.</p>',
+  diag:Object.assign(diagOf(rx,'given'),{note:'The numbers are on the diagram.'})});
+});
+def('6.3','6',dflt({title:'Explain: why ΔH is a difference',
+ html:'<p><b>Explain why the Δ<i>H</i> for a reaction is the difference between the energy needed to break the bonds in the reactants and the energy given out when the bonds in the products form.</b></p>',
+ ideas:[
+  {t:'Breaking bonds takes in energy (it is endothermic).',g:[['break','broken','breaking'],['taken in','takes in','needs','needed','requires','absorb','input','put in','energy in','endothermic','supplied']]},
+  {t:'Making bonds gives out energy (it is exothermic).',g:[['mak','form','new bond'],['given out','gives out','gives off','given off','releas','exothermic','energy out','loses']]},
+  {t:'Δ<i>H</i> is the energy taken in minus the energy given out. If more is given out than taken in, Δ<i>H</i> is negative.',g:[['differ','minus','subtract','take away','takes away','bigger','larger','greater','more energy','less energy','overall','net','total','compare']]}],
+ model:'Breaking the bonds in the reactants takes energy in, and making the bonds in the products gives energy out. The overall energy change, ΔH, is the difference between the two: energy taken in minus energy given out. If more energy is given out than is taken in, ΔH is negative (exothermic). If more is taken in than is given out, ΔH is positive (endothermic).',
+ cheat:CHEAT_RX,
+ worked:'<p>Breaking bonds takes energy in. Making bonds gives energy out. ΔH = energy taken in − energy given out. More out than in: ΔH negative (exothermic). More in than out: ΔH positive (endothermic).</p>'}));
+
+sec('7','Calorimetry: finding ΔH and moles from an experiment','<p><b>About 12 minutes.</b> Work through the steps. The sign goes on ΔH last. Working scores marks.</p>');
+def('7.1','7',r=>{
+ const V1=50,c=0.50,V2=50,T0=20.5,dt=3.4,T1=T0+dt,Vt=V1+V2,qJ=Vt*4.2*dt,qkJ=qJ/1000,n=c*V1/1000,dH=-qkJ/n;
+ return dflt({title:'Acid and alkali in a polystyrene cup',
+  html:'<p><b>'+V1+' '+CM3+'</b> of <b>'+nice(c)+' '+MD+'</b> hydrochloric acid is mixed with <b>'+V2+' '+CM3+'</b> of an excess of '+NAOH+' in a polystyrene cup. The temperature rises from <b>'+T0.toFixed(1)+' °C</b> to <b>'+T1.toFixed(1)+' °C</b>. Treat the mixture as water. The acid is the limiting reactant.</p>'+fm(I('q')+' = '+I('v')+' × 4.2 × Δ'+I('t'))+fm('Δ'+I('H')+' = '+frac(I('q')+' in kJ',I('n'))),
+  fields:[
+   num('Step 1. Total volume of the mixture, '+I('v')+' =',Vt,CM3,{wrong:[{v:V1,msg:'Use the TOTAL volume of the mixture.'}]}),
+   num('Step 2. Temperature change, Δ'+I('t')+' =',dt,'°C',{abs:1e-9,wrong:[{v:T1,msg:'Δ'+I('t')+' is the size of the change: higher temperature minus lower temperature.'}]}),
+   num('Step 3. Energy transferred, '+I('q')+' =',qJ,'J',{wrong:[{v:V1*4.2*dt,msg:'Use the total volume for '+I('v')+'.'}]}),
+   num('Step 4. '+I('q')+' in kJ =',qkJ,'kJ',{abs:1e-9,wrong:[{v:qJ,msg:'That is still in J. Change it to kJ.'}]}),
+   num('Step 5. Moles of the limiting reactant, '+I('n')+' =',n,'mol',{abs:1e-9,wrong:[{v:c*Vt/1000,msg:'Use the volume of the limiting reactant only, not the total volume.'}]}),
+   num('Step 6. Δ'+I('H')+' with its sign =',dH,KJM,{signed:1,wrong:[{v:qJ/n,msg:'Use '+I('q')+' in kJ, not J.'}]}),
+   sel('The energy '+I('q')+' that you calculated is the energy gained by the',['surroundings (the solution)','system (the reacting chemicals)'],'surroundings (the solution)'),
+   sel('So the energy lost by the system is',['equal to q','greater than q','smaller than q'],'equal to q')],
+  cheat:CH_CAL+CH_SYS,
+  worked:'<p>Step 1. '+I('v')+' = '+V1+' + '+V2+' = <b>'+Vt+' '+CM3+'</b></p><p>Step 2. Δ'+I('t')+' = '+T1.toFixed(1)+' − '+T0.toFixed(1)+' = <b>'+nice(dt)+' °C</b></p><div class="fm n">Step 3. '+I('q')+' = '+I('v')+' × 4.2 × Δ'+I('t')+' = '+Vt+' × 4.2 × '+nice(dt)+' = <b>'+nice(qJ)+' J</b></div><p>Step 4. '+frac(nice(qJ),'1000')+' = <b>'+nice(qkJ)+' kJ</b></p><div class="fm n">Step 5. '+I('n')+' = '+frac(nice(c)+' × '+V1,'1000')+' = <b>'+nice(n)+' mol</b></div><div class="fm n">Step 6. Δ'+I('H')+' = '+frac(nice(qkJ),nice(n))+' = '+(+Math.abs(dH).toPrecision(4))+'</div><p>The temperature rose: exothermic, so <b>Δ'+I('H')+' = −'+(+Math.abs(dH).toPrecision(4))+' '+KJM+'</b>.</p><p>The energy <i>q</i> is gained by the surroundings (the solution). By the Law of Conservation of Energy the energy lost by the system is <b>equal to <i>q</i></b>.</p>'});
+});
+def('7.2','7',r=>{
+ const m=4.00,f='NH4NO3',M=Mr(f),V=50,T0=22.0,dt=4.0,T1=T0-dt,qJ=V*4.2*dt,qkJ=qJ/1000,n=m/M,dH=qkJ/n;
+ return dflt({title:'Dissolving a solid in water',
+  html:'<p><b>'+nice(m,2)+' g</b> of ammonium nitrate, NH<sub>4</sub>NO<sub>3</sub>, dissolves in <b>'+V+' '+CM3+'</b> of water in a polystyrene cup. The temperature falls from <b>'+T0.toFixed(1)+' °C</b> to <b>'+T1.toFixed(1)+' °C</b>. Use '+I('v')+' = '+V+' '+CM3+' for the water.</p>'+ATMASS,
+  fields:[
+   num('Temperature change, Δ'+I('t')+' =',dt,'°C',{abs:1e-9,wrong:[{v:T1,msg:'Δ'+I('t')+' is the size of the change: higher temperature minus lower temperature.'}]}),
+   num('Energy transferred, '+I('q')+' =',qJ,'J'),
+   num(I('q')+' in kJ =',qkJ,'kJ',{abs:1e-9,wrong:[{v:qJ,msg:'That is still in J. Change it to kJ.'}]}),
+   num('Molar mass of NH<sub>4</sub>NO<sub>3</sub>, '+I('M')+' =',M,GM,{abs:1e-9}),
+   thinkM(m,M),
+   num('Moles of NH<sub>4</sub>NO<sub>3</sub>, '+I('n')+' =',n,'mol',{abs:1e-9,wrong:[{v:m*M,msg:'Mass and molar mass the wrong way up. Moles = '+frac(I('m'),I('M'))+'.'}]}),
+   num('Δ'+I('H')+' with its sign =',dH,KJM,{signed:1,wrong:[{v:qJ/n,msg:'Use '+I('q')+' in kJ, not J.'}]})],
+  cheat:CH_CAL+ATMASS,
+  worked:'<p>Δ'+I('t')+' = '+T0.toFixed(1)+' − '+T1.toFixed(1)+' = <b>'+nice(dt)+' °C</b></p><div class="fm n">'+I('q')+' = '+V+' × 4.2 × '+nice(dt)+' = <b>'+nice(qJ)+' J</b> = <b>'+nice(qkJ)+' kJ</b></div><p>'+I('M')+' = N 2 × 14 + H 4 × 1 + O 3 × 16 = <b>'+M+' '+GM+'</b>. The mass ('+nice(m,2)+' g) is less than the molar mass, so the moles are less than one mole.</p><div class="fm n">'+I('n')+' = '+frac(nice(m,2),M)+' = <b>'+nice(n)+' mol</b></div><div class="fm n">Δ'+I('H')+' = '+frac(nice(qkJ),nice(n))+' = '+nice(dH)+'</div><p>The temperature fell: endothermic, so <b>Δ'+I('H')+' = +'+nice(dH)+' '+KJM+'</b>.</p>'});
+});
+def('7.3','7',dflt({title:'Explain: improving the experiment',
+ html:'<p>The data book value for dissolving ammonium nitrate is Δ<i>H</i> = +25.7 kJ mol<sup>−1</sup>. The value found in question 7.2 is smaller. <b>Suggest a reason, and one change that would improve the experiment.</b></p>',
+ ideas:[
+  {t:'Energy was gained from the surroundings (the air or the room), so the temperature fell by less than it should.',g:[['energy','heat','warm'],['air','room','surroundings','outside','gained','gains','from the','lost','loses','escap','transferr']]},
+  {t:'An improvement: insulate the cup, put a lid on it, or use a thicker cup, so less energy is transferred to or from the air.',g:[['lid','insulat','cover','thicker','polystyrene','two cups','double','lag','foam','stir']]}],
+ model:'Energy was transferred from the warmer air in the room into the solution, so the temperature fell by less than it should and the calculated ΔH is smaller. A lid on the cup, or a second cup around it, would reduce the energy transferred.',
+ cheat:CH_SYS+CH_CAL,
+ worked:'<p>Energy flows into the cold solution from the warmer air, so the temperature falls by less than it should, and the calculated Δ<i>H</i> is too small. Using a lid or insulating the cup reduces this.</p>'}));
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
