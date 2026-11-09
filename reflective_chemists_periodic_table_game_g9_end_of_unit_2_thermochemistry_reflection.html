@@ -643,9 +643,9 @@
     <div class="final-score" id="phase1Score">0</div>
     <p id="phase1Summary"></p>
     <div class="cert-reflection">
-      <label class="topic-check-label">End of Unit 2 reflection: NGSS HS-PS1-4 Thermochemistry. Chemists check their own understanding as part of the work. For each key idea and calculation, choose the statement that fits where you are today, thinking about the practicals, check-ins and tests in this unit.</label>
+      <label class="topic-check-label">End of Unit 2 reflection: NGSS HS-PS1-4 Thermochemistry. Chemists check their own understanding as part of the work. These are the key skills from your thermochemistry test (Check-In #4), in the seven sections of the test. For each skill, choose the statement that fits where you are today.</label>
       <div id="topicChecklist"></div>
-      <span class="topic-check-tip" id="ratedCount">Rating every idea and calculation gives you the most useful certificate.</span>
+      <span class="topic-check-tip" id="ratedCount">Rating every key skill gives you the most useful certificate.</span>
       <div class="topic-check-label" style="margin-top:16px;">Now write your reflection. Use full sentences, scientific words and the examples from the unit, so that your teacher can see what you understand.</div>
       <div id="reflFields"></div>
     </div>
@@ -848,18 +848,18 @@
   // during the Part-1 checkpoint overlay.
   let part1Score = 0, part2StartMs = 0, part2Ms = 0;
   const REFL_PROMPTS = [
-    { id:'ideas', head:'Why energy is released or absorbed',
-      q:'Explain, in your own words, why a reaction can release energy or absorb energy. Use the words bonds, energy in, energy out, exothermic and endothermic.',
+    { id:'energy', head:'Energy: sections 5 and 6',
+      q:'Explain, in your own words, why a reaction can release or absorb energy, and what the Law of Conservation of Energy says about it. Use the words system, surroundings, bonds, energy in, energy out, exothermic and endothermic.',
       ph:'Start with what happens to the bonds in the reactants and in the products...' },
-    { id:'conserve', head:'System, surroundings and conservation of energy',
-      q:'Think about a reaction in a polystyrene cup where the temperature rises. Say what the system and the surroundings are, which way the energy moves, and how the Law of Conservation of Energy applies.',
-      ph:'Name what is in the system and what is in the surroundings, then follow the energy...' },
-    { id:'calc', head:'One calculation, step by step',
-      q:'Choose one calculation from this unit: q from a temperature change, \u0394H in kJ per mole, or \u0394H from average bond enthalpies. Explain each step in words, including how you decide the sign of \u0394H and why the sign matters.',
+    { id:'structure', head:'Compounds and molecules: sections 1, 2 and 4',
+      q:'Choose one skill from sections 1, 2 and 4: deciding whether a compound is ionic or covalent molecular, writing a formula from the charges on its ions, or the shape and bond angle of a molecule. Explain how you decide, with an example of your own.',
+      ph:'Say which skill you chose, then explain how you decide, step by step...' },
+    { id:'calc', head:'One calculation: sections 3, 6 and 7',
+      q:'Choose one calculation: an empirical formula (section 3), \u0394H from average bond enthalpies (section 6) or \u0394H from calorimetry (section 7). Explain each step in words, including how you decide the sign of \u0394H if you chose section 6 or 7.',
       ph:'Say which calculation you chose, then explain step 1, step 2 and so on...' },
-    { id:'next', head:'My most challenging idea and my next step',
-      q:'Which idea or calculation did you find the most challenging? Describe a mistake you have made or could make, what you do now to avoid it, and one thing you will do next to get stronger.',
-      ph:'Name the idea or calculation, the mistake, and your next step...' }
+    { id:'next', head:'My most challenging skill and my next step',
+      q:'Look back at your ratings. Choose the skill you find the most challenging and say which section of the test it is in. Describe a mistake you have made or could make, what you do now to avoid it, and one thing you will do next to get stronger.',
+      ph:'Name the skill and its section, the mistake, and your next step...' }
   ];
   const MIN_WORDS = 50;
   function emptyRefl(){ const o = {}; REFL_PROMPTS.forEach(function(p){ o[p.id] = ''; }); return o; }
@@ -918,31 +918,40 @@
     return                      { name:'Beginning',     rgb:[112,72,232] };
   }
   const LEVEL_KEY = 'Expert: all correct \u00b7 Proficient: 55 or more \u00b7 Learning well: 45 or more \u00b7 Practising: 35 or more \u00b7 Beginning: fewer than 35';
-  // End of Unit 2 reflection (NGSS HS-PS1-4 Thermochemistry). The Part-1
-  // checkpoint asks the student to rate each key idea and calculation. The
-  // three ratings keep their internal keys (secure / nearly / practice).
+  // End of Unit 2 reflection (NGSS HS-PS1-4 Thermochemistry). The key skills
+  // are those of the thermochemistry test (Check-In #4), one group per test
+  // section. Ratings keep their internal keys (secure / nearly / practice).
   const TOPIC_GROUPS = {
-    ideas: { title:'Key ideas', pdfTitle:'Key ideas', note:'Unit 2 followed the standard HS-PS1-4: the energy released or absorbed in a reaction depends on the change in total bond energy.' },
-    calcs: { title:'Calculations', pdfTitle:'Calculations', note:'' }
+    s1:{ title:'1 Metals, non-metals and types of compound', pdfTitle:'1 Metals, non-metals and types of compound', note:'' },
+    s2:{ title:'2 Writing formulae of ionic compounds', pdfTitle:'2 Writing formulae of ionic compounds', note:'' },
+    s3:{ title:'3 Empirical formulae', pdfTitle:'3 Empirical formulae', note:'' },
+    s4:{ title:'4 Shapes of molecules and bond angles', pdfTitle:'4 Shapes of molecules and bond angles', note:'' },
+    s5:{ title:'5 System, surroundings and conservation of energy', pdfTitle:'5 System, surroundings and conservation of energy', note:'' },
+    s6:{ title:'6 Bond enthalpies and ΔH', pdfTitle:'6 Bond enthalpies and delta H', note:'The standard HS-PS1-4: the energy released or absorbed in a reaction depends on the change in total bond energy.' },
+    s7:{ title:'7 Calorimetry', pdfTitle:'7 Calorimetry', note:'' }
   };
   const TOPIC_LIST = [
-    { id:'i-system',    group:'ideas', label:'System and surroundings: which is which, and which way the energy moves' },
-    { id:'i-conserve',  group:'ideas', label:'The Law of Conservation of Energy: the energy lost by the system equals the energy gained by the surroundings' },
-    { id:'i-sign',      group:'ideas', label:'Exothermic and endothermic reactions: the temperature change, and the sign of ΔH', pdfLabel:'Exothermic and endothermic reactions: the temperature change, and the sign of delta H' },
-    { id:'i-diagrams',  group:'ideas', label:'Enthalpy level diagrams: drawing them and reading ΔH', pdfLabel:'Enthalpy level diagrams: drawing them and reading delta H' },
-    { id:'i-bonds',     group:'ideas', label:'The bond energy model: breaking bonds takes energy in, making bonds gives energy out' },
-    { id:'i-covionic',  group:'ideas', label:'Ionic or covalent molecular: a metal joined to a non-metal, or non-metals only' },
-    { id:'i-shapes',    group:'ideas', label:'Shapes and bond angles of methane, ammonia, water and carbon dioxide, and of bigger molecules such as ethanol' },
-    { id:'i-practical', group:'ideas', label:'The calorimetry practical: measuring volume and temperature, and why the polystyrene cup and the limiting reactant matter' },
-
-    { id:'c-formulae',  group:'calcs', label:'Formulae of ionic compounds from the charges on the ions, using brackets when needed' },
-    { id:'c-molformula',group:'calcs', label:'Molecular formula from a picture of a molecule' },
-    { id:'c-empirical', group:'calcs', label:'Empirical formula from percentages, using moles and the smallest ratio' },
-    { id:'c-moles',     group:'calcs', label:'Moles of a solution from its concentration and volume' },
-    { id:'c-limiting',  group:'calcs', label:'Deciding which reactant is the limiting reactant' },
-    { id:'c-q',         group:'calcs', label:'Energy transferred: q = v × 4.2 × Δt, using the total volume of the mixture', pdfLabel:'Energy transferred: q = v × 4.2 × delta t, using the total volume of the mixture' },
-    { id:'c-dh',        group:'calcs', label:'ΔH in kJ per mole: q in kJ divided by moles, with the sign added last', pdfLabel:'delta H in kJ per mole: q in kJ divided by moles, with the sign added last' },
-    { id:'c-bondcalc',  group:'calcs', label:'ΔH from average bond enthalpies: energy taken in to break bonds minus energy given out making bonds', pdfLabel:'delta H from average bond enthalpies: energy taken in to break bonds minus energy given out making bonds' }
+    { id:'s1-metal',   group:'s1', label:'Telling a metal from a non-metal' },
+    { id:'s1-type',    group:'s1', label:'Deciding whether a compound is ionic or covalent molecular' },
+    { id:'s2-ions',    group:'s2', label:'Using the table of ions so that the charges add up to zero' },
+    { id:'s2-brackets',group:'s2', label:'Putting brackets round a polyatomic ion' },
+    { id:'s2-explain', group:'s2', label:'Explaining a formula from the charges on its ions' },
+    { id:'s3-percent', group:'s3', label:'Turning percentages into masses: "let\u2019s take 100 g"' },
+    { id:'s3-moles',   group:'s3', label:'Moles from mass, and the check: more or less than one mole?' },
+    { id:'s3-ratio',   group:'s3', label:'Dividing by the smallest, then the whole-number ratio and the formula' },
+    { id:'s4-shape',   group:'s4', label:'Shape and bond angle of a molecule from its picture' },
+    { id:'s4-bigger',  group:'s4', label:'Bigger molecules, such as ethanol: counting the bonds around each atom' },
+    { id:'s4-formula', group:'s4', label:'Molecular formula from a picture' },
+    { id:'s5-sys',     group:'s5', label:'Which items are the system and which are the surroundings' },
+    { id:'s5-way',     group:'s5', label:'Which way the energy moves in exothermic and endothermic changes' },
+    { id:'s5-law',     group:'s5', label:'The Law of Conservation of Energy' },
+    { id:'s6-model',   group:'s6', label:'Breaking bonds takes energy in, making bonds gives energy out' },
+    { id:'s6-count',   group:'s6', label:'Counting the bonds and multiplying by each bond enthalpy' },
+    { id:'s6-dh',      group:'s6', label:'ΔH = energy taken in minus energy given out, and its sign', pdfLabel:'delta H = energy taken in minus energy given out, and its sign' },
+    { id:'s7-vdt',     group:'s7', label:'The total volume of the mixture, v, and the size of Δt', pdfLabel:'The total volume of the mixture, v, and the size of delta t' },
+    { id:'s7-q',       group:'s7', label:'Energy transferred: q = v × 4.2 × Δt, and q in kJ', pdfLabel:'Energy transferred: q = v × 4.2 × delta t, and q in kJ' },
+    { id:'s7-n',       group:'s7', label:'Moles of the limiting reactant from concentration and volume' },
+    { id:'s7-dh',      group:'s7', label:'ΔH from q and n, with the sign added last', pdfLabel:'delta H from q and n, with the sign added last' }
   ];
   const STATUS_LABELS = {
     secure:   'Proficient',
@@ -1826,7 +1835,7 @@
     doc.setFont('helvetica','bold');
     doc.setFontSize(12);
     doc.setTextColor(30,60,110);
-    doc.text('My Unit 2 self-check: '+TOPIC_LIST.length+' key ideas and calculations', W/2, boxY, { align:'center' });
+    doc.text('My key skills self-check: '+TOPIC_LIST.length+' skills from the thermochemistry test', W/2, boxY, { align:'center' });
     const bw = 74, bg = 6, bx0 = W/2 - (3*bw + 2*bg)/2;
     [['secure','Proficient'],['nearly','There, but not confident yet'],['practice','Not there yet: a target for the next weeks']].forEach(function(b, i){
       const x = bx0 + i*(bw+bg);
@@ -1906,7 +1915,7 @@
     // ================= PAGE 3: elements to keep practising + self-check =================
     doc.addPage();
     drawFrame();
-    pageHeading('Elements to keep practising, and Unit 2 self-check');
+    pageHeading('Elements to keep practising, and key skills self-check');
     let y2 = 40;
     doc.setFont('helvetica','bold');
     doc.setFontSize(11.5);
@@ -1938,39 +1947,41 @@
     doc.setFont('helvetica','bold');
     doc.setFontSize(11.5);
     doc.setTextColor(30,60,110);
-    doc.text('Unit 2 self-check: key ideas and calculations', 20, y2);
+    doc.text('Key skills from the thermochemistry test (Check-In #4)', 20, y2);
     y2 += 8;
 
-    const colW = 122, colXs = { ideas:20, calcs:155 };
+    const colW = 122, colXs = [20, 155];
     const labelW = colW - 44;
-    ['ideas','calcs'].forEach(function(g){
-      const x = colXs[g];
+    [['s1','s2','s3','s4'],['s5','s6','s7']].forEach(function(groups, ci){
+      const x = colXs[ci];
       let yy = y2;
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(10);
-      doc.setTextColor(60,50,20);
-      doc.text(TOPIC_GROUPS[g].pdfTitle, x, yy);
-      doc.setDrawColor(154,97,0);
-      doc.setLineWidth(0.3);
-      doc.line(x, yy+1.6, x+colW, yy+1.6);
-      yy += 6;
-      TOPIC_LIST.filter(function(t){ return t.group === g; }).forEach(function(t){
-        const status = topicRatings[t.id];
-        doc.setFont('helvetica','normal');
-        doc.setFontSize(8.3);
-        doc.setTextColor(60,60,60);
-        const lines = doc.splitTextToSize(t.pdfLabel || t.label, labelW);
-        lines.forEach(function(line, i){ doc.text(line, x, yy + i*3.7); });
-        const rgb = statusColorFor(status);
+      groups.forEach(function(g){
         doc.setFont('helvetica','bold');
-        doc.setFontSize(8.3);
-        doc.setTextColor(rgb[0], rgb[1], rgb[2]);
-        doc.text(statusWordFor(status), x+colW, yy, { align:'right' });
-        const rowH = lines.length*3.7;
-        doc.setDrawColor(220,214,200);
-        doc.setLineWidth(0.15);
-        doc.line(x, yy+rowH-1.2, x+colW, yy+rowH-1.2);
-        yy += rowH + 1.5;
+        doc.setFontSize(9.5);
+        doc.setTextColor(60,50,20);
+        doc.text(TOPIC_GROUPS[g].pdfTitle, x, yy);
+        doc.setDrawColor(154,97,0);
+        doc.setLineWidth(0.3);
+        doc.line(x, yy+1.5, x+colW, yy+1.5);
+        yy += 5.5;
+        TOPIC_LIST.filter(function(t){ return t.group === g; }).forEach(function(t){
+          const status = topicRatings[t.id];
+          doc.setFont('helvetica','normal');
+          doc.setFontSize(8.3);
+          doc.setTextColor(60,60,60);
+          const lines = doc.splitTextToSize(t.pdfLabel || t.label, labelW);
+          lines.forEach(function(line, i){ doc.text(line, x, yy + i*3.6); });
+          const rgb = statusColorFor(status);
+          doc.setFont('helvetica','bold');
+          doc.setTextColor(rgb[0], rgb[1], rgb[2]);
+          doc.text(statusWordFor(status), x+colW, yy, { align:'right' });
+          const rowH = lines.length*3.6;
+          doc.setDrawColor(220,214,200);
+          doc.setLineWidth(0.15);
+          doc.line(x, yy+rowH-1.2, x+colW, yy+rowH-1.2);
+          yy += rowH + 1.3;
+        });
+        yy += 2.5;
       });
     });
     drawFooter();
@@ -2190,7 +2201,7 @@
     const el = document.getElementById('ratedCount');
     if(!el) return;
     const n = Object.keys(topicRatings).length;
-    el.textContent = 'Rated '+n+' of '+TOPIC_LIST.length+'. Rating every idea and calculation gives you the most useful certificate.';
+    el.textContent = 'Rated '+n+' of '+TOPIC_LIST.length+'. Rating every key skill gives you the most useful certificate.';
   }
 
   function buildTopicChecklist(){
