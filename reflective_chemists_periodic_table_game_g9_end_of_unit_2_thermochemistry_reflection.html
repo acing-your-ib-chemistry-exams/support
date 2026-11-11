@@ -1702,7 +1702,7 @@
     phase1Targets.forEach(function(t){
       const stat = elementStats[t.s] || { wrong: 0 };
       if(stat.wrong === 0) mastered.push(t);
-      else if(stat.wrong >= 2) focus.push({ el: t, wrong: stat.wrong });
+      else focus.push({ el: t, wrong: stat.wrong });
     });
     focus.sort(function(a,b){ return b.wrong - a.wrong; });
     let part2Correct = 0;
@@ -1720,6 +1720,27 @@
     };
   }
 
+  // The PDF uses jsPDF's built-in fonts, which only hold Western (WinAnsi)
+  // characters. A single character outside that set (a subscript such as the 2
+  // in CO\u2082, the Greek capital delta, an arrow, an emoji, an invisible
+  // zero-width space pasted from a website) makes jsPDF switch that whole line
+  // to a different encoding, and the line then prints widely spaced, as if
+  // monospaced, with wrong symbols. So every string is cleaned before it is drawn.
+  const PDF_SUBS = { '\u2080':'0','\u2081':'1','\u2082':'2','\u2083':'3','\u2084':'4','\u2085':'5','\u2086':'6','\u2087':'7','\u2088':'8','\u2089':'9','\u208A':'+','\u208B':'-',
+    '\u2070':'0','\u2074':'4','\u2075':'5','\u2076':'6','\u2077':'7','\u2078':'8','\u2079':'9','\u207A':'+','\u207B':'-',
+    '\u0394':'delta ','\u03B4':'delta ','\u03B1':'alpha','\u03B2':'beta','\u03B3':'gamma','\u03BB':'lambda','\u03BC':'mu','\u03C0':'pi','\u03C3':'sigma','\u03B8':'theta','\u03A3':'sum of ','\u03A9':'ohm',
+    '\u2192':'->','\u2794':'->','\u27F6':'->','\u21D2':'=>','\u2190':'<-','\u21CC':'<=>','\u21C4':'<=>','\u2194':'<->',
+    '\u2212':'-','\u2010':'-','\u2011':'-','\u2012':'-','\u2248':'approx. ','\u2264':'<=','\u2265':'>=','\u2260':'not equal to','\u221E':'infinity','\u221A':'root ','\u2206':'delta ',
+    '\u00A0':' ','\u2009':' ','\u202F':' ','\u2002':' ','\u2003':' ','\u2007':' ','\u2028':'\n','\u2029':'\n','\u00AD':'','\t':' ','\r':'' };
+  function pdfClean(t){
+    if(Array.isArray(t)) return t.map(pdfClean);
+    if(typeof t !== 'string') return t;
+    let out = t.normalize('NFC').replace(/[\u2070-\u209F\u2190-\u21FF\u2200-\u22FF\u0394\u03B1-\u03C9\u03A3\u03A9\u2794\u27F6\u00A0\u00AD\u2002\u2003\u2007\u2009\u202F\u2028\u2029\t\r\u2010-\u2012]/g, function(c){ return Object.prototype.hasOwnProperty.call(PDF_SUBS, c) ? PDF_SUBS[c] : ''; });
+    // keep Latin-1 and the extra WinAnsi characters; remove everything else
+    out = out.replace(/[^\n\u0020-\u007E\u00A1-\u00FF\u2013\u2014\u2018\u2019\u201A\u201C\u201D\u201E\u2022\u2026\u20AC\u2122]/g, '');
+    return out;
+  }
+
   // stage is 'phase1' (checkpoint certificate, Part 2 not yet attempted) or
   // 'phase2' (updated certificate, after finishing the whole table).
   // Pages: 1 certificate, 2 written reflection, 3 elements to keep practising
@@ -1731,6 +1752,10 @@
     }
     const jsPDFCtor = window.jspdf.jsPDF;
     const doc = new jsPDFCtor({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    ['text','splitTextToSize','getTextWidth'].forEach(function(name){
+      const orig = doc[name].bind(doc);
+      doc[name] = function(t){ const a = Array.prototype.slice.call(arguments); a[0] = pdfClean(t); return orig.apply(null, a); };
+    });
     const W = 297, H = 210;
     const data = computeCertificateData();
     const refl = (stage === 'phase1') ? readReflections() : mainReflections;
@@ -1931,7 +1956,7 @@
     doc.setFont('helvetica','bold');
     doc.setFontSize(11.5);
     doc.setTextColor(140,40,40);
-    doc.text('Elements to keep practising:', 20, y2);
+    doc.text('Elements not placed correctly first time, to keep practising:', 20, y2);
     doc.setFont('helvetica','normal');
     doc.setFontSize(10);
     doc.setTextColor(60,60,60);
