@@ -848,20 +848,30 @@
   // during the Part-1 checkpoint overlay.
   let part1Score = 0, part2StartMs = 0, part2Ms = 0;
   const REFL_PROMPTS = [
-    { id:'energy', head:'Energy: sections 5 and 6',
+    // page 1 of the certificate: three short reflections (30 words or more)
+    { id:'enjoy', page:1, min:30, max:340, head:'What I have enjoyed most',
+      q:'Which parts of this unit have you enjoyed most, and why? Think about the practicals, the calculations, the ideas, or the way you worked.',
+      ph:'I have enjoyed... because...' },
+    { id:'hard', page:1, min:30, max:340, head:'What I am finding more difficult',
+      q:'Which skills or ideas are you finding most difficult, and what makes them difficult for you? Name the section of the test.',
+      ph:'I find... difficult because...' },
+    { id:'targets', page:1, min:30, max:340, head:'My targets for the next three weeks',
+      q:'Set one to three targets. A measurable target is something you can check: either can do or can\u2019t yet do, or a number. For example: "score at least 8 out of 10 on a set of bond enthalpy questions." Say what you will do and how you will know you have reached it.',
+      ph:'My target is... I will... I will know I have reached it when...' },
+    // page 2 of the certificate: four longer reflections (50 words or more)
+    { id:'energy', page:2, min:50, max:700, head:'Energy: sections 5 and 6',
       q:'Explain, in your own words, why a reaction can release or absorb energy, and what the Law of Conservation of Energy says about it. Use the words system, surroundings, bonds, energy in, energy out, exothermic and endothermic.',
       ph:'Start with what happens to the bonds in the reactants and in the products...' },
-    { id:'structure', head:'Compounds and molecules: sections 1, 2 and 4',
+    { id:'structure', page:2, min:50, max:700, head:'Compounds and molecules: sections 1, 2 and 4',
       q:'Choose one skill from sections 1, 2 and 4: deciding whether a compound is ionic or covalent molecular, writing a formula from the charges on its ions, or the shape and bond angle of a molecule. Explain how you decide, with an example of your own.',
       ph:'Say which skill you chose, then explain how you decide, step by step...' },
-    { id:'calc', head:'One calculation: sections 3, 6 and 7',
+    { id:'calc', page:2, min:50, max:700, head:'One calculation: sections 3, 6 and 7',
       q:'Choose one calculation: an empirical formula (section 3), \u0394H from average bond enthalpies (section 6) or \u0394H from calorimetry (section 7). Explain each step in words, including how you decide the sign of \u0394H if you chose section 6 or 7.',
       ph:'Say which calculation you chose, then explain step 1, step 2 and so on...' },
-    { id:'next', head:'My most challenging skill and my next step',
-      q:'Look back at your ratings. Choose the skill you find the most challenging and say which section of the test it is in. Describe a mistake you have made or could make, what you do now to avoid it, and one thing you will do next to get stronger.',
-      ph:'Name the skill and its section, the mistake, and your next step...' }
+    { id:'link', page:2, min:50, max:700, head:'Two ways to find \u0394H: sections 6 and 7',
+      q:'Compare the two ways of finding \u0394H in this unit: measuring a temperature change in calorimetry (section 7) and using average bond enthalpies (section 6). Say what each method measures or uses, why the two answers can differ, and which sign rule you use in each.',
+      ph:'Start with what the thermometer shows in calorimetry and what the bond table shows...' }
   ];
-  const MIN_WORDS = 50;
   function emptyRefl(){ const o = {}; REFL_PROMPTS.forEach(function(p){ o[p.id] = ''; }); return o; }
   let mainReflections = emptyRefl();
   function reflEl(id){ return document.getElementById('refl_'+id); }
@@ -878,7 +888,7 @@
     if(!host) return;
     host.innerHTML = REFL_PROMPTS.map(function(p){
       return '<label for="refl_'+p.id+'" class="topic-extra-label"><b>'+p.head+'.</b> '+p.q+'</label>'
-           + '<textarea id="refl_'+p.id+'" rows="4" maxlength="700" placeholder="'+p.ph+' Write at least '+MIN_WORDS+' words."></textarea>'
+           + '<textarea id="refl_'+p.id+'" rows="'+(p.page===1?3:4)+'" maxlength="'+p.max+'" placeholder="'+p.ph+' Write at least '+p.min+' words."></textarea>'
            + '<div class="word-count" id="reflCount_'+p.id+'"></div>';
     }).join('');
     REFL_PROMPTS.forEach(function(p){ reflEl(p.id).addEventListener('input', updateGate); });
@@ -886,8 +896,8 @@
   // Long British date, for example 6 November 2026 (no slashes).
   function todayLong(){ return new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }); }
 
-  // The certificate and Part 2 unlock only when each of the four written
-  // reflections has at least MIN_WORDS words.
+  // The certificate and Part 2 unlock only when each of the seven written
+  // reflections has at least its minimum number of words.
   function wordCount(t){ const m = (t || '').trim().match(/\S+/g); return m ? m.length : 0; }
   function updateGate(){
     const r = readReflections();
@@ -896,10 +906,10 @@
       const n = wordCount(r[p.id]);
       const el = document.getElementById('reflCount_'+p.id);
       if(el){
-        el.textContent = n+' of '+MIN_WORDS+' words'+(n >= MIN_WORDS ? ' \u2713' : '');
-        el.classList.toggle('met', n >= MIN_WORDS);
+        el.textContent = n+' of '+p.min+' words'+(n >= p.min ? ' \u2713' : '');
+        el.classList.toggle('met', n >= p.min);
       }
-      if(n < MIN_WORDS) missing.push('at least '+MIN_WORDS+' words in reflection '+(i+1)+' ('+p.head.toLowerCase()+')');
+      if(n < p.min) missing.push('at least '+p.min+' words for \u201c'+p.head+'\u201d');
     });
     const ok = missing.length === 0;
     if(certBtnPhase1) certBtnPhase1.disabled = !ok;
@@ -1830,39 +1840,40 @@
       doc.text('Part 2 (optional): play on through the rest of the table to add your Part 2 result to an updated certificate.', W/2, 104, { align:'center' });
     }
 
-    // Three boxes: how the student rated the Unit 2 ideas and calculations.
-    const boxY = withPart2 ? 122 : 118;
+    // Three short reflections: enjoyed most, finding difficult, three-week targets.
+    const p1 = REFL_PROMPTS.filter(function(p){ return p.page === 1; });
+    const r1Y = withPart2 ? 119 : 116;
     doc.setFont('helvetica','bold');
     doc.setFontSize(12);
     doc.setTextColor(30,60,110);
-    doc.text('My key skills self-check: '+TOPIC_LIST.length+' skills from the thermochemistry test', W/2, boxY, { align:'center' });
-    const bw = 74, bg = 6, bx0 = W/2 - (3*bw + 2*bg)/2;
-    [['secure','Proficient'],['nearly','There, but not confident yet'],['practice','Not there yet: a target for the next weeks']].forEach(function(b, i){
-      const x = bx0 + i*(bw+bg);
-      const rgb = statusColorFor(b[0]);
-      doc.setDrawColor(rgb[0], rgb[1], rgb[2]);
-      doc.setLineWidth(0.6);
-      doc.roundedRect(x, boxY+4, bw, 24, 2, 2);
+    doc.text('My reflection', W/2, r1Y, { align:'center' });
+    const r1W = 75, r1G = 12, r1X0 = 24;
+    const r1Bottom = H-37;
+    p1.forEach(function(p, i){
+      const x = r1X0 + i*(r1W+r1G);
+      let yy = r1Y + 8;
       doc.setFont('helvetica','bold');
-      doc.setFontSize(22);
-      doc.setTextColor(rgb[0], rgb[1], rgb[2]);
-      doc.text(String(ratingCounts[b[0]]), x+bw/2, boxY+15, { align:'center' });
+      doc.setFontSize(10);
+      doc.setTextColor(30,60,110);
+      doc.text(p.head, x, yy);
+      doc.setDrawColor(154,97,0);
+      doc.setLineWidth(0.3);
+      doc.line(x, yy+1.7, x+r1W, yy+1.7);
+      yy += 7;
+      doc.setFont('helvetica','normal');
       doc.setFontSize(9);
-      doc.text(b[1], x+bw/2, boxY+23, { align:'center' });
+      doc.setTextColor(40,40,40);
+      let ls = doc.splitTextToSize(refl[p.id] || '', r1W);
+      const maxL = Math.max(1, Math.floor((r1Bottom - yy) / 4));
+      if(ls.length > maxL){
+        ls = ls.slice(0, maxL);
+        ls[maxL-1] = ls[maxL-1].replace(/\s*$/, '') + '\u2026';
+      }
+      ls.forEach(function(line, k){ doc.text(line, x, yy + k*4); });
     });
-    if(ratingCounts.unrated > 0){
-      doc.setFont('helvetica','italic');
-      doc.setFontSize(9);
-      doc.setTextColor(120,120,120);
-      doc.text(ratingCounts.unrated+' not yet rated', W/2, boxY+33, { align:'center' });
-    }
-    doc.setFont('helvetica','italic');
-    doc.setFontSize(9);
-    doc.setTextColor(110,110,110);
-    doc.text('My written reflection is on page 2. The detail of each rating, and the elements to keep practising, are on page 3.', W/2, boxY+39, { align:'center' });
 
     // signature lines
-    const sy = H-34;
+    const sy = H-30;
     doc.setDrawColor(120,120,120);
     doc.setLineWidth(0.25);
     doc.line(24, sy, 100, sy);
@@ -1883,13 +1894,13 @@
     drawFrame();
     pageHeading('My reflection on Unit 2: NGSS HS-PS1-4 Thermochemistry');
     const rcolW = 118, rcolX = [24, 24+rcolW+13], rowY = [42, 118];
-    REFL_PROMPTS.forEach(function(p, i){
+    REFL_PROMPTS.filter(function(p){ return p.page === 2; }).forEach(function(p, i){
       const x = rcolX[i % 2];
       let yy = rowY[Math.floor(i / 2)];
       doc.setFont('helvetica','bold');
       doc.setFontSize(10.5);
       doc.setTextColor(30,60,110);
-      doc.text(p.head, x, yy);
+      doc.text(p.head.replace(/\u0394/g, 'delta '), x, yy);
       doc.setDrawColor(154,97,0);
       doc.setLineWidth(0.3);
       doc.line(x, yy+1.8, x+rcolW, yy+1.8);
