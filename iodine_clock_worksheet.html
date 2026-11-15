@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The iodine clock reaction: rate, concentration and graphs</title>
+<style>
+@page { size: A4; margin: 24mm 16mm 22mm 16mm;
+  @top-left { content: "Chemistry"; font-family: "Palatino","Palatino Linotype","TeX Gyre Pagella",serif; font-size: 10pt; border-bottom: 0.6pt solid #000; padding-bottom: 2mm; width: 100%; vertical-align: bottom; }
+  @top-right { content: "Friday, 6 November 2026"; font-family: "Palatino","Palatino Linotype","TeX Gyre Pagella",serif; font-size: 10pt; border-bottom: 0.6pt solid #000; padding-bottom: 2mm; width: 100%; text-align: right; vertical-align: bottom; }
+  @bottom-left { content: "Science Department · Refined with AI"; font-family: "Palatino","Palatino Linotype","TeX Gyre Pagella",serif; font-size: 8.5pt; vertical-align: top; padding-top: 4mm; }
+  @bottom-right { content: counter(page); font-family: "Helvetica Neue","Liberation Sans",Arial,sans-serif; font-weight: bold; font-size: 10pt; vertical-align: top; padding-top: 4mm; }
+}
+* { box-sizing: border-box; }
+html { font-size: 11pt; }
+body { font-family: "Palatino","Palatino Linotype","TeX Gyre Pagella","Book Antiqua",serif; color:#000; background:#fff; line-height: 1.32; margin:0; counter-reset: sec; }
+.page { padding-left: 16mm; }
+h1, h2, h3 { font-family: "Clear Gothic","Clear Gothic Regular","Helvetica Neue","Liberation Sans",Arial,sans-serif; font-weight: normal; margin: 0; }
+h1 { font-size: 21pt; margin: 2mm 0 3mm -16mm; line-height: 1.15; }
+h2 { font-size: 14.5pt; margin: 6mm 0 2mm -16mm; counter-increment: sec; break-after: avoid; }
+h2::before { content: counter(sec) "  "; }
+h3 { font-size: 11.5pt; margin: 5mm 0 1.5mm 0; break-after: avoid; }
+p { margin: 0 0 2.2mm 0; }
+ul, ol { margin: 0 0 2.5mm 0; padding-left: 6mm; }
+li { margin-bottom: 1mm; }
+.eq { text-align: center; white-space: nowrap; margin: 2mm 0; }
+.fr { display:inline-block; vertical-align: middle; text-align:center; margin: 0 0.12em; white-space: nowrap; }
+.fr .n { display:block; border-bottom: 0.8pt solid #000; padding: 0 0.3em 0.05em 0.3em; line-height: 1.2; }
+.fr .d { display:block; padding: 0.05em 0.3em 0 0.3em; line-height: 1.2; }
+.blank { display:inline-block; border-bottom: 0.8pt solid #000; height: 1em; vertical-align: baseline; }
+.q { margin: 2.5mm 0; break-inside: avoid; }
+.q .id { display:inline-block; width: 10mm; font-family: "Helvetica Neue","Liberation Sans",Arial,sans-serif; font-weight: bold; font-size: 9.5pt; margin-left: -10mm; }
+.q { padding-left: 10mm; }
+.lines { margin-top: 2mm; }
+.lines div { border-bottom: 0.5pt solid #777; height: 6.2mm; }
+.panel { border: 0.8pt solid #000; padding: 3mm 4mm; margin: 3mm 0; break-inside: avoid; }
+.panel h3 { margin-top: 0; }
+table { border-collapse: collapse; margin: 2.5mm 0; }
+th, td { border: 0.7pt solid #000; padding: 1.4mm 2.4mm; text-align:center; vertical-align: middle; }
+th { font-weight: normal; background: #eee; }
+td.l, th.l { text-align: left; }
+table.recipe td, table.recipe th { text-align: left; }
+.tick { display:inline-block; width: 3.6mm; height: 3.6mm; border: 0.8pt solid #000; vertical-align: -0.6mm; margin-right: 1mm; }
+.fill { text-align:center; margin: 2mm 0; white-space: nowrap; }
+.graphwrap { text-align:center; margin: 2mm 0 3mm 0; break-inside: avoid; }
+svg.graph { width: 132mm; height: auto; }
+.small { font-size: 9pt; }
+.key { font-family: "Helvetica Neue","Liberation Sans",Arial,sans-serif; font-size: 8.5pt; }
+.pb { break-before: page; }
+.ans { font-style: italic; }
+.ans b { font-style: normal; }
+sub, sup { line-height: 0; }
+</style></head>
+<body><div class="page">
+<h1>The iodine clock reaction: rate, concentration and graphs</h1>
+<p>You will take the Royal Society of Chemistry iodine clock recipe (solutions A and B) and turn it into numbers: the concentrations in the beaker, the rate of the reaction, and the graphs that show how rate depends on concentration.</p>
+<h2>Safety</h2>
+<ul><li>Wear eye protection throughout.</li><li>Solution B contains hydrogen peroxide (an irritant) and ethanoic acid. Solution A contains thiosulfate ions. <b>Keep A and B apart until you are ready to start the clock.</b> Acid mixed with thiosulfate ions slowly gives toxic sulfur dioxide and a sulfur precipitate, so never leave a mixture standing.</li><li>Measure with the syringes your teacher gives you, mix only the volumes in the tables, and dispose of every mixture as your teacher directs.</li><li>Wash your hands after the practical and wipe up spills straight away.</li></ul>
+<h2>Learning objectives and key ideas</h2>
+<p>By the end of this worksheet you should be able to:</p>
+<ul><li>explain, using two equations, why the mixture stays colourless and then turns blue-black suddenly;</li><li>turn the masses and volumes in the recipe into concentrations in the mixture;</li><li>calculate a rate from a clock time, and explain why it is an <i>initial</i> rate;</li><li>plot concentration–time and rate–concentration graphs, and use them to find an order and a rate constant.</li></ul>
+<div class="panel"><h3>Two reactions share the iodine</h3>
+<p>The slow reaction makes iodine. This is the reaction whose rate we measure:</p>
+<div class="eq">H<sub>2</sub>O<sub>2</sub>(aq) + 2I<sup>−</sup>(aq) + 2H<sup>+</sup>(aq) → I<sub>2</sub>(aq) + 2H<sub>2</sub>O(l)</div>
+<p>The fast reaction removes the iodine again as soon as it forms, using thiosulfate ions from solution A:</p>
+<div class="eq">2S<sub>2</sub>O<sub>3</sub><sup>2−</sup>(aq) + I<sub>2</sub>(aq) → S<sub>4</sub>O<sub>6</sub><sup>2−</sup>(aq) + 2I<sup>−</sup>(aq)</div>
+<p>Only when every thiosulfate ion has gone does iodine survive in solution. Iodine, with the excess iodide ions present, forms a blue-black complex with starch. The stopwatch is therefore the thiosulfate: a fixed amount of it takes a time <i>t</i> to use up.</p>
+</div>
+<h2>The Exploration</h2>
+<h3>Part A: What is in the beaker?</h3>
+<table class="recipe"><tr><th class="l">Solution A (made up to 1 dm³)</th><th class="l">Solution B (made up to 1 dm³)</th></tr><tr><td>0.2 g soluble starch<br>4.1 g anhydrous sodium ethanoate<br>50 g potassium iodide, KI<br>9.4 g sodium thiosulfate-5-water, Na<sub>2</sub>S<sub>2</sub>O<sub>3</sub>·5H<sub>2</sub>O</td><td>500 cm³ hydrogen peroxide solution, 20 volume<br>30 cm³ glacial ethanoic acid<br>(the rest is water)</td></tr></table>
+<p>In the demonstration, <b>100 cm³ of A</b> and <b>100 cm³ of B</b> are poured together. The ethanoic acid and sodium ethanoate form a buffer, which keeps the concentration of H<sup>+</sup> ions steady.</p>
+<div class="panel"><h3>Cheat sheet</h3>
+<p><b>molar mass (atomic mass, Ar)</b> in g mol<sup>−1</sup></p>
+<table><tr><th>K</th><th>I</th><th>Na</th><th>S</th><th>O</th><th>H</th><th>C</th></tr><tr><td>39.1</td><td>126.9</td><td>23.0</td><td>32.1</td><td>16.0</td><td>1.0</td><td>12.0</td></tr></table>
+<div class="eq">n = <span class="fr"><span class="n">m</span><span class="d">M</span></span></div>
+<div class="eq">n = <span class="fr"><span class="n">c × V</span><span class="d">1000</span></span></div>
+<div class="eq">c = <span class="fr"><span class="n">n × 1000</span><span class="d">V</span></span></div>
+<p class="small">n = amount (mol); m = mass (g); M = molar mass (g mol<sup>−1</sup>); c = concentration (mol dm<sup>−3</sup>); V = volume in cm³.</p>
+</div>
+<h3>Potassium iodide, KI</h3>
+<div class="q"><span class="id">A1</span>Molar mass of KI: M = <span class="blank" style="width:18mm"></span> g mol<sup>−1</sup></div>
+<div class="q"><span class="id">A2</span>Think carefully before calculating. Are you given more than one mole, or less than one mole, just looking at the numbers given (50 g in 1 dm³)?<br><span class="tick"></span> more than one mole&nbsp;&nbsp;&nbsp;<span class="tick"></span> less than one mole</div>
+<div class="q"><span class="id">A3</span>Amount of KI in 1 dm³ of solution A:<div class="eq">n = <span class="fr"><span class="n">m</span><span class="d">M</span></span></div><div class="fill">n = <span class="fr"><span class="n">50</span><span class="d"><span class="blank" style="width:16mm"></span></span></span> = <span class="blank" style="width:20mm"></span> mol</div>Is your answer less than one, as A2 predicted? If not, check that the smaller number is on top.</div>
+<div class="q"><span class="id">A4</span>So the concentration of KI in A is <span class="blank" style="width:20mm"></span> mol dm<sup>−3</sup>.</div>
+<div class="q"><span class="id">A5</span>Amount of KI in the 100 cm³ of A that is used:<div class="eq">n = <span class="fr"><span class="n">c × V</span><span class="d">1000</span></span></div><div class="fill">n = <span class="fr"><span class="n">c × 100</span><span class="d">1000</span></span> = <span class="blank" style="width:22mm"></span> mol</div></div>
+<div class="q"><span class="id">A6</span>Total volume of the mixture after A and B are poured together: V = <span class="blank" style="width:16mm"></span> cm³.</div>
+<div class="q"><span class="id">A7</span>Concentration of KI in the mixture:<div class="eq">c = <span class="fr"><span class="n">n × 1000</span><span class="d">V</span></span></div><div class="fill">c = <span class="fr"><span class="n">n × 1000</span><span class="d"><span class="blank" style="width:14mm"></span></span></span> = <span class="blank" style="width:22mm"></span> mol dm<sup>−3</sup></div>Compare with A4. Explain in a sentence why the number changed by that factor.<div class="lines"><div></div><div></div></div></div>
+<h3>Sodium thiosulfate-5-water, Na<sub>2</sub>S<sub>2</sub>O<sub>3</sub>·5H<sub>2</sub>O</h3>
+<div class="q"><span class="id">A8</span>Work out the molar mass. The 5H<sub>2</sub>O belongs to the formula, so count it.<div class="fill">M = <span class="blank" style="width:18mm"></span> g mol<sup>−1</sup></div></div>
+<div class="q"><span class="id">A9</span>Think carefully before calculating. Are you given more than one mole, or less than one mole, just looking at the numbers given (9.4 g in 1 dm³)?<br><span class="tick"></span> more than one mole&nbsp;&nbsp;&nbsp;<span class="tick"></span> less than one mole</div>
+<div class="q"><span class="id">A10</span>Repeat steps A3 to A7 for the thiosulfate. Write each step on its own line.<div class="lines"><div></div><div></div><div></div><div></div></div></div>
+<div class="q"><span class="id">A11</span>Concentration of thiosulfate ions in the mixture: <b><span class="blank" style="width:22mm"></span> mol dm<sup>−3</sup></b>. Keep this number; you will use it in every later part.</div>
+<h3>Hydrogen peroxide (stretch)</h3>
+<p>“20 volume” means that 1 dm³ of the solution gives 20 dm³ of oxygen when the peroxide decomposes completely, measured at 0 °C and 1 atmosphere, where 1 mol of gas occupies 22.4 dm³.</p>
+<div class="eq">2H<sub>2</sub>O<sub>2</sub>(aq) → 2H<sub>2</sub>O(l) + O<sub>2</sub>(g)</div>
+<div class="q"><span class="id">A12</span>Amount of oxygen from 1 dm³ of 20 volume peroxide:<div class="fill">n(O<sub>2</sub>) = <span class="fr"><span class="n">20</span><span class="d">22.4</span></span> = <span class="blank" style="width:20mm"></span> mol</div></div>
+<div class="q"><span class="id">A13</span>Amount of H<sub>2</sub>O<sub>2</sub> in 1 dm³ of the 20 volume stock (use the equation above): <span class="blank" style="width:20mm"></span> mol dm<sup>−3</sup></div>
+<div class="q"><span class="id">A14</span>Solution B contains 500 cm³ of stock in each dm³, and B is then halved on mixing with A. Complete the table.</div>
+<table><tr><th class="l">species</th><th>in solution A or B<br>(mol dm<sup>−3</sup>)</th><th>in the mixture<br>(mol dm<sup>−3</sup>)</th></tr><tr><td class="l">I<sup>−</sup> (from KI)</td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr><tr><td class="l">S<sub>2</sub>O<sub>3</sub><sup>2−</sup></td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr><tr><td class="l">H<sub>2</sub>O<sub>2</sub></td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr></table>
+<h3>Part B: Reading the chemistry</h3>
+<div class="q"><span class="id">B1</span>In the demonstration the mixture is colourless for about 20 seconds and then turns dark blue-black. Which of the two equations in the key ideas is the slow one, and which is the fast one? Give the evidence from what you see.<div class="lines"><div></div><div></div><div></div></div></div>
+<div class="q"><span class="id">B2</span>Iodine is being made from the first second. Why is the mixture still colourless?<div class="lines"><div></div><div></div></div></div>
+<div class="q"><span class="id">B3</span>Why does the colour appear <i>suddenly</i> rather than slowly darkening?<div class="lines"><div></div><div></div></div></div>
+<div class="q"><span class="id">B4</span>Add the two equations together (one of each) and cancel every species that appears on both sides. Write the overall equation:<div class="lines"><div></div><div></div></div></div>
+<div class="q"><span class="id">B5</span>In B4, which ion is used up in the slow reaction and made again in the fast reaction? What is its role?<div class="lines"><div></div><div></div></div></div>
+<div class="q"><span class="id">B6</span>For every 1 mol of H<sub>2</sub>O<sub>2</sub> that reacts, how many mol of S<sub>2</sub>O<sub>3</sub><sup>2−</sup> are used up? <span class="blank" style="width:14mm"></span></div>
+<h3>Part C: One run in detail</h3>
+<p>In the RSC demonstration the blue-black colour appears after about 20 s. Use <i>t</i> = 20 s here (replace it with your own time if you have run the experiment). The mixture starts with the thiosulfate concentration you found in A11.</p>
+<div class="q"><span class="id">C1</span>The fast reaction needs 2 mol of S<sub>2</sub>O<sub>3</sub><sup>2−</sup> for each 1 mol of I<sub>2</sub>. The amount of I<sub>2</sub> that must be made, per dm³, to use up all the thiosulfate is:<div class="fill">[I<sub>2</sub>] made = <span class="fr"><span class="n">[S<sub>2</sub>O<sub>3</sub><sup>2−</sup>]</span><span class="d">2</span></span> = <span class="fr"><span class="n"><span class="blank" style="width:14mm"></span></span><span class="d">2</span></span> = <span class="blank" style="width:22mm"></span> mol dm<sup>−3</sup></div></div>
+<div class="q"><span class="id">C2</span>Rate of formation of I<sub>2</sub> (the rate of the slow reaction):<div class="eq">rate = <span class="fr"><span class="n">amount of I<sub>2</sub> made</span><span class="d">time taken</span></span></div><div class="fill">rate = <span class="fr"><span class="n"><span class="blank" style="width:18mm"></span></span><span class="d">20</span></span> = <span class="blank" style="width:24mm"></span> mol dm<sup>−3</sup> s<sup>−1</sup></div></div>
+<div class="q"><span class="id">C3</span>Complete the table. Thiosulfate is used up at <b>twice</b> the rate at which iodine is made, so for the first 20 s:<div class="eq">[S<sub>2</sub>O<sub>3</sub><sup>2−</sup>] remaining = starting value − (2 × rate × time)</div>After 20 s all the thiosulfate has gone. Free iodine then builds up at the same rate as it is made.</div>
+<table><tr><th>time (s)</th><th>thiosulfate remaining<br>(mol dm<sup>−3</sup>)</th><th>free iodine present<br>(mol dm<sup>−3</sup>)</th></tr><tr><td>0</td><td>0.0189</td><td>0</td></tr><tr><td>5</td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr><tr><td>10</td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr><tr><td>15</td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr><tr><td>20</td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr><tr><td>25</td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr><tr><td>30</td><td><span class="blank" style="width:18mm"></span></td><td><span class="blank" style="width:18mm"></span></td></tr></table>
+<div class="q"><span class="id">C4</span>Plot both columns on <b>Graph 1</b> (overleaf), using ● for thiosulfate and ○ for free iodine. Join each set with straight lines.</div>
+<div class="graphwrap"><div class="key">Graph 1: concentration against time for one run (<i>t</i> = 20 s)</div><svg class="graph" viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" font-family="Liberation Sans, Helvetica Neue, Arial, sans-serif" font-size="11">
+<line x1="78.0" y1="14" x2="78.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="92.2" y1="14" x2="92.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="106.4" y1="14" x2="106.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="120.6" y1="14" x2="120.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="134.8" y1="14" x2="134.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="149.0" y1="14" x2="149.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="163.2" y1="14" x2="163.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="177.4" y1="14" x2="177.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="191.6" y1="14" x2="191.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="205.8" y1="14" x2="205.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="220.0" y1="14" x2="220.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="234.2" y1="14" x2="234.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="248.4" y1="14" x2="248.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="262.6" y1="14" x2="262.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="276.8" y1="14" x2="276.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="291.0" y1="14" x2="291.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="305.2" y1="14" x2="305.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="319.4" y1="14" x2="319.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="333.6" y1="14" x2="333.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="347.8" y1="14" x2="347.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="362.0" y1="14" x2="362.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="376.2" y1="14" x2="376.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="390.4" y1="14" x2="390.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="404.6" y1="14" x2="404.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="418.8" y1="14" x2="418.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="433.0" y1="14" x2="433.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="447.2" y1="14" x2="447.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="461.4" y1="14" x2="461.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="475.6" y1="14" x2="475.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="489.8" y1="14" x2="489.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="504.0" y1="14" x2="504.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="308.0" x2="504" y2="308.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="293.3" x2="504" y2="293.3" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="278.6" x2="504" y2="278.6" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="263.9" x2="504" y2="263.9" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="249.2" x2="504" y2="249.2" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="234.5" x2="504" y2="234.5" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="219.8" x2="504" y2="219.8" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="205.1" x2="504" y2="205.1" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="190.4" x2="504" y2="190.4" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="175.7" x2="504" y2="175.7" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="161.0" x2="504" y2="161.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="146.3" x2="504" y2="146.3" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="131.6" x2="504" y2="131.6" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="116.9" x2="504" y2="116.9" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="102.2" x2="504" y2="102.2" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="87.5" x2="504" y2="87.5" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="72.8" x2="504" y2="72.8" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="58.1" x2="504" y2="58.1" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="43.4" x2="504" y2="43.4" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="28.7" x2="504" y2="28.7" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="14.0" x2="504" y2="14.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78.0" y1="14" x2="78.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="78.0" y="323" text-anchor="middle">0</text>
+<line x1="149.0" y1="14" x2="149.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="149.0" y="323" text-anchor="middle">5</text>
+<line x1="220.0" y1="14" x2="220.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="220.0" y="323" text-anchor="middle">10</text>
+<line x1="291.0" y1="14" x2="291.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="291.0" y="323" text-anchor="middle">15</text>
+<line x1="362.0" y1="14" x2="362.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="362.0" y="323" text-anchor="middle">20</text>
+<line x1="433.0" y1="14" x2="433.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="433.0" y="323" text-anchor="middle">25</text>
+<line x1="504.0" y1="14" x2="504.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="504.0" y="323" text-anchor="middle">30</text>
+<line x1="78" y1="308.0" x2="504" y2="308.0" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="312.0" text-anchor="end">0.000</text>
+<line x1="78" y1="234.5" x2="504" y2="234.5" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="238.5" text-anchor="end">0.005</text>
+<line x1="78" y1="161.0" x2="504" y2="161.0" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="165.0" text-anchor="end">0.010</text>
+<line x1="78" y1="87.5" x2="504" y2="87.5" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="91.5" text-anchor="end">0.015</text>
+<line x1="78" y1="14.0" x2="504" y2="14.0" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="18.0" text-anchor="end">0.020</text>
+<rect x="78" y="14" width="426" height="294" fill="none" stroke="#000" stroke-width="1.4"/>
+<text x="291.0" y="350" text-anchor="middle" font-size="12">time (s)</text>
+<text transform="translate(16 161.0) rotate(-90)" text-anchor="middle" font-size="12">concentration (mol dm⁻³)</text>
+</svg></div>
+<div class="q"><span class="id">C5</span>The thiosulfate line is straight. What does that tell you about the rate of the slow reaction during the first 20 s?<div class="lines"><div></div><div></div></div></div>
+<div class="q"><span class="id">C6</span>Find the gradient of the thiosulfate line using a large triangle. Gradient = <span class="blank" style="width:24mm"></span> mol dm<sup>−3</sup> s<sup>−1</sup>. How does its size compare with the rate you found in C2, and why?<div class="lines"><div></div><div></div></div></div>
+<div class="q"><span class="id">C7</span>Why does the free-iodine line rise at the same rate as the rate in C2 once the thiosulfate has gone?<div class="lines"><div></div><div></div></div></div>
+<h3>Part D: Why a clock time gives an initial rate</h3>
+<div class="q"><span class="id">D1</span>By the time the colour appears, <span class="blank" style="width:16mm"></span> mol dm<sup>−3</sup> of H<sub>2</sub>O<sub>2</sub> has been used (it equals the amount of I<sub>2</sub> made). As a percentage of the starting H<sub>2</sub>O<sub>2</sub>:<div class="fill">percentage used = <span class="fr"><span class="n"><span class="blank" style="width:16mm"></span></span><span class="d"><span class="blank" style="width:16mm"></span></span></span> × 100 = <span class="blank" style="width:16mm"></span> %</div></div>
+<div class="q"><span class="id">D2</span>How much I<sup>−</sup> has been used up, overall, by the time the colour appears? Explain.<div class="lines"><div></div><div></div></div></div>
+<div class="q"><span class="id">D3</span>Use D1 and D2 to explain why the rate hardly changes during the clock, and why the average rate over the whole clock time is a good value for the <b>initial rate</b>. Why is that more convenient than drawing a tangent to a curve?<div class="lines"><div></div><div></div><div></div><div></div></div></div>
+<h3>Part E: How does the rate depend on the concentration of hydrogen peroxide?</h3>
+<p>To change only [H<sub>2</sub>O<sub>2</sub>], keep the thiosulfate and iodide the same in every run: use <b>10 cm³ of A</b> each time, and make the second portion up to <b>10 cm³</b> from B and distilled water. Pour the two portions together and start the stopwatch; stop it at the first blue-black colour. The total volume is always 20 cm³.</p>
+<div class="eq">[H<sub>2</sub>O<sub>2</sub>] in mixture = 0.893 × <span class="fr"><span class="n">volume of B (cm³)</span><span class="d">20</span></span></div>
+<div class="q"><span class="id">E1</span>Complete the table. The times are <b>specimen times</b>, calculated from the rate equation for the solutions in Part A and rounded to 1 s; replace them with your own class results if you have them. Use the rate formula<div class="eq">rate = <span class="fr"><span class="n">[S<sub>2</sub>O<sub>3</sub><sup>2−</sup>]</span><span class="d">2 × t</span></span> = <span class="fr"><span class="n">0.00947</span><span class="d">t</span></span></div>and give the rate in units of 10<sup>−4</sup> mol dm<sup>−3</sup> s<sup>−1</sup> (for example, 4.73 × 10<sup>−4</sup> is written 4.73).</div>
+<table><tr><th>volume of B<br>(cm³)</th><th>volume of water<br>(cm³)</th><th>[H<sub>2</sub>O<sub>2</sub>] in mixture<br>(mol dm<sup>−3</sup>)</th><th>specimen time <i>t</i><br>(s)</th><th>rate<br>(10<sup>−4</sup> mol dm<sup>−3</sup> s<sup>−1</sup>)</th></tr><tr><td>10</td><td>0</td><td><span class="blank" style="width:16mm"></span></td><td>20</td><td><span class="blank" style="width:16mm"></span></td></tr><tr><td>8</td><td>2</td><td><span class="blank" style="width:16mm"></span></td><td>25</td><td><span class="blank" style="width:16mm"></span></td></tr><tr><td>6</td><td>4</td><td><span class="blank" style="width:16mm"></span></td><td>33</td><td><span class="blank" style="width:16mm"></span></td></tr><tr><td>4</td><td>6</td><td><span class="blank" style="width:16mm"></span></td><td>50</td><td><span class="blank" style="width:16mm"></span></td></tr><tr><td>2</td><td>8</td><td><span class="blank" style="width:16mm"></span></td><td>100</td><td><span class="blank" style="width:16mm"></span></td></tr></table>
+<div class="q"><span class="id">E2</span>Plot <i>t</i> against [H<sub>2</sub>O<sub>2</sub>] on <b>Graph 2</b> and draw a smooth curve. Describe its shape. What happens to the time when [H<sub>2</sub>O<sub>2</sub>] is halved?<div class="lines"><div></div><div></div><div></div></div></div>
+<div class="graphwrap"><div class="key">Graph 2: time to blue-black against [H<sub>2</sub>O<sub>2</sub>]</div><svg class="graph" viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" font-family="Liberation Sans, Helvetica Neue, Arial, sans-serif" font-size="11">
+<line x1="78.0" y1="14" x2="78.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="95.0" y1="14" x2="95.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="112.1" y1="14" x2="112.1" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="129.1" y1="14" x2="129.1" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="146.2" y1="14" x2="146.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="163.2" y1="14" x2="163.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="180.2" y1="14" x2="180.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="197.3" y1="14" x2="197.3" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="214.3" y1="14" x2="214.3" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="231.4" y1="14" x2="231.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="248.4" y1="14" x2="248.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="265.4" y1="14" x2="265.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="282.5" y1="14" x2="282.5" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="299.5" y1="14" x2="299.5" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="316.6" y1="14" x2="316.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="333.6" y1="14" x2="333.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="350.6" y1="14" x2="350.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="367.7" y1="14" x2="367.7" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="384.7" y1="14" x2="384.7" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="401.8" y1="14" x2="401.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="418.8" y1="14" x2="418.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="435.8" y1="14" x2="435.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="452.9" y1="14" x2="452.9" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="469.9" y1="14" x2="469.9" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="487.0" y1="14" x2="487.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="504.0" y1="14" x2="504.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="308.0" x2="504" y2="308.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="293.3" x2="504" y2="293.3" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="278.6" x2="504" y2="278.6" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="263.9" x2="504" y2="263.9" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="249.2" x2="504" y2="249.2" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="234.5" x2="504" y2="234.5" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="219.8" x2="504" y2="219.8" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="205.1" x2="504" y2="205.1" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="190.4" x2="504" y2="190.4" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="175.7" x2="504" y2="175.7" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="161.0" x2="504" y2="161.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="146.3" x2="504" y2="146.3" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="131.6" x2="504" y2="131.6" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="116.9" x2="504" y2="116.9" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="102.2" x2="504" y2="102.2" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="87.5" x2="504" y2="87.5" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="72.8" x2="504" y2="72.8" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="58.1" x2="504" y2="58.1" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="43.4" x2="504" y2="43.4" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="28.7" x2="504" y2="28.7" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="14.0" x2="504" y2="14.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78.0" y1="14" x2="78.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="78.0" y="323" text-anchor="middle">0.0</text>
+<line x1="163.2" y1="14" x2="163.2" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="163.2" y="323" text-anchor="middle">0.1</text>
+<line x1="248.4" y1="14" x2="248.4" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="248.4" y="323" text-anchor="middle">0.2</text>
+<line x1="333.6" y1="14" x2="333.6" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="333.6" y="323" text-anchor="middle">0.3</text>
+<line x1="418.8" y1="14" x2="418.8" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="418.8" y="323" text-anchor="middle">0.4</text>
+<line x1="504.0" y1="14" x2="504.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="504.0" y="323" text-anchor="middle">0.5</text>
+<line x1="78" y1="308.0" x2="504" y2="308.0" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="312.0" text-anchor="end">0</text>
+<line x1="78" y1="249.2" x2="504" y2="249.2" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="253.2" text-anchor="end">20</text>
+<line x1="78" y1="190.4" x2="504" y2="190.4" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="194.4" text-anchor="end">40</text>
+<line x1="78" y1="131.6" x2="504" y2="131.6" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="135.6" text-anchor="end">60</text>
+<line x1="78" y1="72.8" x2="504" y2="72.8" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="76.8" text-anchor="end">80</text>
+<line x1="78" y1="14.0" x2="504" y2="14.0" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="18.0" text-anchor="end">100</text>
+<rect x="78" y="14" width="426" height="294" fill="none" stroke="#000" stroke-width="1.4"/>
+<text x="291.0" y="350" text-anchor="middle" font-size="12">[H₂O₂] in the mixture (mol dm⁻³)</text>
+<text transform="translate(16 161.0) rotate(-90)" text-anchor="middle" font-size="12">time to blue-black, t (s)</text>
+</svg></div>
+<div class="q"><span class="id">E3</span>Plot rate against [H<sub>2</sub>O<sub>2</sub>] on <b>Graph 3</b> and draw the best straight line through your points. Should it pass through the origin? Explain.<div class="lines"><div></div><div></div></div></div>
+<div class="graphwrap"><div class="key">Graph 3: rate against [H<sub>2</sub>O<sub>2</sub>]</div><svg class="graph" viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" font-family="Liberation Sans, Helvetica Neue, Arial, sans-serif" font-size="11">
+<line x1="78.0" y1="14" x2="78.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="95.0" y1="14" x2="95.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="112.1" y1="14" x2="112.1" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="129.1" y1="14" x2="129.1" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="146.2" y1="14" x2="146.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="163.2" y1="14" x2="163.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="180.2" y1="14" x2="180.2" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="197.3" y1="14" x2="197.3" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="214.3" y1="14" x2="214.3" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="231.4" y1="14" x2="231.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="248.4" y1="14" x2="248.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="265.4" y1="14" x2="265.4" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="282.5" y1="14" x2="282.5" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="299.5" y1="14" x2="299.5" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="316.6" y1="14" x2="316.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="333.6" y1="14" x2="333.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="350.6" y1="14" x2="350.6" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="367.7" y1="14" x2="367.7" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="384.7" y1="14" x2="384.7" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="401.8" y1="14" x2="401.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="418.8" y1="14" x2="418.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="435.8" y1="14" x2="435.8" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="452.9" y1="14" x2="452.9" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="469.9" y1="14" x2="469.9" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="487.0" y1="14" x2="487.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="504.0" y1="14" x2="504.0" y2="308" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="308.0" x2="504" y2="308.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="296.2" x2="504" y2="296.2" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="284.5" x2="504" y2="284.5" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="272.7" x2="504" y2="272.7" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="261.0" x2="504" y2="261.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="249.2" x2="504" y2="249.2" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="237.4" x2="504" y2="237.4" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="225.7" x2="504" y2="225.7" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="213.9" x2="504" y2="213.9" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="202.2" x2="504" y2="202.2" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="190.4" x2="504" y2="190.4" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="178.6" x2="504" y2="178.6" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="166.9" x2="504" y2="166.9" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="155.1" x2="504" y2="155.1" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="143.4" x2="504" y2="143.4" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="131.6" x2="504" y2="131.6" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="119.8" x2="504" y2="119.8" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="108.1" x2="504" y2="108.1" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="96.3" x2="504" y2="96.3" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="84.6" x2="504" y2="84.6" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="72.8" x2="504" y2="72.8" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="61.0" x2="504" y2="61.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="49.3" x2="504" y2="49.3" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="37.5" x2="504" y2="37.5" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="25.8" x2="504" y2="25.8" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78" y1="14.0" x2="504" y2="14.0" stroke="#bbb" stroke-width="0.4"/>
+<line x1="78.0" y1="14" x2="78.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="78.0" y="323" text-anchor="middle">0.0</text>
+<line x1="163.2" y1="14" x2="163.2" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="163.2" y="323" text-anchor="middle">0.1</text>
+<line x1="248.4" y1="14" x2="248.4" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="248.4" y="323" text-anchor="middle">0.2</text>
+<line x1="333.6" y1="14" x2="333.6" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="333.6" y="323" text-anchor="middle">0.3</text>
+<line x1="418.8" y1="14" x2="418.8" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="418.8" y="323" text-anchor="middle">0.4</text>
+<line x1="504.0" y1="14" x2="504.0" y2="308" stroke="#666" stroke-width="0.8"/>
+<text x="504.0" y="323" text-anchor="middle">0.5</text>
+<line x1="78" y1="308.0" x2="504" y2="308.0" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="312.0" text-anchor="end">0</text>
+<line x1="78" y1="249.2" x2="504" y2="249.2" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="253.2" text-anchor="end">1</text>
+<line x1="78" y1="190.4" x2="504" y2="190.4" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="194.4" text-anchor="end">2</text>
+<line x1="78" y1="131.6" x2="504" y2="131.6" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="135.6" text-anchor="end">3</text>
+<line x1="78" y1="72.8" x2="504" y2="72.8" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="76.8" text-anchor="end">4</text>
+<line x1="78" y1="14.0" x2="504" y2="14.0" stroke="#666" stroke-width="0.8"/>
+<text x="72" y="18.0" text-anchor="end">5</text>
+<rect x="78" y="14" width="426" height="294" fill="none" stroke="#000" stroke-width="1.4"/>
+<text x="291.0" y="350" text-anchor="middle" font-size="12">[H₂O₂] in the mixture (mol dm⁻³)</text>
+<text transform="translate(16 161.0) rotate(-90)" text-anchor="middle" font-size="12">rate (10⁻⁴ mol dm⁻³ s⁻¹)</text>
+</svg></div>
+<div class="q"><span class="id">E4</span>Use Graph 3 to state the order of reaction with respect to H<sub>2</sub>O<sub>2</sub>, and the evidence for it.<div class="lines"><div></div><div></div></div></div>
+<div class="q"><span class="id">E5</span>Rate equation, with the order from E4 and the order for iodide given by the RSC:<div class="eq">rate = <i>k</i> [H<sub>2</sub>O<sub>2</sub>] [I<sup>−</sup>]</div>Your runs changed only [H<sub>2</sub>O<sub>2</sub>]. Explain why they cannot tell you the order with respect to iodide, and describe the runs that would.<div class="lines"><div></div><div></div><div></div></div></div>
+<div class="q"><span class="id">E6</span>Because [I<sup>−</sup>] was the same in every run, the gradient of Graph 3 equals <i>k</i> multiplied by [I<sup>−</sup>].<div class="eq">gradient = <i>k</i> × [I<sup>−</sup>]</div><div class="eq"><i>k</i> = <span class="fr"><span class="n">gradient</span><span class="d">[I<sup>−</sup>]</span></span></div>Use a large triangle on your line and your value of [I<sup>−</sup>] from A7 (remember to convert the 10<sup>−4</sup> in the rate).<div class="fill"><i>k</i> = <span class="fr"><span class="n"><span class="blank" style="width:18mm"></span></span><span class="d"><span class="blank" style="width:18mm"></span></span></span> = <span class="blank" style="width:20mm"></span></div></div>
+<div class="q"><span class="id">E7</span>Work out the units of <i>k</i> by putting the units of rate and concentration into the rate equation. Units: <span class="blank" style="width:34mm"></span></div>
+<div class="q"><span class="id">E8</span>Use your line to predict the clock time when [H<sub>2</sub>O<sub>2</sub>] in the mixture is 0.300 mol dm<sup>−3</sup>. Show how you read the value, and check it by calculation.<div class="lines"><div></div><div></div><div></div></div></div>
+<h3>Part F: Predict, then evaluate</h3>
+<div class="q"><span class="id">F1</span>The mass of sodium thiosulfate-5-water in A is doubled to 18.8 g per dm³ and nothing else changes. Predict the clock time and explain, using the amount of iodine that must be made and the rate. Does the thiosulfate appear in the slow step?<div class="lines"><div></div><div></div><div></div></div></div>
+<div class="q"><span class="id">F2</span>A student mixes 50 cm³ of A with 50 cm³ of distilled water and then pours in 100 cm³ of B. By thinking about what happens to the rate <i>and</i> to the amount of thiosulfate to be used up, predict the time. What would you change to investigate iodide properly?<div class="lines"><div></div><div></div><div></div><div></div></div></div>
+<div class="q"><span class="id">F3</span>Choose <b>two</b> of the following and say whether each would give scatter or a systematic shift in Graph 3, and which way:<ul><li>diluting B also dilutes the ethanoic acid, so the acidity changes between runs;</li><li>the “20 volume” on the bottle is a nominal value, and peroxide weakens as it ages;</li><li>the room warms or cools between runs;</li><li>the eye detects blue-black when a very small amount of free iodine is present, not at the exact moment the thiosulfate is gone.</li></ul><div class="lines"><div></div><div></div><div></div><div></div></div></div>
+<h2>Underlying ideas: definitions to learn</h2>
+<table class="recipe" style="width:100%"><tr><td style="width:34%"><b>rate of reaction</b></td><td>the change in concentration of a reactant or product in unit time. Units: mol dm<sup>−3</sup> s<sup>−1</sup>.</td></tr><tr><td><b>initial rate</b></td><td>the rate at the start of the reaction, when the concentrations are the ones you prepared.</td></tr><tr><td><b>rate equation</b></td><td>an equation linking the rate to the concentrations of reactants, found only by experiment.</td></tr><tr><td><b>order of reaction</b></td><td>for one reactant, the power to which its concentration is raised in the rate equation. It cannot be read from the balanced equation.</td></tr><tr><td><b>rate constant, <i>k</i></b></td><td>the constant in the rate equation. It changes with temperature.</td></tr><tr><td><b>rate-determining step</b></td><td>the slowest step in a reaction mechanism; it sets the overall rate.</td></tr><tr><td><b>clock reaction</b></td><td>a reaction in which a sudden change shows when a fixed amount of reaction has happened, so a time is converted to a rate.</td></tr><tr><td><b>buffer</b></td><td>a solution that resists changes in pH; here ethanoic acid with sodium ethanoate.</td></tr></table>
+<p>The overall equation for the slow reaction contains 2H<sup>+</sup>, yet the rate equation above has no [H<sup>+</sup>] term. In this buffered mixture [H<sup>+</sup>] is effectively constant, so any effect of it is included in the value of <i>k</i>; your <i>k</i> applies to this recipe at this temperature, not to every solution.</p>
+<h2>Scale-up question</h2>
+<div class="q"><span class="id">G1</span>For a large lecture room the RSC suggests larger volumes. A teacher mixes 1 dm³ of A with 1 dm³ of B in a large beaker. Predict the clock time and explain which quantities decide it.<div class="lines"><div></div><div></div><div></div></div></div>
+<div class="q"><span class="id">G2</span>How many grams of potassium iodide are needed to make 5 dm³ of solution A? <span class="blank" style="width:22mm"></span> g</div>
+<div class="q"><span class="id">G3</span>The teacher wants the clock to run for about 60 s instead of 20 s, with the same rate. Which reagent should change, and by what factor? Give the new mass of it per dm³ of A.<div class="lines"><div></div><div></div><div></div></div></div>
+<p class="small" style="margin-top:6mm">Source of the recipe: Royal Society of Chemistry, <i>Iodine clock reaction: demonstration</i>, edu.rsc.org/experiments/iodine-clock-reaction-demonstration-method/744.article. Related student article: edu.rsc.org/practical/rates-of-reaction-practical-videos-16-18-students/4014325.article.</p>
+</div></body></html>
