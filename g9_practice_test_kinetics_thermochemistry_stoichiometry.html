@@ -1,0 +1,576 @@
+<!DOCTYPE html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Practice Test: NGSS HS-PS1-5 Kinetics (Rates of Reactions), Thermochemistry and Stoichiometry (Grade 9 Chemistry)</title><style>
+:root{--ink:#111;--grey:#f1f1f1;--rule:#999}
+*{box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;background:#fff;color:var(--ink);font-family:Palatino,'Palatino Linotype','TeX Gyre Pagella','Book Antiqua',serif;font-size:11pt;line-height:1.42}
+.page{max-width:840px;margin:0 auto;padding:18px 22px 40px}
+.runhead{display:flex;justify-content:space-between;font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-size:10pt;padding-bottom:4px;border-bottom:1px solid var(--ink);margin-bottom:14px}
+h1,h2,h3{font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-weight:400;margin:0}
+h1{font-size:25pt;line-height:1.15;margin:6px 0 4px}
+.sub{margin:0 0 10px;font-style:italic;font-size:12pt}
+h2{font-size:17pt;margin:26px 0 8px;padding-bottom:3px;border-bottom:1px solid var(--ink);counter-increment:sec;break-after:avoid}
+h2::before{content:counter(sec) "  "}
+h3{font-size:13.5pt;margin:20px 0 6px;break-after:avoid}
+h3.part{counter-increment:part}
+h3.part::before{content:"Part " counter(part,upper-alpha) "   "}
+body{counter-reset:sec part}
+.in{padding-left:88px}
+.in p,.in ul,.in ol{margin:6px 0}
+.who{display:flex;gap:26px;margin:8px 0 6px;align-items:baseline}
+.keep{break-inside:avoid}
+.nb{break-before:page}
+.box{border:1px solid var(--ink);padding:8px 12px;margin:10px 0;background:var(--grey);break-inside:avoid}
+.box.plain{background:#fff}
+.box .bt{font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-size:12pt;margin-bottom:3px;display:block}
+.q{border:1.6px solid var(--ink);padding:8px 12px;margin:8px 0 10px;font-size:11.5pt;break-inside:avoid}
+.q b{font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-weight:400;font-size:11pt;display:block;margin-bottom:2px}
+ul.tight{padding-left:20px}
+ul.tight li{margin:2px 0}
+table{border-collapse:collapse;width:100%;margin:8px 0}
+tr{break-inside:avoid}
+th,td{border:1px solid var(--ink);padding:4px 7px;vertical-align:middle;text-align:center;font-size:10.5pt}
+th{font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-weight:400;background:var(--grey)}
+td.l,th.l{text-align:left}
+.eq{text-align:center;margin:8px 0;white-space:nowrap;font-size:11.5pt}
+.eq.sm{font-size:10pt}
+.frac{display:inline-block;vertical-align:middle;text-align:center;margin:0 4px;line-height:1.25}
+.frac .n{display:block;padding:0 5px 2px;border-bottom:1.2px solid var(--ink)}
+.frac .d{display:block;padding:2px 5px 0}
+.bank{border:1px dashed var(--ink);padding:5px 10px;margin:8px 0;font-size:10.5pt;text-align:center;break-inside:avoid}
+.bank span{margin:0 9px;white-space:nowrap}
+.dia{display:block;margin:8px auto;max-width:600px;width:100%;height:auto}
+.dia text{font-family:'Gill Sans','Inter',Helvetica,Arial,sans-serif;fill:#111}
+.lines{display:block;width:100%;border:none;padding:0;margin:4px 0 10px;resize:none;overflow:hidden;font-family:inherit;font-size:11pt;line-height:7.5mm;background-color:#fff;background-image:linear-gradient(to bottom,transparent calc(7.5mm - 1px),#8a8a8a calc(7.5mm - 1px));background-size:100% 7.5mm;background-attachment:local;outline:none;break-inside:avoid}
+textarea.lines:focus{background-color:#fafaf3}
+.blank{display:inline-block;border:none;border-bottom:1.2px solid var(--ink);font-family:inherit;font-size:inherit;background:transparent;padding:0 2px;text-align:center;height:1.25em;vertical-align:baseline;border-radius:0;outline:none}
+input.blank:focus{background:#fafaf3}
+.ck{display:inline-flex;align-items:center;gap:5px;margin-right:14px;white-space:nowrap;font-size:10.5pt}
+.ck input{position:absolute;opacity:0;pointer-events:none}
+.bx{display:inline-block;width:13px;height:13px;border:1.4px solid var(--ink);background:#fff;flex:none}
+.ck input:checked + .bx{background:radial-gradient(#111 45%,#fff 50%)}
+.ck input:focus-visible + .bx{outline:2px solid #555}
+.ck{cursor:pointer;position:relative}
+td .ck{margin-right:5px;font-size:9.5pt;gap:3px}
+.frac .blank{border:1.2px solid var(--ink);height:1.25em;min-width:2.2em}
+td .ck{margin:0}
+.padbox{margin:6px auto;text-align:center;break-inside:avoid}
+.padwrap{position:relative;display:block;margin:0 auto}
+.padbg{display:block;width:100%;height:auto}
+.padbg text{font-family:'Gill Sans','Inter',Helvetica,Arial,sans-serif}
+.padwrap canvas{position:absolute;left:0;top:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.clr{font:inherit;font-size:9.5pt;margin-top:3px;padding:1px 9px;border:1px solid var(--ink);background:#fff;cursor:pointer}
+.partner{border-top:1px dotted var(--rule);padding-top:5px;font-size:10.5pt;margin:6px 0 10px}
+.pl{font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;border:1px solid var(--ink);padding:0 6px;margin-right:6px}
+.hintp{font-size:10pt;margin:2px 0 8px;color:#222}
+details.hint{margin:3px 0 8px;font-size:10.5pt}
+details.hint summary{cursor:pointer;display:inline-block;border:1px solid var(--ink);padding:0 9px;font-family:'Gill Sans','Inter',Helvetica,sans-serif;font-size:9.5pt}
+details.hint p{margin:5px 0 0;padding:5px 10px;border-left:3px solid var(--ink);background:#fafafa}
+.tip{border-bottom:1px dotted var(--ink);cursor:help;position:relative}
+.tip:hover::after,.tip:focus::after{content:attr(data-tip);position:absolute;left:0;top:1.5em;z-index:20;width:260px;background:#111;color:#fff;font-size:10pt;line-height:1.3;padding:6px 9px;font-family:'Gill Sans','Inter',Helvetica,sans-serif;font-style:normal}
+.step{font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;margin:12px 0 2px;font-size:11.5pt;break-after:avoid}
+.two{display:flex;gap:14px}
+.two>div{flex:1}
+.lab{font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-size:10.5pt;display:block;margin-top:6px}
+.ctl{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 4px}
+.ctl button,.chk button{font-family:'Gill Sans','Inter',Helvetica,sans-serif;font-size:11pt;padding:5px 14px;border:1.4px solid var(--ink);background:#fff;cursor:pointer}
+.ctl button:hover,.chk button:hover{background:#111;color:#fff}
+select.match{font:inherit;font-size:10.5pt;border:1.2px solid var(--ink);background:#fff;padding:1px 3px;min-width:3.2em}
+select.ok{background:#e7e7e7;outline:2px solid #111}
+select.bad{background:#fff;outline:2px dashed #111}
+.mk{display:inline-block;width:1.3em;text-align:center;font-family:'Gill Sans','Inter',sans-serif}
+.foot{margin-top:30px;padding-top:6px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;font-family:'Gill Sans','Inter',Helvetica,sans-serif;font-size:9.5pt}
+.matchbox{width:2.6em;height:1.6em;border:1.2px solid var(--ink);display:inline-block;vertical-align:middle}
+
+.hints details.hint{display:block}
+.cheat{border:3px double var(--ink);margin:14px 0;padding:0 12px 8px;background:#fff;break-inside:avoid}
+.cheat .bt{display:block;background:#d9d9d9;margin:0 -12px 7px;padding:3px 12px;font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-size:12.5pt;border-bottom:1px solid var(--ink)}
+.cheat ul{margin:4px 0;padding-left:20px}
+.cheat li{margin:3px 0}
+.cheat .must{font-weight:700}
+.cheat .flow{text-align:center;border:1.2px solid var(--ink);padding:5px 8px;margin:7px 0;font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-size:10.5pt;line-height:1.5}
+.cheat table{margin:6px 0}
+.vocab{border:1.4px dashed var(--ink);background:#f6f6f6;margin:12px 0;padding:6px 12px 8px;break-inside:avoid}
+.vocab .bt{display:block;font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-size:12pt;margin-bottom:3px}
+.vocab dl{display:grid;grid-template-columns:150px 1fr;gap:4px 12px;margin:4px 0 0}
+.vocab dt{font-weight:700}
+.vocab dd{margin:0}
+.cb{border-left:3px solid #bbb;padding-left:10px;margin:10px 0}
+.cb .chk{margin:6px 0 4px}
+.tally{align-self:center;font-size:10.5pt;font-family:'Gill Sans','Inter',Helvetica,sans-serif}
+.expl,.model{border:1px solid var(--ink);background:#fff;padding:6px 11px;margin:6px 0;font-size:10.8pt}
+.expl .bt,.model .bt{display:block;font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-size:11pt;margin-bottom:2px}
+.expl p,.model p{margin:3px 0}
+input.blank.ok{background:#e8e8e8;border-bottom-width:2.4px}
+input.blank.bad{background:#fff;border-bottom:2.4px dashed var(--ink)}
+.ck.ok .bx{outline:2px solid #111;outline-offset:1px}
+.ck.bad .bx{outline:2px dashed #111;outline-offset:1px}
+.mk.auto{display:inline-block;width:auto;margin-left:3px;font-weight:700}
+.rub{margin:0 0 12px}
+.coinkey td{vertical-align:middle;padding:2px 8px}.coinkey svg text{font-family:'Inter',Helvetica,sans-serif}.coinrow{display:flex;gap:18px;align-items:center;flex-wrap:wrap}#coinsvg text{font-family:'Inter',Helvetica,sans-serif}#tossbtn,#tossreset{color:#111;font-family:'Gill Sans','Inter',Helvetica,sans-serif;font-size:11pt;padding:5px 14px;border:1.4px solid var(--ink);background:#fff;cursor:pointer}
+.rubb{font-family:'Gill Sans','Inter',Helvetica,sans-serif;font-size:10.5pt;padding:3px 12px;border:1.4px solid var(--ink);background:#fff;cursor:pointer}
+.rubb:hover{background:#111;color:#fff}
+.rubmsg{margin-left:10px;font-size:10.5pt}
+.rubl{list-style:none;padding:0;margin:4px 0}
+.rubl li{margin:3px 0}
+.rubl .mk{width:auto;margin-left:8px;font-size:9.5pt}
+.rl{font-size:10.2pt;margin:6px 0 2px}
+.modelpic{margin:6px 0;padding:5px 8px;border-left:3px solid var(--ink);background:#fafafa}
+.modelpic svg{max-width:100%}
+@media screen and (max-width:760px){.in{padding-left:14px}.two{display:block}.page{padding:12px}}
+@media print{
+ .ctl,.clr,details.hint summary,.chk,.rub,.expl{display:none!important}
+ details.hint p{display:block}
+ .page{max-width:none;padding:0}
+ .tip{border:none}
+ select.match{border:1.2px solid #111}
+}
+
+.qlab{display:flex;gap:14px;align-items:baseline;margin:14px 0 4px;font-family:'Clear Gothic','Gill Sans','Inter',Helvetica,Arial,sans-serif;font-size:11pt;break-after:avoid}
+.qlab .qn{flex:none;width:2.4em}.qlab .qtx{flex:1;font-family:Palatino,'Palatino Linotype','TeX Gyre Pagella','Book Antiqua',serif;font-size:11pt}.qlab .qm{flex:none;font-size:10pt}
+.marksline{text-align:right;margin:-4px 0 0;font-size:10.5pt}
+.ar{font-family:Helvetica,Arial,sans-serif}
+.worked{background:#fff;border:1.6px solid var(--ink)}
+.emp{width:100%}.emp td.l{text-align:left;width:46%}.emp td.tk2,.pics td.tk2,.mid td.tk2{text-align:left;line-height:1.8}
+.mid{width:92%;margin-left:auto;margin-right:auto}
+.pics svg{max-width:130px;height:auto}
+.bonds{width:94%;margin-left:auto;margin-right:auto}
+.ctr{text-align:center}
+.intro{margin:8px 0}
+svg text.bd{font-family:Helvetica,Arial,sans-serif;font-weight:700;fill:#111}
+svg text.bd0{font-family:Helvetica,Arial,sans-serif;fill:#111}
+.secstat{margin:8px 0 0;padding:6px 12px;border:1.4px dashed var(--ink);font-family:'Gill Sans','Inter',Helvetica,sans-serif;font-size:10.5pt;margin-left:88px}
+.secstat.mastered{border:2px solid var(--ink);background:#ececec;font-weight:700}
+#tracker table{width:100%}.trbar{display:inline-block;width:120px;height:11px;border:1.2px solid var(--ink);vertical-align:middle;background:#fff;margin-right:6px}
+.trbar i{display:block;height:100%;background:#111}
+h3.tr{margin:10px 0 4px;font-size:13.5pt}
+.finale{margin:18px 0 0;padding:12px 16px;border:3px double var(--ink);font-size:12.5pt;text-align:center;background:#ececec}
+.gen{margin:18px 0 6px;padding-top:6px;border-top:1px dotted var(--rule)}
+.genstat{font-family:'Gill Sans','Inter',Helvetica,sans-serif;font-size:9.5pt;text-align:right}
+.genstat.full{font-weight:700}
+.pips i{display:inline-block;width:11px;height:11px;border:1.4px solid var(--ink);border-radius:50%;margin-right:3px;vertical-align:-1px;background:#fff}
+.pips i.on{background:#111}
+.newq{margin-left:auto}
+.cb .lines{margin-top:8px}
+@media print{.secstat,.finale,#tracker,h3.tr,.genstat,.newq{display:none!important}}
+</style></head><body><div class="page"><div class="runhead"><span>Chemistry: Practice Test, Grade 9</span><span>Monday, 16 November 2026</span></div>
+<h1>Practice Test: NGSS HS-PS1-5 Kinetics (Rates of Reactions), Thermochemistry and Stoichiometry</h1>
+<p class="sub">Self-marking, with hints and help and fresh questions, to take every section to mastery</p>
+<div class="who"><span>First name <input class="blank" data-field="firstname" style="width:11em" autocomplete="off"></span><span>Set <input class="blank" data-field="set" style="width:5em" autocomplete="off"></span></div>
+<div class="ctl chk"><button id="save" type="button">Save progress</button><button id="retrieve" type="button">Retrieve progress</button><button id="pdf" type="button">Save as a .pdf file</button><input type="file" id="file" accept=".json,application/json" hidden></div>
+<div class="box plain in" style="margin-left:88px;padding-left:12px"><span class="bt">How this practice test works</span><ul class="tight"><li>Every section starts with a <b>cheat sheet</b>: what you must remember. Sections with new words have a <b>New words</b> box, and the calculation sections have a <b>worked example</b>.</li><li>Stuck? Open <b>Hint</b>. Most questions have a second, bigger hint.</li><li>Press <b>Check my answers</b>. Each answer gets a &#10003; or a &#10007;, and then an explanation appears. Change the &#10007; answers and check again until every answer is &#10003;.</li><li>Every question has <b>new numbers or new examples each time</b>. Press <b>Try a new question</b> for a fresh one. A question is <b>secure</b> when you get every answer right. You need to be secure on <b>two different questions</b> in each part. Written explanations need one secure explanation.</li><li>For written answers, write first, then press <b>Check my explanation</b>. The key ideas are ticked, and a model explanation appears for you to compare with your own.</li><li>A section is at <b>mastery</b> when every part of it is secure. The <b>Mastery tracker</b> below shows where you are. Save your progress at any time.</li><li>Type formulae with plain numbers for subscripts, for example H2O or Ca(OH)2. Type a minus sign where an answer is negative.</li></ul></div>
+<div class="in"><h3 class="tr">Mastery tracker</h3><div id="tracker"></div></div>
+<section class="msec" data-name="1 Metals, non-metals and types of compound"><h2>Metals, non-metals and types of compound</h2><div class="in"><p class="marksline">[6 marks]</p><div class="cheat"><span class="bt">Cheat sheet: metals, non-metals and types of compound</span><p class="must">Chunk 1. The short list of common non-metals. Any other element is a metal.</p><table class="c"><tr><th>hydrogen</th><th>helium</th><th>carbon</th><th>nitrogen</th><th>oxygen</th><th>neon</th></tr><tr><td>H</td><td>He</td><td>C</td><td>N</td><td>O</td><td>Ne</td></tr><tr><th>phosphorus</th><th>sulphur</th><th>chlorine</th><th>argon</th><th>bromine</th><th>iodine</th></tr><tr><td>P</td><td>S</td><td>Cl</td><td>Ar</td><td>Br</td><td>I</td></tr></table><p class="must">Chunk 2. Which type of compound?</p><ul><li><b>A metal joined to a non-metal: ionic.</b> It is a giant lattice of ions. The formula shows the simplest ratio of ions.</li><li><b>Non-metals only: covalent molecular.</b> It is made of separate molecules.</li></ul></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>metal</dt><dd>an element that is not on the short list of non-metals.</dd><dt>non-metal</dt><dd>one of the elements on the short list: H, He, C, N, O, Ne, P, S, Cl, Ar, Br, I.</dd><dt>ionic</dt><dd>a compound of a metal and a non-metal, held together as a lattice of positive and negative ions.</dd><dt>covalent molecular</dt><dd>a compound of non-metals only, made of separate molecules.</dd></dl></div><div class="gen" data-gen="s1a"></div><div class="gen" data-gen="s1b"></div></div><div class="secstat"></div></section>
+<section class="msec" data-name="2 Writing formulae of ionic compounds"><h2>Writing formulae of ionic compounds</h2><div class="in"><p class="marksline">[6 marks]</p><div class="cheat"><span class="bt">Cheat sheet: writing formulae of ionic compounds</span><p class="must">Chunk 1. Table of ions.</p><div class="two"><table class="c"><tr><th colspan="2">Positive ions</th></tr><tr><td class="l">sodium</td><td>Na<sup>+</sup></td></tr><tr><td class="l">potassium</td><td>K<sup>+</sup></td></tr><tr><td class="l">ammonium</td><td>NH<sub>4</sub><sup>+</sup></td></tr><tr><td class="l">magnesium</td><td>Mg<sup>2+</sup></td></tr><tr><td class="l">calcium</td><td>Ca<sup>2+</sup></td></tr><tr><td class="l">zinc</td><td>Zn<sup>2+</sup></td></tr><tr><td class="l">copper(II)</td><td>Cu<sup>2+</sup></td></tr><tr><td class="l">iron(II)</td><td>Fe<sup>2+</sup></td></tr><tr><td class="l">iron(III)</td><td>Fe<sup>3+</sup></td></tr><tr><td class="l">aluminium</td><td>Al<sup>3+</sup></td></tr></table><table class="c"><tr><th colspan="2">Negative ions</th></tr><tr><td class="l">chloride</td><td>Cl<sup>&minus;</sup></td></tr><tr><td class="l">hydroxide</td><td>OH<sup>&minus;</sup></td></tr><tr><td class="l">nitrate</td><td>NO<sub>3</sub><sup>&minus;</sup></td></tr><tr><td class="l">oxide</td><td>O<sup>2&minus;</sup></td></tr><tr><td class="l">sulphide</td><td>S<sup>2&minus;</sup></td></tr><tr><td class="l">sulphate</td><td>SO<sub>4</sub><sup>2&minus;</sup></td></tr><tr><td class="l">carbonate</td><td>CO<sub>3</sub><sup>2&minus;</sup></td></tr><tr><td class="l">phosphate</td><td>PO<sub>4</sub><sup>3&minus;</sup></td></tr></table></div><p class="must">Chunk 2. Method: make the charges add up to zero.</p><ul><li>1. Write each ion with its charge.</li><li>2. Find how many of each make the charges add up to zero.</li><li>3. Write the positive ion first. Put <b>brackets</b> round a polyatomic ion if you need more than one.</li></ul><p>Example: Zn<sup>2+</sup> and Cl<sup>&minus;</sup>. One Zn<sup>2+</sup> needs two Cl<sup>&minus;</sup>, so the formula is ZnCl<sub>2</sub>.</p><p>Example with brackets: Mg<sup>2+</sup> and NO<sub>3</sub><sup>&minus;</sup> gives Mg(NO<sub>3</sub>)<sub>2</sub>.</p></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>ion</dt><dd>a particle with an electric charge.</dd><dt>polyatomic ion</dt><dd>an ion made of several atoms joined together, such as sulphate, SO<sub>4</sub><sup>2&minus;</sup>.</dd><dt>subscript</dt><dd>a small number written below the line, such as the 2 in CaCl<sub>2</sub>. Type it as an ordinary number.</dd></dl></div><div class="gen" data-gen="s2a"></div><div class="gen" data-gen="s2b"></div></div><div class="secstat"></div></section>
+<section class="msec" data-name="3 Empirical formulae"><h2>Empirical formulae</h2><div class="in"><p class="marksline">[9 marks]</p><div class="cheat"><span class="bt">Cheat sheet: empirical formulae</span><p class="must">Chunk 1. Molar mass (atomic mass, A<sub>r</sub>) in g mol<sup>&minus;1</sup>. The symbol is in the top row and its molar mass is directly beneath.</p><table class="c"><tr><th>H</th><th>C</th><th>N</th><th>O</th><th>Na</th><th>Mg</th><th>Al</th><th>P</th><th>S</th><th>Cl</th><th>K</th><th>Ca</th><th>Fe</th><th>Cu</th><th>Zn</th></tr><tr><td>1</td><td>12</td><td>14</td><td>16</td><td>23</td><td>24</td><td>27</td><td>31</td><td>32</td><td>35.5</td><td>39</td><td>40</td><td>56</td><td>64</td><td>65</td></tr></table><p class="must">Chunk 2. What the words and letters mean.</p><p><b>mass, <i>m</i></b> = mass in g. <b>molar mass, <i>M</i></b> = molar mass in g mol<sup>&minus;1</sup>. <b>number of moles, <i>n</i></b> = moles in mol.</p><p class="must">Chunk 3. Method: one column for each element.</p><p>With percentages, say <b>&ldquo;Let&rsquo;s take 100 g of the compound&rdquo;</b>. Then 36% is 36 g.</p><p class="eq">number of moles, <i>n</i> = <span class="frac"><span class="n">mass, <i>m</i></span><span class="d">molar mass, <i>M</i></span></span></p><p>Divide every number of moles by the smallest. If you get about 1.5, multiply by 2. If you get about 1.33, multiply by 3.</p><p><b>Reflect:</b> a number of moles less than one is sensible when the mass is less than the molar mass. If it looks wrong, check the calculator: the smaller number is the numerator.</p></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>empirical formula</dt><dd>the simplest whole-number ratio of the atoms of each element in a compound.</dd><dt>percentage composition</dt><dd>the percentage of a compound's mass that is each element.</dd><dt>mole</dt><dd>the amount of a substance that has a mass in grams equal to its molar mass.</dd><dt>molar mass</dt><dd>the mass of one mole in g mol<sup>&minus;1</sup>. For an element, read it from the table.</dd></dl></div><div class="box worked"><span class="bt">Worked example: aluminium and oxygen</span><p>A compound contains 52.9% aluminium and 47.1% oxygen. Take 100 g of the compound: 52.9 g of aluminium and 47.1 g of oxygen.</p><table class="emp"><tr><th></th><th>Al</th><th>O</th></tr><tr><td class="l">Mass, <i>m</i> (g)</td><td>52.9</td><td>47.1</td></tr><tr><td class="l">Molar mass, <i>M</i> (g mol<sup>&minus;1</sup>)</td><td>27</td><td>16</td></tr><tr><td class="l">Number of moles, <i>n</i> = <span class="frac"><span class="n">mass</span><span class="d">molar mass</span></span></td><td><span class="frac"><span class="n">52.9</span><span class="d">27</span></span> = 1.96</td><td><span class="frac"><span class="n">47.1</span><span class="d">16</span></span> = 2.94</td></tr><tr><td class="l"><span class="frac"><span class="n">number of moles</span><span class="d">smallest number of moles</span></span></td><td><span class="frac"><span class="n">1.96</span><span class="d">1.96</span></span> = 1</td><td><span class="frac"><span class="n">2.94</span><span class="d">1.96</span></span> = 1.5</td></tr><tr><td class="l">Multiply by 2, because of the 1.5</td><td>2</td><td>3</td></tr></table><p class="eq">Empirical formula = Al<sub>2</sub>O<sub>3</sub></p></div><div class="gen" data-gen="s3"></div></div><div class="secstat"></div></section>
+<section class="msec" data-name="4 Shapes of molecules and bond angles"><h2>Shapes of molecules and bond angles</h2><div class="in"><p class="marksline">[10 marks]</p><div class="cheat"><span class="bt">Cheat sheet: shapes of molecules and bond angles</span><p class="must">Chunk 1. Look-up table.</p><table><tr><th>Molecule</th><th>Shape</th><th>Bond angle</th></tr><tr><td class="l">methane</td><td>tetrahedral</td><td>109.5&deg;</td></tr><tr><td class="l">ammonia</td><td>pyramid</td><td>107&deg;</td></tr><tr><td class="l">water</td><td>bent</td><td>104.5&deg;</td></tr><tr><td class="l">carbon dioxide</td><td>straight line</td><td>180&deg;</td></tr></table><p class="must">Chunk 2. Reading the pictures.</p><p>Work out which molecule the picture shows, find it in the table, and read across the row to the shape and the bond angle.</p><p class="must">Chunk 3. Bigger molecules.</p><p>Look at one atom at a time and count the bonds around it. A carbon atom with four single bonds has the same shape as the carbon atom in methane. A nitrogen atom with three single bonds has the same shape as the nitrogen atom in ammonia. An oxygen atom with two single bonds has the same shape as the oxygen atom in water.</p><p class="must">Chunk 4. Molecular formula.</p><p>Count the atoms of each element. Write carbon first, then hydrogen, then the other elements. For one atom, write no number.</p></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>bond angle</dt><dd>the angle between two bonds at the same atom.</dd><dt>tetrahedral</dt><dd>a shape with four bonds pointing to the corners of a pyramid with a triangular base.</dd><dt>pyramid</dt><dd>the shape of ammonia: three bonds below a nitrogen atom, like a low pyramid.</dd><dt>bent</dt><dd>the shape of water: two bonds that make an angle, like a boomerang.</dd><dt>wedge and dashed lines</dt><dd>a thick wedge points towards you out of the page. A dashed line points away from you into the page.</dd></dl></div><div class="gen" data-gen="s4a"></div><div class="gen" data-gen="s4b"></div></div><div class="secstat"></div></section>
+<section class="msec" data-name="5 System, surroundings and conservation of energy"><h2>System, surroundings and conservation of energy</h2><div class="in"><p class="marksline">[6 marks]</p><div class="cheat"><span class="bt">Cheat sheet: system, surroundings and the Law of Conservation of Energy</span><p class="must">Chunk 1. Definitions.</p><p>The <b>system</b> is the chemicals that are reacting. The <b>surroundings</b> are everything else: the water, the cup or tube, the thermometer and the air.</p><p class="must">Chunk 2. Which way does the energy go?</p><table><tr><th>Type</th><th>Temperature of the surroundings</th><th>Energy moves</th></tr><tr><td class="l">exothermic</td><td>rises</td><td>from the system to the surroundings</td></tr><tr><td class="l">endothermic</td><td>falls</td><td>from the surroundings to the system</td></tr></table><p class="must">Chunk 3. Law of Conservation of Energy.</p><p>Energy cannot be created or destroyed. It is only transferred. The energy lost by one part is equal to the energy gained by the other part, so the total energy does not change.</p></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>system</dt><dd>the chemicals that are reacting.</dd><dt>surroundings</dt><dd>everything around the chemicals: the cup, thermometer, air and any water that is not reacting.</dd><dt>exothermic</dt><dd>a reaction that gives out energy, so the surroundings get warmer.</dd><dt>endothermic</dt><dd>a reaction that takes in energy, so the surroundings get cooler.</dd></dl></div><div class="gen" data-gen="s5"></div></div><div class="secstat"></div></section>
+<section class="msec" data-name="6 Bond enthalpies and enthalpy change"><h2>Bond enthalpies and enthalpy change</h2><div class="in"><p class="marksline">[10 marks]</p><div class="cheat"><span class="bt">Cheat sheet: bond enthalpies and enthalpy change, &Delta;H</span><p class="must">Chunk 1. Average bond enthalpies.</p><table><tr><th>Bond</th><th>kJ mol<sup>&minus;1</sup></th><th>Bond</th><th>kJ mol<sup>&minus;1</sup></th></tr><tr><td>H&ndash;H</td><td>436</td><td>N&ndash;H</td><td>391</td></tr><tr><td>H&ndash;Cl</td><td>432</td><td>C=C</td><td>612</td></tr><tr><td>H&ndash;Br</td><td>366</td><td>C&equiv;C</td><td>838</td></tr><tr><td>H&ndash;O</td><td>463</td><td>C&ndash;H</td><td>412</td></tr><tr><td>Br&ndash;Br</td><td>193</td><td>C&ndash;Cl</td><td>346</td></tr><tr><td>Cl&ndash;Cl</td><td>243</td><td>C&ndash;O</td><td>360</td></tr><tr><td>O=O</td><td>498</td><td>C=O</td><td>743</td></tr><tr><td>C&ndash;C</td><td>348</td><td>N&equiv;N</td><td>945</td></tr></table><p class="sm" style="text-align:center">&ndash; is a single bond, = a double bond, &equiv; a triple bond.</p><p class="must">Chunk 2. Method.</p><p>Breaking bonds takes energy <b>in</b>. Making bonds gives energy <b>out</b>. Count each bond, multiply by its energy, and add.</p><p class="eq" style="font-weight:700">enthalpy change, &Delta;H = (total energy to break bonds) &minus; (total energy given out making bonds)</p><p>More energy out than in: exothermic, enthalpy change negative. More energy in than out: endothermic, enthalpy change positive.</p></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>bond enthalpy</dt><dd>the energy needed to break one mole of a bond, in kJ mol<sup>&minus;1</sup>.</dd><dt>enthalpy change, &Delta;H</dt><dd>the energy change of a reaction. Negative for an exothermic reaction and positive for an endothermic reaction.</dd></dl></div><div class="box worked"><span class="bt">Worked example: hydrogen and bromine</span><p class="eq"><b>H<sub>2</sub>(g) + Br<sub>2</sub>(g) <span class="ar">&rarr;</span> 2HBr(g)</b></p><p class="eq">H&ndash;H &nbsp;+&nbsp; Br&ndash;Br &nbsp;<span class="ar">&rarr;</span>&nbsp; 2 × H&ndash;Br</p><p>Energy taken in: 436 + 193 = 629 kJ. Energy given out: 2 × 366 = 732 kJ.</p><p class="eq">enthalpy change, &Delta;H = 629 &minus; 732 = &minus;103 kJ mol<sup>&minus;1</sup>, so the reaction is exothermic.</p></div><div class="gen" data-gen="s6"></div></div><div class="secstat"></div></section>
+<section class="msec" data-name="7 Calorimetry"><h2>Calorimetry</h2><div class="in"><p class="marksline">[7 marks]</p><div class="cheat"><span class="bt">Cheat sheet: calorimetry</span><p class="must">Chunk 1. Formulae.</p><p class="eq">local energy change, <i>q</i> = total volume × 4.2 × &Delta;temperature</p><p class="eq">number of moles, <i>n</i> = <span class="frac"><span class="n">concentration × volume</span><span class="d">1000</span></span></p><p class="eq">enthalpy change, &Delta;H = <span class="frac"><span class="n">local energy change, <i>q</i>, in kJ</span><span class="d">number of moles, <i>n</i></span></span></p><p><b>total volume</b> = the volume of the whole mixture in cm<sup>3</sup>. <b>&Delta;temperature</b> = the size of the temperature change in &deg;C (no sign). The local energy change, <i>q</i>, is in J: to change to kJ, <span class="frac"><span class="n">J</span><span class="d">1000</span></span>. In the moles formula, <b>volume</b> is the volume of the limiting reactant in cm<sup>3</sup> and concentration is in mol dm<sup>&minus;3</sup>.</p><p class="must">Chunk 2. The sign goes on the enthalpy change, &Delta;H, last.</p><table><tr><th>Temperature</th><th>Type</th><th>&Delta;H</th></tr><tr><td>rises</td><td>exothermic</td><td>negative</td></tr><tr><td>falls</td><td>endothermic</td><td>positive</td></tr></table></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>calorimetry</dt><dd>measuring the energy of a reaction from the temperature change it causes in water.</dd><dt>limiting reactant</dt><dd>the reactant that is used up first. It decides how much product is made and how many moles to use in the calculation.</dd><dt>in excess</dt><dd>more than enough, so some is left over at the end. The reactant in excess is not used for the moles.</dd><dt>local energy change, <i>q</i></dt><dd>the energy gained by the solution, in J.</dd></dl></div><div class="box worked"><span class="bt">Worked example: hydrochloric acid and sodium hydroxide solution</span><p><b>25 cm<sup>3</sup></b> of <b>2.00 mol dm<sup>&minus;3</sup></b> hydrochloric acid is mixed with <b>25 cm<sup>3</sup></b> of an excess of sodium hydroxide solution (CARE: CORROSIVE!). The temperature rises from <b>19.0 &deg;C</b> to <b>32.5 &deg;C</b>. The acid is the limiting reactant.</p><ul class="tight"><li>Total volume of the mixture = 25 + 25 = 50 cm<sup>3</sup></li><li>&Delta;temperature = 32.5 &minus; 19.0 = 13.5 &deg;C</li><li>Local energy change, <i>q</i> = 50 × 4.2 × 13.5 = 2835 J, and <span class="frac"><span class="n">2835</span><span class="d">1000</span></span> = 2.835 kJ</li><li>Number of moles of acid, <i>n</i> = <span class="frac"><span class="n">2.00 × 25</span><span class="d">1000</span></span> = 0.0500 mol</li><li>Enthalpy change, &Delta;H = <span class="frac"><span class="n">2.835</span><span class="d">0.0500</span></span> = 56.7, and the temperature rose, so &Delta;H = &minus;56.7 kJ mol<sup>&minus;1</sup></li></ul></div><div class="gen" data-gen="s7"></div></div><div class="secstat"></div></section>
+<section class="msec" data-name="8 Brownian motion, the Kinetic Theory and the Collision Theory"><h2>Brownian motion, the Kinetic Theory and the Collision Theory</h2><div class="in"><p class="marksline">[8 marks]</p><div class="cheat"><span class="bt">Cheat sheet: Brownian motion, the Kinetic Theory and the Collision Theory</span><p class="must">Chunk 1. Brownian motion.</p><p><b>Brownian motion</b> is the random zigzag movement of tiny visible specks, such as pollen in water or smoke in air. It happens because fast-moving, invisible particles keep hitting the speck, and at any moment the hits are not balanced. It is our evidence that matter is made of particles that are always moving. The hotter the substance, the faster its particles move, so the specks jiggle more.</p><p class="must">Chunk 2. The Kinetic Theory (the Particle Theory).</p><table><tr><th>State</th><th>How close?</th><th>How do the particles move?</th></tr><tr><td class="l">solid</td><td>touching, in regular rows</td><td>vibrate about fixed positions</td></tr><tr><td class="l">liquid</td><td>touching, no pattern</td><td>slide past each other</td></tr><tr><td class="l">gas</td><td>far apart</td><td>move fast in random directions</td></tr></table><p class="must">Chunk 3. The Collision Theory.</p><p>A collision is <b>successful</b> only if the particles (1) collide, (2) hit with at least the <b>activation energy</b> (a long arrow: fast enough) and (3) have the right <b>orientation</b> (the black spots face each other). The rate of reaction is the number of successful collisions each second.</p></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>Brownian motion</dt><dd>the random zigzag movement of visible specks, caused by collisions with invisible fast-moving particles.</dd><dt>speck</dt><dd>a tiny grain, such as smoke or pollen, big enough to see through a microscope.</dd><dt>random</dt><dd>with no pattern: any direction is possible.</dd><dt>vibrate</dt><dd>move to and fro about a fixed position.</dd><dt>activation energy</dt><dd>the minimum energy that colliding particles need for the collision to be successful.</dd><dt>orientation</dt><dd>the way round that the particles face as they collide.</dd></dl></div><div class="gen" data-gen="s8a"></div><div class="gen" data-gen="s8b"></div><div class="gen" data-gen="s8c"></div></div><div class="secstat"></div></section>
+<section class="msec" data-name="9 What factors change the rate of a reaction, and why?"><h2>What factors change the rate of a reaction, and why?</h2><div class="in"><p class="marksline">[12 marks]</p><div class="cheat"><span class="bt">Cheat sheet: rates of reaction</span><p class="must">Chunk 1. Measuring a rate.</p><p class="eq">rate = <span class="frac"><span class="n">volume of gas made in cm<sup>3</sup></span><span class="d">time taken in s</span></span></p><p>The unit of rate here is cm<sup>3</sup> per second. A bigger rate means a shorter time. A fair test changes one variable at a time.</p><p class="must">Chunk 2. The four factors.</p><table><tr><th>Factor increased</th><th>What changes (Kinetic Theory)</th><th>More collisions each second?</th><th>Bigger fraction successful?</th></tr><tr><td class="l">surface area</td><td>more solid particles exposed</td><td>yes</td><td>no</td></tr><tr><td class="l">concentration</td><td>more particles in each cm<sup>3</sup></td><td>yes</td><td>no</td></tr><tr><td class="l">pressure of a gas</td><td>more particles in each cm<sup>3</sup></td><td>yes</td><td>no</td></tr><tr><td class="l">temperature</td><td>faster particles, more kinetic energy</td><td>a little</td><td>yes</td></tr></table><p class="must">Chunk 3. The shape of every explanation.</p><div class="flow">the change <span class="ar">&rarr;</span> what it does to the particles <span class="ar">&rarr;</span> collisions each second <span class="ar">&rarr;</span> successful collisions each second <span class="ar">&rarr;</span> the rate</div><p>Always say what stays the same.</p></div><div class="vocab"><span class="bt">New words in this part</span><dl><dt>rate of reaction</dt><dd>how quickly reactants are used up or products are made.</dd><dt>surface area</dt><dd>the total area of the outside of a solid that the other reactant can touch.</dd><dt>concentration</dt><dd>the number of particles of a dissolved substance in each cm<sup>3</sup> of solution.</dd><dt>pressure of a gas</dt><dd>caused by gas particles hitting the walls of their container.</dd><dt>kinetic energy</dt><dd>the energy a particle has because it is moving.</dd></dl></div><div class="box worked"><span class="bt">Worked example: a rate</span><p>A student collects 60 cm<sup>3</sup> of carbon dioxide in 30 s.</p><p class="eq">rate = <span class="frac"><span class="n">60</span><span class="d">30</span></span> = 2 cm<sup>3</sup> per second</p></div><div class="gen" data-gen="s9a"></div><div class="gen" data-gen="s9b"></div><div class="gen" data-gen="s9c"></div><div class="gen" data-gen="s9d"></div></div><div class="secstat"></div></section>
+<div class="finale" id="finale" hidden><b>Mastery reached.</b> Every section of this practice test is secure. Save your progress, then try the printed test with no help.</div>
+<div class="foot"><span>Science Department · Refined with AI</span><span>Chemistry: Practice Test, Grade 9</span></div></div><script>window.PT_DATA={"SV": {"water": "<svg viewBox=\"0 0 100 70\" width=\"100\" height=\"70\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"43.8\" y1=\"30.6\" x2=\"26.2\" y2=\"49.4\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"56.2\" y1=\"30.6\" x2=\"73.8\" y2=\"49.4\" stroke=\"#111\" stroke-width=\"1.6\"/><circle cx=\"50\" cy=\"24\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"50\" y=\"27.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">O</text><circle cx=\"20\" cy=\"56\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"20\" y=\"59.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"80\" cy=\"56\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"80\" y=\"59.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text></svg>", "methane": "<svg viewBox=\"0 0 100 84\" width=\"100\" height=\"84\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"50.0\" y1=\"33.0\" x2=\"50.0\" y2=\"20.0\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"42.4\" y1=\"46.8\" x2=\"25.6\" y2=\"57.2\" stroke=\"#111\" stroke-width=\"1.6\"/><polygon points=\"57.5,47.0 73.5,62.0 77.5,56.0\" fill=\"#111\"/><line x1=\"57.8\" y1=\"37.6\" x2=\"74.2\" y2=\"28.4\" stroke=\"#111\" stroke-width=\"2.4\" stroke-dasharray=\"2 2.3\"/><circle cx=\"50\" cy=\"42\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"50\" y=\"45.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">C</text><circle cx=\"50\" cy=\"11\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"50\" y=\"14.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"18\" cy=\"62\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"18\" y=\"65.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"83\" cy=\"64\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"83\" y=\"67.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"82\" cy=\"24\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"82\" y=\"27.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text></svg>", "ammonia": "<svg viewBox=\"0 0 100 84\" width=\"100\" height=\"84\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"41.9\" y1=\"32.2\" x2=\"24.1\" y2=\"23.8\" stroke=\"#111\" stroke-width=\"1.6\"/><polygon points=\"44.6,43.2 28.5,58.6 34.3,63.0\" fill=\"#111\"/><line x1=\"58.0\" y1=\"40.2\" x2=\"76.0\" y2=\"49.8\" stroke=\"#111\" stroke-width=\"2.4\" stroke-dasharray=\"2 2.3\"/><circle cx=\"50\" cy=\"36\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"50\" y=\"39.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">N</text><circle cx=\"16\" cy=\"20\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"16\" y=\"23.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"26\" cy=\"68\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"26\" y=\"71.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"84\" cy=\"54\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"84\" y=\"57.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text></svg>", "co2": "<svg viewBox=\"0 0 130 40\" width=\"130\" height=\"40\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"29.0\" y1=\"17.6\" x2=\"56.0\" y2=\"17.6\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"29.0\" y1=\"22.4\" x2=\"56.0\" y2=\"22.4\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"74.0\" y1=\"17.6\" x2=\"101.0\" y2=\"17.6\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"74.0\" y1=\"22.4\" x2=\"101.0\" y2=\"22.4\" stroke=\"#111\" stroke-width=\"1.6\"/><circle cx=\"20\" cy=\"20\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"20\" y=\"23.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">O</text><circle cx=\"65\" cy=\"20\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"65\" y=\"23.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">C</text><circle cx=\"110\" cy=\"20\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"110\" y=\"23.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">O</text></svg>"}, "BIG": [{"k": "methanol", "svg": "<svg viewBox=\"0 0 240 120\" width=\"240\" height=\"120\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"88.4\" y1=\"58.9\" x2=\"141.6\" y2=\"39.1\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"72.0\" y1=\"57.8\" x2=\"54.0\" y2=\"48.2\" stroke=\"#111\" stroke-width=\"1.6\"/><polygon points=\"77.0,70.5 65.6,92.3 72.4,94.7\" fill=\"#111\"/><line x1=\"86.2\" y1=\"68.6\" x2=\"105.8\" y2=\"89.4\" stroke=\"#111\" stroke-width=\"2.4\" stroke-dasharray=\"2 2.3\"/><line x1=\"158.1\" y1=\"39.9\" x2=\"183.9\" y2=\"52.1\" stroke=\"#111\" stroke-width=\"1.6\"/><circle cx=\"80\" cy=\"62\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"80\" y=\"65.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">C</text><circle cx=\"150\" cy=\"36\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"150\" y=\"39.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">O</text><circle cx=\"46\" cy=\"44\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"46\" y=\"47.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"66\" cy=\"102\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"66\" y=\"105.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"112\" cy=\"96\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"112\" y=\"99.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"192\" cy=\"56\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"192\" y=\"59.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text></svg>", "f": "CH4O", "atoms": [["carbon", 109.5], ["oxygen", 104.5]]}, {"k": "methylamine", "svg": "<svg viewBox=\"0 0 240 120\" width=\"240\" height=\"120\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"88.4\" y1=\"58.9\" x2=\"141.6\" y2=\"39.1\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"72.0\" y1=\"57.8\" x2=\"54.0\" y2=\"48.2\" stroke=\"#111\" stroke-width=\"1.6\"/><polygon points=\"77.0,70.5 65.6,92.3 72.4,94.7\" fill=\"#111\"/><line x1=\"86.2\" y1=\"68.6\" x2=\"105.8\" y2=\"89.4\" stroke=\"#111\" stroke-width=\"2.4\" stroke-dasharray=\"2 2.3\"/><line x1=\"158.1\" y1=\"39.9\" x2=\"183.9\" y2=\"52.1\" stroke=\"#111\" stroke-width=\"1.6\"/><polygon points=\"154.4,28.2 166.7,13.6 160.4,10.1\" fill=\"#111\"/><circle cx=\"80\" cy=\"62\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"80\" y=\"65.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">C</text><circle cx=\"150\" cy=\"36\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"150\" y=\"39.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">N</text><circle cx=\"46\" cy=\"44\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"46\" y=\"47.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"66\" cy=\"102\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"66\" y=\"105.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"112\" cy=\"96\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"112\" y=\"99.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"192\" cy=\"56\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"192\" y=\"59.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"168\" cy=\"4\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"168\" y=\"7.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text></svg>", "f": "CH5N", "atoms": [["carbon", 109.5], ["nitrogen", 107]]}, {"k": "ethanol", "svg": "<svg viewBox=\"0 0 300 120\" width=\"300\" height=\"120\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"99.9\" y1=\"63.8\" x2=\"144.1\" y2=\"40.2\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"160.0\" y1=\"40.1\" x2=\"206.0\" y2=\"63.9\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"83.9\" y1=\"64.2\" x2=\"66.1\" y2=\"55.8\" stroke=\"#111\" stroke-width=\"1.6\"/><polygon points=\"90.1,76.8 82.3,96.5 89.4,97.9\" fill=\"#111\"/><line x1=\"99.1\" y1=\"73.5\" x2=\"120.9\" y2=\"90.5\" stroke=\"#111\" stroke-width=\"2.4\" stroke-dasharray=\"2 2.3\"/><polygon points=\"146.8,28.7 140.2,13.2 134.3,17.4\" fill=\"#111\"/><line x1=\"157.9\" y1=\"29.2\" x2=\"170.1\" y2=\"14.8\" stroke=\"#111\" stroke-width=\"2.4\" stroke-dasharray=\"2 2.3\"/><line x1=\"222.1\" y1=\"64.2\" x2=\"239.9\" y2=\"55.8\" stroke=\"#111\" stroke-width=\"1.6\"/><circle cx=\"92\" cy=\"68\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"92\" y=\"71.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">C</text><circle cx=\"152\" cy=\"36\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"152\" y=\"39.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">C</text><circle cx=\"214\" cy=\"68\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"214\" y=\"71.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">O</text><circle cx=\"58\" cy=\"52\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"58\" y=\"55.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"84\" cy=\"106\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"84\" y=\"109.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"128\" cy=\"96\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"128\" y=\"99.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"132\" cy=\"8\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"132\" y=\"11.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"176\" cy=\"8\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"176\" y=\"11.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"248\" cy=\"52\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"248\" y=\"55.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text></svg>", "f": "C2H6O", "atoms": [["left-hand carbon", 109.5], ["right-hand carbon", 109.5], ["oxygen", 104.5]]}, {"k": "ethylamine", "svg": "<svg viewBox=\"0 0 300 120\" width=\"300\" height=\"120\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"99.9\" y1=\"63.8\" x2=\"144.1\" y2=\"40.2\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"160.0\" y1=\"40.1\" x2=\"206.0\" y2=\"63.9\" stroke=\"#111\" stroke-width=\"1.6\"/><line x1=\"83.9\" y1=\"64.2\" x2=\"66.1\" y2=\"55.8\" stroke=\"#111\" stroke-width=\"1.6\"/><polygon points=\"90.1,76.8 82.3,96.5 89.4,97.9\" fill=\"#111\"/><line x1=\"99.1\" y1=\"73.5\" x2=\"120.9\" y2=\"90.5\" stroke=\"#111\" stroke-width=\"2.4\" stroke-dasharray=\"2 2.3\"/><polygon points=\"146.8,28.7 140.2,13.2 134.3,17.4\" fill=\"#111\"/><line x1=\"157.9\" y1=\"29.2\" x2=\"170.1\" y2=\"14.8\" stroke=\"#111\" stroke-width=\"2.4\" stroke-dasharray=\"2 2.3\"/><line x1=\"222.1\" y1=\"64.2\" x2=\"239.9\" y2=\"55.8\" stroke=\"#111\" stroke-width=\"1.6\"/><polygon points=\"217.7,76.2 223.1,97.2 229.6,94.3\" fill=\"#111\"/><circle cx=\"92\" cy=\"68\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"92\" y=\"71.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">C</text><circle cx=\"152\" cy=\"36\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"152\" y=\"39.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">C</text><circle cx=\"214\" cy=\"68\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"214\" y=\"71.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">N</text><circle cx=\"58\" cy=\"52\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"58\" y=\"55.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"84\" cy=\"106\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"84\" y=\"109.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"128\" cy=\"96\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"128\" y=\"99.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"132\" cy=\"8\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"132\" y=\"11.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"176\" cy=\"8\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"176\" y=\"11.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"248\" cy=\"52\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"248\" y=\"55.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text><circle cx=\"230\" cy=\"104\" r=\"9\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"1.4\"/><text x=\"230\" y=\"107.6\" text-anchor=\"middle\" font-size=\"10.5\" class=\"bd\">H</text></svg>", "f": "C2H7N", "atoms": [["left-hand carbon", 109.5], ["right-hand carbon", 109.5], ["nitrogen", 107]]}]};
+(function(){
+'use strict';
+const NEED=2;
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const MINUS='−';
+let gc=0;
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function mkR(seed){const f=mulberry(seed);return{f:f,int:(a,b)=>a+Math.floor(f()*(b-a+1)),pick:arr=>arr[Math.floor(f()*arr.length)],
+  shuf:arr=>{const x=arr.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}};}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const sub=f=>f.replace(/(\d+)/g,'<sub>$1</sub>');
+const frac=(n,d)=>'<span class="frac"><span class="n">'+n+'</span><span class="d">'+d+'</span></span>';
+const B=(a,w)=>'<input class="blank" data-a="'+esc(a)+'" style="width:'+(w||5)+'em" autocomplete="off" spellcheck="false">';
+const RG=(opts,ok,br)=>{const g='r'+(++gc);return opts.map((o,i)=>'<label class="ck"><input type="radio" name="'+g+'"'+(i===ok?' data-ok="1"':'')+'><span class="bx"></span>'+o+'</label>').join(br?'<br>':' ');};
+const H=(...t)=>'<div class="hints">'+t.map((x,i)=>'<details class="hint"><summary>'+(t.length===1?'Hint':(i===0?'Hint 1':'Hint 2: a bigger push'))+'</summary><p>'+x+'</p></details>').join('')+'</div>';
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+const rngs=(lo,hi)=>lo.toFixed(4)+'..'+hi.toFixed(4);
+const near=(v,tol)=>rngs(v-tol,v+tol);
+const pm=v=>(v<0?MINUS:'')+Math.abs(v);
+const mol='mol dm<sup>'+MINUS+'3</sup>';
+const M={H:1,C:12,N:14,O:16,Na:23,Mg:24,Al:27,P:31,S:32,Cl:35.5,K:39,Ca:40,Fe:56,Cu:64,Zn:65};
+const NAME={Cu:'copper',S:'sulphur',Fe:'iron',O:'oxygen',Al:'aluminium',Mg:'magnesium',Cl:'chlorine',Zn:'zinc',Ca:'calcium',K:'potassium',Na:'sodium',P:'phosphorus',N:'nitrogen'};
+const NONSET=new Set(['H','He','C','N','O','Ne','P','S','Cl','Ar','Br','I']);
+const D=window.PT_DATA;
+const SV=D.SV;
+const gens={};
+
+/* ---------------- 1.1 */
+gens.s1a={need:NEED,make(r){
+  const MET=[['magnesium','Mg'],['iron','Fe'],['zinc','Zn'],['copper','Cu'],['sodium','Na'],['potassium','K'],['calcium','Ca'],['aluminium','Al'],['lithium','Li']];
+  const NON=[['bromine','Br'],['sulphur','S'],['phosphorus','P'],['chlorine','Cl'],['iodine','I'],['nitrogen','N'],['oxygen','O'],['carbon','C']];
+  const k=r.pick([1,2]);const items=r.shuf(r.shuf(NON).slice(0,k).map(x=>x.concat([false])).concat(r.shuf(MET).slice(0,3-k).map(x=>x.concat([true]))));
+  const rows=items.map(x=>'<tr><td>'+x[0]+'</td><td>'+x[1]+'</td><td>'+RG(['metal','non-metal'],x[2]?0:1)+'</td></tr>').join('');
+  const inT=items.filter(x=>!x[2]).map(x=>x[1]),outT=items.filter(x=>x[2]).map(x=>x[1]);
+  return{label:'1.1',marks:3,text:'Tick whether each element is a metal or a non-metal.',
+   body:'<table class="mid"><tr><th>Element</th><th>Symbol</th><th>Metal or non-metal</th></tr>'+rows+'</table>',
+   hints:H('Look for the symbol in the table of non-metals in Chunk 1. If it is in the table it is a non-metal. If it is not in the table it is a metal.',
+     (inT.length?inT.join(' and ')+(inT.length>1?' are':' is')+' in the table. ':'')+(outT.length?outT.join(' and ')+(outT.length>1?' are':' is')+' not in the table.':'')),
+   expl:'<ul class="tight">'+items.map(x=>'<li><b>'+x[0]+' ('+x[1]+')</b> '+(x[2]?'is not on the short list, so it is a <b>metal</b>.':'is on the short list, so it is a <b>non-metal</b>.')+'</li>').join('')+'</ul>'};}};
+
+/* ---------------- 1.2 */
+gens.s1b={need:NEED,make(r){
+  const IONIC=[['calcium chloride','CaCl2'],['magnesium oxide','MgO'],['sodium bromide','NaBr'],['zinc oxide','ZnO'],['potassium iodide','KI'],['aluminium chloride','AlCl3'],['iron(III) oxide','Fe2O3'],['sodium sulphide','Na2S'],['calcium oxide','CaO']];
+  const COV=[['carbon dioxide','CO2'],['sulphur dioxide','SO2'],['methane','CH4'],['ammonia','NH3'],['hydrogen chloride','HCl'],['water','H2O'],['phosphorus trichloride','PCl3']];
+  const k=r.pick([1,2]);
+  const items=r.shuf(r.shuf(IONIC).slice(0,k).map(x=>x.concat([true])).concat(r.shuf(COV).slice(0,3-k).map(x=>x.concat([false]))));
+  const els=f=>f.match(/[A-Z][a-z]?/g);
+  const desc=x=>els(x[1]).map((e,i,a)=>a.indexOf(e)===i?e+' is a '+(NONSET.has(e)?'non-metal':'metal'):null).filter(Boolean).join(', ');
+  return{label:'1.2',marks:3,text:'Tick whether each compound is ionic or covalent molecular.',
+   body:'<table class="mid"><tr><th>Compound</th><th>Formula</th><th>Type</th></tr>'+items.map(x=>'<tr><td>'+x[0]+'</td><td>'+sub(x[1])+'</td><td>'+RG(['ionic','covalent molecular'],x[2]?0:1)+'</td></tr>').join('')+'</table>',
+   hints:H('For each formula, ask: is each element a metal or a non-metal? Use the table in Chunk 1. A metal with a non-metal is ionic. Non-metals only is covalent molecular.',
+     items.map(x=>sub(x[1])+': '+desc(x)).join('. ')+'.'),
+   expl:'<ul class="tight">'+items.map(x=>'<li><b>'+sub(x[1])+':</b> '+desc(x)+', so it is <b>'+(x[2]?'ionic':'covalent molecular')+'</b>.</li>').join('')+'</ul>'};}};
+
+/* ---------------- ions */
+const CAT=[['sodium','Na',1,0],['potassium','K',1,0],['ammonium','NH4',1,1],['magnesium','Mg',2,0],['calcium','Ca',2,0],['zinc','Zn',2,0],['copper(II)','Cu',2,0],['iron(II)','Fe',2,0],['iron(III)','Fe',3,0],['aluminium','Al',3,0]];
+const AN=[['chloride','Cl',1,0],['hydroxide','OH',1,1],['nitrate','NO3',1,1],['oxide','O',2,0],['sulphide','S',2,0],['sulphate','SO4',2,1],['carbonate','CO3',2,1],['phosphate','PO4',3,1]];
+function comp(c,a){const L=c[2]*a[2]/gcd(c[2],a[2]);const nc=L/c[2],na=L/a[2];const part=(x,n)=>n>1?(x[3]?'('+x[1]+')':x[1])+n:x[1];return{name:c[0]+' '+a[0],f:part(c,nc)+part(a,na),nc:nc,na:na,c:c,a:a};}
+function okpair(c,a){if(c[1]==='NH4'&&a[1]==='OH')return false;if((c[1]==='Al'||(c[1]==='Fe'&&c[2]===3))&&a[1]==='CO3')return false;return true;}
+function ionLabel(x,pos){return sub(x[1])+'<sup>'+x[2]+(pos?'+':MINUS)+'</sup>';}
+function why(o){return ionLabel(o.c,1)+' and '+ionLabel(o.a,0)+': '+(o.nc>1?o.nc+' × ':'')+'(+'+o.c[2]+') + '+(o.na>1?o.na+' × ':'')+'('+MINUS+o.a[2]+') = 0, so <b>'+sub(o.f)+'</b>'+((o.c[3]&&o.nc>1)||(o.a[3]&&o.na>1)?', with brackets round the polyatomic ion':'')+'.';}
+
+gens.s2a={need:NEED,make(r){
+  let list;for(let t=0;t<60;t++){const out=[];while(out.length<4){const c=r.pick(CAT),a=r.pick(AN);if(!okpair(c,a))continue;const o=comp(c,a);if(out.some(x=>x.name===o.name))continue;out.push(o);}
+    list=out;if(list.some(o=>/\(/.test(o.f))&&list.some(o=>!/\d/.test(o.f)||o.nc===1&&o.na===1)&&list.some(o=>/\d/.test(o.f)))break;}
+  return{label:'2.1',marks:4,text:'Write the formula of each compound.',
+   body:'<table class="mid"><tr><th>Compound</th><th>Formula</th></tr>'+list.map(o=>'<tr><td>'+o.name+'</td><td>'+B(o.f,11)+'</td></tr>').join('')+'</table>',
+   hints:H('Write each ion with its charge from the table, then add ions until the charges add up to zero. Type subscripts as ordinary numbers, for example Al2O3, and use brackets for more than one polyatomic ion, for example Ca(OH)2.',
+     list.map(o=>o.name+': '+ionLabel(o.c,1)+' and '+ionLabel(o.a,0)).join('. ')+'. Now find how many of each are needed.'),
+   expl:'<ul class="tight">'+list.map(o=>'<li>'+why(o)+'</li>').join('')+'</ul>'};}};
+
+gens.s2b={need:NEED,make(r){
+  let o;for(let t=0;t<200;t++){const c=r.pick(CAT),a=r.pick(AN);if(!okpair(c,a)||c[2]===a[2])continue;o=comp(c,a);if(o.nc>1||o.na>1)break;}
+  const cn=o.c[0],an=o.a[0];
+  return{label:'2.2',marks:2,text:'The formula of '+o.name+' is '+sub(o.f)+'. Use the table of ions to explain the formula.',
+   body:'<p>The charge on the '+cn+' ion is '+B(o.c[2]+'+|+'+o.c[2]+'|'+o.c[2],4)+'. The charge on the '+an+' ion is '+B(o.a[2]+'-|-'+o.a[2]+'|'+o.a[2],4)+'.</p>',
+   hints:H('Look up '+cn+' and '+an+' in the table of ions. Type the number and the sign, for example 1+ or 1-.',
+     'The formula has '+o.nc+' of the '+cn+' ion and '+o.na+' of the '+an+' ion. The total positive charge must equal the total negative charge: '+o.nc+' × (charge on '+cn+') = '+o.na+' × (charge on '+an+').'),
+   expl:'<p>'+cn+' ion: <b>'+o.c[2]+'+</b>. '+an+' ion: <b>'+o.a[2]+MINUS+'</b>. '+o.nc+' × (+'+o.c[2]+') = +'+(o.nc*o.c[2])+' and '+o.na+' × ('+MINUS+o.a[2]+') = '+MINUS+(o.na*o.a[2])+'. The total is zero.</p>'};}};
+
+/* ---------------- 3 empirical formula */
+const EP=[['Cu',2,'S',1],['Fe',2,'O',3],['Al',2,'O',3],['Mg',1,'Cl',2],['Zn',1,'Cl',2],['Ca',1,'Cl',2],['K',2,'S',1],['Na',2,'S',1],['Fe',1,'S',1],['Cu',1,'O',1],['Zn',1,'S',1],['P',2,'O',5],['Fe',3,'O',4],['Mg',3,'N',2]];
+gens.s3={need:NEED,make(r){
+  const e=r.pick(EP),s1=e[0],n1=e[1],s2=e[2],n2=e[3];
+  const w1=n1*M[s1],w2=n2*M[s2];const m1=Math.round(w1/(w1+w2)*1000)/10,m2=Math.round((100-m1)*10)/10;
+  const mo1=m1/M[s1],mo2=m2/M[s2],mn=Math.min(mo1,mo2),q1=mo1/mn,q2=mo2/mn;
+  const g=gcd(n1,n2),f1=n1/g,f2=n2/g;let k=1;for(let t=1;t<=5;t++){if(Math.abs(q1*t-Math.round(q1*t))<0.12&&Math.abs(q2*t-Math.round(q2*t))<0.12){k=t;break;}}
+  const f=s1+(f1>1?f1:'')+s2+(f2>1?f2:'');
+  const mr=(m,mm)=>RG(['more','less'],m>mm?0:1,true);
+  const t='<table class="emp"><tr><th></th><th>'+s1+'</th><th>'+s2+'</th></tr>'+
+   '<tr><td class="l">Mass in 100 g of the compound, mass, <i>m</i> (g)</td><td>'+m1.toFixed(1)+'</td><td>'+m2.toFixed(1)+'</td></tr>'+
+   '<tr><td class="l">Molar mass, <i>M</i> (g mol<sup>'+MINUS+'1</sup>)</td><td>'+B(String(M[s1]),4)+'</td><td>'+B(String(M[s2]),4)+'</td></tr>'+
+   '<tr><td class="l"><b>Think carefully.</b> Is the mass more or less than the molar mass?</td><td class="tk2">'+mr(m1,M[s1])+'</td><td class="tk2">'+mr(m2,M[s2])+'</td></tr>'+
+   '<tr><td class="l">Number of moles, <i>n</i> = '+frac('mass','molar mass')+' (mol)</td><td>'+B(near(mo1,0.02),5)+'</td><td>'+B(near(mo2,0.02),5)+'</td></tr>'+
+   '<tr><td class="l">'+frac('number of moles','smallest number of moles')+'</td><td>'+B(near(q1,0.07),5)+'</td><td>'+B(near(q2,0.07),5)+'</td></tr>'+
+   '<tr><td class="l">Whole-number ratio</td><td>'+B(String(f1),4)+'</td><td>'+B(String(f2),4)+'</td></tr></table>'+
+   '<p class="eq">Empirical formula = '+B(f,8)+'</p>';
+  const rd=x=>(Math.round(x*100)/100).toFixed(2);
+  return{label:'3.1',marks:9,text:'A compound contains <b>'+m1.toFixed(1)+'%</b> '+NAME[s1]+' and <b>'+m2.toFixed(1)+'%</b> '+NAME[s2]+' by mass. Find its empirical formula. Complete the table.',
+   body:t,
+   hints:H('Take 100 g of the compound, so '+m1.toFixed(1)+'% is '+m1.toFixed(1)+' g. Read each molar mass from the table in Chunk 1. Then work down the table one row at a time.',
+     'Number of moles = mass over molar mass: for '+NAME[s1]+', the fraction is '+m1.toFixed(1)+' over '+M[s1]+', and for '+NAME[s2]+' it is '+m2.toFixed(1)+' over '+M[s2]+'. Then divide both numbers of moles by the smaller one. '+(k>1?'If your ratio is not whole numbers, multiply both numbers by '+k+'.':'Your ratio should be close to whole numbers.')),
+   expl:'<p>'+s1+': '+frac(m1.toFixed(1),M[s1])+' = '+rd(mo1)+' mol ('+(m1>M[s1]?'more':'less')+' than 1 mole, because '+m1.toFixed(1)+' is '+(m1>M[s1]?'more':'less')+' than '+M[s1]+'). '+
+     s2+': '+frac(m2.toFixed(1),M[s2])+' = '+rd(mo2)+' mol ('+(m2>M[s2]?'more':'less')+' than 1 mole).</p>'+
+     '<p>Divide by the smallest, '+rd(mn)+': '+s1+' '+frac(rd(mo1),rd(mn))+' = '+rd(q1)+', and '+s2+' '+frac(rd(mo2),rd(mn))+' = '+rd(q2)+'.'+(k>1?' Multiply both by '+k+' to get whole numbers.':'')+
+     ' The whole-number ratio is '+s1+' : '+s2+' = '+f1+' : '+f2+', so the empirical formula is <b>'+sub(f)+'</b>.</p>'};}};
+
+/* ---------------- 4 shapes */
+const SH=[['water','bent',104.5,'water'],['methane','tetrahedral',109.5,'methane'],['ammonia','pyramid',107,'ammonia'],['carbon dioxide','straight line',180,'co2']];
+const SHAPES=['tetrahedral','pyramid','bent','straight line'];
+const ATOMS={water:'One oxygen and two hydrogen atoms',methane:'One carbon and four hydrogen atoms',ammonia:'One nitrogen and three hydrogen atoms','carbon dioxide':'One carbon atom and two oxygen atoms with double bonds'};
+gens.s4a={need:NEED,make(r){
+  const pick=r.shuf(SH).slice(0,3);
+  const rows=pick.map(x=>'<tr><td>'+SV[x[3]]+'</td><td class="tk2">'+RG(SHAPES,SHAPES.indexOf(x[1]),true)+'</td><td>'+B(String(x[2]),5)+'&deg;</td></tr>').join('');
+  return{label:'4.1',marks:6,text:'Each picture shows one molecule. Tick the shape and write the bond angle.',
+   body:'<table class="pics"><tr><th>Picture</th><th>Shape</th><th>Bond angle</th></tr>'+rows+'</table>',
+   hints:H('Count the atoms. Then find the molecule in the look-up table in Chunk 1 and read across the row.',
+     pick.map(x=>ATOMS[x[0]]+': '+x[0]).join('. ')+'. Now read the shape and the angle from the table.'),
+   expl:'<ul class="tight">'+pick.map(x=>'<li>'+ATOMS[x[0]]+': <b>'+x[0]+'</b>, '+x[1]+', <b>'+x[2]+'&deg;</b>.</li>').join('')+'</ul>'};}};
+
+gens.s4b={need:NEED,make(r){
+  const m=r.pick(D.BIG);
+  const rows=m.atoms.map(a=>'<tr><td class="l">'+a[0]+'</td><td>'+B(String(a[1]),5)+'&deg;</td></tr>').join('');
+  const why=m.atoms.map(a=>a[0]+' has '+(a[1]===109.5?'four single bonds, like methane: <b>109.5&deg;</b>':a[1]===104.5?'two single bonds, like water: <b>104.5&deg;</b>':'three single bonds, like ammonia: <b>107&deg;</b>')).join('. ');
+  return{label:'4.2',marks:4,text:'The picture shows a molecule of '+m.k+'. A plain line is a bond in the plane of the page, a thick wedge points towards you and a dashed line points away from you.',
+   body:'<div class="ctr">'+m.svg+'</div><p class="eq">Molecular formula: '+B(m.f,8)+'</p><table class="mid"><tr><th>Atom</th><th>Bond angle</th></tr>'+rows+'</table>',
+   hints:H('Count the atoms of each element. Write carbon first, then hydrogen, then the other element.',
+     'Look at one atom at a time and count its bonds. Four single bonds: same shape as methane. Three single bonds: same shape as ammonia. Two single bonds: same shape as water. Read the angles from the look-up table.'),
+   expl:'<p>The molecular formula is <b>'+sub(m.f)+'</b>.</p><p>'+why+'.</p>'};}};
+
+/* ---------------- 5 system and surroundings */
+const SC=[
+ {sys:'the magnesium ribbon and the hydrochloric acid',txt:'Magnesium ribbon is added to dilute hydrochloric acid in a polystyrene cup.',exo:true},
+ {sys:'the hydrochloric acid and the sodium hydroxide solution',txt:'Dilute hydrochloric acid is added to sodium hydroxide solution (CARE: CORROSIVE!) in a polystyrene cup.',exo:true},
+ {sys:'the calcium oxide and the water',txt:'Calcium oxide powder is added to water in a polystyrene cup.',exo:true},
+ {sys:'the sodium hydrogencarbonate and the citric acid solution',txt:'Sodium hydrogencarbonate powder is added to citric acid solution in a polystyrene cup.',exo:false},
+ {sys:'the sodium hydrogencarbonate and the hydrochloric acid',txt:'Sodium hydrogencarbonate powder is added to dilute hydrochloric acid in a polystyrene cup.',exo:false}];
+gens.s5={need:NEED,make(r){
+  const s=r.pick(SC);const t0=r.int(19,24),d=s.exo?r.int(8,19):r.int(5,9),t1=s.exo?t0+d:t0-d;
+  const items=r.shuf([[s.sys,true],['the polystyrene cup',false],['the thermometer',false],['the air around the cup',false]]);
+  const rows=items.map(x=>'<tr><td class="l">'+x[0]+'</td><td>'+RG(['system','surroundings'],x[1]?0:1)+'</td></tr>').join('');
+  const a52=RG(['from the system to the surroundings','from the surroundings to the system'],s.exo?0:1,true);
+  const a53=s.exo?'The Law of Conservation of Energy says that the energy lost by the system is (tick one) the energy gained by the surroundings:':'The Law of Conservation of Energy says that the energy lost by the surroundings is (tick one) the energy gained by the system:';
+  return{label:'5',marks:6,text:s.txt+' A thermometer shows the temperature '+(s.exo?'rising':'falling')+' from '+t0+' &deg;C to '+t1+' &deg;C. Answer 5.1 to 5.3.',
+   body:'<p class="lab">5.1 Tick whether each item is the system or the surroundings. [4 marks]</p><table class="mid"><tr><th>Item</th><th>System or surroundings</th></tr>'+rows+'</table>'+
+    '<p class="lab">5.2 The temperature '+(s.exo?'rises':'falls')+', so energy moves (tick one): [1 mark]</p><p>'+a52+'</p>'+
+    '<p class="lab">5.3 '+a53+' [1 mark]</p><p>'+RG(['equal to','greater than','smaller than'],0)+'</p>',
+   hints:H('The system is what is reacting. Everything else is the surroundings. For 5.2, use Chunk 2: does the temperature of the surroundings rise or fall?',
+     'The chemicals that react are '+s.sys+'. The cup holds them, the thermometer measures them and the air is around them. '+(s.exo?'A rise in temperature means exothermic.':'A fall in temperature means endothermic.')),
+   expl:'<p>The system is <b>'+s.sys+'</b>. The cup, the thermometer and the air are the <b>surroundings</b>.</p><p>The temperature '+(s.exo?'rises, so the reaction is exothermic and energy moves <b>from the system to the surroundings</b>':'falls, so the reaction is endothermic and energy moves <b>from the surroundings to the system</b>')+'.</p><p>Energy is only transferred, so the energy lost by one part is <b>equal to</b> the energy gained by the other.</p>'};}};
+
+/* ---------------- 6 bond enthalpies */
+const E={'H–H':436,'Cl–Cl':243,'H–Cl':432,'N≡N':945,'N–H':391,'O=O':498,'O–H':463,'C=C':612,'C–C':348,'C–H':412,'C–Cl':346};
+const RX=[
+ {f:'H<sub>2</sub>(g) + Cl<sub>2</sub>(g) → 2HCl(g)',rv:'2HCl(g) → H<sub>2</sub>(g) + Cl<sub>2</sub>(g)',br:[['H–H',1],['Cl–Cl',1]],mk:[['H–Cl',2]],tf:'Hydrogen reacts with chlorine to make hydrogen chloride.',tr:'Hydrogen chloride breaks down into hydrogen and chlorine.'},
+ {f:'N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g)',rv:'2NH<sub>3</sub>(g) → N<sub>2</sub>(g) + 3H<sub>2</sub>(g)',br:[['N≡N',1],['H–H',3]],mk:[['N–H',6]],tf:'Nitrogen reacts with hydrogen to make ammonia.',tr:'Ammonia breaks down into nitrogen and hydrogen.'},
+ {f:'2H<sub>2</sub>(g) + O<sub>2</sub>(g) → 2H<sub>2</sub>O(g)',rv:'2H<sub>2</sub>O(g) → 2H<sub>2</sub>(g) + O<sub>2</sub>(g)',br:[['H–H',2],['O=O',1]],mk:[['O–H',4]],tf:'Hydrogen reacts with oxygen to make steam.',tr:'Steam breaks down into hydrogen and oxygen.'},
+ {f:'C<sub>2</sub>H<sub>4</sub>(g) + H<sub>2</sub>(g) → C<sub>2</sub>H<sub>6</sub>(g)',rv:'C<sub>2</sub>H<sub>6</sub>(g) → C<sub>2</sub>H<sub>4</sub>(g) + H<sub>2</sub>(g)',br:[['C=C',1],['H–H',1]],mk:[['C–C',1],['C–H',2]],tf:'Ethene reacts with hydrogen to make ethane.',tr:'Ethane breaks down into ethene and hydrogen.'},
+ {f:'C<sub>2</sub>H<sub>4</sub>(g) + Cl<sub>2</sub>(g) → C<sub>2</sub>H<sub>4</sub>Cl<sub>2</sub>(g)',rv:'C<sub>2</sub>H<sub>4</sub>Cl<sub>2</sub>(g) → C<sub>2</sub>H<sub>4</sub>(g) + Cl<sub>2</sub>(g)',br:[['C=C',1],['Cl–Cl',1]],mk:[['C–C',1],['C–Cl',2]],tf:'Ethene reacts with chlorine to make 1,2-dichloroethane.',tr:'1,2-dichloroethane breaks down into ethene and chlorine.'}];
+const bl=l=>l.map(x=>(x[1]>1?x[1]+' × ':'')+x[0]).join(' &nbsp;+&nbsp; ');
+gens.s6={need:NEED,make(r){
+  const x=r.pick(RX),rev=r.f()<0.4;
+  const br=rev?x.mk:x.br,mk=rev?x.br:x.mk;
+  const sumb=l=>l.reduce((a,y)=>a+y[1]*E[y[0]],0),inn=sumb(br),out=sumb(mk),dH=inn-out;
+  const row=y=>'<tr><td class="l">'+y[0]+'</td><td>'+B(String(y[1]),3)+'</td><td>'+B(String(y[1]*E[y[0]]),4)+'</td></tr>';
+  const sgn=dH<0?String(dH):dH+'|+'+dH;
+  const calc=br.map(y=>y[1]>1?y[1]+' × '+E[y[0]]:E[y[0]]).join(' + '),calc2=mk.map(y=>y[1]>1?y[1]+' × '+E[y[0]]:E[y[0]]).join(' + ');
+  const exo=dH<0;
+  return{label:'6.1',marks:10,text:(rev?x.tr:x.tf)+' All the substances are gases. Use the table of bond enthalpies to find the enthalpy change, &Delta;H.',
+   body:'<p class="eq"><b>'+(rev?x.rv:x.f)+'</b></p><p class="eq">'+(rev?bl(mk)+' &nbsp;→&nbsp; '+bl(br):bl(br)+' &nbsp;→&nbsp; '+bl(mk))+'</p>'+
+   '<table class="bonds"><tr><th>Bonds broken: energy goes in</th><th>Number of bonds</th><th>Energy (kJ)</th></tr>'+br.map(row).join('')+
+   '<tr><td class="l"><b>Total energy taken in</b></td><td></td><td>'+B(String(inn),4)+'</td></tr>'+
+   '<tr><th>Bonds made: energy goes out</th><th>Number of bonds</th><th>Energy (kJ)</th></tr>'+mk.map(row).join('')+
+   '<tr><td class="l"><b>Total energy given out</b></td><td></td><td>'+B(String(out),4)+'</td></tr></table>'+
+   '<p class="eq">enthalpy change, &Delta;H = (energy taken in) '+MINUS+' (energy given out) = '+B(sgn,5)+' kJ mol<sup>'+MINUS+'1</sup></p>'+
+   '<p>The reaction is '+RG(['exothermic','endothermic'],exo?0:1)+'</p>',
+   hints:H('Count the bonds in the bond line under the equation. Multiply the number of bonds by the energy of one bond from the table in Chunk 1, then add.',
+     'Energy taken in: '+calc+'. Energy given out: '+calc2+'. Then subtract: energy taken in minus energy given out. If more energy goes out than in, the answer is negative. Type the sign.'),
+   expl:'<p>Energy taken in: '+calc+' = <b>'+inn+' kJ</b>. Energy given out: '+calc2+' = <b>'+out+' kJ</b>.</p><p class="eq">enthalpy change, &Delta;H = '+inn+' '+MINUS+' '+out+' = <b>'+(dH<0?MINUS:'+')+Math.abs(dH)+' kJ mol<sup>'+MINUS+'1</sup></b></p><p>'+(exo?'More energy is given out than taken in, so the reaction is <b>exothermic</b> and the enthalpy change is negative.':'More energy is taken in than given out, so the reaction is <b>endothermic</b> and the enthalpy change is positive.')+'</p>'};}};
+
+/* ---------------- 7 calorimetry */
+gens.s7={need:NEED,make(r){
+  let Va,c,Vb,dt,V;for(let t=0;t<200;t++){Va=r.pick([20,25,30,40,50]);c=r.pick([0.5,1.0,2.0]);Vb=r.pick([10,15,20,25]);V=Va+Vb;const n=c*Va/1000;dt=Math.round(55500*n/(V*4.2)*2)/2;if(dt>=3&&dt<=16)break;}
+  const T0=r.int(18,23)+r.pick([0,0.5]),T1=T0+dt,q=V*4.2*dt,qk=q/1000,n=c*Va/1000,dH=qk/n;
+  const cs=c.toFixed(c===1?2:c===2?2:3);
+  const f4=x=>String(Math.round(x*10000)/10000);
+  return{label:'7',marks:7,text:'<b>'+Va+' cm<sup>3</sup></b> of <b>'+cs+' '+mol+'</b> hydrochloric acid is mixed with <b>'+Vb+' cm<sup>3</sup></b> of an excess of sodium hydroxide solution (CARE: CORROSIVE!) in a polystyrene cup. The temperature rises from <b>'+T0.toFixed(1)+' &deg;C</b> to <b>'+T1.toFixed(1)+' &deg;C</b>. Treat the mixture as water. The acid is the limiting reactant. Work through the steps.',
+   body:'<p class="lab">Step 1. Total volume of the mixture</p><p class="eq">total volume = '+Va+' + '+Vb+' = '+B(String(V),4)+' cm<sup>3</sup></p>'+
+   '<p class="lab">Step 2. &Delta;temperature</p><p class="eq">&Delta;temperature = '+T1.toFixed(1)+' '+MINUS+' '+T0.toFixed(1)+' = '+B(String(dt),4)+' &deg;C</p>'+
+   '<p class="lab">Step 3. Local energy change, <i>q</i></p><p class="eq">local energy change, <i>q</i> = '+B(String(V),3)+' × 4.2 × '+B(String(dt),3)+' = '+B(near(q,0.6),6)+' J</p>'+
+   '<p class="lab">Step 4. Local energy change, <i>q</i>, in kJ</p><p class="eq">'+frac(B(near(q,0.6),6),'1000')+' = '+B(near(qk,0.0006),6)+' kJ</p>'+
+   '<p class="lab">Step 5. Number of moles of acid, <i>n</i></p><p class="eq">number of moles, <i>n</i> = '+frac(B(String(c),4)+' × '+B(String(Va),3),'1000')+' = '+B(String(f4(n)),6)+' mol</p>'+
+   '<p class="lab">Step 6. Enthalpy change, &Delta;H, with its sign</p><p class="eq">enthalpy change, &Delta;H = '+frac(B(near(qk,0.0006),6),B(String(f4(n)),6))+' = '+B(near(dH,Math.abs(dH)*0.012),6)+'</p>'+
+   '<p>The temperature rose, so the reaction is '+RG(['exothermic','endothermic'],0)+', and &Delta;H = '+B(rngs(-dH*1.012,-dH*0.988),6)+' kJ mol<sup>'+MINUS+'1</sup></p>'+
+   '<p class="lab">7.2 The local energy change, <i>q</i>, is the energy gained by the (tick one): [1 mark]</p><p>'+RG(['surroundings (the solution)','system (the reacting chemicals)'],0)+'</p>',
+   hints:H('Follow the worked example one step at a time. The total volume is the acid plus the sodium hydroxide solution. The &Delta;temperature has no sign.',
+     'Step 3: '+V+' × 4.2 × '+dt+'. Step 5 uses the volume of the acid only ('+Va+' cm<sup>3</sup>), not the total. Step 6: divide the energy in kJ by the number of moles, and put the minus sign on last because the temperature rose.'),
+   expl:'<ul class="tight"><li>Total volume = '+Va+' + '+Vb+' = <b>'+V+' cm<sup>3</sup></b>. &Delta;temperature = '+T1.toFixed(1)+' '+MINUS+' '+T0.toFixed(1)+' = <b>'+dt+' &deg;C</b>.</li>'+
+    '<li>Local energy change, <i>q</i> = '+V+' × 4.2 × '+dt+' = <b>'+Math.round(q*10)/10+' J</b>, and '+frac(String(Math.round(q*10)/10),'1000')+' = <b>'+f4(qk)+' kJ</b>.</li>'+
+    '<li>Number of moles, <i>n</i> = '+frac(c+' × '+Va,'1000')+' = <b>'+f4(n)+' mol</b>. Use the volume of the acid (the limiting reactant), not the total volume.</li>'+
+    '<li>Enthalpy change, &Delta;H = '+frac(f4(qk),f4(n))+' = '+(Math.round(dH*10)/10)+'. The temperature rose, so the reaction is exothermic and &Delta;H = <b>'+MINUS+(Math.round(dH*10)/10)+' kJ mol<sup>'+MINUS+'1</sup></b>.</li></ul>'+
+    '<p>The energy is gained by the <b>solution</b>, which is part of the surroundings.</p>'};}};
+
+/* ---------------- 8 */
+gens.s8a={need:NEED,make(r){
+  const w=r.pick([['pollen','water','water|water molecules|h2o|water particles','A grain of pollen floats on water.'],['smoke','air','air|gas|nitrogen|oxygen|air molecules|air particles','A speck of smoke floats in air.']]);
+  let x=40,y=60;const pts=[[x,y]];for(let i=0;i<12;i++){x=Math.max(14,Math.min(256,x+r.int(-30,30)+14));y=Math.max(12,Math.min(108,y+r.int(-34,34)));pts.push([x,y]);}
+  const svg='<svg viewBox="0 0 270 120" width="240" height="107" xmlns="http://www.w3.org/2000/svg"><polyline points="'+pts.map(p=>p.join(',')).join(' ')+'" fill="none" stroke="#111" stroke-width="1.3"/>'+pts.map(p=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="2" fill="#111"/>').join('')+'</svg>';
+  return{label:'8.1',marks:2,text:w[3]+' Under a microscope its path looks like this.',
+   body:'<div class="ctr">'+svg+'</div><p class="eq">This random movement is called '+B('Brownian|brownian motion',9)+' motion.</p><p class="eq">It happens because the '+w[0]+' is hit by fast-moving, invisible '+B(w[2],8)+' particles.</p>',
+   hints:H('This is the movement that Robert Brown first saw. The '+w[0]+' is in '+w[1]+', so think about what the '+w[1]+' is made of.','The first blank starts with a B. The invisible particles that hit the '+w[0]+' are the particles of the '+w[1]+' around it.'),
+   expl:'<p>This movement is called <b>Brownian</b> motion. The '+w[0]+' is hit from all sides by fast-moving, invisible <b>'+w[1]+'</b> particles. At any moment the hits are not balanced, so the '+w[0]+' is pushed one way and then another.</p>'};}};
+
+gens.s8b={need:NEED,make(r){
+  const warm=r.f()<0.5;
+  const sts=r.shuf(['solid','liquid','gas']).slice(0,2);
+  const S={solid:'<p class="eq">In a solid the particles '+B('vibrate|vibrates',8)+' about fixed positions.</p>',
+   liquid:'<p class="eq">In a liquid the particles '+B('slide|slide past each other|slide past',8)+' past each other.</p>',
+   gas:'<p class="eq">In a gas the particles are '+B('far|far apart|spread out',7)+' apart and move '+B('fast|quickly|rapidly|fast and randomly|randomly',8)+' in random directions.</p>'};
+  const E2={solid:'In a solid the particles <b>vibrate</b> about fixed positions.',liquid:'In a liquid the particles <b>slide</b> past each other.',gas:'In a gas the particles are <b>far</b> apart and move <b>fast</b> in random directions.'};
+  return{label:'8.2',marks:3,text:'Complete the sentences using the Kinetic Theory.',
+   body:sts.map(s=>S[s]).join('')+'<p>In '+(warm?'warmer':'colder')+' air the smoke would jiggle '+RG(['less','the same','more'],warm?2:0)+'</p>',
+   hints:H('Look at the Kinetic Theory table in Chunk 2: find the rows for '+sts.join(' and ')+'.','Solid: vibrate. Liquid: slide. Gas: far apart and fast. '+(warm?'Warmer':'Colder')+' means '+(warm?'faster':'slower')+' particles.'),
+   expl:'<p>'+sts.map(s=>E2[s]).join(' ')+'</p><p>In '+(warm?'warmer':'colder')+' air the molecules move '+(warm?'faster, so they hit the smoke harder and more often':'more slowly, so they hit the smoke less hard and less often')+', so the smoke jiggles <b>'+(warm?'more':'less')+'</b>.</p>'};}};
+
+function arrowS(x1,y,x2){const d=x2>x1?1:-1;return '<line x1="'+x1+'" y1="'+y+'" x2="'+(x2-d*6)+'" y2="'+y+'" stroke="#111" stroke-width="2.4"/><polygon points="'+x2+','+y+' '+(x2-d*9)+','+(y-5)+' '+(x2-d*9)+','+(y+5)+'" fill="#111"/>';}
+function collS(ox,label,facing,fast){const xl=ox+70,xr=ox+160,y=72,sl=facing?xl+11:xl-11,sr=facing?xr-11:xr+11,L=fast?34:12;
+  return '<circle cx="'+xl+'" cy="'+y+'" r="19" fill="#fff" stroke="#111" stroke-width="1.5"/><circle cx="'+sl+'" cy="'+y+'" r="6.5" fill="#111"/><circle cx="'+xr+'" cy="'+y+'" r="19" fill="#fff" stroke="#111" stroke-width="1.5"/><circle cx="'+sr+'" cy="'+y+'" r="6.5" fill="#111"/>'
+  +arrowS(xl-L,y-34,xl+L)+arrowS(xr+L,y-34,xr-L)+'<text x="'+(ox+115)+'" y="'+(y+50)+'" text-anchor="middle" font-size="12" style="font-family:Helvetica,Arial,sans-serif">'+label+'</text>';}
+gens.s8c={need:NEED,make(r){
+  const combos=[[true,true],[true,false],[false,true],[false,false]];let a,b;
+  do{a=r.pick(combos);b=r.pick(combos);}while(a[0]&&a[1]&&b[0]&&b[1]);
+  const cases=[a,b];
+  const R3=['too slow: less than the activation energy','wrong orientation','both too slow and wrong orientation','all three conditions are met'];
+  const idx=c=>c[0]&&c[1]?3:(c[0]&&!c[1]?1:(!c[0]&&c[1]?0:2));
+  const lbl=['P','Q'];
+  const svg='<svg viewBox="0 0 520 140" width="500" height="135" xmlns="http://www.w3.org/2000/svg">'+collS(0,'Collision P',cases[0][1],cases[0][0])+collS(260,'Collision Q',cases[1][1],cases[1][0])+'</svg>';
+  const rows=cases.map((c,i)=>'<tr><td>'+lbl[i]+'</td><td>'+RG(['yes','no'],c[0]&&c[1]?0:1)+'</td><td class="tk2">'+RG(R3,idx(c),true)+'</td></tr>').join('');
+  const why=cases.map((c,i)=>'<p><b>'+lbl[i]+': '+(c[0]&&c[1]?'reaction':'no reaction')+'.</b> '+(c[0]?'The arrows are long (enough energy)':'The arrows are short (too slow, less than the activation energy)')+' and '+(c[1]?'the spots face each other (right orientation).':'the spots face away from each other (wrong orientation).')+'</p>').join('');
+  return{label:'8.3',marks:3,text:'The picture shows two collisions. Long arrows mean the particles are moving fast. The black spots are the reactive parts of the particles.',
+   body:'<div class="ctr">'+svg+'</div><table class="mid"><tr><th>Collision</th><th>Reaction?</th><th>Reason</th></tr>'+rows+'</table>',
+   hints:H('Check the three conditions in Chunk 3 for each collision: collide, enough energy (long arrows), right orientation (spots facing).','For each collision, ask two questions: are the arrows long? Do the black spots face each other? A reaction needs both.'),
+   expl:why};}};
+
+/* ---------------- 9 */
+gens.s9a={need:NEED,make(r){
+  const rx=r.pick([['Magnesium','dilute sulphuric acid','hydrogen'],['Zinc','dilute hydrochloric acid','hydrogen'],['Marble chips','dilute hydrochloric acid','carbon dioxide']]);
+  const ch=r.pick([{f:2,a:'1.0 '+mol+' acid',b:'2.0 '+mol+' acid'},{f:2,a:'the acid at 25 &deg;C',b:'the acid at 35 &deg;C'},{f:3,a:'lumps',b:'powder'},{f:4,a:'lumps',b:'powder'}]);
+  let V,t1,t2;for(let t=0;t<400;t++){V=r.pick([60,72,84,90,96,120]);t1=r.pick([24,30,36,40,45,48,60,72,80,90,120]);t2=t1/ch.f;if(Number.isInteger(t2)&&Math.abs(V/t1*10-Math.round(V/t1*10))<1e-9&&Math.abs(V/t2*10-Math.round(V/t2*10))<1e-9&&t2>=6)break;}
+  const r1=V/t1,r2=V/t2;
+  const set=(x)=>/lumps|powder/.test(x)?'the '+rx[0].toLowerCase()+' as '+x:x;
+  return{label:'9.1',marks:4,text:rx[0]+' reacts with '+rx[1]+' and makes '+rx[2]+' gas. A student collects <b>'+V+' cm<sup>3</sup></b> of gas with '+set(ch.a)+' in <b>'+t1+' s</b>. With '+set(ch.b)+' the same mass of '+rx[0].toLowerCase()+' gives <b>'+V+' cm<sup>3</sup></b> in <b>'+t2+' s</b>.',
+   body:'<p class="eq">first run: rate = '+frac(B(String(V),3),B(String(t1),3))+' = '+B(String(r1),4)+' cm<sup>3</sup> per second</p>'+
+   '<p class="eq">second run: rate = '+frac(B(String(V),3),B(String(t2),3))+' = '+B(String(r2),4)+' cm<sup>3</sup> per second</p>'+
+   '<p class="eq">The second run reacts '+B(String(ch.f)+'|'+(['','','two','three','four'][ch.f]),4)+' times as fast as the first run.</p>',
+   hints:H('Put the volume of gas on the top and the time on the bottom, then use the fraction button on your calculator.','The first rate is '+V+' over '+t1+'. For the last line, compare the two rates: how many times does the smaller rate go into the bigger one?'),
+   expl:'<p class="eq">'+frac(V,t1)+' = '+r1+' cm<sup>3</sup> per second &nbsp;&nbsp;&nbsp; '+frac(V,t2)+' = '+r2+' cm<sup>3</sup> per second</p><p>Both runs make the same '+V+' cm<sup>3</sup>, but the second run takes '+(ch.f===2?'half':'1/'+ch.f+' of')+' the time, so its rate is <b>'+ch.f+'</b> times as big: '+frac(r2,r1)+' = '+ch.f+'.</p>'};}};
+
+gens.s9b={need:NEED,make(r){
+  const F=[['a bigger surface area of a solid','Yes','No'],['a higher concentration','Yes','No'],['a higher pressure of a gas','Yes','No'],['a higher temperature','A little','Yes']];
+  const pick=r.shuf(F).slice(0,3);
+  const rows=pick.map(f=>'<tr><td class="l">'+f[0]+'</td><td>'+RG(['Yes','A little','No'],['Yes','A little','No'].indexOf(f[1]))+'</td><td>'+RG(['Yes','A little','No'],['Yes','A little','No'].indexOf(f[2]))+'</td></tr>').join('');
+  return{label:'9.2',marks:3,text:'Tick the effect of each change on the number of collisions each second, and on the fraction of the collisions that are successful.',
+   body:'<table class="mid"><tr><th>The change</th><th>More collisions each second?</th><th>A bigger fraction successful?</th></tr>'+rows+'</table>',
+   hints:H('Use the table of the four factors in Chunk 2. Surface area, concentration and pressure put more particles where they can collide. Temperature is the one that changes the fraction.','Surface area, concentration and pressure: yes, more collisions; no change in the fraction. Temperature: only a little more collisions, but a much bigger fraction with enough energy.'),
+   expl:'<ul class="tight">'+pick.map(f=>'<li><b>'+f[0]+':</b> '+(f[1]==='Yes'?'more collisions each second; the fraction that are successful is the same.':'only a little more collisions each second; a <b>much bigger fraction</b> of them have at least the activation energy.')+'</li>').join('')+'</ul>'};}};
+
+const SAME=/(same (temperature|energy|fraction|proportion)|temperature.{0,30}(same|unchanged|constant)|fraction.{0,25}(same|unchanged)|proportion.{0,25}(same|unchanged))/;
+const RUBS=[
+ {text:'Powdered marble reacts faster with dilute hydrochloric acid than the same mass of marble lumps at the same temperature. Explain why, using the Kinetic Theory and the Collision Theory.',
+  hint1:'Start with the particles in the acid: are they moving? Then say which marble particles they can reach, and which they cannot. Finish with collisions each second.',
+  ideas:[['The acid particles are moving all the time and hit the marble.',/(mov|motion|random|hit|collid)/],['Only particles on the surface of the marble can be hit; those inside are protected.',/(surface|outside|exposed|inside|protect|hidden)/],
+   ['Powder has a much bigger surface area, so many more particles are exposed.',/((bigger|larger|greater|more).{0,40}(surface|exposed|particles)|surface area)/],['So there are more collisions each second, and more successful collisions each second.',/(more collisions|collisions? (each|per|every) second|more often|more successful|successful)/],['The temperature is the same, so the fraction that are successful is the same.',SAME]],
+  model:'The particles in the acid are always moving, so they hit whatever marble they can reach. Only the particles on the outside surface of the marble can be hit, and the particles inside a lump are protected. Powder has a much bigger surface area, so many more marble particles are exposed to the acid. There are more collisions each second. The temperature has not changed, so the same fraction of collisions are successful, which means there are more successful collisions each second, and the rate of reaction is faster.'},
+ {text:'Magnesium ribbon reacts faster with 2.0 '+mol+' hydrochloric acid than with 1.0 '+mol+' hydrochloric acid at the same temperature. Explain why, using the Kinetic Theory and the Collision Theory.',
+  hint1:'Start with what concentration means: how many particles in each cm<sup>3</sup>? Then say what that does to the number of collisions each second. Say what stays the same.',
+  ideas:[['There are twice as many hydrogen ions in each cm³: the particles are more crowded.',/((twice|double|more).{0,40}(ions|particles|h\+)|crowd|closer|packed)/],['The particles are moving all the time and hit the magnesium surface.',/(mov|motion|random|hit|collid|reach)/],
+   ['Each magnesium particle is hit more often, so there are more collisions each second.',/(more collisions|collisions? (each|per|every) second|more often|twice as often|more frequent)/],['The temperature is the same, so the fraction that are successful is the same.',SAME],['So there are more successful collisions each second: the rate is faster.',/(successful|faster|rate)/]],
+  model:'The 2.0 mol dm−3 acid has twice as many hydrogen ions in each cm³, so the ions are more crowded. They move at the same speed, because the temperature has not changed, and with more ions around, each magnesium surface particle is hit more often, so there are more collisions each second. The temperature is the same, so the fraction of collisions that are successful is the same. There are therefore more successful collisions each second, and the rate is faster.'},
+ {text:'Two gases, A and B, react. Doubling the pressure of the mixture at the same temperature makes the reaction go faster. Explain why, using the Kinetic Theory and the Collision Theory.',
+  hint1:'Start with what pressure means for gas particles. If the same gas is squeezed into half the volume, how many particles are in each cm<sup>3</sup>? Then say what that does to collisions each second.',
+  ideas:[['Gas pressure is caused by particles hitting the walls; squeezing puts twice as many particles in each cm³.',/((twice|double|more).{0,50}(particles|molecules|cm|volume|space)|closer|crowd|packed|half the volume)/],['The particles still move at the same speed, because the temperature has not changed.',SAME],
+   ['Each A particle meets B particles more often, so there are more collisions each second.',/(more collisions|collisions? (each|per|every) second|more often|twice as often|more frequent)/],['So there are more successful collisions each second.',/successful/],['The temperature is the same, so the fraction that are successful is the same.',SAME]],
+  model:'Squeezing the gases into half the volume puts twice as many particles in each cm³, so they are closer together. The temperature has not changed, so the particles move at the same speed. Each A particle meets B particles more often, so there are more collisions each second. The temperature is the same, so the same fraction of collisions are successful, and there are therefore more successful collisions each second. The rate of reaction is faster.'}];
+gens.s9c={need:1,make(r){
+  const u=r.pick(RUBS);
+  return{label:'9.3',marks:3,text:u.text,rub:true,rows:5,ideas:u.ideas,model:u.model,hints:H(u.hint1,'Follow the chain in Chunk 3: the change, what it does to the particles, collisions each second, successful collisions each second, the rate. Say what stays the same: the temperature.')};}};
+gens.s9d={need:1,fixed:true,make(r){
+  return{label:'9.4',marks:2,text:'A rise in temperature of 10 &deg;C makes the particles move only about 2 in every 100 faster, yet it can double the rate of a reaction. Explain why.',rub:true,rows:4,
+   ideas:[['The number of collisions each second rises only slightly.',/(slight|only a little|a little|small|not much|only about 2)/],
+    ['A much bigger fraction of the collisions has at least the activation energy.',/(((bigger|larger|greater|higher|more).{0,40}(fraction|proportion|percentage|collisions|particles).{0,60}(activation|enough energy))|activation energy)/],
+    ['So there are many more successful collisions each second, and the rate is about twice as fast.',/(successful|twice|double|faster)/]],
+   model:'A rise of 10 °C makes the particles only slightly faster, so the number of collisions each second rises only slightly. The big effect is that a much bigger fraction of the collisions have at least the activation energy, so there are many more successful collisions each second. That is why the rate can double.',
+   hints:H('A rise of 2 in 100 is tiny. Can it double the number of collisions? So where does the rest of the doubling come from?','Think about the activation energy: what happens to the fraction of collisions with at least that much energy when the particles move faster?')};}};
+
+/* ================= engine ================= */
+function norm(s){return String(s).toLowerCase().replace(/[₀-₉]/g,c=>String(c.charCodeAt(0)-0x2080)).replace(/[−–]/g,'-').replace(/[.!]+$/,'').replace(/\s+/g,' ').trim();}
+function num(s){const m=String(s).trim().match(/^(-?\d+(?:[.,]\d+)?)\s*(?:°c|°|degrees?|cm³|cm3|cm²|cm2|kj|j|g|mol|s|sec|seconds?|min|minutes?|times|x|×|%|c)?$/i);return m?parseFloat(m[1].replace(',','.')):null;}
+function okAns(i){const v=norm(i.value);if(!v)return false;
+  for(const a of i.dataset.a.split('|')){
+    if(a.includes('..')){const p=a.split('..').map(Number),n=num(v);if(n!==null&&n>=p[0]&&n<=p[1])return true;}
+    else{const na=num(a),nv=num(v);if(na!==null&&nv!==null){if(Math.abs(na-nv)<1e-9*Math.max(1,Math.abs(na)))return true;}
+      else{const A=norm(a);if(A===v||A.replace(/ /g,'')===v.replace(/ /g,''))return true;}}}
+  return false;}
+function mark(el,g){const m=document.createElement('span');m.className='mk auto';m.textContent=g?'✓':'✗';el.insertAdjacentElement('afterend',m);}
+function fit(t){t.style.height='auto';const min=parseFloat(t.getAttribute('rows')||1)*parseFloat(getComputedStyle(t).lineHeight);t.style.height=Math.max(min,t.scrollHeight)+'px';}
+
+const S={};      // state per gen id
+function newSeed(){return Math.floor(Math.random()*2147483647)+1;}
+function ensure(id){if(!S[id])S[id]={seed:newSeed(),secure:0,secured:false};return S[id];}
+
+function render(el){
+  const id=el.dataset.gen,g=gens[id],st=ensure(id);
+  const q=g.make(mkR(st.seed));
+  const head='<p class="qlab"><span class="qn">'+q.label+'</span><span class="qtx">'+q.text+'</span><span class="qm">['+q.marks+' marks]</span></p>';
+  const newBtn=g.fixed?'':'<button class="newq" type="button">Try a new question</button>';
+  let inner;
+  if(q.rub){
+    const items=q.ideas.map(x=>'<li data-re="'+esc(x[1].source)+'"><label class="ck"><input type="checkbox"><span class="bx"></span>'+x[0]+'</label><span class="mk"></span></li>').join('');
+    inner='<div class="cb rubwrap">'+q.hints+'<textarea class="lines" rows="'+q.rows+'" style="height:'+(q.rows*7.5)+'mm" spellcheck="true"></textarea>'+
+      '<div class="ctl chk"><button class="rubb" type="button">Check my explanation</button><span class="tally secnote"></span>'+newBtn+'</div><span class="rubmsg"></span>'+
+      '<div class="rubout" hidden><p class="rl">Key ideas for this explanation. A ✓ means the idea was found in your writing. If you said an idea in other words, tick its box yourself. Then read the model explanation and improve your own.</p><ul class="rubl">'+items+'</ul><div class="model"><span class="bt">A model explanation</span><p>'+q.model+'</p></div></div></div>';
+  }else{
+    inner='<div class="cb">'+q.body+q.hints+'<div class="ctl chk"><button class="chkb" type="button">Check my answers</button><span class="tally"></span>'+newBtn+'</div><div class="expl" hidden><span class="bt">Explanation</span>'+q.expl+'</div></div>';
+  }
+  el.innerHTML='<div class="genstat"></div>'+head+inner;
+  el._rub=!!q.rub;
+  bind(el);status(el);
+}
+function status(el){const id=el.dataset.gen,st=S[id],need=gens[id].need;
+  const s=$('.genstat',el);const n=Math.min(st.secure,need);
+  s.innerHTML='<span class="pips">'+Array.from({length:need},(_,i)=>'<i class="'+(i<n?'on':'')+'"></i>').join('')+'</span> '+(n>=need?'Secure':('Secure answers: '+n+' of '+need))+(need>1&&n<need?'. You need '+need+' correct answers on different questions.':'');
+  s.classList.toggle('full',n>=need);}
+function bind(el){
+  const id=el.dataset.gen,st=S[id],cb=$('.cb',el);
+  const nq=$('.newq',el);if(nq)nq.addEventListener('click',()=>{st.seed=newSeed();st.secured=false;render(el);upd();});
+  $$('textarea.lines',el).forEach(t=>t.addEventListener('input',()=>fit(t)));
+  if(el._rub){
+    const b=$('.rubb',el),ta=$('textarea',el),out=$('.rubout',el),msg=$('.rubmsg',el);
+    const refresh=li=>{li.querySelector('.mk').textContent=li.querySelector('input').checked?'✓':'add this idea?';};
+    const done=()=>{const all=$$('li input',el).every(c=>c.checked);if(all&&!st.secured){st.secured=true;st.secure++;}status(el);upd();};
+    $$('li',el).forEach(li=>li.querySelector('input').addEventListener('change',()=>{refresh(li);if(!out.hidden)done();}));
+    b.addEventListener('click',()=>{const t=ta.value.trim();
+      if(t.split(/\s+/).filter(Boolean).length<8){msg.textContent='Write your explanation first, in your own words, then check it.';out.hidden=true;return;}
+      msg.textContent='';$$('li',el).forEach(li=>{const c=li.querySelector('input');if(new RegExp(li.dataset.re,'i').test(t))c.checked=true;refresh(li);});out.hidden=false;done();});
+  }else{
+    $('.chkb',el).addEventListener('click',()=>check(el,false));
+    cb.addEventListener('input',e=>{const t=e.target;if(t.matches('input.blank')){t.classList.remove('ok','bad');const n=t.nextElementSibling;if(n&&n.classList.contains('auto'))n.remove();}});
+  }
+}
+function check(el,silent){
+  const id=el.dataset.gen,st=S[id],cb=$('.cb',el),tally=$('.tally',cb),ex=$('.expl',cb);
+  $$('.mk.auto',cb).forEach(m=>m.remove());$$('.ok,.bad',cb).forEach(e=>e.classList.remove('ok','bad'));
+  let ok=0,n=0;
+  $$('input.blank[data-a]',cb).forEach(i=>{n++;const g=okAns(i);i.classList.add(g?'ok':'bad');mark(i,g);if(g)ok++;});
+  const groups={};$$('input[type=radio]',cb).forEach(r=>{(groups[r.name]=groups[r.name]||[]).push(r);});
+  Object.values(groups).forEach(list=>{n++;const sel=list.find(r=>r.checked),g=!!(sel&&sel.dataset.ok);const lab=(sel||list[list.length-1]).closest('label');lab.classList.add(g?'ok':'bad');mark(lab,g);if(g)ok++;});
+  tally.textContent=ok+' of '+n+' correct'+(ok===n?'. All correct.':'. Open a hint, change the ✗ answers and check again.');
+  if(!silent||st.secured)ex.hidden=false;
+  if(!silent&&ok===n&&!st.secured){st.secured=true;st.secure++;}
+  status(el);upd();
+}
+function upd(){
+  const secs=$$('.msec');let all=true,tot=0,got=0;const rows=[];
+  secs.forEach((s,i)=>{
+    let n=0,d=0;$$('.gen',s).forEach(g=>{const need=gens[g.dataset.gen].need;n+=need;d+=Math.min(S[g.dataset.gen].secure,need);});
+    tot+=n;got+=d;if(d<n)all=false;
+    const stat=$('.secstat',s);
+    stat.textContent=d===n?'Section '+(i+1)+': mastery. Every part is secure.':'Section '+(i+1)+': '+d+' of '+n+' secure answers. Check every question, and press Try a new question to practise with new numbers.';
+    stat.classList.toggle('mastered',d===n);
+    rows.push('<tr><td class="l">'+s.dataset.name+'</td><td><span class="trbar"><i style="width:'+(n?100*d/n:0)+'%"></i></span>'+d+' of '+n+'</td><td>'+(d===n?'Mastery ✓':(d===0?'Not started':'In progress'))+'</td></tr>');
+  });
+  const pct=tot?Math.round(100*got/tot):0;
+  $('#tracker').innerHTML='<table><tr><th class="l">Section</th><th>Secure answers</th><th>Status</th></tr>'+rows.join('')+'<tr><td class="l"><b>Whole practice test</b></td><td><span class="trbar"><i style="width:'+pct+'%"></i></span>'+got+' of '+tot+'</td><td>'+pct+'%</td></tr></table>';
+  $('#finale').hidden=!(all&&tot>0);
+}
+function collect(){const o={fields:{},gens:{},sheet:'practice_test_v2',saved:new Date().toISOString()};
+  $$('[data-field]').forEach(e=>o.fields[e.dataset.field]=e.value);
+  $$('.gen').forEach(el=>{const id=el.dataset.gen,st=S[id];
+    const ins=$$('input.blank,input[type=radio],input[type=checkbox],textarea',el).map(e=>e.type==='radio'||e.type==='checkbox'?(e.checked?1:0):e.value);
+    o.gens[id]={seed:st.seed,secure:st.secure,secured:st.secured,inputs:ins};});
+  return o;}
+function restore(o){
+  $$('[data-field]').forEach(e=>{if(o.fields&&o.fields[e.dataset.field]!==undefined)e.value=o.fields[e.dataset.field];});
+  $$('.gen').forEach(el=>{const id=el.dataset.gen,g=o.gens&&o.gens[id];if(!g)return;
+    S[id]={seed:g.seed,secure:g.secure||0,secured:!!g.secured};gc=gc;render(el);
+    const els=$$('input.blank,input[type=radio],input[type=checkbox],textarea',el);
+    (g.inputs||[]).forEach((v,i)=>{const e=els[i];if(!e)return;if(e.type==='radio'||e.type==='checkbox')e.checked=!!v;else e.value=v;});
+    $$('textarea.lines',el).forEach(fit);
+    if(el._rub){$$('li',el).forEach(li=>{li.querySelector('.mk').textContent=li.querySelector('input').checked?'✓':'';});
+      if(S[id].secured||$$('li input',el).some(c=>c.checked)){$('.rubout',el).hidden=false;}}
+    else if(els.some(e=>(e.type==='radio'||e.type==='checkbox')?e.checked:e.value!=='')){check(el,true);}
+    status(el);});
+  upd();}
+$$('.gen').forEach(el=>{ensure(el.dataset.gen);render(el);});
+$('#save').addEventListener('click',()=>{const nm=(($('[data-field=firstname]').value)||'student').toLowerCase().replace(/[^a-z0-9]/g,'')||'student';
+  const blob=new Blob([JSON.stringify(collect())],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='practice_test_progress_'+nm+'.json';document.body.appendChild(a);a.click();a.remove();});
+const fi=$('#file');$('#retrieve').addEventListener('click',()=>fi.click());
+fi.addEventListener('change',()=>{const f=fi.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{restore(JSON.parse(r.result));}catch(e){alert('That file could not be read. Choose a practice_test_progress file that you saved earlier.');}};r.readAsText(f);fi.value='';});
+$('#pdf').addEventListener('click',()=>{$$('textarea.lines').forEach(fit);window.print();});
+upd();
+window.__PT={S:S,render:render,gens:gens,check:check,collect:collect,restore:restore};
+})();
+</script></body></html>
