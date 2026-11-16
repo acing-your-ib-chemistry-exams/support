@@ -150,6 +150,11 @@
                     <button id="ugt-cv-range-auto0" class="ugt-btn ugt-btn-ghost" type="button">Autoscale (0,0 origin)</button>
                   </div>
                   <span class="ugt-hint">Set range plots from (0, 0) up to the highest x/y you give. Autoscale fits tightly to your current data; Autoscale (0,0 origin) does the same but always keeps the origin in view.</span>
+                  <div class="ugt-inline" style="margin-top:10px">
+                    <button id="ugt-cv-fix" class="ugt-btn ugt-btn-ghost" type="button">FIX</button>
+                    <button id="ugt-cv-colorimetry" class="ugt-btn ugt-btn-ghost" type="button">Colorimetry</button>
+                  </div>
+                  <span class="ugt-hint" id="ugt-cv-fix-note" style="display:block;margin-top:4px"></span>
                 </div>
               </div>
               <div class="ugt-data-block">
@@ -307,6 +312,8 @@
   #ugt-root .ugt-btn-ghost:hover{ background:var(--teal-soft); }
   #ugt-root .ugt-btn-danger{ color:#c0392b; border-color:#c0392b; }
   #ugt-root .ugt-btn-danger:hover{ background:#f8dcd6; }
+  #ugt-root .ugt-btn-ghost.ugt-btn-on{ background:var(--teal); color:#fff; border-color:var(--teal-d); }
+  #ugt-root .ugt-btn-ghost.ugt-btn-on:hover{ background:var(--teal-d); }
   #ugt-root .ugt-btn[disabled]{ opacity:.45; cursor:not-allowed; }
   #ugt-root .ugt-check{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--ink-soft); cursor:pointer; }
 
@@ -876,6 +883,106 @@
 
   function curveY(x){ return CURVES[cvType].y(cvParams, x); }
   function curveSlope(x){ return CURVES[cvType].slope(cvParams, x); }
+  function fixHolder(){ return datasets[activeDataset]; }
+
+  /* ---------- FIX: force the fitted line through one chosen, exactly-known point ---------- */
+  // Each fixable curve shape gets fixOk(x,y) (can this point be fixed?) and fitFixed(data,x0,y0)
+  // (a least-squares fit constrained to pass exactly through (x0,y0), in the same linearised form
+  // the ordinary fit() already uses). Free-form shapes and the plateau are left unconstrained.
+  CURVES.linear.fixWhy = ''; CURVES.linear.fixOk = function(x,y){ return isFinite(x) && isFinite(y); };
+  CURVES.linear.fitFixed = function(d,x0,y0){
+    var nu=0, de=0;
+    d.forEach(function(p){ var dx=p.x-x0; nu+=dx*(p.y-y0); de+=dx*dx; });
+    var m = de!==0 ? nu/de : 0;
+    return {m:m, c:y0-m*x0};
+  };
+  CURVES.expdecay.fixWhy = 'its y value must be greater than zero';
+  CURVES.expdecay.fixOk = function(x,y){ return isFinite(x) && y>0; };
+  CURVES.expdecay.fitFixed = function(d,x0,y0){
+    // ln y = ln y0 - (x - x0)/tau, so regress (ln y - ln y0) on (x - x0) through the origin
+    var l0=Math.log(y0), nu=0, de=0;
+    d.forEach(function(p){ if(!(p.y>0)) return; var dx=p.x-x0; nu+=dx*(Math.log(p.y)-l0); de+=dx*dx; });
+    var s = de!==0 ? nu/de : 0;
+    var tau = s!==0 ? -1/s : 1e9;
+    return {A:y0*Math.exp(x0/tau), tau:tau};
+  };
+  CURVES.inv.fixWhy = 'its x value must not be zero';
+  CURVES.inv.fixOk = function(x,y){ return isFinite(y) && isFinite(x) && x!==0; };
+  CURVES.inv.fitFixed = function(d,x0,y0){ return {k:y0*x0}; };
+  CURVES.invsq.fixWhy = 'its x value must not be zero';
+  CURVES.invsq.fixOk = function(x,y){ return isFinite(y) && isFinite(x) && x!==0; };
+  CURVES.invsq.fitFixed = function(d,x0,y0){ return {k:y0*x0*x0}; };
+  CURVES.logdecay.fixWhy = 'its y value must be greater than zero';
+  CURVES.logdecay.fixOk = function(x,y){ return isFinite(x) && y>0; };
+  CURVES.logdecay.fitFixed = function(d,x0,y0){
+    // 1/y = 1/A + x/(A·tau); through (x0,y0): (1/y - 1/y0) = s·(x - x0), with s = 1/(A·tau)
+    var i0=1/y0, nu=0, de=0;
+    d.forEach(function(p){ if(!p.y) return; var dx=p.x-x0; nu+=dx*(1/p.y-i0); de+=dx*dx; });
+    var s = de!==0 ? nu/de : 0;
+    var c = i0 - s*x0;
+    if(!(c>0)) return null;
+    return {A:1/c, tau: s!==0 ? c/s : 1e9};
+  };
+
+  var cvFixPicking = false;   // true while waiting for the user to click the data point to fix
+  // 'dimensionless' is shown on the axis title but is not a unit to be multiplied into gradients etc.
+  function uClean(u){ return String(u==null?'':u).trim().toLowerCase()==='dimensionless' ? '' : u; }
+  // unit of a gradient (y unit per x unit). With a dimensionless y and a compound x unit such as
+  // mol dm⁻³ the result is written (mol dm⁻³)⁻¹ rather than the garbled "1 mol dm⁻³⁻¹".
+  function gradUnit(xu, yu){
+    if(!xu) return yu || '';
+    if(!yu) return /[\s·⁻]/.test(xu) ? '('+xu+')⁻¹' : xu+'⁻¹';
+    return yu+' '+xu+'⁻¹';
+  }
+  // the fixed point of a data-set holder, or null if there is none / it no longer applies. The
+  // fixed point is held as a reference to the very point object in the table, so editing its x or y
+  // moves the fixed point with it, and deleting the point releases the fix automatically.
+  function fixPointOf(h){
+    if(!h || !h.fixed) return null;
+    var pts = h.points || cvData;
+    if(pts.indexOf(h.fixed) < 0){ h.fixed = null; return null; }
+    var C = CURVES[cvType];
+    if(!C.fitFixed || !C.fixOk(h.fixed.x, h.fixed.y)) return null;
+    return h.fixed;
+  }
+  // every fit goes through here, so the constraint is honoured by the ordinary fit, "Fit to
+  // selected", and each data set's own remembered fit alike
+  function fitFor(type, pts, h){
+    var C = CURVES[type], fx = C.fitFixed ? fixPointOf(h) : null;
+    if(fx){ var r = C.fitFixed(pts, fx.x, fx.y); if(r) return r; }
+    return C.fit(pts);
+  }
+  function updateFixUI(){
+    var btn = $('ugt-cv-fix'), note = $('ugt-cv-fix-note');
+    if(!btn || !note) return;
+    var can = !!CURVES[cvType].fitFixed, fx = fixPointOf(fixHolder());
+    if(!can || fx) cvFixPicking = false;
+    btn.disabled = !can;
+    btn.classList.toggle('ugt-btn-on', !!fx || cvFixPicking);
+    btn.textContent = fx ? 'UNFIX' : (cvFixPicking ? 'FIX: click a point…' : 'FIX');
+    note.textContent = !can ? 'FIX is not available for this curve shape.'
+      : fx ? ('Line fixed through ('+fmt(fx.x,4)+', '+fmt(fx.y,4)+'). Press UNFIX to release it.')
+      : cvFixPicking ? 'Click one of your data points on the graph to fix it (Esc to cancel).'
+      : 'Press FIX, then click a data point whose value is known exactly: the line is forced through it.';
+  }
+  function cvAfterFixChange(msg){
+    refitCurve(); resyncPivot();
+    if(typeof renderDatasetChips === 'function') renderDatasetChips();
+    if(typeof updateDatasetButtons === 'function') updateDatasetButtons();
+    drawCurvePlot(); updateCurveReadout(); updateFixUI();
+    flashStatus($('ugt-cv-d-status'), msg);
+  }
+  function cvChooseFixed(d){
+    var C = CURVES[cvType], h = fixHolder();
+    if(!C.fitFixed) return;
+    if(!C.fixOk(d.x, d.y)){
+      flashStatus($('ugt-cv-d-status'), 'That point cannot be fixed on this curve shape: '+C.fixWhy+'.');
+      return;
+    }
+    h.fixed = d; h.fitPinned = false; cvFixPicking = false;
+    cvAfterFixChange('Fixed the point ('+fmt(d.x,4)+', '+fmt(d.y,4)+'): the line now passes exactly through it, and every other point is fitted around it.');
+  }
+
   function cvXExtent(){
     if(cvData.length<2){
       var pxs = CURVES[cvType].data.map(function(d){return d.x;});
@@ -895,10 +1002,11 @@
       cvParams = activeDS.fitParams;
       return;
     }
-    cvParams = CURVES[cvType].fit(cvData);
+    cvParams = fitFor(cvType, cvData, activeDS);
     // keep the active data set's own remembered fit in sync — this is what lets a hand-shaped
     // "fit by eye" curve (or any other fit) survive switching to another data set and back
     if(activeDS) activeDS.fitParams = cvParams;
+    updateFixUI();
   }
   // after a refit, re-anchor the pivot onto the (possibly now-different) curve at the same x,
   // translating the tangent rigidly so the student's own slope survives the data edit
@@ -997,7 +1105,7 @@
   function dsFitParams(dsi, ds){
     if(dsi === activeDataset) return cvParams;
     if(ds.fitParams) return ds.fitParams;
-    try{ return CURVES[cvType].fit(ds.points); }catch(e){ return null; }
+    try{ return fitFor(cvType, ds.points, ds); }catch(e){ return null; }
   }
   // the saved minimum/maximum GRADIENT lines (linear mode, from the trial-line "Save as Minimum/
   // Maximum Gradient" buttons) for a given data set — same active/remembered split as fitParams,
@@ -1094,6 +1202,7 @@
     $('ugt-ds-show').disabled = !multiple;
     $('ugt-ds-color').disabled = !multiple;
     $('ugt-ds-add').disabled = n >= MAX_DATASETS;
+    updateFixUI();
     $('ugt-ds-show').textContent = (multiple && !datasets[activeDataset].visible) ? 'Show data set on graph' : (multiple ? 'Hide data set from graph' : 'Show data set on graph');
     // the tangent / min-max-gradient tools only make sense while at most one line of best fit is
     // being shown at a time — grey them out (without hiding them) once a second one appears
@@ -1595,7 +1704,7 @@
     cctx.save();
     cctx.translate(13, padT+plotH/2); cctx.rotate(-Math.PI/2);
     cctx.textBaseline='top';
-    cctx.fillText(yl + (yu?(' / '+yu):''), 0, 0);
+    cctx.fillText(yl + (yu?(' / '+yu):''), 0, 0); yu = uClean(yu);
     cctx.restore();
 
     // line(s) of best fit — each data set independently chooses (via its chip's "fit shown" toggle)
@@ -1719,7 +1828,7 @@
           riseLeftSide?'right':'left', 'middle', '600 11px Segoe UI,system-ui,sans-serif', '#8a5a0d');
 
         // gradient — placed clear of the wedge, just past its lowest (screen-y, i.e. furthest-down) corner
-        var gunit2 = (yu||xu) ? ((yu||'1')+(xu?(' '+xu+'⁻¹'):'')) : '';
+        var gunit2 = (yu||xu) ? gradUnit(xu,yu) : '';
         var gLabel = 'gradient = rise/run = '+fmt(run!==0?rise/run:0,4)+(gunit2?(' '+gunit2):'');
         var gY = Math.max(sAy,sBy,sCy) + 20, gX = sBx;
         var gLeft = (sAx+sCx)/2 >= sBx;
@@ -1744,6 +1853,15 @@
       var isActiveDS = dsi === activeDataset, r = isActiveDS ? 3.6 : 3.1;
       ds.points.forEach(function(d, di){
         var X=sx(d.x), Y=sy(d.y);
+        if(isActiveDS && d===fixPointOf(ds)){
+          cctx.save();
+          cctx.beginPath(); cctx.arc(X,Y,10.5,0,2*Math.PI);
+          cctx.strokeStyle='#16222c'; cctx.lineWidth=2; cctx.stroke();
+          cctx.beginPath(); cctx.arc(X,Y,14,0,2*Math.PI);
+          cctx.strokeStyle='#c87f12'; cctx.lineWidth=1.4; cctx.setLineDash([3,3]); cctx.stroke();
+          cctx.restore();
+          labelWithBg('fixed', X+17, Y-15, 'left', 'bottom', '600 11px Segoe UI,system-ui,sans-serif', '#8a5a0d');
+        }
         if(isActiveDS && cvSelected.indexOf(di)>=0){
           cctx.beginPath(); cctx.arc(X,Y,8,0,2*Math.PI);
           cctx.fillStyle='rgba(200,127,18,.22)'; cctx.fill();
@@ -1877,8 +1995,8 @@
       // on screen at once. Each data set's own saved minimum/maximum gradient lines are listed right
       // underneath it, in full (m and c, both with units) — matching how the best-fit line itself is
       // shown, and giving the best-fit line a ± uncertainty once that data set has both saved.
-      var xuF=$('ugt-cv-xunit').value, yuF=$('ugt-cv-yunit').value;
-      var gunitF = (yuF||xuF) ? ((yuF||'1')+(xuF?(' '+xuF+'⁻¹'):'')) : '';
+      var xuF=$('ugt-cv-xunit').value, yuF=uClean($('ugt-cv-yunit').value);
+      var gunitF = (yuF||xuF) ? gradUnit(xuF,yuF) : '';
       var fitLines = [];
       var fitDSCount = 0;
       datasets.forEach(function(ds, dsi){
@@ -1892,6 +2010,7 @@
         var halfMF = haveMinMaxF ? Math.abs(dmxF.m-dmnF.m)/2 : 0;
         var halfCF = haveMinMaxF ? Math.abs(dmxF.c-dmnF.c)/2 : 0;
         fitLines.push({text:tag+': m = '+fmt(p.m,4)+(haveMinMaxF?(' ± '+fmt(halfMF,2)):'')+(gunitF?(' '+gunitF):'')+', c = '+fmt(p.c,4)+(haveMinMaxF?(' ± '+fmt(halfCF,2)):'')+(yuF?(' '+yuF):''), color:ds.color});
+        if(fixPointOf(ds)) fitLines.push({text:tag+' fixed through ('+fmt(ds.fixed.x,4)+', '+fmt(ds.fixed.y,4)+')', color:ds.color});
         if(dmnF) fitLines.push({text:tag+' minimum: m = '+fmt(dmnF.m,4)+(gunitF?(' '+gunitF):'')+', c = '+fmt(dmnF.c,4)+(yuF?(' '+yuF):''), color:COLOR_MIN});
         if(dmxF) fitLines.push({text:tag+' maximum: m = '+fmt(dmxF.m,4)+(gunitF?(' '+gunitF):'')+', c = '+fmt(dmxF.c,4)+(yuF?(' '+yuF):''), color:COLOR_MAX});
       });
@@ -1901,8 +2020,8 @@
       // the tangent tools only ever apply to one data set at a time (see multiFitActive), so there's
       // nothing to number here; this follows "Show tangent" and is hidden once 2+ curved fits are
       // shown at once, same as the tangent line itself
-      var xuB=$('ugt-cv-xunit').value, yuB=$('ugt-cv-yunit').value;
-      var gunitB = (yuB||xuB) ? ((yuB||'1')+(xuB?(' '+xuB+'⁻¹'):'')) : '';
+      var xuB=$('ugt-cv-xunit').value, yuB=uClean($('ugt-cv-yunit').value);
+      var gunitB = (yuB||xuB) ? gradUnit(xuB,yuB) : '';
       var mStudB = (tan.x2-tan.x1)!==0 ? (tan.y2-tan.y1)/(tan.x2-tan.x1) : 0;
       var cStudB = tangentIntercept(mStudB);
       var lines = [
@@ -1927,8 +2046,8 @@
 
   function updateCurveReadout(){
     if(!tan) return;
-    var xu=$('ugt-cv-xunit').value, yu=$('ugt-cv-yunit').value;
-    var gunit = (yu||xu) ? ((yu||'1')+(xu?(' '+xu+'⁻¹'):'')) : '';
+    var xu=$('ugt-cv-xunit').value, yu=uClean($('ugt-cv-yunit').value);
+    var gunit = (yu||xu) ? gradUnit(xu,yu) : '';
     if(CURVES[cvType].isLinear){ updateLinearReadout(xu,yu,gunit); return; }
     if(multiFitActive()){
       var htmlM = datasetStatusNote();
@@ -2108,6 +2227,17 @@
       ev.preventDefault();
       return;
     }
+        if(cvFixPicking && cvPlot && p.x>=cvPlot.padL && p.x<=cvPlot.padL+cvPlot.plotW && p.y>=cvPlot.padT && p.y<=cvPlot.padT+cvPlot.plotH){
+      var fxBest = null, fxD2 = Infinity;
+      cvData.forEach(function(d){
+        var fdx = cvPlot.sx(d.x)-p.x, fdy = cvPlot.sy(d.y)-p.y, fd2 = fdx*fdx+fdy*fdy;
+        if(fd2 < fxD2){ fxD2 = fd2; fxBest = d; }
+      });
+      if(fxBest && fxD2 <= 20*20){ cvChooseFixed(fxBest); }
+      else { flashStatus($('ugt-cv-d-status'), 'No data point there: click directly on one of the crosses, or press Esc to cancel.'); }
+      ev.preventDefault();
+      return;
+    }
     var bHit = cvBezierHitTest(p.x,p.y);
     if(bHit !== null){
       cvDrag='bezierHandle'; cvBezierDragIndex=bHit;
@@ -2261,7 +2391,7 @@
     var subset = cvSelected.map(function(i){ return cvData[i]; }).filter(Boolean);
     if(subset.length < 2) return;
     var fitted;
-    try{ fitted = CURVES[cvType].fit(subset); }catch(e){ fitted = null; }
+    try{ fitted = fitFor(cvType, subset, datasets[activeDataset]); }catch(e){ fitted = null; }
     if(!fitted){ flashStatus($('ugt-cv-d-status'), 'Could not fit a curve to just those points — try selecting a few more.'); return; }
     cvParams = fitted;
     var n = cvSelected.length;
@@ -2294,6 +2424,42 @@
     flashStatus($('ugt-cv-d-status'), 'Cleared all data points.');
   });
 
+
+    /* ---------- FIX and Colorimetry buttons ---------- */
+  $('ugt-cv-fix').addEventListener('click', function(){
+    var h = fixHolder();
+    if(!CURVES[cvType].fitFixed) return;
+    if(fixPointOf(h)){
+      h.fixed = null; h.fitPinned = false; cvFixPicking = false;
+      cvAfterFixChange('Released the fixed point: the line is fitted to every point again.');
+      return;
+    }
+    cvFixPicking = !cvFixPicking;
+    updateFixUI();
+  });
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape' && cvFixPicking){ cvFixPicking = false; updateFixUI(); }
+  });
+  // Colorimetry: Absorbance, A (dimensionless) on y; time on x for an exponential decay, or
+  // [Concentration] on x for a linear calibration graph
+  $('ugt-cv-colorimetry').addEventListener('click', function(){
+    if(cvType !== 'expdecay' && cvType !== 'linear'){
+      flashStatus($('ugt-cv-d-status'), 'Colorimetry sets the axes for the Linear and Exponential decay curve shapes: choose one of those first.');
+      return;
+    }
+    if(cvType === 'expdecay'){
+      $('ugt-cv-xlab').value = 'Time, t';
+      if(!/^(ms|s|min|h|hr)$/i.test($('ugt-cv-xunit').value.trim())) $('ugt-cv-xunit').value = 's';
+    } else {
+      $('ugt-cv-xlab').value = '[Concentration]';
+      $('ugt-cv-xunit').value = 'mol dm⁻³';
+    }
+    $('ugt-cv-ylab').value = 'Absorbance, A';
+    $('ugt-cv-yunit').value = 'dimensionless';
+    drawCurvePlot(); updateCurveReadout();
+    flashStatus($('ugt-cv-d-status'), 'Axes set for colorimetry.');
+  });
+  updateFixUI();
 
   /* ---------- init ---------- */
   loadCurve('expdecay');
@@ -2379,6 +2545,11 @@
                     <button id="ugt-cv-range-auto0" class="ugt-btn ugt-btn-ghost" type="button">Autoscale (0,0 origin)</button>
                   </div>
                   <span class="ugt-hint">Set range plots from (0, 0) up to the highest x/y you give. Autoscale fits tightly to your current data; Autoscale (0,0 origin) does the same but always keeps the origin in view.</span>
+                  <div class="ugt-inline" style="margin-top:10px">
+                    <button id="ugt-cv-fix" class="ugt-btn ugt-btn-ghost" type="button">FIX</button>
+                    <button id="ugt-cv-colorimetry" class="ugt-btn ugt-btn-ghost" type="button">Colorimetry</button>
+                  </div>
+                  <span class="ugt-hint" id="ugt-cv-fix-note" style="display:block;margin-top:4px"></span>
                 </div>
               </div>
               <div class="ugt-data-block">
@@ -2536,6 +2707,8 @@
   #ugt-root .ugt-btn-ghost:hover{ background:var(--teal-soft); }
   #ugt-root .ugt-btn-danger{ color:#c0392b; border-color:#c0392b; }
   #ugt-root .ugt-btn-danger:hover{ background:#f8dcd6; }
+  #ugt-root .ugt-btn-ghost.ugt-btn-on{ background:var(--teal); color:#fff; border-color:var(--teal-d); }
+  #ugt-root .ugt-btn-ghost.ugt-btn-on:hover{ background:var(--teal-d); }
   #ugt-root .ugt-btn[disabled]{ opacity:.45; cursor:not-allowed; }
   #ugt-root .ugt-check{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--ink-soft); cursor:pointer; }
 
@@ -3105,6 +3278,106 @@
 
   function curveY(x){ return CURVES[cvType].y(cvParams, x); }
   function curveSlope(x){ return CURVES[cvType].slope(cvParams, x); }
+  function fixHolder(){ return datasets[activeDataset]; }
+
+  /* ---------- FIX: force the fitted line through one chosen, exactly-known point ---------- */
+  // Each fixable curve shape gets fixOk(x,y) (can this point be fixed?) and fitFixed(data,x0,y0)
+  // (a least-squares fit constrained to pass exactly through (x0,y0), in the same linearised form
+  // the ordinary fit() already uses). Free-form shapes and the plateau are left unconstrained.
+  CURVES.linear.fixWhy = ''; CURVES.linear.fixOk = function(x,y){ return isFinite(x) && isFinite(y); };
+  CURVES.linear.fitFixed = function(d,x0,y0){
+    var nu=0, de=0;
+    d.forEach(function(p){ var dx=p.x-x0; nu+=dx*(p.y-y0); de+=dx*dx; });
+    var m = de!==0 ? nu/de : 0;
+    return {m:m, c:y0-m*x0};
+  };
+  CURVES.expdecay.fixWhy = 'its y value must be greater than zero';
+  CURVES.expdecay.fixOk = function(x,y){ return isFinite(x) && y>0; };
+  CURVES.expdecay.fitFixed = function(d,x0,y0){
+    // ln y = ln y0 - (x - x0)/tau, so regress (ln y - ln y0) on (x - x0) through the origin
+    var l0=Math.log(y0), nu=0, de=0;
+    d.forEach(function(p){ if(!(p.y>0)) return; var dx=p.x-x0; nu+=dx*(Math.log(p.y)-l0); de+=dx*dx; });
+    var s = de!==0 ? nu/de : 0;
+    var tau = s!==0 ? -1/s : 1e9;
+    return {A:y0*Math.exp(x0/tau), tau:tau};
+  };
+  CURVES.inv.fixWhy = 'its x value must not be zero';
+  CURVES.inv.fixOk = function(x,y){ return isFinite(y) && isFinite(x) && x!==0; };
+  CURVES.inv.fitFixed = function(d,x0,y0){ return {k:y0*x0}; };
+  CURVES.invsq.fixWhy = 'its x value must not be zero';
+  CURVES.invsq.fixOk = function(x,y){ return isFinite(y) && isFinite(x) && x!==0; };
+  CURVES.invsq.fitFixed = function(d,x0,y0){ return {k:y0*x0*x0}; };
+  CURVES.logdecay.fixWhy = 'its y value must be greater than zero';
+  CURVES.logdecay.fixOk = function(x,y){ return isFinite(x) && y>0; };
+  CURVES.logdecay.fitFixed = function(d,x0,y0){
+    // 1/y = 1/A + x/(A·tau); through (x0,y0): (1/y - 1/y0) = s·(x - x0), with s = 1/(A·tau)
+    var i0=1/y0, nu=0, de=0;
+    d.forEach(function(p){ if(!p.y) return; var dx=p.x-x0; nu+=dx*(1/p.y-i0); de+=dx*dx; });
+    var s = de!==0 ? nu/de : 0;
+    var c = i0 - s*x0;
+    if(!(c>0)) return null;
+    return {A:1/c, tau: s!==0 ? c/s : 1e9};
+  };
+
+  var cvFixPicking = false;   // true while waiting for the user to click the data point to fix
+  // 'dimensionless' is shown on the axis title but is not a unit to be multiplied into gradients etc.
+  function uClean(u){ return String(u==null?'':u).trim().toLowerCase()==='dimensionless' ? '' : u; }
+  // unit of a gradient (y unit per x unit). With a dimensionless y and a compound x unit such as
+  // mol dm⁻³ the result is written (mol dm⁻³)⁻¹ rather than the garbled "1 mol dm⁻³⁻¹".
+  function gradUnit(xu, yu){
+    if(!xu) return yu || '';
+    if(!yu) return /[\s·⁻]/.test(xu) ? '('+xu+')⁻¹' : xu+'⁻¹';
+    return yu+' '+xu+'⁻¹';
+  }
+  // the fixed point of a data-set holder, or null if there is none / it no longer applies. The
+  // fixed point is held as a reference to the very point object in the table, so editing its x or y
+  // moves the fixed point with it, and deleting the point releases the fix automatically.
+  function fixPointOf(h){
+    if(!h || !h.fixed) return null;
+    var pts = h.points || cvData;
+    if(pts.indexOf(h.fixed) < 0){ h.fixed = null; return null; }
+    var C = CURVES[cvType];
+    if(!C.fitFixed || !C.fixOk(h.fixed.x, h.fixed.y)) return null;
+    return h.fixed;
+  }
+  // every fit goes through here, so the constraint is honoured by the ordinary fit, "Fit to
+  // selected", and each data set's own remembered fit alike
+  function fitFor(type, pts, h){
+    var C = CURVES[type], fx = C.fitFixed ? fixPointOf(h) : null;
+    if(fx){ var r = C.fitFixed(pts, fx.x, fx.y); if(r) return r; }
+    return C.fit(pts);
+  }
+  function updateFixUI(){
+    var btn = $('ugt-cv-fix'), note = $('ugt-cv-fix-note');
+    if(!btn || !note) return;
+    var can = !!CURVES[cvType].fitFixed, fx = fixPointOf(fixHolder());
+    if(!can || fx) cvFixPicking = false;
+    btn.disabled = !can;
+    btn.classList.toggle('ugt-btn-on', !!fx || cvFixPicking);
+    btn.textContent = fx ? 'UNFIX' : (cvFixPicking ? 'FIX: click a point…' : 'FIX');
+    note.textContent = !can ? 'FIX is not available for this curve shape.'
+      : fx ? ('Line fixed through ('+fmt(fx.x,4)+', '+fmt(fx.y,4)+'). Press UNFIX to release it.')
+      : cvFixPicking ? 'Click one of your data points on the graph to fix it (Esc to cancel).'
+      : 'Press FIX, then click a data point whose value is known exactly: the line is forced through it.';
+  }
+  function cvAfterFixChange(msg){
+    refitCurve(); resyncPivot();
+    if(typeof renderDatasetChips === 'function') renderDatasetChips();
+    if(typeof updateDatasetButtons === 'function') updateDatasetButtons();
+    drawCurvePlot(); updateCurveReadout(); updateFixUI();
+    flashStatus($('ugt-cv-d-status'), msg);
+  }
+  function cvChooseFixed(d){
+    var C = CURVES[cvType], h = fixHolder();
+    if(!C.fitFixed) return;
+    if(!C.fixOk(d.x, d.y)){
+      flashStatus($('ugt-cv-d-status'), 'That point cannot be fixed on this curve shape: '+C.fixWhy+'.');
+      return;
+    }
+    h.fixed = d; h.fitPinned = false; cvFixPicking = false;
+    cvAfterFixChange('Fixed the point ('+fmt(d.x,4)+', '+fmt(d.y,4)+'): the line now passes exactly through it, and every other point is fitted around it.');
+  }
+
   function cvXExtent(){
     if(cvData.length<2){
       var pxs = CURVES[cvType].data.map(function(d){return d.x;});
@@ -3124,10 +3397,11 @@
       cvParams = activeDS.fitParams;
       return;
     }
-    cvParams = CURVES[cvType].fit(cvData);
+    cvParams = fitFor(cvType, cvData, activeDS);
     // keep the active data set's own remembered fit in sync — this is what lets a hand-shaped
     // "fit by eye" curve (or any other fit) survive switching to another data set and back
     if(activeDS) activeDS.fitParams = cvParams;
+    updateFixUI();
   }
   // after a refit, re-anchor the pivot onto the (possibly now-different) curve at the same x,
   // translating the tangent rigidly so the student's own slope survives the data edit
@@ -3226,7 +3500,7 @@
   function dsFitParams(dsi, ds){
     if(dsi === activeDataset) return cvParams;
     if(ds.fitParams) return ds.fitParams;
-    try{ return CURVES[cvType].fit(ds.points); }catch(e){ return null; }
+    try{ return fitFor(cvType, ds.points, ds); }catch(e){ return null; }
   }
   // the saved minimum/maximum GRADIENT lines (linear mode, from the trial-line "Save as Minimum/
   // Maximum Gradient" buttons) for a given data set — same active/remembered split as fitParams,
@@ -3323,6 +3597,7 @@
     $('ugt-ds-show').disabled = !multiple;
     $('ugt-ds-color').disabled = !multiple;
     $('ugt-ds-add').disabled = n >= MAX_DATASETS;
+    updateFixUI();
     $('ugt-ds-show').textContent = (multiple && !datasets[activeDataset].visible) ? 'Show data set on graph' : (multiple ? 'Hide data set from graph' : 'Show data set on graph');
     // the tangent / min-max-gradient tools only make sense while at most one line of best fit is
     // being shown at a time — grey them out (without hiding them) once a second one appears
@@ -3824,7 +4099,7 @@
     cctx.save();
     cctx.translate(13, padT+plotH/2); cctx.rotate(-Math.PI/2);
     cctx.textBaseline='top';
-    cctx.fillText(yl + (yu?(' / '+yu):''), 0, 0);
+    cctx.fillText(yl + (yu?(' / '+yu):''), 0, 0); yu = uClean(yu);
     cctx.restore();
 
     // line(s) of best fit — each data set independently chooses (via its chip's "fit shown" toggle)
@@ -3948,7 +4223,7 @@
           riseLeftSide?'right':'left', 'middle', '600 11px Segoe UI,system-ui,sans-serif', '#8a5a0d');
 
         // gradient — placed clear of the wedge, just past its lowest (screen-y, i.e. furthest-down) corner
-        var gunit2 = (yu||xu) ? ((yu||'1')+(xu?(' '+xu+'⁻¹'):'')) : '';
+        var gunit2 = (yu||xu) ? gradUnit(xu,yu) : '';
         var gLabel = 'gradient = rise/run = '+fmt(run!==0?rise/run:0,4)+(gunit2?(' '+gunit2):'');
         var gY = Math.max(sAy,sBy,sCy) + 20, gX = sBx;
         var gLeft = (sAx+sCx)/2 >= sBx;
@@ -3973,6 +4248,15 @@
       var isActiveDS = dsi === activeDataset, r = isActiveDS ? 3.6 : 3.1;
       ds.points.forEach(function(d, di){
         var X=sx(d.x), Y=sy(d.y);
+        if(isActiveDS && d===fixPointOf(ds)){
+          cctx.save();
+          cctx.beginPath(); cctx.arc(X,Y,10.5,0,2*Math.PI);
+          cctx.strokeStyle='#16222c'; cctx.lineWidth=2; cctx.stroke();
+          cctx.beginPath(); cctx.arc(X,Y,14,0,2*Math.PI);
+          cctx.strokeStyle='#c87f12'; cctx.lineWidth=1.4; cctx.setLineDash([3,3]); cctx.stroke();
+          cctx.restore();
+          labelWithBg('fixed', X+17, Y-15, 'left', 'bottom', '600 11px Segoe UI,system-ui,sans-serif', '#8a5a0d');
+        }
         if(isActiveDS && cvSelected.indexOf(di)>=0){
           cctx.beginPath(); cctx.arc(X,Y,8,0,2*Math.PI);
           cctx.fillStyle='rgba(200,127,18,.22)'; cctx.fill();
@@ -4106,8 +4390,8 @@
       // on screen at once. Each data set's own saved minimum/maximum gradient lines are listed right
       // underneath it, in full (m and c, both with units) — matching how the best-fit line itself is
       // shown, and giving the best-fit line a ± uncertainty once that data set has both saved.
-      var xuF=$('ugt-cv-xunit').value, yuF=$('ugt-cv-yunit').value;
-      var gunitF = (yuF||xuF) ? ((yuF||'1')+(xuF?(' '+xuF+'⁻¹'):'')) : '';
+      var xuF=$('ugt-cv-xunit').value, yuF=uClean($('ugt-cv-yunit').value);
+      var gunitF = (yuF||xuF) ? gradUnit(xuF,yuF) : '';
       var fitLines = [];
       var fitDSCount = 0;
       datasets.forEach(function(ds, dsi){
@@ -4121,6 +4405,7 @@
         var halfMF = haveMinMaxF ? Math.abs(dmxF.m-dmnF.m)/2 : 0;
         var halfCF = haveMinMaxF ? Math.abs(dmxF.c-dmnF.c)/2 : 0;
         fitLines.push({text:tag+': m = '+fmt(p.m,4)+(haveMinMaxF?(' ± '+fmt(halfMF,2)):'')+(gunitF?(' '+gunitF):'')+', c = '+fmt(p.c,4)+(haveMinMaxF?(' ± '+fmt(halfCF,2)):'')+(yuF?(' '+yuF):''), color:ds.color});
+        if(fixPointOf(ds)) fitLines.push({text:tag+' fixed through ('+fmt(ds.fixed.x,4)+', '+fmt(ds.fixed.y,4)+')', color:ds.color});
         if(dmnF) fitLines.push({text:tag+' minimum: m = '+fmt(dmnF.m,4)+(gunitF?(' '+gunitF):'')+', c = '+fmt(dmnF.c,4)+(yuF?(' '+yuF):''), color:COLOR_MIN});
         if(dmxF) fitLines.push({text:tag+' maximum: m = '+fmt(dmxF.m,4)+(gunitF?(' '+gunitF):'')+', c = '+fmt(dmxF.c,4)+(yuF?(' '+yuF):''), color:COLOR_MAX});
       });
@@ -4130,8 +4415,8 @@
       // the tangent tools only ever apply to one data set at a time (see multiFitActive), so there's
       // nothing to number here; this follows "Show tangent" and is hidden once 2+ curved fits are
       // shown at once, same as the tangent line itself
-      var xuB=$('ugt-cv-xunit').value, yuB=$('ugt-cv-yunit').value;
-      var gunitB = (yuB||xuB) ? ((yuB||'1')+(xuB?(' '+xuB+'⁻¹'):'')) : '';
+      var xuB=$('ugt-cv-xunit').value, yuB=uClean($('ugt-cv-yunit').value);
+      var gunitB = (yuB||xuB) ? gradUnit(xuB,yuB) : '';
       var mStudB = (tan.x2-tan.x1)!==0 ? (tan.y2-tan.y1)/(tan.x2-tan.x1) : 0;
       var cStudB = tangentIntercept(mStudB);
       var lines = [
@@ -4156,8 +4441,8 @@
 
   function updateCurveReadout(){
     if(!tan) return;
-    var xu=$('ugt-cv-xunit').value, yu=$('ugt-cv-yunit').value;
-    var gunit = (yu||xu) ? ((yu||'1')+(xu?(' '+xu+'⁻¹'):'')) : '';
+    var xu=$('ugt-cv-xunit').value, yu=uClean($('ugt-cv-yunit').value);
+    var gunit = (yu||xu) ? gradUnit(xu,yu) : '';
     if(CURVES[cvType].isLinear){ updateLinearReadout(xu,yu,gunit); return; }
     if(multiFitActive()){
       var htmlM = datasetStatusNote();
@@ -4337,6 +4622,17 @@
       ev.preventDefault();
       return;
     }
+        if(cvFixPicking && cvPlot && p.x>=cvPlot.padL && p.x<=cvPlot.padL+cvPlot.plotW && p.y>=cvPlot.padT && p.y<=cvPlot.padT+cvPlot.plotH){
+      var fxBest = null, fxD2 = Infinity;
+      cvData.forEach(function(d){
+        var fdx = cvPlot.sx(d.x)-p.x, fdy = cvPlot.sy(d.y)-p.y, fd2 = fdx*fdx+fdy*fdy;
+        if(fd2 < fxD2){ fxD2 = fd2; fxBest = d; }
+      });
+      if(fxBest && fxD2 <= 20*20){ cvChooseFixed(fxBest); }
+      else { flashStatus($('ugt-cv-d-status'), 'No data point there: click directly on one of the crosses, or press Esc to cancel.'); }
+      ev.preventDefault();
+      return;
+    }
     var bHit = cvBezierHitTest(p.x,p.y);
     if(bHit !== null){
       cvDrag='bezierHandle'; cvBezierDragIndex=bHit;
@@ -4490,7 +4786,7 @@
     var subset = cvSelected.map(function(i){ return cvData[i]; }).filter(Boolean);
     if(subset.length < 2) return;
     var fitted;
-    try{ fitted = CURVES[cvType].fit(subset); }catch(e){ fitted = null; }
+    try{ fitted = fitFor(cvType, subset, datasets[activeDataset]); }catch(e){ fitted = null; }
     if(!fitted){ flashStatus($('ugt-cv-d-status'), 'Could not fit a curve to just those points — try selecting a few more.'); return; }
     cvParams = fitted;
     var n = cvSelected.length;
@@ -4523,6 +4819,42 @@
     flashStatus($('ugt-cv-d-status'), 'Cleared all data points.');
   });
 
+
+    /* ---------- FIX and Colorimetry buttons ---------- */
+  $('ugt-cv-fix').addEventListener('click', function(){
+    var h = fixHolder();
+    if(!CURVES[cvType].fitFixed) return;
+    if(fixPointOf(h)){
+      h.fixed = null; h.fitPinned = false; cvFixPicking = false;
+      cvAfterFixChange('Released the fixed point: the line is fitted to every point again.');
+      return;
+    }
+    cvFixPicking = !cvFixPicking;
+    updateFixUI();
+  });
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape' && cvFixPicking){ cvFixPicking = false; updateFixUI(); }
+  });
+  // Colorimetry: Absorbance, A (dimensionless) on y; time on x for an exponential decay, or
+  // [Concentration] on x for a linear calibration graph
+  $('ugt-cv-colorimetry').addEventListener('click', function(){
+    if(cvType !== 'expdecay' && cvType !== 'linear'){
+      flashStatus($('ugt-cv-d-status'), 'Colorimetry sets the axes for the Linear and Exponential decay curve shapes: choose one of those first.');
+      return;
+    }
+    if(cvType === 'expdecay'){
+      $('ugt-cv-xlab').value = 'Time, t';
+      if(!/^(ms|s|min|h|hr)$/i.test($('ugt-cv-xunit').value.trim())) $('ugt-cv-xunit').value = 's';
+    } else {
+      $('ugt-cv-xlab').value = '[Concentration]';
+      $('ugt-cv-xunit').value = 'mol dm⁻³';
+    }
+    $('ugt-cv-ylab').value = 'Absorbance, A';
+    $('ugt-cv-yunit').value = 'dimensionless';
+    drawCurvePlot(); updateCurveReadout();
+    flashStatus($('ugt-cv-d-status'), 'Axes set for colorimetry.');
+  });
+  updateFixUI();
 
   /* ---------- init ---------- */
   loadCurve('expdecay');
@@ -4608,6 +4940,11 @@
                     <button id="ugt-cv-range-auto0" class="ugt-btn ugt-btn-ghost" type="button">Autoscale (0,0 origin)</button>
                   </div>
                   <span class="ugt-hint">Set range plots from (0, 0) up to the highest x/y you give. Autoscale fits tightly to your current data; Autoscale (0,0 origin) does the same but always keeps the origin in view.</span>
+                  <div class="ugt-inline" style="margin-top:10px">
+                    <button id="ugt-cv-fix" class="ugt-btn ugt-btn-ghost" type="button">FIX</button>
+                    <button id="ugt-cv-colorimetry" class="ugt-btn ugt-btn-ghost" type="button">Colorimetry</button>
+                  </div>
+                  <span class="ugt-hint" id="ugt-cv-fix-note" style="display:block;margin-top:4px"></span>
                 </div>
               </div>
               <div class="ugt-data-block">
@@ -4754,6 +5091,8 @@
   #ugt-root .ugt-btn-ghost:hover{ background:var(--teal-soft); }
   #ugt-root .ugt-btn-danger{ color:#c0392b; border-color:#c0392b; }
   #ugt-root .ugt-btn-danger:hover{ background:#f8dcd6; }
+  #ugt-root .ugt-btn-ghost.ugt-btn-on{ background:var(--teal); color:#fff; border-color:var(--teal-d); }
+  #ugt-root .ugt-btn-ghost.ugt-btn-on:hover{ background:var(--teal-d); }
   #ugt-root .ugt-btn[disabled]{ opacity:.45; cursor:not-allowed; }
   #ugt-root .ugt-check{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--ink-soft); cursor:pointer; }
 
@@ -5290,6 +5629,107 @@
 
   function curveY(x){ return CURVES[cvType].y(cvParams, x); }
   function curveSlope(x){ return CURVES[cvType].slope(cvParams, x); }
+  var cvFixHolder = {fixed:null};
+  function fixHolder(){ return cvFixHolder; }
+
+  /* ---------- FIX: force the fitted line through one chosen, exactly-known point ---------- */
+  // Each fixable curve shape gets fixOk(x,y) (can this point be fixed?) and fitFixed(data,x0,y0)
+  // (a least-squares fit constrained to pass exactly through (x0,y0), in the same linearised form
+  // the ordinary fit() already uses). Free-form shapes and the plateau are left unconstrained.
+  CURVES.linear.fixWhy = ''; CURVES.linear.fixOk = function(x,y){ return isFinite(x) && isFinite(y); };
+  CURVES.linear.fitFixed = function(d,x0,y0){
+    var nu=0, de=0;
+    d.forEach(function(p){ var dx=p.x-x0; nu+=dx*(p.y-y0); de+=dx*dx; });
+    var m = de!==0 ? nu/de : 0;
+    return {m:m, c:y0-m*x0};
+  };
+  CURVES.expdecay.fixWhy = 'its y value must be greater than zero';
+  CURVES.expdecay.fixOk = function(x,y){ return isFinite(x) && y>0; };
+  CURVES.expdecay.fitFixed = function(d,x0,y0){
+    // ln y = ln y0 - (x - x0)/tau, so regress (ln y - ln y0) on (x - x0) through the origin
+    var l0=Math.log(y0), nu=0, de=0;
+    d.forEach(function(p){ if(!(p.y>0)) return; var dx=p.x-x0; nu+=dx*(Math.log(p.y)-l0); de+=dx*dx; });
+    var s = de!==0 ? nu/de : 0;
+    var tau = s!==0 ? -1/s : 1e9;
+    return {A:y0*Math.exp(x0/tau), tau:tau};
+  };
+  CURVES.inv.fixWhy = 'its x value must not be zero';
+  CURVES.inv.fixOk = function(x,y){ return isFinite(y) && isFinite(x) && x!==0; };
+  CURVES.inv.fitFixed = function(d,x0,y0){ return {k:y0*x0}; };
+  CURVES.invsq.fixWhy = 'its x value must not be zero';
+  CURVES.invsq.fixOk = function(x,y){ return isFinite(y) && isFinite(x) && x!==0; };
+  CURVES.invsq.fitFixed = function(d,x0,y0){ return {k:y0*x0*x0}; };
+  CURVES.logdecay.fixWhy = 'its y value must be greater than zero';
+  CURVES.logdecay.fixOk = function(x,y){ return isFinite(x) && y>0; };
+  CURVES.logdecay.fitFixed = function(d,x0,y0){
+    // 1/y = 1/A + x/(A·tau); through (x0,y0): (1/y - 1/y0) = s·(x - x0), with s = 1/(A·tau)
+    var i0=1/y0, nu=0, de=0;
+    d.forEach(function(p){ if(!p.y) return; var dx=p.x-x0; nu+=dx*(1/p.y-i0); de+=dx*dx; });
+    var s = de!==0 ? nu/de : 0;
+    var c = i0 - s*x0;
+    if(!(c>0)) return null;
+    return {A:1/c, tau: s!==0 ? c/s : 1e9};
+  };
+
+  var cvFixPicking = false;   // true while waiting for the user to click the data point to fix
+  // 'dimensionless' is shown on the axis title but is not a unit to be multiplied into gradients etc.
+  function uClean(u){ return String(u==null?'':u).trim().toLowerCase()==='dimensionless' ? '' : u; }
+  // unit of a gradient (y unit per x unit). With a dimensionless y and a compound x unit such as
+  // mol dm⁻³ the result is written (mol dm⁻³)⁻¹ rather than the garbled "1 mol dm⁻³⁻¹".
+  function gradUnit(xu, yu){
+    if(!xu) return yu || '';
+    if(!yu) return /[\s·⁻]/.test(xu) ? '('+xu+')⁻¹' : xu+'⁻¹';
+    return yu+' '+xu+'⁻¹';
+  }
+  // the fixed point of a data-set holder, or null if there is none / it no longer applies. The
+  // fixed point is held as a reference to the very point object in the table, so editing its x or y
+  // moves the fixed point with it, and deleting the point releases the fix automatically.
+  function fixPointOf(h){
+    if(!h || !h.fixed) return null;
+    var pts = h.points || cvData;
+    if(pts.indexOf(h.fixed) < 0){ h.fixed = null; return null; }
+    var C = CURVES[cvType];
+    if(!C.fitFixed || !C.fixOk(h.fixed.x, h.fixed.y)) return null;
+    return h.fixed;
+  }
+  // every fit goes through here, so the constraint is honoured by the ordinary fit, "Fit to
+  // selected", and each data set's own remembered fit alike
+  function fitFor(type, pts, h){
+    var C = CURVES[type], fx = C.fitFixed ? fixPointOf(h) : null;
+    if(fx){ var r = C.fitFixed(pts, fx.x, fx.y); if(r) return r; }
+    return C.fit(pts);
+  }
+  function updateFixUI(){
+    var btn = $('ugt-cv-fix'), note = $('ugt-cv-fix-note');
+    if(!btn || !note) return;
+    var can = !!CURVES[cvType].fitFixed, fx = fixPointOf(fixHolder());
+    if(!can || fx) cvFixPicking = false;
+    btn.disabled = !can;
+    btn.classList.toggle('ugt-btn-on', !!fx || cvFixPicking);
+    btn.textContent = fx ? 'UNFIX' : (cvFixPicking ? 'FIX: click a point…' : 'FIX');
+    note.textContent = !can ? 'FIX is not available for this curve shape.'
+      : fx ? ('Line fixed through ('+fmt(fx.x,4)+', '+fmt(fx.y,4)+'). Press UNFIX to release it.')
+      : cvFixPicking ? 'Click one of your data points on the graph to fix it (Esc to cancel).'
+      : 'Press FIX, then click a data point whose value is known exactly: the line is forced through it.';
+  }
+  function cvAfterFixChange(msg){
+    refitCurve(); resyncPivot();
+    if(typeof renderDatasetChips === 'function') renderDatasetChips();
+    if(typeof updateDatasetButtons === 'function') updateDatasetButtons();
+    drawCurvePlot(); updateCurveReadout(); updateFixUI();
+    flashStatus($('ugt-cv-d-status'), msg);
+  }
+  function cvChooseFixed(d){
+    var C = CURVES[cvType], h = fixHolder();
+    if(!C.fitFixed) return;
+    if(!C.fixOk(d.x, d.y)){
+      flashStatus($('ugt-cv-d-status'), 'That point cannot be fixed on this curve shape: '+C.fixWhy+'.');
+      return;
+    }
+    h.fixed = d; h.fitPinned = false; cvFixPicking = false;
+    cvAfterFixChange('Fixed the point ('+fmt(d.x,4)+', '+fmt(d.y,4)+'): the line now passes exactly through it, and every other point is fitted around it.');
+  }
+
   function cvXExtent(){
     if(cvData.length<2){
       var pxs = CURVES[cvType].data.map(function(d){return d.x;});
@@ -5298,7 +5738,7 @@
     var xs=cvData.map(function(d){return d.x;});
     return {min:Math.min.apply(null,xs), max:Math.max.apply(null,xs)};
   }
-  function refitCurve(){ cvSelected = []; updateSelectUI(); cvBezierDragIndex = null; cvParams = CURVES[cvType].fit(cvData); }
+  function refitCurve(){ cvSelected = []; updateSelectUI(); cvBezierDragIndex = null; cvParams = fitFor(cvType, cvData, fixHolder()); updateFixUI(); }
   // after a refit, re-anchor the pivot onto the (possibly now-different) curve at the same x,
   // translating the tangent rigidly so the student's own slope survives the data edit
   function resyncPivot(){
@@ -5716,7 +6156,7 @@
     cctx.save();
     cctx.translate(13, padT+plotH/2); cctx.rotate(-Math.PI/2);
     cctx.textBaseline='top';
-    cctx.fillText(yl + (yu?(' / '+yu):''), 0, 0);
+    cctx.fillText(yl + (yu?(' / '+yu):''), 0, 0); yu = uClean(yu);
     cctx.restore();
 
     // smooth curve — the line of best fit is drawn in black for the linear mode, teal for a curved fit
@@ -5813,7 +6253,7 @@
           riseLeftSide?'right':'left', 'middle', '600 11px Segoe UI,system-ui,sans-serif', '#8a5a0d');
 
         // gradient — placed clear of the wedge, just past its lowest (screen-y, i.e. furthest-down) corner
-        var gunit2 = (yu||xu) ? ((yu||'1')+(xu?(' '+xu+'⁻¹'):'')) : '';
+        var gunit2 = (yu||xu) ? gradUnit(xu,yu) : '';
         var gLabel = 'gradient = rise/run = '+fmt(run!==0?rise/run:0,4)+(gunit2?(' '+gunit2):'');
         var gY = Math.max(sAy,sBy,sCy) + 20, gX = sBx;
         var gLeft = (sAx+sCx)/2 >= sBx;
@@ -5833,7 +6273,16 @@
     // a soft amber ring behind it
     cvData.forEach(function(d,di){
       var X=sx(d.x), Y=sy(d.y);
-      if(cvSelected.indexOf(di)>=0){
+      if(d===fixPointOf(fixHolder())){
+          cctx.save();
+          cctx.beginPath(); cctx.arc(X,Y,10.5,0,2*Math.PI);
+          cctx.strokeStyle='#16222c'; cctx.lineWidth=2; cctx.stroke();
+          cctx.beginPath(); cctx.arc(X,Y,14,0,2*Math.PI);
+          cctx.strokeStyle='#c87f12'; cctx.lineWidth=1.4; cctx.setLineDash([3,3]); cctx.stroke();
+          cctx.restore();
+          labelWithBg('fixed', X+17, Y-15, 'left', 'bottom', '600 11px Segoe UI,system-ui,sans-serif', '#8a5a0d');
+        }
+        if(cvSelected.indexOf(di)>=0){
         cctx.beginPath(); cctx.arc(X,Y,8,0,2*Math.PI);
         cctx.fillStyle='rgba(200,127,18,.22)'; cctx.fill();
         cctx.strokeStyle='#c87f12'; cctx.lineWidth=1.6; cctx.stroke();
@@ -5926,8 +6375,8 @@
     // In linear mode this stays visible even with the trial line hidden (it reports the best-fit/
     // min/max results, not just the in-progress trial); in curved mode it follows "Show tangent".
     if(tan && (isLin || tangentVisible)){
-      var xuB=$('ugt-cv-xunit').value, yuB=$('ugt-cv-yunit').value;
-      var gunitB = (yuB||xuB) ? ((yuB||'1')+(xuB?(' '+xuB+'⁻¹'):'')) : '';
+      var xuB=$('ugt-cv-xunit').value, yuB=uClean($('ugt-cv-yunit').value);
+      var gunitB = (yuB||xuB) ? gradUnit(xuB,yuB) : '';
       var lines, boxTitle;
       if(isLin){
         // tagged "Data set (1)" the same way the Teacher tab's multi-data-set version numbers each
@@ -5939,6 +6388,7 @@
         lines = [
           {text:'Data set (1): m = '+fmt(cvParams.m,4)+(haveMinMaxB?(' ± '+fmt(halfMB,2)):'')+(gunitB?(' '+gunitB):'')+', c = '+fmt(cvParams.c,4)+(haveMinMaxB?(' ± '+fmt(halfCB,2)):'')+(yuB?(' '+yuB):''), color:COLOR_BEST}
         ];
+        if(fixPointOf(fixHolder())) lines.push({text:'Data set (1) fixed through ('+fmt(cvFixHolder.fixed.x,4)+', '+fmt(cvFixHolder.fixed.y,4)+')', color:COLOR_BEST});
         if(minLine) lines.push({text:'Data set (1) minimum: m = '+fmt(minLine.m,4)+(gunitB?(' '+gunitB):'')+', c = '+fmt(minLine.c,4)+(yuB?(' '+yuB):''), color:COLOR_MIN});
         if(maxLine) lines.push({text:'Data set (1) maximum: m = '+fmt(maxLine.m,4)+(gunitB?(' '+gunitB):'')+', c = '+fmt(maxLine.c,4)+(yuB?(' '+yuB):''), color:COLOR_MAX});
       } else {
@@ -5997,8 +6447,8 @@
 
   function updateCurveReadout(){
     if(!tan) return;
-    var xu=$('ugt-cv-xunit').value, yu=$('ugt-cv-yunit').value;
-    var gunit = (yu||xu) ? ((yu||'1')+(xu?(' '+xu+'⁻¹'):'')) : '';
+    var xu=$('ugt-cv-xunit').value, yu=uClean($('ugt-cv-yunit').value);
+    var gunit = (yu||xu) ? gradUnit(xu,yu) : '';
     if(CURVES[cvType].isLinear){ updateLinearReadout(xu,yu,gunit); return; }
     var mStud = (tan.x2-tan.x1)!==0 ? (tan.y2-tan.y1)/(tan.x2-tan.x1) : 0;
     var cStud = tangentIntercept(mStud);
@@ -6142,6 +6592,17 @@
       summaryBoxDrag = {offX: p.x-summaryBoxRect.x, offY: p.y-summaryBoxRect.y};
       ccan.style.cursor = 'grabbing';
       try{ ccan.setPointerCapture(ev.pointerId); }catch(e){ /* see the axis-drag capture above */ }
+      ev.preventDefault();
+      return;
+    }
+        if(cvFixPicking && cvPlot && p.x>=cvPlot.padL && p.x<=cvPlot.padL+cvPlot.plotW && p.y>=cvPlot.padT && p.y<=cvPlot.padT+cvPlot.plotH){
+      var fxBest = null, fxD2 = Infinity;
+      cvData.forEach(function(d){
+        var fdx = cvPlot.sx(d.x)-p.x, fdy = cvPlot.sy(d.y)-p.y, fd2 = fdx*fdx+fdy*fdy;
+        if(fd2 < fxD2){ fxD2 = fd2; fxBest = d; }
+      });
+      if(fxBest && fxD2 <= 20*20){ cvChooseFixed(fxBest); }
+      else { flashStatus($('ugt-cv-d-status'), 'No data point there: click directly on one of the crosses, or press Esc to cancel.'); }
       ev.preventDefault();
       return;
     }
@@ -6298,6 +6759,42 @@
     flashStatus($('ugt-cv-d-status'), 'Cleared all data points.');
   });
 
+
+    /* ---------- FIX and Colorimetry buttons ---------- */
+  $('ugt-cv-fix').addEventListener('click', function(){
+    var h = fixHolder();
+    if(!CURVES[cvType].fitFixed) return;
+    if(fixPointOf(h)){
+      h.fixed = null; h.fitPinned = false; cvFixPicking = false;
+      cvAfterFixChange('Released the fixed point: the line is fitted to every point again.');
+      return;
+    }
+    cvFixPicking = !cvFixPicking;
+    updateFixUI();
+  });
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape' && cvFixPicking){ cvFixPicking = false; updateFixUI(); }
+  });
+  // Colorimetry: Absorbance, A (dimensionless) on y; time on x for an exponential decay, or
+  // [Concentration] on x for a linear calibration graph
+  $('ugt-cv-colorimetry').addEventListener('click', function(){
+    if(cvType !== 'expdecay' && cvType !== 'linear'){
+      flashStatus($('ugt-cv-d-status'), 'Colorimetry sets the axes for the Linear and Exponential decay curve shapes: choose one of those first.');
+      return;
+    }
+    if(cvType === 'expdecay'){
+      $('ugt-cv-xlab').value = 'Time, t';
+      if(!/^(ms|s|min|h|hr)$/i.test($('ugt-cv-xunit').value.trim())) $('ugt-cv-xunit').value = 's';
+    } else {
+      $('ugt-cv-xlab').value = '[Concentration]';
+      $('ugt-cv-xunit').value = 'mol dm⁻³';
+    }
+    $('ugt-cv-ylab').value = 'Absorbance, A';
+    $('ugt-cv-yunit').value = 'dimensionless';
+    drawCurvePlot(); updateCurveReadout();
+    flashStatus($('ugt-cv-d-status'), 'Axes set for colorimetry.');
+  });
+  updateFixUI();
 
   /* ---------- init ---------- */
   loadCurve('expdecay');
