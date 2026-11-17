@@ -458,12 +458,12 @@ gens.s9c={need:1,make(r){
   const u=r.pick(RUBS);
   return{label:'9.3',marks:3,text:u.text,rub:true,rows:5,ideas:u.ideas,model:u.model,hints:H(u.hint1,'Follow the chain in Chunk 3: the change, what it does to the particles, collisions each second, successful collisions each second, the rate. Say what stays the same: the temperature.')};}};
 gens.s9d={need:1,fixed:true,make(r){
-  return{label:'9.4',marks:2,text:'A rise in temperature of 10 &deg;C makes the particles move only about 2 in every 100 faster, yet it can double the rate of a reaction. Explain why.',rub:true,rows:4,
+  return{label:'9.4',marks:2,text:'A rise in temperature of 10 &deg;C makes the particles move only about 2% faster on average, yet it can double the rate of a reaction. Explain why.',rub:true,rows:4,
    ideas:[['The number of collisions each second rises only slightly.',/(slight|only a little|a little|small|not much|only about 2)/],
     ['A much bigger fraction of the collisions has at least the activation energy.',/(((bigger|larger|greater|higher|more).{0,40}(fraction|proportion|percentage|collisions|particles).{0,60}(activation|enough energy))|activation energy)/],
     ['So there are many more successful collisions each second, and the rate is about twice as fast.',/(successful|twice|double|faster)/]],
    model:'A rise of 10 °C makes the particles only slightly faster, so the number of collisions each second rises only slightly. The big effect is that a much bigger fraction of the collisions have at least the activation energy, so there are many more successful collisions each second. That is why the rate can double.',
-   hints:H('A rise of 2 in 100 is tiny. Can it double the number of collisions? So where does the rest of the doubling come from?','Think about the activation energy: what happens to the fraction of collisions with at least that much energy when the particles move faster?')};}};
+   hints:H('A rise of 2% is tiny. Can it double the number of collisions? So where does the rest of the doubling come from?','Think about the activation energy: what happens to the fraction of collisions with at least that much energy when the particles move faster?')};}};
 
 /* ================= engine ================= */
 function norm(s){return String(s).toLowerCase().replace(/[₀-₉]/g,c=>String(c.charCodeAt(0)-0x2080)).replace(/[−–]/g,'-').replace(/[.!]+$/,'').replace(/\s+/g,' ').trim();}
