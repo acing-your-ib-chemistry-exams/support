@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>First-order reactions: rate from gradients, and rate against concentration</title>
+<style>
+@page{size:A4;margin:18mm 16mm}
+*{box-sizing:border-box}
+body{font-family:'Palatino','Palatino Linotype','TeX Gyre Pagella','Book Antiqua',serif;font-size:17px;line-height:1.5;color:#000;background:#fff;margin:0;padding:14px;counter-reset:sec q}
+.wrap{max-width:900px;margin:0 auto}
+h1,h2,h3,.sans,button,table.sans,.res{font-family:'Clear Gothic','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:400}
+h1{font-size:28px;margin:0 0 4px;line-height:1.2}
+h2{font-size:22px;margin:34px 0 10px;padding-left:88px;position:relative;counter-increment:sec;border-top:1px solid #000;padding-top:10px}
+h2::before{content:counter(sec);position:absolute;left:0}
+h3{font-size:18px;margin:24px 0 6px}
+.runhead{display:flex;justify-content:space-between;font-size:14px;border-bottom:1px solid #000;padding-bottom:3px;margin-bottom:16px}
+.ind{margin-left:88px}
+.box{border:1px solid #000;padding:10px 14px;margin:12px 0}
+.eq{text-align:center;white-space:nowrap;margin:10px 0;font-size:16px;overflow-x:auto}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .25em;line-height:1.25}
+.frac>span:first-child{border-bottom:1px solid #000;padding:0 .35em .1em}.frac>span:last-child{padding:.1em .35em 0}
+button{font-size:14px;background:#fff;color:#000;border:1px solid #000;padding:5px 12px;margin:3px 4px 3px 0;cursor:pointer;border-radius:3px}
+button:hover,button:focus{background:#000;color:#fff}
+a.btn{display:inline-block;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;color:#000;border:1px solid #000;padding:5px 12px;border-radius:3px;text-decoration:none;margin:3px 4px 3px 0}
+a.btn:hover{background:#000;color:#fff}
+input[type=number],input[type=text],select,textarea{font:inherit;font-size:16px;border:1px solid #000;padding:3px 6px;border-radius:3px;background:#fff}
+input[type=number]{width:110px}
+textarea{width:100%;min-height:70px}
+table{border-collapse:collapse;margin:8px 0}td,th{border:1px solid #000;padding:6px 10px;text-align:center;vertical-align:middle;font-weight:400}th{font-weight:700}
+table.left td,table.left th{text-align:left;vertical-align:top}
+.q{border:1px solid #000;padding:10px 14px;margin:14px 0 14px 88px;position:relative;break-inside:avoid;counter-increment:q}
+.q::before{content:counter(q);position:absolute;left:-80px;width:68px;text-align:right;font-weight:700}
+.res{font-size:14px;margin-top:6px}
+.ok{font-weight:700}
+.hint,.model{display:none;border-left:3px solid #000;padding-left:10px;margin-top:8px;font-size:16px}
+.hint.show,.model.show{display:block}
+.opt{display:block;margin:4px 0;font-size:16px}
+.tt{border-bottom:1px dotted #000;cursor:help;position:relative}
+.tt:hover::after,.tt:focus::after,.tt.open::after{content:attr(data-tip);position:absolute;left:0;top:1.5em;z-index:9;width:270px;background:#000;color:#fff;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.35;padding:6px 9px;border-radius:3px}
+.bar{position:sticky;top:0;background:#fff;border-bottom:1px solid #000;padding:6px 0;z-index:5}
+.foot{border-top:1px solid #000;margin-top:34px;padding-top:6px;font-size:13px}
+.mono{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px}
+@media(max-width:760px){.ind,.q{margin-left:0}.q::before{position:static;display:block;text-align:left}h2{padding-left:0}h2::before{position:static;margin-right:10px}}
+@media print{.bar,.noprint,button,a.btn{display:none!important}.hint,.model{display:none}.model.show{display:block}.tt::after{display:none!important}body{padding:0;font-size:11pt}.q{break-inside:avoid}}
+</style></head><body><div class="wrap">
+<div class="runhead"><span>Chemistry</span><span>Wednesday 18 November 2026</span></div>
+<h1>First-order reactions: rate from gradients, and rate against concentration</h1>
+<p class="ind">Brilliant blue dye and bleach (sodium chlorate(I)). You will use the <a href="graphical-analysis-toolkit.html" target="_blank" rel="noopener">Graphical Analysis Toolkit</a> to turn a concentration–time curve into a graph that shows what <i>first order</i> means.</p>
+
+<h2>Learning objectives and key ideas</h2>
+<div class="ind"><p>By the end of this worksheet you can:</p><ul>
+<li>plot concentration against time with the toolkit and place <span class="tt" tabindex="0" data-tip="A straight line that just touches a curve at one point and has the same steepness as the curve there.">tangents</span> at five points;</li>
+<li>use the <span class="tt" tabindex="0" data-tip="How steep a line is: the change in the vertical value over the change in the horizontal value.">gradient</span> of each tangent as the <span class="tt" tabindex="0" data-tip="How fast the concentration of a reactant changes with time. It is the size of the gradient of a concentration against time graph.">rate of reaction</span> at that moment;</li>
+<li>plot rate (vertical axis) against concentration (horizontal axis), use a linear fit, and say what the straight line through the origin proves;</li>
+<li>find the <span class="tt" tabindex="0" data-tip="The constant k in: rate of reaction = k × concentration. For a first-order reaction its unit is s⁻¹.">rate constant</span>, k, from the gradient of that line.</li></ul></div>
+<div class="box ind"><p><b>Key ideas</b></p>
+<div class="eq">gradient = <span class="frac"><span>change in concentration</span><span>change in time</span></span></div>
+<p>The concentration of dye falls, so every gradient of the concentration–time graph is negative. The <b>rate of reaction</b> is the size of the gradient: write it as a positive number.</p>
+<div class="eq">rate of reaction = rate constant, k × concentration of dye, c</div>
+<p>A reaction with this rate equation is <b>first order</b> in the dye. A graph of rate against concentration is then a straight line through the origin, with gradient k.</p></div>
+
+<h2>The Exploration</h2>
+<h3 class="ind" style="margin-left:88px">Part A: plot the concentration–time data</h3>
+<div class="ind"><p>Choose your data set (your teacher may give you a number). The same data set must be used throughout.</p>
+<p class="mono">Data set: <select id="ds" data-save></select></p>
+<div id="dtab"></div>
+<p>The concentration is in µmol dm⁻³ (millionths of a mole per cubic decimetre), so the starting concentration is a few of these units. Time is in seconds.</p>
+<p><a class="btn" href="graphical-analysis-toolkit.html" target="_blank" rel="noopener">Open the Graphical Analysis Toolkit</a><button id="cpy1">Copy the data as CSV</button><button id="dl1">Download the data as a .csv file</button> <span class="mono" id="m1"></span></p></div>
+<div class="q"><p>Plot <b>concentration of dye (vertical axis)</b> against <b>time (horizontal axis)</b> in the toolkit. Type in the values, or import the CSV. Fit a smooth curve through the points. Give each axis a title with its unit.</p>
+<p>Describe the shape of the curve in a sentence: where is it steepest, and what happens as the time increases?</p><textarea id="a1" data-save></textarea>
+<button data-m="m_a1">Show a model answer</button><div class="model" id="m_a1">The curve falls steeply at the start (high concentration) and becomes less and less steep, approaching zero but never reaching it: an exponential decay. The steepness (the rate) is greater when there is more dye.</div></div>
+
+<h3 class="ind" style="margin-left:88px">Part B: gradients at five key points</h3>
+<div class="box ind"><p><b>Small steps for a tangent</b></p><ol><li>In the toolkit, place a tangent on your curve at the time shown in the table below.</li><li>Check that the tangent just touches the curve at that point and does not cut across it.</li><li>Read the gradient of the tangent from the toolkit. If you work it out yourself, choose two points far apart on the tangent line:</li></ol>
+<div class="eq">gradient = <span class="frac"><span>concentration at the end − concentration at the start</span><span>time at the end − time at the start</span></span></div>
+<p>The gradient will be negative. Enter the <b>rate of reaction</b>: the size of the gradient, as a positive number. Give three decimal places. Unit: µmol dm⁻³ s⁻¹.</p></div>
+<div class="q"><p>Place tangents at the five times below. Enter the rate of reaction at each.</p><div id="gtab"></div><button id="chkg">Check my five rates</button><button id="hg">Hint</button>
+<div class="hint" id="hgt">A tangent is steepest at 0 s, where the concentration is highest, and flattest at 400 s. If your rates do not fall steadily from the first to the last, re-place the tangent that breaks the pattern. A tangent at 0 s touches the curve at its very first point.</div><div class="res" id="gres"></div></div>
+
+<h3 class="ind" style="margin-left:88px">Part C: rate against concentration</h3>
+<div class="ind"><p>Now the five rates become a new set of data. In the toolkit, plot <b>rate of reaction (vertical axis)</b> against <b>concentration of dye (horizontal axis)</b>, using the five pairs from the table below. Then use the toolkit’s <b>linear fit</b> to draw the best straight line.</p></div>
+<div class="q"><p>Complete the last column of the table by calculating, for each row, the rate of reaction over the concentration of dye.</p>
+<div class="eq">rate of reaction over concentration of dye = <span class="frac"><span>rate of reaction</span><span>concentration of dye, c</span></span></div>
+<div id="ctab"></div><p><button id="cpy2">Copy my concentration and rate values as CSV</button><button id="chkr">Check the last column</button> <span class="mono" id="m2"></span></p><div class="res" id="rres"></div></div>
+<div class="q"><p>Read from the toolkit’s linear fit: the gradient of the line and the intercept on the vertical axis.</p>
+<p class="mono">Gradient of the line: <input type="number" step="any" id="slope" data-save> &nbsp; Intercept: <input type="number" step="any" id="icpt" data-save></p>
+<button id="chks">Check</button><button id="hs">Hint</button><div class="hint" id="hst">The gradient of this line is rate over concentration, so it should match the numbers in your last column. Its unit is s⁻¹. The intercept should be very close to zero compared with your largest rate.</div><div class="res" id="sres"></div></div>
+
+<h3 class="ind" style="margin-left:88px">Part D: what the graph shows</h3>
+<div id="mcq"></div>
+<div id="num"></div>
+<div id="cq"></div>
+
+<h2>Underlying ideas: definitions to learn</h2>
+<div class="ind"><table class="left" id="gl"><tr><th style="width:36%">term</th><th>definition</th></tr>
+<tr><td>concentration, c</td><td>the amount of a substance in a given volume of solution; here in µmol dm⁻³.</td></tr>
+<tr><td>gradient</td><td>how steep a line is: the change in the vertical value over the change in the horizontal value.</td></tr>
+<tr><td>tangent</td><td>a straight line that just touches a curve at one point, with the same steepness as the curve there.</td></tr>
+<tr><td>rate of reaction</td><td>how fast the concentration of a reactant falls: the size of the gradient of its concentration–time graph.</td></tr>
+<tr><td>proportional</td><td>when one quantity doubles, the other doubles; a graph of one against the other is a straight line through the origin.</td></tr>
+<tr><td>first-order reaction</td><td>a reaction whose rate is proportional to the concentration of one reactant: rate of reaction = rate constant, k × concentration.</td></tr>
+<tr><td>rate constant, k</td><td>the constant in the rate equation; for first order it is the gradient of a graph of rate against concentration, with unit s⁻¹, and equals 0.693 over the half-life.</td></tr>
+<tr><td>half-life</td><td>the time for the concentration of a reactant to fall to half its value.</td></tr></table></div>
+
+<h2>Scale-up and looking ahead</h2>
+<div id="cq2"></div>
+
+<div class="bar noprint" style="position:static;border-top:1px solid #000;margin-top:24px"><button id="save">Save progress</button><button id="load">Retrieve progress</button><button id="pdf">Save as a .pdf file</button> <span class="mono" id="msg"></span></div>
+<div class="foot">Science Department · Refined with AI</div>
+</div>
+<script>
+function $(i){return document.getElementById(i)}
+const MINUS='−';
+const PRESETS=[[6.00,0.0046],[8.00,0.0035],[5.00,0.0058],[7.50,0.0040],[4.00,0.0070],[9.00,0.0030]];
+const TIMES=[0,50,100,150,200,250,300,400,500,600],KEYT=[0,100,200,300,400];
+let ds=0;const att={};
+PRESETS.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent='Data set '+(i+1);$('ds').appendChild(o)});
+function K(){return PRESETS[ds][1]}function C0(){return PRESETS[ds][0]}
+function cAt(t){return C0()*Math.exp(-K()*t)}
+function tabData(){return TIMES.map(t=>[t,+cAt(t).toFixed(3)])}
+function sig(x){return Number(x.toPrecision(3)).toString()}
+function csvOf(rows,h){return h+'\n'+rows.map(r=>r.join(',')).join('\n')}
+function copy(text,out){const done=()=>{$(out).textContent='Copied.';setTimeout(()=>$(out).textContent='',3000)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,()=>fb(text,done))}else fb(text,done)}
+function fb(text,done){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){prompt('Copy this text:',text)}document.body.removeChild(t)}
+function renderTables(){
+ const d=tabData();
+ $('dtab').innerHTML='<table class="mono"><tr><th>time, s</th>'+d.map(r=>'<td>'+r[0]+'</td>').join('')+'</tr><tr><th>concentration of dye, µmol dm⁻³</th>'+d.map(r=>'<td>'+r[1].toFixed(3)+'</td>').join('')+'</tr></table>';
+ let g='<table class="mono"><tr><th>time, s</th><th>concentration of dye, µmol dm⁻³</th><th>rate of reaction, µmol dm⁻³ s⁻¹</th></tr>';
+ KEYT.forEach((t,i)=>{g+='<tr><td>'+t+'</td><td>'+cAt(t).toFixed(3)+'</td><td><input type="number" step="any" id="g'+i+'" data-save></td></tr>'});
+ $('gtab').innerHTML=g+'</table>';
+ let c='<table class="mono"><tr><th>concentration of dye, µmol dm⁻³</th><th>rate of reaction, µmol dm⁻³ s⁻¹</th><th>rate of reaction over concentration of dye, s⁻¹</th></tr>';
+ KEYT.forEach((t,i)=>{c+='<tr><td>'+cAt(t).toFixed(3)+'</td><td id="cr'+i+'">&nbsp;</td><td><input type="number" step="any" id="r'+i+'" data-save></td></tr>'});
+ $('ctab').innerHTML=c+'</table>';
+ KEYT.forEach((t,i)=>$('g'+i).addEventListener('input',syncRates));
+ buildNum();
+}
+function syncRates(){KEYT.forEach((t,i)=>{const v=parseFloat($('g'+i).value);$('cr'+i).textContent=isNaN(v)?' ':Math.abs(v).toFixed(4)})}
+function userPairs(){const p=[];KEYT.forEach((t,i)=>{const v=parseFloat($('g'+i).value);if(!isNaN(v))p.push([cAt(t),Math.abs(v)])});return p}
+function regress(p){const n=p.length;if(n<2)return null;let sx=0,sy=0,sxx=0,sxy=0;p.forEach(a=>{sx+=a[0];sy+=a[1];sxx+=a[0]*a[0];sxy+=a[0]*a[1]});const m=(n*sxy-sx*sy)/(n*sxx-sx*sx);return{m:m,b:(sy-m*sx)/n}}
+function wrong(key,txt,reveal){att[key]=(att[key]||0)+1;return att[key]>=3?txt+' '+reveal:txt+' (Try again; the answer appears after three checks.)'}
+$('chkg').onclick=()=>{let html='',all=true;KEYT.forEach((t,i)=>{const v=parseFloat($('g'+i).value);if(isNaN(v)){html+='Time '+t+' s: enter a value.<br>';all=false;return}
+  const exp=K()*cAt(t),a=Math.abs(v),ok=Math.abs(a-exp)<=0.15*exp;
+  if(ok){html+='Time '+t+' s: <span class="ok">✓ within the accepted range</span><br>'}else{all=false;const dir=a<exp?'a little low':'a little high';html+='Time '+t+' s: ✗ '+dir+'. '+(((att['g'+i]=(att['g'+i]||0)+1))>=3?'Expected about '+sig(exp)+' (accept '+sig(0.85*exp)+' to '+sig(1.15*exp)+').':'Re-place the tangent and read again.')+'<br>'}});
+ $('gres').innerHTML=html;syncRates()};
+$('hg').onclick=()=>$('hgt').classList.toggle('show');
+$('cpy1').onclick=()=>copy(csvOf(tabData(),'time_s,concentration_umol_dm-3'),'m1');
+$('dl1').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csvOf(tabData(),'time_s,concentration_umol_dm-3')],{type:'text/csv'}));a.download='bbd_bleach_concentration_time_data_set_'+(ds+1)+'.csv';a.click()};
+$('cpy2').onclick=()=>{const p=[];KEYT.forEach((t,i)=>{const v=parseFloat($('g'+i).value);if(!isNaN(v))p.push([cAt(t).toFixed(3),Math.abs(v)])});if(!p.length){$('m2').textContent='Enter your rates in Part B first.';return}copy(csvOf(p,'concentration_umol_dm-3,rate_umol_dm-3_s-1'),'m2')};
+$('chkr').onclick=()=>{let html='';KEYT.forEach((t,i)=>{const g=parseFloat($('g'+i).value),r=parseFloat($('r'+i).value);if(isNaN(g)){html+='Row '+(i+1)+': complete Part B first.<br>';return}if(isNaN(r)){html+='Row '+(i+1)+': enter a value.<br>';return}
+  const exp=Math.abs(g)/cAt(t),ok=Math.abs(r-exp)<=0.03*exp;html+='Row '+(i+1)+': '+(ok?'<span class="ok">✓ correct</span>':'✗ '+(((att['r'+i]=(att['r'+i]||0)+1))>=3?'Expected '+sig(exp)+' (rate over concentration).':'Check you divided in the right order: rate on top, concentration beneath.'))+'<br>'});
+ $('rres').innerHTML=html;const reg=regress(userPairs());if(reg)$('rres').innerHTML+='<br>The values should be close to each other. What does that tell you?'};
+$('chks').onclick=()=>{const m=parseFloat($('slope').value),b=parseFloat($('icpt').value);let html='';const reg=regress(userPairs());
+ if(isNaN(m)){html='Enter the gradient from the linear fit.'}else{const okT=Math.abs(m-K())<=0.12*K(),okR=reg&&Math.abs(m-reg.m)<=0.06*Math.abs(reg.m);
+  html+=(okT||okR)?'Gradient: <span class="ok">✓ consistent with your data</span> (rate constant, k, close to '+sig(K())+' s⁻¹ for this data set).':'Gradient: ✗ '+wrong('slope','Compare with the numbers in your last column.','Expected about '+sig(K())+' s⁻¹.')}
+ html+='<br>';
+ if(isNaN(b)){html+='Enter the intercept.'}else{const maxr=Math.max.apply(null,KEYT.map(t=>K()*cAt(t)));const okb=Math.abs(b)<=0.12*maxr;html+=okb?'Intercept: <span class="ok">✓ close to zero: the line passes through the origin</span>.':'Intercept: ✗ '+wrong('icpt','It should be very close to zero compared with your largest rate.','If your points lie on a line through the origin, the intercept is about 0.')}
+ $('sres').innerHTML=html};
+$('hs').onclick=()=>$('hst').classList.toggle('show');
+// MCQ
+const MCQ=[
+ ['What shape is your graph of rate of reaction (vertical) against concentration (horizontal)?',['A horizontal straight line','A straight line through the origin','A curve that bends upwards','A curve that levels off'],1,'The points lie on a straight line through the origin: the rate is proportional to the concentration.'],
+ ['What does a straight line through the origin tell you?',['The rate does not depend on concentration','The rate is proportional to the concentration: the reaction is first order in the dye','The reaction has stopped','The rate depends on the square of the concentration'],1,'Doubling the concentration doubles the rate. That is the meaning of first order.'],
+ ['What does the gradient of your rate–concentration line represent?',['The half-life','The starting concentration','The rate constant, k','The time for the reaction to finish'],2,'rate of reaction = rate constant, k × concentration, so rate against concentration has gradient k.'],
+ ['What is the unit of the gradient (rate in µmol dm⁻³ s⁻¹, concentration in µmol dm⁻³)?',['s','s⁻¹','µmol dm⁻³','µmol dm⁻³ s⁻¹'],1,'The µmol dm⁻³ cancels between the numerator and the denominator, leaving s⁻¹.'],
+ ['If the reaction were zero order in the dye, what would a graph of rate against concentration look like?',['A straight line through the origin','A horizontal straight line','A steeply rising curve','A line through the origin with negative gradient'],1,'Zero order means the rate does not change with concentration: a horizontal line.']];
+(function(){const box=$('mcq');MCQ.forEach((q,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML='<p>'+q[0]+'</p>'+q[1].map((o,j)=>'<label class="opt"><input type="radio" name="mc'+i+'" value="'+j+'" data-save> '+o+'</label>').join('')+'<button data-mc="'+i+'">Check</button><div class="res" id="mcr'+i+'"></div>';box.appendChild(d)});
+ box.querySelectorAll('button[data-mc]').forEach(b=>b.onclick=()=>{const i=+b.dataset.mc,s=document.querySelector('input[name=mc'+i+']:checked'),r=$('mcr'+i);if(!s){r.textContent='Choose an answer first.';return}
+  if(+s.value===MCQ[i][2])r.innerHTML='<span class="ok">✓ correct.</span> '+MCQ[i][3];else r.innerHTML=((att['mc'+i]=(att['mc'+i]||0)+1)>=2)?'✗ not yet. The answer is: '+MCQ[i][1][MCQ[i][2]]+'. '+MCQ[i][3]:'✗ not yet. Look again at your graph.'})})();
+// numeric
+function buildNum(){const k=K(),c=C0(),X=+(c/2).toFixed(2);
+ $('num').innerHTML='<div class="q"><p>Use the gradient of your line to find the half-life of the dye.</p><div class="eq">half-life = <span class="frac"><span>0.693</span><span>rate constant, k</span></span></div><p class="mono">half-life = <input type="number" step="any" id="n1" data-save> s <button id="cn1">Check</button><button data-hint="hn1">Hint</button></p><div class="hint" id="hn1">Step 1: take your gradient from Part C as k. Step 2: put 0.693 on top and k underneath, using the fraction key. Step 3: the unit is seconds. Check against the table: how long does it take for the concentration to halve?</div><div class="res" id="rn1"></div></div>'+
+ '<div class="q"><p>Use rate of reaction = rate constant, k × concentration of dye to predict the rate when the concentration is <b>'+X.toFixed(2)+' µmol dm⁻³</b>.</p><p class="mono">rate of reaction = <input type="number" step="any" id="n2" data-save> µmol dm⁻³ s⁻¹ <button id="cn2">Check</button><button data-hint="hn2">Hint</button></p><div class="hint" id="hn2">Multiply your gradient (the rate constant, k) by '+X.toFixed(2)+'. Then check that your point lies on the line you drew.</div><div class="res" id="rn2"></div></div>';
+ document.querySelectorAll('button[data-hint]').forEach(b=>b.onclick=()=>$(b.dataset.hint).classList.toggle('show'));
+ $('cn1').onclick=()=>{const v=parseFloat($('n1').value),r=$('rn1');if(isNaN(v)){r.textContent='Enter a number.';return}const reg=regress(userPairs()),m=parseFloat($('slope').value),own=!isNaN(m)?Math.LN2/m:null,t=Math.LN2/k;
+  const ok=Math.abs(v-t)<=0.12*t||(own&&Math.abs(v-own)<=0.05*own);r.innerHTML=ok?'<span class="ok">✓ correct</span> (about '+sig(t)+' s for this data set; check it against the table).':'✗ '+wrong('n1','Use 0.693 over k.','Expected about '+sig(t)+' s.')};
+ $('cn2').onclick=()=>{const v=parseFloat($('n2').value),r=$('rn2');if(isNaN(v)){r.textContent='Enter a number.';return}const m=parseFloat($('slope').value),t=k*X,ok=Math.abs(v-t)<=0.1*t||(!isNaN(m)&&Math.abs(v-m*X)<=0.05*m*X);r.innerHTML=ok?'<span class="ok">✓ correct</span> (about '+sig(t)+').':'✗ '+wrong('n2','Multiply k by the concentration.','Expected about '+sig(t)+' µmol dm⁻³ s⁻¹.')};
+}
+// conceptual
+const CQ=[
+ ['Explain why the gradient of a tangent to the concentration–time curve is the rate of reaction at that moment.','The gradient is the change in concentration over the change in time. A tangent has the same steepness as the curve at that one point, so its gradient is how fast the concentration is changing at that instant: the rate of reaction then.'],
+ ['In Part B the rate fell as the time passed. Use your table to say what happened to the concentration of dye, and what connects the two falls.','The concentration of dye fell, and so did the rate. In a first-order reaction the rate is proportional to the concentration, so a lower concentration gives a proportionally lower rate: when the concentration is halved, the rate is halved.'],
+ ['Some students plot the single concentration–time curve and find the half-life. Others plot rate against concentration. What does the second method show directly that the first does not?','The rate–concentration graph shows the order directly: a straight line through the origin means rate is proportional to concentration, and the gradient gives k. The half-life method shows the pattern indirectly through repeated halving.'],
+ ['The bleach is in large excess in this experiment. If the experiment were repeated with twice the concentration of bleach, what would change on your rate–concentration graph, and what would stay the same?','The graph would still be a straight line through the origin because the reaction is still first order in the dye. The gradient would be larger (about twice as large), because the measured rate constant includes the concentration of bleach, which is almost constant.']];
+const CQ2=[['Looking ahead. In the cuvette the concentration of dye falls with time, so the rate falls with time too. Imagine the same mixture flowing steadily along a long, narrow tube. Where along the tube is the reaction fastest? Now imagine the mixture in a well-stirred tank with fresh mixture entering all the time, so the whole tank sits at the low outlet concentration. How does the rate in the tank compare with the rate near the start of the tube? Use rate of reaction = rate constant, k × concentration of dye.','In the tube the concentration is highest at the entrance, so the rate is greatest there and falls along the tube as the dye is used up. In the stirred tank the whole contents are at the low outlet concentration, so the rate throughout is the (low) rate for that concentration, much smaller than the rate near the tube entrance. This difference is the starting point for comparing tube reactors and stirred-tank reactors.']];
+function buildC(id,list,off){const box=$(id);list.forEach((c,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML='<p>'+c[0]+'</p><textarea id="'+id+'t'+i+'" data-save></textarea><button data-m="'+id+'m'+i+'">Show a model answer</button><div class="model" id="'+id+'m'+i+'">'+c[1]+'</div>';box.appendChild(d)})}
+buildC('cq',CQ);buildC('cq2',CQ2);
+document.querySelectorAll('button[data-m]').forEach(b=>b.onclick=()=>$(b.dataset.m).classList.toggle('show'));
+// dataset change
+$('ds').onchange=()=>{ds=+$('ds').value;document.querySelectorAll('[data-save]').forEach(e=>{if(e.id!=='ds'&&e.type!=='radio')e.value='';if(e.type==='radio')e.checked=false});Object.keys(att).forEach(k=>delete att[k]);renderTables();['gres','rres','sres'].forEach(i=>$(i).textContent='')};
+// save / load
+function collect(){const o={};document.querySelectorAll('[data-save]').forEach(e=>{if(e.type==='radio'){if(e.checked)o[e.name]=e.value}else o[e.id]=e.value});return o}
+function apply(o){ds=+(o.ds||0);$('ds').value=ds;renderTables();document.querySelectorAll('[data-save]').forEach(e=>{if(e.id==='ds')return;if(e.type==='radio')e.checked=(o[e.name]===e.value);else e.value=o[e.id]||''});syncRates()}
+function msg(t){$('msg').textContent=t;setTimeout(()=>$('msg').textContent='',4000)}
+$('save').onclick=()=>{const s=JSON.stringify(collect());let ok=false;try{localStorage.setItem('fo_gradients_progress',s);ok=true}catch(e){}const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'application/json'}));a.download='first_order_gradients_progress.json';a.click();msg(ok?'Saved in this browser and as a file.':'Saved as a file.')};
+$('load').onclick=()=>{let s=null;try{s=localStorage.getItem('fo_gradients_progress')}catch(e){}if(s){apply(JSON.parse(s));msg('Progress retrieved.');return}const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=()=>{const r=new FileReader();r.onload=()=>{try{apply(JSON.parse(r.result));msg('Progress retrieved.')}catch(e){msg('That file could not be read.')}};r.readAsText(i.files[0])};i.click()};
+$('pdf').onclick=()=>window.print();
+document.querySelectorAll('.tt').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('open')));
+renderTables();
+</script></body></html>
