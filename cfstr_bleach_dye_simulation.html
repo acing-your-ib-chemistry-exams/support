@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The CFSTR: bleach and Brilliant Blue dye</title>
+<style>
+  :root { --ink:#000; --rule:#000; --soft:#f3f3f3; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#fff; color:var(--ink);
+         font-family:Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", serif;
+         font-size:18px; line-height:1.5; }
+  .page { max-width:960px; margin:0 auto; padding:24px 20px 40px; }
+  .runhead { display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid var(--rule);
+             padding-bottom:6px; font-size:15px; }
+  h1, h2, h3, .sans { font-family:"Clear Gothic","Gill Sans","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight:400; }
+  h1 { font-size:34px; line-height:1.2; margin:28px 0 4px; }
+  .sub { margin:0 0 8px; padding-left:clamp(0px,6vw,88px); font-style:italic; }
+  h2 { font-size:24px; margin:34px 0 8px; counter-increment:sec; }
+  h2::before { content:counter(sec) "\00a0\00a0"; }
+  body { counter-reset:sec; }
+  h3 { font-size:19px; margin:20px 0 6px; }
+  .indent { padding-left:clamp(0px,6vw,88px); }
+  .indent p, .indent ul, .indent ol { margin:0 0 10px; }
+  ul, ol { padding-left:1.3em; }
+  li { margin-bottom:4px; }
+
+  /* tool-tips */
+  .tip { border-bottom:1px dotted var(--ink); cursor:help; position:relative; }
+  .tip:hover::after, .tip:focus::after {
+    content:attr(data-tip); position:absolute; left:0; top:1.7em; width:min(300px,70vw); z-index:20;
+    background:#000; color:#fff; font:400 14px/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding:7px 9px; white-space:normal; }
+  .tip:focus { outline:none; }
+
+  /* simulation */
+  .sim { border:1px solid var(--ink); padding:10px; margin:10px 0; }
+  .sim svg { width:100%; height:auto; display:block; }
+  .controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px 22px; margin:12px 0 4px; }
+  .ctl label { display:block; font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-bottom:2px; }
+  .ctl .row { display:flex; align-items:center; gap:10px; }
+  .ctl input[type=range] { flex:1; accent-color:#000; }
+  .ctl output { min-width:7.5em; text-align:right; font:700 15px "Helvetica Neue",Helvetica,Arial,sans-serif; white-space:nowrap; }
+  .main-ctl { grid-column:1 / -1; border:2px solid var(--ink); padding:8px 10px 10px; }
+  .main-ctl label { font-size:17px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin:14px 0 6px; }
+  .card { border:1px solid var(--ink); padding:8px 10px; }
+  .card .k { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .card .v { font:700 24px "Helvetica Neue",Helvetica,Arial,sans-serif; white-space:nowrap; }
+  .card .u { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .card.key { background:var(--soft); }
+  .note { min-height:3.2em; margin:6px 0 0; font-size:16px; padding:6px 10px; border-left:4px solid var(--ink); background:var(--soft); }
+  .note:empty { display:none; }
+
+  /* equations: own line, centred, never wrapped */
+  .eq { text-align:center; white-space:nowrap; margin:8px 0; overflow-x:auto; padding:2px 0; font-size:19px; }
+  .frac { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; margin:0 .3em; }
+  .frac > span:first-child { border-bottom:1.5px solid var(--ink); padding:0 .5em .12em; }
+  .frac > span:last-child { padding:.12em .5em 0; }
+  .work { border:1px solid var(--ink); padding:6px 12px 10px; margin:10px 0; }
+  .work h3 { margin-top:8px; }
+  .step { margin:8px 0 12px; }
+  .step .lab { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  dl { margin:0; }
+  dt { font-weight:700; margin-top:8px; }
+  dd { margin:0 0 4px; }
+
+  footer { margin-top:40px; border-top:1px solid var(--rule); padding-top:6px; font-size:14px; text-align:center;
+           font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  /* animation */
+  @keyframes flowdash { to { stroke-dashoffset:-18; } }
+  .dash { stroke:rgba(255,255,255,.75); stroke-width:3; stroke-dasharray:6 12; fill:none; animation:flowdash 1s linear infinite; }
+  @keyframes blade { 0%{transform:scaleX(1);} 50%{transform:scaleX(-1);} 100%{transform:scaleX(1);} }
+  .imp { animation:blade .7s linear infinite; }
+  @media (prefers-reduced-motion:reduce) { .dash, .imp { animation:none; } }
+  @media (max-width:560px) { body{font-size:17px;} .eq{font-size:16px;} h1{font-size:28px;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="runhead"><span>Chemical reactor design</span><span id="today">Wednesday 18 November 2026</span></div>
+
+<h1>The continuous stirred tank reactor</h1>
+<p class="sub">Two streams in, one stream out: bleach and Brilliant Blue dye</p>
+
+<h2 class="sans">Learning objectives</h2>
+<div class="indent">
+  <ul>
+    <li>Describe a <span class="tip" tabindex="0" data-tip="Continuous flow stirred tank reactor: a stirred tank with liquid flowing in and out all the time. Also written CSTR.">CFSTR</span> and say what <span class="tip" tabindex="0" data-tip="Steady state: every quantity in the tank (volume, concentration, temperature) stays constant with time, even though liquid is flowing through all the time.">steady state</span> means.</li>
+    <li>Calculate the mixed concentration of a substance when two streams join.</li>
+    <li>Calculate the <span class="tip" tabindex="0" data-tip="Average residence time: the average time a portion of liquid spends in the tank. It equals the tank volume divided by the total flow rate.">average residence time</span> and predict what changing the tank volume does to it.</li>
+  </ul>
+</div>
+
+<h2 class="sans">The Exploration</h2>
+<div class="indent">
+  <p>One stream is <span class="tip" tabindex="0" data-tip="Bleach is a solution of sodium hypochlorite in water. It contains no Brilliant Blue dye.">bleach</span>. The other is water carrying <span class="tip" tabindex="0" data-tip="BBD: Brilliant Blue dye, the blue food dye also called Brilliant Blue FCF.">BBD</span>. The two <span class="tip" tabindex="0" data-tip="A feed stream is a stream flowing into the reactor.">feed streams</span> flow into a <span class="tip" tabindex="0" data-tip="Perfectly mixed: the stirrer is so effective that the liquid has the same concentration everywhere in the tank at every moment.">perfectly mixed</span> tank. One <span class="tip" tabindex="0" data-tip="The output stream is the liquid leaving the tank. Because the tank is perfectly mixed, it has exactly the same concentration as the liquid in the tank.">output stream</span> leaves. The tank is at steady state, so the volume of liquid in it stays constant.</p>
+</div>
+
+<div class="sim">
+  <div class="card key" style="max-width:320px;margin:0 0 10px;"><div class="k">Average residence time</div><div class="v" id="rTau"></div><div class="u" id="rTauU"></div></div>
+  <svg id="sim" viewBox="0 0 800 440" role="img" aria-label="Stirred tank with a bleach stream and a Brilliant Blue dye stream flowing in and one mixed stream flowing out">
+    <path id="liquid" fill="#cfe2f3"/>
+    <g id="flecks"></g>
+    <path id="tank" fill="none" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- stirrer -->
+    <rect id="motor" fill="#000"/>
+    <line id="shaft" stroke="#000" stroke-width="4"/>
+    <g id="impPos"><g class="imp"><rect x="-40" y="-4" width="80" height="8" fill="#000"/></g></g>
+
+    <!-- bleach stream -->
+    <polyline id="bPipe" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="bIn" fill="none" stroke="#e6e287" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="bFall" fill="none" stroke="#e6e287" stroke-width="5"/>
+    <polyline id="bDash" class="dash"/>
+
+    <!-- dye stream -->
+    <polyline id="dPipe" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="dIn" fill="none" stroke="#0a37c8" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="dFall" fill="none" stroke="#0a37c8" stroke-width="5"/>
+    <polyline id="dDash" class="dash"/>
+
+    <!-- output -->
+    <polyline id="oPipe" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="oIn" fill="none" stroke="#9bb7e0" stroke-width="8"/>
+    <polyline id="oDash" class="dash"/>
+
+    <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#000">
+      <text x="20" y="20" font-size="15" font-weight="700">Bleach stream</text>
+      <text id="tB" x="20" y="38" font-size="14"></text>
+      <text x="780" y="20" font-size="15" font-weight="700" text-anchor="end">Water containing BBD</text>
+      <text id="tD" x="780" y="38" font-size="14" text-anchor="end"></text>
+      <text id="tO1" x="780" font-size="15" font-weight="700" text-anchor="end">Output stream</text>
+      <text id="tO2" x="780" font-size="14" text-anchor="end"></text>
+      <text id="tO3" x="780" font-size="14" text-anchor="end"></text>
+      <text id="tTank" y="412" font-size="15" font-weight="700" text-anchor="middle"></text>
+    </g>
+  </svg>
+
+  <div class="controls">
+    <div class="ctl main-ctl">
+      <label for="V">Change the tank volume</label>
+      <div class="row"><input id="V" type="range" min="100" max="2000" step="50" value="500"><output id="Vo"></output></div>
+    </div>
+    <div class="ctl">
+      <label for="Fb">Bleach flow rate</label>
+      <div class="row"><input id="Fb" type="range" min="5" max="200" step="5" value="60"><output id="Fbo"></output></div>
+    </div>
+    <div class="ctl">
+      <label for="Fd">Flow rate of water containing BBD</label>
+      <div class="row"><input id="Fd" type="range" min="5" max="200" step="5" value="40"><output id="Fdo"></output></div>
+    </div>
+    <div class="ctl">
+      <label for="C0">BBD concentration in its feed stream</label>
+      <div class="row"><input id="C0" type="range" min="1" max="50" step="1" value="25"><output id="C0o"></output></div>
+    </div>
+    <div class="ctl">
+      <label for="B0">Sodium hypochlorite concentration in the bleach</label>
+      <div class="row"><input id="B0" type="range" min="0.1" max="1" step="0.05" value="0.7"><output id="B0o"></output></div>
+    </div>
+  </div>
+
+  <div class="note sans" id="note" aria-live="polite"></div>
+
+  <div class="cards">
+    <div class="card"><div class="k">Total flow rate in (and out)</div><div class="v" id="rFt"></div><div class="u">cm³ per minute</div></div>
+    <div class="card key"><div class="k">Mixed BBD concentration in the tank</div><div class="v" id="rC"></div><div class="u">mg per dm³</div></div>
+    <div class="card key"><div class="k">BBD concentration in the output stream</div><div class="v" id="rCo"></div><div class="u">mg per dm³</div></div>
+    <div class="card"><div class="k">Mixed hypochlorite concentration</div><div class="v" id="rB"></div><div class="u">mol dm⁻³</div></div>
+  </div>
+</div>
+
+<div class="indent">
+  <div class="work">
+    <h3 class="sans">Calculation for the settings above</h3>
+    <div id="workings"></div>
+  </div>
+
+  <h3 class="sans">Questions</h3>
+  <ol>
+    <li>Leave the flow rates and concentrations as they are. Write down the average residence time, then double the tank volume. Predict the new mixed BBD concentration before you test it.</li>
+    <li>Reduce the tank volume to its smallest setting. State what happens to the output concentration and what happens to the average residence time.</li>
+    <li>Choose flow rates that make the mixed BBD concentration exactly one fifth of the feed concentration.</li>
+    <li>With a tank volume of 1000 cm³, find flow rates that give an average residence time of 5 minutes.</li>
+  </ol>
+</div>
+
+<h2 class="sans">Underlying ideas: definitions to learn</h2>
+<div class="indent">
+  <dl>
+    <dt>CFSTR</dt><dd>A continuous flow stirred tank reactor. Liquid flows in and out all the time, and a stirrer keeps the contents the same everywhere.</dd>
+    <dt>Steady state</dt><dd>Nothing in the tank changes with time. The flow rate in equals the flow rate out, so the volume stays constant, and the concentrations stay constant too.</dd>
+    <dt>Perfectly mixed</dt><dd>The concentration is identical at every point in the tank. The output stream therefore has the same concentration as the tank.</dd>
+    <dt>Flow rate</dt><dd>The volume of liquid passing a point in one minute, here in cm³ per minute.</dd>
+    <dt>Average residence time</dt><dd>The average time a portion of liquid spends in the tank. In one residence time, a volume of liquid equal to the tank volume has flowed through.</dd>
+  </dl>
+
+  <p>Total flow rate in:</p>
+  <div class="eq">total flow rate = bleach flow rate + flow rate of water containing BBD</div>
+  <p>Mixed concentration of a substance that arrives in one stream only (the dye here):</p>
+  <div class="eq">mixed BBD concentration =
+    <span class="frac"><span>flow rate of water containing BBD × BBD concentration in its feed</span><span>total flow rate</span></span></div>
+  <p>Average residence time:</p>
+  <div class="eq">average residence time =
+    <span class="frac"><span>tank volume</span><span>total flow rate</span></span></div>
+</div>
+
+<h2 class="sans">Scale-up and reflection</h2>
+<div class="indent">
+  <ol>
+    <li>A factory copies your tank at 100 times the volume and runs all flow rates 100 times faster. State what happens to the mixed concentration and what happens to the average residence time, and explain why.</li>
+    <li>Real bleach removes the colour from Brilliant Blue dye. If that reaction happened inside the tank, would the BBD concentration in the output stream be higher or lower than the value calculated here? Explain how the tank volume would then matter.</li>
+  </ol>
+</div>
+
+<footer>Science Department · Refined with AI</footer>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var NS = "http://www.w3.org/2000/svg";
+
+  try {
+    $("today").textContent = new Date().toLocaleDateString("en-GB",
+      { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  } catch (e) {}
+
+  function fmt(x) {
+    if (x >= 100) return x.toFixed(0);
+    if (x >= 10) return x.toFixed(1);
+    return x.toFixed(2);
+  }
+  function fr(n, d) { return '<span class="frac"><span>' + n + '</span><span>' + d + '</span></span>'; }
+
+  function readState() {
+    return {
+      V: +$("V").value, Fb: +$("Fb").value, Fd: +$("Fd").value,
+      C0: +$("C0").value, B0: +$("B0").value
+    };
+  }
+  function calc(s) {
+    var Ft = s.Fb + s.Fd;
+    return { Ft: Ft, C: s.Fd * s.C0 / Ft, B: s.Fb * s.B0 / Ft, tau: s.V / Ft };
+  }
+  function dyeColour(c) {
+    var f = 1 - Math.exp(-c / 12);
+    var a = [238, 246, 252], b = [10, 55, 200];
+    var rgb = a.map(function (v, i) { return Math.round(v + (b[i] - v) * f); });
+    return "rgb(" + rgb.join(",") + ")";
+  }
+  function setPts(el, pts) { el.setAttribute("points", pts.map(function (p) { return p.join(","); }).join(" ")); }
+  function dashSpeed(el, F) { el.style.animationDuration = (18 / (10 + 0.5 * F)).toFixed(2) + "s"; }
+
+  /* flecks that circulate in the liquid */
+  var flecks = [];
+  for (var i = 0; i < 46; i++) {
+    var c = document.createElementNS(NS, "circle");
+    c.setAttribute("r", (1.8 + Math.random() * 1.8).toFixed(1));
+    c.setAttribute("fill", "rgba(255,255,255,0.55)");
+    $("flecks").appendChild(c);
+    flecks.push({ el: c, a: Math.random() * 6.283, rx: 0.15 + Math.random() * 0.8,
+                  ry: 0.15 + Math.random() * 0.8, w: (0.6 + Math.random() * 1.4) * (Math.random() < 0.5 ? 1 : -1) });
+  }
+  var geo = { cx: 380, cy: 300, hw: 80, hh: 80 };
+  var last = performance.now();
+  function tick(now) {
+    var dt = Math.min(0.05, (now - last) / 1000); last = now;
+    for (var k = 0; k < flecks.length; k++) {
+      var f = flecks[k];
+      f.a += f.w * dt;
+      f.el.setAttribute("cx", (geo.cx + Math.cos(f.a) * f.rx * geo.hw).toFixed(1));
+      f.el.setAttribute("cy", (geo.cy + Math.sin(f.a) * f.ry * geo.hh).toFixed(1));
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  function draw(s, r) {
+    var t = (s.V - 100) / 1900;
+    var W = 170 + 130 * t, H = 170 + 120 * t;
+    var cx = 380, x0 = cx - W / 2, x1 = cx + W / 2, yb = 380, yt = yb - H;
+    var yl = yt + H * 0.1;                       /* liquid surface */
+    var yo = yl + 16;                            /* outlet pipe height */
+
+    $("tank").setAttribute("d",
+      "M" + x0 + " " + yt + " L" + x0 + " " + (yb - 20) + " Q" + x0 + " " + yb + " " + (x0 + 20) + " " + yb +
+      " L" + (x1 - 20) + " " + yb + " Q" + x1 + " " + yb + " " + x1 + " " + (yb - 20) + " L" + x1 + " " + yt);
+    $("liquid").setAttribute("d",
+      "M" + x0 + " " + yl + " L" + x0 + " " + (yb - 20) + " Q" + x0 + " " + yb + " " + (x0 + 20) + " " + yb +
+      " L" + (x1 - 20) + " " + yb + " Q" + x1 + " " + yb + " " + x1 + " " + (yb - 20) + " L" + x1 + " " + yl + " Z");
+
+    var mixCol = dyeColour(r.C);
+    $("liquid").setAttribute("fill", mixCol);
+    $("oIn").setAttribute("stroke", mixCol);
+    var feedCol = dyeColour(s.C0);
+    $("dIn").setAttribute("stroke", feedCol);
+    $("dFall").setAttribute("stroke", feedCol);
+
+    /* stirrer */
+    $("motor").setAttribute("x", cx - 16); $("motor").setAttribute("y", yt - 44);
+    $("motor").setAttribute("width", 32); $("motor").setAttribute("height", 18);
+    $("shaft").setAttribute("x1", cx); $("shaft").setAttribute("x2", cx);
+    $("shaft").setAttribute("y1", yt - 28); $("shaft").setAttribute("y2", yb - 44);
+    $("impPos").setAttribute("transform", "translate(" + cx + "," + (yb - 44) + ")");
+
+    /* pipes */
+    var xb = x0 + W * 0.26, xd = x0 + W * 0.74;
+    var bPath = [[20, 55], [xb, 55], [xb, yt - 4]];
+    var dPath = [[780, 55], [xd, 55], [xd, yt - 4]];
+    setPts($("bPipe"), bPath); setPts($("bIn"), bPath);
+    setPts($("dPipe"), dPath); setPts($("dIn"), dPath);
+    setPts($("bFall"), [[xb, yt - 4], [xb, yl]]);
+    setPts($("dFall"), [[xd, yt - 4], [xd, yl]]);
+    setPts($("bDash"), [[20, 55], [xb, 55], [xb, yl]]);
+    setPts($("dDash"), [[780, 55], [xd, 55], [xd, yl]]);
+    var oPath = [[x1, yo], [640, yo]];
+    setPts($("oPipe"), oPath); setPts($("oIn"), oPath); setPts($("oDash"), oPath);
+    dashSpeed($("bDash"), s.Fb); dashSpeed($("dDash"), s.Fd); dashSpeed($("oDash"), r.Ft);
+
+    /* labels */
+    $("tB").textContent = s.Fb + " cm³ per minute";
+    $("tD").textContent = s.Fd + " cm³ per minute";
+    $("tO1").setAttribute("y", yo + 30);
+    $("tO2").setAttribute("y", yo + 48);
+    $("tO3").setAttribute("y", yo + 66);
+    $("tO2").textContent = r.Ft + " cm³ per minute";
+    $("tO3").textContent = "BBD " + fmt(r.C) + " mg per dm³";
+    $("tTank").setAttribute("x", cx);
+    $("tTank").textContent = "Tank volume " + s.V + " cm³";
+
+    geo = { cx: cx, cy: (yl + yb) / 2, hw: W / 2 - 10, hh: (yb - yl) / 2 - 10 };
+  }
+
+  function workings(s, r) {
+    var h = "";
+    h += '<div class="step"><div class="lab">Total flow rate</div>' +
+         '<div class="eq">total flow rate = bleach flow rate + flow rate of water containing BBD</div>' +
+         '<div class="eq">= ' + s.Fb + ' + ' + s.Fd + ' = ' + r.Ft + ' cm³ per minute</div></div>';
+    h += '<div class="step"><div class="lab">Mixed BBD concentration (this is also the output concentration)</div>' +
+         '<div class="eq">mixed BBD concentration = ' +
+           fr('flow rate of water containing BBD × BBD concentration in its feed', 'total flow rate') + '</div>' +
+         '<div class="eq">= ' + fr(s.Fd + ' × ' + s.C0, r.Ft) + ' = ' + fmt(r.C) + ' mg per dm³</div></div>';
+    h += '<div class="step"><div class="lab">Mixed hypochlorite concentration</div>' +
+         '<div class="eq">mixed hypochlorite concentration = ' +
+           fr('bleach flow rate × hypochlorite concentration in the bleach', 'total flow rate') + '</div>' +
+         '<div class="eq">= ' + fr(s.Fb + ' × ' + s.B0.toFixed(2), r.Ft) + ' = ' + fmt(r.B) + ' mol dm⁻³</div></div>';
+    h += '<div class="step"><div class="lab">Average residence time</div>' +
+         '<div class="eq">average residence time = ' + fr('tank volume', 'total flow rate') + '</div>' +
+         '<div class="eq">= ' + fr(s.V, r.Ft) + ' = ' + fmt(r.tau) + ' minutes</div></div>';
+    $("workings").innerHTML = h;
+  }
+
+  var ref = calc(readState());   /* values at the start of a tank-volume change */
+
+  function update(changed) {
+    var s = readState(), r = calc(s);
+
+    $("Vo").textContent = s.V + " cm³";
+    $("Fbo").textContent = s.Fb + " cm³ per min";
+    $("Fdo").textContent = s.Fd + " cm³ per min";
+    $("C0o").textContent = s.C0 + " mg per dm³";
+    $("B0o").textContent = s.B0.toFixed(2) + " mol dm⁻³";
+
+    $("rFt").textContent = r.Ft;
+    $("rC").textContent = fmt(r.C);
+    $("rCo").textContent = fmt(r.C);
+    $("rB").textContent = fmt(r.B);
+    $("rTau").textContent = fmt(r.tau);
+    $("rTauU").textContent = "minutes (" + Math.round(r.tau * 60) + " seconds)";
+
+    if (changed === "V") {
+      var same = Math.abs(ref.C - r.C) < 1e-9;
+      $("note").textContent = "Tank volume changed to " + s.V + " cm³. Mixed BBD concentration: " +
+        fmt(ref.C) + " → " + fmt(r.C) + " mg per dm³" + (same ? " (no change)" : "") +
+        ". Average residence time: " + fmt(ref.tau) + " → " + fmt(r.tau) + " minutes.";
+    } else if (changed) {
+      $("note").textContent = "";
+    }
+    if (changed && changed !== "V") ref = r;
+
+    draw(s, r);
+    workings(s, r);
+  }
+
+  ["pointerdown", "touchstart", "focus"].forEach(function (ev) {
+    $("V").addEventListener(ev, function () { ref = calc(readState()); });
+  });
+  ["V", "Fb", "Fd", "C0", "B0"].forEach(function (id) {
+    $(id).addEventListener("input", function () { update(id); });
+  });
+  update(null);
+})();
+</script>
+</body>
+</html>
