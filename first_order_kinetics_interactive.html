@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>First-order reactions, the Maxwell–Boltzmann curve and rates</title>
+<style>
+@page{size:A4;margin:18mm 16mm}
+*{box-sizing:border-box}
+body{font-family:'Palatino','Palatino Linotype','TeX Gyre Pagella','Book Antiqua',serif;font-size:17px;line-height:1.5;color:#000;background:#fff;margin:0;padding:14px;counter-reset:sec}
+.wrap{max-width:880px;margin:0 auto}
+h1,h2,h3,.sans{font-family:'Clear Gothic','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:400}
+h1{font-size:28px;margin:0 0 4px}
+h2{font-size:22px;margin:34px 0 10px;padding-left:88px;position:relative;counter-increment:sec;border-top:1px solid #000;padding-top:10px}
+h2::before{content:counter(sec);position:absolute;left:0}
+h3{font-size:18px;margin:22px 0 6px}
+.runhead{display:flex;justify-content:space-between;font-size:14px;border-bottom:1px solid #000;padding-bottom:3px;margin-bottom:16px}
+.ind{margin-left:88px}
+.box{border:1px solid #000;padding:10px 14px;margin:12px 0}
+.eq{text-align:center;white-space:nowrap;margin:10px 0;font-size:16px;overflow-x:auto}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .25em;line-height:1.25}
+.frac>span:first-child{border-bottom:1px solid #000;padding:0 .35em .1em}.frac>span:last-child{padding:.1em .35em 0}
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+@media(max-width:760px){.panel{grid-template-columns:1fr}.ind{margin-left:0}h2{padding-left:0}h2::before{position:static;margin-right:10px}}
+canvas{width:100%;height:auto;border:1px solid #000;background:#fff;display:block}
+.ctl{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;margin:6px 0}
+.ctl label{display:block}.ctl input[type=range]{width:100%}
+.out{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;border:1px solid #000;padding:8px 10px;margin:8px 0}
+.out b{font-weight:700}
+button{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;background:#fff;color:#000;border:1px solid #000;padding:5px 12px;margin:3px 4px 3px 0;cursor:pointer;border-radius:3px}
+button:hover,button:focus{background:#000;color:#fff}
+input[type=number],input[type=text],textarea{font:inherit;font-size:16px;border:1px solid #000;padding:3px 6px;border-radius:3px}
+textarea{width:100%;min-height:70px}
+.q{border:1px solid #000;padding:10px 14px;margin:14px 0;break-inside:avoid;position:relative}
+.q .n{font-weight:700;margin-right:6px}
+.res{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;margin-top:6px}
+.model{display:none;border-left:3px solid #000;padding-left:10px;margin-top:8px}
+.model.show{display:block}
+.hint{display:none;font-size:15px;border-left:3px solid #000;padding-left:10px;margin-top:6px}
+.hint.show{display:block}
+.tt{border-bottom:1px dotted #000;cursor:help;position:relative}
+.tt:hover::after,.tt:focus::after,.tt.open::after{content:attr(data-tip);position:absolute;left:0;top:1.5em;z-index:9;width:260px;background:#000;color:#fff;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.35;padding:6px 9px;border-radius:3px}
+table{border-collapse:collapse}td,th{border:1px solid #000;padding:6px 10px;text-align:left;vertical-align:top;font-weight:400}th{font-weight:700}
+.bar{position:sticky;top:0;background:#fff;border-bottom:1px solid #000;padding:6px 0;z-index:5}
+.foot{border-top:1px solid #000;margin-top:34px;padding-top:6px;font-size:13px}
+.ok{font-weight:700}
+@media print{.bar,.noprint,button,.ctl,canvas.live{display:none!important}.q{break-inside:avoid}.hint,.model{display:none}.model.show{display:block}.tt::after{display:none!important}body{padding:0;font-size:11pt}}
+</style></head><body><div class="wrap">
+<div class="runhead"><span>Chemistry</span><span>Wednesday 18 November 2026</span></div>
+<h1>First-order reactions, the Maxwell–Boltzmann curve and rate</h1>
+<p class="ind">Brilliant blue dye and bleach (sodium chlorate(I)), followed by colorimetry. Hover over, or tap, a dotted term for its meaning; every term is in the glossary at the end.</p>
+
+<h2>Learning objectives and key ideas</h2>
+<div class="ind"><ul>
+<li>Recognise <span class="tt" tabindex="0" data-tip="A reaction whose rate is proportional to the concentration of one reactant. Its half-life is constant.">first-order</span> behaviour from a decay curve and from a constant <span class="tt" tabindex="0" data-tip="The time for the concentration of a reactant to fall to half its value.">half-life</span>.</li>
+<li>Link the half-life to the <span class="tt" tabindex="0" data-tip="The constant k in: rate of reaction = k × concentration. Units for first order: per second, s⁻¹.">rate constant</span>, k, and use the exponential decay equation.</li>
+<li>Explain with the <span class="tt" tabindex="0" data-tip="The spread of energies of the molecules in a sample at one temperature. The area under the curve is the total number of molecules.">Maxwell–Boltzmann curve</span> how temperature and a <span class="tt" tabindex="0" data-tip="A substance that speeds up a reaction by giving a route with lower activation energy. It is not used up.">catalyst</span> change the rate.</li></ul></div>
+<div class="box ind"><div class="eq">absorbance, A = starting absorbance, A₀ × e<sup>−(rate constant, k × time, t)</sup></div>
+<div class="eq">half-life, t½ = <span class="frac"><span>0.693</span><span>rate constant, k</span></span></div></div>
+
+<h2>The Exploration</h2>
+<h3>Explorer 1: exponential decay and half-life</h3>
+<div class="ind"><p>Absorbance is proportional to the concentration of dye, so the curve below is the dye being used up. Change the starting absorbance and the half-life. Watch the dashed lines: each one marks the absorbance halving.</p></div>
+<div class="panel"><div><canvas id="c1" class="live" width="640" height="440"></canvas>
+<div class="ctl"><label><input type="checkbox" id="lnmode"> plot ln(absorbance) instead of absorbance</label></div></div>
+<div><div class="ctl"><label>Starting absorbance, A₀: <b id="a0v"></b><input type="range" id="a0" min="0.2" max="1.5" step="0.05" value="0.8"></label>
+<label>Half-life, t½: <b id="hlv"></b> s<input type="range" id="hl" min="30" max="400" step="5" value="150"></label></div>
+<div class="out" id="o1"></div></div></div>
+<div class="ind"><p><b>Thinking.</b> Double the starting absorbance and compare the half-life readout. Then switch to the ln plot. Which feature of the line gives the rate constant?</p></div>
+
+<h3>Explorer 1b: find the rate constant yourself</h3>
+<div class="ind"><p>The dots are a hidden run with a little experimental scatter. Adjust your curve until it passes through them, then check.</p></div>
+<div class="panel"><div><canvas id="c1b" class="live" width="640" height="420"></canvas></div>
+<div><div class="ctl"><label>Your A₀: <b id="fa0v"></b><input type="range" id="fa0" min="0.4" max="1.4" step="0.01" value="0.8"></label>
+<label>Your half-life: <b id="fhlv"></b> s<input type="range" id="fhl" min="30" max="400" step="1" value="150"></label></div>
+<button id="fchk">Check my fit</button><button id="fnew">New hidden run</button><div class="out" id="fo">Your rate constant, k = 0.693 over your half-life. Check to compare.</div></div></div>
+
+<h3>Explorer 2: temperature, concentration and a catalyst</h3>
+<div class="ind"><p>Left: the Maxwell–Boltzmann curve (energy of the molecules). Right: the dye absorbance that results. The grey dashed curves are the starting conditions (25 °C, bleach 0.010 mol dm⁻³, no catalyst, half-life 150 s). Ea starts at 50 kJ mol⁻¹, a typical value, so the graph has a break: the curve to scale on the left, the tail magnified on the right. Press <b>Pin</b> to keep the current curve as a new comparison. This model uses the exact fraction of molecules at or above the activation energy; collisions also become slightly more frequent when hotter, which it ignores.</p></div>
+<div class="panel"><div><canvas id="c2" class="live" width="640" height="440"></canvas>
+</div>
+<div><div class="ctl">
+<label>Temperature: <b id="tv"></b> °C<input type="range" id="T" min="5" max="70" step="1" value="25"></label>
+<label>Concentration of bleach: <b id="cv"></b> mol dm⁻³<input type="range" id="C" min="0.005" max="0.04" step="0.005" value="0.01"></label>
+<label>Activation energy, Ea (no catalyst): <b id="ev"></b> kJ mol⁻¹<input type="range" id="E" min="5" max="60" step="1" value="50"></label>
+<label><input type="checkbox" id="cat"> add a catalyst, lowering Ea by <b id="dv"></b> kJ mol⁻¹</label>
+<label><input type="range" id="D" min="2" max="15" step="1" value="10"></label>
+<label><input type="checkbox" id="logy"> log scale on the vertical axis</label>
+<button id="pin">Pin current as comparison</button><button id="unpin">Reset comparison</button></div>
+<div class="out" id="o2"></div>
+<canvas id="c3" class="live" width="640" height="360"></canvas></div></div>
+<div class="ind"><p>Left of the break the curve is drawn to scale. After the break the vertical scale is magnified, because the real tail beyond a typical activation energy is a tiny fraction of the molecules. The <b>shaded area</b> is the fraction of all molecules with energy at or above Ea: the molecules able to react.</p></div>
+<h3>Explorer 2 task: the pattern for every 10 °C</h3>
+<div class="ind"><ol>
+<li>Set Ea = 50 kJ mol⁻¹, bleach 0.010 mol dm⁻³, no catalyst, and temperature 25 °C. Press <b>Record this temperature</b>.</li>
+<li>Press <b>Raise temperature by 10 °C</b>, then <b>Record</b>. Repeat up to 65 °C.</li>
+<li>Look at the column “increase from the row above”. What is the approximate pattern?</li>
+<li>Follow the line of logic in the box below the table: each step is written out with your current numbers.</li>
+<li>Now repeat with Ea = 30 and then Ea = 10 kJ mol⁻¹ (the table recalculates). What happens to the factor for each 10 °C step?</li></ol></div>
+<div class="ind"><button id="up10">Raise temperature by 10 °C</button><button id="dn10">Lower temperature by 10 °C</button><button id="rec">Record this temperature</button><button id="clr">Clear the table</button>
+<div style="overflow-x:auto;margin-top:8px"><table id="lad" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px"><tr><th>temperature, °C</th><th>shaded area: fraction of molecules able to react</th><th>area compared with 25 °C</th><th>increase from the row above</th><th>rate constant, k, s⁻¹</th><th>half-life, s</th></tr></table></div></div>
+<div class="box ind" id="logic"></div>
+
+<h2>Underlying ideas: definitions to learn</h2>
+<div class="ind"><table id="gl"><tr><th>term</th><th>definition</th></tr>
+<tr><td>absorbance</td><td>how much light a coloured solution absorbs; proportional to the concentration of the coloured substance.</td></tr>
+<tr><td>first-order reaction</td><td>a reaction whose rate is proportional to the concentration of one reactant; the half-life is constant.</td></tr>
+<tr><td>exponential decay</td><td>a quantity that falls by the same fraction in each equal interval of time.</td></tr>
+<tr><td>half-life, t½</td><td>the time for the concentration of a reactant to fall to half its value.</td></tr>
+<tr><td>rate constant, k</td><td>the constant in rate = k × concentration; for first order it has units s⁻¹ and equals 0.693 over the half-life.</td></tr>
+<tr><td>pseudo-first-order</td><td>behaving as first order because the other reactant is in such large excess that its concentration stays almost constant.</td></tr>
+<tr><td>activation energy, Ea</td><td>the minimum energy colliding particles need to react.</td></tr>
+<tr><td>Maxwell–Boltzmann distribution</td><td>the spread of energies of molecules at one temperature; the area is the total number of molecules.</td></tr>
+<tr><td>catalyst</td><td>speeds up a reaction by giving a route with lower activation energy; not used up.</td></tr></table></div>
+
+<h2>Searching questions</h2>
+<div class="bar noprint ind"><button id="save">Save progress</button><button id="load">Retrieve progress</button><button id="pdf">Save as a .pdf file</button> <button id="reseed">New numbers</button> <span class="sans" id="msg" style="font-size:14px"></span></div>
+<div class="ind"><p>Calculation questions mark themselves within 3%. Working earns marks even when the final answer is wrong, so write your working on paper first. Use the hints for small steps.</p></div>
+<div id="nq"></div>
+<div id="cq"></div>
+
+<div class="foot">Science Department · Refined with AI</div>
+</div>
+<script>
+const R=8.314e-3; // kJ mol-1 K-1
+function $(i){return document.getElementById(i)}
+const MINUS='−';
+function fmt(x,d){return x.toFixed(d).replace('-',MINUS)}
+function setup(c){const dpr=window.devicePixelRatio||1;const w=c.width,h=c.height;c.width=w*dpr;c.height=h*dpr;const g=c.getContext('2d');g.scale(dpr,dpr);g.W=w;g.H=h;return g}
+const F='14px "Helvetica Neue",Helvetica,Arial,sans-serif';
+function axes(g,L,T,Rr,B,xl,yl){g.clearRect(0,0,g.W,g.H);g.fillStyle='#fff';g.fillRect(0,0,g.W,g.H);g.strokeStyle='#000';g.lineWidth=1.5;g.beginPath();g.moveTo(L,T);g.lineTo(L,g.H-B);g.lineTo(g.W-Rr,g.H-B);g.stroke();g.fillStyle='#000';g.font=F;g.textAlign='center';g.fillText(xl,(L+g.W-Rr)/2,g.H-8);g.save();g.translate(16,(T+g.H-B)/2);g.rotate(-Math.PI/2);g.fillText(yl,0,0);g.restore()}
+// ---------- Explorer 1
+const c1=setup($('c1'));
+function draw1(){
+ const A0=+$('a0').value,hl=+$('hl').value,k=Math.LN2/hl,ln=$('lnmode').checked;
+ $('a0v').textContent=A0.toFixed(2);$('hlv').textContent=hl;
+ const L=64,T=14,Rr=16,B=48,tmax=600,pw=c1.W-L-Rr,ph=c1.H-T-B;
+ axes(c1,L,T,Rr,B,'time, s',ln?'ln(absorbance)':'absorbance');
+ const X=t=>L+t/tmax*pw;
+ const ymax=1.6,ymin=-4.5,Y=ln?(v=>T+(Math.log(1.6)-v)/(Math.log(1.6)-ymin)*ph):(v=>T+ph-v/ymax*ph);
+ const g=c1;g.font=F;g.textAlign='center';
+ for(let t=0;t<=tmax;t+=100){g.fillText(t,X(t),g.H-B+18);g.beginPath();g.moveTo(X(t),T+ph);g.lineTo(X(t),T+ph+4);g.stroke()}
+ g.textAlign='right';
+ if(!ln){for(let v=0;v<=1.6;v+=0.4){g.fillText(v.toFixed(1),L-6,Y(v)+4)}}else{for(let v=0;v>=-4;v-=1){g.fillText(fmt(v,1),L-6,Y(v)+4)}}
+ g.strokeStyle='#000';g.lineWidth=2.2;g.beginPath();
+ for(let t=0;t<=tmax;t+=3){const a=A0*Math.exp(-k*t);const y=Y(ln?Math.log(a):a);t?g.lineTo(X(t),y):g.moveTo(X(t),y)}g.stroke();
+ g.setLineDash([6,4]);g.lineWidth=1;
+ for(let n=1;n<=4;n++){const t=n*hl;if(t>tmax)break;const a=A0/Math.pow(2,n);const y=Y(ln?Math.log(a):a);g.beginPath();g.moveTo(L,y);g.lineTo(X(t),y);g.lineTo(X(t),T+ph);g.stroke();g.textAlign='left';g.fillText(a.toFixed(3),L+6,y-4)}
+ g.setLineDash([]);
+ $('o1').innerHTML='<b>rate constant, k</b> = 0.693 over '+hl+' s = <b>'+k.toFixed(4)+' s⁻¹</b><br>after 1, 2, 3 half-lives: '+[1,2,3].map(n=>(A0/Math.pow(2,n)).toFixed(3)).join(', ')+'<br>initial rate = k × A₀ = '+(k*A0).toFixed(5)+' absorbance units per second'+(ln?'<br>gradient of the ln line = '+fmt(-k,4)+' s⁻¹':'');
+}
+['a0','hl','lnmode'].forEach(i=>$(i).addEventListener('input',draw1));
+// ---------- Explorer 1b
+const c1b=setup($('c1b'));let hid;
+function newHidden(){hid={A0:0.6+Math.random()*0.7,hl:60+Math.random()*250};hid.k=Math.LN2/hid.hl;hid.pts=[];for(let t=0;t<=600;t+=50){hid.pts.push([t,hid.A0*Math.exp(-hid.k*t)+(Math.random()-.5)*0.03])}$('fo').textContent='Your rate constant, k = 0.693 over your half-life. Check to compare.';draw1b()}
+function draw1b(){
+ const A0=+$('fa0').value,hl=+$('fhl').value,k=Math.LN2/hl;$('fa0v').textContent=A0.toFixed(2);$('fhlv').textContent=hl;
+ const L=64,T=14,Rr=16,B=48,pw=c1b.W-L-Rr,ph=c1b.H-T-B;axes(c1b,L,T,Rr,B,'time, s','absorbance');
+ const g=c1b,X=t=>L+t/600*pw,Y=v=>T+ph-v/1.5*ph;g.font=F;g.textAlign='center';
+ for(let t=0;t<=600;t+=100)g.fillText(t,X(t),g.H-B+18);g.textAlign='right';for(let v=0;v<=1.5;v+=0.5)g.fillText(v.toFixed(1),L-6,Y(v)+4);
+ g.fillStyle='#000';hid.pts.forEach(p=>{g.beginPath();g.arc(X(p[0]),Y(p[1]),4.5,0,7);g.fill()});
+ g.lineWidth=2;g.beginPath();for(let t=0;t<=600;t+=3){const y=Y(A0*Math.exp(-k*t));t?g.lineTo(X(t),y):g.moveTo(X(t),y)}g.stroke();
+}
+$('fa0').addEventListener('input',draw1b);$('fhl').addEventListener('input',draw1b);$('fnew').onclick=newHidden;
+$('fchk').onclick=()=>{const hl=+$('fhl').value,k=Math.LN2/hl,e=Math.abs(k-hid.k)/hid.k;$('fo').innerHTML='Your k = <b>'+k.toFixed(4)+' s⁻¹</b>. Hidden k = <b>'+hid.k.toFixed(4)+' s⁻¹</b> (half-life '+hid.hl.toFixed(0)+' s, A₀ '+hid.A0.toFixed(2)+'). '+(e<0.08?'<span class="ok">Within 8%: a good fit.</span>':'More than 8% away: adjust the curve until it passes through the dots.')}
+// ---------- Explorer 2
+const c2=setup($('c2')),c3=setup($('c3'));
+function erfc(x){const z=Math.abs(x),t=1/(1+0.5*z);const r=t*Math.exp(-z*z-1.26551223+t*(1.00002368+t*(0.37409196+t*(0.09678418+t*(-0.18628806+t*(0.27886807+t*(-1.13520398+t*(1.48851587+t*(-0.82215223+t*0.17087277)))))))));return x>=0?r:2-r}
+function frac(Ea,T){const x=Ea/(R*T);return erfc(Math.sqrt(x))+2*Math.sqrt(x/Math.PI)*Math.exp(-x)}
+function f(E,T){const rt=R*T;return 2*Math.sqrt(E/Math.PI)*Math.pow(rt,-1.5)*Math.exp(-E/rt)}
+let pinned=null;
+function state(){const E=+$('E').value,d=+$('D').value,cat=$('cat').checked;return{T:+$('T').value+273.15,C:+$('C').value,Ea:E,cat,Eeff:cat?E-d:E,d}}
+function kobs(s,ref){return Math.LN2/150*(s.C/0.01)*frac(s.Eeff,s.T)/frac(ref.Ea,298.15)}
+function draw2(){
+ const s=state();$('tv').textContent=(s.T-273.15).toFixed(0);$('cv').textContent=s.C.toFixed(3);$('ev').textContent=s.Ea;$('dv').textContent=s.d;
+ const fr=frac(s.Eeff,s.T),FAC=fr/frac(s.Eeff,298.15);
+  const base=pinned||{T:298.15,C:0.01,Eeff:s.Ea,Ea:s.Ea};
+  const log=$('logy').checked;const L=64,Tp=14,Rr=16,B=48,pw=c2.W-L-Rr,ph=c2.H-Tp-B;
+  const peak=f(R*278.15/2,278.15),ytop=peak*1.1,g=c2;
+  const eB=pinned?pinned.Eeff:s.Ea,broken=!log&&Math.min(s.Eeff,eB)>22;
+  axes(c2,L,Tp,Rr,B,'energy, kJ mol⁻¹',log?'log10 (fraction per kJ mol⁻¹)':'fraction of molecules per kJ mol⁻¹');
+  const sup=n=>String(n).split('').map(c=>({'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'})[c]).join('');
+  g.font=F;g.fillStyle='#000';
+  if(!broken){
+   const Emax=log?Math.max(30,Math.ceil(1.4*s.Ea/5)*5):30,X=e=>L+e/Emax*pw,lo=-9,hi=Math.log10(ytop);
+   const Y=v=>log?Tp+(hi-Math.log10(Math.max(v,1e-15)))/(hi-lo)*ph:Tp+ph-v/ytop*ph;
+   g.textAlign='center';const stp=Emax>45?10:5;for(let e=0;e<=Emax;e+=stp)g.fillText(e,X(e),g.H-B+18);
+   if(log){g.textAlign='right';for(let v=-8;v<=-2;v+=2)g.fillText(v,L-6,Y(Math.pow(10,v))+4)}
+   const curve=(T,col,dash,lw)=>{g.strokeStyle=col;g.lineWidth=lw;g.setLineDash(dash);g.beginPath();let first=true;for(let e=0.15;e<=Emax;e+=0.3){const y=Y(f(e,T));first?g.moveTo(X(e),y):g.lineTo(X(e),y);first=false}g.stroke();g.setLineDash([])};
+   if(s.Eeff<Emax-1){g.fillStyle='rgba(0,0,0,0.28)';g.beginPath();g.moveTo(X(s.Eeff),Tp+ph);for(let e=s.Eeff;e<=Emax;e+=0.3)g.lineTo(X(e),Y(f(e,s.T)));g.lineTo(X(Emax),Tp+ph);g.closePath();g.fill();}
+   curve(base.T,'#777',[6,4],1.6);curve(s.T,'#000',[],2.4);
+   g.lineWidth=1.3;g.strokeStyle='#000';g.fillStyle='#000';
+   const mark=(E,lab,yy)=>{if(E<Emax-1){g.setLineDash([5,4]);g.beginPath();g.moveTo(X(E),Tp);g.lineTo(X(E),Tp+ph);g.stroke();g.setLineDash([]);g.textAlign='left';g.fillText(lab,X(E)+4,Tp+yy)}else{g.textAlign='right';g.fillText(lab+' = '+E+' kJ mol⁻¹ → off the scale',g.W-Rr-6,Tp+yy)}};
+   mark(s.Ea,'Ea',16);if(s.cat)mark(s.Eeff,'Ea with catalyst',36);
+   g.textAlign='right';g.fillText('solid: now   dashed grey: comparison',g.W-Rr-8,Tp+ph-8);
+   g.font='bold 14px "Helvetica Neue",Helvetica,Arial,sans-serif';g.fillText('shaded area = '+sci(fr),g.W-Rr-8,Tp+56);g.fillText(FAC.toFixed(2)+' \u00d7 the area at 25 \u00b0C',g.W-Rr-8,Tp+74);g.font=F;
+  } else {
+   const lw=0.46*pw,gap=0.07*pw,rw=pw-lw-gap,XL=e=>L+e/22*lw;
+   const a=Math.min(s.Eeff,eB)-2,b=Math.max(s.Eeff,eB)+16,XR=e=>L+lw+gap+(e-a)/(b-a)*rw;
+   const maxf=Math.max(f(a,s.T),f(a,base.T)),Mexp=Math.floor(Math.log10(0.85*ytop/maxf)),M=Math.pow(10,Mexp);
+   const YL=v=>Tp+ph-v/ytop*ph,YR=v=>Tp+ph-M*v/ytop*ph;
+   const stroke=(X,Y,e0,e1,T,col,dash,lw2)=>{g.strokeStyle=col;g.lineWidth=lw2;g.setLineDash(dash);g.beginPath();const n=150;for(let i=0;i<=n;i++){const e=e0+(e1-e0)*i/n;i?g.lineTo(X(e),Y(f(e,T))):g.moveTo(X(e),Y(f(e,T)))}g.stroke();g.setLineDash([])};
+   // axis gap
+   g.fillStyle='#fff';g.fillRect(L+lw+4,Tp+ph-3,gap-8,6);g.strokeStyle='#000';g.lineWidth=1.5;
+   [L+lw+2,L+lw+gap-6].forEach(x=>{g.beginPath();g.moveTo(x,Tp+ph+6);g.lineTo(x+4,Tp+ph-6);g.stroke()});
+   // ticks
+   g.fillStyle='#000';g.textAlign='center';for(let e=0;e<=20;e+=5)g.fillText(e,XL(e),g.H-B+18);
+   for(let e=Math.ceil(a/5)*5;e<=b;e+=5)g.fillText(e,XR(e),g.H-B+18);
+   // left: true scale
+   stroke(XL,YL,0.15,22,base.T,'#777',[6,4],1.6);stroke(XL,YL,0.15,22,s.T,'#000',[],2.4);
+   g.textAlign='left';g.fillText('true scale',XL(7),Tp+16);
+   // right: magnified
+   g.fillStyle='rgba(0,0,0,0.28)';g.beginPath();g.moveTo(XR(s.Eeff),Tp+ph);for(let i=0;i<=150;i++){const e=s.Eeff+(b-s.Eeff)*i/150;g.lineTo(XR(e),YR(f(e,s.T)))}g.lineTo(XR(b),Tp+ph);g.closePath();g.fill();
+   stroke(XR,YR,a,b,base.T,'#777',[6,4],1.6);stroke(XR,YR,a,b,s.T,'#000',[],2.4);
+   g.strokeStyle='#000';g.lineWidth=1.3;g.setLineDash([5,4]);g.fillStyle='#000';
+   const vm=(E,lab,yy)=>{g.beginPath();g.moveTo(XR(E),Tp+yy-4);g.lineTo(XR(E),Tp+ph);g.stroke();g.textAlign='left';g.fillText(lab,XR(E)+5,Tp+yy+8)};
+   vm(s.Eeff,s.cat?'Ea with catalyst':'Ea',44);if(Math.abs(eB-s.Eeff)>0.5)vm(eB,'Ea (comparison)',70);g.setLineDash([]);
+   g.textAlign='left';g.fillText('tail magnified ×10'+sup(Mexp),XR(a)-4,Tp+16);
+   g.fillText('shaded: able to react',XR(a)-4,Tp+32);
+   g.fillText('solid: now',XL(7),Tp+34);g.fillText('dashed grey: comparison',XL(7),Tp+50);
+   g.font='bold 14px "Helvetica Neue",Helvetica,Arial,sans-serif';g.fillText('shaded area = '+sci(fr),XL(7),Tp+78);g.fillText(FAC.toFixed(2)+' \u00d7 the area at 25 \u00b0C',XL(7),Tp+96);g.font=F;
+  }
+ // decay
+ const k=kobs(s,{Ea:s.Ea}),kb=pinned?pinned.k:Math.LN2/150*(1)*1,A0=0.8;
+ const L3=64,pw3=c3.W-L3-16,ph3=c3.H-14-48;axes(c3,L3,14,16,48,'time, s','absorbance');const g3=c3,X3=t=>L3+t/600*pw3,Y3=v=>14+ph3-v/0.9*ph3;g3.font=F;g3.textAlign='center';for(let t=0;t<=600;t+=100)g3.fillText(t,X3(t),g3.H-48+18);g3.textAlign='right';for(let v=0;v<=0.8;v+=0.2)g3.fillText(v.toFixed(1),L3-6,Y3(v)+4);
+ const kbase=pinned?pinned.k:Math.LN2/150;
+ const dc=(kk,col,dash,lw)=>{g3.strokeStyle=col;g3.lineWidth=lw;g3.setLineDash(dash);g3.beginPath();for(let t=0;t<=600;t+=3){const y=Y3(A0*Math.exp(-kk*t));t?g3.lineTo(X3(t),y):g3.moveTo(X3(t),y)}g3.stroke();g3.setLineDash([])};
+ dc(kbase,'#777',[6,4],1.6);dc(k,'#000',[],2.4);
+ const frb=pinned?frac(pinned.Eeff,pinned.T):frac(s.Ea,298.15);
+ $('o2').innerHTML='<b>shaded area</b> = fraction of molecules able to react = <b>'+sci(fr)+'</b> (about '+perBillion(fr)+' in every billion molecules)<br><b>increase since 25 \u00b0C</b> (same Ea): <b>'+FAC.toFixed(2)+' times</b><br>comparison (grey curve): '+sci(frb)+'<br>relative rate (against the grey curve): <b>'+(k/kbase).toFixed(2)+' times</b><br>rate constant, k = <b>'+k.toFixed(4)+' s⁻¹</b>; half-life = 0.693 over k = <b>'+(Math.LN2/k).toFixed(0)+' s</b><br>average energy has changed by '+(((s.T-(pinned?pinned.T:298.15))/(pinned?pinned.T:298.15))*100).toFixed(1)+'% against the comparison';
+ draw2.k=k;renderLadder(s);renderLogic(s,fr,FAC,k);
+}
+['T','C','E','cat','D','logy'].forEach(i=>$(i).addEventListener('input',draw2));
+$('pin').onclick=()=>{const s=state();pinned={T:s.T,C:s.C,Eeff:s.Eeff,Ea:s.Ea,k:kobs(s,{Ea:s.Ea})};draw2()};
+$('unpin').onclick=()=>{pinned=null;draw2()};
+
+const SUPS={'-':'\u207b','0':'\u2070','1':'\u00b9','2':'\u00b2','3':'\u00b3','4':'\u2074','5':'\u2075','6':'\u2076','7':'\u2077','8':'\u2078','9':'\u2079'};
+function supS(n){return String(n).split('').map(c=>SUPS[c]||c).join('')}
+function sci(x){if(x===0)return '0';const e=Math.floor(Math.log10(x)),m=x/Math.pow(10,e);return m.toFixed(2)+' \u00d7 10'+supS(e)}
+function perBillion(x){const v=x*1e9;return v>=1000?Number(v.toPrecision(3)).toLocaleString('en-GB'):v.toPrecision(3)}
+let recorded=[];
+function stateAt(s,Tc){return Object.assign({},s,{T:Tc+273.15})}
+function renderLadder(s){
+ const t=$('lad');if(!t)return;while(t.rows.length>1)t.deleteRow(1);
+ const a25=frac(s.Eeff,298.15);let prev=null;
+ recorded.slice().sort((x,y)=>x-y).forEach(Tc=>{const si=stateAt(s,Tc),a=frac(s.Eeff,si.T),k=kobs(si,{Ea:s.Ea});const r=t.insertRow();
+  const inc=prev===null?'':(a/prev.a).toFixed(2)+' times';
+  [Tc,sci(a),(a/a25).toFixed(2)+' times',inc,k.toFixed(4),(Math.LN2/k).toFixed(0)].forEach(v=>{const c=r.insertCell();c.textContent=v});prev={a,Tc}});
+ if(recorded.length<2){const r=t.insertRow();const c=r.insertCell();c.colSpan=6;c.textContent='Record 25 \u00b0C, then raise the temperature by 10 \u00b0C and record again.'}
+}
+function renderLogic(s,fr,F,k){
+ const Tc=(s.T-273.15).toFixed(0),a25=frac(s.Eeff,298.15),k25=kobs(stateAt(s,25),{Ea:s.Ea});
+ $('logic').innerHTML='<p><b>The line of logic, with your current numbers</b> (Ea = '+s.Eeff+' kJ mol\u207b\u00b9, bleach '+s.C.toFixed(3)+' mol dm\u207b\u00b3)</p><ol style="margin:0">'+
+ '<li><b>Temperature:</b> raised from 25 \u00b0C to '+Tc+' \u00b0C.</li>'+
+ '<li><b>Shaded area:</b> the fraction of molecules with energy at or above Ea goes from '+sci(a25)+' to '+sci(fr)+'. The area has increased <b>'+F.toFixed(2)+' times</b> since 25 \u00b0C.</li>'+
+ '<li><b>Population able to react:</b> the shaded area is the molecules with enough energy to react, so <b>'+F.toFixed(2)+' times</b> as many molecules in the sample can react when they collide.</li>'+
+ '<li><b>Rate of reaction:</b> the rate is proportional to the number of molecules able to react, so the rate constant increases <b>'+F.toFixed(2)+' times</b>: from '+k25.toFixed(4)+' s\u207b\u00b9 to '+k.toFixed(4)+' s\u207b\u00b9.</li>'+
+ '<li><b>Half-life:</b> falls from '+(Math.LN2/k25).toFixed(0)+' s to '+(Math.LN2/k).toFixed(0)+' s: the dye fades '+F.toFixed(2)+' times as fast.</li></ol>';
+}
+$('up10').onclick=()=>{const t=$('T');t.value=Math.min(70,+t.value+10);draw2()};
+$('dn10').onclick=()=>{const t=$('T');t.value=Math.max(5,+t.value-10);draw2()};
+$('rec').onclick=()=>{const Tc=+$('T').value;if(!recorded.includes(Tc))recorded.push(Tc);draw2()};
+$('clr').onclick=()=>{recorded=[];draw2()};
+// ---------- Questions
+function rng(seed){let s=seed>>>0||1;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+let seed=Math.floor(Math.random()*1e6)+1;
+const answers={};
+function nums(){const r=rng(seed);const pick=(a)=>a[Math.floor(r()*a.length)];
+ const hl1=pick([20,30,40,45,60,80,90,120,200]),k2=pick([0.0021,0.0035,0.0058,0.0087,0.012,0.015]),A0=pick([0.6,0.7,0.9,1.0,1.2]),k3=pick([0.0042,0.0071,0.011,0.0165]),t3=pick([50,80,120,150,200]),n4=pick([2,3,4]),A4=pick([0.8,1.2,1.6,0.96]),h4=pick([30,45,60,75,90]),ha=pick([200,180,240]),hb=pick([60,72,80,90,100]);
+ return[
+ {q:'A first-order reaction has a half-life of <b>'+hl1+' s</b>. Calculate the rate constant, k, in s⁻¹.',a:Math.LN2/hl1,u:'s⁻¹',h:'Step 1: rate constant, k = 0.693 over half-life. Step 2: put in '+hl1+' s as the denominator, using the fraction key. Step 3: the unit is s⁻¹.'},
+ {q:'A first-order reaction has a rate constant of <b>'+k2+' s⁻¹</b>. Calculate its half-life in seconds.',a:Math.LN2/k2,u:'s',h:'Rearrange: half-life = 0.693 over k. Put 0.693 as the numerator and '+k2+' as the denominator. Think: should the half-life be longer or shorter when k is small?'},
+ {q:'A dye starts at absorbance <b>'+A0+'</b> with rate constant <b>'+k3+' s⁻¹</b>. Calculate the absorbance after <b>'+t3+' s</b>.',a:A0*Math.exp(-k3*t3),u:'',h:'Step 1: k × t = '+k3+' × '+t3+'. Step 2: press e^x, then (−), then your step 1 answer. Step 3: multiply by '+A0+'.'},
+ {q:'A dye starts at absorbance <b>'+A4+'</b> and its half-life is <b>'+h4+' s</b>. What is the absorbance after <b>'+(n4*h4)+' s</b>?',a:A4/Math.pow(2,n4),u:'',h:'Count the half-lives: time over half-life = '+(n4*h4)+' over '+h4+'. Halve the absorbance that many times.'},
+ {q:'At 20 °C a first-order reaction has half-life <b>'+ha+' s</b>. At 30 °C its half-life is <b>'+hb+' s</b>. How many times larger is the rate constant at 30 °C?',a:ha/hb,u:'times',h:'Find k for each temperature using 0.693 over half-life, then put the larger over the smaller. The 0.693 cancels: you can use half-life at 20 °C over half-life at 30 °C directly.'}];
+}
+function buildN(){const box=$('nq');box.innerHTML='';const list=nums();list.forEach((o,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML='<span class="n">'+(i+1)+'</span>'+o.q+'<div class="res"><input type="number" step="any" id="n'+i+'" style="width:140px"> '+o.u+' <button data-i="'+i+'">Check</button><button data-h="'+i+'">Hint</button><span id="r'+i+'"></span></div><div class="hint" id="h'+i+'">'+o.h+'</div>';box.appendChild(d)});
+ box.querySelectorAll('button[data-i]').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,o=list[i],v=parseFloat($('n'+i).value),r=$('r'+i);if(isNaN(v)){r.textContent=' Enter a number first.';return}const ok=Math.abs(v-o.a)/Math.abs(o.a)<0.03;r.innerHTML=ok?' <span class="ok">✓ correct</span> (accurate value '+sig(o.a)+')':' ✗ not yet. Accurate value: '+sig(o.a)+'. Compare your working with the hint.'});
+ box.querySelectorAll('button[data-h]').forEach(b=>b.onclick=()=>$('h'+b.dataset.h).classList.toggle('show'))}
+function sig(x){return Number(x.toPrecision(3)).toString()}
+const CQ=[
+['Using the table from Explorer 2 at Ea = 50 kJ mol\u207b\u00b9, write out the chain of reasoning that links a 10 \u00b0C rise in temperature to a change in the half-life of the dye. Use these four links: shaded area, population able to react, rate of reaction, half-life. Give the approximate factor at each link.','Raising the temperature by 10 \u00b0C makes the Maxwell\u2013Boltzmann curve flatter, and the shaded area beyond Ea grows by a factor of about 2. The shaded area is the fraction of molecules with enough energy to react, so about twice as many molecules can react in collisions. The rate of reaction is proportional to the number of molecules able to react, so the rate constant is about 2 times larger. A larger k means a shorter half-life: it falls to about half (for example from 150 s to about 80 s). Each further 10 \u00b0C step doubles again, approximately.'],
+['A student says: “Doubling the starting concentration of dye means twice as much to react with, so the half-life should halve.” Use Explorer 1 to decide whether this is right, and explain.','The half-life stays the same. Each dye molecule has the same chance per second of reacting (set by k), so the amount used up in each interval is proportional to the amount present. The initial <i>rate</i> doubles, but the rate constant and the half-life do not.'],
+['In the experiment the bleach was in large excess. Explain why that matters for seeing a simple exponential decay, and what you would expect for the successive half-lives if dye and bleach were present in equal amounts.','Excess bleach means its concentration is almost constant, so the rate depends on the dye alone (pseudo-first-order). If both are used up at the same pace the rate depends on both falling concentrations, the curve is not a simple exponential and successive half-lives are not constant (each is longer than the last for a second-order reaction).'],
+['Raising the temperature by 10 K increases the average energy of the molecules by only about 3%, yet many reaction rates roughly double. Use Explorer 2 to explain: compare the enlarged tails at 25 °C and 35 °C, and try Ea = 50 kJ mol⁻¹.','Only molecules at or beyond the activation energy can react, and this is the far tail of the curve. A small shift of the whole curve changes the tiny fraction in the tail by a large factor (about 1.9 times for 25 °C to 35 °C at Ea = 50 kJ mol⁻¹, and about 1.1 times at Ea = 10 kJ mol⁻¹: the larger the Ea, the more sensitive the rate is to temperature), so many more collisions per second are successful.'],
+['A student sketches the effect of a catalyst by shifting the whole Maxwell–Boltzmann curve to the right. Explain what is wrong, and show what a catalyst does change.','A catalyst does not change the energies of the molecules, so the curve stays where it is at the same temperature. It provides a route with lower activation energy: the Ea line moves left and a larger area of the same curve lies beyond it.'],
+['Why do the curves at different temperatures enclose the same area, while the higher-temperature peak is lower and further right?','The area is the total number of molecules, which is the same sample. At higher temperature the energies are spread more widely, so the peak is lower and moves to a higher energy, and the tail grows.'],
+['Absorbance against time is curved but ln(absorbance) against time is straight. What does the straight line prove, and what does its gradient give?','A straight line shows ln A falls by equal amounts in equal times, which is exponential decay: first order in the dye. The gradient is the negative of the rate constant, −k.'],
+['Would the rate constant, k, be different if the dye started at twice the absorbance? Would the initial rate (absorbance units per second) be different? Explain the difference between the two.','k is unchanged because it depends on temperature, bleach concentration and any catalyst. The initial rate = k × starting absorbance doubles. The rate depends on concentration; the rate constant does not.'],
+['Looking ahead: in the cuvette the dye concentration falls with time. A mixture of dye and bleach flows steadily along a long narrow tube at constant speed. Describe the colour along the tube, and relate time spent in the tube to distance. Then say what you expect if the mixture were instead stirred in a tank with fresh mixture entering all the time.','Along the tube the colour fades with distance following the same exponential curve; at constant speed, time in the tube is proportional to distance travelled. In a well-stirred tank the contents are uniform, so the dye concentration everywhere equals the (low) outlet concentration and does not fall with position. This is the starting point for comparing tube reactors and stirred tanks.']];
+function buildC(){const box=$('cq');box.innerHTML='';CQ.forEach((c,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML='<span class="n">'+(i+6)+'</span>'+c[0]+'<textarea id="t'+i+'"></textarea><button data-m="'+i+'">Show model answer</button><div class="model" id="m'+i+'">'+c[1]+'</div>';box.appendChild(d)});box.querySelectorAll('button[data-m]').forEach(b=>b.onclick=()=>$('m'+b.dataset.m).classList.toggle('show'))}
+// progress
+function msg(t){$('msg').textContent=t;setTimeout(()=>$('msg').textContent='',4000)}
+function collect(){const o={seed,n:{},t:{}};for(let i=0;i<5;i++)o.n[i]=$('n'+i).value;for(let i=0;i<CQ.length;i++)o.t[i]=$('t'+i).value;return o}
+function apply(o){seed=o.seed;buildN();for(let i=0;i<5;i++)$('n'+i).value=o.n[i]||'';for(let i=0;i<CQ.length;i++)$('t'+i).value=o.t[i]||''}
+$('save').onclick=()=>{const o=collect(),s=JSON.stringify(o);let ok=false;try{localStorage.setItem('fok_progress',s);ok=true}catch(e){}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'application/json'}));a.download='first_order_progress.json';a.click();msg(ok?'Saved in this browser and as a file.':'Saved as a file.')};
+$('load').onclick=()=>{let s=null;try{s=localStorage.getItem('fok_progress')}catch(e){}if(s){apply(JSON.parse(s));msg('Progress retrieved.');return}
+ const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=()=>{const r=new FileReader();r.onload=()=>{try{apply(JSON.parse(r.result));msg('Progress retrieved.')}catch(e){msg('That file could not be read.')}};r.readAsText(i.files[0])};i.click()};
+$('pdf').onclick=()=>{document.querySelectorAll('.model,.hint').forEach(e=>{});window.print()};
+$('reseed').onclick=()=>{seed=Math.floor(Math.random()*1e6)+1;buildN()};
+document.querySelectorAll('.tt').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('open')));
+newHidden();draw1();draw2();buildN();buildC();
+</script></body></html>
