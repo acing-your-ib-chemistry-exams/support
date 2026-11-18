@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adventures with a tube reactor</title>
+<style>
+  :root { --ink:#000; --rule:#000; --soft:#f3f3f3; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#fff; color:var(--ink);
+         font-family:Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", serif;
+         font-size:18px; line-height:1.5; counter-reset:sec; }
+  .page { max-width:1000px; margin:0 auto; padding:24px 20px 40px; }
+  .runhead { display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid var(--rule);
+             padding-bottom:6px; font-size:15px; }
+  h1, h2, h3, .sans { font-family:"Clear Gothic","Gill Sans","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight:400; }
+  h1 { font-size:34px; line-height:1.2; margin:28px 0 4px; }
+  .sub { margin:0 0 8px; padding-left:clamp(0px,6vw,88px); font-style:italic; }
+  h2 { font-size:24px; margin:34px 0 8px; counter-increment:sec; }
+  h2::before { content:counter(sec) "\00a0\00a0"; }
+  h3 { font-size:19px; margin:20px 0 6px; }
+  .indent { padding-left:clamp(0px,6vw,88px); }
+  .indent p, .indent ul, .indent ol { margin:0 0 10px; }
+  ul, ol { padding-left:1.3em; }
+  li { margin-bottom:6px; }
+  .ui { font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  .tip { border-bottom:1px dotted var(--ink); cursor:help; position:relative; }
+  .tip:hover::after, .tip:focus::after {
+    content:attr(data-tip); position:absolute; left:0; top:1.7em; width:min(300px,70vw); z-index:20;
+    background:#000; color:#fff; font:400 14px/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding:7px 9px; white-space:normal; }
+  .tip:focus { outline:none; }
+
+  .sim { border:1px solid var(--ink); padding:10px; margin:10px 0; }
+  .sim svg { width:100%; height:auto; display:block; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin:6px 0 10px; }
+  .card { border:1px solid var(--ink); padding:7px 10px; }
+  .card .k { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .card .v { font:700 24px "Helvetica Neue",Helvetica,Arial,sans-serif; white-space:nowrap; }
+  .card .u { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .card.key { background:var(--soft); }
+  .card.small .v { font-size:20px; }
+
+  .panel { border:1px solid var(--ink); padding:8px 12px 12px; margin:10px 0; }
+  .panel > .ptitle { font:400 16px "Helvetica Neue",Helvetica,Arial,sans-serif; margin:0 0 6px; }
+  .controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px 22px; }
+  .ctl label { display:block; font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-bottom:2px; }
+  .ctl .row { display:flex; align-items:center; gap:10px; }
+  .ctl input[type=range] { flex:1; accent-color:#000; }
+  .ctl output { min-width:8.5em; text-align:right; font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; line-height:1.25; }
+  .ctl output small { font-weight:400; display:block; }
+  .btns { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
+  .btns span.lbl { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  button { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; background:#fff; color:#000; border:1.5px solid #000;
+           padding:4px 12px; cursor:pointer; }
+  button:hover, button.on { background:#000; color:#fff; }
+  .clock { margin-left:auto; font:700 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .status { min-height:1.4em; margin:4px 0 0; font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:10px; margin:8px 0; }
+  .chart .ct { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-bottom:2px; }
+  .chart canvas { width:100%; height:150px; display:block; border:1px solid var(--ink); background:#fff; }
+
+  table.tot { border-collapse:collapse; font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; width:100%; }
+  table.tot td { border:1px solid var(--ink); padding:4px 8px; }
+  table.tot td:last-child { text-align:right; font-weight:700; white-space:nowrap; }
+
+  .eq { text-align:center; white-space:nowrap; margin:8px 0; overflow-x:auto; padding:2px 0; font-size:19px; }
+  .frac { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; margin:0 .3em; }
+  .frac > span:first-child { border-bottom:1.5px solid var(--ink); padding:0 .5em .12em; }
+  .frac > span:last-child { padding:.12em .5em 0; }
+  .work { border:1px solid var(--ink); padding:6px 12px 10px; margin:10px 0; }
+  .work h3 { margin-top:8px; }
+  .step { margin:8px 0 12px; }
+  .step .lab { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  dl { margin:0; }
+  dt { font-weight:700; margin-top:8px; }
+  dd { margin:0 0 4px; }
+
+  footer { margin-top:40px; border-top:1px solid var(--rule); padding-top:6px; font-size:14px; text-align:center;
+           font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  @keyframes flowdash { to { stroke-dashoffset:-18; } }
+  .dash { stroke:rgba(255,255,255,.75); stroke-width:3; stroke-dasharray:6 12; fill:none; animation:flowdash 1s linear infinite; }
+  @keyframes blade { 0%{transform:scaleX(1);} 50%{transform:scaleX(-1);} 100%{transform:scaleX(1);} }
+  .imp { animation:blade .7s linear infinite; }
+  @media (prefers-reduced-motion:reduce) { .dash, .imp { animation:none; } }
+  @media (max-width:560px) { body{font-size:17px;} .eq{font-size:16px;} h1{font-size:28px;} }
+
+  /* ---------- interactive questions ---------- */
+  .qtools { border:1px solid var(--ink); padding:8px 12px 10px; margin:10px 0 14px; }
+  .qtools .bar { height:10px; border:1px solid var(--ink); margin:6px 0 4px; background:#fff; }
+  .qtools .bar > div { height:100%; width:0; background:#000; transition:width .3s; }
+  .qtools .score { font:700 16px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .qtools .msg { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; min-height:1.3em; margin-top:4px; }
+  .qtools .btns { margin:8px 0 0; }
+  .style-guide { border:1px solid var(--ink); background:var(--soft); padding:6px 14px 10px; margin:10px 0 14px; }
+  .style-guide h3 { margin:6px 0; }
+  .style-guide ul { margin:0 0 8px; }
+  .style-guide .ex { font-size:16px; margin:4px 0; }
+  .style-guide .ex b { font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:13px; }
+  section.q { border-top:2px solid var(--ink); margin-top:18px; padding-top:2px; }
+  section.q h3 { margin-top:8px; }
+  .qsetup { font-style:italic; margin:0 0 8px; }
+  .part { border:1px solid var(--ink); padding:8px 12px 10px; margin:8px 0; page-break-inside:avoid; }
+  .part.done { background:#fafafa; }
+  .plabel { margin-bottom:6px; }
+  .plabel .n { font:700 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-right:6px; }
+  .opts label { display:block; margin:3px 0; cursor:pointer; }
+  .part input[type=text] { font:400 17px "Helvetica Neue",Helvetica,Arial,sans-serif; width:7em; padding:3px 6px; border:1.5px solid #000; }
+  .part textarea { width:100%; min-height:110px; font:400 17px Palatino,"Palatino Linotype",serif; padding:6px 8px; border:1.5px solid #000; }
+  .fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px 16px; margin:4px 0 8px; }
+  .fields label { display:block; font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .unit { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-left:6px; }
+  .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .fb { margin-top:8px; padding:6px 10px; border-left:4px solid #000; font-size:17px; display:none; }
+  .fb.show { display:block; }
+  .fb.ok { background:#f3f3f3; }
+  .fb.no { background:#fff; border-left-style:dashed; }
+  .fb .tag { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .phints { margin-top:6px; }
+  .phints .h { font-size:16px; border-left:3px dotted #000; padding:2px 10px; margin:4px 0; }
+  .points { margin:6px 0; }
+  .points label { display:block; margin:3px 0; font-size:16px; }
+  .model { margin-top:8px; padding:6px 10px; border:1px solid #000; font-size:17px; }
+  .model .tag { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; display:block; margin-bottom:2px; }
+  .mark { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-top:4px; }
+  #report { display:none; }
+
+  @media print {
+    @page { size:A4; margin:16mm; }
+    body { font-size:11pt; background:#fff; }
+    .page > *:not(#report) { display:none !important; }
+    #report { display:block !important; }
+    #report h1 { font-size:20pt; margin:0 0 4pt; }
+    #report .rq { margin:10pt 0 2pt; font:700 12pt "Helvetica Neue",Helvetica,Arial,sans-serif; }
+    #report .rp { margin:4pt 0 6pt; padding:0 0 4pt; border-bottom:0.5pt solid #000; page-break-inside:avoid; }
+    #report .rp p { margin:1pt 0; }
+    #report .rl { font:700 9pt "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  }
+  .pnote { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="runhead"><span>Chemical reactor design</span><span id="today">Wednesday 18 November 2026</span></div>
+
+<h1>Adventures with a tube reactor</h1>
+<p class="sub">Plug flow, valves, and a steam jacket along the tube</p>
+
+<h2 class="sans">Learning objectives</h2>
+<div class="indent">
+  <ul>
+    <li>Describe a <span class="tip" tabindex="0" data-tip="Plug flow reactor (PFR): a tube in which the liquid moves as plugs. Each plug enters at the inlet, travels along without mixing with the plugs in front or behind, and leaves after the same time as every other plug.">plug flow reactor</span> and the assumption that every portion of liquid spends exactly the same time in the tube.</li>
+    <li>Calculate the volume of a tube, the speed of the liquid and the <span class="tip" tabindex="0" data-tip="Average residence time: the time a plug of liquid spends in the tube. In a plug flow reactor every plug spends exactly this time. It equals the tube volume divided by the total flow rate.">average residence time</span>.</li>
+    <li>Use the first-order plug flow relationship to predict the BBD concentration in the output stream.</li>
+    <li>Compare a tube with a <span class="tip" tabindex="0" data-tip="Continuous flow stirred tank reactor: a stirred tank with liquid flowing in and out all the time. Also written CSTR.">CFSTR</span> of the same volume.</li>
+  </ul>
+</div>
+
+<h2 class="sans">The Exploration</h2>
+<div class="indent">
+  <p>The same two streams as before meet in a mixer: <span class="tip" tabindex="0" data-tip="Bleach is a solution of sodium hypochlorite in water. It contains no Brilliant Blue dye, and it destroys the dye slowly, so the blue colour fades.">bleach</span>, and water carrying <span class="tip" tabindex="0" data-tip="BBD: Brilliant Blue dye, the blue food dye also called Brilliant Blue FCF.">BBD</span>. The mixture then flows through a long, narrow tube. We assume <span class="tip" tabindex="0" data-tip="Plug flow: the liquid moves along the tube as plugs. There is no mixing along the tube, and perfect mixing across it, so every plug has one concentration and one temperature.">plug flow</span>: the liquid moves along as plugs that do not mix with each other. Each plug acts like a small batch of liquid that reacts for exactly as long as it takes to travel the tube. A valve controls each inlet, a valve controls the output, and a <span class="tip" tabindex="0" data-tip="A steam jacket is a hollow wall around the tube. Steam condenses on the outside of the inner tube and passes its heat into the liquid. The steam never touches the liquid.">steam jacket</span> with its own valve warms the whole tube. The tube is always full, so the flow in always equals the flow out. If the output valve passes less than the two inlets would supply, both inlet flows are reduced in the same proportion. The tube starts at steady state.</p>
+</div>
+
+<div class="sim">
+  <div class="cards">
+    <div class="card key"><div class="k">Average residence time</div><div class="v" id="rTau"></div><div class="u" id="rTauU"></div></div>
+    <div class="card key"><div class="k">BBD concentration in the output stream</div><div class="v" id="rC"></div><div class="u">mg per dm³</div></div>
+    <div class="card key"><div class="k">Temperature of the output stream</div><div class="v" id="rT"></div><div class="u">°C</div></div>
+    <div class="card key"><div class="k">Volume of the tube</div><div class="v" id="rV"></div><div class="u" id="rVU"></div></div>
+  </div>
+
+  <svg id="sim" viewBox="0 0 900 575" role="img" aria-label="Tube reactor with a steam jacket. Bleach and water containing BBD meet in a mixer and flow along a coiled tube to the output. Valves control both inlets, the output and the steam.">
+    <polyline id="jacket" fill="none" stroke="rgba(230,110,40,0.1)" stroke-linejoin="round"/>
+    <polyline id="outline" fill="none" stroke="#000" stroke-linejoin="round"/>
+    <g id="segs"></g>
+    <polyline id="dashes" class="dash"/>
+    <rect x="130" y="140" width="40" height="40" fill="#fff" stroke="#000" stroke-width="3"/>
+    <text x="150" y="165" font-size="11" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">Mixer</text>
+
+    <!-- bleach -->
+    <polyline id="bUp" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="bUpIn" fill="none" stroke="#e6e287" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="bDn" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="bDnIn" fill="none" stroke="#e6e287" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="bDash" class="dash"/>
+    <!-- dye -->
+    <polyline id="dUp" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="dUpIn" fill="none" stroke="#0a37c8" stroke-width="8"/>
+    <polyline id="dDn" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="dDnIn" fill="none" stroke="#0a37c8" stroke-width="8"/>
+    <polyline id="dDash" class="dash"/>
+    <!-- output -->
+    <polyline id="oUp" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="oUpIn" fill="none" stroke="#9bb7e0" stroke-width="8"/>
+    <polyline id="oDn" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="oDnIn" fill="none" stroke="#9bb7e0" stroke-width="8"/>
+    <polyline id="oDash" class="dash"/>
+    <!-- steam and condensate -->
+    <polyline id="sUp" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="sUpIn" fill="none" stroke="#f0c9ad" stroke-width="8"/>
+    <polyline id="sDn" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="sDnIn" fill="none" stroke="#f0c9ad" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="sDash" class="dash"/>
+    <polyline id="cPipe" fill="none" stroke="#777" stroke-width="10" stroke-linejoin="round"/>
+    <polyline id="cIn" fill="none" stroke="#b9cbd9" stroke-width="5" stroke-linejoin="round"/>
+    <polyline id="cDash" class="dash"/>
+
+    <g id="valves"></g>
+
+    <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#000">
+      <text x="190" y="38" font-size="15" font-weight="700">Bleach stream</text>
+      <text id="tB" x="190" y="56" font-size="14"></text>
+      <text x="20" y="232" font-size="15" font-weight="700">Water containing</text>
+      <text x="20" y="248" font-size="15" font-weight="700">BBD</text>
+      <text id="tD" x="20" y="266" font-size="14"></text>
+      <text id="tTube" x="470" y="108" font-size="14" text-anchor="middle"></text>
+      <text x="880" y="474" font-size="15" font-weight="700" text-anchor="end">Output stream</text>
+      <text id="tO2" x="880" y="492" font-size="14" text-anchor="end"></text>
+      <text id="tO3" x="880" y="508" font-size="14" text-anchor="end"></text>
+      <text id="tO4" x="880" y="524" font-size="14" text-anchor="end"></text>
+      <text x="20" y="462" font-size="15" font-weight="700">Steam (100 °C)</text>
+      <text id="tS" x="20" y="478" font-size="14"></text>
+      <text x="690" y="500" font-size="15" font-weight="700" text-anchor="end">Condensate</text>
+      <text id="tCond" x="690" y="518" font-size="14" text-anchor="end"></text>
+      <text id="tIn" x="30" y="20" font-size="0"></text>
+      <text id="tFlag" x="470" y="560" font-size="14" font-weight="700" text-anchor="middle"></text>
+    </g>
+  </svg>
+
+  <div class="panel">
+    <div class="ptitle">Time</div>
+    <div class="btns">
+      <span class="lbl">Speed:</span>
+      <button type="button" data-speed="1">×1</button>
+      <button type="button" data-speed="10">×10</button>
+      <button type="button" data-speed="30" class="on">×30</button>
+      <button type="button" data-speed="100">×100</button>
+      <button type="button" id="pause">Pause</button>
+      <button type="button" id="reset">Reset everything</button>
+      <span class="clock" id="clock"></span>
+    </div>
+    <div class="status" id="status" aria-live="polite"></div>
+  </div>
+
+  <div class="panel">
+    <div class="ptitle">The four valves</div>
+    <div class="controls">
+      <div class="ctl"><label for="vb">Bleach valve</label>
+        <div class="row"><input id="vb" type="range" min="0" max="100" step="1" value="30"><output id="vbo"></output></div></div>
+      <div class="ctl"><label for="vd">Valve on the water containing BBD</label>
+        <div class="row"><input id="vd" type="range" min="0" max="100" step="1" value="20"><output id="vdo"></output></div></div>
+      <div class="ctl"><label for="vo">Output valve</label>
+        <div class="row"><input id="vo" type="range" min="0" max="100" step="1" value="100"><output id="voo"></output></div></div>
+      <div class="ctl"><label for="vs">Steam valve</label>
+        <div class="row"><input id="vs" type="range" min="0" max="100" step="1" value="0"><output id="vso"></output></div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="ptitle">The tube and its feeds (changing the tube refills it at steady state)</div>
+    <div class="controls">
+      <div class="ctl"><label for="L">Length of the tube</label>
+        <div class="row"><input id="L" type="range" min="1" max="20" step="0.5" value="10"><output id="Lo"></output></div></div>
+      <div class="ctl"><label for="D">Inner diameter of the tube</label>
+        <div class="row"><input id="D" type="range" min="4" max="16" step="1" value="8"><output id="Do"></output></div></div>
+      <div class="ctl"><label for="C0">BBD concentration in its feed stream</label>
+        <div class="row"><input id="C0" type="range" min="1" max="50" step="1" value="25"><output id="C0o"></output></div></div>
+      <div class="ctl"><label for="B0">Sodium hypochlorite concentration in the bleach</label>
+        <div class="row"><input id="B0" type="range" min="0.1" max="1" step="0.05" value="0.7"><output id="B0o"></output></div></div>
+    </div>
+  </div>
+
+  <div class="charts">
+    <div class="chart"><div class="ct">BBD concentration along the tube (mg per dm³); axis in metres. Dashed: a CFSTR of the same volume and flows.</div><canvas id="chC"></canvas></div>
+    <div class="chart"><div class="ct">Temperature along the tube (°C); axis in metres</div><canvas id="chT"></canvas></div>
+    <div class="chart"><div class="ct">BBD concentration in the output stream (mg per dm³) over the last 30 minutes (axis in minutes). Dashed: steady-state prediction.</div><canvas id="chH"></canvas></div>
+  </div>
+
+  <div class="cards">
+    <div class="card small"><div class="k">Total flow rate through the tube</div><div class="v" id="rFt"></div><div class="u" id="rFtU">cm³ per minute</div></div>
+    <div class="card small"><div class="k">Speed of the liquid along the tube</div><div class="v" id="rU"></div><div class="u">metres per minute</div></div>
+    <div class="card small"><div class="k">BBD concentration from mixing alone</div><div class="v" id="rMix"></div><div class="u">mg per dm³</div></div>
+    <div class="card small"><div class="k">Hypochlorite concentration after mixing</div><div class="v" id="rB"></div><div class="u">mol dm⁻³</div></div>
+    <div class="card small"><div class="k">Rate constant for dye removal at 20 °C</div><div class="v" id="rK"></div><div class="u">per minute</div></div>
+    <div class="card small"><div class="k">Jacket temperature</div><div class="v" id="rTj"></div><div class="u">°C</div></div>
+    <div class="card small"><div class="k">Steam condensing in the jacket</div><div class="v" id="rSt"></div><div class="u" id="rStU"></div></div>
+    <div class="card small"><div class="k">Predicted steady-state BBD concentration</div><div class="v" id="rPred"></div><div class="u">mg per dm³</div></div>
+    <div class="card small"><div class="k">A CFSTR of the same volume would give</div><div class="v" id="rCf"></div><div class="u">mg per dm³</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="ptitle">Running totals since the start</div>
+    <table class="tot" id="totals"></table>
+  </div>
+</div>
+
+<div class="indent">
+  <div class="work">
+    <h3 class="sans">Prediction for the settings above</h3>
+    <div class="step"><div class="lab">These steps assume that the steam valve is closed, so the tube stays at 20 °C. With steam, the temperature changes along the tube, so the rate constant changes too, and the card above the workings adds up the removal along the tube.</div></div>
+    <div id="workings"></div>
+  </div>
+
+  <h3 class="sans">Adventures</h3>
+  <div class="qtools">
+    <div class="score sans"><span id="qScore"></span> &middot; <span id="qDone"></span></div>
+    <div class="bar"><div id="qBar"></div></div>
+    <div class="btns">
+      <button type="button" id="qSave">Save progress</button>
+      <button type="button" id="qLoad">Retrieve progress</button>
+      <button type="button" id="qPdf">Save as a .pdf file</button>
+      <input type="file" id="qFile" accept=".json,application/json" hidden>
+    </div>
+    <div class="msg" id="qMsg" aria-live="polite"></div>
+  </div>
+  <p class="ui" style="font-size:15px">Numerical answers are marked for you, with three tries and a hint at each step. Written answers are marked by you: write your own answer first, then tick the points it makes and read the model answer. <b>Save as a .pdf file</b> opens the print window; choose Save as PDF there.</p>
+  <div class="style-guide">
+    <h3 class="sans">Writing a good scientific answer</h3>
+    <ul>
+      <li>Answer the question in the first sentence, then give the reason.</li>
+      <li>Use the terms of the topic: steady state, residence time, rate constant, flow rate in, flow rate out.</li>
+      <li>Support a claim with a number and its unit, taken from the simulation or from a calculation.</li>
+      <li>Link ideas with <i>because</i>, <i>so</i> and <i>therefore</i>, and keep to one idea in each sentence.</li>
+      <li>Say what increases or decreases, and say what stays the same.</li>
+    </ul>
+    <div class="ex"><b>WEAK</b> It gets too hot, so it stops.</div>
+    <div class="ex"><b>BETTER</b> The temperature levels off because the heat arriving from the steam equals the heat leaving with the output stream and through the tank wall. Nothing in the tank then changes with time, which is steady state.</div>
+  </div>
+  <div id="quizA"></div>
+</div>
+
+<h2 class="sans">Underlying ideas: definitions to learn</h2>
+<div class="indent">
+  <dl>
+    <dt>Plug flow reactor</dt><dd>A tube in which the liquid moves as plugs. There is no mixing along the tube, so each plug spends exactly the same time in it, and there is perfect mixing across the tube, so each plug has one concentration and one temperature.</dd>
+    <dt>Average residence time</dt><dd>The time a plug spends in the tube. In a plug flow reactor every plug spends exactly this time. A plug is a tiny batch reactor that travels along the tube.</dd>
+    <dt>Steady state</dt><dd>Nothing at any point along the tube changes with time. The concentration and temperature differ from place to place along the tube, but each place keeps the same values.</dd>
+    <dt>First-order reaction</dt><dd>A reaction whose rate is proportional to the concentration of one substance. Here the bleach is in such large excess that its concentration stays constant, so the dye disappears at a rate proportional to the dye concentration alone.</dd>
+    <dt>Steam jacket</dt><dd>A hollow wall around the tube. Steam condenses on the inner tube and the heat released warms the liquid. The condensate leaves at the bottom.</dd>
+  </dl>
+
+  <p>Volume of the tube:</p>
+  <div class="eq">tube volume = π × <span class="frac"><span>inner diameter</span><span>2</span></span> × <span class="frac"><span>inner diameter</span><span>2</span></span> × length</div>
+  <p>Speed of the liquid along the tube:</p>
+  <div class="eq">speed of the liquid =
+    <span class="frac"><span>total flow rate</span><span>cross-section area of the tube</span></span></div>
+  <p>Average residence time:</p>
+  <div class="eq">average residence time =
+    <span class="frac"><span>tube volume</span><span>total flow rate</span></span></div>
+  <p>BBD concentration from mixing alone, before any reaction:</p>
+  <div class="eq">BBD concentration from mixing alone =
+    <span class="frac"><span>flow rate of water containing BBD × BBD concentration in its feed</span><span>total flow rate</span></span></div>
+  <p>BBD concentration in the output stream at steady state and constant temperature (the exponent is negative):</p>
+  <div class="eq">BBD concentration in the output stream = BBD concentration from mixing alone × e<sup>−rate constant for dye removal × average residence time</sup></div>
+  <p>For comparison, a CFSTR of the same volume and flows gives:</p>
+  <div class="eq">BBD concentration in the output stream =
+    <span class="frac"><span>BBD concentration from mixing alone</span><span>1 + rate constant for dye removal × average residence time</span></span></div>
+
+  <h3 class="sans">Values built into the model</h3>
+  <ul>
+    <li>Each 1 % of valve opening passes 2 cm³ per minute, so a fully open valve passes 200 cm³ per minute.</li>
+    <li>Both feeds arrive at 20 °C. The mixer mixes the two streams completely before the liquid enters the tube.</li>
+    <li>Steam is at 100 °C. The fully open steam valve would supply 10 g of steam per minute, and each gram of steam condensing releases 2257 J. If the supply is smaller than the tube could take, the jacket temperature falls below 100 °C. The steam-to-liquid heat transfer is 300 W for each square metre of tube wall for each kelvin of temperature difference, and heat losses to the surroundings are ignored.</li>
+    <li>The rate constant for the reaction of BBD with hypochlorite is 0.8 dm³ mol⁻¹ min⁻¹ at 20 °C, with an activation energy of 50 kJ mol⁻¹, so the rate roughly doubles for every 10 °C rise.</li>
+    <li>The liquid is treated as water: density 1 g cm⁻³ and specific heat capacity 4.18 J g⁻¹ K⁻¹.</li>
+  </ul>
+</div>
+
+<h2 class="sans">Scale-up and reflection</h2>
+<div class="indent">
+  <div id="quizR"></div>
+</div>
+
+<div id="report"></div>
+
+<footer>Science Department · Refined with AI</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var NS = "http://www.w3.org/2000/svg";
+
+  /* ---------- model constants ---------- */
+  var K20 = 0.8, EA = 50000, RG = 8.314, CP = 4.18, LAMBDA = 2257, UW = 300;
+  var FLOW_PER_PCT = 2, STEAM_MAX = 10, NPAR = 400, WINDOW = 30;
+  var DEFAULTS = { vb: 30, vd: 20, vo: 100, vs: 0, L: 10, D: 8, C0: 25, B0: 0.7 };
+  var IDS = ["vb", "vd", "vo", "vs", "L", "D", "C0", "B0"];
+  var ctl = {}, parcels = [], Phi = 0, pend = 0, pendC = 0, pendB = 0;
+  var st = {}, tot = {}, hist = [], sampleAcc = 0, speed = 30, paused = false;
+
+  try {
+    $("today").textContent = new Date().toLocaleDateString("en-GB",
+      { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  } catch (e) {}
+
+  function kT(T) { return K20 * Math.exp(EA / RG * (1 / 293.15 - 1 / (T + 273.15))); }
+  function sup(s) { var m = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" }; return s.split("").map(function (c) { return m[c] || c; }).join(""); }
+  function fmt(x) {
+    if (!isFinite(x)) return "–";
+    var a = Math.abs(x);
+    if (a >= 100) return x.toFixed(0);
+    if (a >= 10) return x.toFixed(1);
+    return x.toFixed(2);
+  }
+  function fmtc(x) {
+    if (!isFinite(x)) return "–";
+    if (x === 0) return "0";
+    if (x >= 0.1) return fmt(x);
+    if (x >= 0.001) return x.toFixed(3);
+    var e = x.toExponential(1).split("e");
+    return e[0] + " × 10" + sup(String(parseInt(e[1], 10)));
+  }
+  function fr(n, d) { return '<span class="frac"><span>' + n + '</span><span>' + d + '</span></span>'; }
+
+  function readCtl() {
+    IDS.forEach(function (id) { ctl[id] = +$(id).value; });
+    ctl.steam = ctl.vs / 100 * STEAM_MAX;
+  }
+  function geom() {
+    var Dcm = ctl.D / 10, A = Math.PI * (Dcm / 2) * (Dcm / 2);
+    return { A: A, V: A * ctl.L * 100, Dm: ctl.D / 1000 };
+  }
+  function flows() {
+    var Fb = ctl.vb * FLOW_PER_PCT, Fd = ctl.vd * FLOW_PER_PCT, Fo = ctl.vo * FLOW_PER_PCT, Fin = Fb + Fd;
+    var F = Math.min(Fin, Fo), s = Fin > 0 ? F / Fin : 0;
+    var Fba = Fb * s, Fda = Fd * s;
+    return { Fb: Fb, Fd: Fd, Fo: Fo, Fin: Fin, F: F, Fba: Fba, Fda: Fda, restricted: Fo < Fin - 1e-9,
+             Cm: F > 0 ? Fda * ctl.C0 / F : 0, Bm: F > 0 ? Fba * ctl.B0 / F : 0,
+             CmSet: Fin > 0 ? Fd * ctl.C0 / Fin : 0, BmSet: Fin > 0 ? Fb * ctl.B0 / Fin : 0 };
+  }
+
+  /* ---------- steady-state prediction (also used by the questions) ---------- */
+  function predict(p) {
+    var Fb = p.vb * FLOW_PER_PCT, Fd = p.vd * FLOW_PER_PCT, Fo = p.vo * FLOW_PER_PCT, Fin = Fb + Fd, F = Math.min(Fin, Fo);
+    if (F <= 0) return null;
+    var s = F / Fin, Cm = Fd * s * p.C0 / F, Bm = Fb * s * p.B0 / F;
+    var Dm = p.D / 1000, A = Math.PI * (p.D / 20) * (p.D / 20), V = A * p.L * 100, tau = V / F;
+    var mcp = F / 60 * CP, beta = UW * Math.PI * Dm / mcp, Qs = p.vs / 100 * STEAM_MAX * LAMBDA / 60;
+    var Tj = 20, T = function () { return 20; };
+    if (Qs > 0) {
+      var e = Math.exp(-beta * p.L), Tout = 20 + Qs / mcp;
+      Tj = (Tout - 20 * e) / (1 - e); if (Tj > 100) Tj = 100;
+      T = function (z) { return Tj - (Tj - 20) * Math.exp(-beta * z); };
+    }
+    var N = 400, sum = 0;
+    for (var i = 0; i < N; i++) sum += kT(T((i + 0.5) / N * p.L)) * Bm * (tau / N);
+    return { F: F, Cm: Cm, Bm: Bm, V: V, A: A, tau: tau, Tj: Tj, Tout: T(p.L), C: Cm * Math.exp(-sum), u: F / A / 100 };
+  }
+  window.PFR_MODEL = { predict: predict };
+
+  /* ---------- the parcels ---------- */
+  function initParcels() {
+    readCtl();
+    var g = geom(), f = flows(), n = NPAR, w = g.V / n, F = f.F;
+    var Cm = F > 0 ? f.Cm : f.CmSet, Bm = F > 0 ? f.Bm : f.BmSet, kp = kT(20) * Bm;
+    parcels = [];
+    for (var i = 0; i < n; i++) {
+      var pos = g.V - (i + 0.5) * w;
+      parcels.push({ c: F > 0 ? Cm * Math.exp(-kp * pos / F) : Cm, b: Bm, T: 20, w: w, phi: w / 2 - pos });
+    }
+    Phi = 0; pend = 0; pendC = 0; pendB = 0;
+  }
+  function initAll() {
+    initParcels();
+    st = { Q: 0, mUsed: 0, Tj: 20, F: flows().F, outC: parcels[0].c, outT: 20, restricted: false };
+    tot = { bleach: 0, dye: 0, out: 0, steam: 0, t: 0 };
+    hist = []; sampleAcc = 0;
+  }
+
+  function step(dt) {
+    var g = geom(), f = flows(), n, i, p;
+    st.F = f.F; st.restricted = f.restricted;
+    /* heating by the jacket */
+    var Qs = ctl.steam * LAMBDA / 60, sumUA = 0, sumUAT = 0;
+    n = parcels.length;
+    for (i = 0; i < n; i++) { p = parcels[i]; p.UA = UW * Math.PI * g.Dm * (p.w / g.A / 100); sumUA += p.UA; sumUAT += p.UA * p.T; }
+    var Tj = 20, Qtot = 0;
+    if (Qs > 0 && sumUA > 0) { Tj = (Qs + sumUAT) / sumUA; if (Tj > 100) Tj = 100; }
+    for (i = 0; i < n; i++) {
+      p = parcels[i];
+      var q = Qs > 0 ? p.UA * (Tj - p.T) : 0;
+      var Told = p.T;
+      p.T += q * dt * 60 / (p.w * CP);
+      Qtot += q;
+      p.c *= Math.exp(-kT((Told + p.T) / 2) * p.b * dt);
+    }
+    st.Tj = Tj; st.Q = Math.max(0, Qtot); st.mUsed = st.Q * 60 / LAMBDA;
+    /* advection: new liquid enters, old liquid leaves */
+    var dPhi = f.F * dt;
+    if (dPhi > 0) {
+      Phi += dPhi; pend += dPhi; pendC += f.Cm * dPhi; pendB += f.Bm * dPhi;
+      if (pend >= g.V / NPAR) {
+        parcels.push({ c: pendC / pend, b: pendB / pend, T: 20, w: pend, phi: Phi });
+        pend = 0; pendC = 0; pendB = 0;
+      }
+      while (parcels.length > 1 && (Phi - parcels[0].phi) >= g.V) {
+        var x = parcels.shift(); st.outC = x.c; st.outT = x.T;
+      }
+    }
+    var head = parcels[0]; st.outC = head.c; st.outT = head.T;
+    tot.bleach += f.Fba * dt; tot.dye += f.Fda * dt; tot.out += dPhi; tot.steam += st.mUsed * dt; tot.t += dt;
+    sampleAcc += dt;
+    if (sampleAcc >= 0.05) {
+      sampleAcc = 0;
+      var pr = predict(ctl);
+      hist.push({ t: tot.t, C: st.outC, P: pr ? pr.C : NaN });
+      if (hist.length > 800) hist.shift();
+    }
+  }
+
+  /* profile along the tube, inlet to outlet */
+  function profile() {
+    var g = geom(), f = flows(), xs = [], cs = [], ts = [], n = parcels.length, i;
+    for (i = n - 1; i >= 0; i--) {
+      var p = parcels[i], pos = Phi - p.phi + p.w / 2;
+      xs.push(Math.max(0, pos) / g.V); cs.push(p.c); ts.push(p.T);
+    }
+    return { xs: xs, cs: cs, ts: ts, V: g.V };
+  }
+  function interp(xs, ys, x) {
+    var n = xs.length; if (!n) return 0;
+    if (x <= xs[0]) return ys[0]; if (x >= xs[n - 1]) return ys[n - 1];
+    var lo = 0, hi = n - 1;
+    while (hi - lo > 1) { var m = (lo + hi) >> 1; if (xs[m] <= x) lo = m; else hi = m; }
+    var t = (x - xs[lo]) / (xs[hi] - xs[lo] || 1); return ys[lo] + (ys[hi] - ys[lo]) * t;
+  }
+
+  /* ---------- drawing ---------- */
+  var ROWS = [160, 220, 280, 340, 400], XA = 230, XB = 720, XS = 170, R = 30;
+  function buildPath() {
+    var v = [], r, k, t;
+    for (r = 0; r < ROWS.length; r++) {
+      var ltr = (r % 2 === 0), y = ROWS[r];
+      if (ltr) { v.push([r === 0 ? XS : XA, y]); v.push([XB, y]); } else { v.push([XB, y]); v.push([XA, y]); }
+      if (r < ROWS.length - 1) {
+        var cy = y + R;
+        for (k = 1; k < 12; k++) {
+          t = -Math.PI / 2 + Math.PI * k / 12;
+          v.push(ltr ? [XB + R * Math.cos(t), cy + R * Math.sin(t)] : [XA - R * Math.cos(t), cy + R * Math.sin(t)]);
+        }
+      }
+    }
+    var cum = [0], i;
+    for (i = 1; i < v.length; i++) cum.push(cum[i - 1] + Math.hypot(v[i][0] - v[i - 1][0], v[i][1] - v[i - 1][1]));
+    var total = cum[cum.length - 1], NS_ = 160, pts = [], j = 0;
+    for (k = 0; k <= NS_; k++) {
+      var s = total * k / NS_;
+      while (j < cum.length - 2 && cum[j + 1] < s) j++;
+      var u = (s - cum[j]) / ((cum[j + 1] - cum[j]) || 1);
+      pts.push([v[j][0] + (v[j + 1][0] - v[j][0]) * u, v[j][1] + (v[j + 1][1] - v[j][1]) * u]);
+    }
+    return pts;
+  }
+  var PATH = buildPath(), SEG = PATH.length - 1, segEls = [];
+  function mk(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function setPts(el, pts) { el.setAttribute("points", pts.map(function (p) { return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ")); }
+  for (var si = 0; si < SEG; si++) {
+    segEls.push(mk("line", { x1: PATH[si][0].toFixed(1), y1: PATH[si][1].toFixed(1), x2: PATH[si + 1][0].toFixed(1), y2: PATH[si + 1][1].toFixed(1), "stroke-linecap": "round", stroke: "#cfe2f3" }, $("segs")));
+  }
+  setPts($("jacket"), PATH); setPts($("outline"), PATH); setPts($("dashes"), PATH);
+
+  function dashSpeed(el, F) { el.style.animationDuration = (18 / (10 + 0.5 * F)).toFixed(2) + "s"; }
+  function dyeColour(c, scale) {
+    var f = 1 - Math.exp(-c / (scale || 12)), a = [238, 246, 252], b = [10, 55, 200];
+    return "rgb(" + a.map(function (v, i) { return Math.round(v + (b[i] - v) * f); }).join(",") + ")";
+  }
+  var valves = {};
+  function makeValve(key, x, y, name) {
+    var g = mk("g", { transform: "translate(" + x + "," + y + ")" }, $("valves"));
+    var body = mk("polygon", { points: "-13,-10 13,10 13,-10 -13,10", fill: "#fff", stroke: "#000", "stroke-width": 2 }, g);
+    mk("line", { x1: 0, y1: 0, x2: 0, y2: -22, stroke: "#000", "stroke-width": 3 }, g);
+    var wg = mk("g", { transform: "translate(0,-22)" }, g), wheel = mk("g", { transform: "rotate(0)" }, wg);
+    mk("line", { x1: -12, y1: 0, x2: 12, y2: 0, stroke: "#000", "stroke-width": 4, "stroke-linecap": "round" }, wheel);
+    mk("line", { x1: 0, y1: -4, x2: 0, y2: 4, stroke: "#000", "stroke-width": 2 }, wheel);
+    var ff = "Helvetica Neue, Helvetica, Arial, sans-serif";
+    mk("text", { y: 30, "text-anchor": "middle", "font-size": 12, "font-weight": 700, "font-family": ff }, g).textContent = name;
+    var t2 = mk("text", { y: 44, "text-anchor": "middle", "font-size": 12, "font-family": ff }, g);
+    valves[key] = { body: body, wheel: wheel, txt: t2 };
+  }
+  makeValve("vb", 70, 45, "Bleach valve");
+  makeValve("vd", 70, 160, "BBD valve");
+  makeValve("vo", 800, 400, "Output valve");
+  makeValve("vs", 110, 520, "Steam valve");
+  function setValve(key, pct) {
+    var v = valves[key];
+    v.wheel.setAttribute("transform", "rotate(" + (pct * 3.6) + ")");
+    v.body.setAttribute("fill", pct <= 0 ? "#000" : "#fff");
+    v.txt.textContent = Math.round(pct) + " % open";
+  }
+
+  var lastCol = [];
+  function draw() {
+    var g = geom(), f = flows(), pf = profile();
+    var tw = 5 + ctl.D * 0.9;
+    $("outline").setAttribute("stroke-width", (tw + 4).toFixed(1));
+    $("jacket").setAttribute("stroke-width", (tw + 18).toFixed(1));
+    var steamInt = Math.min(1, st.mUsed / STEAM_MAX);
+    $("jacket").setAttribute("stroke", "rgba(230,110,40," + (0.08 + 0.45 * steamInt).toFixed(2) + ")");
+    for (var i = 0; i < SEG; i++) {
+      var fr_ = (i + 0.5) / SEG, c = interp(pf.xs, pf.cs, fr_);
+      var col = dyeColour(c), el = segEls[i];
+      el.setAttribute("stroke-width", tw.toFixed(1));
+      if (lastCol[i] !== col) { el.setAttribute("stroke", col); lastCol[i] = col; }
+    }
+    $("dashes").setAttribute("stroke-width", 2);
+    $("dashes").style.display = f.F > 0 ? "" : "none";
+    dashSpeed($("dashes"), f.F);
+
+    var feedCol = dyeColour(ctl.C0);
+    $("dUpIn").setAttribute("stroke", feedCol); $("dDnIn").setAttribute("stroke", feedCol);
+    var outCol = dyeColour(st.outC);
+    $("oUpIn").setAttribute("stroke", outCol); $("oDnIn").setAttribute("stroke", outCol);
+
+    var yo = 400;
+    setPts($("bUp"), [[20, 45], [70, 45]]); setPts($("bUpIn"), [[20, 45], [70, 45]]);
+    var bd = [[70, 45], [150, 45], [150, 140]]; setPts($("bDn"), bd); setPts($("bDnIn"), bd); setPts($("bDash"), [[20, 45], [150, 45], [150, 140]]);
+    setPts($("dUp"), [[20, 160], [70, 160]]); setPts($("dUpIn"), [[20, 160], [70, 160]]);
+    setPts($("dDn"), [[70, 160], [130, 160]]); setPts($("dDnIn"), [[70, 160], [130, 160]]); setPts($("dDash"), [[20, 160], [130, 160]]);
+    setPts($("oUp"), [[XB, yo], [800, yo]]); setPts($("oUpIn"), [[XB, yo], [800, yo]]);
+    setPts($("oDn"), [[800, yo], [880, yo]]); setPts($("oDnIn"), [[800, yo], [880, yo]]); setPts($("oDash"), [[XB, yo], [880, yo]]);
+    setPts($("sUp"), [[20, 520], [110, 520]]); setPts($("sUpIn"), [[20, 520], [110, 520]]);
+    var sd = [[110, 520], [260, 520], [260, 412]]; setPts($("sDn"), sd); setPts($("sDnIn"), sd); setPts($("sDash"), [[20, 520], [260, 520], [260, 412]]);
+    var cd = [[560, 412], [560, 480], [690, 480]]; setPts($("cPipe"), cd); setPts($("cIn"), cd); setPts($("cDash"), cd);
+
+    var fB = f.Fba > 0, fD = f.Fda > 0, fO = f.F > 0, fS = ctl.vs > 0, fC = st.mUsed > 0.005;
+    ["bDn", "bDnIn", "bDash"].forEach(function (id) { $(id).style.display = fB ? "" : "none"; });
+    ["dDn", "dDnIn", "dDash"].forEach(function (id) { $(id).style.display = fD ? "" : "none"; });
+    ["oUp", "oUpIn", "oDn", "oDnIn", "oDash"].forEach(function (id) { $(id).style.display = fO ? "" : "none"; });
+    ["sDn", "sDnIn", "sDash"].forEach(function (id) { $(id).style.display = fS ? "" : "none"; });
+    ["cPipe", "cIn", "cDash"].forEach(function (id) { $(id).style.display = fC ? "" : "none"; });
+    dashSpeed($("bDash"), f.Fba); dashSpeed($("dDash"), f.Fda); dashSpeed($("oDash"), f.F);
+    dashSpeed($("sDash"), 40 + 160 * ctl.vs / 100); dashSpeed($("cDash"), 20 + 100 * steamInt);
+
+    setValve("vb", ctl.vb); setValve("vd", ctl.vd); setValve("vo", ctl.vo); setValve("vs", ctl.vs);
+
+    $("tB").textContent = fmt(f.Fba) + " cm³ per minute";
+    $("tD").textContent = fmt(f.Fda) + " cm³ per minute";
+    $("tTube").textContent = "Tube: " + ctl.L + " m long, " + ctl.D + " mm inner diameter, volume " + Math.round(g.V) + " cm³";
+    $("tO2").textContent = fmt(f.F) + " cm³ per minute";
+    $("tO3").textContent = "BBD " + fmtc(st.outC) + " mg per dm³";
+    $("tO4").textContent = fmt(st.outT) + " °C";
+    $("tS").textContent = fmt(ctl.steam) + " g per minute supplied";
+    $("tCond").textContent = fmt(st.mUsed) + " g per minute";
+    $("tFlag").textContent = f.restricted ? "THE OUTPUT VALVE IS RESTRICTING THE FLOW" : "";
+  }
+
+  /* ---------- charts ---------- */
+  function setup(cv) {
+    var dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if (!w || !h) return null;
+    if (cv.width !== Math.round(w * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    var g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+    return { g: g, w: w, h: h };
+  }
+  function axes(c, ymax, xlabels, ylab) {
+    var g = c.g, L = 48, Rr = 28, T = 10, B = 24, pw = c.w - L - Rr, ph = c.h - T - B;
+    g.strokeStyle = "#000"; g.fillStyle = "#000"; g.lineWidth = 1; g.font = "12px Helvetica, Arial, sans-serif";
+    g.beginPath(); g.moveTo(L, T); g.lineTo(L, T + ph); g.lineTo(L + pw, T + ph); g.stroke();
+    g.textAlign = "right"; g.textBaseline = "middle";
+    [0, 0.5, 1].forEach(function (f) {
+      var y = T + ph - f * ph; g.fillText(ylab(f * ymax), L - 5, y);
+      g.strokeStyle = "#ccc"; g.beginPath(); g.moveTo(L, y); g.lineTo(L + pw, y); g.stroke(); g.strokeStyle = "#000";
+    });
+    g.textAlign = "center"; g.textBaseline = "top";
+    xlabels.forEach(function (xl) { g.fillText(xl.t, L + xl.f * pw, T + ph + 4); });
+    return { L: L, T: T, pw: pw, ph: ph };
+  }
+  function line(c, a, pts, col, w, dash) {
+    var g = c.g; g.save(); g.beginPath(); g.rect(a.L, a.T, a.pw, a.ph); g.clip();
+    g.strokeStyle = col; g.lineWidth = w; g.setLineDash(dash || []); g.beginPath();
+    var started = false;
+    pts.forEach(function (p) {
+      if (!isFinite(p[1])) { started = false; return; }
+      var x = a.L + p[0] * a.pw, y = a.T + a.ph - Math.min(1, Math.max(0, p[1])) * a.ph;
+      if (!started) { g.moveTo(x, y); started = true; } else g.lineTo(x, y);
+    });
+    g.stroke(); g.restore();
+  }
+  function updateCharts() {
+    var pf = profile(), f = flows(), pr = predict(ctl), c, a, k;
+    var xl = [0, 0.25, 0.5, 0.75, 1].map(function (q) { return { f: q, t: fmt(q * ctl.L) + "" }; });
+    /* concentration along the tube */
+    c = setup($("chC"));
+    if (c) {
+      var ymax = Math.max(0.01, f.Cm, Math.max.apply(null, pf.cs)) * 1.05;
+      a = axes(c, ymax, xl, fmtc);
+      line(c, a, pf.xs.map(function (x, i) { return [x, pf.cs[i] / ymax]; }), "#000", 2);
+      if (f.F > 0) {
+        var tm = 0, wsum = 0; for (k = 0; k < parcels.length; k++) { tm += parcels[k].T * parcels[k].w; wsum += parcels[k].w; }
+        var Tm = wsum ? tm / wsum : 20, tau = pf.V / f.F;
+        var Ceq = f.Cm / (1 + kT(Tm) * f.Bm * tau);
+        line(c, a, [[0, Ceq / ymax], [1, Ceq / ymax]], "#777", 1.5, [5, 4]);
+      }
+    }
+    c = setup($("chT"));
+    if (c) { a = axes(c, 100, xl, fmt); line(c, a, pf.xs.map(function (x, i) { return [x, pf.ts[i] / 100]; }), "#000", 2); }
+    c = setup($("chH"));
+    if (c) {
+      var tNow = tot.t, t0 = tNow - WINDOW, hy = 0.01;
+      hist.forEach(function (h) { if (h.t >= t0 - 0.2) { hy = Math.max(hy, h.C, isFinite(h.P) ? h.P : 0); } });
+      hy *= 1.1;
+      a = axes(c, hy, [-30, -20, -10, 0].map(function (m) { return { f: (m + WINDOW) / WINDOW, t: String(m) }; }), fmtc);
+      var win = hist.filter(function (h) { return h.t >= t0 - 0.2; });
+      line(c, a, win.map(function (h) { return [(h.t - t0) / WINDOW, h.P / hy]; }), "#777", 1.5, [5, 4]);
+      line(c, a, win.map(function (h) { return [(h.t - t0) / WINDOW, h.C / hy]; }), "#000", 2);
+    }
+  }
+
+  /* ---------- readouts ---------- */
+  var lastWork = "";
+  function updateUI() {
+    var g = geom(), f = flows(), pr = predict(ctl);
+    $("vbo").innerHTML = ctl.vb + " % open<small>" + fmt(f.Fb) + " cm³ per minute</small>";
+    $("vdo").innerHTML = ctl.vd + " % open<small>" + fmt(f.Fd) + " cm³ per minute</small>";
+    $("voo").innerHTML = ctl.vo + " % open<small>" + fmt(f.Fo) + " cm³ per minute</small>";
+    $("vso").innerHTML = ctl.vs + " % open<small>" + fmt(ctl.steam) + " g per minute supplied</small>";
+    $("Lo").textContent = ctl.L + " m"; $("Do").textContent = ctl.D + " mm";
+    $("C0o").textContent = ctl.C0 + " mg per dm³"; $("B0o").textContent = ctl.B0.toFixed(2) + " mol dm⁻³";
+
+    if (f.F > 0) { var tau = g.V / f.F; $("rTau").textContent = fmt(tau); $("rTauU").textContent = "minutes (" + Math.round(tau * 60) + " seconds)"; }
+    else { $("rTau").textContent = "∞"; $("rTauU").textContent = "no flow"; }
+    $("rC").textContent = fmtc(st.outC);
+    $("rT").textContent = fmt(st.outT);
+    $("rV").textContent = fmt(g.V); $("rVU").textContent = "cm³ (" + ctl.L + " m, " + ctl.D + " mm)";
+    $("rFt").textContent = fmt(f.F); $("rFtU").textContent = f.restricted ? "cm³ per minute (restricted by the output valve)" : "cm³ per minute";
+    $("rU").textContent = f.F > 0 ? fmt(f.F / g.A / 100) : "0";
+    $("rMix").textContent = f.F > 0 ? fmtc(f.Cm) : "–";
+    $("rB").textContent = f.F > 0 ? fmt(f.Bm) : "–";
+    $("rK").textContent = f.F > 0 ? fmt(kT(20) * f.Bm) : "–";
+    $("rTj").textContent = ctl.steam > 0 ? fmt(st.Tj) : "–";
+    $("rSt").textContent = fmt(st.mUsed); $("rStU").textContent = "g per minute (" + fmt(st.Q) + " W)";
+    $("rPred").textContent = pr ? fmtc(pr.C) : "–";
+    var tm = 0, ws = 0; parcels.forEach(function (p) { tm += p.T * p.w; ws += p.w; });
+    var Tm = ws ? tm / ws : 20;
+    $("rCf").textContent = f.F > 0 ? fmtc(f.Cm / (1 + kT(Tm) * f.Bm * (g.V / f.F))) : "–";
+
+    var mm = Math.floor(tot.t), ss = Math.floor((tot.t - mm) * 60);
+    $("clock").textContent = "Simulated time " + mm + ":" + (ss < 10 ? "0" : "") + ss;
+    var msg;
+    if (f.F <= 0) msg = "Nothing is flowing, so the liquid in the tube stands still. It keeps reacting, and the steam keeps heating it.";
+    else if (f.restricted) msg = "The output valve passes less than the two inlets would supply, so both inlet flows are reduced in proportion. The tube is always full.";
+    else msg = "The tube is full, so the flow out equals the flow in.";
+    $("status").textContent = msg;
+
+    $("totals").innerHTML =
+      "<tr><td>Bleach used</td><td>" + fmt(tot.bleach) + " cm³</td></tr>" +
+      "<tr><td>Water containing BBD used</td><td>" + fmt(tot.dye) + " cm³</td></tr>" +
+      "<tr><td>Steam condensed in the jacket</td><td>" + fmt(tot.steam) + " g</td></tr>" +
+      "<tr><td>Liquid sent out through the output valve</td><td>" + fmt(tot.out) + " cm³</td></tr>" +
+      "<tr><td>Simulated time</td><td>" + fmt(tot.t) + " minutes</td></tr>";
+
+    var h = "";
+    if (f.F <= 0) h = '<div class="step"><div class="lab">Nothing flows through the tube, so there is no steady state to predict.</div></div>';
+    else {
+      var Dcm = ctl.D / 10, A = g.A, tau2 = g.V / f.F, kp = kT(20) * f.Bm;
+      h += '<div class="step"><div class="lab">Total flow rate through the tube</div>' +
+        '<div class="eq">total flow rate = bleach flow rate + flow rate of water containing BBD</div>' +
+        '<div class="eq">= ' + fmt(f.Fba) + ' + ' + fmt(f.Fda) + ' = ' + fmt(f.F) + ' cm³ per minute</div></div>';
+      h += '<div class="step"><div class="lab">BBD concentration from mixing alone</div>' +
+        '<div class="eq">= ' + fr('flow rate of water containing BBD × BBD concentration in its feed', 'total flow rate') + '</div>' +
+        '<div class="eq">= ' + fr(fmt(f.Fda) + ' × ' + ctl.C0, fmt(f.F)) + ' = ' + fmt(f.Cm) + ' mg per dm³</div></div>';
+      h += '<div class="step"><div class="lab">Hypochlorite concentration after mixing</div>' +
+        '<div class="eq">= ' + fr('bleach flow rate × hypochlorite concentration in the bleach', 'total flow rate') + '</div>' +
+        '<div class="eq">= ' + fr(fmt(f.Fba) + ' × ' + ctl.B0.toFixed(2), fmt(f.F)) + ' = ' + fmt(f.Bm) + ' mol dm⁻³</div></div>';
+      h += '<div class="step"><div class="lab">Rate constant for dye removal at 20 °C</div>' +
+        '<div class="eq">rate constant for dye removal = rate constant at 20 °C × hypochlorite concentration</div>' +
+        '<div class="eq">= 0.8 × ' + fmt(f.Bm) + ' = ' + fmt(kp) + ' per minute</div></div>';
+      h += '<div class="step"><div class="lab">Volume of the tube</div>' +
+        '<div class="eq">tube volume = π × ' + fr('inner diameter', '2') + ' × ' + fr('inner diameter', '2') + ' × length</div>' +
+        '<div class="eq">= π × ' + fr(fmt(Dcm) + ' cm', '2') + ' × ' + fr(fmt(Dcm) + ' cm', '2') + ' × ' + fmt(ctl.L * 100) + ' cm = ' + fmt(g.V) + ' cm³</div></div>';
+      h += '<div class="step"><div class="lab">Average residence time</div>' +
+        '<div class="eq">average residence time = ' + fr('tube volume', 'total flow rate') + '</div>' +
+        '<div class="eq">= ' + fr(fmt(g.V), fmt(f.F)) + ' = ' + fmt(tau2) + ' minutes</div></div>';
+      h += '<div class="step"><div class="lab">BBD concentration in the output stream</div>' +
+        '<div class="eq">= BBD concentration from mixing alone × e<sup>−rate constant for dye removal × average residence time</sup></div>' +
+        '<div class="eq">= ' + fmt(f.Cm) + ' × e<sup>−' + fmt(kp) + ' × ' + fmt(tau2) + '</sup> = ' + fmt(f.Cm) + ' × e<sup>−' + fmt(kp * tau2) + '</sup> = ' + fmtc(f.Cm * Math.exp(-kp * tau2)) + ' mg per dm³</div></div>';
+    }
+    if (h !== lastWork) { $("workings").innerHTML = h; lastWork = h; }
+  }
+
+  /* ---------- loop and controls ---------- */
+  var lastFrame = performance.now(), lastUI = 0, lastCh = 0;
+  function frame(now) {
+    var real = Math.min(0.1, (now - lastFrame) / 1000); lastFrame = now;
+    if (!paused) {
+      var simDt = real * speed / 60;
+      while (simDt > 1e-9) { var d = Math.min(0.02, simDt); step(d); simDt -= d; }
+    }
+    draw();
+    if (now - lastUI > 200) { updateUI(); lastUI = now; }
+    if (now - lastCh > 250) { updateCharts(); lastCh = now; }
+    requestAnimationFrame(frame);
+  }
+  IDS.forEach(function (id) {
+    $(id).addEventListener("input", function () {
+      readCtl();
+      if (id === "L" || id === "D") initParcels();
+      lastUI = 0;
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("button[data-speed]"), function (b) {
+    b.addEventListener("click", function () {
+      speed = +b.getAttribute("data-speed");
+      Array.prototype.forEach.call(document.querySelectorAll("button[data-speed]"), function (x) { x.classList.remove("on"); });
+      b.classList.add("on");
+    });
+  });
+  $("pause").addEventListener("click", function () {
+    paused = !paused; $("pause").textContent = paused ? "Run" : "Pause"; $("pause").classList.toggle("on", paused);
+  });
+  $("reset").addEventListener("click", function () {
+    IDS.forEach(function (id) { $(id).value = DEFAULTS[id]; });
+    initAll(); lastUI = 0; lastWork = "";
+  });
+  window.__pfr = { step: step, st: function () { return st; }, tot: function () { return tot; }, readCtl: readCtl, initParcels: initParcels, parcels: function () { return parcels; } };
+
+  initAll(); draw(); updateUI(); updateCharts();
+  requestAnimationFrame(frame);
+})();
+</script>
+<script>
+
+window.QUIZ_META = { key: "adventures_with_a_tube_reactor", title: "Adventures with a tube reactor" };
+(function () {
+  function fr(n, d) { return '<span class="frac"><span>' + n + '</span><span>' + d + '</span></span>'; }
+  function eq(x) { return '<div class="eq">' + x + '</div>'; }
+  function ul(a) { return "<ul>" + a.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; }
+  var P = function (o) { return window.PFR_MODEL.predict(o); };
+  var D0 = { vb: 30, vd: 20, vo: 100, vs: 0, L: 10, D: 8, C0: 25, B0: 0.7 };
+  function r2(x) { return Math.round(x * 100) / 100; }
+
+  var adventures = [
+    { id: "a1", title: "The size of the tube",
+      setup: "Press <b>Reset everything</b>. The tube is 10 m long with an inner diameter of 8 mm, and the two inlets together supply 100 cm³ per minute.",
+      parts: [
+        { k: "a", type: "num", prompt: "Calculate the volume of the tube in cm³. Use the diameter in cm." + eq("tube volume = π × " + fr("inner diameter", "2") + " × " + fr("inner diameter", "2") + " × length"),
+          plain: "Calculate the volume of the tube in cm³ (8 mm inner diameter, 10 m long).", unit: "cm³", answer: 502.65, tol: 3,
+          diag: function (v) { if (Math.abs(v - 5.03) < 0.1) return "The length must be in cm as well: 10 m is 1000 cm."; if (Math.abs(v - 2010.6) < 10) return "Use the radius, which is half the diameter, in both factors."; return ""; },
+          hints: ["Convert to centimetres: the diameter is 0.8 cm and the length is 1000 cm.", "Half the diameter is 0.4 cm. Work out the cross-section area, π × 0.4 × 0.4.", "Multiply the area, 0.503 cm², by the length, 1000 cm."],
+          explain: "The cross-section area is π × 0.4 × 0.4 = 0.503 cm². Multiplying by 1000 cm gives a volume of 503 cm³. The card above the simulation shows the same value." },
+        { k: "b", type: "num", prompt: "Calculate the speed of the liquid along the tube, in metres per minute." + eq("speed of the liquid = " + fr("total flow rate", "cross-section area of the tube")) + "Give the speed in cm per minute first, then change to metres.",
+          plain: "Calculate the speed of the liquid along the tube (metres per minute).", unit: "metres per minute", answer: 1.99, tol: 0.04,
+          diag: function (v) { if (Math.abs(v - 199) < 3) return "That is in cm per minute. Divide by 100 to change to metres, by writing it as a fraction over 100."; return ""; },
+          hints: ["The total flow rate is 100 cm³ per minute and the cross-section area is 0.503 cm².", "Write the fraction: " + fr("100", "0.503") + ". The answer is in cm per minute.", "There are 100 cm in 1 m, so the speed in metres per minute is the answer of the fraction above, over 100."],
+          explain: "Speed = 100 over 0.503 = 199 cm per minute, which is 1.99 metres per minute." },
+        { k: "c", type: "num", prompt: "Calculate the average residence time in minutes." + eq("average residence time = " + fr("tube volume", "total flow rate")),
+          plain: "Calculate the average residence time (minutes).", unit: "minutes", answer: 5.03, tol: 0.1,
+          hints: ["Use the tube volume from part a.", "Write the fraction: " + fr("503 cm³", "100 cm³ per minute")],
+          explain: "503 over 100 = 5.03 minutes. In plug flow every plug spends exactly this time in the tube." },
+        { k: "d", type: "mcq", prompt: "A plug of liquid enters the tube at the same moment as a plug that entered earlier. In plug flow, which statement is correct?",
+          options: ["Both plugs leave after the same time in the tube, because no plug mixes with another.", "The earlier plug spends longer in the tube, because it was there first.", "The plugs mix, so each leaves after a different time."], correct: 0,
+          wrong: { 1: "Every plug travels at the same speed along the tube, so every plug spends the same time in it.", 2: "Plug flow means that there is no mixing along the tube. Mixing along the tube is the feature of a stirred tank." },
+          hints: ["Think about how plug flow differs from a stirred tank.", "In plug flow the liquid moves along as plugs that do not mix with the plugs in front or behind."],
+          explain: "No mixing along the tube means that every plug moves at the same speed and spends the same time, 5.03 minutes, in the tube. A tiny batch reactor travelling along the tube is a good picture." }
+      ] },
+
+    { id: "a2", title: "Waiting for a change to arrive",
+      setup: "Press <b>Reset everything</b>. Wait until the graph of the output concentration against time is flat. Then move the slider for the BBD concentration in its feed stream from 25 to 40 mg per dm³. Watch the graph along the tube and the graph of the output concentration against time.",
+      parts: [
+        { k: "a", type: "num", prompt: "Find the new BBD concentration from mixing alone, in mg per dm³." + eq("BBD concentration from mixing alone = " + fr("flow rate of water containing BBD × BBD concentration in its feed", "total flow rate")),
+          plain: "Find the BBD concentration from mixing alone with the feed at 40 mg per dm³.", unit: "mg per dm³", answer: 16, tol: 0.2,
+          hints: ["The flow rate of the water containing BBD is 40 cm³ per minute and the total flow rate is 100 cm³ per minute.", "Write the fraction: " + fr("40 × 40", "100")],
+          explain: "40 × 40 = 1600, and 1600 over 100 = 16 mg per dm³." },
+        { k: "b", type: "num", prompt: "The liquid already in the tube must be pushed out by the new mixture before the output stream can change. How many minutes pass before the first plug of the new mixture reaches the output?" + eq("time to push out the tube contents = " + fr("tube volume", "total flow rate")),
+          plain: "How many minutes pass before the first plug of the new mixture reaches the output? (minutes)", unit: "minutes", answer: 5.03, tol: 0.1,
+          hints: ["The volume that must be pushed out is the volume of the tube, 503 cm³.", "The new mixture pushes at the total flow rate, 100 cm³ per minute."],
+          explain: "503 over 100 = 5.03 minutes, which is the average residence time. Nothing happens at the output for this dead time, and then the concentration changes as the first plug of the new mixture arrives. Watch the output graph to see the delay." },
+        { k: "c", type: "num", prompt: "After the change has passed through, what is the new BBD concentration in the output stream, in mg per dm³? The rate constant and the average residence time have not changed." + eq("BBD concentration in the output stream = BBD concentration from mixing alone × e<sup>−rate constant for dye removal × average residence time</sup>"),
+          plain: "What is the new BBD concentration in the output stream, in mg per dm³?", unit: "mg per dm³", answer: 2.96, tol: 0.06,
+          hints: ["The fraction of dye left after the tube, e<sup>−1.69</sup>, is 0.185 as before, because the rate constant and the average residence time are the same.", "Multiply the new concentration from mixing alone, 16 mg per dm³, by 0.185."],
+          explain: "The first-order reaction removes the same fraction of the dye whatever the concentration, so the output concentration rises in proportion: 16 × 0.185 = 2.96 mg per dm³." },
+        { k: "d", type: "mcq", prompt: "Now compare with a stirred tank of the same volume. After the same change, when would the output concentration of the stirred tank start to change?",
+          options: ["Immediately, because the new liquid mixes with all of the liquid in the tank at once", "After the same dead time as the tube", "Only after the tank has been completely replaced"], correct: 0,
+          wrong: { 1: "The stirred tank has no dead time, because the new liquid is mixed through the whole tank straight away.", 2: "The liquid in a stirred tank is never completely replaced in a fixed time. The output starts to change at once and settles gradually." },
+          hints: ["Recall the steady-state worksheet: the new liquid is mixed into the tank as soon as it arrives.", "Is there any part of a stirred tank that the new liquid has to travel through before the output sees it?"],
+          explain: "In a stirred tank the output starts to change immediately and approaches the new value gradually. In a tube the output does nothing for the dead time, then changes as the new plugs arrive." }
+      ] },
+
+    { id: "a3", title: "Tube against stirred tank",
+      setup: "Press <b>Reset everything</b>. The concentrations after mixing are 10 mg per dm³ of BBD and 0.42 mol dm⁻³ of hypochlorite. The rate constant at 20 °C is 0.8 dm³ mol⁻¹ min⁻¹.",
+      parts: [
+        { k: "a", type: "num", prompt: "Calculate the rate constant for dye removal at 20 °C, in units of per minute." + eq("rate constant for dye removal = 0.8 × hypochlorite concentration after mixing"),
+          plain: "Calculate the rate constant for dye removal at 20 °C (per minute).", unit: "per minute", answer: 0.336, tol: 0.005,
+          hints: ["Multiply 0.8 by the hypochlorite concentration after mixing, 0.42.", "0.8 × 0.42 = ?"],
+          explain: "0.8 × 0.42 = 0.336 per minute. The card on the page shows the same value." },
+        { k: "b", type: "num", prompt: "Calculate the BBD concentration in the output stream of the tube, in mg per dm³." + eq("BBD concentration in the output stream = BBD concentration from mixing alone × e<sup>−rate constant for dye removal × average residence time</sup>"),
+          plain: "Calculate the BBD concentration in the output stream of the tube (mg per dm³).", unit: "mg per dm³", answer: 1.85, tol: 0.04,
+          diag: function (v) { if (Math.abs(v - 10 * Math.exp(0.336 * 5.03)) < 5) return "The exponent must be negative: the dye is being removed."; return ""; },
+          hints: ["Multiply the rate constant by the average residence time: 0.336 × 5.03.", "The product is 1.69. Press the e<sup>x</sup> key with a minus sign to find e<sup>−1.69</sup>.", "Multiply that result by 10 mg per dm³."],
+          explain: "e<sup>−1.69</sup> = 0.185, so the output concentration is 10 × 0.185 = 1.85 mg per dm³. The card for the predicted steady state shows the same value." },
+        { k: "c", type: "num", prompt: "A stirred tank of the same volume and flow rates would give:" + eq("BBD concentration in the output stream = " + fr("BBD concentration from mixing alone", "1 + rate constant for dye removal × average residence time")) + "Calculate its output concentration in mg per dm³.",
+          plain: "Calculate the output concentration of a stirred tank of the same volume and flows (mg per dm³).", unit: "mg per dm³", answer: 3.72, tol: 0.06,
+          hints: ["The denominator is 1 + 0.336 × 5.03. Work it out first.", "The denominator is 2.69. Write the fraction: " + fr("10", "2.69")],
+          explain: "10 over 2.69 = 3.72 mg per dm³. The card on the page shows this as the value a stirred tank would give. The tube removes more dye than the stirred tank." },
+        { k: "d", type: "text", minWords: 25,
+          prompt: "In two or three sentences, explain why the tube removes more dye than the stirred tank of the same volume and flow rate.",
+          plain: "Explain why the tube removes more dye than a stirred tank of the same volume and flow rate.",
+          hints: ["Think about what concentration the reaction sees in each reactor, because the rate depends on the dye concentration.", "In the stirred tank the whole contents are at the low output concentration. In the tube the concentration changes along the tube. Where is it highest?", "Begin: The tube removes more dye because ..."],
+          points: [
+            { label: "The reaction rate is proportional to the dye concentration, so it is fastest where the concentration is high.", re: /proportional|rate|faster|fastest|higher concentration|high concentration/i },
+            { label: "In the stirred tank all the liquid is at the low output concentration, so the reaction is slow everywhere.", re: /stirred|cfstr|tank|whole|everywhere|low/i },
+            { label: "In the tube the dye concentration is high near the inlet, so the early part of the tube reacts quickly.", re: /inlet|start|beginning|early|high|along/i },
+            { label: "Every plug stays for the full residence time, whereas in the stirred tank some liquid leaves quickly.", re: /same time|full|exactly|every plug|leaves quickly|short/i }],
+          model: "The tube removes more dye because the reaction rate is proportional to the dye concentration. In the stirred tank all of the liquid sits at the low output concentration, so the reaction is slow everywhere in it. In the tube the concentration is high near the inlet, so the early part of the tube reacts quickly, and every plug stays for the full residence time.",
+          tips: ul(["The first sentence gives the result and the main reason together.", "It compares the two reactors in matching sentences.", "It uses the terms of the topic: reaction rate, concentration, residence time."]) }
+      ] },
+
+    { id: "a4", title: "A longer tube",
+      setup: "Press <b>Reset everything</b>, then move the length slider to 20 m. Everything else stays at its starting value.",
+      parts: [
+        { k: "a", type: "num", prompt: "Find the new average residence time in minutes.",
+          plain: "Find the average residence time for the 20 m tube (minutes).", unit: "minutes", answer: 10.05, tol: 0.2,
+          hints: ["Doubling the length doubles the volume of the tube.", "The volume is now 1005 cm³ and the total flow rate is still 100 cm³ per minute."],
+          explain: "The volume is 1005 cm³, so the average residence time is 1005 over 100 = 10.05 minutes." },
+        { k: "b", type: "num", prompt: "Calculate the new BBD concentration in the output stream, in mg per dm³. The rate constant is still 0.336 per minute.",
+          plain: "Calculate the BBD concentration in the output stream for the 20 m tube (mg per dm³).", unit: "mg per dm³", answer: 0.341, tol: 0.012,
+          hints: ["Multiply the rate constant by the new average residence time: 0.336 × 10.05.", "The product is 3.38. Find e<sup>−3.38</sup> and multiply by 10."],
+          explain: "e<sup>−3.38</sup> = 0.0341, so the output concentration is 10 × 0.0341 = 0.341 mg per dm³. Doubling the tube length squares the fraction of dye left: 0.185 × 0.185 = 0.034." },
+        { k: "c", type: "mcq", prompt: "Which change of the flow rate would give the same output concentration as doubling the length of the tube?",
+          options: ["Halving the total flow rate", "Doubling the total flow rate", "Reducing the flow rate by 10 %"], correct: 0,
+          wrong: { 1: "A larger flow rate gives a shorter residence time, so less dye is removed.", 2: "A small reduction gives only a small increase in the residence time." },
+          hints: ["Look at the formula for the average residence time. What happens to it if the total flow rate is halved?", "The reaction depends on the product of the rate constant and the average residence time."],
+          explain: "Halving the total flow rate doubles the average residence time, just as doubling the tube volume does. Set the output valve to 50 % open to check this: it restricts both inlets in the same proportion." }
+      ] },
+
+    { id: "a5", title: "A wider tube",
+      setup: "Press <b>Reset everything</b>, then set the inner diameter slider to 12 mm. The length stays at 10 m.",
+      parts: [
+        { k: "a", type: "num", prompt: "Find the speed of the liquid along the tube, in metres per minute.",
+          plain: "Find the speed of the liquid in the 12 mm tube (metres per minute).", unit: "metres per minute", answer: 0.884, tol: 0.015,
+          hints: ["Find the cross-section area first: π × 0.6 × 0.6 cm².", "The area is 1.131 cm². Divide the flow rate by the area, as a fraction, then change to metres."],
+          explain: "The area is 1.131 cm², so the speed = 100 over 1.131 = 88.4 cm per minute = 0.884 metres per minute." },
+        { k: "b", type: "num", prompt: "Find the average residence time in minutes.",
+          plain: "Find the average residence time in the 12 mm tube (minutes).", unit: "minutes", answer: 11.31, tol: 0.2,
+          hints: ["The volume is the area times the length: 1.131 × 1000 cm³.", "Write the fraction: " + fr("1131 cm³", "100 cm³ per minute")],
+          explain: "1131 over 100 = 11.3 minutes." },
+        { k: "c", type: "mcq", prompt: "The diameter increased by a factor of 1.5. By what factor did the residence time increase?",
+          options: ["1.5", "2.25", "3.4"], correct: 1,
+          wrong: { 0: "The volume depends on the area, and the area depends on the square of the diameter.", 2: "That is 1.5 multiplied by itself three times. Only the area depends on the diameter; the length does not change." },
+          hints: ["The volume depends on the cross-section area, which depends on the diameter times the diameter.", "Multiply 1.5 by 1.5."],
+          explain: "Area depends on the square of the diameter: 1.5 × 1.5 = 2.25. A small change in diameter makes a large change in volume and so in residence time." }
+      ] },
+
+    { id: "a6", title: "Turning on the steam",
+      setup: "Press <b>Reset everything</b>. Open the steam valve to 50 %. Watch the temperature graph along the tube and the colour of the liquid. Use ×100 speed to reach steady state quickly, then wait for the output graph to settle.",
+      parts: [
+        { k: "a", type: "num", prompt: "Read the temperature of the output stream from the card above the simulation, in °C.",
+          plain: "Read the output temperature at steady state with the steam valve 50 % open (°C).", unit: "°C", answer: 47, tol: 1.5,
+          hints: ["The temperature card is at the top, next to the card for the output concentration.", "Wait for the temperature along the tube to stop changing."],
+          explain: "The steam supplies 5 g per minute, which releases 188 W. That warms 100 cm³ per minute by about 27 °C, so the output is at 47 °C." },
+        { k: "b", type: "mcq", prompt: "How does the temperature change along the tube?",
+          options: ["It rises steadily from 20 °C at the inlet, rising quickly at first and then more slowly", "It jumps to the output value at the inlet and stays there", "It stays at 20 °C until the end of the tube"], correct: 0,
+          wrong: { 1: "Heat has to pass through the wall, which takes time. The liquid warms as it travels.", 2: "The jacket surrounds the whole tube, so the liquid warms all along it." },
+          hints: ["Look at the graph of temperature along the tube.", "The liquid is heated as long as it is cooler than the jacket. The warmer it gets, the smaller the temperature difference that drives the heat."],
+          explain: "The liquid warms as it travels. The heat flow depends on the temperature difference between the jacket and the liquid, so the temperature rises quickly at first and then more slowly." },
+        { k: "c", type: "text", minWords: 25,
+          prompt: "Compare the output concentration with the steam valve closed, 1.85 mg per dm³, and with the steam valve 50 % open. In two or three sentences, explain the difference, using the figures.",
+          plain: "Explain why heating the tube lowers the BBD concentration in the output stream, using the figures.",
+          hints: ["Look at the rate constant. How does it depend on temperature?", "The rate roughly doubles for every 10 °C. The output is about 27 °C warmer.", "Begin: The output concentration is much lower with steam because ..."],
+          points: [
+            { label: "The rate constant increases with temperature, roughly doubling for every 10 °C.", re: /rate constant|faster|increase|double|10 ?°|temperature/i },
+            { label: "The liquid is warmer for most of its time in the tube, so the dye reacts faster along the tube.", re: /warm|hot|along|most|faster|react/i },
+            { label: "The residence time is the same, so the larger rate constant removes much more dye.", re: /same|residence|unchanged|time/i },
+            { label: "A figure is quoted from the page: 1.85 without steam and about 0.002 mg per dm³ with the steam valve 50 % open.", re: /1\.85|0\.00|0\.002|47/ }],
+          model: "The output concentration is much lower with steam because the rate constant increases with temperature, roughly doubling for every 10 °C. The liquid is warmer for most of its time in the tube, so the dye reacts much faster along the tube, while the residence time stays the same. The concentration therefore falls from 1.85 mg per dm³ without steam to about 0.002 mg per dm³ with the steam valve 50 % open.",
+          tips: ul(["It answers in the first sentence and then gives the cause.", "It quotes numbers from the page for both cases.", "It states what stays the same, which is the residence time."]) }
+      ] },
+
+    { id: "a7", title: "Squeezing the output valve",
+      setup: "Press <b>Reset everything</b>, then set the output valve to 25 % open. Keep the steam valve closed.",
+      parts: [
+        { k: "a", type: "num", prompt: "Find the total flow rate through the tube in cm³ per minute. The output valve restricts both inlets in the same proportion.",
+          plain: "Find the total flow rate through the tube with the output valve 25 % open (cm³ per minute).", unit: "cm³ per minute", answer: 50, tol: 1,
+          hints: ["Find the flow that the output valve passes: each 1 % passes 2 cm³ per minute.", "The tube is always full, so the flow in equals the flow out."],
+          explain: "25 % open passes 50 cm³ per minute, so that is the flow through the tube. Both inlets are cut to half of what they would supply." },
+        { k: "b", type: "num", prompt: "Find the BBD concentration in the output stream in mg per dm³. The concentrations after mixing do not change, because both inlets are reduced in the same proportion.",
+          plain: "Find the BBD concentration in the output stream with the output valve 25 % open (mg per dm³).", unit: "mg per dm³", answer: 0.341, tol: 0.012,
+          hints: ["The flow rate is halved, so the average residence time doubles to 10.05 minutes.", "Use the rate constant 0.336 per minute and the formula from the earlier adventure."],
+          explain: "The average residence time is 503 over 50 = 10.05 minutes. The output concentration is 10 × e<sup>−0.336 × 10.05</sup> = 0.341 mg per dm³, the same as for a tube twice as long." },
+        { k: "c", type: "text", minWords: 25,
+          prompt: "In two or three sentences, state one advantage and one disadvantage of lowering the output concentration by closing the output valve rather than lengthening the tube.",
+          plain: "State an advantage and a disadvantage of closing the output valve instead of lengthening the tube.",
+          hints: ["Consider what each choice costs, and what each choice does to the amount of liquid treated each minute.", "Closing the valve costs nothing to build. What happens to the amount of product made each minute?"],
+          points: [
+            { label: "Advantage: it needs no extra tube, so it costs nothing to build and can be done at once.", re: /no (extra )?(cost|tube)|cheap|nothing|immediate|at once|quick|easy/i },
+            { label: "Disadvantage: the flow rate falls, so less liquid is treated each minute.", re: /flow|less|fewer|throughput|per minute|output falls|production/i },
+            { label: "A longer tube keeps the flow rate but costs more to build.", re: /longer|capital|build|cost/i }],
+          model: "The advantage of closing the output valve is that it needs no extra tube, so it costs nothing to build and works at once. The disadvantage is that the flow rate falls, so less liquid is treated every minute. A longer tube keeps the flow rate but costs more to build, which is the trade-off an engineer must weigh.",
+          tips: ul(["One sentence for the advantage and one for the disadvantage.", "It names the quantity that changes: the flow rate.", "It ends with the trade-off."]) }
+      ] },
+
+    { id: "a8", title: "A challenging target",
+      setup: "Keep the steam valve closed and the output valve fully open. The feed concentrations stay at 25 mg per dm³ of BBD and 0.70 mol dm⁻³ of hypochlorite. Choose settings that bring the BBD concentration in the output stream below 1 mg per dm³ while treating at least 100 cm³ per minute, in a tube of volume no more than 800 cm³.",
+      parts: [
+        { k: "a", type: "config", prompt: "Enter your four settings. The page calculates the steady-state BBD concentration for them.",
+          plain: "Enter two valve openings, a length and a diameter that give below 1 mg per dm³ at 100 cm³ per minute or more, with a tube volume of at most 800 cm³.",
+          fields: [
+            { key: "vb", short: "bleach valve", label: "Bleach valve", unit: "% open" },
+            { key: "vd", short: "BBD valve", label: "Valve on the water containing BBD", unit: "% open" },
+            { key: "L", short: "length", label: "Length of the tube", unit: "m" },
+            { key: "D", short: "diameter", label: "Inner diameter of the tube", unit: "mm" }],
+          check: function (v) {
+            var vb = v.vb_n, vd = v.vd_n, L = v.L_n, Dd = v.D_n;
+            if (vb < 0 || vb > 100 || vd < 0 || vd > 100) return { ok: false, msg: "Each valve opening must be between 0 and 100 %." };
+            if (L < 1 || L > 20) return { ok: false, msg: "The length must be between 1 and 20 m." };
+            if (Dd < 4 || Dd > 16) return { ok: false, msg: "The inner diameter must be between 4 and 16 mm." };
+            var q = P({ vb: vb, vd: vd, vo: 100, vs: 0, L: L, D: Dd, C0: 25, B0: 0.7 });
+            if (!q) return { ok: false, msg: "Nothing flows through the tube." };
+            if (q.F < 100) return { ok: false, msg: "The total flow rate is " + r2(q.F) + " cm³ per minute, which is below 100. Open the inlet valves further." };
+            if (q.V > 800) return { ok: false, msg: "The tube volume is " + Math.round(q.V) + " cm³, which is more than 800. Shorten or narrow the tube." };
+            var c = r2(q.C);
+            if (q.C < 1) return { ok: true, msg: "The predicted BBD concentration is " + c + " mg per dm³, which is below 1. The flow rate is " + Math.round(q.F) + " cm³ per minute and the tube volume is " + Math.round(q.V) + " cm³." };
+            return { ok: false, msg: "The predicted BBD concentration is " + c + " mg per dm³, which is not yet below 1. The average residence time is " + r2(q.tau) + " minutes. Look at the hypochlorite concentration after mixing as well as the residence time: a larger share of bleach raises the rate constant." };
+          },
+          hints: ["Two things set the rate constant: how much bleach there is in the mixture, and the residence time. Aim for a large share of bleach.", "Try the bleach valve at 80 % and the valve on the water containing BBD at 20 %, then choose a tube of 10 m and 10 mm.", "Check the volume of your tube with the formula, and the flow rate from the two valve openings."],
+          explain: "Several answers work. For example, the bleach valve at 80 %, the valve on the water containing BBD at 20 %, 10 m and 10 mm gives a flow of 200 cm³ per minute in a tube of 785 cm³ and a concentration of 0.86 mg per dm³. A larger share of bleach raises the rate constant, and the tube volume sets the residence time." }
+      ] }
+  ];
+
+  var reflection = [
+    { id: "r1", title: "Is the flow really plug flow?",
+      setup: "Plug flow assumes that nothing mixes along the tube and that everything mixes across it.",
+      parts: [
+        { k: "a", type: "text", minWords: 35,
+          prompt: "Real flow in a narrow tube is slower near the wall than at the centre. In three or four sentences, explain how this would change the output concentration compared with the plug flow prediction, and say which direction the error would go.",
+          plain: "Explain how slower liquid near the wall would change the output concentration compared with plug flow.",
+          hints: ["Liquid at the centre moves faster than the average, and liquid near the wall moves more slowly. What does that do to the time each portion spends in the tube?", "Which portions are overtreated, and which are undertreated? The reaction does not respond equally to extra time and less time.", "Begin: Slower liquid near the wall means that ..."],
+          points: [
+            { label: "Different portions of liquid spend different times in the tube, so there is a spread of residence times.", re: /different|spread|range|vary|distribution|not the same/i },
+            { label: "Fast liquid near the centre leaves too soon, with too much dye left.", re: /centre|center|fast|too soon|less time|short/i },
+            { label: "Slow liquid near the wall reacts for longer, but the extra removal is smaller than the loss from the fast liquid.", re: /wall|slow|longer|more time|extra/i },
+            { label: "The output concentration would therefore be higher than the plug flow prediction.", re: /higher|more dye|greater|above|worse|larger/i }],
+          model: "Liquid at the centre of the tube moves faster than the average and liquid near the wall moves more slowly, so different portions of liquid spend different times in the tube. The fast liquid leaves with too much dye left, while the slow liquid reacts for longer, but the extra removal is smaller than the loss from the fast liquid because the dye concentration in it is already low. The output concentration would therefore be higher than the plug flow prediction.",
+          tips: ul(["It starts with the physical cause, the spread of residence times.", "It follows both the fast and the slow liquid.", "It ends with the direction of the error."]) }
+      ] },
+    { id: "r2", title: "Heating a much larger tube",
+      setup: "The wall area of a tube compared with its volume depends on its diameter: for each cm³ of liquid the wall area is four times the reciprocal of the diameter.",
+      parts: [
+        { k: "a", type: "text", minWords: 35,
+          prompt: "A factory needs to treat 100 times the flow rate and chooses a tube of 10 times the diameter, so that the speed and the residence time stay the same. In three or four sentences, explain what happens to the heating of the liquid and what an engineer could do.",
+          plain: "Explain what happens to the heating of the liquid in a tube of 10 times the diameter and what an engineer could do.",
+          hints: ["Heat enters through the wall. Compare the wall area for each cm³ of liquid in the narrow and in the wide tube.", "The wall area for each cm³ is ten times smaller. What does that do to the heating rate for each cm³ of liquid?", "Think about using several narrow tubes in parallel, which keeps the wall area high."],
+          points: [
+            { label: "Heat enters through the wall, so the heating rate depends on the wall area for each cm³ of liquid.", re: /wall|area|surface|jacket/i },
+            { label: "In the wider tube the wall area for each cm³ is ten times smaller, so the liquid warms more slowly.", re: /ten|10|smaller|less|slower|reduc/i },
+            { label: "The centre of the liquid is far from the wall, so plug flow with the same temperature across the tube no longer holds.", re: /centre|center|far|across|radial|uniform/i },
+            { label: "An engineer could use many narrow tubes in parallel, or add internal heat exchange surfaces.", re: /parallel|many|bundle|narrow|internal|coil|several/i }],
+          model: "Heat enters through the wall, so the heating rate depends on the wall area for each cm³ of liquid. In a tube of 10 times the diameter that wall area is ten times smaller, so the liquid warms much more slowly, and the liquid at the centre is far from the wall, so the temperature is no longer the same across the tube. An engineer could use many narrow tubes in parallel, which keeps the wall area high for each cm³ of liquid.",
+          tips: ul(["It names the path of the heat first.", "It uses a number: ten times smaller.", "It ends with a practical remedy."]) }
+      ] },
+    { id: "r3", title: "The costs of building and running the tube",
+      setup: "Both a longer tube and a hotter tube lower the BBD concentration in the output stream.",
+      parts: [
+        { k: "a", type: "text", minWords: 40, prompt: "List every cost a company would meet in building and running this reactor for a year, and state which controls on this page each cost depends on.",
+          plain: "List every cost of building and running this reactor for a year, and the controls each depends on.",
+          hints: ["Separate the cost of building the reactor, which you pay once, from the costs of running it, which you pay every hour.", "For each running cost, find the control on this page that sets it: three of the four valves each set a material or energy cost.", "Do not forget the costs that no valve sets: pumping, labour, maintenance and the treatment of the output stream."],
+          points: [
+            { label: "The capital cost of the tube, the jacket and the valves, which rises with the length and diameter.", re: /capital|build|construct|tube|jacket|valve|purchase|length|volume/i },
+            { label: "The bleach and the dye solution, set by the two inlet valves.", re: /bleach|dye|material|raw|inlet/i },
+            { label: "The steam, set by the steam valve and the temperature held.", re: /steam|heat|fuel|energy|temperature/i },
+            { label: "Electricity for pumping, which rises for a longer or narrower tube, and labour and maintenance.", re: /electric|pump|labour|labor|maintenance|wages/i },
+            { label: "The treatment or disposal of the output stream.", re: /waste|dispos|treat|output/i }],
+          model: "A company meets a capital cost for building the tube, its jacket and the valves, and that cost rises with the length and diameter of the tube. Running costs then follow: the bleach and the dye solution, which depend on the settings of the two inlet valves; the steam, which depends on the steam valve and the temperature held; electricity for pumping, which rises for a longer or narrower tube; labour and maintenance; and the treatment of the output stream. A longer tube costs more to build but needs less steam, so the engineer must weigh the one-off cost against the running costs.",
+          tips: ul(["It separates the one-off cost from the running costs.", "Every cost is joined to a control on the page, which is what the next worksheet will need.", "It closes with the trade-off that the costs create."]) }
+      ] }
+  ];
+
+  window.QUIZ_BANKS = [
+    { mount: "quizA", label: "Adventure", questions: adventures },
+    { mount: "quizR", label: "Reflection", questions: reflection }
+  ];
+})();
+
+</script>
+<script>
+
+(function () {
+  "use strict";
+  var META = window.QUIZ_META, BANKS = window.QUIZ_BANKS;
+  var parts = {}, order = [], A = {};
+
+  function $(id) { return document.getElementById(id); }
+  function plain(html) { var d = document.createElement("div"); d.innerHTML = html || ""; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function st(id) {
+    if (!A[id]) A[id] = { tries: 0, done: false, got: 0, rev: false, val: "", hints: 0, ticks: null, text: "", checked: false, fb: "", kind: "" };
+    return A[id];
+  }
+  function maxMarks(p) { return p.type === "text" ? p.points.length : 1; }
+  function earned(p) {
+    var s = A[p.id]; if (!s) return 0;
+    if (p.type === "text") return s.checked ? (s.ticks || []).filter(Boolean).length : 0;
+    return s.got || 0;
+  }
+  function fnum(x) { return (Math.round(x * 100) / 100).toString(); }
+
+  /* ---------- building the page ---------- */
+  function partHtml(p) {
+    var h = '<div class="part" id="p-' + p.id + '" data-id="' + p.id + '">';
+    h += '<div class="plabel"><span class="n">' + p.id.toUpperCase().replace(/^[A-Z]+/, "") + '</span>' + p.prompt + '</div>';
+    if (p.type === "mcq") {
+      h += '<div class="opts">';
+      p.options.forEach(function (o, i) {
+        h += '<label><input type="radio" name="r-' + p.id + '" value="' + i + '"> ' + o + '</label>';
+      });
+      h += '</div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    } else if (p.type === "num") {
+      h += '<div><input type="text" class="ans" inputmode="decimal" autocomplete="off" aria-label="Your answer"><span class="unit">' + (p.unit || "") +
+           '</span></div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    } else if (p.type === "text") {
+      h += '<textarea class="ans" placeholder="Write your answer here, in full sentences."></textarea>' +
+           '<div class="actions"><button type="button" class="chk">Check my answer</button></div>' +
+           '<div class="pts"></div>';
+    } else if (p.type === "config") {
+      h += '<div class="fields">';
+      p.fields.forEach(function (f) {
+        h += '<label>' + f.label + '<br><input type="text" class="cf" data-f="' + f.key + '" inputmode="decimal" autocomplete="off"><span class="unit">' + (f.unit || "") + '</span></label>';
+      });
+      h += '</div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    }
+    h += '<div class="fb" aria-live="polite"></div>';
+    h += '<div class="phints"></div>';
+    if (p.hints && p.hints.length) h += '<div class="actions"><button type="button" class="hint">Hint</button></div>';
+    h += '<div class="model" style="display:none"></div><div class="mark"></div>';
+    return h + '</div>';
+  }
+
+  function build() {
+    BANKS.forEach(function (b) {
+      var mount = $(b.mount), h = "";
+      b.questions.forEach(function (q, qi) {
+        h += '<section class="q"><h3 class="sans">' + b.label + ' ' + (qi + 1) + ': ' + q.title + '</h3>';
+        if (q.setup) h += '<div class="qsetup">' + q.setup + '</div>';
+        q.parts.forEach(function (p, pi) {
+          p.id = q.id + p.k; p.qtitle = b.label + ' ' + (qi + 1) + ': ' + plain(q.title);
+          parts[p.id] = p; order.push(p.id);
+          h += partHtml(p);
+        });
+        h += '</section>';
+      });
+      mount.innerHTML = h;
+    });
+    /* label parts with letters */
+    order.forEach(function (id) {
+      var p = parts[id]; var n = document.querySelector("#p-" + id + " .plabel .n");
+      if (n) n.textContent = p.k + ".";
+    });
+  }
+
+  /* ---------- showing state ---------- */
+  function setFb(id, kind, html) {
+    var s = st(id); s.kind = kind; s.fb = html;
+  }
+  function paint(id) {
+    var p = parts[id], s = st(id), root = $("p-" + id);
+    if (!root) return;
+    var fb = root.querySelector(".fb");
+    if (s.fb) { fb.className = "fb show " + s.kind; fb.innerHTML = s.fb; } else { fb.className = "fb"; fb.innerHTML = ""; }
+    root.classList.toggle("done", !!s.done);
+    var ph = root.querySelector(".phints"), hh = "";
+    for (var i = 0; i < s.hints; i++) hh += '<div class="h"><b>Hint ' + (i + 1) + '.</b> ' + p.hints[i] + '</div>';
+    ph.innerHTML = hh;
+    var hb = root.querySelector("button.hint");
+    if (hb) {
+      hb.textContent = s.hints >= p.hints.length ? "No more hints" : "Hint (" + (s.hints + 1) + " of " + p.hints.length + ")";
+      hb.disabled = s.hints >= p.hints.length || (s.done && p.type !== "text");
+    }
+    var model = root.querySelector(".model");
+    var showModel = (p.type === "text") ? s.checked : (s.done && p.model);
+    if (showModel) {
+      model.style.display = "block";
+      model.innerHTML = '<span class="tag">Model answer, written in a good scientific style</span>' + (p.model || "") +
+        (p.tips ? '<span class="tag" style="margin-top:6px">What makes it good</span>' + p.tips : "");
+    } else model.style.display = "none";
+
+    if (p.type === "mcq") {
+      var rs = root.querySelectorAll("input[type=radio]");
+      for (var r = 0; r < rs.length; r++) { rs[r].checked = (s.val !== "" && +rs[r].value === +s.val); rs[r].disabled = !!s.done; }
+      root.querySelector(".chk").disabled = !!s.done;
+    } else if (p.type === "num") {
+      var inp = root.querySelector(".ans"); inp.value = s.val; inp.disabled = !!s.done;
+      root.querySelector(".chk").disabled = !!s.done;
+    } else if (p.type === "text") {
+      var ta = root.querySelector(".ans"); if (document.activeElement !== ta) ta.value = s.text;
+      var pts = root.querySelector(".pts");
+      if (s.checked) {
+        var ph2 = '<div class="points"><div class="pnote" style="margin-bottom:4px">Tick each point your answer makes. The page has pre-ticked the points it recognised in your wording; correct any tick that is wrong.</div>';
+        p.points.forEach(function (pt, i) {
+          ph2 += '<label><input type="checkbox" data-i="' + i + '"' + (s.ticks && s.ticks[i] ? " checked" : "") + '> ' + pt.label + '</label>';
+        });
+        pts.innerHTML = ph2 + '</div>';
+      } else pts.innerHTML = "";
+    } else if (p.type === "config") {
+      var vals = s.val && typeof s.val === "object" ? s.val : {};
+      var cfs = root.querySelectorAll(".cf");
+      for (var c = 0; c < cfs.length; c++) { if (vals[cfs[c].getAttribute("data-f")] !== undefined) cfs[c].value = vals[cfs[c].getAttribute("data-f")]; cfs[c].disabled = !!s.done; }
+      root.querySelector(".chk").disabled = !!s.done;
+    }
+    var mk = root.querySelector(".mark");
+    if (p.type === "text") mk.textContent = s.checked ? "Your mark: " + earned(p) + " out of " + maxMarks(p) : "";
+    else mk.textContent = s.done ? "Your mark: " + earned(p) + " out of 1" : "";
+  }
+  function paintAll() { order.forEach(paint); score(); }
+
+  function score() {
+    var got = 0, max = 0, done = 0;
+    order.forEach(function (id) {
+      var p = parts[id]; got += earned(p); max += maxMarks(p);
+      var s = A[id]; if (s && (s.done || (p.type === "text" && s.checked))) done++;
+    });
+    $("qScore").textContent = "Score: " + fnum(got) + " out of " + max + " marks";
+    $("qDone").textContent = done + " of " + order.length + " parts completed";
+    $("qBar").style.width = (order.length ? 100 * done / order.length : 0) + "%";
+  }
+
+  /* ---------- checking ---------- */
+  function parseNum(t) {
+    var m = String(t).replace(",", ".").match(/-?\d+(\.\d+)?/);
+    return m ? parseFloat(m[0]) : NaN;
+  }
+  function checkPart(id) {
+    var p = parts[id], s = st(id), root = $("p-" + id);
+    if (p.type === "mcq") {
+      var sel = root.querySelector("input[type=radio]:checked");
+      if (!sel) { setFb(id, "no", "Choose one of the answers first."); paint(id); return; }
+      var i = +sel.value; s.val = i; s.tries++;
+      if (i === p.correct) {
+        s.done = true; s.got = 1;
+        setFb(id, "ok", '<span class="tag">Correct.</span> ' + (p.explain || ""));
+      } else if (s.tries >= 2) {
+        s.done = true; s.got = 0; s.rev = true; s.val = p.correct;
+        setFb(id, "no", '<span class="tag">The answer is: ' + p.options[p.correct] + '</span> ' + (p.explain || ""));
+      } else {
+        setFb(id, "no", '<span class="tag">Not yet.</span> ' + ((p.wrong && p.wrong[i]) || "Read the question again, then use a hint if you need one."));
+      }
+    } else if (p.type === "num") {
+      var v = parseNum(root.querySelector(".ans").value);
+      s.val = root.querySelector(".ans").value;
+      if (isNaN(v)) { setFb(id, "no", "Type a number first."); paint(id); return; }
+      s.tries++;
+      if (Math.abs(v - p.answer) <= p.tol) {
+        s.done = true; s.got = 1;
+        setFb(id, "ok", '<span class="tag">Correct.</span> ' + (p.explain || ""));
+      } else if (s.tries >= 3) {
+        s.done = true; s.got = 0; s.rev = true; s.val = String(p.answer);
+        setFb(id, "no", '<span class="tag">The answer is ' + p.answer + ' ' + (p.unit || "") + '.</span> ' + (p.explain || ""));
+      } else {
+        var d = p.diag ? p.diag(v) : "";
+        setFb(id, "no", '<span class="tag">Not yet.</span> ' + (d || "Check your working and the units, then try again.") + ' You have ' + (3 - s.tries) + (3 - s.tries === 1 ? " try" : " tries") + ' left.');
+      }
+    } else if (p.type === "text") {
+      var txt = root.querySelector(".ans").value.trim();
+      var words = txt ? txt.split(/\s+/).length : 0;
+      if (words < (p.minWords || 15)) { setFb(id, "no", "Write a fuller answer first, in complete sentences (at least " + (p.minWords || 15) + " words). Use a hint if you are not sure where to start."); paint(id); return; }
+      s.text = txt; s.checked = true; s.done = true;
+      s.ticks = p.points.map(function (pt) { return pt.re.test(txt); });
+      setFb(id, "ok", '<span class="tag">Now mark your own answer.</span> Compare it with the points below and the model answer.');
+    } else if (p.type === "config") {
+      var vals = {}, ok = true;
+      Array.prototype.forEach.call(root.querySelectorAll(".cf"), function (el) {
+        var k = el.getAttribute("data-f"), n = parseNum(el.value); vals[k] = el.value; if (isNaN(n)) ok = false; else vals[k + "_n"] = n;
+      });
+      s.val = vals;
+      if (!ok) { setFb(id, "no", "Fill in every box with a number first."); paint(id); return; }
+      s.tries++;
+      var r = p.check(vals);
+      if (r.ok) { s.done = true; s.got = 1; setFb(id, "ok", '<span class="tag">Correct.</span> ' + r.msg + (p.explain ? " " + p.explain : "")); }
+      else if (s.tries >= 4 && p.example) { s.done = true; s.got = 0; s.rev = true; setFb(id, "no", r.msg + ' <span class="tag">One answer that works:</span> ' + p.example); }
+      else setFb(id, "no", '<span class="tag">Not yet.</span> ' + r.msg);
+    }
+    paint(id); score();
+  }
+
+  function onClick(e) {
+    var t = e.target, root = t.closest ? t.closest(".part") : null;
+    if (!root) return;
+    var id = root.getAttribute("data-id");
+    if (t.classList.contains("chk")) checkPart(id);
+    else if (t.classList.contains("hint")) { var s = st(id); if (s.hints < parts[id].hints.length) { s.hints++; paint(id); } }
+  }
+  function onChange(e) {
+    var t = e.target;
+    if (t.type === "checkbox" && t.closest(".points")) {
+      var root = t.closest(".part"), id = root.getAttribute("data-id"), s = st(id);
+      s.ticks[+t.getAttribute("data-i")] = t.checked; paint(id); score();
+    }
+  }
+  function onInput(e) {
+    var t = e.target; if (!t.closest) return;
+    var root = t.closest(".part"); if (!root) return;
+    var id = root.getAttribute("data-id"), p = parts[id], s = st(id);
+    if (t.tagName === "TEXTAREA") s.text = t.value;
+    else if (p.type === "num" && t.classList.contains("ans")) s.val = t.value;
+  }
+
+  /* ---------- save, retrieve, pdf ---------- */
+  function say(m) { $("qMsg").textContent = m; }
+  function save() {
+    var data = { page: META.key, saved: new Date().toISOString(), answers: A };
+    var blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = META.key + "_progress.json";
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    say("Progress saved to the file " + META.key + "_progress.json in your downloads folder. Keep it, and use Retrieve progress to carry on later.");
+  }
+  function retrieve(file) {
+    var fr = new FileReader();
+    fr.onload = function () {
+      try {
+        var d = JSON.parse(fr.result);
+        if (d.page !== META.key || !d.answers) { say("That file belongs to a different page, so nothing was loaded."); return; }
+        A = d.answers; paintAll(); say("Progress retrieved from " + new Date(d.saved).toLocaleString("en-GB", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }) + ".");
+      } catch (err) { say("That file could not be read, so nothing was loaded."); }
+    };
+    fr.readAsText(file);
+  }
+  function report() {
+    var got = 0, max = 0;
+    order.forEach(function (id) { got += earned(parts[id]); max += maxMarks(parts[id]); });
+    var h = '<h1>' + META.title + '</h1><p>Self-marked questions. Printed ' + new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) +
+            '.</p><p class="rl">Score: ' + fnum(got) + ' out of ' + max + ' marks</p>';
+    var lastQ = "";
+    order.forEach(function (id) {
+      var p = parts[id], s = A[id] || {};
+      if (p.qtitle !== lastQ) { h += '<div class="rq">' + esc(p.qtitle) + '</div>'; lastQ = p.qtitle; }
+      h += '<div class="rp"><p class="rl">' + p.k + '. ' + esc(plain(p.plain || p.prompt)) + '</p>';
+      var ans = "";
+      if (p.type === "text") ans = s.text || "";
+      else if (p.type === "mcq") ans = (s.val !== "" && s.val !== undefined) ? plain(p.options[+s.val]) : "";
+      else if (p.type === "config") ans = s.val && typeof s.val === "object" ? p.fields.map(function (f) { return f.short + " " + (s.val[f.key] || ""); }).join("; ") : "";
+      else ans = (s.val || "") + (s.val ? " " + (p.unit || "") : "");
+      h += '<p>Answer: ' + (ans ? esc(ans) : "not answered yet") + '</p>';
+      h += '<p>Mark: ' + (p.type === "text" ? (s.checked ? earned(p) + " out of " + maxMarks(p) : "not marked") : (s.done ? earned(p) + " out of 1" : "not completed")) + '</p>';
+      if (p.type === "text" && s.checked) {
+        h += '<p>Points made: ' + p.points.map(function (pt, i) { return (s.ticks && s.ticks[i] ? "yes" : "no") + " - " + esc(plain(pt.label)); }).join("; ") + '</p>';
+      }
+      if ((s.done || s.checked) && p.model) h += '<p>Model answer: ' + esc(plain(p.model)) + '</p>';
+      h += '</div>';
+    });
+    h += '<p class="rl">Science Department · Refined with AI</p>';
+    $("report").innerHTML = h;
+  }
+
+  function init() {
+    build();
+    $("qSave").addEventListener("click", save);
+    $("qLoad").addEventListener("click", function () { $("qFile").click(); });
+    $("qFile").addEventListener("change", function (e) { if (e.target.files[0]) retrieve(e.target.files[0]); e.target.value = ""; });
+    $("qPdf").addEventListener("click", function () { report(); window.print(); });
+    BANKS.forEach(function (b) {
+      var m = $(b.mount);
+      m.addEventListener("click", onClick); m.addEventListener("change", onChange); m.addEventListener("input", onInput);
+    });
+    paintAll();
+  }
+  init();
+})();
+
+</script>
+</body>
+</html>

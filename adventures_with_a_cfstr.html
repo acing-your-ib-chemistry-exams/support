@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adventures with a CFSTR</title>
+<style>
+  :root { --ink:#000; --rule:#000; --soft:#f3f3f3; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#fff; color:var(--ink);
+         font-family:Palatino, "Palatino Linotype", "Book Antiqua", "URW Palladio L", serif;
+         font-size:18px; line-height:1.5; counter-reset:sec; }
+  .page { max-width:1000px; margin:0 auto; padding:24px 20px 40px; }
+  .runhead { display:flex; justify-content:space-between; gap:16px; border-bottom:1px solid var(--rule);
+             padding-bottom:6px; font-size:15px; }
+  h1, h2, h3, .sans { font-family:"Clear Gothic","Gill Sans","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight:400; }
+  h1 { font-size:34px; line-height:1.2; margin:28px 0 4px; }
+  .sub { margin:0 0 8px; padding-left:clamp(0px,6vw,88px); font-style:italic; }
+  h2 { font-size:24px; margin:34px 0 8px; counter-increment:sec; }
+  h2::before { content:counter(sec) "\00a0\00a0"; }
+  h3 { font-size:19px; margin:20px 0 6px; }
+  .indent { padding-left:clamp(0px,6vw,88px); }
+  .indent p, .indent ul, .indent ol { margin:0 0 10px; }
+  ul, ol { padding-left:1.3em; }
+  li { margin-bottom:6px; }
+  .ui { font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  .tip { border-bottom:1px dotted var(--ink); cursor:help; position:relative; }
+  .tip:hover::after, .tip:focus::after {
+    content:attr(data-tip); position:absolute; left:0; top:1.7em; width:min(300px,70vw); z-index:20;
+    background:#000; color:#fff; font:400 14px/1.35 "Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding:7px 9px; white-space:normal; }
+  .tip:focus { outline:none; }
+
+  .sim { border:1px solid var(--ink); padding:10px; margin:10px 0; }
+  .sim svg { width:100%; height:auto; display:block; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin:6px 0 10px; }
+  .card { border:1px solid var(--ink); padding:7px 10px; }
+  .card .k { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .card .v { font:700 24px "Helvetica Neue",Helvetica,Arial,sans-serif; white-space:nowrap; }
+  .card .u { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .card.key { background:var(--soft); }
+  .card.small .v { font-size:20px; }
+
+  .panel { border:1px solid var(--ink); padding:8px 12px 12px; margin:10px 0; }
+  .panel > .ptitle { font:400 16px "Helvetica Neue",Helvetica,Arial,sans-serif; margin:0 0 6px; }
+  .controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px 22px; }
+  .ctl label { display:block; font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-bottom:2px; }
+  .ctl .row { display:flex; align-items:center; gap:10px; }
+  .ctl input[type=range] { flex:1; accent-color:#000; }
+  .ctl output { min-width:8.5em; text-align:right; font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; line-height:1.25; }
+  .ctl output small { font-weight:400; display:block; }
+  .btns { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
+  .btns span.lbl { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  button { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; background:#fff; color:#000; border:1.5px solid #000;
+           padding:4px 12px; cursor:pointer; }
+  button:hover, button.on { background:#000; color:#fff; }
+  .clock { margin-left:auto; font:700 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .status { min-height:1.4em; margin:4px 0 0; font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:10px; margin:8px 0; }
+  .chart .ct { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-bottom:2px; }
+  .chart canvas { width:100%; height:150px; display:block; border:1px solid var(--ink); background:#fff; }
+
+  table.tot { border-collapse:collapse; font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; width:100%; }
+  table.tot td { border:1px solid var(--ink); padding:4px 8px; }
+  table.tot td:last-child { text-align:right; font-weight:700; white-space:nowrap; }
+
+  .eq { text-align:center; white-space:nowrap; margin:8px 0; overflow-x:auto; padding:2px 0; font-size:19px; }
+  .frac { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; margin:0 .3em; }
+  .frac > span:first-child { border-bottom:1.5px solid var(--ink); padding:0 .5em .12em; }
+  .frac > span:last-child { padding:.12em .5em 0; }
+  .work { border:1px solid var(--ink); padding:6px 12px 10px; margin:10px 0; }
+  .work h3 { margin-top:8px; }
+  .step { margin:8px 0 12px; }
+  .step .lab { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  dl { margin:0; }
+  dt { font-weight:700; margin-top:8px; }
+  dd { margin:0 0 4px; }
+
+  footer { margin-top:40px; border-top:1px solid var(--rule); padding-top:6px; font-size:14px; text-align:center;
+           font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+  @keyframes flowdash { to { stroke-dashoffset:-18; } }
+  .dash { stroke:rgba(255,255,255,.75); stroke-width:3; stroke-dasharray:6 12; fill:none; animation:flowdash 1s linear infinite; }
+  @keyframes blade { 0%{transform:scaleX(1);} 50%{transform:scaleX(-1);} 100%{transform:scaleX(1);} }
+  .imp { animation:blade .7s linear infinite; }
+  @media (prefers-reduced-motion:reduce) { .dash, .imp { animation:none; } }
+  @media (max-width:560px) { body{font-size:17px;} .eq{font-size:16px;} h1{font-size:28px;} }
+
+  /* ---------- interactive questions ---------- */
+  .qtools { border:1px solid var(--ink); padding:8px 12px 10px; margin:10px 0 14px; }
+  .qtools .bar { height:10px; border:1px solid var(--ink); margin:6px 0 4px; background:#fff; }
+  .qtools .bar > div { height:100%; width:0; background:#000; transition:width .3s; }
+  .qtools .score { font:700 16px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .qtools .msg { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; min-height:1.3em; margin-top:4px; }
+  .qtools .btns { margin:8px 0 0; }
+  .style-guide { border:1px solid var(--ink); background:var(--soft); padding:6px 14px 10px; margin:10px 0 14px; }
+  .style-guide h3 { margin:6px 0; }
+  .style-guide ul { margin:0 0 8px; }
+  .style-guide .ex { font-size:16px; margin:4px 0; }
+  .style-guide .ex b { font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:13px; }
+  section.q { border-top:2px solid var(--ink); margin-top:18px; padding-top:2px; }
+  section.q h3 { margin-top:8px; }
+  .qsetup { font-style:italic; margin:0 0 8px; }
+  .part { border:1px solid var(--ink); padding:8px 12px 10px; margin:8px 0; page-break-inside:avoid; }
+  .part.done { background:#fafafa; }
+  .plabel { margin-bottom:6px; }
+  .plabel .n { font:700 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-right:6px; }
+  .opts label { display:block; margin:3px 0; cursor:pointer; }
+  .part input[type=text] { font:400 17px "Helvetica Neue",Helvetica,Arial,sans-serif; width:7em; padding:3px 6px; border:1.5px solid #000; }
+  .part textarea { width:100%; min-height:110px; font:400 17px Palatino,"Palatino Linotype",serif; padding:6px 8px; border:1.5px solid #000; }
+  .fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px 16px; margin:4px 0 8px; }
+  .fields label { display:block; font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .unit { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-left:6px; }
+  .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .fb { margin-top:8px; padding:6px 10px; border-left:4px solid #000; font-size:17px; display:none; }
+  .fb.show { display:block; }
+  .fb.ok { background:#f3f3f3; }
+  .fb.no { background:#fff; border-left-style:dashed; }
+  .fb .tag { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .phints { margin-top:6px; }
+  .phints .h { font-size:16px; border-left:3px dotted #000; padding:2px 10px; margin:4px 0; }
+  .points { margin:6px 0; }
+  .points label { display:block; margin:3px 0; font-size:16px; }
+  .model { margin-top:8px; padding:6px 10px; border:1px solid #000; font-size:17px; }
+  .model .tag { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; display:block; margin-bottom:2px; }
+  .mark { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-top:4px; }
+  #report { display:none; }
+
+  @media print {
+    @page { size:A4; margin:16mm; }
+    body { font-size:11pt; background:#fff; }
+    .page > *:not(#report) { display:none !important; }
+    #report { display:block !important; }
+    #report h1 { font-size:20pt; margin:0 0 4pt; }
+    #report .rq { margin:10pt 0 2pt; font:700 12pt "Helvetica Neue",Helvetica,Arial,sans-serif; }
+    #report .rp { margin:4pt 0 6pt; padding:0 0 4pt; border-bottom:0.5pt solid #000; page-break-inside:avoid; }
+    #report .rp p { margin:1pt 0; }
+    #report .rl { font:700 9pt "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  }
+  .pnote { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="runhead"><span>Chemical reactor design</span><span id="today">Wednesday 18 November 2026</span></div>
+
+<h1>Adventures with a CFSTR</h1>
+<p class="sub">Valves, a steam jacket, and a tank you can fill, drain and heat</p>
+
+<h2 class="sans">Learning objectives</h2>
+<div class="indent">
+  <ul>
+    <li>Explain how the opening of each <span class="tip" tabindex="0" data-tip="Each valve is set as a percentage open. A fully open valve passes 200 cm³ per minute; a half-open valve passes 100 cm³ per minute.">valve</span> sets a flow rate, and how a difference between the flow in and the flow out makes the liquid volume rise or fall.</li>
+    <li>Describe <span class="tip" tabindex="0" data-tip="Steady state: every quantity in the tank (volume, concentration, temperature) stays constant with time, even though liquid flows through all the time.">steady state</span> and explain why the dye concentration in the tank settles at a constant value.</li>
+    <li>Predict how tank volume, flow rates and temperature change the <span class="tip" tabindex="0" data-tip="Average residence time: the average time a portion of liquid spends in the tank. It equals the liquid volume in the tank divided by the output flow rate.">average residence time</span> and the dye concentration in the output stream.</li>
+    <li>Use the first-order <span class="tip" tabindex="0" data-tip="Continuous flow stirred tank reactor: a stirred tank with liquid flowing in and out all the time. Also written CSTR.">CFSTR</span> relationship to calculate the output concentration.</li>
+  </ul>
+</div>
+
+<h2 class="sans">The Exploration</h2>
+<div class="indent">
+  <p>One stream is <span class="tip" tabindex="0" data-tip="Bleach is a solution of sodium hypochlorite in water. It contains no Brilliant Blue dye, and it destroys the dye slowly, so the blue colour fades.">bleach</span>. The other is water carrying <span class="tip" tabindex="0" data-tip="BBD: Brilliant Blue dye, the blue food dye also called Brilliant Blue FCF.">BBD</span>. Each of the two inlets and the output has a valve, so you decide the flow rate in every pipe. Steam flowing through the <span class="tip" tabindex="0" data-tip="A steam jacket is a hollow wall around the tank. Steam condenses on the outside of the inner wall and passes its heat into the liquid. The steam never touches the liquid.">steam jacket</span> warms the tank, and a fourth valve controls the steam. The tank starts at steady state, with a flow in equal to the flow out. Change a valve and watch the tank respond.</p>
+</div>
+
+<div class="sim">
+  <div class="cards">
+    <div class="card key"><div class="k">Average residence time</div><div class="v" id="rTau"></div><div class="u" id="rTauU"></div></div>
+    <div class="card key"><div class="k">BBD concentration in the output stream</div><div class="v" id="rC"></div><div class="u">mg per dm³</div></div>
+    <div class="card key"><div class="k">Tank temperature</div><div class="v" id="rT"></div><div class="u">°C</div></div>
+    <div class="card key"><div class="k">Liquid in the tank</div><div class="v" id="rV"></div><div class="u" id="rVU"></div></div>
+  </div>
+
+  <svg id="sim" viewBox="0 0 900 540" role="img" aria-label="Stirred tank reactor with a steam jacket. Valves control a bleach inlet, a dye inlet, the output stream and the steam supply.">
+    <defs><clipPath id="tankClip"><path id="clipPath"/></clipPath></defs>
+
+    <path id="jacket" fill="rgba(230,110,40,0.1)" stroke="#777" stroke-width="2"/>
+    <rect id="liquid" fill="#cfe2f3" clip-path="url(#tankClip)"/>
+    <g id="flecks" clip-path="url(#tankClip)"></g>
+    <path id="tank" fill="none" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+
+    <rect id="motor" fill="#000"/>
+    <line id="shaft" stroke="#000" stroke-width="4"/>
+    <g id="impPos"><g class="imp"><rect x="-40" y="-4" width="80" height="8" fill="#000"/></g></g>
+
+    <!-- bleach -->
+    <polyline id="bUp" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="bUpIn" fill="none" stroke="#e6e287" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="bDn" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="bDnIn" fill="none" stroke="#e6e287" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="bFall" fill="none" stroke="#e6e287" stroke-width="5"/>
+    <polyline id="bDash" class="dash"/>
+    <!-- dye -->
+    <polyline id="dUp" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="dUpIn" fill="none" stroke="#0a37c8" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="dDn" fill="none" stroke="#777" stroke-width="14" stroke-linejoin="round"/>
+    <polyline id="dDnIn" fill="none" stroke="#0a37c8" stroke-width="8" stroke-linejoin="round"/>
+    <polyline id="dFall" fill="none" stroke="#0a37c8" stroke-width="5"/>
+    <polyline id="dDash" class="dash"/>
+    <!-- output -->
+    <polyline id="oUp" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="oUpIn" fill="none" stroke="#9bb7e0" stroke-width="8"/>
+    <polyline id="oDn" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="oDnIn" fill="none" stroke="#9bb7e0" stroke-width="8"/>
+    <polyline id="oDash" class="dash"/>
+    <!-- steam in and condensate out -->
+    <polyline id="sUp" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="sUpIn" fill="none" stroke="#f0c9ad" stroke-width="8"/>
+    <polyline id="sDn" fill="none" stroke="#777" stroke-width="14"/>
+    <polyline id="sDnIn" fill="none" stroke="#f0c9ad" stroke-width="8"/>
+    <polyline id="sDash" class="dash"/>
+    <polyline id="cPipe" fill="none" stroke="#777" stroke-width="10"/>
+    <polyline id="cIn" fill="none" stroke="#b9cbd9" stroke-width="5"/>
+    <polyline id="cDash" class="dash"/>
+    <!-- overflow -->
+    <polyline id="spill" fill="none" stroke="#9bb7e0" stroke-width="5"/>
+    <polyline id="spillDash" class="dash"/>
+
+    <!-- thermometer -->
+    <rect x="34" y="130" width="12" height="170" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+    <rect id="merc" x="38" width="4" fill="#c0272d"/>
+    <circle cx="40" cy="312" r="14" fill="#c0272d" stroke="#000" stroke-width="2"/>
+    <g stroke="#000" stroke-width="1.5"><line x1="48" y1="130" x2="56" y2="130"/><line x1="48" y1="215" x2="56" y2="215"/><line x1="48" y1="300" x2="56" y2="300"/></g>
+
+    <g id="valves"></g>
+
+    <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#000">
+      <text x="20" y="20" font-size="15" font-weight="700">Bleach stream</text>
+      <text id="tB" x="20" y="38" font-size="14"></text>
+      <text x="880" y="20" font-size="15" font-weight="700" text-anchor="end">Water containing BBD</text>
+      <text id="tD" x="880" y="38" font-size="14" text-anchor="end"></text>
+      <text id="tO1" x="880" font-size="15" font-weight="700" text-anchor="end">Output stream</text>
+      <text id="tO2" x="880" font-size="14" text-anchor="end"></text>
+      <text id="tO3" x="880" font-size="14" text-anchor="end"></text>
+      <text id="tO4" x="880" font-size="14" text-anchor="end"></text>
+      <text x="20" y="96" font-size="14" font-weight="700">Tank temperature</text>
+      <text id="tTemp" x="20" y="112" font-size="14"></text>
+      <text x="20" y="352" font-size="15" font-weight="700">Steam (100 °C)</text>
+      <text id="tS" x="20" y="368" font-size="14"></text>
+      <text x="700" y="492" font-size="15" font-weight="700" text-anchor="end">Condensate</text>
+      <text id="tCond" x="700" y="510" font-size="14" text-anchor="end"></text>
+      <text id="tTank" y="528" font-size="15" font-weight="700" text-anchor="middle"></text>
+      <text id="tFlag" font-size="15" font-weight="700" text-anchor="middle"></text>
+      <text id="tSpill" font-size="14" font-weight="700"></text>
+    </g>
+  </svg>
+
+  <div class="panel">
+    <div class="ptitle">Time</div>
+    <div class="btns">
+      <span class="lbl">Speed:</span>
+      <button type="button" data-speed="1">×1</button>
+      <button type="button" data-speed="10">×10</button>
+      <button type="button" data-speed="30" class="on">×30</button>
+      <button type="button" data-speed="100">×100</button>
+      <button type="button" id="pause">Pause</button>
+      <button type="button" id="reset">Reset everything</button>
+      <span class="clock" id="clock"></span>
+    </div>
+    <div class="status" id="status" aria-live="polite"></div>
+  </div>
+
+  <div class="panel">
+    <div class="ptitle">The four valves</div>
+    <div class="controls">
+      <div class="ctl"><label for="vb">Bleach valve</label>
+        <div class="row"><input id="vb" type="range" min="0" max="100" step="1" value="30"><output id="vbo"></output></div></div>
+      <div class="ctl"><label for="vd">Valve on the water containing BBD</label>
+        <div class="row"><input id="vd" type="range" min="0" max="100" step="1" value="20"><output id="vdo"></output></div></div>
+      <div class="ctl"><label for="vo">Output valve</label>
+        <div class="row"><input id="vo" type="range" min="0" max="100" step="1" value="50"><output id="voo"></output></div></div>
+      <div class="ctl"><label for="vs">Steam valve</label>
+        <div class="row"><input id="vs" type="range" min="0" max="100" step="1" value="0"><output id="vso"></output></div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="ptitle">The reactor and its feeds</div>
+    <div class="controls">
+      <div class="ctl"><label for="cap">Reactor volume (capacity of the tank)</label>
+        <div class="row"><input id="cap" type="range" min="200" max="2000" step="50" value="1000"><output id="capo"></output></div></div>
+      <div class="ctl"><label for="C0">BBD concentration in its feed stream</label>
+        <div class="row"><input id="C0" type="range" min="1" max="50" step="1" value="25"><output id="C0o"></output></div></div>
+      <div class="ctl"><label for="B0">Sodium hypochlorite concentration in the bleach</label>
+        <div class="row"><input id="B0" type="range" min="0.1" max="1" step="0.05" value="0.7"><output id="B0o"></output></div></div>
+    </div>
+  </div>
+
+  <div class="charts">
+    <div class="chart"><div class="ct">BBD concentration in the output stream (mg per dm³). Dashed: steady-state prediction.</div><canvas id="chC"></canvas></div>
+    <div class="chart"><div class="ct">Tank temperature (°C)</div><canvas id="chT"></canvas></div>
+    <div class="chart"><div class="ct">Liquid in the tank (cm³)</div><canvas id="chV"></canvas></div>
+  </div>
+
+  <div class="cards">
+    <div class="card small"><div class="k">Total flow rate in</div><div class="v" id="rFt"></div><div class="u">cm³ per minute</div></div>
+    <div class="card small"><div class="k">Output flow rate</div><div class="v" id="rFo"></div><div class="u">cm³ per minute</div></div>
+    <div class="card small"><div class="k">Change in liquid volume</div><div class="v" id="rNet"></div><div class="u">cm³ per minute</div></div>
+    <div class="card small"><div class="k">BBD concentration from mixing alone</div><div class="v" id="rMix"></div><div class="u">mg per dm³</div></div>
+    <div class="card small"><div class="k">Hypochlorite concentration in the tank</div><div class="v" id="rB"></div><div class="u">mol dm⁻³</div></div>
+    <div class="card small"><div class="k">Rate constant for dye removal</div><div class="v" id="rK"></div><div class="u">per minute</div></div>
+    <div class="card small"><div class="k">Steam condensing in the jacket</div><div class="v" id="rSt"></div><div class="u" id="rStU"></div></div>
+    <div class="card small"><div class="k">Predicted steady-state BBD concentration</div><div class="v" id="rPred"></div><div class="u">mg per dm³</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="ptitle">Running totals since the start</div>
+    <table class="tot" id="totals"></table>
+  </div>
+</div>
+
+<div class="indent">
+  <div class="work">
+    <h3 class="sans">Prediction for the settings above</h3>
+    <div class="step"><div class="lab">These steps assume the flow out equals the flow in, and that the temperature stays where it is now.</div></div>
+    <div id="workings"></div>
+  </div>
+
+  <h3 class="sans">Adventures</h3>
+  <div class="qtools">
+    <div class="score sans"><span id="qScore"></span> &middot; <span id="qDone"></span></div>
+    <div class="bar"><div id="qBar"></div></div>
+    <div class="btns">
+      <button type="button" id="qSave">Save progress</button>
+      <button type="button" id="qLoad">Retrieve progress</button>
+      <button type="button" id="qPdf">Save as a .pdf file</button>
+      <input type="file" id="qFile" accept=".json,application/json" hidden>
+    </div>
+    <div class="msg" id="qMsg" aria-live="polite"></div>
+  </div>
+  <p class="ui" style="font-size:15px">Numerical answers are marked for you, with three tries and a hint at each step. Written answers are marked by you: write your own answer first, then tick the points it makes and read the model answer. <b>Save as a .pdf file</b> opens the print window; choose Save as PDF there.</p>
+  <div class="style-guide">
+    <h3 class="sans">Writing a good scientific answer</h3>
+    <ul>
+      <li>Answer the question in the first sentence, then give the reason.</li>
+      <li>Use the terms of the topic: steady state, residence time, rate constant, flow rate in, flow rate out.</li>
+      <li>Support a claim with a number and its unit, taken from the simulation or from a calculation.</li>
+      <li>Link ideas with <i>because</i>, <i>so</i> and <i>therefore</i>, and keep to one idea in each sentence.</li>
+      <li>Say what increases or decreases, and say what stays the same.</li>
+    </ul>
+    <div class="ex"><b>WEAK</b> It gets too hot, so it stops.</div>
+    <div class="ex"><b>BETTER</b> The temperature levels off because the heat arriving from the steam equals the heat leaving with the output stream and through the tank wall. Nothing in the tank then changes with time, which is steady state.</div>
+  </div>
+  <div id="quizA"></div>
+</div>
+
+<h2 class="sans">Underlying ideas: definitions to learn</h2>
+<div class="indent">
+  <dl>
+    <dt>CFSTR</dt><dd>A continuous flow stirred tank reactor. Liquid flows in and out all the time, and a stirrer keeps the contents the same everywhere.</dd>
+    <dt>Valve opening</dt><dd>How far a valve is open, in percent. In this model every 1 % of opening passes 2 cm³ per minute, so a fully open valve passes 200 cm³ per minute.</dd>
+    <dt>Steady state</dt><dd>Nothing in the tank changes with time. The flow in equals the flow out, so the volume is constant, and the concentration and temperature are constant too.</dd>
+    <dt>Perfectly mixed</dt><dd>The concentration and temperature are identical at every point in the tank, so the output stream has the same concentration and temperature as the tank.</dd>
+    <dt>Average residence time</dt><dd>The average time a portion of liquid spends in the tank. In one residence time, a volume of liquid equal to the liquid in the tank has flowed out.</dd>
+    <dt>Steam jacket</dt><dd>A hollow wall around the tank. Steam at 100 °C condenses on the inner wall, and the heat released warms the liquid. The condensate leaves at the bottom.</dd>
+    <dt>First-order reaction</dt><dd>A reaction whose rate is proportional to the concentration of one substance. Here the bleach is present in such large excess that its concentration stays constant, so the dye disappears at a rate proportional to the dye concentration alone.</dd>
+    <dt>Rate constant for dye removal</dt><dd>The number that tells you how fast the dye disappears. A larger value means faster removal. It grows with the hypochlorite concentration and with temperature.</dd>
+  </dl>
+
+  <p>Change in liquid volume (positive means the tank is filling):</p>
+  <div class="eq">change in liquid volume per minute = total flow rate in − output flow rate</div>
+  <p>Average residence time:</p>
+  <div class="eq">average residence time =
+    <span class="frac"><span>liquid volume in the tank</span><span>output flow rate</span></span></div>
+  <p>BBD concentration from mixing alone, before any reaction:</p>
+  <div class="eq">BBD concentration from mixing alone =
+    <span class="frac"><span>flow rate of water containing BBD × BBD concentration in its feed</span><span>total flow rate in</span></span></div>
+  <p>BBD concentration in the output stream at steady state:</p>
+  <div class="eq">BBD concentration in the output stream =
+    <span class="frac"><span>BBD concentration from mixing alone</span><span>1 + rate constant for dye removal × average residence time</span></span></div>
+
+  <h3 class="sans">Values built into the model</h3>
+  <ul>
+    <li>Both feeds arrive at 20 °C, and the surroundings are at 20 °C.</li>
+    <li>Steam is at 100 °C. The fully open steam valve would supply 10 g of steam per minute. Each gram of steam condensing releases 2257 J, and the jacket can pass only as much heat as the temperature difference allows, so the steam actually condensing is less than the supply when the tank is hot.</li>
+    <li>The rate constant for the reaction of BBD with hypochlorite is 0.8 dm³ mol⁻¹ min⁻¹ at 20 °C, with an activation energy of 50 kJ mol⁻¹, so the rate roughly doubles for every 10 °C rise.</li>
+    <li>The liquid is treated as water: density 1 g cm⁻³ and specific heat capacity 4.18 J g⁻¹ K⁻¹.</li>
+  </ul>
+</div>
+
+<h2 class="sans">Scale-up and reflection</h2>
+<div class="indent">
+  <div id="quizR"></div>
+</div>
+
+<div id="report"></div>
+
+<footer>Science Department · Refined with AI</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var NS = "http://www.w3.org/2000/svg";
+
+  /* ---------- constants of the model ---------- */
+  var K20 = 0.8, EA = 50000, RG = 8.314;           /* dm3 mol-1 min-1, J mol-1, J mol-1 K-1 */
+  var TAMB = 20, TSTEAM = 100, LAMBDA = 2257, CP = 4.18;
+  var FLOW_PER_PCT = 2, STEAM_MAX = 10;            /* cm3 per min per percent; g per min */
+  var UA0 = 10, HL0 = 0.4;                         /* W per K for 500 cm3 */
+  var WINDOW = 30;                                 /* chart window, simulated minutes */
+  var DEFAULTS = { vb: 30, vd: 20, vo: 50, vs: 0, cap: 1000, C0: 25, B0: 0.7 };
+  var IDS = ["vb", "vd", "vo", "vs", "cap", "C0", "B0"];
+
+  var ctl = {}, st = {}, tot = {}, hist = [];
+  var speed = 30, paused = false, sampleAcc = 0;
+
+  try {
+    $("today").textContent = new Date().toLocaleDateString("en-GB",
+      { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  } catch (e) {}
+
+  function fmt(x) {
+    if (!isFinite(x)) return "–";
+    var a = Math.abs(x);
+    if (a >= 100) return x.toFixed(0);
+    if (a >= 10) return x.toFixed(1);
+    return x.toFixed(2);
+  }
+  function fr(n, d) { return '<span class="frac"><span>' + n + '</span><span>' + d + '</span></span>'; }
+  function kT(T) { return K20 * Math.exp(EA / RG * (1 / 293.15 - 1 / (T + 273.15))); }
+
+  function readCtl() {
+    IDS.forEach(function (id) { ctl[id] = +$(id).value; });
+    ctl.Fb = ctl.vb * FLOW_PER_PCT; ctl.Fd = ctl.vd * FLOW_PER_PCT; ctl.Fo = ctl.vo * FLOW_PER_PCT;
+    ctl.Ft = ctl.Fb + ctl.Fd; ctl.steam = ctl.vs / 100 * STEAM_MAX;
+  }
+
+  function initState() {
+    readCtl();
+    var V = 0.5 * ctl.cap;
+    var B = ctl.Ft > 0 ? ctl.Fb * ctl.B0 / ctl.Ft : 0;
+    var kp = kT(TAMB) * B;
+    var C = ctl.Ft > 0 ? ctl.Fd * ctl.C0 / (ctl.Ft + kp * V) : 0;
+    st = { V: V, C: C, B: B, T: TAMB, Fout: ctl.Fo, spill: 0, Q: 0, mUsed: 0 };
+    tot = { bleach: 0, dye: 0, out: 0, spill: 0, steam: 0, t: 0 };
+    hist = []; sampleAcc = 0;
+  }
+
+  /* ---------- the model ---------- */
+  function step(dt) {
+    var c = ctl, Fb = c.Fb, Fd = c.Fd, Ft = c.Ft;
+    st.C *= Math.exp(-kT(st.T) * st.B * dt / 2);
+
+    var Vin = Ft * dt, Vset = c.Fo * dt, Vmix = st.V + Vin;
+    var Cm = st.C, Bm = st.B, Tm = st.T;
+    if (Vmix > 1e-9) {
+      Cm = (st.C * st.V + c.C0 * Fd * dt) / Vmix;
+      Bm = (st.B * st.V + c.B0 * Fb * dt) / Vmix;
+      Tm = (st.T * st.V + TAMB * Vin) / Vmix;
+    }
+    var Vout = Math.min(Vset, Vmix);
+    var Vend = Vmix - Vout, spill = 0;
+    if (Vend > c.cap) { spill = Vend - c.cap; Vend = c.cap; }
+    st.C = Cm; st.B = Bm; st.T = Tm; st.V = Vend;
+    st.Fout = Vout / dt; st.spill = spill / dt;
+    st.C *= Math.exp(-kT(st.T) * st.B * dt / 2);
+
+    var Q = 0, mUsed = 0;
+    if (st.V > 2 && c.steam > 0) {
+      var UA = UA0 * Math.pow(st.V / 500, 2 / 3);
+      var Qs = c.steam * LAMBDA / 60;
+      Q = Math.min(Qs, UA * Math.max(0, TSTEAM - st.T));
+      mUsed = Q * 60 / LAMBDA;
+    }
+    var loss = HL0 * Math.pow(Math.max(st.V, 1) / 500, 2 / 3) * (st.T - TAMB);
+    var Cth = Math.max(st.V, 5) * CP;
+    st.T += (Q - loss) * dt * 60 / Cth;
+    st.T = Math.min(TSTEAM, Math.max(TAMB, st.T));
+    st.Q = Q; st.mUsed = mUsed;
+
+    tot.bleach += Fb * dt; tot.dye += Fd * dt; tot.out += Vout; tot.spill += spill;
+    tot.steam += mUsed * dt; tot.t += dt;
+
+    sampleAcc += dt;
+    if (sampleAcc >= 0.05) {
+      sampleAcc = 0;
+      hist.push({ t: tot.t, C: st.C, P: predict().C, T: st.T, V: st.V });
+      if (hist.length > 800) hist.shift();
+    }
+  }
+
+  function predict() {
+    var Ft = ctl.Ft;
+    if (Ft <= 0) return { ok: false };
+    var Bm = ctl.Fb * ctl.B0 / Ft, Cmix = ctl.Fd * ctl.C0 / Ft;
+    var k = kT(st.T), kp = k * Bm, tau = st.V / Ft;
+    return { ok: true, Bm: Bm, Cmix: Cmix, k: k, kp: kp, tau: tau, C: Cmix / (1 + kp * tau) };
+  }
+
+  /* ---------- drawing ---------- */
+  function mk(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function setPts(el, pts) { el.setAttribute("points", pts.map(function (p) { return p.join(","); }).join(" ")); }
+  function dashSpeed(el, F) { el.style.animationDuration = (18 / (10 + 0.5 * F)).toFixed(2) + "s"; }
+  function dyeColour(c) {
+    var f = 1 - Math.exp(-c / 12), a = [238, 246, 252], b = [10, 55, 200];
+    return "rgb(" + a.map(function (v, i) { return Math.round(v + (b[i] - v) * f); }).join(",") + ")";
+  }
+
+  var valves = {};
+  function makeValve(key, x, y, name) {
+    var g = mk("g", { transform: "translate(" + x + "," + y + ")" }, $("valves"));
+    var body = mk("polygon", { points: "-13,-10 13,10 13,-10 -13,10", fill: "#fff", stroke: "#000", "stroke-width": 2 }, g);
+    mk("line", { x1: 0, y1: 0, x2: 0, y2: -22, stroke: "#000", "stroke-width": 3 }, g);
+    var wg = mk("g", { transform: "translate(0,-22)" }, g);
+    var wheel = mk("g", { transform: "rotate(0)" }, wg);
+    mk("line", { x1: -12, y1: 0, x2: 12, y2: 0, stroke: "#000", "stroke-width": 4, "stroke-linecap": "round" }, wheel);
+    mk("line", { x1: 0, y1: -4, x2: 0, y2: 4, stroke: "#000", "stroke-width": 2 }, wheel);
+    var t1 = mk("text", { y: 30, "text-anchor": "middle", "font-size": 12, "font-weight": 700, "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif" }, g);
+    t1.textContent = name;
+    var t2 = mk("text", { y: 44, "text-anchor": "middle", "font-size": 12, "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif" }, g);
+    valves[key] = { body: body, wheel: wheel, txt: t2 };
+  }
+  makeValve("vb", 230, 60, "Bleach valve");
+  makeValve("vd", 670, 60, "BBD valve");
+  makeValve("vo", 640, 394, "Output valve");
+  makeValve("vs", 250, 385, "Steam valve");
+  function setValve(key, pct) {
+    var v = valves[key];
+    v.wheel.setAttribute("transform", "rotate(" + (pct * 3.6) + ")");
+    v.body.setAttribute("fill", pct <= 0 ? "#000" : "#fff");
+    v.txt.textContent = Math.round(pct) + " % open";
+  }
+
+  var flecks = [];
+  for (var i = 0; i < 46; i++) {
+    var cc = mk("circle", { r: (1.8 + Math.random() * 1.8).toFixed(1), fill: "rgba(255,255,255,0.55)" }, $("flecks"));
+    flecks.push({ el: cc, a: Math.random() * 6.283, rx: 0.15 + Math.random() * 0.8, ry: 0.15 + Math.random() * 0.8,
+                  w: (0.6 + Math.random() * 1.4) * (Math.random() < 0.5 ? 1 : -1) });
+  }
+  var geo = { cx: 430, cy: 300, hw: 80, hh: 80, show: true };
+  var lastFrame = performance.now(), lastUI = 0;
+
+  function draw() {
+    var c = ctl, cap = c.cap;
+    var t = (cap - 200) / 1800;
+    var W = 170 + 130 * t, H = 200 + 110 * t;
+    var cx = 430, x0 = cx - W / 2, x1 = cx + W / 2, yb = 420, yt = yb - H, g = 14;
+    var yj = yt + 0.2 * H;
+
+    var tankD = "M" + x0 + " " + yt + " L" + x0 + " " + (yb - 20) + " Q" + x0 + " " + yb + " " + (x0 + 20) + " " + yb +
+      " L" + (x1 - 20) + " " + yb + " Q" + x1 + " " + yb + " " + x1 + " " + (yb - 20) + " L" + x1 + " " + yt;
+    $("tank").setAttribute("d", tankD);
+    $("clipPath").setAttribute("d", tankD + " Z");
+    var jb = yb + g;
+    $("jacket").setAttribute("d",
+      "M" + (x0 - g) + " " + yj + " L" + (x0 - g) + " " + (jb - 18) + " Q" + (x0 - g) + " " + jb + " " + (x0 - g + 18) + " " + jb +
+      " L" + (x1 + g - 18) + " " + jb + " Q" + (x1 + g) + " " + jb + " " + (x1 + g) + " " + (jb - 18) + " L" + (x1 + g) + " " + yj);
+    var steamInt = Math.min(1, st.mUsed / STEAM_MAX);
+    $("jacket").setAttribute("fill", "rgba(230,110,40," + (0.08 + 0.5 * steamInt).toFixed(2) + ")");
+
+    var yMax = yt + 6, level = yb - (st.V / cap) * (yb - yMax);
+    var liq = $("liquid");
+    liq.setAttribute("x", x0); liq.setAttribute("width", W);
+    liq.setAttribute("y", level); liq.setAttribute("height", Math.max(0, yb - level + 2));
+    var col = dyeColour(st.C);
+    liq.setAttribute("fill", col);
+    $("oUpIn").setAttribute("stroke", col); $("oDnIn").setAttribute("stroke", col);
+    var feedCol = dyeColour(c.C0);
+    ["dUpIn", "dDnIn", "dFall"].forEach(function (id) { $(id).setAttribute("stroke", feedCol); });
+
+    $("motor").setAttribute("x", cx - 16); $("motor").setAttribute("y", yt - 44);
+    $("motor").setAttribute("width", 32); $("motor").setAttribute("height", 18);
+    $("shaft").setAttribute("x1", cx); $("shaft").setAttribute("x2", cx);
+    $("shaft").setAttribute("y1", yt - 28); $("shaft").setAttribute("y2", yb - 44);
+    $("impPos").setAttribute("transform", "translate(" + cx + "," + (yb - 44) + ")");
+
+    var xb = x0 + W * 0.26, xd = x0 + W * 0.74;
+    var yFall = Math.max(level, yt);
+    /* bleach */
+    setPts($("bUp"), [[20, 60], [230, 60]]); setPts($("bUpIn"), [[20, 60], [230, 60]]);
+    var bd = [[230, 60], [xb, 60], [xb, yt - 4]];
+    setPts($("bDn"), bd); setPts($("bDnIn"), bd);
+    setPts($("bFall"), [[xb, yt - 4], [xb, yFall]]);
+    setPts($("bDash"), [[20, 60], [xb, 60], [xb, yFall]]);
+    /* dye */
+    setPts($("dUp"), [[880, 60], [670, 60]]); setPts($("dUpIn"), [[880, 60], [670, 60]]);
+    var dd = [[670, 60], [xd, 60], [xd, yt - 4]];
+    setPts($("dDn"), dd); setPts($("dDnIn"), dd);
+    setPts($("dFall"), [[xd, yt - 4], [xd, yFall]]);
+    setPts($("dDash"), [[880, 60], [xd, 60], [xd, yFall]]);
+    /* output */
+    var yo = yb - 26;
+    setPts($("oUp"), [[x1, yo], [640, yo]]); setPts($("oUpIn"), [[x1, yo], [640, yo]]);
+    setPts($("oDn"), [[640, yo], [740, yo]]); setPts($("oDnIn"), [[640, yo], [740, yo]]);
+    setPts($("oDash"), [[x1, yo], [740, yo]]);
+    /* steam */
+    var ys = 385;
+    setPts($("sUp"), [[20, ys], [250, ys]]); setPts($("sUpIn"), [[20, ys], [250, ys]]);
+    setPts($("sDn"), [[250, ys], [x0 - g, ys]]); setPts($("sDnIn"), [[250, ys], [x0 - g, ys]]);
+    setPts($("sDash"), [[20, ys], [x0 - g, ys]]);
+    var yc = jb + 24, xc = x1 - 20;
+    setPts($("cPipe"), [[xc, jb], [xc, yc], [700, yc]]); setPts($("cIn"), [[xc, jb], [xc, yc], [700, yc]]);
+    setPts($("cDash"), [[xc, jb], [xc, yc], [700, yc]]);
+    /* overflow spout */
+    setPts($("spill"), [[x1, yt + 4], [x1 + 30, yt + 4], [x1 + 30, yt + 30]]);
+    setPts($("spillDash"), [[x1, yt + 4], [x1 + 30, yt + 4], [x1 + 30, yt + 30]]);
+    var spilling = st.spill > 0.01;
+    $("spill").style.display = spilling ? "" : "none";
+    $("spillDash").style.display = spilling ? "" : "none";
+    $("spill").setAttribute("stroke", col);
+    $("tSpill").setAttribute("x", x1 + 38); $("tSpill").setAttribute("y", yt + 22);
+    $("tSpill").textContent = spilling ? "OVERFLOW" : "";
+
+    /* which pipe sections carry liquid */
+    var fB = c.Fb > 0, fD = c.Fd > 0, fO = st.Fout > 0.01 && st.V > 0.01, fS = c.vs > 0, fC = st.mUsed > 0.005;
+    $("bDn").style.display = $("bDnIn").style.display = fB ? "" : "none";
+    $("bFall").style.display = $("bDash").style.display = fB ? "" : "none";
+    $("dDn").style.display = $("dDnIn").style.display = fD ? "" : "none";
+    $("dFall").style.display = $("dDash").style.display = fD ? "" : "none";
+    $("oDn").style.display = $("oDnIn").style.display = $("oDash").style.display = fO ? "" : "none";
+    $("oUp").style.display = $("oUpIn").style.display = fO ? "" : "none";
+    $("sDn").style.display = $("sDnIn").style.display = $("sDash").style.display = fS ? "" : "none";
+    $("cPipe").style.display = $("cIn").style.display = $("cDash").style.display = fC ? "" : "none";
+    $("bUpIn").setAttribute("stroke", "#e6e287");
+    dashSpeed($("bDash"), c.Fb); dashSpeed($("dDash"), c.Fd); dashSpeed($("oDash"), st.Fout);
+    dashSpeed($("sDash"), 40 + 160 * c.vs / 100); dashSpeed($("cDash"), 20 + 100 * steamInt); dashSpeed($("spillDash"), 60);
+    $("sDash").style.stroke = "rgba(255,255,255,.8)";
+
+    setValve("vb", c.vb); setValve("vd", c.vd); setValve("vo", c.vo); setValve("vs", c.vs);
+
+    /* thermometer */
+    var th = Math.max(0, Math.min(1, st.T / 100)) * 170;
+    $("merc").setAttribute("y", 300 - th); $("merc").setAttribute("height", th + 4);
+
+    /* labels */
+    $("tB").textContent = fmt(c.Fb) + " cm³ per minute";
+    $("tD").textContent = fmt(c.Fd) + " cm³ per minute";
+    $("tO1").setAttribute("y", yo + 38); $("tO2").setAttribute("y", yo + 56);
+    $("tO3").setAttribute("y", yo + 72); $("tO4").setAttribute("y", yo + 88);
+    $("tO2").textContent = fmt(fO ? st.Fout : 0) + " cm³ per minute";
+    $("tO3").textContent = st.V > 0.5 ? "BBD " + fmt(st.C) + " mg per dm³" : "";
+    $("tO4").textContent = st.V > 0.5 ? fmt(st.T) + " °C" : "";
+    $("tTemp").textContent = fmt(st.T) + " °C";
+    $("tS").textContent = fmt(c.steam) + " g per minute supplied";
+    $("tCond").textContent = fmt(st.mUsed) + " g per minute";
+    $("tTank").setAttribute("x", cx); $("tTank").textContent = "Reactor volume " + cap + " cm³";
+    var flag = "";
+    if (st.V < 0.5) flag = "TANK EMPTY"; else if (st.V >= cap - 0.01) flag = "TANK FULL";
+    $("tFlag").setAttribute("x", cx); $("tFlag").setAttribute("y", (level + yb) / 2 + 5);
+    $("tFlag").textContent = flag;
+    $("tFlag").setAttribute("fill", st.C > 12 ? "#fff" : "#000");
+
+    geo = { cx: cx, cy: (level + yb) / 2, hw: W / 2 - 10, hh: Math.max(0, (yb - level) / 2 - 8), show: st.V > 15 };
+  }
+
+  var lastFlk = performance.now();
+  function animateFlecks(now) {
+    var dt = Math.min(0.05, (now - lastFlk) / 1000); lastFlk = now;
+    for (var k = 0; k < flecks.length; k++) {
+      var f = flecks[k];
+      f.a += f.w * dt;
+      f.el.setAttribute("cx", (geo.cx + Math.cos(f.a) * f.rx * geo.hw).toFixed(1));
+      f.el.setAttribute("cy", (geo.cy + Math.sin(f.a) * f.ry * geo.hh).toFixed(1));
+      f.el.style.display = geo.show ? "" : "none";
+    }
+  }
+
+  /* ---------- charts ---------- */
+  function drawChart(cv, ymax, series, tNow) {
+    var dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if (!w || !h) return;
+    if (cv.width !== Math.round(w * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    var g = cv.getContext("2d");
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+    var L = 44, R = 10, T = 10, B = 24, pw = w - L - R, ph = h - T - B;
+    g.strokeStyle = "#000"; g.fillStyle = "#000"; g.lineWidth = 1;
+    g.font = "12px Helvetica, Arial, sans-serif";
+    g.beginPath(); g.moveTo(L, T); g.lineTo(L, T + ph); g.lineTo(L + pw, T + ph); g.stroke();
+    g.textAlign = "right"; g.textBaseline = "middle";
+    [0, 0.5, 1].forEach(function (f) {
+      var y = T + ph - f * ph;
+      g.fillText(fmt(f * ymax), L - 5, y);
+      g.strokeStyle = "#ccc"; g.beginPath(); g.moveTo(L, y); g.lineTo(L + pw, y); g.stroke(); g.strokeStyle = "#000";
+    });
+    g.textAlign = "center"; g.textBaseline = "top";
+    [-30, -20, -10, 0].forEach(function (m) {
+      var x = L + (m + WINDOW) / WINDOW * pw;
+      g.fillText(String(m), x, T + ph + 4);
+    });
+    g.textAlign = "right"; g.fillText("minutes", L + pw, T + ph + 4 - 0);
+    var t0 = tNow - WINDOW;
+    series.forEach(function (s) {
+      g.save(); g.beginPath(); g.rect(L, T, pw, ph); g.clip();
+      g.strokeStyle = s.col; g.lineWidth = s.w; g.setLineDash(s.dash || []);
+      g.beginPath();
+      var started = false;
+      hist.forEach(function (p) {
+        var v = p[s.key];
+        if (!isFinite(v) || p.t < t0 - 0.2) { started = false; return; }
+        var x = L + (p.t - t0) / WINDOW * pw, y = T + ph - Math.min(1, Math.max(0, v / ymax)) * ph;
+        if (!started) { g.moveTo(x, y); started = true; } else g.lineTo(x, y);
+      });
+      g.stroke(); g.restore();
+    });
+  }
+
+  /* ---------- text readouts ---------- */
+  var lastWork = "";
+  function updateUI() {
+    var c = ctl, p = predict();
+    $("vbo").innerHTML = c.vb + " % open<small>" + fmt(c.Fb) + " cm³ per minute</small>";
+    $("vdo").innerHTML = c.vd + " % open<small>" + fmt(c.Fd) + " cm³ per minute</small>";
+    $("voo").innerHTML = c.vo + " % open<small>" + fmt(c.Fo) + " cm³ per minute</small>";
+    $("vso").innerHTML = c.vs + " % open<small>" + fmt(c.steam) + " g per minute supplied</small>";
+    $("capo").textContent = c.cap + " cm³";
+    $("C0o").textContent = c.C0 + " mg per dm³";
+    $("B0o").textContent = c.B0.toFixed(2) + " mol dm⁻³";
+
+    var tauTxt, tauU;
+    if (c.Fo < 0.5) { tauTxt = "∞"; tauU = "output valve closed"; }
+    else if (st.V < 0.5) { tauTxt = "0"; tauU = "tank empty"; }
+    else { var tau = st.V / c.Fo; tauTxt = fmt(tau); tauU = "minutes (" + Math.round(tau * 60) + " seconds)"; }
+    $("rTau").textContent = tauTxt; $("rTauU").textContent = tauU;
+    $("rC").textContent = st.V > 0.5 ? fmt(st.C) : "–";
+    $("rT").textContent = fmt(st.T);
+    $("rV").textContent = fmt(st.V); $("rVU").textContent = "cm³ of " + c.cap + " cm³";
+
+    var net = c.Ft - c.Fo;
+    $("rFt").textContent = fmt(c.Ft); $("rFo").textContent = fmt(c.Fo);
+    $("rNet").textContent = (net > 0 ? "+" : "") + fmt(net);
+    $("rMix").textContent = c.Ft > 0 ? fmt(c.Fd * c.C0 / c.Ft) : "–";
+    $("rB").textContent = st.V > 0.5 ? fmt(st.B) : "–";
+    $("rK").textContent = st.V > 0.5 ? fmt(kT(st.T) * st.B) : "–";
+    $("rSt").textContent = fmt(st.mUsed); $("rStU").textContent = "g per minute (" + fmt(st.Q) + " W)";
+    $("rPred").textContent = p.ok ? fmt(p.C) : "–";
+
+    var mm = Math.floor(tot.t), ss = Math.floor((tot.t - mm) * 60);
+    $("clock").textContent = "Simulated time " + mm + ":" + (ss < 10 ? "0" : "") + ss;
+
+    var msg = "";
+    if (st.spill > 0.01) msg = "The tank is full and overflowing: liquid is flowing in faster than it flows out.";
+    else if (st.V < 0.5 && c.Ft <= c.Fo) msg = "The tank is empty: the output flow cannot be larger than the flow arriving.";
+    else if (Math.abs(net) < 0.5 && st.V > 0.5) msg = "Flow in equals flow out, so the volume is constant.";
+    else if (net > 0) msg = "Flow in is larger than flow out, so the tank is filling.";
+    else msg = "Flow out is larger than flow in, so the tank is draining.";
+    $("status").textContent = msg;
+
+    $("totals").innerHTML =
+      "<tr><td>Bleach used</td><td>" + fmt(tot.bleach) + " cm³</td></tr>" +
+      "<tr><td>Water containing BBD used</td><td>" + fmt(tot.dye) + " cm³</td></tr>" +
+      "<tr><td>Steam condensed in the jacket</td><td>" + fmt(tot.steam) + " g</td></tr>" +
+      "<tr><td>Liquid sent out through the output valve</td><td>" + fmt(tot.out) + " cm³</td></tr>" +
+      "<tr><td>Liquid lost by overflow</td><td>" + fmt(tot.spill) + " cm³</td></tr>" +
+      "<tr><td>Simulated time</td><td>" + fmt(tot.t) + " minutes</td></tr>";
+
+    /* worked prediction */
+    var h = "";
+    if (!p.ok) {
+      h = '<div class="step"><div class="lab">Both inlet valves are closed, so nothing flows in and there is no steady state to predict.</div></div>';
+    } else {
+      var Tn = fmt(st.T);
+      h += '<div class="step"><div class="lab">Total flow rate in</div>' +
+        '<div class="eq">total flow rate in = bleach flow rate + flow rate of water containing BBD</div>' +
+        '<div class="eq">= ' + fmt(c.Fb) + ' + ' + fmt(c.Fd) + ' = ' + fmt(c.Ft) + ' cm³ per minute</div></div>';
+      h += '<div class="step"><div class="lab">BBD concentration from mixing alone</div>' +
+        '<div class="eq">= ' + fr('flow rate of water containing BBD × BBD concentration in its feed', 'total flow rate in') + '</div>' +
+        '<div class="eq">= ' + fr(fmt(c.Fd) + ' × ' + c.C0, fmt(c.Ft)) + ' = ' + fmt(p.Cmix) + ' mg per dm³</div></div>';
+      h += '<div class="step"><div class="lab">Hypochlorite concentration after mixing</div>' +
+        '<div class="eq">= ' + fr('bleach flow rate × hypochlorite concentration in the bleach', 'total flow rate in') + '</div>' +
+        '<div class="eq">= ' + fr(fmt(c.Fb) + ' × ' + c.B0.toFixed(2), fmt(c.Ft)) + ' = ' + fmt(p.Bm) + ' mol dm⁻³</div></div>';
+      h += '<div class="step"><div class="lab">Rate constant for dye removal at ' + Tn + ' °C</div>' +
+        '<div class="eq">rate constant for dye removal = rate constant at ' + Tn + ' °C × hypochlorite concentration</div>' +
+        '<div class="eq">= ' + fmt(p.k) + ' × ' + fmt(p.Bm) + ' = ' + fmt(p.kp) + ' per minute</div></div>';
+      h += '<div class="step"><div class="lab">Average residence time</div>' +
+        '<div class="eq">average residence time = ' + fr('liquid volume in the tank', 'total flow rate in') + '</div>' +
+        '<div class="eq">= ' + fr(fmt(st.V), fmt(c.Ft)) + ' = ' + fmt(p.tau) + ' minutes</div></div>';
+      h += '<div class="step"><div class="lab">BBD concentration in the output stream</div>' +
+        '<div class="eq">= ' + fr('BBD concentration from mixing alone', '1 + rate constant for dye removal × average residence time') + '</div>' +
+        '<div class="eq">= ' + fr(fmt(p.Cmix), '1 + ' + fmt(p.kp) + ' × ' + fmt(p.tau)) + ' = ' + fmt(p.C) + ' mg per dm³</div></div>';
+    }
+    if (h !== lastWork) { $("workings").innerHTML = h; lastWork = h; }
+  }
+
+  function updateCharts() {
+    var tNow = tot.t;
+    drawChart($("chC"), Math.max(1, ctl.C0), [
+      { key: "P", col: "#777", w: 1.5, dash: [5, 4] }, { key: "C", col: "#000", w: 2 }], tNow);
+    drawChart($("chT"), 100, [{ key: "T", col: "#000", w: 2 }], tNow);
+    drawChart($("chV"), ctl.cap, [{ key: "V", col: "#000", w: 2 }], tNow);
+  }
+
+  /* ---------- main loop ---------- */
+  var lastCharts = 0;
+  function frame(now) {
+    var real = Math.min(0.1, (now - lastFrame) / 1000); lastFrame = now;
+    if (!paused) {
+      var simDt = real * speed / 60;
+      while (simDt > 1e-9) { var d = Math.min(0.02, simDt); step(d); simDt -= d; }
+    }
+    draw(); animateFlecks(now);
+    if (now - lastUI > 200) { updateUI(); lastUI = now; }
+    if (now - lastCharts > 250) { updateCharts(); lastCharts = now; }
+    requestAnimationFrame(frame);
+  }
+
+  /* ---------- controls ---------- */
+  IDS.forEach(function (id) { $(id).addEventListener("input", function () { readCtl(); lastUI = 0; }); });
+  Array.prototype.forEach.call(document.querySelectorAll("button[data-speed]"), function (b) {
+    b.addEventListener("click", function () {
+      speed = +b.getAttribute("data-speed");
+      Array.prototype.forEach.call(document.querySelectorAll("button[data-speed]"), function (x) { x.classList.remove("on"); });
+      b.classList.add("on");
+    });
+  });
+  $("pause").addEventListener("click", function () {
+    paused = !paused; $("pause").textContent = paused ? "Run" : "Pause"; $("pause").classList.toggle("on", paused);
+  });
+  $("reset").addEventListener("click", function () {
+    IDS.forEach(function (id) { $(id).value = DEFAULTS[id]; });
+    initState(); lastUI = 0; lastWork = "";
+  });
+
+
+  initState();
+  draw(); updateUI(); updateCharts();
+  requestAnimationFrame(frame);
+})();
+</script>
+<script>
+
+window.QUIZ_META = { key: "adventures_with_a_cfstr", title: "Adventures with a CFSTR" };
+(function () {
+  function fr(n, d) { return '<span class="frac"><span>' + n + '</span><span>' + d + '</span></span>'; }
+  function eq(x) { return '<div class="eq">' + x + '</div>'; }
+  function ul(a) { return "<ul>" + a.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; }
+
+  var adventures = [
+    { id: "a1", title: "Fill and drain",
+      setup: "Press <b>Reset everything</b>. Then close the output valve completely (0 % open) and watch the tank for a few minutes of simulated time.",
+      parts: [
+        { k: "a", type: "mcq", prompt: "While the output valve is closed, what happens to the liquid volume in the tank?",
+          options: ["It rises", "It falls", "It stays constant"], correct: 0,
+          wrong: { 1: "Liquid leaves a tank when the output valve is open. Is anything leaving now?", 2: "The volume stays constant only when the flow in equals the flow out. Compare the two." },
+          hints: ["Compare the total flow rate in with the output flow rate. The status line under the simulation states which is larger.", "The total flow rate in is 100 cm³ per minute. The output valve is closed, so the flow out is zero."],
+          explain: "Liquid keeps arriving and none leaves, so the volume rises." },
+        { k: "b", type: "num", prompt: "Find the rate at which the liquid volume rises." + eq("change in liquid volume per minute = total flow rate in − output flow rate"),
+          plain: "Find the rate at which the liquid volume rises (cm³ per minute).", unit: "cm³ per minute", answer: 100, tol: 1,
+          diag: function (v) { if (Math.abs(v - 60) < 1 || Math.abs(v - 40) < 1) return "That is one inlet on its own. The total flow rate in is the sum of both inlets."; return ""; },
+          hints: ["Read the flow rates of the two inlets from the valve sliders: the bleach and the water containing BBD.", "Add them: the total flow rate in = 60 + 40.", "The output flow rate is 0, so the change in liquid volume per minute equals the total flow rate in."],
+          explain: "The total flow rate in is 60 + 40 = 100 cm³ per minute and nothing leaves, so the volume rises by 100 cm³ every minute." },
+        { k: "c", type: "num", prompt: "The tank starts half full, with 500 cm³ of liquid in a tank that holds 1000 cm³. How many minutes pass before it is full?" +
+            eq("time to fill = " + fr("volume still to fill", "rate of rise")),
+          plain: "How many minutes until the half-full 1000 cm³ tank is full? (minutes)", unit: "minutes", answer: 5, tol: 0.3,
+          diag: function (v) { if (Math.abs(v - 10) < 0.5) return "Check the volume still to fill: the tank is already half full."; return ""; },
+          hints: ["How much more liquid can the tank hold? Subtract 500 cm³ from 1000 cm³.", "That is 500 cm³, arriving at the rate you found in part b.", "Write the fraction: " + fr("500 cm³", "100 cm³ per minute")],
+          explain: "Time to fill = 500 over 100 = 5 minutes. Watch the clock reach 5:00 and TANK FULL appear." },
+        { k: "d", type: "num", prompt: "Press <b>Reset everything</b>, then set the output valve to 80 % open. The tank starts with 500 cm³ of liquid. How many minutes pass before it is empty?" +
+            eq("rate of fall = output flow rate − total flow rate in") + eq("time to empty = " + fr("volume to drain", "rate of fall")),
+          plain: "With the output valve 80 % open and 500 cm³ in the tank, how many minutes until it is empty? (minutes)", unit: "minutes", answer: 8.33, tol: 0.3,
+          hints: ["Each 1 % of valve opening passes 2 cm³ per minute. Find the output flow rate at 80 % open.", "The output flow rate is 160 cm³ per minute and the total flow rate in is 100 cm³ per minute. Subtract to find the rate of fall.", "Write the fraction: " + fr("500 cm³", "60 cm³ per minute")],
+          explain: "The output flow rate is 160 cm³ per minute, so the volume falls by 160 − 100 = 60 cm³ every minute. Time to empty = 500 over 60 = 8.3 minutes." },
+        { k: "e", type: "text", minWords: 20,
+          prompt: "Press <b>Reset everything</b> and close the output valve again. In two or three sentences, explain why the BBD concentration in the tank falls while the tank fills, although dye keeps arriving.",
+          plain: "Explain why the BBD concentration in the tank falls while the tank fills, although dye keeps arriving.",
+          hints: ["Think about two things: what removes dye from the tank, and how long each portion of liquid stays there when nothing leaves.", "Dye reacts with hypochlorite for as long as the liquid is in the tank. With the output closed, how long does a portion of liquid stay?", "Begin with the result, then give the reason: The BBD concentration falls because ..."],
+          points: [
+            { label: "The reaction with hypochlorite keeps removing dye the whole time the liquid is in the tank.", re: /react|hypochlorite|bleach|remov|destroy|decolour|fade/i },
+            { label: "With no liquid leaving, each portion stays in the tank for longer, so more of it reacts.", re: /longer|more time|residence|stays in|remain/i },
+            { label: "The dye arriving each minute is shared among a growing volume of liquid, so it adds less to the concentration.", re: /shar|spread|growing|larger volume|more liquid|bigger|volume|dilut/i }],
+          model: "The BBD concentration falls because the reaction with hypochlorite keeps removing dye, and with the output valve closed no liquid leaves. Each portion of liquid therefore stays in the tank for longer, so a larger share of its dye reacts. At the same time the dye arriving each minute is shared among a volume that keeps growing, so it adds less and less to the concentration.",
+          tips: ul(["The first sentence gives the result and the reason together.", "Each sentence carries one idea, joined with <i>therefore</i> and <i>at the same time</i>.", "It uses the terms of the topic: reaction, hypochlorite, concentration."]) }
+      ] },
+
+    { id: "a2", title: "Overflow",
+      setup: "Press <b>Reset everything</b>. Set the bleach valve to 100 % open and the valve on the water containing BBD to 50 % open. Leave the output valve at 50 % open.",
+      parts: [
+        { k: "a", type: "num", prompt: "Find the rate at which the liquid volume rises." + eq("change in liquid volume per minute = total flow rate in − output flow rate"),
+          plain: "Find the rate at which the liquid volume rises (cm³ per minute).", unit: "cm³ per minute", answer: 200, tol: 1,
+          diag: function (v) { if (Math.abs(v - 300) < 1) return "That is the total flow rate in. Subtract the output flow rate."; return ""; },
+          hints: ["Find each flow rate: every 1 % of valve opening passes 2 cm³ per minute.", "The bleach passes 200 cm³ per minute and the water containing BBD passes 100 cm³ per minute. The output passes 100 cm³ per minute.", "Total flow rate in = 300 cm³ per minute. Subtract the output flow rate."],
+          explain: "300 − 100 = 200 cm³ per minute." },
+        { k: "b", type: "num", prompt: "The tank starts with 500 cm³ of liquid and holds 1000 cm³. How many minutes pass before it overflows?" + eq("time to overflow = " + fr("volume still to fill", "rate of rise")),
+          plain: "How many minutes until the tank overflows? (minutes)", unit: "minutes", answer: 2.5, tol: 0.2,
+          hints: ["The tank can take 500 cm³ more liquid.", "Use the rate of rise from part a.", "Write the fraction: " + fr("500 cm³", "200 cm³ per minute")],
+          explain: "500 over 200 = 2.5 minutes. After that the word OVERFLOW appears and the excess leaves through the spout." },
+        { k: "c", type: "text", minWords: 20,
+          prompt: "State the rule that tells you whether the liquid volume rises, falls or stays constant.",
+          plain: "State the rule that tells you whether the liquid volume rises, falls or stays constant.",
+          hints: ["The rule compares two flow rates. Which two?", "Say what happens to the volume in each of three cases: flow in larger, flow in smaller, and the two equal.", "Begin: The liquid volume rises when ..."],
+          points: [
+            { label: "The volume rises when the flow in is larger than the flow out.", re: /ris|fill|increas|overflow|gain/i },
+            { label: "The volume falls when the flow in is smaller than the flow out.", re: /fall|drain|empt|decreas|lose|drop/i },
+            { label: "The volume stays constant when the flow in equals the flow out, which is steady state.", re: /constant|same|equal|steady/i }],
+          model: "The liquid volume changes at a rate equal to the total flow rate in minus the output flow rate. It rises when the flow in is larger than the flow out, and it falls when the flow in is smaller. When the two flow rates are equal, the volume stays constant and the tank is at steady state.",
+          tips: ul(["It gives the rule as one statement first, then applies it to each case.", "Each case names both flow rates and says what the volume does.", "It links the constant volume to the idea of steady state."]) }
+      ] },
+
+    { id: "a3", title: "Back to steady state",
+      setup: "Press <b>Reset everything</b>. Set the bleach valve to 50 % open and the valve on the water containing BBD to 25 % open.",
+      parts: [
+        { k: "a", type: "num", prompt: "Find the total flow rate in.", plain: "Find the total flow rate in (cm³ per minute).", unit: "cm³ per minute", answer: 150, tol: 1,
+          hints: ["Each 1 % of valve opening passes 2 cm³ per minute.", "Bleach: 50 × 2. Water containing BBD: 25 × 2. Add the two flow rates."],
+          explain: "100 + 50 = 150 cm³ per minute." },
+        { k: "b", type: "num", prompt: "Find the output valve opening that holds the liquid volume constant." + eq("output valve opening = " + fr("output flow rate needed", "2 cm³ per minute for each 1 % open")),
+          plain: "Find the output valve opening that holds the liquid volume constant (% open).", unit: "% open", answer: 75, tol: 1,
+          hints: ["The volume stays constant when the flow out equals the flow in.", "So the output flow rate must be the answer to part a.", "Write the fraction: " + fr("150", "2")],
+          explain: "The output must pass 150 cm³ per minute, and 150 over 2 = 75 % open. Set the valve and check that the status line reads that the volume is constant." },
+        { k: "c", type: "num", prompt: "With the output valve at your answer to part b and 500 cm³ of liquid in the tank, find the average residence time." + eq("average residence time = " + fr("liquid volume in the tank", "output flow rate")),
+          plain: "Find the average residence time with 500 cm³ in the tank (minutes).", unit: "minutes", answer: 3.33, tol: 0.1,
+          hints: ["Use the liquid volume, 500 cm³, and the output flow rate, 150 cm³ per minute.", "Write the fraction: " + fr("500", "150")],
+          explain: "500 over 150 = 3.33 minutes. The card above the diagram should show the same value." }
+      ] },
+
+    { id: "a4", title: "Turn up the heat",
+      setup: "Press <b>Reset everything</b>. Open the steam valve to 50 % and run the simulation until the temperature stops rising, which takes about 10 simulated minutes.",
+      parts: [
+        { k: "a", type: "num", prompt: "Read the tank temperature from the thermometer.", plain: "Tank temperature at steady state with the steam valve 50 % open (°C).", unit: "°C", answer: 45.5, tol: 2,
+          hints: ["The temperature levels off when the heat arriving from the steam equals the heat leaving.", "Wait until the temperature on the card stops changing, then read it.", "If it keeps changing, increase the simulation speed or wait longer."],
+          explain: "The tank levels off near 45.5 °C. The heat from the steam is balanced by the heat carried away by the output stream and lost through the wall." },
+        { k: "b", type: "num", prompt: "Read the BBD concentration in the output stream once the temperature has levelled off.", plain: "BBD concentration in the output stream at that temperature (mg per dm³).", unit: "mg per dm³", answer: 1.03, tol: 0.15,
+          hints: ["Use the card above the diagram, or the predicted steady-state value further down the page.", "Compare with the value before heating, 3.7 mg per dm³."],
+          explain: "At 45.5 °C the rate constant for dye removal is about 4.1 dm³ mol⁻¹ min⁻¹, five times its value at 20 °C, and the output falls to about 1.0 mg per dm³." },
+        { k: "c", type: "num", prompt: "Open the steam valve fully and wait again. Read the new tank temperature.", plain: "Tank temperature with the steam valve fully open (°C).", unit: "°C", answer: 66, tol: 2.5,
+          hints: ["Wait until the thermometer stops moving.", "The jacket can pass only as much heat as the temperature difference allows, so the temperature does not reach 100 °C."],
+          explain: "The tank levels off near 66 °C, where the heat passing through the jacket balances the heat leaving." },
+        { k: "d", type: "text", minWords: 30,
+          prompt: "Use the rate constant card to explain why the BBD concentration in the output stream falls when the steam valve is opened.",
+          plain: "Explain why the BBD concentration in the output stream falls when the steam valve is opened.",
+          hints: ["Follow the chain: steam, then temperature, then rate constant, then concentration.", "Say what has not changed: compare the average residence time before and after.", "Begin: The output concentration falls because the steam raises the tank temperature, which ..."],
+          points: [
+            { label: "The steam raises the tank temperature.", re: /temperature|hotter|heat|warm/i },
+            { label: "A higher temperature increases the rate constant for dye removal (more molecules have enough energy to react; the rate roughly doubles for every 10 °C).", re: /rate constant|faster|rate|activation|energy|collision/i },
+            { label: "The average residence time has not changed, because the flow rates and the volume are the same.", re: /residence|same time|unchanged|not changed|volume|same/i },
+            { label: "More dye reacts in the same time, so less BBD leaves in the output stream.", re: /more dye|less|lower|fall|reduc|decreas/i }],
+          model: "The output concentration falls because the steam raises the tank temperature, which increases the rate constant for dye removal: more molecules have the energy needed to react, and the rate roughly doubles for every 10 °C rise. The flow rates and the liquid volume have not changed, so the average residence time is the same as before. In that same time more dye reacts, so less BBD leaves in the output stream.",
+          tips: ul(["It begins with the result, then gives a chain of cause and effect: steam, temperature, rate constant, concentration.", "It states what stayed the same, the residence time, which shows that the rate constant alone explains the change.", "It uses a number, the doubling for every 10 °C, as evidence."]) }
+      ] },
+
+    { id: "a5", title: "Prediction",
+      setup: "Press <b>Reset everything</b>. Set the bleach valve to 40 % open, the valve on the water containing BBD to 40 % open and the output valve to 80 % open. The liquid volume is 500 cm³ and the steam valve stays closed. The flows balance, so the tank settles at a steady state that you can predict.",
+      parts: [
+        { k: "a", type: "num", prompt: "Find the BBD concentration from mixing alone." + eq("BBD concentration from mixing alone = " + fr("flow rate of water containing BBD × BBD concentration in its feed", "total flow rate in")) + eq("= " + fr("80 × 25", "160") + " = ________ mg per dm³"),
+          plain: "BBD concentration from mixing alone (mg per dm³).", unit: "mg per dm³", answer: 12.5, tol: 0.1,
+          hints: ["The valves are 40 % open, so each inlet passes 80 cm³ per minute and the total flow rate in is 160 cm³ per minute.", "Multiply 80 by the feed concentration, 25, then write it over 160."],
+          explain: "80 × 25 = 2000, and 2000 over 160 = 12.5 mg per dm³." },
+        { k: "b", type: "num", prompt: "Find the hypochlorite concentration after mixing." + eq("hypochlorite concentration after mixing = " + fr("bleach flow rate × hypochlorite concentration in the bleach", "total flow rate in")) + eq("= " + fr("80 × 0.70", "160") + " = ________ mol dm⁻³"),
+          plain: "Hypochlorite concentration after mixing (mol dm⁻³).", unit: "mol dm⁻³", answer: 0.35, tol: 0.005,
+          hints: ["The bleach flow rate is 80 cm³ per minute and the bleach contains 0.70 mol dm⁻³ of hypochlorite.", "Half of the total flow is bleach, so the concentration is half of 0.70."],
+          explain: "80 × 0.70 = 56, and 56 over 160 = 0.35 mol dm⁻³." },
+        { k: "c", type: "num", prompt: "Find the rate constant for dye removal at 20 °C, using 0.8 dm³ mol⁻¹ min⁻¹ for the rate constant at 20 °C." + eq("rate constant for dye removal = rate constant at 20 °C × hypochlorite concentration") + eq("= 0.8 × ________ = ________ per minute"),
+          plain: "Rate constant for dye removal at 20 °C (per minute).", unit: "per minute", answer: 0.28, tol: 0.005,
+          hints: ["Use the hypochlorite concentration from part b.", "Multiply 0.8 by 0.35."],
+          explain: "0.8 × 0.35 = 0.28 per minute." },
+        { k: "d", type: "num", prompt: "Find the average residence time." + eq("average residence time = " + fr("liquid volume in the tank", "output flow rate")) + eq("= " + fr("500", "160") + " = ________ minutes"),
+          plain: "Average residence time (minutes).", unit: "minutes", answer: 3.125, tol: 0.05,
+          hints: ["The output valve is 80 % open, so the output flow rate is 160 cm³ per minute.", "Write 500 over 160 and use the fraction button on your calculator."],
+          explain: "500 over 160 = 3.1 minutes." },
+        { k: "e", type: "num", prompt: "Predict the BBD concentration in the output stream at steady state." + eq("BBD concentration in the output stream = " + fr("BBD concentration from mixing alone", "1 + rate constant for dye removal × average residence time")) + eq("= " + fr("________", "1 + ________ × ________") + " = ________ mg per dm³"),
+          plain: "Predicted BBD concentration in the output stream (mg per dm³).", unit: "mg per dm³", answer: 6.67, tol: 0.1,
+          diag: function (v) { if (Math.abs(v - 12.5) < 0.2) return "That is the concentration from mixing alone. The reaction removes more dye, so the answer must be smaller."; return ""; },
+          hints: ["Use your answers to parts a, c and d.", "Work out the denominator first: 1 + 0.28 × 3.125.", "The denominator is 1.875. Write 12.5 over 1.875."],
+          explain: "0.28 × 3.125 = 0.875, so the denominator is 1.875, and 12.5 over 1.875 = 6.67 mg per dm³. Is the answer smaller than 12.5? It should be, because the reaction removes dye." },
+        { k: "f", type: "num", prompt: "Run the simulation for about 30 simulated minutes. Read the BBD concentration in the output stream and enter it.",
+          plain: "BBD concentration in the output stream shown by the simulation after 30 simulated minutes (mg per dm³).", unit: "mg per dm³", answer: 6.67, tol: 0.2,
+          hints: ["If the value is still changing, wait longer or increase the simulation speed.", "Compare your reading with your prediction. A close match shows that the calculation describes the tank."],
+          explain: "The simulation settles at the value you predicted, about 6.7 mg per dm³." }
+      ] },
+
+    { id: "a6", title: "A challenging target",
+      setup: "Keep the steam valve closed. After <b>Reset everything</b> the liquid volume is half the reactor volume. Find valve openings that keep the volume steady and a reactor volume that bring the BBD concentration in the output stream below 1 mg per dm³. The feed concentrations stay at 25 mg per dm³ of BBD and 0.70 mol dm⁻³ of hypochlorite.",
+      parts: [
+        { k: "a", type: "config", prompt: "Enter your four settings. The page calculates the steady-state BBD concentration for them.",
+          plain: "Enter valve openings and a reactor volume that give below 1 mg per dm³ of BBD with the volume steady.",
+          fields: [
+            { key: "vb", short: "bleach valve", label: "Bleach valve", unit: "% open" },
+            { key: "vd", short: "BBD valve", label: "Valve on the water containing BBD", unit: "% open" },
+            { key: "vo", short: "output valve", label: "Output valve", unit: "% open" },
+            { key: "cap", short: "reactor volume", label: "Reactor volume", unit: "cm³" }],
+          check: function (v) {
+            var vb = v.vb_n, vd = v.vd_n, vo = v.vo_n, cap = v.cap_n;
+            if (vb < 0 || vb > 100 || vd < 0 || vd > 100 || vo < 0 || vo > 100) return { ok: false, msg: "Each valve opening must be between 0 and 100 %." };
+            if (cap < 200 || cap > 2000) return { ok: false, msg: "The reactor volume must be between 200 and 2000 cm³." };
+            var Fb = vb * 2, Fd = vd * 2, Fo = vo * 2, Ft = Fb + Fd;
+            if (Ft <= 0) return { ok: false, msg: "Both inlets are closed, so nothing flows in." };
+            if (Math.abs(Fo - Ft) > 2) return { ok: false, msg: "Your flow out is " + Fo + " cm³ per minute and your flow in is " + Ft + " cm³ per minute, so the liquid volume would not stay constant. Match the output valve to the two inlets." };
+            var B = Fb * 0.7 / Ft, kp = 0.8 * B, V = cap / 2, C = Fd * 25 / (Ft + kp * V);
+            var c2 = (Math.round(C * 100) / 100);
+            if (C < 1) return { ok: true, msg: "The predicted BBD concentration is " + c2 + " mg per dm³, which is below 1." };
+            return { ok: false, msg: "The predicted BBD concentration is " + c2 + " mg per dm³, which is not yet below 1. Make the average residence time longer: reduce the flow rates or enlarge the reactor." };
+          },
+          example: "bleach valve 2 %, BBD valve 2 %, output valve 4 %, reactor volume 1000 cm³ (predicted 0.68 mg per dm³).",
+          hints: ["The volume is steady when the output valve opening equals the sum of the two inlet openings.", "The output concentration falls when the average residence time and the rate constant for dye removal rise. Without steam, the residence time is the one you can change.", "A long residence time needs a large volume and a small flow rate. Try inlet valves that are only a few percent open."],
+          explain: "Both a large reactor and small flow rates lengthen the residence time, and a longer residence time gives the reaction more time to remove the dye. Test your setting in the simulation: the concentration should settle close to the prediction." },
+        { k: "b", type: "text", minWords: 30,
+          prompt: "Describe the compromise that you had to make to reach the target.",
+          plain: "Describe the compromise that you had to make to reach the target.",
+          hints: ["A long residence time needs a large volume, small flow rates, or both. What does each of these cost or give up?", "Think about how much liquid is treated each hour, and about the cost of a large tank.", "Begin: To bring the output below 1 mg per dm³ without steam, the liquid must ..."],
+          points: [
+            { label: "A long residence time is needed, so the volume must be large, the flow rates small, or both.", re: /residence|long|time|large|small/i },
+            { label: "Small flow rates mean that very little liquid is treated each hour.", re: /small|low|little|slow|throughput|production|per hour|each hour|amount/i },
+            { label: "A larger reactor costs more to build, so cost has to be balanced against performance.", re: /cost|expens|capital|build|balance|compromise|trade/i }],
+          model: "To bring the output below 1 mg per dm³ without steam, the liquid must stay in the tank for a long time, so the tank must be large, the flow rates small, or both. Small flow rates mean that very little liquid is treated each hour, and a large tank costs more to build. The result is a compromise between the cost of the reactor and the amount of liquid it can treat.",
+          tips: ul(["It starts with the condition that must be met: a long residence time.", "It names two ways to meet it and the price of each.", "It ends by naming the compromise in one sentence."]) }
+      ] }
+  ];
+
+  var reflection = [
+    { id: "r1", title: "A factory copies the tank",
+      setup: "A factory builds a copy of the tank with 100 times the volume and runs every flow rate 100 times larger, at the same temperature.",
+      parts: [
+        { k: "a", type: "mcq", prompt: "What happens to the average residence time?", options: ["It becomes 100 times longer", "It stays the same", "It becomes 100 times shorter"], correct: 1,
+          wrong: { 0: "Average residence time is the volume over the flow rate. Both change. Does the ratio?", 2: "Average residence time is the volume over the flow rate. Both change. Does the ratio?" },
+          hints: ["Write the fraction: average residence time = " + fr("liquid volume in the tank", "output flow rate"), "Multiply the top and the bottom by 100."],
+          explain: "The volume and the output flow rate are both 100 times larger, so their ratio is unchanged." },
+        { k: "b", type: "mcq", prompt: "What happens to the BBD concentration in the output stream?", options: ["It becomes 100 times larger", "It stays the same", "It becomes 100 times smaller"], correct: 1,
+          wrong: { 0: "The concentration depends on ratios, not on the size of the flows.", 2: "The concentration depends on ratios, not on the size of the flows." },
+          hints: ["The mixed concentration depends on the ratio of the two flow rates.", "The reaction depends on the rate constant and on the average residence time. Do either change?"],
+          explain: "The ratio of the flow rates, the rate constant and the residence time are all unchanged, so the concentration is unchanged." },
+        { k: "c", type: "text", minWords: 30, prompt: "Explain your two answers in full sentences.", plain: "Explain why the residence time and the BBD concentration stay the same.",
+          hints: ["Take the residence time first: write it as a fraction and say what multiplying the top and the bottom by 100 does.", "Then say which quantities decide the concentration, and whether each one has changed.", "End with what does change: the amount of liquid treated each minute."],
+          points: [
+            { label: "Average residence time is the volume over the flow rate, and both are 100 times larger, so the ratio is unchanged.", re: /ratio|both|same|unchanged|cancel/i },
+            { label: "The concentration from mixing alone depends on the ratio of the flow rates, which is unchanged.", re: /ratio|mixing|flow rates|same|unchanged/i },
+            { label: "The rate constant is unchanged, so the same fraction of dye reacts in the same residence time.", re: /rate constant|react|fraction|removal|temperature/i },
+            { label: "What changes is the amount of liquid treated each minute, which is 100 times larger.", re: /100 times|amount|more liquid|throughput|treated|larger/i }],
+          model: "The average residence time is the liquid volume divided by the output flow rate. Both are 100 times larger, so the ratio is unchanged. The concentration from mixing alone depends on the ratio of the flow rates, which is also unchanged, and the rate constant is the same because the temperature is the same. The same fraction of the dye therefore reacts in the same residence time, so the output concentration is unchanged. What changes is the amount of liquid treated each minute, which is 100 times larger.",
+          tips: ul(["It names the quantity that matters, a ratio, and shows why scaling cancels.", "It checks each factor that could change the concentration, one at a time.", "It ends with the one thing that does change."]) }
+      ] },
+    { id: "r2", title: "Heating a very large tank",
+      setup: "A larger tank has less wall area for each cm³ of liquid it holds. The wall area of a tank grows as the volume raised to the power two thirds.",
+      parts: [
+        { k: "a", type: "num", prompt: "When the volume is 100 times larger, by what factor does the wall area for each cm³ of liquid become smaller?" + eq("wall area for each cm³ = " + fr("1", "volume to the power one third")),
+          plain: "By what factor does the wall area for each cm³ become smaller when the volume is 100 times larger?", unit: "times smaller", answer: 4.64, tol: 0.2,
+          hints: ["Replace the volume by 100 in the fraction.", "100 to the power one third is the cube root of 100. Use the cube root button on your calculator."],
+          explain: "The cube root of 100 is 4.64, so each cm³ of liquid has about 4.6 times less wall area." },
+        { k: "b", type: "text", minWords: 30, prompt: "Explain how this affects the time the steam jacket needs to warm a very large tank.", plain: "Explain how this affects the time the steam jacket needs to warm a very large tank.",
+          hints: ["Where does the heat enter the tank?", "Compare how much liquid must be heated with how much wall area there is to heat it.", "Finish with one way an engineer could shorten the heating time."],
+          points: [
+            { label: "Heat enters through the wall, so the heating rate depends on the wall area.", re: /wall|area|surface|jacket/i },
+            { label: "Each cm³ of liquid has less wall area, so each cm³ receives heat more slowly.", re: /less|smaller|each|per|every|4\.6/i },
+            { label: "There is more liquid to heat than wall area to heat it, so the tank takes longer to warm.", re: /longer|slower|more time|take/i },
+            { label: "An engineer could add coils or a larger jacket area, or use a hotter heating fluid.", re: /coil|larger jacket|more area|hotter|higher pressure|internal/i }],
+          model: "Heat enters the tank through its wall, so the heating rate depends on the wall area. In a tank 100 times larger, each cm³ of liquid has about 4.6 times less wall area, so there is much more liquid to heat for each unit of wall area and the tank takes longer to warm. An engineer could shorten the heating time by adding internal coils, enlarging the jacket area or using a hotter heating fluid.",
+          tips: ul(["It names the path of the heat first, then follows its consequence.", "It uses the number from part a as evidence.", "It ends with a practical remedy."]) }
+      ] },
+    { id: "r3", title: "The costs of running the reactor",
+      setup: "Both a bigger tank and a hotter tank lower the BBD in the output stream.",
+      parts: [
+        { k: "a", type: "text", minWords: 40, prompt: "List every cost a company would meet in building and running this reactor for a year, and state which controls on this page each cost depends on.",
+          plain: "List every cost of building and running this reactor for a year, and the controls each depends on.",
+          hints: ["Separate the cost of building the reactor, which you pay once, from the costs of running it, which you pay every hour.", "For each running cost, find the control on this page that sets it: three of the four valves each set a material or energy cost.", "Do not forget the costs that no valve sets: stirring, labour, maintenance and the treatment of the output stream."],
+          points: [
+            { label: "The capital cost of the tank, jacket, stirrer and valves, which rises with the reactor volume.", re: /capital|build|construct|vessel|tank|jacket|stirrer|purchase|volume/i },
+            { label: "The bleach and the dye solution, set by the two inlet valves.", re: /bleach|dye|material|raw|inlet/i },
+            { label: "The steam, set by the steam valve and the temperature held.", re: /steam|heat|fuel|energy|temperature/i },
+            { label: "Electricity for stirring and pumping, and labour and maintenance.", re: /electric|stir|pump|labour|labor|maintenance|wages/i },
+            { label: "The treatment or disposal of the output stream.", re: /waste|dispos|treat|output/i }],
+          model: "A company meets a capital cost for building the tank, its jacket, the stirrer and the valves, and that cost rises with the reactor volume. Running costs then follow: the bleach and the dye solution, which depend on the settings of the two inlet valves; the steam, which depends on the steam valve and the temperature held; electricity for stirring and pumping; labour and maintenance; and the treatment or disposal of the output stream. A larger reactor trades a higher capital cost for lower running costs, because a long residence time removes the dye without steam.",
+          tips: ul(["It separates the one-off cost from the running costs.", "Every cost is joined to a control on the page, which is what the next worksheet will need.", "It closes with the trade-off that the costs create."]) }
+      ] }
+  ];
+
+  window.QUIZ_BANKS = [
+    { mount: "quizA", label: "Adventure", questions: adventures },
+    { mount: "quizR", label: "Reflection", questions: reflection }
+  ];
+})();
+
+</script>
+<script>
+
+(function () {
+  "use strict";
+  var META = window.QUIZ_META, BANKS = window.QUIZ_BANKS;
+  var parts = {}, order = [], A = {};
+
+  function $(id) { return document.getElementById(id); }
+  function plain(html) { var d = document.createElement("div"); d.innerHTML = html || ""; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function st(id) {
+    if (!A[id]) A[id] = { tries: 0, done: false, got: 0, rev: false, val: "", hints: 0, ticks: null, text: "", checked: false, fb: "", kind: "" };
+    return A[id];
+  }
+  function maxMarks(p) { return p.type === "text" ? p.points.length : 1; }
+  function earned(p) {
+    var s = A[p.id]; if (!s) return 0;
+    if (p.type === "text") return s.checked ? (s.ticks || []).filter(Boolean).length : 0;
+    return s.got || 0;
+  }
+  function fnum(x) { return (Math.round(x * 100) / 100).toString(); }
+
+  /* ---------- building the page ---------- */
+  function partHtml(p) {
+    var h = '<div class="part" id="p-' + p.id + '" data-id="' + p.id + '">';
+    h += '<div class="plabel"><span class="n">' + p.id.toUpperCase().replace(/^[A-Z]+/, "") + '</span>' + p.prompt + '</div>';
+    if (p.type === "mcq") {
+      h += '<div class="opts">';
+      p.options.forEach(function (o, i) {
+        h += '<label><input type="radio" name="r-' + p.id + '" value="' + i + '"> ' + o + '</label>';
+      });
+      h += '</div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    } else if (p.type === "num") {
+      h += '<div><input type="text" class="ans" inputmode="decimal" autocomplete="off" aria-label="Your answer"><span class="unit">' + (p.unit || "") +
+           '</span></div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    } else if (p.type === "text") {
+      h += '<textarea class="ans" placeholder="Write your answer here, in full sentences."></textarea>' +
+           '<div class="actions"><button type="button" class="chk">Check my answer</button></div>' +
+           '<div class="pts"></div>';
+    } else if (p.type === "config") {
+      h += '<div class="fields">';
+      p.fields.forEach(function (f) {
+        h += '<label>' + f.label + '<br><input type="text" class="cf" data-f="' + f.key + '" inputmode="decimal" autocomplete="off"><span class="unit">' + (f.unit || "") + '</span></label>';
+      });
+      h += '</div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    }
+    h += '<div class="fb" aria-live="polite"></div>';
+    h += '<div class="phints"></div>';
+    if (p.hints && p.hints.length) h += '<div class="actions"><button type="button" class="hint">Hint</button></div>';
+    h += '<div class="model" style="display:none"></div><div class="mark"></div>';
+    return h + '</div>';
+  }
+
+  function build() {
+    BANKS.forEach(function (b) {
+      var mount = $(b.mount), h = "";
+      b.questions.forEach(function (q, qi) {
+        h += '<section class="q"><h3 class="sans">' + b.label + ' ' + (qi + 1) + ': ' + q.title + '</h3>';
+        if (q.setup) h += '<div class="qsetup">' + q.setup + '</div>';
+        q.parts.forEach(function (p, pi) {
+          p.id = q.id + p.k; p.qtitle = b.label + ' ' + (qi + 1) + ': ' + plain(q.title);
+          parts[p.id] = p; order.push(p.id);
+          h += partHtml(p);
+        });
+        h += '</section>';
+      });
+      mount.innerHTML = h;
+    });
+    /* label parts with letters */
+    order.forEach(function (id) {
+      var p = parts[id]; var n = document.querySelector("#p-" + id + " .plabel .n");
+      if (n) n.textContent = p.k + ".";
+    });
+  }
+
+  /* ---------- showing state ---------- */
+  function setFb(id, kind, html) {
+    var s = st(id); s.kind = kind; s.fb = html;
+  }
+  function paint(id) {
+    var p = parts[id], s = st(id), root = $("p-" + id);
+    if (!root) return;
+    var fb = root.querySelector(".fb");
+    if (s.fb) { fb.className = "fb show " + s.kind; fb.innerHTML = s.fb; } else { fb.className = "fb"; fb.innerHTML = ""; }
+    root.classList.toggle("done", !!s.done);
+    var ph = root.querySelector(".phints"), hh = "";
+    for (var i = 0; i < s.hints; i++) hh += '<div class="h"><b>Hint ' + (i + 1) + '.</b> ' + p.hints[i] + '</div>';
+    ph.innerHTML = hh;
+    var hb = root.querySelector("button.hint");
+    if (hb) {
+      hb.textContent = s.hints >= p.hints.length ? "No more hints" : "Hint (" + (s.hints + 1) + " of " + p.hints.length + ")";
+      hb.disabled = s.hints >= p.hints.length || (s.done && p.type !== "text");
+    }
+    var model = root.querySelector(".model");
+    var showModel = (p.type === "text") ? s.checked : (s.done && p.model);
+    if (showModel) {
+      model.style.display = "block";
+      model.innerHTML = '<span class="tag">Model answer, written in a good scientific style</span>' + (p.model || "") +
+        (p.tips ? '<span class="tag" style="margin-top:6px">What makes it good</span>' + p.tips : "");
+    } else model.style.display = "none";
+
+    if (p.type === "mcq") {
+      var rs = root.querySelectorAll("input[type=radio]");
+      for (var r = 0; r < rs.length; r++) { rs[r].checked = (s.val !== "" && +rs[r].value === +s.val); rs[r].disabled = !!s.done; }
+      root.querySelector(".chk").disabled = !!s.done;
+    } else if (p.type === "num") {
+      var inp = root.querySelector(".ans"); inp.value = s.val; inp.disabled = !!s.done;
+      root.querySelector(".chk").disabled = !!s.done;
+    } else if (p.type === "text") {
+      var ta = root.querySelector(".ans"); if (document.activeElement !== ta) ta.value = s.text;
+      var pts = root.querySelector(".pts");
+      if (s.checked) {
+        var ph2 = '<div class="points"><div class="pnote" style="margin-bottom:4px">Tick each point your answer makes. The page has pre-ticked the points it recognised in your wording; correct any tick that is wrong.</div>';
+        p.points.forEach(function (pt, i) {
+          ph2 += '<label><input type="checkbox" data-i="' + i + '"' + (s.ticks && s.ticks[i] ? " checked" : "") + '> ' + pt.label + '</label>';
+        });
+        pts.innerHTML = ph2 + '</div>';
+      } else pts.innerHTML = "";
+    } else if (p.type === "config") {
+      var vals = s.val && typeof s.val === "object" ? s.val : {};
+      var cfs = root.querySelectorAll(".cf");
+      for (var c = 0; c < cfs.length; c++) { if (vals[cfs[c].getAttribute("data-f")] !== undefined) cfs[c].value = vals[cfs[c].getAttribute("data-f")]; cfs[c].disabled = !!s.done; }
+      root.querySelector(".chk").disabled = !!s.done;
+    }
+    var mk = root.querySelector(".mark");
+    if (p.type === "text") mk.textContent = s.checked ? "Your mark: " + earned(p) + " out of " + maxMarks(p) : "";
+    else mk.textContent = s.done ? "Your mark: " + earned(p) + " out of 1" : "";
+  }
+  function paintAll() { order.forEach(paint); score(); }
+
+  function score() {
+    var got = 0, max = 0, done = 0;
+    order.forEach(function (id) {
+      var p = parts[id]; got += earned(p); max += maxMarks(p);
+      var s = A[id]; if (s && (s.done || (p.type === "text" && s.checked))) done++;
+    });
+    $("qScore").textContent = "Score: " + fnum(got) + " out of " + max + " marks";
+    $("qDone").textContent = done + " of " + order.length + " parts completed";
+    $("qBar").style.width = (order.length ? 100 * done / order.length : 0) + "%";
+  }
+
+  /* ---------- checking ---------- */
+  function parseNum(t) {
+    var m = String(t).replace(",", ".").match(/-?\d+(\.\d+)?/);
+    return m ? parseFloat(m[0]) : NaN;
+  }
+  function checkPart(id) {
+    var p = parts[id], s = st(id), root = $("p-" + id);
+    if (p.type === "mcq") {
+      var sel = root.querySelector("input[type=radio]:checked");
+      if (!sel) { setFb(id, "no", "Choose one of the answers first."); paint(id); return; }
+      var i = +sel.value; s.val = i; s.tries++;
+      if (i === p.correct) {
+        s.done = true; s.got = 1;
+        setFb(id, "ok", '<span class="tag">Correct.</span> ' + (p.explain || ""));
+      } else if (s.tries >= 2) {
+        s.done = true; s.got = 0; s.rev = true; s.val = p.correct;
+        setFb(id, "no", '<span class="tag">The answer is: ' + p.options[p.correct] + '</span> ' + (p.explain || ""));
+      } else {
+        setFb(id, "no", '<span class="tag">Not yet.</span> ' + ((p.wrong && p.wrong[i]) || "Read the question again, then use a hint if you need one."));
+      }
+    } else if (p.type === "num") {
+      var v = parseNum(root.querySelector(".ans").value);
+      s.val = root.querySelector(".ans").value;
+      if (isNaN(v)) { setFb(id, "no", "Type a number first."); paint(id); return; }
+      s.tries++;
+      if (Math.abs(v - p.answer) <= p.tol) {
+        s.done = true; s.got = 1;
+        setFb(id, "ok", '<span class="tag">Correct.</span> ' + (p.explain || ""));
+      } else if (s.tries >= 3) {
+        s.done = true; s.got = 0; s.rev = true; s.val = String(p.answer);
+        setFb(id, "no", '<span class="tag">The answer is ' + p.answer + ' ' + (p.unit || "") + '.</span> ' + (p.explain || ""));
+      } else {
+        var d = p.diag ? p.diag(v) : "";
+        setFb(id, "no", '<span class="tag">Not yet.</span> ' + (d || "Check your working and the units, then try again.") + ' You have ' + (3 - s.tries) + (3 - s.tries === 1 ? " try" : " tries") + ' left.');
+      }
+    } else if (p.type === "text") {
+      var txt = root.querySelector(".ans").value.trim();
+      var words = txt ? txt.split(/\s+/).length : 0;
+      if (words < (p.minWords || 15)) { setFb(id, "no", "Write a fuller answer first, in complete sentences (at least " + (p.minWords || 15) + " words). Use a hint if you are not sure where to start."); paint(id); return; }
+      s.text = txt; s.checked = true; s.done = true;
+      s.ticks = p.points.map(function (pt) { return pt.re.test(txt); });
+      setFb(id, "ok", '<span class="tag">Now mark your own answer.</span> Compare it with the points below and the model answer.');
+    } else if (p.type === "config") {
+      var vals = {}, ok = true;
+      Array.prototype.forEach.call(root.querySelectorAll(".cf"), function (el) {
+        var k = el.getAttribute("data-f"), n = parseNum(el.value); vals[k] = el.value; if (isNaN(n)) ok = false; else vals[k + "_n"] = n;
+      });
+      s.val = vals;
+      if (!ok) { setFb(id, "no", "Fill in every box with a number first."); paint(id); return; }
+      s.tries++;
+      var r = p.check(vals);
+      if (r.ok) { s.done = true; s.got = 1; setFb(id, "ok", '<span class="tag">Correct.</span> ' + r.msg + (p.explain ? " " + p.explain : "")); }
+      else if (s.tries >= 4 && p.example) { s.done = true; s.got = 0; s.rev = true; setFb(id, "no", r.msg + ' <span class="tag">One answer that works:</span> ' + p.example); }
+      else setFb(id, "no", '<span class="tag">Not yet.</span> ' + r.msg);
+    }
+    paint(id); score();
+  }
+
+  function onClick(e) {
+    var t = e.target, root = t.closest ? t.closest(".part") : null;
+    if (!root) return;
+    var id = root.getAttribute("data-id");
+    if (t.classList.contains("chk")) checkPart(id);
+    else if (t.classList.contains("hint")) { var s = st(id); if (s.hints < parts[id].hints.length) { s.hints++; paint(id); } }
+  }
+  function onChange(e) {
+    var t = e.target;
+    if (t.type === "checkbox" && t.closest(".points")) {
+      var root = t.closest(".part"), id = root.getAttribute("data-id"), s = st(id);
+      s.ticks[+t.getAttribute("data-i")] = t.checked; paint(id); score();
+    }
+  }
+  function onInput(e) {
+    var t = e.target; if (!t.closest) return;
+    var root = t.closest(".part"); if (!root) return;
+    var id = root.getAttribute("data-id"), p = parts[id], s = st(id);
+    if (t.tagName === "TEXTAREA") s.text = t.value;
+    else if (p.type === "num" && t.classList.contains("ans")) s.val = t.value;
+  }
+
+  /* ---------- save, retrieve, pdf ---------- */
+  function say(m) { $("qMsg").textContent = m; }
+  function save() {
+    var data = { page: META.key, saved: new Date().toISOString(), answers: A };
+    var blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = META.key + "_progress.json";
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    say("Progress saved to the file " + META.key + "_progress.json in your downloads folder. Keep it, and use Retrieve progress to carry on later.");
+  }
+  function retrieve(file) {
+    var fr = new FileReader();
+    fr.onload = function () {
+      try {
+        var d = JSON.parse(fr.result);
+        if (d.page !== META.key || !d.answers) { say("That file belongs to a different page, so nothing was loaded."); return; }
+        A = d.answers; paintAll(); say("Progress retrieved from " + new Date(d.saved).toLocaleString("en-GB", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }) + ".");
+      } catch (err) { say("That file could not be read, so nothing was loaded."); }
+    };
+    fr.readAsText(file);
+  }
+  function report() {
+    var got = 0, max = 0;
+    order.forEach(function (id) { got += earned(parts[id]); max += maxMarks(parts[id]); });
+    var h = '<h1>' + META.title + '</h1><p>Self-marked questions. Printed ' + new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) +
+            '.</p><p class="rl">Score: ' + fnum(got) + ' out of ' + max + ' marks</p>';
+    var lastQ = "";
+    order.forEach(function (id) {
+      var p = parts[id], s = A[id] || {};
+      if (p.qtitle !== lastQ) { h += '<div class="rq">' + esc(p.qtitle) + '</div>'; lastQ = p.qtitle; }
+      h += '<div class="rp"><p class="rl">' + p.k + '. ' + esc(plain(p.plain || p.prompt)) + '</p>';
+      var ans = "";
+      if (p.type === "text") ans = s.text || "";
+      else if (p.type === "mcq") ans = (s.val !== "" && s.val !== undefined) ? plain(p.options[+s.val]) : "";
+      else if (p.type === "config") ans = s.val && typeof s.val === "object" ? p.fields.map(function (f) { return f.short + " " + (s.val[f.key] || ""); }).join("; ") : "";
+      else ans = (s.val || "") + (s.val ? " " + (p.unit || "") : "");
+      h += '<p>Answer: ' + (ans ? esc(ans) : "not answered yet") + '</p>';
+      h += '<p>Mark: ' + (p.type === "text" ? (s.checked ? earned(p) + " out of " + maxMarks(p) : "not marked") : (s.done ? earned(p) + " out of 1" : "not completed")) + '</p>';
+      if (p.type === "text" && s.checked) {
+        h += '<p>Points made: ' + p.points.map(function (pt, i) { return (s.ticks && s.ticks[i] ? "yes" : "no") + " - " + esc(plain(pt.label)); }).join("; ") + '</p>';
+      }
+      if ((s.done || s.checked) && p.model) h += '<p>Model answer: ' + esc(plain(p.model)) + '</p>';
+      h += '</div>';
+    });
+    h += '<p class="rl">Science Department · Refined with AI</p>';
+    $("report").innerHTML = h;
+  }
+
+  function init() {
+    build();
+    $("qSave").addEventListener("click", save);
+    $("qLoad").addEventListener("click", function () { $("qFile").click(); });
+    $("qFile").addEventListener("change", function (e) { if (e.target.files[0]) retrieve(e.target.files[0]); e.target.value = ""; });
+    $("qPdf").addEventListener("click", function () { report(); window.print(); });
+    BANKS.forEach(function (b) {
+      var m = $(b.mount);
+      m.addEventListener("click", onClick); m.addEventListener("change", onChange); m.addEventListener("input", onInput);
+    });
+    paintAll();
+  }
+  init();
+})();
+
+</script>
+</body>
+</html>

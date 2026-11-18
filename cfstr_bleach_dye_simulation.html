@@ -76,6 +76,60 @@
   .imp { animation:blade .7s linear infinite; }
   @media (prefers-reduced-motion:reduce) { .dash, .imp { animation:none; } }
   @media (max-width:560px) { body{font-size:17px;} .eq{font-size:16px;} h1{font-size:28px;} }
+
+  /* ---------- interactive questions ---------- */
+  .qtools { border:1px solid var(--ink); padding:8px 12px 10px; margin:10px 0 14px; }
+  .qtools .bar { height:10px; border:1px solid var(--ink); margin:6px 0 4px; background:#fff; }
+  .qtools .bar > div { height:100%; width:0; background:#000; transition:width .3s; }
+  .qtools .score { font:700 16px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .qtools .msg { font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; min-height:1.3em; margin-top:4px; }
+  .qtools .btns { margin:8px 0 0; }
+  .style-guide { border:1px solid var(--ink); background:var(--soft); padding:6px 14px 10px; margin:10px 0 14px; }
+  .style-guide h3 { margin:6px 0; }
+  .style-guide ul { margin:0 0 8px; }
+  .style-guide .ex { font-size:16px; margin:4px 0; }
+  .style-guide .ex b { font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:13px; }
+  section.q { border-top:2px solid var(--ink); margin-top:18px; padding-top:2px; }
+  section.q h3 { margin-top:8px; }
+  .qsetup { font-style:italic; margin:0 0 8px; }
+  .part { border:1px solid var(--ink); padding:8px 12px 10px; margin:8px 0; page-break-inside:avoid; }
+  .part.done { background:#fafafa; }
+  .plabel { margin-bottom:6px; }
+  .plabel .n { font:700 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-right:6px; }
+  .opts label { display:block; margin:3px 0; cursor:pointer; }
+  .part input[type=text] { font:400 17px "Helvetica Neue",Helvetica,Arial,sans-serif; width:7em; padding:3px 6px; border:1.5px solid #000; }
+  .part textarea { width:100%; min-height:110px; font:400 17px Palatino,"Palatino Linotype",serif; padding:6px 8px; border:1.5px solid #000; }
+  .fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px 16px; margin:4px 0 8px; }
+  .fields label { display:block; font:400 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .unit { font:400 15px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-left:6px; }
+  .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .fb { margin-top:8px; padding:6px 10px; border-left:4px solid #000; font-size:17px; display:none; }
+  .fb.show { display:block; }
+  .fb.ok { background:#f3f3f3; }
+  .fb.no { background:#fff; border-left-style:dashed; }
+  .fb .tag { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  .phints { margin-top:6px; }
+  .phints .h { font-size:16px; border-left:3px dotted #000; padding:2px 10px; margin:4px 0; }
+  .points { margin:6px 0; }
+  .points label { display:block; margin:3px 0; font-size:16px; }
+  .model { margin-top:8px; padding:6px 10px; border:1px solid #000; font-size:17px; }
+  .model .tag { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; display:block; margin-bottom:2px; }
+  .mark { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; margin-top:4px; }
+  #report { display:none; }
+
+  @media print {
+    @page { size:A4; margin:16mm; }
+    body { font-size:11pt; background:#fff; }
+    .page > *:not(#report) { display:none !important; }
+    #report { display:block !important; }
+    #report h1 { font-size:20pt; margin:0 0 4pt; }
+    #report .rq { margin:10pt 0 2pt; font:700 12pt "Helvetica Neue",Helvetica,Arial,sans-serif; }
+    #report .rp { margin:4pt 0 6pt; padding:0 0 4pt; border-bottom:0.5pt solid #000; page-break-inside:avoid; }
+    #report .rp p { margin:1pt 0; }
+    #report .rl { font:700 9pt "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  }
+  .pnote { font:700 14px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
 </style>
 </head>
 <body>
@@ -181,12 +235,31 @@
   </div>
 
   <h3 class="sans">Questions</h3>
-  <ol>
-    <li>Leave the flow rates and concentrations as they are. Write down the average residence time, then double the tank volume. Predict the new mixed BBD concentration before you test it.</li>
-    <li>Reduce the tank volume to its smallest setting. State what happens to the output concentration and what happens to the average residence time.</li>
-    <li>Choose flow rates that make the mixed BBD concentration exactly one fifth of the feed concentration.</li>
-    <li>With a tank volume of 1000 cm³, find flow rates that give an average residence time of 5 minutes.</li>
-  </ol>
+  <div class="qtools">
+    <div class="score sans"><span id="qScore"></span> &middot; <span id="qDone"></span></div>
+    <div class="bar"><div id="qBar"></div></div>
+    <div class="btns">
+      <button type="button" id="qSave">Save progress</button>
+      <button type="button" id="qLoad">Retrieve progress</button>
+      <button type="button" id="qPdf">Save as a .pdf file</button>
+      <input type="file" id="qFile" accept=".json,application/json" hidden>
+    </div>
+    <div class="msg" id="qMsg" aria-live="polite"></div>
+  </div>
+  <p class="ui" style="font-size:15px">Numerical answers are marked for you, with three tries and a hint at each step. Written answers are marked by you: write your own answer first, then tick the points it makes and read the model answer. <b>Save as a .pdf file</b> opens the print window; choose Save as PDF there.</p>
+  <div class="style-guide">
+    <h3 class="sans">Writing a good scientific answer</h3>
+    <ul>
+      <li>Answer the question in the first sentence, then give the reason.</li>
+      <li>Use the terms of the topic: steady state, residence time, rate constant, flow rate in, flow rate out.</li>
+      <li>Support a claim with a number and its unit, taken from the simulation or from a calculation.</li>
+      <li>Link ideas with <i>because</i>, <i>so</i> and <i>therefore</i>, and keep to one idea in each sentence.</li>
+      <li>Say what increases or decreases, and say what stays the same.</li>
+    </ul>
+    <div class="ex"><b>WEAK</b> It gets too hot, so it stops.</div>
+    <div class="ex"><b>BETTER</b> The temperature levels off because the heat arriving from the steam equals the heat leaving with the output stream and through the tank wall. Nothing in the tank then changes with time, which is steady state.</div>
+  </div>
+  <div id="quizQ"></div>
 </div>
 
 <h2 class="sans">Underlying ideas: definitions to learn</h2>
@@ -211,11 +284,10 @@
 
 <h2 class="sans">Scale-up and reflection</h2>
 <div class="indent">
-  <ol>
-    <li>A factory copies your tank at 100 times the volume and runs all flow rates 100 times faster. State what happens to the mixed concentration and what happens to the average residence time, and explain why.</li>
-    <li>Real bleach removes the colour from Brilliant Blue dye. If that reaction happened inside the tank, would the BBD concentration in the output stream be higher or lower than the value calculated here? Explain how the tank volume would then matter.</li>
-  </ol>
+  <div id="quizR"></div>
 </div>
+
+<div id="report"></div>
 
 <footer>Science Department · Refined with AI</footer>
 </div>
@@ -395,6 +467,411 @@
   });
   update(null);
 })();
+</script>
+<script>
+
+window.QUIZ_META = { key: "cfstr_bleach_dye_simulation", title: "The continuous stirred tank reactor (CFSTR)" };
+(function () {
+  function fr(n, d) { return '<span class="frac"><span>' + n + '</span><span>' + d + '</span></span>'; }
+  function eq(x) { return '<div class="eq">' + x + '</div>'; }
+  function ul(a) { return "<ul>" + a.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; }
+  var START = "Set the sliders to the starting values: tank volume 500 cm³, bleach flow rate 60 cm³ per minute, flow rate of water containing BBD 40 cm³ per minute, BBD concentration in its feed 25 mg per dm³ and hypochlorite concentration 0.70 mol dm⁻³.";
+
+  var questions = [
+    { id: "q1", title: "Doubling the tank volume", setup: START,
+      parts: [
+        { k: "a", type: "num", prompt: "Find the average residence time." + eq("average residence time = " + fr("tank volume", "total flow rate")) + eq("= " + fr("________", "________") + " = ________ minutes"),
+          plain: "Find the average residence time at the starting values (minutes).", unit: "minutes", answer: 5, tol: 0.1,
+          hints: ["The total flow rate is the bleach flow rate plus the flow rate of water containing BBD.", "Write 500 over 100 and use the fraction button on your calculator."],
+          explain: "The total flow rate is 60 + 40 = 100 cm³ per minute, and 500 over 100 = 5 minutes." },
+        { k: "b", type: "mcq", prompt: "Double the tank volume to 1000 cm³ and leave everything else alone. Before you test it, predict what happens to the mixed BBD concentration.",
+          options: ["It rises", "It falls", "It stays the same"], correct: 2,
+          wrong: { 0: "Look at the formula for the mixed concentration. Does it contain the tank volume?", 1: "Look at the formula for the mixed concentration. Does it contain the tank volume?" },
+          hints: ["Write the formula: mixed BBD concentration = " + fr("flow rate of water containing BBD × BBD concentration in its feed", "total flow rate"), "Is the tank volume anywhere in that formula?"],
+          explain: "The mixed concentration depends only on the flow rates and the feed concentration. Now test it with the slider." },
+        { k: "c", type: "num", prompt: "Find the new average residence time at 1000 cm³.", plain: "Find the average residence time at 1000 cm³ (minutes).", unit: "minutes", answer: 10, tol: 0.2,
+          hints: ["Use the same fraction, with the new tank volume on the top.", "Write 1000 over 100."], explain: "1000 over 100 = 10 minutes, twice the value at 500 cm³." },
+        { k: "d", type: "text", minWords: 25, prompt: "Explain in full sentences why the mixed BBD concentration did not change when the tank volume doubled.",
+          plain: "Explain why the mixed BBD concentration did not change when the tank volume doubled.",
+          hints: ["Name the quantities that do decide the mixed concentration.", "Say what the larger tank does hold, and what it does to the average residence time.", "Begin: The mixed concentration did not change because it depends only on ..."],
+          points: [
+            { label: "The mixed concentration is set by the flow rates and the feed concentration alone.", re: /flow rate|feed|depend|only|alone|set by/i },
+            { label: "A larger tank holds more liquid of the same concentration.", re: /more liquid|holds|larger tank|bigger tank|same concentration|volume/i },
+            { label: "Only the average residence time changes: it doubles because the volume doubles at the same flow rate.", re: /residence|doubl|twice|longer/i }],
+          model: "The mixed concentration did not change because it depends only on the flow rates and on the concentration in the feed, and I changed neither. A larger tank simply holds more liquid of the same concentration. What does change is the average residence time, which doubles because the volume doubles while the flow rate stays the same.",
+          tips: ul(["The first sentence answers the question and names the cause.", "It separates what changed (volume, residence time) from what did not (concentration).", "It gives the cause and the effect on the residence time in one sentence."]) }
+      ] },
+    { id: "q2", title: "The smallest tank", setup: "Set the tank volume to its smallest value, 100 cm³, and leave the other sliders at the starting values.",
+      parts: [
+        { k: "a", type: "num", prompt: "Find the average residence time." + eq("average residence time = " + fr("tank volume", "total flow rate")), plain: "Find the average residence time at 100 cm³ (minutes).", unit: "minutes", answer: 1, tol: 0.05,
+          hints: ["The total flow rate is still 100 cm³ per minute.", "Write 100 over 100."], explain: "100 over 100 = 1 minute, which is 60 seconds." },
+        { k: "b", type: "mcq", prompt: "What happens to the BBD concentration in the output stream?", options: ["It rises", "It falls", "It stays the same"], correct: 2,
+          wrong: { 0: "Check the output concentration card. Did it change?", 1: "Check the output concentration card. Did it change?" },
+          hints: ["Read the output concentration card before and after the change.", "Recall your answer to question 1, part d."], explain: "The output has the same concentration as the mixed liquid, and the mixed concentration does not depend on the tank volume." }
+      ] },
+    { id: "q3", title: "One fifth of the feed", setup: "Choose flow rates that make the mixed BBD concentration exactly one fifth of the feed concentration.",
+      parts: [
+        { k: "a", type: "config", prompt: "Enter the two flow rates. The page checks the mixed concentration for you.",
+          plain: "Enter flow rates that give a mixed BBD concentration of one fifth of the feed concentration.",
+          fields: [{ key: "fb", short: "bleach flow rate", label: "Bleach flow rate", unit: "cm³ per minute" }, { key: "fd", short: "flow rate of water containing BBD", label: "Flow rate of water containing BBD", unit: "cm³ per minute" }],
+          check: function (v) {
+            var fb = v.fb_n, fd = v.fd_n;
+            if (fb < 0 || fd < 0 || fb + fd <= 0) return { ok: false, msg: "Both flow rates must be positive numbers." };
+            var f = fd / (fb + fd);
+            var share = Math.round(f * 1000) / 10;
+            if (Math.abs(f - 0.2) < 0.002) return { ok: true, msg: "The water containing BBD is " + share + " % of the total flow, so the mixed concentration is one fifth of the feed concentration." };
+            return { ok: false, msg: "The water containing BBD is " + share + " % of the total flow rate. The mixed concentration is that fraction of the feed concentration, so it needs to be 20 %." };
+          },
+          example: "bleach 80 cm³ per minute and water containing BBD 20 cm³ per minute (or 40 and 10).",
+          hints: ["The mixed concentration is the feed concentration multiplied by " + fr("flow rate of water containing BBD", "total flow rate") + ".", "That fraction must equal one fifth, so the water containing BBD must be one fifth of the total flow.", "Try a total of 100 cm³ per minute. How much of it is the water containing BBD?"],
+          explain: "The mixed concentration = feed concentration × " + fr("dye flow", "total flow") + ", so the dye stream must be one fifth of the total flow. Test it with the sliders: the concentration card should read 5.0 mg per dm³." }
+      ] },
+    { id: "q4", title: "A residence time of five minutes", setup: "Set the tank volume to 1000 cm³.",
+      parts: [
+        { k: "a", type: "config", prompt: "Enter two flow rates that give an average residence time of exactly 5 minutes." + eq("average residence time = " + fr("tank volume", "total flow rate")),
+          plain: "Enter flow rates that give an average residence time of 5 minutes in a 1000 cm³ tank.",
+          fields: [{ key: "fb", short: "bleach flow rate", label: "Bleach flow rate", unit: "cm³ per minute" }, { key: "fd", short: "flow rate of water containing BBD", label: "Flow rate of water containing BBD", unit: "cm³ per minute" }],
+          check: function (v) {
+            var fb = v.fb_n, fd = v.fd_n, ft = fb + fd;
+            if (fb < 0 || fd < 0 || ft <= 0) return { ok: false, msg: "Both flow rates must be positive numbers." };
+            var t = Math.round(1000 / ft * 100) / 100;
+            if (Math.abs(1000 / ft - 5) < 0.05) return { ok: true, msg: "The total flow rate is " + ft + " cm³ per minute, so the average residence time is " + t + " minutes." };
+            return { ok: false, msg: "Your total flow rate is " + ft + " cm³ per minute, which gives an average residence time of " + t + " minutes." };
+          },
+          example: "bleach 150 cm³ per minute and water containing BBD 50 cm³ per minute.",
+          hints: ["Rearrange the formula: the total flow rate must make " + fr("1000", "total flow rate") + " equal 5.", "The total flow rate = " + fr("1000", "5") + ".", "Share that total between the two streams in any way you like."],
+          explain: "The total flow rate must be 1000 over 5 = 200 cm³ per minute. Any pair of flow rates adding to 200 works." }
+      ] }
+  ];
+
+  var reflection = [
+    { id: "r1", title: "A factory copies the tank", setup: "A factory builds a copy of the tank with 100 times the volume and runs every flow rate 100 times larger.",
+      parts: [
+        { k: "a", type: "mcq", prompt: "What happens to the average residence time?", options: ["It becomes 100 times longer", "It stays the same", "It becomes 100 times shorter"], correct: 1,
+          wrong: { 0: "The average residence time is the volume over the flow rate. Both change. Does the ratio?", 2: "The average residence time is the volume over the flow rate. Both change. Does the ratio?" },
+          hints: ["Write the fraction: average residence time = " + fr("tank volume", "total flow rate"), "Multiply the top and the bottom by 100."],
+          explain: "The volume and the flow rate are both 100 times larger, so their ratio is unchanged." },
+        { k: "b", type: "mcq", prompt: "What happens to the mixed BBD concentration?", options: ["It becomes 100 times larger", "It stays the same", "It becomes 100 times smaller"], correct: 1,
+          wrong: { 0: "Look at the formula for the mixed concentration. It contains a ratio of flow rates.", 2: "Look at the formula for the mixed concentration. It contains a ratio of flow rates." },
+          hints: ["Write the formula: mixed BBD concentration = " + fr("flow rate of water containing BBD × BBD concentration in its feed", "total flow rate"), "Multiply every flow rate in it by 100."],
+          explain: "The flow rates on the top and the bottom are both multiplied by 100, so the mixed concentration is unchanged." },
+        { k: "c", type: "text", minWords: 30, prompt: "Explain your two answers in full sentences.", plain: "Explain why the residence time and the mixed concentration stay the same.",
+          hints: ["Take the residence time first: write it as a fraction and say what happens when the top and the bottom are both multiplied by 100.", "Then do the same for the mixed concentration.", "End with the one quantity that does change."],
+          points: [
+            { label: "Average residence time is the volume over the flow rate; both are 100 times larger, so the ratio is unchanged.", re: /ratio|both|same|unchanged|cancel/i },
+            { label: "The mixed concentration depends on the ratio of the flow rates, which is unchanged.", re: /ratio|flow rates|same|unchanged|cancel/i },
+            { label: "What changes is the amount of liquid treated each minute, which is 100 times larger.", re: /100 times|amount|more liquid|throughput|treated|larger/i }],
+          model: "The average residence time is the tank volume divided by the total flow rate. Both are 100 times larger, so the ratio is unchanged. The mixed concentration depends on the ratio of the flow rate of the dye stream to the total flow rate, and multiplying both by 100 leaves that ratio unchanged too. What does change is the amount of liquid the tank treats each minute, which is 100 times larger.",
+          tips: ul(["It names the quantity that matters, a ratio, and shows why scaling cancels.", "It treats the two answers in the same order as the question.", "It ends with the one thing that does change."]) }
+      ] },
+    { id: "r2", title: "Adding the reaction", setup: "Real bleach removes the colour from Brilliant Blue dye, a reaction that the simulation on this page leaves out.",
+      parts: [
+        { k: "a", type: "mcq", prompt: "If the reaction happened inside the tank, would the BBD concentration in the output stream be higher or lower than the value calculated here?", options: ["Higher", "Lower", "The same"], correct: 1,
+          wrong: { 0: "The reaction destroys dye. Does that raise or lower the amount leaving?", 2: "The reaction destroys dye. Does that leave the amount leaving unchanged?" },
+          hints: ["Does the reaction add dye or remove it?"], explain: "The reaction removes dye, so less BBD leaves than mixing alone would suggest." },
+        { k: "b", type: "text", minWords: 30, prompt: "Explain how the tank volume would then matter.", plain: "Explain how the tank volume would matter if the reaction happened in the tank.",
+          hints: ["Link the tank volume to the average residence time.", "Say what the longer residence time does to the amount of dye that reacts.", "Contrast this with what you found in question 1, where the tank volume made no difference."],
+          points: [
+            { label: "The dye is destroyed by the reaction while the liquid is in the tank, so the output is below the mixed value.", re: /react|destroy|remov|decolour|below|lower/i },
+            { label: "A larger tank gives a longer average residence time, so more dye reacts before the liquid leaves.", re: /residence|longer|more time|larger tank|bigger tank|volume/i },
+            { label: "With mixing alone the volume made no difference, but with the reaction a larger tank lowers the output concentration.", re: /no difference|did not change|unchanged|lower|fall|reduc/i }],
+          model: "The reaction destroys dye while the liquid is in the tank, so the output concentration is below the value from mixing alone. A larger tank gives a longer average residence time at the same flow rate, so more of the dye reacts before the liquid leaves. With mixing alone the tank volume made no difference, but with the reaction a larger tank lowers the output concentration.",
+          tips: ul(["It states the effect of the reaction first, then links volume to residence time.", "It contrasts the new case with the earlier result, which shows how the idea has developed.", "Every sentence carries one idea."]) }
+      ] }
+  ];
+
+  window.QUIZ_BANKS = [
+    { mount: "quizQ", label: "Question", questions: questions },
+    { mount: "quizR", label: "Reflection", questions: reflection }
+  ];
+})();
+
+</script>
+<script>
+
+(function () {
+  "use strict";
+  var META = window.QUIZ_META, BANKS = window.QUIZ_BANKS;
+  var parts = {}, order = [], A = {};
+
+  function $(id) { return document.getElementById(id); }
+  function plain(html) { var d = document.createElement("div"); d.innerHTML = html || ""; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function st(id) {
+    if (!A[id]) A[id] = { tries: 0, done: false, got: 0, rev: false, val: "", hints: 0, ticks: null, text: "", checked: false, fb: "", kind: "" };
+    return A[id];
+  }
+  function maxMarks(p) { return p.type === "text" ? p.points.length : 1; }
+  function earned(p) {
+    var s = A[p.id]; if (!s) return 0;
+    if (p.type === "text") return s.checked ? (s.ticks || []).filter(Boolean).length : 0;
+    return s.got || 0;
+  }
+  function fnum(x) { return (Math.round(x * 100) / 100).toString(); }
+
+  /* ---------- building the page ---------- */
+  function partHtml(p) {
+    var h = '<div class="part" id="p-' + p.id + '" data-id="' + p.id + '">';
+    h += '<div class="plabel"><span class="n">' + p.id.toUpperCase().replace(/^[A-Z]+/, "") + '</span>' + p.prompt + '</div>';
+    if (p.type === "mcq") {
+      h += '<div class="opts">';
+      p.options.forEach(function (o, i) {
+        h += '<label><input type="radio" name="r-' + p.id + '" value="' + i + '"> ' + o + '</label>';
+      });
+      h += '</div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    } else if (p.type === "num") {
+      h += '<div><input type="text" class="ans" inputmode="decimal" autocomplete="off" aria-label="Your answer"><span class="unit">' + (p.unit || "") +
+           '</span></div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    } else if (p.type === "text") {
+      h += '<textarea class="ans" placeholder="Write your answer here, in full sentences."></textarea>' +
+           '<div class="actions"><button type="button" class="chk">Check my answer</button></div>' +
+           '<div class="pts"></div>';
+    } else if (p.type === "config") {
+      h += '<div class="fields">';
+      p.fields.forEach(function (f) {
+        h += '<label>' + f.label + '<br><input type="text" class="cf" data-f="' + f.key + '" inputmode="decimal" autocomplete="off"><span class="unit">' + (f.unit || "") + '</span></label>';
+      });
+      h += '</div><div class="actions"><button type="button" class="chk">Check my answer</button></div>';
+    }
+    h += '<div class="fb" aria-live="polite"></div>';
+    h += '<div class="phints"></div>';
+    if (p.hints && p.hints.length) h += '<div class="actions"><button type="button" class="hint">Hint</button></div>';
+    h += '<div class="model" style="display:none"></div><div class="mark"></div>';
+    return h + '</div>';
+  }
+
+  function build() {
+    BANKS.forEach(function (b) {
+      var mount = $(b.mount), h = "";
+      b.questions.forEach(function (q, qi) {
+        h += '<section class="q"><h3 class="sans">' + b.label + ' ' + (qi + 1) + ': ' + q.title + '</h3>';
+        if (q.setup) h += '<div class="qsetup">' + q.setup + '</div>';
+        q.parts.forEach(function (p, pi) {
+          p.id = q.id + p.k; p.qtitle = b.label + ' ' + (qi + 1) + ': ' + plain(q.title);
+          parts[p.id] = p; order.push(p.id);
+          h += partHtml(p);
+        });
+        h += '</section>';
+      });
+      mount.innerHTML = h;
+    });
+    /* label parts with letters */
+    order.forEach(function (id) {
+      var p = parts[id]; var n = document.querySelector("#p-" + id + " .plabel .n");
+      if (n) n.textContent = p.k + ".";
+    });
+  }
+
+  /* ---------- showing state ---------- */
+  function setFb(id, kind, html) {
+    var s = st(id); s.kind = kind; s.fb = html;
+  }
+  function paint(id) {
+    var p = parts[id], s = st(id), root = $("p-" + id);
+    if (!root) return;
+    var fb = root.querySelector(".fb");
+    if (s.fb) { fb.className = "fb show " + s.kind; fb.innerHTML = s.fb; } else { fb.className = "fb"; fb.innerHTML = ""; }
+    root.classList.toggle("done", !!s.done);
+    var ph = root.querySelector(".phints"), hh = "";
+    for (var i = 0; i < s.hints; i++) hh += '<div class="h"><b>Hint ' + (i + 1) + '.</b> ' + p.hints[i] + '</div>';
+    ph.innerHTML = hh;
+    var hb = root.querySelector("button.hint");
+    if (hb) {
+      hb.textContent = s.hints >= p.hints.length ? "No more hints" : "Hint (" + (s.hints + 1) + " of " + p.hints.length + ")";
+      hb.disabled = s.hints >= p.hints.length || (s.done && p.type !== "text");
+    }
+    var model = root.querySelector(".model");
+    var showModel = (p.type === "text") ? s.checked : (s.done && p.model);
+    if (showModel) {
+      model.style.display = "block";
+      model.innerHTML = '<span class="tag">Model answer, written in a good scientific style</span>' + (p.model || "") +
+        (p.tips ? '<span class="tag" style="margin-top:6px">What makes it good</span>' + p.tips : "");
+    } else model.style.display = "none";
+
+    if (p.type === "mcq") {
+      var rs = root.querySelectorAll("input[type=radio]");
+      for (var r = 0; r < rs.length; r++) { rs[r].checked = (s.val !== "" && +rs[r].value === +s.val); rs[r].disabled = !!s.done; }
+      root.querySelector(".chk").disabled = !!s.done;
+    } else if (p.type === "num") {
+      var inp = root.querySelector(".ans"); inp.value = s.val; inp.disabled = !!s.done;
+      root.querySelector(".chk").disabled = !!s.done;
+    } else if (p.type === "text") {
+      var ta = root.querySelector(".ans"); if (document.activeElement !== ta) ta.value = s.text;
+      var pts = root.querySelector(".pts");
+      if (s.checked) {
+        var ph2 = '<div class="points"><div class="pnote" style="margin-bottom:4px">Tick each point your answer makes. The page has pre-ticked the points it recognised in your wording; correct any tick that is wrong.</div>';
+        p.points.forEach(function (pt, i) {
+          ph2 += '<label><input type="checkbox" data-i="' + i + '"' + (s.ticks && s.ticks[i] ? " checked" : "") + '> ' + pt.label + '</label>';
+        });
+        pts.innerHTML = ph2 + '</div>';
+      } else pts.innerHTML = "";
+    } else if (p.type === "config") {
+      var vals = s.val && typeof s.val === "object" ? s.val : {};
+      var cfs = root.querySelectorAll(".cf");
+      for (var c = 0; c < cfs.length; c++) { if (vals[cfs[c].getAttribute("data-f")] !== undefined) cfs[c].value = vals[cfs[c].getAttribute("data-f")]; cfs[c].disabled = !!s.done; }
+      root.querySelector(".chk").disabled = !!s.done;
+    }
+    var mk = root.querySelector(".mark");
+    if (p.type === "text") mk.textContent = s.checked ? "Your mark: " + earned(p) + " out of " + maxMarks(p) : "";
+    else mk.textContent = s.done ? "Your mark: " + earned(p) + " out of 1" : "";
+  }
+  function paintAll() { order.forEach(paint); score(); }
+
+  function score() {
+    var got = 0, max = 0, done = 0;
+    order.forEach(function (id) {
+      var p = parts[id]; got += earned(p); max += maxMarks(p);
+      var s = A[id]; if (s && (s.done || (p.type === "text" && s.checked))) done++;
+    });
+    $("qScore").textContent = "Score: " + fnum(got) + " out of " + max + " marks";
+    $("qDone").textContent = done + " of " + order.length + " parts completed";
+    $("qBar").style.width = (order.length ? 100 * done / order.length : 0) + "%";
+  }
+
+  /* ---------- checking ---------- */
+  function parseNum(t) {
+    var m = String(t).replace(",", ".").match(/-?\d+(\.\d+)?/);
+    return m ? parseFloat(m[0]) : NaN;
+  }
+  function checkPart(id) {
+    var p = parts[id], s = st(id), root = $("p-" + id);
+    if (p.type === "mcq") {
+      var sel = root.querySelector("input[type=radio]:checked");
+      if (!sel) { setFb(id, "no", "Choose one of the answers first."); paint(id); return; }
+      var i = +sel.value; s.val = i; s.tries++;
+      if (i === p.correct) {
+        s.done = true; s.got = 1;
+        setFb(id, "ok", '<span class="tag">Correct.</span> ' + (p.explain || ""));
+      } else if (s.tries >= 2) {
+        s.done = true; s.got = 0; s.rev = true; s.val = p.correct;
+        setFb(id, "no", '<span class="tag">The answer is: ' + p.options[p.correct] + '</span> ' + (p.explain || ""));
+      } else {
+        setFb(id, "no", '<span class="tag">Not yet.</span> ' + ((p.wrong && p.wrong[i]) || "Read the question again, then use a hint if you need one."));
+      }
+    } else if (p.type === "num") {
+      var v = parseNum(root.querySelector(".ans").value);
+      s.val = root.querySelector(".ans").value;
+      if (isNaN(v)) { setFb(id, "no", "Type a number first."); paint(id); return; }
+      s.tries++;
+      if (Math.abs(v - p.answer) <= p.tol) {
+        s.done = true; s.got = 1;
+        setFb(id, "ok", '<span class="tag">Correct.</span> ' + (p.explain || ""));
+      } else if (s.tries >= 3) {
+        s.done = true; s.got = 0; s.rev = true; s.val = String(p.answer);
+        setFb(id, "no", '<span class="tag">The answer is ' + p.answer + ' ' + (p.unit || "") + '.</span> ' + (p.explain || ""));
+      } else {
+        var d = p.diag ? p.diag(v) : "";
+        setFb(id, "no", '<span class="tag">Not yet.</span> ' + (d || "Check your working and the units, then try again.") + ' You have ' + (3 - s.tries) + (3 - s.tries === 1 ? " try" : " tries") + ' left.');
+      }
+    } else if (p.type === "text") {
+      var txt = root.querySelector(".ans").value.trim();
+      var words = txt ? txt.split(/\s+/).length : 0;
+      if (words < (p.minWords || 15)) { setFb(id, "no", "Write a fuller answer first, in complete sentences (at least " + (p.minWords || 15) + " words). Use a hint if you are not sure where to start."); paint(id); return; }
+      s.text = txt; s.checked = true; s.done = true;
+      s.ticks = p.points.map(function (pt) { return pt.re.test(txt); });
+      setFb(id, "ok", '<span class="tag">Now mark your own answer.</span> Compare it with the points below and the model answer.');
+    } else if (p.type === "config") {
+      var vals = {}, ok = true;
+      Array.prototype.forEach.call(root.querySelectorAll(".cf"), function (el) {
+        var k = el.getAttribute("data-f"), n = parseNum(el.value); vals[k] = el.value; if (isNaN(n)) ok = false; else vals[k + "_n"] = n;
+      });
+      s.val = vals;
+      if (!ok) { setFb(id, "no", "Fill in every box with a number first."); paint(id); return; }
+      s.tries++;
+      var r = p.check(vals);
+      if (r.ok) { s.done = true; s.got = 1; setFb(id, "ok", '<span class="tag">Correct.</span> ' + r.msg + (p.explain ? " " + p.explain : "")); }
+      else if (s.tries >= 4 && p.example) { s.done = true; s.got = 0; s.rev = true; setFb(id, "no", r.msg + ' <span class="tag">One answer that works:</span> ' + p.example); }
+      else setFb(id, "no", '<span class="tag">Not yet.</span> ' + r.msg);
+    }
+    paint(id); score();
+  }
+
+  function onClick(e) {
+    var t = e.target, root = t.closest ? t.closest(".part") : null;
+    if (!root) return;
+    var id = root.getAttribute("data-id");
+    if (t.classList.contains("chk")) checkPart(id);
+    else if (t.classList.contains("hint")) { var s = st(id); if (s.hints < parts[id].hints.length) { s.hints++; paint(id); } }
+  }
+  function onChange(e) {
+    var t = e.target;
+    if (t.type === "checkbox" && t.closest(".points")) {
+      var root = t.closest(".part"), id = root.getAttribute("data-id"), s = st(id);
+      s.ticks[+t.getAttribute("data-i")] = t.checked; paint(id); score();
+    }
+  }
+  function onInput(e) {
+    var t = e.target; if (!t.closest) return;
+    var root = t.closest(".part"); if (!root) return;
+    var id = root.getAttribute("data-id"), p = parts[id], s = st(id);
+    if (t.tagName === "TEXTAREA") s.text = t.value;
+    else if (p.type === "num" && t.classList.contains("ans")) s.val = t.value;
+  }
+
+  /* ---------- save, retrieve, pdf ---------- */
+  function say(m) { $("qMsg").textContent = m; }
+  function save() {
+    var data = { page: META.key, saved: new Date().toISOString(), answers: A };
+    var blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = META.key + "_progress.json";
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    say("Progress saved to the file " + META.key + "_progress.json in your downloads folder. Keep it, and use Retrieve progress to carry on later.");
+  }
+  function retrieve(file) {
+    var fr = new FileReader();
+    fr.onload = function () {
+      try {
+        var d = JSON.parse(fr.result);
+        if (d.page !== META.key || !d.answers) { say("That file belongs to a different page, so nothing was loaded."); return; }
+        A = d.answers; paintAll(); say("Progress retrieved from " + new Date(d.saved).toLocaleString("en-GB", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }) + ".");
+      } catch (err) { say("That file could not be read, so nothing was loaded."); }
+    };
+    fr.readAsText(file);
+  }
+  function report() {
+    var got = 0, max = 0;
+    order.forEach(function (id) { got += earned(parts[id]); max += maxMarks(parts[id]); });
+    var h = '<h1>' + META.title + '</h1><p>Self-marked questions. Printed ' + new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) +
+            '.</p><p class="rl">Score: ' + fnum(got) + ' out of ' + max + ' marks</p>';
+    var lastQ = "";
+    order.forEach(function (id) {
+      var p = parts[id], s = A[id] || {};
+      if (p.qtitle !== lastQ) { h += '<div class="rq">' + esc(p.qtitle) + '</div>'; lastQ = p.qtitle; }
+      h += '<div class="rp"><p class="rl">' + p.k + '. ' + esc(plain(p.plain || p.prompt)) + '</p>';
+      var ans = "";
+      if (p.type === "text") ans = s.text || "";
+      else if (p.type === "mcq") ans = (s.val !== "" && s.val !== undefined) ? plain(p.options[+s.val]) : "";
+      else if (p.type === "config") ans = s.val && typeof s.val === "object" ? p.fields.map(function (f) { return f.short + " " + (s.val[f.key] || ""); }).join("; ") : "";
+      else ans = (s.val || "") + (s.val ? " " + (p.unit || "") : "");
+      h += '<p>Answer: ' + (ans ? esc(ans) : "not answered yet") + '</p>';
+      h += '<p>Mark: ' + (p.type === "text" ? (s.checked ? earned(p) + " out of " + maxMarks(p) : "not marked") : (s.done ? earned(p) + " out of 1" : "not completed")) + '</p>';
+      if (p.type === "text" && s.checked) {
+        h += '<p>Points made: ' + p.points.map(function (pt, i) { return (s.ticks && s.ticks[i] ? "yes" : "no") + " - " + esc(plain(pt.label)); }).join("; ") + '</p>';
+      }
+      if ((s.done || s.checked) && p.model) h += '<p>Model answer: ' + esc(plain(p.model)) + '</p>';
+      h += '</div>';
+    });
+    h += '<p class="rl">Science Department · Refined with AI</p>';
+    $("report").innerHTML = h;
+  }
+
+  function init() {
+    build();
+    $("qSave").addEventListener("click", save);
+    $("qLoad").addEventListener("click", function () { $("qFile").click(); });
+    $("qFile").addEventListener("change", function (e) { if (e.target.files[0]) retrieve(e.target.files[0]); e.target.value = ""; });
+    $("qPdf").addEventListener("click", function () { report(); window.print(); });
+    BANKS.forEach(function (b) {
+      var m = $(b.mount);
+      m.addEventListener("click", onClick); m.addEventListener("change", onChange); m.addEventListener("input", onInput);
+    });
+    paintAll();
+  }
+  init();
+})();
+
 </script>
 </body>
 </html>
