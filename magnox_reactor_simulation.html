@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A magnox reactor: from control rods to electricity</title>
+<style>
+  :root { --ink:#111; --rule:#999; --soft:#f2f2f2; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#fff; color:var(--ink); font-family:'Palatino Linotype','Book Antiqua',Palatino,'Pagella TT',serif; font-size:17px; line-height:1.5; }
+  .page { max-width:1060px; margin:0 auto; padding:18px 22px 40px; }
+  h1,h2,h3 { font-family:'Gill Sans','Gill Sans MT','Clear Gothic',Carlito,Calibri,sans-serif; font-weight:400; margin:0; }
+  h1 { font-size:2rem; padding-bottom:6px; }
+  h2 { font-size:1.4rem; margin:28px 0 8px; }
+  h3 { font-size:1.1rem; margin:14px 0 4px; }
+  .runhead { display:flex; justify-content:space-between; font-size:.8rem; border-bottom:1px solid #000; padding-bottom:3px; margin-bottom:14px; }
+  .ind { padding-left:0; }
+  p { margin:6px 0 8px; }
+  canvas { width:100%; height:auto; display:block; border:1px solid #000; background:#fbfbf8; }
+  .controls { display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; margin:12px 0; padding:12px 14px; border:1px solid #000; }
+  .ctl label { display:block; font-family:'Gill Sans','Gill Sans MT',Carlito,Calibri,sans-serif; font-size:1rem; }
+  .ctl input[type=range] { width:100%; }
+  .btns { grid-column:1 / span 2; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  button { font:inherit; font-size:.95rem; padding:5px 12px; border:1px solid #000; background:#fff; cursor:pointer; border-radius:3px; }
+  button:hover { background:var(--soft); }
+  button.on { background:#000; color:#fff; }
+  .readouts { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:8px; margin:10px 0; }
+  .ro { border:1px solid var(--rule); padding:6px 9px; }
+  .ro .v { font-family:'Gill Sans','Gill Sans MT',Carlito,Calibri,sans-serif; font-size:1.35rem; }
+  .ro .l { font-size:.82rem; }
+  .status { border:1px solid #000; padding:8px 12px; margin:8px 0; font-family:'Gill Sans','Gill Sans MT',Carlito,Calibri,sans-serif; }
+  .status.alarm { background:#000; color:#fff; }
+  .eq { text-align:center; white-space:nowrap; margin:10px 0; }
+  .frac { display:inline-block; vertical-align:middle; text-align:center; }
+  .frac .n { display:block; border-bottom:1px solid #000; padding:0 .4em 2px; }
+  .frac .d { display:block; padding:2px .4em 0; }
+  ol.tasks li, ul.defs li { margin-bottom:8px; }
+  .tip { border-bottom:1px dotted #000; cursor:help; position:relative; }
+  .tip:hover::after, .tip:focus::after { content:attr(data-tip); position:absolute; left:0; top:1.5em; width:17em; background:#111; color:#fff; padding:6px 9px; font-size:.82rem; line-height:1.35; z-index:20; white-space:normal; font-family:'Gill Sans','Gill Sans MT',Carlito,Calibri,sans-serif; }
+  textarea { width:100%; font:inherit; border:1px solid #000; padding:6px; min-height:70px; }
+  table.gl { border-collapse:collapse; width:100%; font-size:.95rem; }
+  table.gl td, table.gl th { border:1px solid var(--rule); padding:5px 8px; vertical-align:top; text-align:left; }
+  table.gl th { background:var(--soft); font-family:'Gill Sans','Gill Sans MT',Carlito,Calibri,sans-serif; font-weight:400; }
+  .foot { margin-top:34px; border-top:1px solid #000; padding-top:4px; font-size:.8rem; }
+  @media (max-width:720px) { .controls { grid-template-columns:1fr; } .btns { grid-column:1; } }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="runhead"><span>Chemistry: nuclear energy</span><span id="today"></span></div>
+<h1>A magnox reactor: from control rods to electricity</h1>
+
+<p>A magnox reactor burns natural uranium metal. The uranium fuel rods are sealed in a thin skin of <span class="tip" tabindex="0" data-tip="Magnox: a magnesium alloy, short for magnesium non-oxidising. It wraps each fuel rod, holds in the fission products and lets heat through.">magnox</span> alloy, and they sit in channels in a huge stack of graphite blocks. Carbon dioxide gas is blown up through the channels. It carries the heat to a boiler, and the steam from the boiler turns a turbine. The first station of this kind, Calder Hall in Cumbria, fed electricity into the grid in 1956.</p>
+<p>Below, you control the reactor. Move the control rods and watch the rate of fission change. Change the speed of the gas blowers and watch the temperatures. Then watch the electricity appear in the turbine hall.</p>
+
+<h2>The simulation</h2>
+
+<canvas id="scene" width="1000" height="600" aria-label="Cross-section of a magnox reactor core with its boiler and turbine hall"></canvas>
+
+<div class="controls">
+  <div class="ctl">
+    <label for="rods">Control rods: <b id="rodsLab">100</b>&nbsp;% inserted (set)</label>
+    <input id="rods" type="range" min="0" max="100" step="0.5" value="100">
+  </div>
+  <div class="ctl">
+    <label for="blow">Gas blowers: <b id="blowLab">100</b>&nbsp;% of full speed</label>
+    <input id="blow" type="range" min="0" max="100" step="1" value="100">
+  </div>
+  <div class="btns">
+    <button id="bWith">Withdraw all rods</button>
+    <button id="bScram">Insert all rods (SCRAM)</button>
+    <button id="bResetTrip">Clear trip</button>
+    <span style="margin-left:10px">Time:</span>
+    <button class="spd" data-s="1">×1</button>
+    <button class="spd on" data-s="3">×3</button>
+    <button class="spd" data-s="10">×10</button>
+    <button id="bPause">Pause</button>
+    <button id="bReset">Restart cold</button>
+  </div>
+</div>
+
+<div class="status" id="status">Reactor shut down.</div>
+
+<div class="readouts">
+  <div class="ro"><div class="v" id="rRods">100</div><div class="l">rods actually inserted, %</div></div>
+  <div class="ro"><div class="v" id="rK">0.95</div><div class="l"><span class="tip" tabindex="0" data-tip="Neutron multiplication factor, k: the number of neutrons in one generation divided by the number in the generation before. Below 1 the fission rate falls, at 1 it is steady, above 1 it rises.">neutron multiplication factor, k</span></div></div>
+  <div class="ro"><div class="v" id="rFis">0.3</div><div class="l">rate of <span class="tip" tabindex="0" data-tip="Fission: a uranium-235 nucleus captures a slow neutron, splits into two smaller nuclei, releases heat and releases two or three more neutrons.">fission</span>, % of full power</div></div>
+  <div class="ro"><div class="v" id="rMW">0</div><div class="l">heat made in the core, MW</div></div>
+  <div class="ro"><div class="v" id="rClad">200</div><div class="l"><span class="tip" tabindex="0" data-tip="The temperature of the fuel and its magnox cladding. In this simulation the limit is 450 °C; above 480 °C the reactor trips.">cladding</span> temperature, °C</div></div>
+  <div class="ro"><div class="v" id="rGr">200</div><div class="l">graphite temperature, °C</div></div>
+  <div class="ro"><div class="v" id="rOut">200</div><div class="l">gas leaving the core, °C</div></div>
+  <div class="ro"><div class="v" id="rBoil">0</div><div class="l">heat taken to the boiler, MW</div></div>
+  <div class="ro"><div class="v" id="rMWe">0</div><div class="l">electricity, MW (<span class="tip" tabindex="0" data-tip="MWe means megawatts of electricity; MW alone here means megawatts of heat. Only about a quarter to a third of the heat becomes electricity.">MWe</span>)</div></div>
+  <div class="ro"><div class="v" id="rRpm">0</div><div class="l">turbine speed, revolutions per minute</div></div>
+</div>
+
+<canvas id="chart" width="1000" height="330" aria-label="Graphs of fission rate, rod position and temperatures against time"></canvas>
+<p style="font-size:.85rem;margin-top:2px">Top graph: fission rate (solid) and rods inserted (dashed), both in %. Bottom graph: cladding temperature (solid), gas leaving the core (dashed), and the 450 °C cladding limit (dotted). The time axis shows the last 180 s of simulated time.</p>
+
+<h2>Try these</h2>
+<ol class="tasks">
+  <li><b>Start-up.</b> The rods begin fully inserted. Withdraw them slowly. Watch k. At what rod position does the rate of fission stop falling and start to rise? What is k at that moment?</li>
+  <li><b>Full power.</b> Bring the fission rate to about 100&nbsp;%. Read the electricity in MWe. Where are the rods now? Compare this with your start-up position and explain the difference using the temperature of the core.</li>
+  <li><b>Withdraw the rods further.</b> Watch the fission rate and the cladding temperature as you pull the rods out of the core. What happens and why does it happen quickly?</li>
+  <li><b>Less gas.</b> At full power, halve the blower speed. Describe what happens to the cladding temperature, the gas temperature, the fission rate and the electricity. Which changes first?</li>
+  <li><b>Shut down.</b> Insert all rods, then turn the blowers to zero. Describe the fission rate, then the cladding temperature. Where does the heat come from?</li>
+  <li><b>Challenging.</b> Find a rod position and a blower speed that give a steady 25 MWe.</li>
+</ol>
+
+<h2>How the model works</h2>
+<p>The control rods are made of boron steel. Boron absorbs neutrons, so inserting a rod lowers k. Graphite slows the fast neutrons from fission so that uranium-235 can capture them. In the model the rate of fission changes like this:</p>
+<div class="eq"><span class="frac"><span class="n">change in fission rate</span><span class="d">change in time</span></span> = <span class="frac"><span class="n">k − 1</span><span class="d">neutron lifetime</span></span> × fission rate</div>
+<p>When k is more than 1 the numerator is positive and the fission rate rises; when k is less than 1 it falls. Gas carries the heat away. The rise in gas temperature is:</p>
+<div class="eq">rise in gas temperature =
+  <span class="frac"><span class="n">heat removed by the gas</span><span class="d">gas flow × heat capacity of the gas</span></span></div>
+<p>Hotter fuel lowers k a little, so the reactor steadies itself. Switching off the chain reaction does not switch off the heat: the fission products keep releasing about 6&nbsp;% of full power, falling slowly, as <span class="tip" tabindex="0" data-tip="Decay heat: heat released by the radioactive decay of fission products. It continues after the chain reaction has stopped, so the core needs cooling for a long time after shutdown.">decay heat</span>. The boiler turns water to steam, and the turbine and generator change a share of that heat into electricity: the hotter the gas leaving the core, the larger the share.</p>
+
+<h2>Underlying ideas: definitions to learn</h2>
+<table class="gl">
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td>moderator</td><td>A material, here <span class="tip" tabindex="0" data-tip="Graphite: carbon in the form of blocks. Neutrons bounce off its carbon nuclei and lose speed without being absorbed.">graphite</span>, that slows fast neutrons so that they are more likely to cause fission.</td></tr>
+<tr><td>control rod</td><td>A rod of a neutron-absorbing material, here boron steel, that is moved in or out of the core to change k.</td></tr>
+<tr><td>fuel rod</td><td>Natural uranium metal in a magnox alloy skin. About 0.7&nbsp;% of the uranium is uranium-235, which is the part that undergoes fission.</td></tr>
+<tr><td>coolant</td><td>The carbon dioxide gas that carries heat out of the core.</td></tr>
+<tr><td>neutron multiplication factor, k</td><td>The number of neutrons in one generation divided by the number in the one before. When k is 1 the chain reaction is steady.</td></tr>
+<tr><td>SCRAM</td><td>An emergency shutdown, in which all the control rods are driven fully into the core.</td></tr>
+<tr><td>decay heat</td><td>Heat from the radioactive decay of fission products, released after the chain reaction stops.</td></tr>
+<tr><td>heat exchanger (boiler)</td><td>A set of tubes in which hot gas turns water to steam without the gas and water mixing.</td></tr>
+</table>
+
+<h2>Scale-up question</h2>
+<p>Insert all the control rods and the fission rate falls to almost nothing within a minute. Why must the gas blowers keep running for a long time afterwards?</p>
+<textarea aria-label="Your answer"></textarea>
+
+<div class="foot">Science Department · Refined with AI</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
+var TAU = Math.PI*2;
+$('today').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+// ---------- constants of the model ----------
+var P0 = 180;            // full thermal power, MW
+var TIN = 200;           // gas temperature returning from the boiler, deg C
+var LIFETIME = 0.5;      // neutron lifetime used in the model, s
+var SOURCE = 3e-4;       // background neutron source
+var WORTH = 0.12;        // total control rod worth
+var EXCESS = 0.055;      // excess k with all rods out and cold
+var ALPHA = 0.00015;     // fall in k per deg C of fuel temperature
+var CF = 0.143;          // heat capacity of fuel, in model units
+var LIMIT = 450, TRIPT = 480, TRIPN = 1.3;
+
+// ---------- state ----------
+var S, speed = 3, paused = false;
+function init(){
+  S = { t:0, x:1, demand:100, flowDemand:100, scram:false, tripMsg:'',
+        n:0.003, D:0, D1:0, D2:0, Tf:200, Tgr:200, Tout:200, ToutI:200, Qb:0, Qrem:0, q:0,
+        f:1, k:0.95, w:0, Pe:0, ang:0, bang:0, phase:0, gphase:0, sphase:0 };
+  hist = {t:[], p:[], r:[], tf:[], to:[]}; histNext = 0;
+  parts.length = 0; flashes.length = 0;
+}
+var hist, histNext, parts = [], flashes = [];
+
+function rodWorthFraction(x){ return x - Math.sin(TAU*x)/TAU; }
+
+function step(dt){
+  // rods move slowly; a SCRAM drops them quickly
+  var target = S.scram ? 1 : S.demand/100;
+  var rate = S.scram ? 0.2 : 0.015;
+  S.x += clamp(target - S.x, -rate*dt, rate*dt);
+  // blowers speed up and slow down
+  S.f += (S.flowDemand/100 - S.f)*dt/3;
+  // multiplication factor
+  S.k = 1 + EXCESS - WORTH*rodWorthFraction(S.x) - ALPHA*(S.Tf - 300);
+  // fission rate (fraction of full power)
+  S.n += ((S.k-1)/LIFETIME*S.n + SOURCE)*dt;
+  S.n = clamp(S.n, 0, 2);
+  // decay heat follows the fission rate slowly
+  S.D1 += (0.03*S.n - S.D1)*dt/40;
+  S.D2 += (0.03*S.n - S.D2)*dt/900;
+  S.D = S.D1 + S.D2;
+  S.q = 0.94*S.n + S.D;
+  // heat removal by the gas
+  var fe = Math.max(S.f, 0.01);
+  var Hh = Math.pow(fe,0.8)/120;
+  S.Qrem = Math.max(0, Hh*(S.Tf - TIN)/(1 + 90*Hh/fe));
+  S.Tf += (S.q - S.Qrem)/CF*dt;
+  S.ToutI = Math.min(TIN + 180*S.Qrem/fe, Math.max(S.Tf, TIN));
+  S.Tout += (S.ToutI - S.Tout)*dt/4;
+  S.Qb += (S.Qrem - S.Qb)*dt/6;
+  S.Tgr += (0.5*(S.Tf + 0.5*(TIN + S.ToutI)) - S.Tgr)*dt/120;
+  // turbine hall
+  var eff = 0.28*clamp((S.Tout-230)/150, 0, 1.2);
+  S.Pe = P0*S.Qb*eff;
+  S.w += ((S.Pe > 1 ? 1 : 0) - S.w)*dt/8;
+  S.t += dt;
+  // trips
+  if(!S.scram){
+    if(S.n > TRIPN){ trip('Reactor tripped: fission rate above 130 % of full power. All rods inserted.'); }
+    else if(S.Tf > TRIPT){ trip('Reactor tripped: cladding temperature above 480 °C. All rods inserted.'); }
+  }
+  // history every 0.5 s of simulated time
+  if(S.t >= histNext){
+    histNext = S.t + 0.5;
+    hist.t.push(S.t); hist.p.push(S.n*100); hist.r.push(S.x*100); hist.tf.push(S.Tf); hist.to.push(S.Tout);
+    if(hist.t.length > 360){ for(var key in hist){ hist[key].shift(); } }
+  }
+}
+function trip(msg){ S.scram = true; S.tripMsg = msg; }
+
+// ---------- colours ----------
+function mix(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+function rgb(c){ return 'rgb('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+')'; }
+function colT(T){
+  var t = clamp((T-200)/250, 0, 1);
+  return rgb(t < 0.5 ? mix([70,120,220],[240,170,40], t*2) : mix([240,170,40],[210,40,30], (t-0.5)*2));
+}
+function colFuel(T){ return rgb(mix([95,100,95],[235,115,30], clamp((T-200)/300,0,1))); }
+function colGr(T){ return rgb(mix([150,150,152],[196,164,122], clamp((T-200)/250,0,1))); }
+
+// ---------- geometry ----------
+var CX0 = 70, CY0 = 150, CW = 300, CH = 300, NC = 11, COLW = CW/NC;
+var PATTERN = 'FFCFFCFFCFF'.split('');
+function colCentre(i){ return CX0 + (i+0.5)*COLW; }
+var fuelCols = [], ctrlCols = [];
+PATTERN.forEach(function(c,i){ (c==='F' ? fuelCols : ctrlCols).push(i); });
+
+// ---------- neutrons (illustration of the rate of fission) ----------
+function spawn(){
+  var i = fuelCols[(Math.random()*fuelCols.length)|0];
+  var a = Math.random()*TAU;
+  parts.push({x:colCentre(i)+(Math.random()-0.5)*4, y:CY0+Math.random()*CH, a:a, sp:150, slow:false, d:0, life:3.5});
+}
+function inRod(px,py){
+  for(var j=0;j<ctrlCols.length;j++){
+    var cx = colCentre(ctrlCols[j]);
+    if(Math.abs(px-cx) < 7 && py > CY0 && py < CY0 + S.x*CH) return true;
+  }
+  return false;
+}
+function inFuel(px){
+  for(var j=0;j<fuelCols.length;j++){ if(Math.abs(px-colCentre(fuelCols[j])) < 6) return true; }
+  return false;
+}
+var spawnCarry = 0;
+function updateParts(dt){
+  spawnCarry += S.n*110*dt;
+  while(spawnCarry >= 1 && parts.length < 320){ spawn(); spawnCarry -= 1; }
+  if(spawnCarry > 1) spawnCarry = 0;
+  for(var i=parts.length-1;i>=0;i--){
+    var p = parts[i];
+    p.a += (Math.random()-0.5)*(p.slow?1.4:0.5);
+    p.x += Math.cos(p.a)*p.sp*dt; p.y += Math.sin(p.a)*p.sp*dt;
+    p.d += p.sp*dt; p.life -= dt;
+    if(!p.slow && p.d > 70){ p.slow = true; p.sp = 45; }
+    var dead = false;
+    if(p.x < CX0 || p.x > CX0+CW || p.y < CY0 || p.y > CY0+CH || p.life <= 0) dead = true;
+    else if(inRod(p.x,p.y)){ flashes.push({x:p.x,y:p.y,age:0,c:'#ffffff',r:5}); dead = true; }
+    else if(p.slow && inFuel(p.x) && Math.random() < 0.5){ flashes.push({x:p.x,y:p.y,age:0,c:'#ff8a1f',r:10}); dead = true; }
+    if(dead) parts.splice(i,1);
+  }
+  for(var j=flashes.length-1;j>=0;j--){ flashes[j].age += dt; if(flashes[j].age > 0.3) flashes.splice(j,1); }
+}
+
+// ---------- drawing ----------
+var cv = $('scene'), ctx = cv.getContext('2d');
+var DPR = Math.min(2, window.devicePixelRatio || 1);
+cv.width = 1000*DPR; cv.height = 600*DPR; ctx.scale(DPR,DPR);
+var SANS = "'Gill Sans','Gill Sans MT',Carlito,Calibri,sans-serif";
+function txt(s,x,y,size,align,col){ ctx.font = (size||13)+'px '+SANS; ctx.textAlign = align||'left'; ctx.fillStyle = col||'#111'; ctx.fillText(s,x,y); }
+function pathPoint(pts,s){
+  for(var i=0;i<pts.length-1;i++){
+    var a = pts[i], b = pts[i+1], L = Math.hypot(b[0]-a[0], b[1]-a[1]);
+    if(s <= L) return [a[0]+(b[0]-a[0])*s/L, a[1]+(b[1]-a[1])*s/L];
+    s -= L;
+  }
+  return pts[pts.length-1];
+}
+function pathLen(pts){ var L=0; for(var i=0;i<pts.length-1;i++) L += Math.hypot(pts[i+1][0]-pts[i][0], pts[i+1][1]-pts[i][1]); return L; }
+function thickLine(pts,col,w){
+  ctx.lineJoin='round'; ctx.lineCap='butt';
+  ctx.strokeStyle='#222'; ctx.lineWidth=w+4; ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]); for(var i=1;i<pts.length;i++) ctx.lineTo(pts[i][0],pts[i][1]); ctx.stroke();
+  ctx.strokeStyle=col; ctx.lineWidth=w; ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]); for(i=1;i<pts.length;i++) ctx.lineTo(pts[i][0],pts[i][1]); ctx.stroke();
+}
+function dotsAlong(pts,ph,spacing,colFn,r){
+  var L = pathLen(pts);
+  for(var s = ((ph%spacing)+spacing)%spacing; s < L; s += spacing){
+    var p = pathPoint(pts,s);
+    ctx.fillStyle = colFn(s/L); ctx.beginPath(); ctx.arc(p[0],p[1],r,0,TAU); ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,.55)'; ctx.lineWidth=0.8; ctx.stroke();
+  }
+}
+function wheel(cx,cy,r,ang,spokes,col){
+  ctx.strokeStyle='#222'; ctx.fillStyle=col||'#d9dde3'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,TAU); ctx.fill(); ctx.stroke();
+  for(var i=0;i<spokes;i++){ var a = ang + i*TAU/spokes; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r); ctx.stroke(); }
+  ctx.beginPath(); ctx.arc(cx,cy,3,0,TAU); ctx.fillStyle='#222'; ctx.fill();
+}
+
+var GAS_PATH = [[390,120],[485,120],[485,540],[220,540],[220,470]];
+var GAS_LEN = pathLen(GAS_PATH);
+var BOIL_A = pathLen([[390,120],[485,120]]), BOIL_B = BOIL_A + 330;
+function gasColourAt(s){
+  var T;
+  if(s < BOIL_A) T = S.Tout;
+  else if(s < BOIL_B) T = S.Tout + (TIN - S.Tout)*(s-BOIL_A)/(BOIL_B-BOIL_A);
+  else T = TIN;
+  return colT(T);
+}
+
+function drawScene(dtReal){
+  var f = S.f;
+  ctx.clearRect(0,0,1000,600);
+
+  // turbine hall background
+  ctx.fillStyle='#f1ede2'; ctx.strokeStyle='#222'; ctx.lineWidth=1.5;
+  ctx.fillRect(570,70,330,470); ctx.strokeRect(570,70,330,470);
+  txt('TURBINE HALL',585,92,13,'left','#444');
+
+  // pressure vessel
+  ctx.fillStyle='#d7dbe0'; ctx.strokeStyle='#222'; ctx.lineWidth=3;
+  ctx.beginPath(); ctx.roundRect ? ctx.roundRect(50,90,340,420,22) : ctx.rect(50,90,340,420); ctx.fill(); ctx.stroke();
+  // plenums coloured by gas temperature
+  ctx.fillStyle = colT(S.Tout); ctx.globalAlpha = .35; ctx.fillRect(56,96,328,54); ctx.globalAlpha = 1;
+  ctx.fillStyle = colT(TIN); ctx.globalAlpha = .35; ctx.fillRect(56,450,328,54); ctx.globalAlpha = 1;
+
+  // graphite blocks
+  var gc = colGr(S.Tgr);
+  for(var i=0;i<NC;i++){
+    var x0 = CX0 + i*COLW;
+    ctx.fillStyle = gc; ctx.fillRect(x0,CY0,COLW+0.5,CH);
+    ctx.strokeStyle='rgba(0,0,0,.28)'; ctx.lineWidth=1;
+    for(var yy=CY0; yy<=CY0+CH; yy+=30){ ctx.beginPath(); ctx.moveTo(x0,yy); ctx.lineTo(x0+COLW,yy); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(x0,CY0); ctx.lineTo(x0,CY0+CH); ctx.stroke();
+  }
+  ctx.strokeStyle='#222'; ctx.lineWidth=2; ctx.strokeRect(CX0,CY0,CW,CH);
+
+  // channels, fuel rods, gas chevrons
+  var fcol = colFuel(S.Tf);
+  for(i=0;i<NC;i++){
+    var cx = colCentre(i);
+    ctx.fillStyle='#1d2430'; ctx.fillRect(cx-9,CY0,18,CH);
+    if(PATTERN[i]==='F'){
+      for(var e=0;e<5;e++){
+        var ey = CY0+3+e*59.5;
+        ctx.fillStyle=fcol; ctx.fillRect(cx-4,ey,8,55);
+        ctx.strokeStyle='rgba(0,0,0,.45)'; ctx.lineWidth=1;
+        for(var fy=ey+5; fy<ey+55; fy+=7){ ctx.beginPath(); ctx.moveTo(cx-6,fy); ctx.lineTo(cx-4,fy); ctx.moveTo(cx+4,fy); ctx.lineTo(cx+6,fy); ctx.stroke(); }
+      }
+      for(var c=0;c<11;c++){
+        var py = CY0+CH - ((S.phase + c*28)%CH);
+        var col = colT(TIN + (S.ToutI-TIN)*(CY0+CH-py)/CH);
+        ctx.fillStyle = col;
+        [-6.5,6.5].forEach(function(dx){ ctx.beginPath(); ctx.moveTo(cx+dx,py-4); ctx.lineTo(cx+dx-2.5,py+2); ctx.lineTo(cx+dx+2.5,py+2); ctx.closePath(); ctx.fill(); });
+      }
+    }
+  }
+  // control rods
+  ctx.save(); ctx.beginPath(); ctx.rect(0,56,1000,500); ctx.clip();
+  ctrlCols.forEach(function(ci){
+    var cx = colCentre(ci), bottom = CY0 + S.x*CH;
+    ctx.fillStyle='#555'; ctx.fillRect(cx-9,56,18,18);                     // drive motor
+    ctx.fillStyle='#888'; ctx.fillRect(cx-2,74,4,Math.max(0,bottom-CH-74+CH)); // stem
+    ctx.fillStyle='#000'; ctx.fillRect(cx-5,bottom-CH,10,CH);              // rod body
+    ctx.fillStyle='#fff'; ctx.fillRect(cx-5,bottom-6,10,2);                 // tip band
+  });
+  ctx.restore();
+  txt('control rods',CX0+2*COLW+COLW/2,50,12,'center');
+  txt('control rods',CX0+8*COLW+COLW/2,50,12,'center');
+
+  // neutrons and flashes
+  parts.forEach(function(p){
+    ctx.fillStyle = p.slow ? '#4aa8ff' : '#ffe14a';
+    ctx.beginPath(); ctx.arc(p.x,p.y,2.2,0,TAU); ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,.6)'; ctx.lineWidth=.6; ctx.stroke();
+  });
+  flashes.forEach(function(fl){
+    var a = 1 - fl.age/0.3;
+    ctx.strokeStyle=fl.c; ctx.globalAlpha=a; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(fl.x,fl.y,fl.r*(1-a)+2,0,TAU); ctx.stroke(); ctx.globalAlpha=1;
+  });
+
+  // labels on the core
+  txt('graphite moderator',CX0,470,12,'left','#111');
+  txt('fuel rods in magnox cladding',CX0+CW,470,12,'right','#111');
+  txt('steel pressure vessel',60,520,12,'left','#333');
+
+  // gas pipes
+  var hot = [[390,120],[485,120]];
+  // boiler
+  ctx.fillStyle='#cfd8e3'; ctx.strokeStyle='#222'; ctx.lineWidth=2;
+  ctx.fillRect(455,110,60,350); ctx.strokeRect(455,110,60,350);
+  ctx.strokeStyle='#3b78c4'; ctx.lineWidth=2;
+  for(var z=130; z<450; z+=22){ ctx.beginPath(); ctx.moveTo(460,z); ctx.lineTo(472,z+8); ctx.moveTo(498,z); ctx.lineTo(510,z+8); ctx.stroke(); }
+  thickLine(GAS_PATH.slice(0,2), colT(S.Tout), 12);
+  // gradient pipe through the boiler
+  ctx.lineWidth=16; ctx.strokeStyle='#222'; ctx.beginPath(); ctx.moveTo(485,120); ctx.lineTo(485,450); ctx.stroke();
+  var g = ctx.createLinearGradient(0,120,0,450); g.addColorStop(0,colT(S.Tout)); g.addColorStop(1,colT(TIN));
+  ctx.lineWidth=12; ctx.strokeStyle=g; ctx.beginPath(); ctx.moveTo(485,120); ctx.lineTo(485,450); ctx.stroke();
+  thickLine([[485,450],[485,540],[220,540],[220,470]], colT(TIN), 12);
+  dotsAlong(GAS_PATH, S.gphase, 26, gasColourAt, 3);
+  txt('heat exchanger (boiler)',485,102,12,'center');
+  txt('gas out',394,140,12,'left');
+  txt(Math.round(S.Tout)+' °C',394,155,13,'left');
+  txt('gas back in: '+TIN+' °C',60,562,12,'left');
+  // blower
+  ctx.fillStyle='#e9ecef'; ctx.strokeStyle='#222'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(350,540,24,0,TAU); ctx.fill(); ctx.stroke();
+  wheel(350,540,20,S.bang,4,'#e9ecef');
+  txt('gas blower',350,584,12,'center');
+
+  // steam, turbine, generator
+  var steamAmt = clamp((S.Tout-230)/150,0,1)*S.Qb;
+  var STEAM = [[515,150],[560,150],[560,225],[598,225]];
+  thickLine(STEAM, steamAmt>0.01 ? '#f4f6f8' : '#bfc6ce', 9);
+  if(steamAmt > 0.01) dotsAlong(STEAM, S.sphase, 22, function(){ return '#ffffff'; }, 2.6);
+  txt('steam',538,142,12,'center');
+  // turbine casing (cutaway)
+  ctx.fillStyle='#b9c0c9'; ctx.strokeStyle='#222'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(598,205); ctx.lineTo(726,180); ctx.lineTo(726,270); ctx.lineTo(598,245); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#555'; ctx.fillRect(590,217,230,8);
+  wheel(630,225,16,S.ang,8,'#e6e9ed');
+  wheel(668,225,21,S.ang*1.0,10,'#e6e9ed');
+  wheel(708,225,27,S.ang,12,'#e6e9ed');
+  txt('turbine',662,172,13,'center');
+  // generator
+  ctx.fillStyle='#8f98a3'; ctx.strokeStyle='#222'; ctx.fillRect(742,190,80,70); ctx.strokeRect(742,190,80,70);
+  wheel(782,225,22,S.ang,6,'#c9cfd6');
+  txt('generator',782,182,13,'center');
+  // exhaust steam, condenser, feed water
+  thickLine([[665,272],[665,335]], steamAmt>0.01 ? '#e4e8ed' : '#bfc6ce', 8);
+  ctx.fillStyle='#c6d8ee'; ctx.strokeStyle='#222'; ctx.lineWidth=2; ctx.fillRect(620,335,100,60); ctx.strokeRect(620,335,100,60);
+  txt('condenser',670,368,13,'center');
+  var FEED = [[620,372],[515,372]];
+  thickLine(FEED,'#6aa0dc',7);
+  if(steamAmt > 0.01) dotsAlong([[620,372],[515,372]], S.sphase, 18, function(){ return '#cfe3fa'; }, 2.2);
+  txt('feed water',568,362,12,'center');
+  var EXH = [[665,272],[665,335]];
+  if(steamAmt > 0.01) dotsAlong(EXH, S.sphase, 16, function(){ return '#fff'; }, 2.2);
+  // output line and homes
+  var lit = Math.round(clamp(S.Pe/5,0,10));
+  var OUT = [[822,225],[950,225],[950,430]];
+  thickLine(OUT, '#d8c36a', 4);
+  if(S.Pe > 1) dotsAlong(OUT, S.gphase*1.5, 20, function(){ return '#fff7c2'; }, 2);
+  txt('to the grid',888,215,12,'center');
+  ctx.strokeStyle='#222'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(905,432); ctx.lineTo(990,432); ctx.stroke();
+  for(i=0;i<10;i++){
+    var hx = 906 + (i%5)*17, hy = 440 + ((i/5)|0)*34;
+    ctx.fillStyle='#8a7d6a'; ctx.fillRect(hx,hy+8,13,14);
+    ctx.fillStyle='#4b3f33'; ctx.beginPath(); ctx.moveTo(hx-2,hy+8); ctx.lineTo(hx+6.5,hy); ctx.lineTo(hx+15,hy+8); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = i<lit ? '#ffd23f' : '#2a2a2a'; ctx.fillRect(hx+4,hy+12,5,6);
+  }
+  txt('each lit house = 5 MW',945,516,11,'center');
+  // readouts in the hall
+  txt(S.Pe.toFixed(1)+' MW',782,284,15,'center');
+  txt('electricity',782,300,12,'center');
+  if(steamAmt <= 0.01) txt('no steam yet',538,246,12,'center','#555');
+
+  // temperature scale
+  var sg = ctx.createLinearGradient(590,0,790,0);
+  sg.addColorStop(0,colT(200)); sg.addColorStop(0.5,colT(325)); sg.addColorStop(1,colT(450));
+  ctx.fillStyle=sg; ctx.fillRect(590,500,200,10); ctx.strokeStyle='#222'; ctx.lineWidth=1; ctx.strokeRect(590,500,200,10);
+  txt('200 °C',590,525,11,'left'); txt('450 °C',790,525,11,'right'); txt('gas temperature',690,495,11,'center');
+  // legend for neutrons
+  ctx.fillStyle='#ffe14a'; ctx.beginPath(); ctx.arc(600,555,3,0,TAU); ctx.fill(); ctx.strokeStyle='#000'; ctx.lineWidth=.6; ctx.stroke(); txt('fast neutron',609,559,11);
+  ctx.fillStyle='#4aa8ff'; ctx.beginPath(); ctx.arc(690,555,3,0,TAU); ctx.fill(); ctx.stroke(); txt('slow neutron',699,559,11);
+  ctx.strokeStyle='#ff8a1f'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(790,555,5,0,TAU); ctx.stroke(); txt('fission',800,559,11);
+  ctx.fillStyle='#000'; ctx.fillRect(850,550,8,10); txt('absorbed by rod',864,559,11);
+}
+
+// ---------- chart ----------
+var ch = $('chart'), cc = ch.getContext('2d');
+ch.width = 1000*DPR; ch.height = 330*DPR; cc.scale(DPR,DPR);
+function plot(box, series, ymin, ymax, ylab, ticks){
+  var x0=box[0], y0=box[1], w=box[2], h=box[3];
+  cc.strokeStyle='#000'; cc.lineWidth=1; cc.strokeRect(x0,y0,w,h);
+  cc.font='12px '+SANS; cc.fillStyle='#111'; cc.textAlign='right';
+  ticks.forEach(function(tv){
+    var y = y0+h-(tv-ymin)/(ymax-ymin)*h;
+    cc.strokeStyle='#ddd'; cc.beginPath(); cc.moveTo(x0,y); cc.lineTo(x0+w,y); cc.stroke();
+    cc.fillText(tv,x0-6,y+4);
+  });
+  cc.save(); cc.translate(14,y0+h/2); cc.rotate(-Math.PI/2); cc.textAlign='center'; cc.fillText(ylab,0,0); cc.restore();
+  series.forEach(function(s){
+    cc.strokeStyle=s.col; cc.lineWidth=s.w||2; cc.setLineDash(s.dash||[]);
+    cc.beginPath();
+    var n = s.data.length;
+    for(var i=0;i<n;i++){
+      var x = x0 + w - (n-1-i)*(w/360);
+      var y = y0+h-(clamp(s.data[i],ymin,ymax)-ymin)/(ymax-ymin)*h;
+      if(i===0) cc.moveTo(x,y); else cc.lineTo(x,y);
+    }
+    cc.stroke(); cc.setLineDash([]);
+  });
+}
+function drawChart(){
+  cc.clearRect(0,0,1000,330);
+  plot([60,10,920,120],[{data:hist.r,col:'#777',dash:[6,4]},{data:hist.p,col:'#000',w:2.5}],0,130,'% of full',[0,25,50,75,100,125]);
+  var lim = []; for(var i=0;i<hist.t.length;i++) lim.push(LIMIT);
+  plot([60,170,920,120],[{data:lim,col:'#000',dash:[2,3],w:1.5},{data:hist.to,col:'#e08a00',dash:[6,4]},{data:hist.tf,col:'#c0392b',w:2.5}],150,550,'temperature, °C',[200,300,400,500]);
+  cc.font='12px '+SANS; cc.fillStyle='#111'; cc.textAlign='center';
+  cc.fillText('time: the last 180 s of simulated time',520,312);
+}
+
+// ---------- readouts ----------
+function fmt(v,d){ return v.toFixed(d); }
+function updateReadouts(){
+  $('rRods').textContent = fmt(S.x*100,1);
+  $('rK').textContent = fmt(S.k,4);
+  var pc = S.n*100;
+  $('rFis').textContent = pc < 10 ? fmt(pc,2) : fmt(pc,0);
+  $('rMW').textContent = fmt(P0*S.q,0);
+  $('rClad').textContent = fmt(S.Tf,0);
+  $('rGr').textContent = fmt(S.Tgr,0);
+  $('rOut').textContent = fmt(S.Tout,0);
+  $('rBoil').textContent = fmt(P0*S.Qb,0);
+  $('rMWe').textContent = fmt(S.Pe,1);
+  $('rRpm').textContent = fmt(3000*S.w,0);
+  var st = $('status'), msg, alarm = false;
+  if(S.scram && S.tripMsg){ msg = S.tripMsg + ' Press "Clear trip" when the cladding has cooled.'; alarm = true; }
+  else if(S.scram){ msg = 'Control rods driven in (SCRAM). The fission rate is falling.'; }
+  else if(S.Tf > LIMIT){ msg = 'Cladding temperature is above the 450 °C limit.'; alarm = true; }
+  else if(S.k < 0.999){ msg = 'k is below 1: the fission rate is falling.'; }
+  else if(S.k > 1.001){ msg = 'k is above 1: the fission rate is rising.'; }
+  else { msg = 'k is about 1: the chain reaction is steady.'; }
+  if(S.Tf > LIMIT && S.scram && !S.tripMsg){ alarm = true; msg += ' Cladding temperature is above the 450 °C limit.'; }
+  st.textContent = msg; st.className = 'status' + (alarm ? ' alarm' : '');
+}
+
+// ---------- controls ----------
+var rodsIn = $('rods'), blowIn = $('blow');
+rodsIn.addEventListener('input', function(){ S.demand = +rodsIn.value; $('rodsLab').textContent = rodsIn.value; });
+blowIn.addEventListener('input', function(){ S.flowDemand = +blowIn.value; $('blowLab').textContent = blowIn.value; });
+$('bWith').addEventListener('click', function(){ rodsIn.value = 0; S.demand = 0; $('rodsLab').textContent = '0'; });
+$('bScram').addEventListener('click', function(){ S.scram = true; S.tripMsg = ''; rodsIn.value = 100; S.demand = 100; $('rodsLab').textContent = '100'; });
+$('bResetTrip').addEventListener('click', function(){ S.scram = false; S.tripMsg = ''; });
+$('bPause').addEventListener('click', function(){ paused = !paused; this.textContent = paused ? 'Resume' : 'Pause'; });
+$('bReset').addEventListener('click', function(){ init(); rodsIn.value = 100; blowIn.value = 100; $('rodsLab').textContent = '100'; $('blowLab').textContent = '100'; });
+Array.prototype.forEach.call(document.querySelectorAll('.spd'), function(b){
+  b.addEventListener('click', function(){
+    speed = +b.getAttribute('data-s');
+    Array.prototype.forEach.call(document.querySelectorAll('.spd'), function(o){ o.classList.toggle('on', o===b); });
+  });
+});
+
+// ---------- main loop ----------
+var last = performance.now(), roAcc = 0;
+S = null; hist = null; init();
+function frame(now){
+  var dtReal = Math.min(0.1, (now-last)/1000); last = now;
+  if(!paused){
+    var simT = dtReal*speed, n = Math.ceil(simT/0.05);
+    for(var i=0;i<n;i++) step(simT/n);
+    S.phase += 60*S.f*dtReal;
+    S.gphase += 90*S.f*dtReal;
+    S.sphase += 70*clamp(S.Qb*1.2,0,1.3)*dtReal;
+    S.ang += S.w*14*dtReal;
+    S.bang += (8*S.f)*dtReal;
+    updateParts(dtReal);
+  }
+  drawScene(dtReal);
+  roAcc += dtReal;
+  if(roAcc > 0.1){ roAcc = 0; updateReadouts(); drawChart(); }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+window.__sim = { step:step, get S(){ return S; }, init:init, setDemand:function(v){ S.demand=v; }, setFlow:function(v){ S.flowDemand=v; }, run:function(sec){ for(var t=0;t<sec;t+=0.05) step(0.05); } };
+})();
+</script>
+</body>
+</html>
